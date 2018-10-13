@@ -1,0 +1,19 @@
+{
+  "name": "goodluck",
+  "version": "0.0.1",
+  "description": "A tiny WebGL2 game engine with ECS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stasm/goodluck.git"
+  },
+  "author": "Staś Małolepszy <stas@piesku.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stasm/goodluck/issues"
+  },
+  "homepage": "https://github.com/stasm/goodluck#readme"
+}
