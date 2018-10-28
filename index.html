@@ -1,0 +1,31 @@
+<!doctype html>
+<meta charset="utf8">
+<title>goodluck example</title>
+<style>
+    html, body {
+        overflow: hidden;
+        margin: 0;
+    }
+    #fps {
+        position: absolute;
+        top: 0;
+        background: #000;
+        color: #fff;
+    }
+</style>
+
+<canvas></canvas>
+<div id="fps"></div>
+<script type="module">
+    import Game from "./game.js";
+    import create_basic from "./material_basic.js";
+    import create_tetrahedron from "./shape_tetrahedron.js";
+
+    let game = new Game({
+        selector: "canvas",
+    });
+
+    let basic_material = create_basic(game.gl);
+    create_tetrahedron(game, basic_material);
+    game.start();
+</script>
