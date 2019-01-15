@@ -44,6 +44,8 @@ function create(gl) {
             3 * Float32Array.BYTES_PER_ELEMENT,
             0 * Float32Array.BYTES_PER_ELEMENT);
 
+    let index_buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
 
     gl.bindVertexArray(null);
 

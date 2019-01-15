@@ -30,6 +30,11 @@ function draw(gl, model, {vertices, indices, material, color}) {
     gl.uniform4fv(material.uniforms.color, color);
     gl.bindVertexArray(material.vao);
     gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-    gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 3);
+    if (indices) {
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
+        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+    } else {
+        gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 3);
+    }
     gl.bindVertexArray(null);
 }
