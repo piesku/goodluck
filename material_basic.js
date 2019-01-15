@@ -3,10 +3,9 @@ import {compile, link, reflect} from "./material.js";
 let vertex = `#version 300 es
     uniform mat4 pv;
     uniform mat4 model;
+    uniform vec4 color;
 
     in vec3 position;
-    in vec4 color;
-
     out vec4 vert_color;
 
     void main() {
@@ -42,13 +41,9 @@ function create(gl) {
 
     gl.enableVertexAttribArray(attribs.position);
     gl.vertexAttribPointer(attribs.position, 3, gl.FLOAT, false,
-            7 * Float32Array.BYTES_PER_ELEMENT,
+            3 * Float32Array.BYTES_PER_ELEMENT,
             0 * Float32Array.BYTES_PER_ELEMENT);
 
-    gl.enableVertexAttribArray(attribs.color);
-    gl.vertexAttribPointer(attribs.color, 4, gl.FLOAT, false,
-            7 * Float32Array.BYTES_PER_ELEMENT,
-            3 * Float32Array.BYTES_PER_ELEMENT);
 
     gl.bindVertexArray(null);
 
