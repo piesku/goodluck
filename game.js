@@ -37,11 +37,11 @@ class Game {
         this.entities[entity] = COMPONENT_NONE;
     }
 
-    update(delta) {
+    fixed_update(delta) {
         rotate_tick(this, delta);
     }
 
-    render(delta) {
+    frame_update(delta) {
         render_tick(this, delta);
         framerate_tick(this, delta);
     }
@@ -56,10 +56,10 @@ class Game {
             accumulator += delta;
             while (accumulator > step) {
                 accumulator -= step;
-                this.update(step);
+                this.fixed_update(step);
             }
 
-            this.render(delta);
+            this.frame_update(delta);
             last = now;
 
             requestAnimationFrame(tick);
