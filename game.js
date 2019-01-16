@@ -2,9 +2,9 @@ import * as mat4 from "./gl-matrix/mat4.js";
 import create_context from "./context.js";
 import {COMPONENT_NONE} from "./components.js";
 
-import {default as render_tick} from "./system_render.js";
-import {default as rotate_tick} from "./system_rotate.js";
-import {default as framerate_tick} from "./system_framerate.js";
+import render_tick from "./system_render.js";
+import rotate_tick from "./system_rotate.js";
+import framerate_tick from "./system_framerate.js";
 
 const MAX_ENTITIES = 10000;
 
