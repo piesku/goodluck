@@ -1,9 +1,9 @@
 import * as mat4 from "./gl-matrix/mat4.js";
 import {COMPONENT_RENDER, COMPONENT_TRANSFORM} from "./components.js";
-import {create_render} from "./system_render.js";
+import create_render from "./component_render.js";
 import {range} from "./number.js";
 
-let vertex_array = Float32Array.from([
+let vertices = Float32Array.from([
     0, -1, 0, 0.203181, -0.96795, 0.147618, -0.077607, -0.96795, 0.238853,
     0.723607, -0.44722, 0.525725, 0.609547, -0.657519, 0.442856, 0.812729,
     -0.502301, 0.295238, 0, -1, 0, -0.077607, -0.96795, 0.238853, -0.251147,
@@ -399,9 +399,9 @@ let vertex_array = Float32Array.from([
     0.442856, 0.723607, -0.44722, 0.525725, 0.531941, -0.502302, 0.681712
 ]);
 
-let index_array = Uint16Array.from(range(0, 960));
+let indices = Uint16Array.from(range(0, 960));
 
-let normals = [
+let normals = Float32Array.from([
     0.0482, -0.9878, 0.1482, 0.0482, -0.9878, 0.1482, 0.0482, -0.9878, 0.1482,
       0.723, -0.5545, 0.4121, 0.723, -0.5545, 0.4121, 0.723, -0.5545, 0.4121,
     -0.1261, -0.9878, 0.0916, -0.1261, -0.9878, 0.0916, -0.1261, -0.9878,
@@ -737,7 +737,7 @@ let normals = [
     0.4526, 0.4674, -0.7594, 0.4526, 0.4674, -0.7594, 0.4526, 0.5087, -0.6369,
     0.5792, 0.5087, -0.6369, 0.5792, 0.5087, -0.6369, 0.5792, 0.6153, -0.5545,
     0.5603, 0.6153, -0.5545, 0.5603, 0.6153, -0.5545, 0.5603
-];
+]);
 
 export default
 function create_icoshpere(game, material, color) {
@@ -745,7 +745,7 @@ function create_icoshpere(game, material, color) {
             COMPONENT_TRANSFORM | COMPONENT_RENDER);
     game.components.transform[entity] = mat4.create();
     game.components.render[entity] = create_render(
-            game.gl, vertex_array, index_array, material, color);
+            {vertices, indices, normals}, material, color);
     return entity;
 }
 

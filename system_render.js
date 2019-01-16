@@ -33,24 +33,3 @@ function draw(gl, model, {vao, count, material, color}) {
     gl.drawElements(material.mode, count, gl.UNSIGNED_SHORT, 0);
     gl.bindVertexArray(null);
 }
-
-export
-function create_render(gl, vertex_array, index_array, material, color) {
-    let vao = gl.createVertexArray()
-    gl.bindVertexArray(vao);
-
-    let vertex_buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
-    gl.bufferData(gl.ARRAY_BUFFER, vertex_array, gl.STATIC_DRAW);
-    gl.enableVertexAttribArray(material.attribs.position);
-    gl.vertexAttribPointer(material.attribs.position, 3, gl.FLOAT, false,
-            3 * Float32Array.BYTES_PER_ELEMENT,
-            0 * Float32Array.BYTES_PER_ELEMENT);
-
-    let index_buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, index_array, gl.STATIC_DRAW);
-
-    gl.bindVertexArray(null);
-    return {vao, count: index_array.length, material, color};
-}
