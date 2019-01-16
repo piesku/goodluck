@@ -19,6 +19,7 @@
 <script type="module">
     import Game from "./game.js";
     import create_basic from "./material_basic.js";
+    import create_wireframe from "./material_wireframe.js";
     import create_tetrahedron from "./shape_tetrahedron.js";
     import create_cube from "./shape_cube.js";
 
@@ -27,7 +28,8 @@
     });
 
     let basic_material = create_basic(game.gl);
-    create_tetrahedron(game, basic_material, [1, 1, 0.3, 1]);
+    let wireframe_material = create_wireframe(game.gl);
+    create_tetrahedron(game, wireframe_material, [1, 1, 0.3, 1]);
     create_cube(game, basic_material, [0.3, 1, 1, 1]);
     game.start();
 </script>

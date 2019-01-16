@@ -18,6 +18,7 @@ function tick(game, delta) {
 
     for (let i = 0; i < entities.length; i++) {
         if (entities[i] & MASK) {
+            // TODO Sort by material.
             draw(gl, components.transform[i], components.render[i]);
         }
     }
@@ -29,6 +30,6 @@ function draw(gl, model, {vao, count, material, color}) {
     gl.uniformMatrix4fv(material.uniforms.model, gl.FALSE, model);
     gl.uniform4fv(material.uniforms.color, color);
     gl.bindVertexArray(vao);
-    gl.drawElements(gl.TRIANGLES, count, gl.UNSIGNED_SHORT, 0);
+    gl.drawElements(material.mode, count, gl.UNSIGNED_SHORT, 0);
     gl.bindVertexArray(null);
 }

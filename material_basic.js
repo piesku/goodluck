@@ -30,5 +30,5 @@ function create(gl) {
     let program = link(gl,
             compile(gl, gl.VERTEX_SHADER, vertex),
             compile(gl, gl.FRAGMENT_SHADER, fragment));
-    return {program, ...reflect(gl, program)};
+    return {mode: gl.TRIANGLES, program, ...reflect(gl, program)};
 }
