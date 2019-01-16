@@ -8,7 +8,7 @@ let vertex = `#version 300 es
 
     void main() {
         gl_Position = pv * model * vec4(position, 1.0);
-        gl_PointSize = 3.0;
+        gl_PointSize = 2.0;
     }
 `;
 

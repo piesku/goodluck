@@ -1,15 +1,14 @@
 import * as mat4 from "./gl-matrix/mat4.js";
 import {COMPONENT_RENDER, COMPONENT_TRANSFORM} from "./components.js";
 import {create_render} from "./system_render.js";
+import {range} from "./number.js";
 
 let vertex_array = Float32Array.from([
     1, -1, -1, -1, 1, -1, 1, 1, 1, 1, 1, 1, -1, -1, 1, 1, -1, -1, -1, -1, 1,
     -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, 1, 1, 1, 1
 ]);
 
-let index_array = Uint16Array.from([
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
-]);
+let index_array = Uint16Array.from(range(0, 12));
 
 let normals = [
     0.5774, 0.5774, -0.5774, 0.5774, 0.5774, -0.5774, 0.5774, 0.5774, -0.5774,
