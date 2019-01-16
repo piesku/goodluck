@@ -36,9 +36,12 @@
     let points_material = create_points(game.gl);
     let flat_material = create_flat(game.gl);
 
-    create_cube(game, basic_material, [0.3, 1, 1, 1]);
-    create_tetrahedron(game, wireframe_material, [1, 1, 0.3, 1]);
-    create_icoshpere(game, flat_material, [0.3, 0.3, 1, 1]);
+    let C = [0.3, 1, 1, 1];
+    let Y = [1, 1, 0.3, 1];
+
+    //create_cube(game, basic_material, C);
+    //create_tetrahedron(game, wireframe_material, Y);
+    create_icoshpere(game, flat_material, Y);
 
     game.start();
 </script>

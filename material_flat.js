@@ -9,11 +9,17 @@ let vertex = `#version 300 es
     in vec3 normal;
     flat out vec4 vert_color;
 
-    void main() {
-        gl_Position = pv * model * vec4(position, 1.0);
+    const vec3 light_pos = vec3(-10.0, 10.0, 10.0);
 
-        vec3 n = normalize(normal) * 0.5 + 0.5;
-        vert_color = vec4(n, 1.0);
+    void main() {
+        vec4 world_pos = model * vec4(position, 1.0);
+        gl_Position = pv * world_pos;
+
+        vec3 world_normal = (model * vec4(normal, 1.0)).xyz;
+        vec3 light_dir = normalize(light_pos - world_pos.xyz);
+        float light_factor = max(dot(world_normal, light_dir), 0.0);
+
+        vert_color = vec4(color.xyz * light_factor, 1.0);
     }
 `;
 
