@@ -30,24 +30,5 @@ function create(gl) {
     let program = link(gl,
             compile(gl, gl.VERTEX_SHADER, vertex),
             compile(gl, gl.FRAGMENT_SHADER, fragment));
-
-    let {attribs, uniforms} = reflect(gl, program);
-
-    let vao = gl.createVertexArray()
-    gl.bindVertexArray(vao);
-
-    let vertex_buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
-
-    gl.enableVertexAttribArray(attribs.position);
-    gl.vertexAttribPointer(attribs.position, 3, gl.FLOAT, false,
-            3 * Float32Array.BYTES_PER_ELEMENT,
-            0 * Float32Array.BYTES_PER_ELEMENT);
-
-    let index_buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
-
-    gl.bindVertexArray(null);
-
-    return {program, attribs, uniforms, vao};
+    return {program, ...reflect(gl, program)};
 }

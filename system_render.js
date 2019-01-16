@@ -23,18 +23,12 @@ function tick(game, delta) {
     }
 }
 
-function draw(gl, model, {vertices, indices, material, color}) {
+function draw(gl, model, {vao, count, material, color}) {
     gl.useProgram(material.program);
     gl.uniformMatrix4fv(material.uniforms.pv, gl.FALSE, pv);
     gl.uniformMatrix4fv(material.uniforms.model, gl.FALSE, model);
     gl.uniform4fv(material.uniforms.color, color);
-    gl.bindVertexArray(material.vao);
-    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-    if (indices) {
-        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
-        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
-    } else {
-        gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 3);
-    }
+    gl.bindVertexArray(vao);
+    gl.drawElements(gl.TRIANGLES, count, gl.UNSIGNED_SHORT, 0);
     gl.bindVertexArray(null);
 }

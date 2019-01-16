@@ -1,25 +1,48 @@
 import * as mat4 from "./gl-matrix/mat4.js";
 import {COMPONENT_RENDER, COMPONENT_TRANSFORM} from "./components.js";
 
-let tetrahedron = [
-    [1.0, 1.0, 1.0],
-    [-1.0, 1.0, -1.0],
-    [1.0, -1.0, -1.0],
-    [-1.0, -1.0, 1.0],
-];
-
-let vertices = Float32Array.from([
-    ...tetrahedron[0], ...tetrahedron[1], ...tetrahedron[2],
-    ...tetrahedron[1], ...tetrahedron[3], ...tetrahedron[2],
-    ...tetrahedron[0], ...tetrahedron[3], ...tetrahedron[1],
-    ...tetrahedron[0], ...tetrahedron[2], ...tetrahedron[3],
+let vertex_array = Float32Array.from([
+    1, -1, -1, -1, 1, -1, 1, 1, 1, 1, 1, 1, -1, -1, 1, 1, -1, -1, -1, -1, 1,
+    -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, 1, 1, 1, 1
 ]);
+
+let index_array = Uint16Array.from([
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+]);
+
+let normals = [
+    0.5774, 0.5774, -0.5774, 0.5774, 0.5774, -0.5774, 0.5774, 0.5774, -0.5774,
+      0.5774, -0.5774, 0.5774, 0.5774, -0.5774, 0.5774, 0.5774, -0.5774,
+    0.5774, -0.5774, -0.5774, -0.5774, -0.5774, -0.5774, -0.5774, -0.5774,
+    -0.5774, -0.5774, -0.5774, 0.5774, 0.5774, -0.5774, 0.5774, 0.5774,
+    -0.5774, 0.5774, 0.5774
+];
 
 export default
 function create_tetrahedron(game, material, color) {
     let entity = game.create_entity(
             COMPONENT_TRANSFORM | COMPONENT_RENDER);
-    game.components.render[entity] = {vertices, material, color};
     game.components.transform[entity] = mat4.create();
+
+    let {gl} = game;
+    let vao = gl.createVertexArray()
+    gl.bindVertexArray(vao);
+
+    let vertex_buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, vertex_array, gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(material.attribs.position);
+    gl.vertexAttribPointer(material.attribs.position, 3, gl.FLOAT, false,
+            3 * Float32Array.BYTES_PER_ELEMENT,
+            0 * Float32Array.BYTES_PER_ELEMENT);
+
+    let index_buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, index_array, gl.STATIC_DRAW);
+
+    gl.bindVertexArray(null);
+    game.components.render[entity] = {
+            vao, count: index_array.length, material, color};
+
     return entity;
 }
