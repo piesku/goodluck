@@ -1,4 +1,4 @@
-import {compile, link, reflect} from "./material.js";
+import create from "./material.js";
 
 let vertex = `#version 300 es
     uniform mat4 pv;
@@ -24,9 +24,6 @@ let fragment = `#version 300 es
 `;
 
 export default
-function create(gl) {
-    let program = link(gl,
-            compile(gl, gl.VERTEX_SHADER, vertex),
-            compile(gl, gl.FRAGMENT_SHADER, fragment));
-    return {mode: gl.POINTS, program, ...reflect(gl, program)};
+function create_points(gl) {
+    return create(gl, vertex, fragment, gl.POINTS);
 }

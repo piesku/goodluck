@@ -1,3 +1,11 @@
+export default
+function create(gl, vertex, fragment, mode) {
+    let program = link(gl,
+            compile(gl, gl.VERTEX_SHADER, vertex),
+            compile(gl, gl.FRAGMENT_SHADER, fragment));
+    return {mode, program, ...reflect(gl, program)};
+}
+
 export function compile(gl, type, source) {
     let shader = gl.createShader(type);
     gl.shaderSource(shader, source);
