@@ -1,6 +1,6 @@
 
 import * as mat4 from "./gl-matrix/mat4.js";
-import {COMPONENT_RENDER, COMPONENT_TRANSFORM} from "./components.js";
+import {RENDER, TRANSFORM} from "./components.js";
 import create_render from "./component_render.js";
 
 let vertices = Float32Array.from([
@@ -162,11 +162,10 @@ let normals = Float32Array.from([
 
 export default
 function create_computer(game, material, color) {
-    let entity = game.create_entity(
-            COMPONENT_TRANSFORM | COMPONENT_RENDER);
+    let entity = game.create_entity(TRANSFORM | RENDER);
     let m = mat4.create();
-    game.components.transform[entity] = mat4.scale(m, m, [15, 15, 15]);
-    game.components.render[entity] = create_render(
+    game.components[TRANSFORM][entity] = mat4.scale(m, m, [15, 15, 15]);
+    game.components[RENDER][entity] = create_render(
             {vertices, indices, normals}, material, color);
     return entity;
 }

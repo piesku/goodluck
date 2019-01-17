@@ -1,15 +1,13 @@
 import * as mat4 from "./gl-matrix/mat4.js";
-import {COMPONENT_TRANSFORM, COMPONENT_ROTATE} from "./components.js";
+import {TRANSFORM, ROTATE} from "./components.js";
 
-const MASK = COMPONENT_TRANSFORM | COMPONENT_ROTATE;
+const MASK = TRANSFORM | ROTATE;
 
 export default
 function tick({entities, components}, delta) {
     for (let i = 0; i < entities.length; i++) {
         if ((entities[i] & MASK) === MASK) {
-            let model = components.transform[i];
-            let rotation = components.rotate[i];
-            update(delta, model, rotation);
+            update(delta, components[TRANSFORM][i], components[ROTATE][i]);
         }
     }
 }

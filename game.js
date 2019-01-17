@@ -1,11 +1,12 @@
 import * as mat4 from "./gl-matrix/mat4.js";
 import create_context from "./context.js";
-import {COMPONENT_NONE} from "./components.js";
 
+import * as COMPONENT from "./components.js";
 import render_tick from "./system_render.js";
 import rotate_tick from "./system_rotate.js";
 import framerate_tick from "./system_framerate.js";
 
+const COMPONENT_NONE = 0;
 const MAX_ENTITIES = 10000;
 
 export default
@@ -13,11 +14,11 @@ class Game {
     constructor({selector, ...options}) {
         Object.assign(this, options, create_context(selector));
         this.entities = new Uint32Array(MAX_ENTITIES);
-        this.components = {
-            transform: [],
-            render: [],
-            rotate: [],
-        };
+
+        this.components = [];
+        this.components[COMPONENT.TRANSFORM] = [];
+        this.components[COMPONENT.RENDER] = [];
+        this.components[COMPONENT.ROTATE] = [];
 
         this.projection = mat4.create();
         mat4.perspective(this.projection, 1,

@@ -1,5 +1,5 @@
 import * as mat4 from "./gl-matrix/mat4.js";
-import {COMPONENT_RENDER, COMPONENT_TRANSFORM} from "./components.js";
+import {RENDER, TRANSFORM} from "./components.js";
 import create_render from "./component_render.js";
 
 let vertices = Float32Array.from([
@@ -24,10 +24,9 @@ let normals = Float32Array.from([
 
 export default
 function create_cube(game, material, color) {
-    let entity = game.create_entity(
-            COMPONENT_TRANSFORM | COMPONENT_RENDER);
-    game.components.transform[entity] = mat4.create();
-    game.components.render[entity] = create_render(
+    let entity = game.create_entity(TRANSFORM | RENDER);
+    game.components[TRANSFORM][entity] = mat4.create();
+    game.components[RENDER][entity] = create_render(
             {vertices, indices, normals}, material, color);
     return entity;
 }

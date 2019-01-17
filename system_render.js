@@ -1,7 +1,7 @@
 import * as mat4 from "./gl-matrix/mat4.js";
-import {COMPONENT_RENDER, COMPONENT_TRANSFORM} from "./components.js";
+import {RENDER, TRANSFORM} from "./components.js";
 
-const MASK = COMPONENT_RENDER | COMPONENT_TRANSFORM;
+const MASK = RENDER | TRANSFORM;
 
 let view = mat4.create();
 mat4.translate(view, view, [0, 0, 10]);
@@ -19,7 +19,7 @@ function tick(game, delta) {
     for (let i = 0; i < entities.length; i++) {
         if ((entities[i] & MASK) === MASK) {
             // TODO Sort by material.
-            draw(gl, components.transform[i], components.render[i]);
+            draw(gl, components[TRANSFORM][i], components[RENDER][i]);
         }
     }
 }
