@@ -26,6 +26,7 @@
     import create_cube from "./shape_cube.js";
     import create_tetrahedron from "./shape_tetrahedron.js";
     import create_icoshpere from "./shape_icosphere.js";
+    import create_computer from "./shape_computer.js";
 
     let game = new Game({
         selector: "canvas",
@@ -41,7 +42,8 @@
 
     //create_cube(game, basic_material, C);
     //create_tetrahedron(game, wireframe_material, Y);
-    create_icoshpere(game, flat_material, Y);
+    //create_icoshpere(game, flat_material, Y);
+    create_computer(game, flat_material, Y);
 
     game.start();
 </script>
