@@ -14,8 +14,9 @@ class Game {
         Object.assign(this, options, create_context(selector));
         this.entities = new Uint32Array(MAX_ENTITIES);
         this.components = {
-            render: [],
             transform: [],
+            render: [],
+            rotate: [],
         };
 
         this.projection = mat4.create();

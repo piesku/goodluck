@@ -18,6 +18,7 @@
 <div id="fps"></div>
 <script type="module">
     import Game from "./game.js";
+    import {COMPONENT_ROTATE} from "./components.js";
     import create_basic from "./material_basic.js";
     import create_wireframe from "./material_wireframe.js";
     import create_points from "./material_points.js";
@@ -40,10 +41,13 @@
     let C = [0.3, 1, 1, 1];
     let Y = [1, 1, 0.3, 1];
 
-    //create_cube(game, basic_material, C);
+    let cube = create_cube(game, flat_material, C);
+    game.entities[cube] |= COMPONENT_ROTATE;
+    game.components.rotate[cube] = [0.1, 0.2, 0.3];
+
     //create_tetrahedron(game, wireframe_material, Y);
     //create_icoshpere(game, flat_material, Y);
-    create_computer(game, flat_material, Y);
+    //create_computer(game, flat_material, Y);
 
     game.start();
 </script>

@@ -17,7 +17,7 @@ function tick(game, delta) {
     mat4.multiply(pv, game.projection, view);
 
     for (let i = 0; i < entities.length; i++) {
-        if (entities[i] & MASK) {
+        if ((entities[i] & MASK) === MASK) {
             // TODO Sort by material.
             draw(gl, components.transform[i], components.render[i]);
         }
