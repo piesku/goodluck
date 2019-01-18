@@ -24,11 +24,12 @@
     import create_points from "./material_points.js";
     import create_flat from "./material_flat.js";
 
-    import create_tri from "./shape_tri.js";
-    import create_cube from "./shape_cube.js";
-    import create_tetrahedron from "./shape_tetrahedron.js";
-    import create_icoshpere from "./shape_icosphere.js";
-    import create_computer from "./shape_computer.js";
+    import {renderable} from "./creators.js";
+    import * as Tri from "./shape_tri.js";
+    import * as Cube from "./shape_cube.js";
+    import * as Tetrahedron from "./shape_tetrahedron.js";
+    import * as Icosphere from "./shape_icosphere.js";
+    import * as Computer from "./shape_computer.js";
 
     let game = new Game({
         selector: "canvas",
@@ -42,16 +43,16 @@
     let C = [0.3, 1, 1, 1];
     let Y = [1, 1, 0.3, 1];
 
-    let cube = create_cube(game, flat_material, C);
+    let cube = renderable(game, Cube, flat_material, C);
     game.entities[cube] |= ROTATE;
     game.components[ROTATE][cube] = [0.1, 0.2, 0.3];
 
-    let tetrahedron = create_tetrahedron(game, wireframe_material, Y);
+    let tetrahedron = renderable(game, Tetrahedron, wireframe_material, Y);
     game.entities[tetrahedron] |= ROTATE;
     game.components[ROTATE][tetrahedron] = [-0.1, -0.2, -0.3];
 
-    //create_icoshpere(game, flat_material, Y);
-    //create_computer(game, flat_material, Y);
+    //renderable(game, Icosphere, flat_material, Y);
+    //renderable(game, Computer, flat_material, Y, [7, 7, 7]);
 
     game.start();
 </script>

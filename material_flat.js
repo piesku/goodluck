@@ -9,7 +9,7 @@ let vertex = `#version 300 es
     in vec3 normal;
     flat out vec4 vert_color;
 
-    const vec3 light_pos = vec3(-10.0, 10.0, 10.0);
+    const vec3 light_pos = vec3(-10.0, 5.0, 10.0);
     const vec3 light_color = vec3(1.0, 1.0, 1.0);
 
     void main() {

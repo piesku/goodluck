@@ -1,8 +1,4 @@
-
-import * as mat4 from "./gl-matrix/mat4.js";
-import {RENDER, TRANSFORM} from "./components.js";
-import create_render from "./component_render.js";
-
+export
 let vertices = Float32Array.from([
     0.104575, -0.016915, 0.138191, -0.104598, -0.016902, 0.138194, -0.119388,
       -0.095481, 0.146398, -0.124966, 0.106761, -0.131556, -0.124966,
@@ -85,6 +81,7 @@ let vertices = Float32Array.from([
     -0.10867
 ]);
 
+export
 let indices = Uint16Array.from([
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
     21, 22, 23, 24, 25, 26, 24, 97, 25, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
@@ -100,6 +97,7 @@ let indices = Uint16Array.from([
     178, 179, 180, 181
 ]);
 
+export
 let normals = Float32Array.from([
     0, 0.1038, 0.9946, 0, 0.1038, 0.9946, 0, 0.1038, 0.9946, -1, -0, -0, -1,
     -0, -0, -1, -0, -0, -0.7351, 0.0727, 0.6741, -0.7351, 0.0727, 0.6741,
@@ -159,13 +157,3 @@ let normals = Float32Array.from([
     -0.0128, -0.0005, 0.9939, -0.1106, -0.0005, 0.9939, -0.1106, -0.0005,
     0.9939, -0.1106
 ]);
-
-export default
-function create_computer(game, material, color) {
-    let entity = game.create_entity(TRANSFORM | RENDER);
-    let m = mat4.create();
-    game.components[TRANSFORM][entity] = mat4.scale(m, m, [15, 15, 15]);
-    game.components[RENDER][entity] = create_render(
-            {vertices, indices, normals}, material, color);
-    return entity;
-}

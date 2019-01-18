@@ -1,15 +1,15 @@
-import * as mat4 from "./gl-matrix/mat4.js";
-import {RENDER, TRANSFORM} from "./components.js";
-import create_render from "./component_render.js";
 import {range} from "./number.js";
 
+export
 let vertices = Float32Array.from([
     1, -1, -1, -1, 1, -1, 1, 1, 1, 1, 1, 1, -1, -1, 1, 1, -1, -1, -1, -1, 1,
     -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, 1, 1, 1, 1
 ]);
 
+export
 let indices = Uint16Array.from(range(0, 12));
 
+export
 let normals = Float32Array.from([
     0.5774, 0.5774, -0.5774, 0.5774, 0.5774, -0.5774, 0.5774, 0.5774, -0.5774,
       0.5774, -0.5774, 0.5774, 0.5774, -0.5774, 0.5774, 0.5774, -0.5774,
@@ -17,12 +17,3 @@ let normals = Float32Array.from([
     -0.5774, -0.5774, -0.5774, 0.5774, 0.5774, -0.5774, 0.5774, 0.5774,
     -0.5774, 0.5774, 0.5774
 ]);
-
-export default
-function create_tetrahedron(game, material, color) {
-    let entity = game.create_entity(TRANSFORM | RENDER);
-    game.components[TRANSFORM][entity] = mat4.create();
-    game.components[RENDER][entity] = create_render(
-            {vertices, indices, normals}, material, color);
-    return entity;
-}
