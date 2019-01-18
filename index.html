@@ -30,6 +30,7 @@
     import * as Tetrahedron from "./shape_tetrahedron.js";
     import * as Icosphere from "./shape_icosphere.js";
     import * as Computer from "./shape_computer.js";
+    import * as Monkey from "./shape_monkey.js";
 
     let game = new Game({
         selector: "canvas",
@@ -43,16 +44,20 @@
     let C = [0.3, 1, 1, 1];
     let Y = [1, 1, 0.3, 1];
 
-    let cube = renderable(game, Cube, flat_material, C);
-    game.entities[cube] |= ROTATE;
-    game.components[ROTATE][cube] = [0.1, 0.2, 0.3];
+    //let cube = renderable(game, Cube, flat_material, C);
+    //game.entities[cube] |= ROTATE;
+    //game.components[ROTATE][cube] = [0.1, 0.2, 0.3];
 
-    let tetrahedron = renderable(game, Tetrahedron, wireframe_material, Y);
-    game.entities[tetrahedron] |= ROTATE;
-    game.components[ROTATE][tetrahedron] = [-0.1, -0.2, -0.3];
+    //let tetrahedron = renderable(game, Tetrahedron, wireframe_material, Y);
+    //game.entities[tetrahedron] |= ROTATE;
+    //game.components[ROTATE][tetrahedron] = [-0.1, -0.2, -0.3];
 
     //renderable(game, Icosphere, flat_material, Y);
     //renderable(game, Computer, flat_material, Y, [7, 7, 7]);
+
+    let monkey = renderable(game, Monkey, flat_material, Y);
+    game.entities[monkey] |= ROTATE;
+    game.components[ROTATE][monkey] = [0.1, 0.2, 0.3];
 
     game.start();
 </script>
