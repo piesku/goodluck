@@ -1,0 +1,98 @@
+<!doctype html>
+<meta charset="utf8">
+<title>goodluck iteration perf</title>
+
+<h1>Iteration Perf Test</h1>
+
+<p>Compare the speed of iterating over a sparse array, a Uint32Array, an object, and a map. See the console for the results (reported in milliseconds).<p>
+
+<p>In Firefox, remember to turn disable the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Performance/now#Reduced_time_precision"><code>privacy.reduceTimerPrecision</code></a> pref before testing. (And enable it back afterwards!)
+
+<script>
+    let arr = (new Array(1000).fill(1)).concat(new Array(9000));
+    
+    let int = Uint32Array.from(arr);
+
+    let obj = {};
+    for (let [i, e] of arr.entries())
+        if (e) obj[i] = e;
+
+    let map = new Map();
+    for (let [i, e] of arr.entries())
+        if (e) map.set(i, e);
+
+    //console.log(arr);
+    //console.log(int);
+    //console.log(obj);
+    //console.log(map);
+
+    {
+        let start = performance.now();
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] === 2)
+                console.log("MATCH");
+        }
+        let end = performance.now();
+        console.log("array, for length", end - start);
+    }
+
+    {
+        let start = performance.now();
+        for (let el of arr) {
+            if (el === 2)
+                console.log("MATCH");
+        }
+        let end = performance.now();
+        console.log("array, for of", end - start);
+    }
+
+    {
+        let start = performance.now();
+        for (let i = 0; i < int.length; i++) {
+            if (int[i] === 2)
+                console.log("MATCH");
+        }
+        let end = performance.now();
+        console.log("uint array, for length", end - start);
+    }
+
+    {
+        let start = performance.now();
+        for (let el of int) {
+            if (el === 2)
+                console.log("MATCH");
+        }
+        let end = performance.now();
+        console.log("uint array, for of", end - start);
+    }
+
+    {
+        let start = performance.now();
+        for (let i in obj) {
+            if (obj[i] === 2)
+                console.log("MATCH");
+        }
+        let end = performance.now();
+        console.log("object, for in", end - start);
+    }
+
+    {
+        let start = performance.now();
+        for (let el of Object.values(obj)) {
+            if (el === 2)
+                console.log("MATCH");
+        }
+        let end = performance.now();
+        console.log("object, Object.values", end - start);
+    }
+
+    {
+        let start = performance.now();
+        for (let el of map.values()) {
+            if (el === 2)
+                console.log("MATCH");
+        }
+        let end = performance.now();
+        console.log("map, for of values", end - start);
+    }
+</script>
