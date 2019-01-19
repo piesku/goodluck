@@ -18,13 +18,12 @@
 <div id="fps"></div>
 <script type="module">
     import Game from "./game.js";
-    import {ROTATE} from "./components.js";
     import create_basic from "./material_basic.js";
     import create_wireframe from "./material_wireframe.js";
     import create_points from "./material_points.js";
     import create_flat from "./material_flat.js";
 
-    import {renderable} from "./creators.js";
+    import {renderable, rotating} from "./creators.js";
     import * as Tri from "./shape_tri.js";
     import * as Cube from "./shape_cube.js";
     import * as Tetrahedron from "./shape_tetrahedron.js";
@@ -44,20 +43,14 @@
     let C = [0.3, 1, 1, 1];
     let Y = [1, 1, 0.3, 1];
 
-    //let cube = renderable(game, Cube, flat_material, C);
-    //game.entities[cube] |= ROTATE;
-    //game.components[ROTATE][cube] = [0.1, 0.2, 0.3];
+    //rotating(game, Cube, flat_material, {color: C});
+    //rotating(game, Tetrahedron, wireframe_material,
+    //        {color: Y, rotation: [-0.1, -0.2, -0.3]});
 
-    //let tetrahedron = renderable(game, Tetrahedron, wireframe_material, Y);
-    //game.entities[tetrahedron] |= ROTATE;
-    //game.components[ROTATE][tetrahedron] = [-0.1, -0.2, -0.3];
+    //renderable(game, Icosphere, flat_material, {color: Y});
+    //renderable(game, Computer, flat_material, {color: Y, scale: [7, 7, 7]});
 
-    //renderable(game, Icosphere, flat_material, Y);
-    //renderable(game, Computer, flat_material, Y, [7, 7, 7]);
-
-    let monkey = renderable(game, Monkey, flat_material, Y);
-    game.entities[monkey] |= ROTATE;
-    game.components[ROTATE][monkey] = [0.1, 0.2, 0.3];
+    rotating(game, Monkey, flat_material, {color: Y});
 
     game.start();
 </script>
