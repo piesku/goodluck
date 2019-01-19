@@ -24,6 +24,6 @@ let fragment = `#version 300 es
 `;
 
 export default
-function create_points(gl) {
+function PointsMaterial(gl) {
     return create(gl, vertex, fragment, gl.POINTS);
 }

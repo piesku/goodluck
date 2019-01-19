@@ -36,6 +36,6 @@ let fragment = `#version 300 es
 `;
 
 export default
-function create_flat(gl) {
+function FlatMaterial(gl) {
     return create(gl, vertex, fragment, gl.TRIANGLES);
 }

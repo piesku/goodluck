@@ -27,6 +27,6 @@ let fragment = `#version 300 es
 `;
 
 export default
-function create_basic(gl) {
+function BasicMaterial(gl) {
     return create(gl, vertex, fragment, gl.TRIANGLES);
 }

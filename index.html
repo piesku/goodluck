@@ -18,10 +18,10 @@
 <div id="fps"></div>
 <script type="module">
     import Game from "./game.js";
-    import create_basic from "./material_basic.js";
-    import create_wireframe from "./material_wireframe.js";
-    import create_points from "./material_points.js";
-    import create_flat from "./material_flat.js";
+    import BasicMaterial from "./material_basic.js";
+    import WireframeMaterial from "./material_wireframe.js";
+    import PointsMaterial from "./material_points.js";
+    import FlatMaterial from "./material_flat.js";
 
     import {renderable, rotating} from "./creators.js";
     import * as Tri from "./shape_tri.js";
@@ -35,10 +35,10 @@
         selector: "canvas",
     });
 
-    let basic_material = create_basic(game.gl);
-    let wireframe_material = create_wireframe(game.gl);
-    let points_material = create_points(game.gl);
-    let flat_material = create_flat(game.gl);
+    let basic_material = BasicMaterial(game.gl);
+    let wireframe_material = WireframeMaterial(game.gl);
+    let points_material = PointsMaterial(game.gl);
+    let flat_material = FlatMaterial(game.gl);
 
     let C = [0.3, 1, 1, 1];
     let Y = [1, 1, 0.3, 1];
