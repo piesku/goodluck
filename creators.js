@@ -1,16 +1,17 @@
 import * as mat4 from "./gl-matrix/mat4.js";
 import {TRANSFORM, RENDER, ROTATE, SWARM} from "./components.js";
+import {create_vao} from "./material.js";
 
 export
 function renderable(game, shape, material, {color, scale = [1, 1, 1]}) {
     let entity = game.create_entity(TRANSFORM | RENDER);
-
     let model = mat4.create();
     game.components[TRANSFORM][entity] = mat4.scale(model, model, scale);
-
-    let vao = material.buffer(shape);
-    game.components[RENDER][entity] =
-        {vao, count: shape.indices.length, material, color};
+    game.components[RENDER][entity] = {
+        vao: create_vao(material, shape),
+        count: shape.indices.length,
+        material, color
+    };
     return entity;
 }
 
@@ -27,10 +28,10 @@ export
 function swarming(game, shape, material, {color, ...swarm}) {
     let entity = game.create_entity(TRANSFORM | SWARM);
     game.components[TRANSFORM][entity] = mat4.create();
-    let vao = material.buffer(shape);
     game.components[RENDER][entity] = {
-        vao, material, color,
+        vao: create_vao(material, shape),
         count: shape.indices.length,
+        material, color,
     };
     game.components[SWARM][entity] = swarm;
     return entity;

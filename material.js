@@ -4,8 +4,7 @@ function create(gl, vertex, fragment, mode) {
             compile(gl, gl.VERTEX_SHADER, vertex),
             compile(gl, gl.FRAGMENT_SHADER, fragment));
     let {uniforms, attribs} = reflect(gl, program);
-    let buffer = shape => create_vao(gl, attribs, shape);
-    return {mode, program, uniforms, attribs, buffer};
+    return {gl, mode, program, uniforms, attribs};
 }
 
 function compile(gl, type, source) {
@@ -51,7 +50,8 @@ function reflect(gl, program) {
     return {attribs, uniforms};
 }
 
-function create_vao(gl, attribs, {vertices, indices, normals}) {
+export
+function create_vao({gl, attribs}, {vertices, indices, normals}) {
     let vao = gl.createVertexArray()
     gl.bindVertexArray(vao);
 
