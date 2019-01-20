@@ -11,16 +11,24 @@ let vertex = `#version 300 es
 
     const vec3 light_pos = vec3(-10.0, 5.0, 10.0);
     const vec3 light_color = vec3(1.0, 1.0, 1.0);
+    const float light_range = 15.0;
 
     void main() {
         vec4 world_pos = model * vec4(position, 1.0);
         gl_Position = pv * world_pos;
 
-        vec3 world_normal = normalize((model * vec4(normal, 1.0)).xyz);
-        vec3 light_dir = normalize(light_pos - world_pos.xyz);
-        float light_factor = max(dot(world_normal, light_dir), 0.0);
+        vec3 light_dir = light_pos - world_pos.xyz ;
+        vec3 light_normal = normalize(light_dir);
+        float light_dist = length(light_dir);
 
-        vert_color = vec4(color.xyz * light_color * light_factor, 1.0);
+        vec3 world_normal = normalize((model * vec4(normal, 1.0)).xyz);
+        float diffuse_factor = max(dot(world_normal, light_normal), 0.0);
+        float distance_factor = light_dist * light_dist;
+        float intensity_factor = light_range * light_range;
+
+        vec3 rgb = color.xyz * light_color * diffuse_factor * intensity_factor
+                / distance_factor;
+        vert_color = vec4(rgb, 1.0);
     }
 `;
 
