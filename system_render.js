@@ -12,8 +12,6 @@ let pv = mat4.create();
 export default
 function tick(game, delta) {
     let {gl, entities, components} = game;
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
     mat4.multiply(pv, game.projection, view);
 
     for (let i = 0; i < entities.length; i++) {

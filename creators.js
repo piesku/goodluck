@@ -1,5 +1,5 @@
 import * as mat4 from "./gl-matrix/mat4.js";
-import {TRANSFORM, RENDER, ROTATE} from "./components.js";
+import {TRANSFORM, RENDER, ROTATE, SWARM} from "./components.js";
 
 export
 function renderable(game, shape, material, {color, scale = [1, 1, 1]}) {
@@ -20,5 +20,18 @@ function rotating(game, shape, material,
     let entity = renderable(game, shape, material, {color, scale});
     game.entities[entity] |= ROTATE;
     game.components[ROTATE][entity] = rotation;
+    return entity;
+}
+
+export
+function swarming(game, shape, material, {color, ...swarm}) {
+    let entity = game.create_entity(TRANSFORM | SWARM);
+    game.components[TRANSFORM][entity] = mat4.create();
+    let vao = material.buffer(shape);
+    game.components[RENDER][entity] = {
+        vao, material, color,
+        count: shape.indices.length,
+    };
+    game.components[SWARM][entity] = swarm;
     return entity;
 }

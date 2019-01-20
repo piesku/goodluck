@@ -17,13 +17,19 @@
 <canvas></canvas>
 <div id="fps"></div>
 <script type="module">
+    import * as mat4 from "./gl-matrix/mat4.js";
+
     import Game from "./game.js";
+    import {ROTATE} from "./components.js";
+
     import BasicMaterial from "./material_basic.js";
     import WireframeMaterial from "./material_wireframe.js";
     import PointsMaterial from "./material_points.js";
     import FlatMaterial from "./material_flat.js";
 
-    import {renderable, rotating} from "./creators.js";
+    import BreathingCubeMaterial from "./material_breathing_cube.js";
+
+    import {renderable, rotating, swarming} from "./creators.js";
     import * as Tri from "./shape_tri.js";
     import * as Cube from "./shape_cube.js";
     import * as Tetrahedron from "./shape_tetrahedron.js";
@@ -31,7 +37,7 @@
     import * as Computer from "./shape_computer.js";
     import * as Monkey from "./shape_monkey.js";
 
-    let game = new Game({
+    window.game = new Game({
         selector: "canvas",
     });
 
@@ -39,6 +45,7 @@
     let wireframe_material = WireframeMaterial(game.gl);
     let points_material = PointsMaterial(game.gl);
     let flat_material = FlatMaterial(game.gl);
+    let breathing_cube_material = BreathingCubeMaterial(game.gl);
 
     let C = [0.3, 1, 1, 1];
     let Y = [1, 1, 0.3, 1];
@@ -50,7 +57,17 @@
     //renderable(game, Icosphere, flat_material, {color: Y});
     //renderable(game, Computer, flat_material, {color: Y, scale: [7, 7, 7]});
 
-    rotating(game, Monkey, flat_material, {color: Y});
+    //rotating(game, Monkey, flat_material, {color: Y});
+
+    let breathing_cube = swarming(game, Tetrahedron, breathing_cube_material, {
+        color: Y,
+        age: 0,
+        instances: 20 ** 3,
+        edge: 20,
+        padding: 5,
+    });
+    game.entities[breathing_cube] |= ROTATE;
+    game.components[ROTATE][breathing_cube] = [0.1, 0.2, 0.3];
 
     game.start();
 </script>

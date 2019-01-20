@@ -3,6 +3,8 @@ import create_context from "./context.js";
 
 import * as COMPONENT from "./components.js";
 import render_tick from "./system_render.js";
+import render_swarm_tick from "./system_render_swarm.js";
+import swarm_tick from "./system_swarm.js";
 import rotate_tick from "./system_rotate.js";
 import framerate_tick from "./system_framerate.js";
 
@@ -19,6 +21,7 @@ class Game {
         this.components[COMPONENT.TRANSFORM] = [];
         this.components[COMPONENT.RENDER] = [];
         this.components[COMPONENT.ROTATE] = [];
+        this.components[COMPONENT.SWARM] = [];
 
         this.projection = mat4.create();
         mat4.perspective(this.projection, 1,
@@ -41,10 +44,13 @@ class Game {
 
     fixed_update(delta) {
         rotate_tick(this, delta);
+        swarm_tick(this, delta);
     }
 
     frame_update(delta) {
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
         render_tick(this, delta);
+        render_swarm_tick(this, delta);
         framerate_tick(this, delta);
     }
 
