@@ -16,23 +16,12 @@ function tick(game, delta) {
 
     for (let i = 0; i < entities.length; i++) {
         if ((entities[i] & MASK) === MASK) {
-            draw(gl, components[TRANSFORM][i], components[RENDER][i],
-                    components[SWARM][i]);
+            let model = components[TRANSFORM][i];
+            let render = components[RENDER][i];
+            let swarm = components[SWARM][i];
+
+            render.material.use(pv);
+            render.material.draw(model, render, swarm);
         }
     }
-}
-
-function draw(gl, model, render, swarm) {
-    gl.useProgram(render.material.program);
-    gl.uniformMatrix4fv(render.material.uniforms.pv, gl.FALSE, pv);
-    gl.uniformMatrix4fv(render.material.uniforms.model, gl.FALSE, model);
-    gl.uniform4fv(render.material.uniforms.color, render.color);
-    gl.uniform1f(render.material.uniforms.timestamp, swarm.age);
-    gl.uniform1i(render.material.uniforms.edge, swarm.edge);
-    gl.uniform1f(render.material.uniforms.padding, swarm.padding);
-    gl.bindVertexArray(render.vao);
-    gl.drawElementsInstanced(
-        render.material.mode, render.count, gl.UNSIGNED_SHORT, 0,
-        swarm.instances);
-    gl.bindVertexArray(null);
 }

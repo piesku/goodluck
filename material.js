@@ -1,8 +1,44 @@
 export default
-function create(gl, vertex, fragment, mode) {
-    let program = link(gl,
+class Material {
+    constructor(gl, mode, vertex, fragment) {
+        this.gl = gl;
+        this.mode = mode;
+        this.program = link(gl,
             compile(gl, gl.VERTEX_SHADER, vertex),
             compile(gl, gl.FRAGMENT_SHADER, fragment));
+        Object.assign(this, reflect(gl, this.program));
+    }
+
+    use(pv) {
+        let {gl, program, uniforms} = this;
+        gl.useProgram(program);
+        gl.uniformMatrix4fv(uniforms.pv, gl.FALSE, pv);
+    }
+
+    create_vao({vertices, indices, normals}) {
+        let {gl, attribs} = this;
+        let vao = gl.createVertexArray()
+        gl.bindVertexArray(vao);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+        gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW);
+        gl.enableVertexAttribArray(attribs.normal);
+        gl.vertexAttribPointer(attribs.normal, 3, gl.FLOAT, gl.FALSE, 0, 0);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+        gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+        gl.enableVertexAttribArray(attribs.position);
+        gl.vertexAttribPointer(attribs.position, 3, gl.FLOAT, gl.FALSE, 0, 0);
+
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer());
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
+
+        gl.bindVertexArray(null);
+        return vao;
+    }
+}
+
+function create(gl, vertex, fragment, mode) {
     let {uniforms, attribs} = reflect(gl, program);
     return {gl, mode, program, uniforms, attribs};
 }
@@ -48,28 +84,4 @@ function reflect(gl, program) {
     }
 
     return {attribs, uniforms};
-}
-
-export
-function create_vao({gl, attribs}, {vertices, indices, normals}) {
-    let vao = gl.createVertexArray()
-    gl.bindVertexArray(vao);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(gl.ARRAY_BUFFER, normals, gl.STATIC_DRAW);
-    gl.enableVertexAttribArray(attribs.normal);
-    gl.vertexAttribPointer(attribs.normal, 3, gl.FLOAT, gl.FALSE,
-            0, 0);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-    gl.enableVertexAttribArray(attribs.position);
-    gl.vertexAttribPointer(attribs.position, 3, gl.FLOAT, gl.FALSE,
-            0, 0);
-
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
-
-    gl.bindVertexArray(null);
-    return vao;
 }

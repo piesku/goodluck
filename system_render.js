@@ -11,23 +11,17 @@ let pv = mat4.create();
 
 export default
 function tick(game, delta) {
-    let {gl, entities, components} = game;
+    let {entities, components} = game;
     mat4.multiply(pv, game.projection, view);
 
     for (let i = 0; i < entities.length; i++) {
         if ((entities[i] & MASK) === MASK) {
+            let model = components[TRANSFORM][i];
+            let render = components[RENDER][i];
+
             // TODO Sort by material.
-            draw(gl, components[TRANSFORM][i], components[RENDER][i]);
+            render.material.use(pv);
+            render.material.draw(model, render);
         }
     }
-}
-
-function draw(gl, model, {vao, count, material, color}) {
-    gl.useProgram(material.program);
-    gl.uniformMatrix4fv(material.uniforms.pv, gl.FALSE, pv);
-    gl.uniformMatrix4fv(material.uniforms.model, gl.FALSE, model);
-    gl.uniform4fv(material.uniforms.color, color);
-    gl.bindVertexArray(vao);
-    gl.drawElements(material.mode, count, gl.UNSIGNED_SHORT, 0);
-    gl.bindVertexArray(null);
 }

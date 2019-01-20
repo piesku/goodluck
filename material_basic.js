@@ -1,4 +1,4 @@
-import create from "./material.js";
+import Material from "./material.js";
 
 let vertex = `#version 300 es
     uniform mat4 pv;
@@ -27,6 +27,17 @@ let fragment = `#version 300 es
 `;
 
 export default
-function BasicMaterial(gl) {
-    return create(gl, vertex, fragment, gl.TRIANGLES);
+class BasicMaterial extends Material {
+    constructor(gl) {
+        super(gl, gl.TRIANGLES, vertex, fragment);
+    }
+
+    draw(model, render) {
+        let {gl, mode, uniforms, attribs} = this;
+        gl.uniformMatrix4fv(uniforms.model, gl.FALSE, model);
+        gl.uniform4fv(uniforms.color, render.color);
+        gl.bindVertexArray(render.vao);
+        gl.drawElements(mode, render.count, gl.UNSIGNED_SHORT, 0);
+        gl.bindVertexArray(null);
+    }
 }

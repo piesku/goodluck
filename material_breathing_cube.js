@@ -1,10 +1,10 @@
-import create from "./material.js";
+import Material from "./material.js";
 
 let vertex = `#version 300 es
     uniform mat4 pv;
     uniform mat4 model;
     uniform vec4 color;
-    uniform float timestamp;
+    uniform float age;
     uniform int edge;
     uniform float padding;
 
@@ -16,7 +16,7 @@ let vertex = `#version 300 es
     const vec3 light_color = vec3(1.0, 1.0, 1.0);
 
     vec3 translate(int id) {
-        float pad = padding + 2.0 * sin(2.0 * timestamp);
+        float pad = padding + 2.0 * sin(2.0 * age);
         float offset = -0.5 * float(edge) * pad;
         return vec3(
             offset + pad * float(id % edge),
@@ -49,6 +49,23 @@ let fragment = `#version 300 es
 `;
 
 export default
-function FlatSimpleParticles(gl) {
-    return create(gl, vertex, fragment, gl.TRIANGLES);
+class BreathingCubeMaterial extends Material {
+    constructor(gl) {
+        super(gl, gl.TRIANGLES, vertex, fragment);
+    }
+
+    draw(model, render, swarm) {
+        let {gl, mode, uniforms, attribs} = this;
+
+        gl.uniformMatrix4fv(uniforms.model, gl.FALSE, model);
+        gl.uniform4fv(uniforms.color, render.color);
+        gl.uniform1f(uniforms.age, swarm.age);
+        gl.uniform1i(uniforms.edge, swarm.edge);
+        gl.uniform1f(uniforms.padding, swarm.padding);
+
+        gl.bindVertexArray(render.vao);
+        gl.drawElementsInstanced(mode, render.count, gl.UNSIGNED_SHORT, 0,
+                swarm.instances);
+        gl.bindVertexArray(null);
+    }
 }
