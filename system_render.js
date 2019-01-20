@@ -1,10 +1,10 @@
 import * as mat4 from "./gl-matrix/mat4.js";
-import {RENDER, TRANSFORM} from "./components.js";
+import {TRANSFORM, RENDER, SWARM} from "./components.js";
 
-const MASK = RENDER | TRANSFORM;
+const MASK = TRANSFORM | RENDER;
 
 let view = mat4.create();
-mat4.translate(view, view, [0, 0, 10]);
+mat4.translate(view, view, [0, 0, 50]);
 mat4.invert(view, view);
 
 let pv = mat4.create();
@@ -18,10 +18,11 @@ function tick(game, delta) {
         if ((entities[i] & MASK) === MASK) {
             let model = components[TRANSFORM][i];
             let render = components[RENDER][i];
+            let swarm = components[SWARM][i];
 
             // TODO Sort by material.
             render.material.use(pv);
-            render.material.draw(model, render);
+            render.material.draw(model, render, swarm);
         }
     }
 }

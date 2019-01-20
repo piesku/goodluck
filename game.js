@@ -3,7 +3,6 @@ import create_context from "./context.js";
 
 import * as COMPONENT from "./components.js";
 import render_tick from "./system_render.js";
-import render_swarm_tick from "./system_render_swarm.js";
 import swarm_tick from "./system_swarm.js";
 import rotate_tick from "./system_rotate.js";
 import framerate_tick from "./system_framerate.js";
@@ -50,7 +49,6 @@ class Game {
     frame_update(delta) {
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
         render_tick(this, delta);
-        render_swarm_tick(this, delta);
         framerate_tick(this, delta);
     }
 

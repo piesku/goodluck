@@ -25,7 +25,7 @@ function rotating(game, shape, material,
 
 export
 function swarming(game, shape, material, {color, ...swarm}) {
-    let entity = game.create_entity(TRANSFORM | SWARM);
+    let entity = game.create_entity(TRANSFORM | RENDER | SWARM);
     game.components[TRANSFORM][entity] = mat4.create();
     game.components[RENDER][entity] = {
         vao: material.create_vao(shape),
