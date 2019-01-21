@@ -80,7 +80,8 @@ function reflect(gl, program) {
     let uniform_count = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
     for (let i = 0; i < uniform_count; ++i) {
       let {name} = gl.getActiveUniform(program, i);
-      uniforms[name] = gl.getUniformLocation(program, name);
+      // Array uniforms are named foo[0]; strip the [0] part.
+      uniforms[name.replace(/\[0\]$/, "")] = gl.getUniformLocation(program, name);
     }
 
     return {attribs, uniforms};

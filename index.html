@@ -29,7 +29,7 @@
 
     import BreathingCubeMaterial from "./material_breathing_cube.js";
 
-    import {renderable, rotating, swarming} from "./creators.js";
+    import {renderable, lighting, rotating, swarming} from "./creators.js";
     import * as Tri from "./shape_tri.js";
     import * as Cube from "./shape_cube.js";
     import * as Tetrahedron from "./shape_tetrahedron.js";
@@ -50,6 +50,9 @@
     let C = [0.3, 1, 1, 1];
     let Y = [1, 1, 0.3, 1];
 
+    lighting(game, {position: [-10, 5, 10], range: 15});
+    lighting(game, {position: [3, 0, 1], range: 2});
+
     //rotating(game, Cube, flat_material, {color: C});
     //rotating(game, Tetrahedron, wireframe_material,
     //        {color: Y, rotation: [-0.1, -0.2, -0.3]});
@@ -57,9 +60,9 @@
     //renderable(game, Icosphere, flat_material, {color: Y});
     //renderable(game, Computer, flat_material, {color: Y, scale: [7, 7, 7]});
 
-    //rotating(game, Monkey, flat_material, {color: Y});
+    rotating(game, Monkey, flat_material, {color: Y});
 
-    let breathing_cube = swarming(game, Tetrahedron, breathing_cube_material, {
+    /*let breathing_cube = swarming(game, Tetrahedron, breathing_cube_material, {
         color: Y,
         age: 0,
         instances: 10 ** 3,
@@ -68,6 +71,7 @@
     });
     game.entities[breathing_cube] |= ROTATE;
     game.components[ROTATE][breathing_cube] = [0.1, 0.2, 0.3];
+    */
 
     game.start();
 </script>

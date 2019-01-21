@@ -21,6 +21,7 @@ class Game {
         this.components[COMPONENT.RENDER] = [];
         this.components[COMPONENT.ROTATE] = [];
         this.components[COMPONENT.SWARM] = [];
+        this.components[COMPONENT.LIGHT] = new Map();
 
         this.projection = mat4.create();
         mat4.perspective(this.projection, 1,

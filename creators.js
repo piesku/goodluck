@@ -1,5 +1,5 @@
 import * as mat4 from "./gl-matrix/mat4.js";
-import {TRANSFORM, RENDER, ROTATE, SWARM} from "./components.js";
+import {TRANSFORM, RENDER, ROTATE, SWARM, LIGHT} from "./components.js";
 
 export
 function renderable(game, shape, material, {color, scale = [1, 1, 1]}) {
@@ -11,6 +11,15 @@ function renderable(game, shape, material, {color, scale = [1, 1, 1]}) {
         count: shape.indices.length,
         material, color
     };
+    return entity;
+}
+
+export
+function lighting(game, {position, color = [1, 1, 1], range = 1}) {
+    let entity = game.create_entity(TRANSFORM | LIGHT);
+    let model = mat4.create();
+    game.components[TRANSFORM][entity] = mat4.translate(model, model, position);
+    game.components[LIGHT].set(entity, {color, range});
     return entity;
 }
 
