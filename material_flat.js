@@ -6,8 +6,7 @@ let vertex = `#version 300 es
     uniform vec4 color;
     uniform int light_count;
     uniform vec3 light_positions[100];
-    uniform vec3 light_colors[100];
-    uniform float light_ranges[100];
+    uniform vec4 light_details[100];
 
     in vec3 position;
     in vec3 normal;
@@ -26,9 +25,9 @@ let vertex = `#version 300 es
 
             float diffuse_factor = max(dot(world_normal, light_normal), 0.0);
             float distance_factor = light_dist * light_dist;
-            float intensity_factor = light_ranges[i] * light_ranges[i];
+            float intensity_factor = light_details[i].a * light_details[i].a;
 
-            rgb += color.xyz * light_colors[i] * diffuse_factor * intensity_factor
+            rgb += color.rgb * light_details[i].rgb * diffuse_factor * intensity_factor
                     / distance_factor;
         }
 
@@ -57,8 +56,7 @@ class FlatMaterial extends Material {
         super.use(pv);
         let {gl, uniforms} = this;
         gl.uniform3fv(uniforms.light_positions, lights.positions);
-        gl.uniform3fv(uniforms.light_colors, lights.colors);
-        gl.uniform1fv(uniforms.light_ranges, lights.ranges);
+        gl.uniform4fv(uniforms.light_details, lights.details);
         gl.uniform1i(uniforms.light_count, lights.count);
     }
 

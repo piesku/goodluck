@@ -18,16 +18,15 @@ function tick(game, delta) {
     let lights = {
         count: lights_count,
         positions: new Float32Array(lights_count * 3),
-        colors: new Float32Array(lights_count * 3),
-        ranges: new Float32Array(lights_count),
+        details: new Float32Array(lights_count * 4),
     };
 
     let i = 0;
     for (let [entity, light] of components[LIGHT]) {
         let light_position = components[TRANSFORM][entity].slice(12, 15);
         lights.positions.set(light_position, i * 3);
-        lights.colors.set(light.color, i * 3);
-        lights.ranges[i++] = light.range;
+        lights.details.set([...light.color, light.range], i * 4);
+        i++;
     }
 
     for (let i = 0; i < entities.length; i++) {
