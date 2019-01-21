@@ -27,8 +27,8 @@ let vertex = `#version 300 es
             float distance_factor = light_dist * light_dist;
             float intensity_factor = light_details[i].a * light_details[i].a;
 
-            rgb += color.rgb * light_details[i].rgb * diffuse_factor * intensity_factor
-                    / distance_factor;
+            rgb += color.rgb * light_details[i].rgb * diffuse_factor
+                    * intensity_factor / distance_factor;
         }
 
         vert_color = vec4(rgb, 1.0);
