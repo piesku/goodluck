@@ -1,8 +1,10 @@
+import * as mat4 from "./gl-matrix/mat4.js";
 import Material from "./material.js";
 
 let vertex = `#version 300 es
     uniform mat4 pv;
     uniform mat4 model;
+    uniform mat4 model_inverse;
     uniform vec4 color;
     uniform int light_count;
     uniform vec3 light_positions[100];
@@ -27,7 +29,7 @@ let vertex = `#version 300 es
     void main() {
         vec3 translation = translate(gl_InstanceID);
         vec4 world_pos = model * vec4(position + translation, 1.0);
-        vec3 world_normal = normalize((model * vec4(normal, 1.0)).xyz);
+        vec3 world_normal = normalize((vec4(normal, 0.0) * model_inverse).xyz);
         gl_Position = pv * world_pos;
 
         vec3 rgb = vec3(0.0, 0.0, 0.0);
@@ -77,6 +79,8 @@ class BreathingCubeMaterial extends Material {
         let {gl, mode, uniforms, attribs} = this;
 
         gl.uniformMatrix4fv(uniforms.model, gl.FALSE, model);
+        gl.uniformMatrix4fv(uniforms.model_inverse, gl.FALSE,
+                mat4.invert([], model));
         gl.uniform4fv(uniforms.color, render.color);
         gl.uniform1f(uniforms.age, swarm.age);
         gl.uniform1i(uniforms.edge, swarm.edge);
