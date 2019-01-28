@@ -26,6 +26,7 @@
     import WireframeMaterial from "./material_wireframe.js";
     import PointsMaterial from "./material_points.js";
     import FlatMaterial from "./material_flat.js";
+    import GouraudMaterial from "./material_gouraud.js";
 
     import BreathingCubeMaterial from "./material_breathing_cube.js";
 
@@ -48,6 +49,7 @@
     let wireframe_material = new WireframeMaterial(game.gl);
     let points_material = new PointsMaterial(game.gl);
     let flat_material = new FlatMaterial(game.gl);
+    let gouraud_material = new GouraudMaterial(game.gl);
     let breathing_cube_material = new BreathingCubeMaterial(game.gl);
 
     let C = [0.3, 1, 1, 1];
@@ -60,7 +62,7 @@
     //rotating(game, Octahedron, wireframe_material, {color: Y});
 
     //rotating(game, Icosphere, flat_material, {color: Y});
-    rotating(game, Discoball, flat_material, {color: Y});
+    rotating(game, Discoball, gouraud_material, {color: Y});
 
     //rotating(game, Monkey, flat_material, {color: Y});
 
