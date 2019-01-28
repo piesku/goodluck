@@ -30,16 +30,19 @@
     import BreathingCubeMaterial from "./material_breathing_cube.js";
 
     import {renderable, lighting, rotating, swarming} from "./creators.js";
-    import * as Tri from "./shape_tri.js";
-    import * as Cube from "./shape_cube.js";
-    import * as Tetrahedron from "./shape_tetrahedron.js";
-    import * as Icosphere from "./shape_icosphere.js";
-    import * as Computer from "./shape_computer.js";
-    import * as Monkey from "./shape_monkey.js";
+    import * as Tri from "./shapes/tri.js";
+    import * as Plane from "./shapes/plane.js";
+    import * as Pyramid from "./shapes/pyramid.js";
+    import * as Cube from "./shapes/cube.js";
+    import * as Tetrahedron from "./shapes/tetrahedron.js";
+    import * as Octahedron from "./shapes/octahedron.js";
+    import * as Icosphere from "./shapes/icosphere.js";
+    import * as Discoball from "./shapes/discoball.js";
+    import * as Monkey from "./shapes/monkey.js";
 
-    window.game = new Game({
-        selector: "canvas",
-    });
+    window.game = new Game({selector: "canvas"});
+    lighting(game, {position: [-10, 5, 10], range: 15});
+    lighting(game, {position: [3, 0, 1], range: 2});
 
     let basic_material = new BasicMaterial(game.gl);
     let wireframe_material = new WireframeMaterial(game.gl);
@@ -50,17 +53,16 @@
     let C = [0.3, 1, 1, 1];
     let Y = [1, 1, 0.3, 1];
 
-    lighting(game, {position: [-10, 5, 10], range: 15});
-    lighting(game, {position: [3, 0, 1], range: 2});
+    //rotating(game, Plane, wireframe_material, {color: Y});
+    //rotating(game, Cube, wireframe_material, {color: Y});
+    //rotating(game, Pyramid, flat_material, {color: Y, rotation: [-0.5, 0, 0]});
+    //rotating(game, Tetrahedron, wireframe_material, {color: Y, rotation: [-0.1, -0.2, -0.3]});
+    //rotating(game, Octahedron, wireframe_material, {color: Y});
 
-    //rotating(game, Cube, flat_material, {color: C});
-    //rotating(game, Tetrahedron, wireframe_material,
-    //        {color: Y, rotation: [-0.1, -0.2, -0.3]});
+    //rotating(game, Icosphere, flat_material, {color: Y});
+    rotating(game, Discoball, flat_material, {color: Y});
 
-    //renderable(game, Icosphere, flat_material, {color: Y});
-    //renderable(game, Computer, flat_material, {color: Y, scale: [7, 7, 7]});
-
-    rotating(game, Monkey, flat_material, {color: Y});
+    //rotating(game, Monkey, flat_material, {color: Y});
 
     /*let breathing_cube = swarming(game, Tetrahedron, breathing_cube_material, {
         color: Y,
