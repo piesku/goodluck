@@ -24,7 +24,17 @@ let vertices = Float32Array.from([
 
 export
 let indices = Uint16Array.from([
-    ${faces.reduce((acc, cur) => acc.concat(cur)).join(", ")}
+    ${faces
+        // Both Blender and Assimp triangulate polygons starting from the first
+        // vertex and going CCW tri-by-tri. The result is that adjacent tris
+        // share their first vertex rather than the last which breaks flat
+        // shading. In OpenGL, the provoking vertex of a primitive is by
+        // default set to the last one. WebGL doesn't expose the
+        // glProvokingVertex API to change the default. By reversing the index
+        // array, the tri get drawn in reverse order and the shared vertices
+        // becomes last.
+        .reverse()
+        .reduce((acc, cur) => acc.concat(cur)).join(", ")}
 ]);
 
 export
