@@ -42,8 +42,8 @@
     import * as Monkey from "./shapes/monkey.js";
 
     window.game = new Game({selector: "canvas"});
-    lighting(game, {position: [-10, 5, 10], range: 15});
-    lighting(game, {position: [5, 0, 5], range: 4});
+    lighting(game, {position: [-10, 5, 10], range: 12});
+    lighting(game, {position: [10, 5, 10], range: 12});
 
     let basic_material = new BasicMaterial(game.gl);
     let wireframe_material = new WireframeMaterial(game.gl);
@@ -67,8 +67,8 @@
     rotating(game, Octahedron, demo_material,
             {position: [4, 0, 0], scale: [1, 1, 1], color: Y});
 
-    rotating(game, Icosphere, demo_material, {position: [-4, -3, 0], color: Y});
-    rotating(game, Discoball, demo_material, {position: [0, -3, 0], color: Y});
+    rotating(game, Icosphere, gouraud_material, {position: [-4, -3, 0], color: Y});
+    rotating(game, Discoball, gouraud_material, {position: [0, -3, 0], color: Y});
     rotating(game, Monkey, gouraud_material, {position: [4, -3, 0], color: Y});
 
     /*let breathing_cube = swarming(game, Tetrahedron, breathing_cube_material, {
