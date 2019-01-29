@@ -8,6 +8,7 @@ function create_context(selector) {
     gl.clearColor(1.0, 0.3, 0.3, 1.0);
     gl.enable(gl.DEPTH_TEST);
     gl.enable(gl.CULL_FACE);
+    gl.frontFace(gl.CW);
 
     return {canvas, gl};
 }

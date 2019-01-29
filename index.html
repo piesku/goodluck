@@ -54,19 +54,21 @@
 
     let C = [0.3, 1, 1, 1];
     let Y = [1, 1, 0.3, 1];
+    let demo_material = flat_material;
 
-    rotating(game, Tri, wireframe_material, {position: [-4, 3, 0], color: Y});
-    rotating(game, Plane, flat_material, {position: [0, 3, 0], color: Y});
-    rotating(game, Tetrahedron, wireframe_material,
+    rotating(game, Tri, demo_material, {position: [-4, 3, 0], color: Y});
+    rotating(game, Plane, demo_material, {position: [0, 3, 0], color: Y});
+    rotating(game, Tetrahedron, demo_material,
             {position: [4, 3, 0], color: Y, speed: [-0.1, -0.2, -0.3]});
 
-    rotating(game, Pyramid, flat_material,
+    rotating(game, Pyramid, demo_material,
             {position: [-4, 0, 0], color: Y, speed: [-0.5, 0, 0]});
-    rotating(game, Cube, wireframe_material, {position: [0, 0, 0], color: Y});
-    rotating(game, Octahedron, flat_material, {position: [4, 0, 0], color: Y});
+    rotating(game, Cube, demo_material, {position: [0, 0, 0], color: Y});
+    rotating(game, Octahedron, demo_material,
+            {position: [4, 0, 0], scale: [1, 1, 1], color: Y});
 
-    rotating(game, Icosphere, flat_material, {position: [-4, -3, 0], color: Y});
-    rotating(game, Discoball, flat_material, {position: [0, -3, 0], color: Y});
+    rotating(game, Icosphere, demo_material, {position: [-4, -3, 0], color: Y});
+    rotating(game, Discoball, demo_material, {position: [0, -3, 0], color: Y});
     rotating(game, Monkey, gouraud_material, {position: [4, -3, 0], color: Y});
 
     /*let breathing_cube = swarming(game, Tetrahedron, breathing_cube_material, {

@@ -5,7 +5,7 @@ let vertices = Float32Array.from([
 
 export
 let indices = Uint16Array.from([
-    0, 1, 2
+    2, 1, 0
 ]);
 
 export
