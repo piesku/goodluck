@@ -33,9 +33,9 @@
     import {renderable, lighting, rotating, swarming} from "./creators.js";
     import * as Tri from "./shapes/tri.js";
     import * as Plane from "./shapes/plane.js";
+    import * as Tetrahedron from "./shapes/tetrahedron.js";
     import * as Pyramid from "./shapes/pyramid.js";
     import * as Cube from "./shapes/cube.js";
-    import * as Tetrahedron from "./shapes/tetrahedron.js";
     import * as Octahedron from "./shapes/octahedron.js";
     import * as Icosphere from "./shapes/icosphere.js";
     import * as Discoball from "./shapes/discoball.js";
@@ -43,7 +43,7 @@
 
     window.game = new Game({selector: "canvas"});
     lighting(game, {position: [-10, 5, 10], range: 15});
-    lighting(game, {position: [3, 0, 1], range: 2});
+    lighting(game, {position: [5, 0, 5], range: 4});
 
     let basic_material = new BasicMaterial(game.gl);
     let wireframe_material = new WireframeMaterial(game.gl);
@@ -55,16 +55,19 @@
     let C = [0.3, 1, 1, 1];
     let Y = [1, 1, 0.3, 1];
 
-    //rotating(game, Plane, wireframe_material, {color: Y});
-    //rotating(game, Cube, wireframe_material, {color: Y});
-    //rotating(game, Pyramid, flat_material, {color: Y, rotation: [-0.5, 0, 0]});
-    //rotating(game, Tetrahedron, wireframe_material, {color: Y, rotation: [-0.1, -0.2, -0.3]});
-    //rotating(game, Octahedron, wireframe_material, {color: Y});
+    rotating(game, Tri, wireframe_material, {position: [-4, 3, 0], color: Y});
+    rotating(game, Plane, flat_material, {position: [0, 3, 0], color: Y});
+    rotating(game, Tetrahedron, wireframe_material,
+            {position: [4, 3, 0], color: Y, speed: [-0.1, -0.2, -0.3]});
 
-    //rotating(game, Icosphere, flat_material, {color: Y});
-    //rotating(game, Discoball, flat_material, {color: Y});
+    rotating(game, Pyramid, flat_material,
+            {position: [-4, 0, 0], color: Y, speed: [-0.5, 0, 0]});
+    rotating(game, Cube, wireframe_material, {position: [0, 0, 0], color: Y});
+    rotating(game, Octahedron, flat_material, {position: [4, 0, 0], color: Y});
 
-    rotating(game, Monkey, gouraud_material, {color: Y});
+    rotating(game, Icosphere, flat_material, {position: [-4, -3, 0], color: Y});
+    rotating(game, Discoball, flat_material, {position: [0, -3, 0], color: Y});
+    rotating(game, Monkey, gouraud_material, {position: [4, -3, 0], color: Y});
 
     /*let breathing_cube = swarming(game, Tetrahedron, breathing_cube_material, {
         color: Y,
