@@ -24,7 +24,8 @@ function lighting(game,
     let entity = game.create_entity(TRANSFORM | LIGHT);
     let model = mat4.create();
     game.components[TRANSFORM][entity] = mat4.translate(model, model, position);
-    game.components[LIGHT].set(entity, {color, range});
+    let intensity = range * range;
+    game.components[LIGHT].set(entity, {color, intensity});
     return entity;
 }
 

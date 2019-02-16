@@ -25,7 +25,7 @@ function tick(game, delta) {
     for (let [entity, light] of components[LIGHT]) {
         let light_position = components[TRANSFORM][entity].slice(12, 15);
         lights.positions.set(light_position, i * 3);
-        lights.details.set([...light.color, light.range], i * 4);
+        lights.details.set([...light.color, light.intensity], i * 4);
         i++;
     }
 
