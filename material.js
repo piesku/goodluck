@@ -6,6 +6,7 @@ class Material {
         this.program = link(gl,
             compile(gl, gl.VERTEX_SHADER, vertex),
             compile(gl, gl.FRAGMENT_SHADER, fragment));
+        this.vaos = new WeakMap();
         Object.assign(this, reflect(gl, this.program));
     }
 
@@ -15,7 +16,20 @@ class Material {
         gl.uniformMatrix4fv(uniforms.pv, gl.FALSE, pv);
     }
 
-    create_vao({vertices, indices, normals}) {
+    bind(shape, color) {
+        if (!this.vaos.has(shape)) {
+            // Cache the VAO for this shape.
+            this.vaos.set(shape, this.buffer(shape));
+        }
+        return {
+            material: this,
+            vao: this.vaos.get(shape),
+            count: shape.indices.length,
+            color,
+        };
+    }
+
+    buffer({vertices, indices, normals}) {
         let {gl, attribs} = this;
         let vao = gl.createVertexArray()
         gl.bindVertexArray(vao);

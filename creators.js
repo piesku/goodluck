@@ -10,11 +10,7 @@ function renderable(game, shape, material,
     let model = mat4.create();
     game.components[TRANSFORM][entity] = mat4.fromRotationTranslationScale(
         model, rotation, position, scale);
-    game.components[RENDER][entity] = {
-        vao: material.create_vao(shape),
-        count: shape.indices.length,
-        material, color
-    };
+    game.components[RENDER][entity] = material.bind(shape, color);
     return entity;
 }
 
@@ -45,11 +41,7 @@ function swarming(game, shape, material,
     let model = mat4.create();
     game.components[TRANSFORM][entity] = mat4.fromRotationTranslationScale(
         model, rotation, position, scale);
-    game.components[RENDER][entity] = {
-        vao: material.create_vao(shape),
-        count: shape.indices.length,
-        material, color,
-    };
+    game.components[RENDER][entity] = material.bind(shape, color);
     game.components[SWARM][entity] = swarm;
     return entity;
 }
