@@ -42,8 +42,8 @@
     import * as Monkey from "./shapes/monkey.js";
 
     window.game = new Game({selector: "canvas"});
-    lighting(game, {position: [-10, 5, 10], range: 12});
-    lighting(game, {position: [10, 5, 10], range: 12});
+    lighting(game, {translation: [-10, 5, 10], range: 12});
+    lighting(game, {translation: [10, 5, 10], range: 12});
 
     let basic_material = new BasicMaterial(game.gl);
     let wireframe_material = new WireframeMaterial(game.gl);
@@ -56,20 +56,20 @@
     let Y = [1, 1, 0.3, 1];
     let demo_material = flat_material;
 
-    rotating(game, Tri, demo_material, {position: [-4, 3, 0], color: Y});
-    rotating(game, Plane, demo_material, {position: [0, 3, 0], color: Y});
+    rotating(game, Tri, demo_material, {translation: [-4, 3, 0], color: Y});
+    rotating(game, Plane, demo_material, {translation: [0, 3, 0], color: Y});
     rotating(game, Tetrahedron, demo_material,
-            {position: [4, 3, 0], color: Y, speed: [-0.1, -0.2, -0.3]});
+            {translation: [4, 3, 0], color: Y, speed: [-0.1, -0.2, -0.3]});
 
     rotating(game, Pyramid, demo_material,
-            {position: [-4, 0, 0], color: Y, speed: [-0.5, 0, 0]});
-    rotating(game, Cube, demo_material, {position: [0, 0, 0], color: Y});
+            {translation: [-4, 0, 0], color: Y, speed: [-0.5, 0, 0]});
+    rotating(game, Cube, demo_material, {translation: [0, 0, 0], color: Y});
     rotating(game, Octahedron, demo_material,
-            {position: [4, 0, 0], scale: [1, 1, 1], color: Y});
+            {translation: [4, 0, 0], scale: [1, 1, 1], color: Y});
 
-    rotating(game, Icosphere, gouraud_material, {position: [-4, -3, 0], color: Y});
-    rotating(game, Discoball, gouraud_material, {position: [0, -3, 0], color: Y});
-    rotating(game, Monkey, gouraud_material, {position: [4, -3, 0], color: Y});
+    rotating(game, Icosphere, gouraud_material, {translation: [-4, -3, 0], color: Y});
+    rotating(game, Discoball, gouraud_material, {translation: [0, -3, 0], color: Y});
+    rotating(game, Monkey, gouraud_material, {translation: [4, -3, 0], color: Y});
 
     /*let breathing_cube = swarming(game, Tetrahedron, breathing_cube_material, {
         color: Y,

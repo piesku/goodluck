@@ -1,25 +1,22 @@
-import * as mat4 from "./gl-matrix/mat4.js";
+import * as quat from "./gl-matrix/quat.js";
 import {TRANSFORM, RENDER, ROTATE, SWARM, LIGHT} from "./components.js";
-
-const QUAT_IDENTITY = new Float32Array([0, 0, 0, 1]);
+import Transform from "./component_transform.js";
 
 export
 function renderable(game, shape, material,
-        {position, rotation = QUAT_IDENTITY, scale = [1, 1, 1], color}) {
+        {translation, rotation, scale, color}) {
     let entity = game.create_entity(TRANSFORM | RENDER);
-    let model = mat4.create();
-    game.components[TRANSFORM][entity] = mat4.fromRotationTranslationScale(
-        model, rotation, position, scale);
+    game.components[TRANSFORM][entity] = new Transform(
+        translation, rotation, scale);
     game.components[RENDER][entity] = material.bind(shape, color);
     return entity;
 }
 
 export
 function lighting(game,
-        {position, color = [1, 1, 1], range = 1}) {
+        {translation, color = [1, 1, 1], range = 1}) {
     let entity = game.create_entity(TRANSFORM | LIGHT);
-    let model = mat4.create();
-    game.components[TRANSFORM][entity] = mat4.translate(model, model, position);
+    game.components[TRANSFORM][entity] = new Transform(translation);
     let intensity = range * range;
     game.components[LIGHT].set(entity, {color, intensity});
     return entity;
@@ -27,20 +24,20 @@ function lighting(game,
 
 export
 function rotating(game, shape, material,
-        {position, scale, color, speed = [0.1, 0.2, 0.3]}) {
-    let entity = renderable(game, shape, material, {position, scale, color});
+        {translation, scale, color, speed = [0.1, 0.2, 0.3]}) {
+    let entity = renderable(game, shape, material, {translation, scale, color});
     game.entities[entity] |= ROTATE;
-    game.components[ROTATE][entity] = speed;
+    let rotate = quat.create();
+    game.components[ROTATE][entity] = quat.fromEuler(rotate, ...speed);
     return entity;
 }
 
 export
 function swarming(game, shape, material,
-        {position, rotation = QUAT_IDENTITY, color, ...swarm}) {
+        {translation, rotation, scale, color, ...swarm}) {
     let entity = game.create_entity(TRANSFORM | RENDER | SWARM);
-    let model = mat4.create();
-    game.components[TRANSFORM][entity] = mat4.fromRotationTranslationScale(
-        model, rotation, position, scale);
+    game.components[TRANSFORM][entity] = new Transform(
+        translation, rotation, scale);
     game.components[RENDER][entity] = material.bind(shape, color);
     game.components[SWARM][entity] = swarm;
     return entity;

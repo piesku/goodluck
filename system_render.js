@@ -23,7 +23,7 @@ function tick(game, delta) {
 
     let i = 0;
     for (let [entity, light] of components[LIGHT]) {
-        let light_position = components[TRANSFORM][entity].slice(12, 15);
+        let light_position = components[TRANSFORM][entity].translation;
         lights.positions.set(light_position, i * 3);
         lights.details.set([...light.color, light.intensity], i * 4);
         i++;
@@ -31,13 +31,13 @@ function tick(game, delta) {
 
     for (let i = 0; i < entities.length; i++) {
         if ((entities[i] & MASK) === MASK) {
-            let model = components[TRANSFORM][i];
+            let transform = components[TRANSFORM][i];
             let render = components[RENDER][i];
             let swarm = components[SWARM][i];
 
             // TODO Sort by material.
             render.material.use(pv, lights);
-            render.material.draw(model, render, swarm);
+            render.material.draw(transform.model, render, swarm);
         }
     }
 }
