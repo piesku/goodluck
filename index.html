@@ -17,8 +17,6 @@
 <canvas></canvas>
 <div id="fps"></div>
 <script type="module">
-    import * as mat4 from "./gl-matrix/mat4.js";
-
     import Game from "./game.js";
     import {ROTATE} from "./components.js";
 
@@ -30,7 +28,8 @@
 
     import BreathingCubeMaterial from "./material_breathing_cube.js";
 
-    import {renderable, lighting, rotating, swarming} from "./creators.js";
+    import {camera, renderable, lighting, rotating, swarming}
+            from "./creators.js";
     import * as Tri from "./shapes/tri.js";
     import * as Plane from "./shapes/plane.js";
     import * as Tetrahedron from "./shapes/tetrahedron.js";
@@ -42,6 +41,13 @@
     import * as Monkey from "./shapes/monkey.js";
 
     window.game = new Game({selector: "canvas"});
+    game.camera = camera(game, {
+        translation: [0, 0, 10],
+        fovy: 1,
+        aspect: game.canvas.width / game.canvas.height,
+        near: 0.1,
+        far: 1000,
+    });
     lighting(game, {translation: [-10, 5, 10], range: 12});
     lighting(game, {translation: [10, 5, 10], range: 12});
 

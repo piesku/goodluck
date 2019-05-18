@@ -1,6 +1,18 @@
+import * as mat4 from "./gl-matrix/mat4.js";
 import * as quat from "./gl-matrix/quat.js";
-import {TRANSFORM, RENDER, ROTATE, SWARM, LIGHT} from "./components.js";
+import {TRANSFORM, RENDER, ROTATE, SWARM, LIGHT, CAMERA}
+        from "./components.js";
 import Transform from "./component_transform.js";
+
+export
+function camera(game, {translation, fovy, aspect, near, far}) {
+    let entity = game.create_entity(TRANSFORM | CAMERA);
+    game.components[TRANSFORM][entity] = new Transform(translation);
+    game.components[CAMERA].set(entity,
+            // Create the projection matrix.
+            mat4.perspective(mat4.create(), fovy, aspect, near, far));
+    return entity;
+}
 
 export
 function renderable(game, shape, material,

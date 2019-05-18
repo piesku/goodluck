@@ -22,10 +22,7 @@ class Game {
         this.components[COMPONENT.ROTATE] = [];
         this.components[COMPONENT.SWARM] = [];
         this.components[COMPONENT.LIGHT] = new Map();
-
-        this.projection = mat4.create();
-        mat4.perspective(this.projection, 1,
-                this.canvas.width / this.canvas.height, 0.1, 1000);
+        this.components[COMPONENT.CAMERA] = new Map();
     }
 
     create_entity(mask) {
