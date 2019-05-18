@@ -8,9 +8,9 @@ export
 function camera(game, {translation, fovy, aspect, near, far}) {
     let entity = game.create_entity(TRANSFORM | CAMERA);
     game.components[TRANSFORM][entity] = new Transform(translation);
-    game.components[CAMERA].set(entity,
-            // Create the projection matrix.
-            mat4.perspective(mat4.create(), fovy, aspect, near, far));
+    game.components[CAMERA][entity] =
+        // Create the projection matrix.
+        mat4.perspective(mat4.create(), fovy, aspect, near, far);
     return entity;
 }
 

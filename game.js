@@ -22,7 +22,7 @@ class Game {
         this.components[COMPONENT.ROTATE] = [];
         this.components[COMPONENT.SWARM] = [];
         this.components[COMPONENT.LIGHT] = new Map();
-        this.components[COMPONENT.CAMERA] = new Map();
+        this.components[COMPONENT.CAMERA] = [];
 
         this.input = {};
         window.addEventListener("keydown",

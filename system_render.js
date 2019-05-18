@@ -10,7 +10,7 @@ export default
 function tick(game, delta) {
     let {entities, components} = game;
 
-    let projection = game.components[CAMERA].get(game.camera);
+    let projection = game.components[CAMERA][game.camera];
     let view = mat4.create();
     mat4.invert(view, game.components[TRANSFORM][game.camera].model);
     mat4.multiply(pv, projection, view);
