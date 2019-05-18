@@ -15,20 +15,25 @@ function tick(game, delta) {
     mat4.invert(view, game.components[TRANSFORM][game.camera].model);
     mat4.multiply(pv, projection, view);
 
-    let lights_count = components[LIGHT].size;
+    let lights_count = 0;
+    let lights_positions = [];
+    let lights_details = [];
+
+    for (let i = 0; i < entities.length; i++) {
+        if ((entities[i] & LIGHT) === LIGHT) {
+            lights_count++;
+            let position = components[TRANSFORM][i].translation;
+            lights_positions.push(...position);
+            let light = components[LIGHT][i];
+            lights_details.push(...light.color, light.intensity);
+        }
+    }
+
     let lights = {
         count: lights_count,
-        positions: new Float32Array(lights_count * 3),
-        details: new Float32Array(lights_count * 4),
+        positions: new Float32Array(lights_positions),
+        details: new Float32Array(lights_details),
     };
-
-    let i = 0;
-    for (let [entity, light] of components[LIGHT]) {
-        let light_position = components[TRANSFORM][entity].translation;
-        lights.positions.set(light_position, i * 3);
-        lights.details.set([...light.color, light.intensity], i * 4);
-        i++;
-    }
 
     for (let i = 0; i < entities.length; i++) {
         if ((entities[i] & MASK) === MASK) {

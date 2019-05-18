@@ -30,7 +30,7 @@ function lighting(game,
     let entity = game.create_entity(TRANSFORM | LIGHT);
     game.components[TRANSFORM][entity] = new Transform(translation);
     let intensity = range * range;
-    game.components[LIGHT].set(entity, {color, intensity});
+    game.components[LIGHT][entity] = {color, intensity};
     return entity;
 }
 

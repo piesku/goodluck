@@ -21,7 +21,7 @@ class Game {
         this.components[COMPONENT.RENDER] = [];
         this.components[COMPONENT.ROTATE] = [];
         this.components[COMPONENT.SWARM] = [];
-        this.components[COMPONENT.LIGHT] = new Map();
+        this.components[COMPONENT.LIGHT] = [];
         this.components[COMPONENT.CAMERA] = [];
 
         this.input = {};
