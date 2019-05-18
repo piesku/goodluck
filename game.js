@@ -23,6 +23,12 @@ class Game {
         this.components[COMPONENT.SWARM] = [];
         this.components[COMPONENT.LIGHT] = new Map();
         this.components[COMPONENT.CAMERA] = new Map();
+
+        this.input = {};
+        window.addEventListener("keydown",
+                evt => this.input[evt.code] = true);
+        window.addEventListener("keyup",
+                evt => this.input[evt.code] = false);
     }
 
     create_entity(mask) {
