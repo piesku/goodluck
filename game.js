@@ -1,14 +1,14 @@
 import * as mat4 from "./gl-matrix/mat4.js";
 import create_context from "./context.js";
 
-import * as COMPONENT from "./components.js";
 import render_tick from "./system_render.js";
 import swarm_tick from "./system_swarm.js";
 import rotate_tick from "./system_rotate.js";
 import framerate_tick from "./system_framerate.js";
 
-const COMPONENT_NONE = 0;
 const MAX_ENTITIES = 10000;
+const COMPONENT_COUNT = 32;
+const COMPONENT_NONE = 0;
 
 export default
 class Game {
@@ -17,12 +17,9 @@ class Game {
         this.entities = new Uint32Array(MAX_ENTITIES);
 
         this.components = [];
-        this.components[COMPONENT.TRANSFORM] = [];
-        this.components[COMPONENT.RENDER] = [];
-        this.components[COMPONENT.ROTATE] = [];
-        this.components[COMPONENT.SWARM] = [];
-        this.components[COMPONENT.LIGHT] = [];
-        this.components[COMPONENT.CAMERA] = [];
+        for (let i = 0; i < COMPONENT_COUNT; i++) {
+            this.components[2 ** i] = [];
+        }
 
         this.input = {};
         window.addEventListener("keydown",
