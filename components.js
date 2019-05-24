@@ -4,3 +4,4 @@ export const ROTATE = 1 << 2;
 export const SWARM = 1 << 3;
 export const LIGHT = 1 << 4;
 export const CAMERA = 1 << 5;
+export const MOVE = 1 << 6;
