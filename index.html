@@ -25,6 +25,7 @@
     import PointsMaterial from "./material_points.js";
     import FlatMaterial from "./material_flat.js";
     import GouraudMaterial from "./material_gouraud.js";
+    import ToonMaterial from "./material_toon.js";
 
     import BreathingCubeMaterial from "./material_breathing_cube.js";
 
@@ -49,19 +50,21 @@
         far: 1000,
     });
     lighting(game, {translation: [-10, 5, 10], range: 12});
-    lighting(game, {translation: [10, 5, 10], range: 12});
+    //lighting(game, {translation: [10, 5, 10], range: 6});
 
     let basic_material = new BasicMaterial(game.gl);
     let wireframe_material = new WireframeMaterial(game.gl);
     let points_material = new PointsMaterial(game.gl);
     let flat_material = new FlatMaterial(game.gl);
     let gouraud_material = new GouraudMaterial(game.gl);
+    let toon_material = new ToonMaterial(game.gl);
     let breathing_cube_material = new BreathingCubeMaterial(game.gl);
 
     let C = [0.3, 1, 1, 1];
     let Y = [1, 1, 0.3, 1];
     let demo_material = flat_material;
 
+/*
     rotating(game, Tri, demo_material, {translation: [-4, 3, 0], color: Y});
     rotating(game, Plane, demo_material, {translation: [0, 3, 0], color: Y});
     rotating(game, Tetrahedron, demo_material,
@@ -76,6 +79,10 @@
     rotating(game, Icosphere, gouraud_material, {translation: [-4, -3, 0], color: Y});
     rotating(game, Discoball, gouraud_material, {translation: [0, -3, 0], color: Y});
     rotating(game, Monkey, gouraud_material, {translation: [4, -3, 0], color: Y});
+    */
+
+    rotating(game, Monkey, toon_material, {
+        translation: [0, 0, 0], scale: [2, 2, 2], color: Y});
 
     /*let breathing_cube = swarming(game, Tetrahedron, breathing_cube_material, {
         color: Y,
