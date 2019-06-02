@@ -25,6 +25,7 @@
     import PointsMaterial from "./material_points.js";
     import FlatMaterial from "./material_flat.js";
     import GouraudMaterial from "./material_gouraud.js";
+    import PhongMaterial from "./material_phong.js";
     import ToonMaterial from "./material_toon.js";
 
     import BreathingCubeMaterial from "./material_breathing_cube.js";
@@ -57,6 +58,7 @@
     let points_material = new PointsMaterial(game.gl);
     let flat_material = new FlatMaterial(game.gl);
     let gouraud_material = new GouraudMaterial(game.gl);
+    let phong_material = new PhongMaterial(game.gl);
     let toon_material = new ToonMaterial(game.gl);
     let breathing_cube_material = new BreathingCubeMaterial(game.gl);
 
@@ -81,7 +83,7 @@
     rotating(game, Monkey, gouraud_material, {translation: [4, -3, 0], color: Y});
     */
 
-    rotating(game, Monkey, toon_material, {
+    rotating(game, Icosphere, phong_material, {
         translation: [0, 0, 0], scale: [2, 2, 2], color: Y});
 
     /*let breathing_cube = swarming(game, Tetrahedron, breathing_cube_material, {
