@@ -1,6 +1,6 @@
 import * as mat4 from "./gl-matrix/mat4.js";
 import * as quat from "./gl-matrix/quat.js";
-import {TRANSFORM, RENDER, ROTATE, SWARM, LIGHT, CAMERA, MOVE}
+import {TRANSFORM, RENDER, ROTATE, LIGHT, CAMERA, MOVE}
         from "./components.js";
 import Transform from "./component_transform.js";
 import Move from "./component_move.js";
@@ -53,16 +53,5 @@ function movable(game, shape, material,
     let entity = renderable(game, shape, material, {translation, scale, color});
     game.entities[entity] |= MOVE;
     game.components[MOVE][entity] = new Move();
-    return entity;
-}
-
-export
-function swarming(game, shape, material,
-        {translation, rotation, scale, color, ...swarm}) {
-    let entity = game.create_entity(TRANSFORM | RENDER | SWARM);
-    game.components[TRANSFORM][entity] = new Transform(
-        translation, rotation, scale);
-    game.components[RENDER][entity] = material.bind(shape, color);
-    game.components[SWARM][entity] = swarm;
     return entity;
 }

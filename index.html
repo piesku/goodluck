@@ -28,9 +28,7 @@
     import PhongMaterial from "./material_phong.js";
     import ToonMaterial from "./material_toon.js";
 
-    import BreathingCubeMaterial from "./material_breathing_cube.js";
-
-    import {camera, renderable, lighting, rotating, movable, swarming}
+    import {camera, renderable, lighting, rotating, movable}
             from "./creators.js";
     import * as Icosphere from "./shapes/icosphere.js";
 
@@ -51,7 +49,6 @@
     let gouraud_material = new GouraudMaterial(game.gl);
     let phong_material = new PhongMaterial(game.gl);
     let toon_material = new ToonMaterial(game.gl);
-    let breathing_cube_material = new BreathingCubeMaterial(game.gl);
 
     let C = [0.3, 1, 1, 1];
     let Y = [1, 1, 0.3, 1];
