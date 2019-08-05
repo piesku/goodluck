@@ -1,10 +1,7 @@
-import * as mat4 from "./gl-matrix/mat4.js";
 import create_context from "./context.js";
 
 import render_tick from "./system_render.js";
-import swarm_tick from "./system_swarm.js";
 import rotate_tick from "./system_rotate.js";
-import move_tick from "./system_move.js";
 import framerate_tick from "./system_framerate.js";
 
 const MAX_ENTITIES = 10000;
@@ -45,8 +42,6 @@ class Game {
 
     fixed_update(delta) {
         rotate_tick(this, delta);
-        move_tick(this, delta);
-        swarm_tick(this, delta);
     }
 
     frame_update(delta) {
