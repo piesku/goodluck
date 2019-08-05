@@ -32,7 +32,7 @@
             from "./creators.js";
     import * as Icosphere from "./shapes/icosphere.js";
 
-    window.game = new Game({selector: "canvas"});
+    window.game = new Game();
     game.camera = camera(game, {
         translation: [0, 0, 10],
         fovy: 1,

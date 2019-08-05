@@ -1,5 +1,3 @@
-import create_context from "./context.js";
-
 import render_tick from "./systems/sys_render.js";
 import rotate_tick from "./systems/sys_rotate.js";
 import framerate_tick from "./systems/sys_framerate.js";
@@ -10,8 +8,7 @@ const COMPONENT_NONE = 0;
 
 export default
 class Game {
-    constructor({selector, ...options}) {
-        Object.assign(this, options, create_context(selector));
+    constructor() {
         this.entities = new Uint32Array(MAX_ENTITIES);
 
         this.components = [];
@@ -24,6 +21,16 @@ class Game {
                 evt => this.input[evt.code] = true);
         window.addEventListener("keyup",
                 evt => this.input[evt.code] = false);
+
+        this.canvas = document.querySelector("canvas");
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+
+        this.gl = canvas.getContext("webgl2");
+        this.gl.clearColor(1.0, 0.3, 0.3, 1.0);
+        this.gl.enable(gl.DEPTH_TEST);
+        this.gl.enable(gl.CULL_FACE);
+        this.gl.frontFace(gl.CW);
     }
 
     create_entity(mask) {
