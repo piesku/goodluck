@@ -1,5 +1,5 @@
 import {multiply} from "./gl-matrix/quat.js";
-import {TRANSFORM, ROTATE} from "./components.js";
+import {TRANSFORM, ROTATE} from "./components/com_index.js";
 
 const MASK = TRANSFORM | ROTATE;
 

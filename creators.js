@@ -1,8 +1,8 @@
 import * as mat4 from "./gl-matrix/mat4.js";
 import * as quat from "./gl-matrix/quat.js";
 import {TRANSFORM, RENDER, ROTATE, LIGHT, CAMERA}
-        from "./components.js";
-import Transform from "./component_transform.js";
+        from "./components/com_index.js";
+import Transform from "./components/com_transform.js";
 
 export
 function camera(game, {translation, fovy, aspect, near, far}) {

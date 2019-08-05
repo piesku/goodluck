@@ -1,5 +1,5 @@
-import * as vec3 from "./gl-matrix/vec3.js";
-import * as mat4 from "./gl-matrix/mat4.js";
+import * as vec3 from "../gl-matrix/vec3.js";
+import * as mat4 from "../gl-matrix/mat4.js";
 
 export default
 class Transform {
