@@ -1,32 +1,35 @@
-import Material from "./material.js";
+import Material from "./mat_common.js";
 
 let vertex = `#version 300 es
     uniform mat4 pv;
     uniform mat4 model;
+    uniform vec4 color;
 
     in vec3 position;
+    in vec3 normal;
+    out vec4 vert_color;
 
     void main() {
         gl_Position = pv * model * vec4(position, 1.0);
-        gl_PointSize = 2.0;
+        vert_color = color;
     }
 `;
 
 let fragment = `#version 300 es
     precision mediump float;
-    uniform vec4 color;
 
+    in vec4 vert_color;
     out vec4 frag_color;
 
     void main() {
-        frag_color = color;
+        frag_color = vert_color;
     }
 `;
 
 export default
-class PointsMaterial extends Material {
+class WireframeMaterial extends Material {
     constructor(gl) {
-        super(gl, gl.POINTS, vertex, fragment);
+        super(gl, gl.LINE_LOOP, vertex, fragment);
     }
 
     draw(model, render) {

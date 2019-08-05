@@ -1,9 +1,8 @@
-import * as mat4 from "./gl-matrix/mat4.js";
-import Material from "./material.js";
+import * as mat4 from "../gl-matrix/mat4.js";
+import Material from "./mat_common.js";
 
 let vertex = `#version 300 es
     uniform mat4 pv;
-    uniform float scale;
     uniform mat4 model;
     uniform mat4 model_inverse;
 
@@ -13,8 +12,8 @@ let vertex = `#version 300 es
     out vec3 vert_normal;
 
     void main() {
-        vert_pos = (model * scale * vec4(position, 1.0)).xyz;
         vert_normal = normalize((vec4(normal, 0.0) * model_inverse).xyz);
+        vert_pos = (model * vec4(position, 1.0)).xyz;
         gl_Position = pv * vec4(vert_pos, 1.0);
     }
 `;
@@ -31,8 +30,6 @@ let fragment = `#version 300 es
     in vec3 vert_normal;
     out vec4 frag_color;
 
-    const float levels = 3.0;
-
     void main() {
         vec3 rgb = vec3(0.0, 0.0, 0.0);
         for (int i = 0; i < light_count; i++) {
@@ -41,8 +38,6 @@ let fragment = `#version 300 es
             float light_dist = length(light_dir);
 
             float diffuse_factor = max(dot(vert_normal, light_normal), 0.0);
-            diffuse_factor = floor(diffuse_factor * levels + 0.5) / levels;
-
             float distance_factor = light_dist * light_dist;
             float intensity_factor = light_details[i].a;
             float attenuation = distance_factor / intensity_factor;
@@ -58,8 +53,6 @@ export default
 class GouraudMaterial extends Material {
     constructor(gl) {
         super(gl, gl.TRIANGLES, vertex, fragment);
-        this.regular = 1;
-        this.outline = 1.01;
     }
 
     use(pv, lights) {
@@ -76,13 +69,7 @@ class GouraudMaterial extends Material {
         gl.uniformMatrix4fv(uniforms.model_inverse, gl.FALSE,
                 mat4.invert([], model));
         gl.bindVertexArray(render.vao);
-        gl.frontFace(gl.CCW);
-        gl.uniform4fv(uniforms.color, [0, 0, 0, 1]);
-        gl.uniform1f(uniforms.scale, this.outline);
-        gl.drawElements(mode, render.count, gl.UNSIGNED_SHORT, 0);
-        gl.frontFace(gl.CW);
         gl.uniform4fv(uniforms.color, render.color);
-        gl.uniform1f(uniforms.scale, this.regular);
         gl.drawElements(mode, render.count, gl.UNSIGNED_SHORT, 0);
         gl.bindVertexArray(null);
     }

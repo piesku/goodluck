@@ -1,5 +1,5 @@
-import * as mat4 from "./gl-matrix/mat4.js";
-import Material from "./material.js";
+import * as mat4 from "../gl-matrix/mat4.js";
+import Material from "./mat_common.js";
 
 let vertex = `#version 300 es
     uniform mat4 pv;
@@ -12,7 +12,7 @@ let vertex = `#version 300 es
 
     in vec3 position;
     in vec3 normal;
-    flat out vec4 vert_color;
+    out vec4 vert_color;
 
     void main() {
         vec4 world_pos = model * vec4(position, 1.0);
@@ -40,7 +40,7 @@ let vertex = `#version 300 es
 let fragment = `#version 300 es
     precision mediump float;
 
-    flat in vec4 vert_color;
+    in vec4 vert_color;
     out vec4 frag_color;
 
     void main() {
@@ -49,7 +49,7 @@ let fragment = `#version 300 es
 `;
 
 export default
-class FlatMaterial extends Material {
+class GouraudMaterial extends Material {
     constructor(gl) {
         super(gl, gl.TRIANGLES, vertex, fragment);
     }
