@@ -1,4 +1,4 @@
-import Material from "./mat_common.js/index.js";
+import Material from "./mat_common.js";
 
 let vertex = `#version 300 es
     uniform mat4 pv;

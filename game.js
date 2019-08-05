@@ -26,11 +26,11 @@ class Game {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
 
-        this.gl = canvas.getContext("webgl2");
+        this.gl = this.canvas.getContext("webgl2");
         this.gl.clearColor(1.0, 0.3, 0.3, 1.0);
-        this.gl.enable(gl.DEPTH_TEST);
-        this.gl.enable(gl.CULL_FACE);
-        this.gl.frontFace(gl.CW);
+        this.gl.enable(this.gl.DEPTH_TEST);
+        this.gl.enable(this.gl.CULL_FACE);
+        this.gl.frontFace(this.gl.CW);
     }
 
     create_entity(mask) {
