@@ -1,8 +1,8 @@
 import create_context from "./context.js";
 
-import render_tick from "./system_render.js";
-import rotate_tick from "./system_rotate.js";
-import framerate_tick from "./system_framerate.js";
+import render_tick from "./systems/sys_render.js";
+import rotate_tick from "./systems/sys_rotate.js";
+import framerate_tick from "./systems/sys_framerate.js";
 
 const MAX_ENTITIES = 10000;
 const COMPONENT_COUNT = 32;

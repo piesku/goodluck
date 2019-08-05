@@ -1,5 +1,5 @@
-import * as mat4 from "./gl-matrix/mat4.js";
-import {TRANSFORM, RENDER, SWARM, LIGHT, CAMERA} from "./components/com_index.js";
+import * as mat4 from "../gl-matrix/mat4.js";
+import {TRANSFORM, RENDER, SWARM, LIGHT, CAMERA} from "../components/com_index.js";
 
 const MASK = TRANSFORM | RENDER;
 
