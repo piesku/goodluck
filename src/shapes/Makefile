@@ -1,6 +1,6 @@
 SHAPES_BLEND := $(wildcard *.blend)
 SHAPES_OBJ := $(SHAPES_BLEND:%.blend=%.obj)
-SHAPES_JS := $(SHAPES_BLEND:%.blend=%.js)
+SHAPES_JS := $(SHAPES_BLEND:%.blend=%.ts)
 
 all: $(SHAPES_JS)
 
@@ -14,6 +14,6 @@ all: $(SHAPES_JS)
 		"$(shell wslpath -w $@)" \
 		1> /dev/null
 
-%.js: %.obj
+%.ts: %.obj
 	@echo "$< → $@"
 	@node asset2shape "$(shell wslpath -w $(CURDIR)/$<)" > $@

@@ -8,7 +8,7 @@ const ASSIMP2JSON = "/c/Applications/assimp2json/assimp2json.exe";
 
 let filename = process.argv[2];
 if (!filename) {
-    console.error("Specify a path to an asset file.")
+    console.error("Specify a path to an asset file.");
     process.exit(1);
 }
 
@@ -36,8 +36,7 @@ let indices = Uint16Array.from([
         // array, the tri get drawn in reverse order and the shared vertices
         // become last.
         .reverse()
-        .join(", ")
-    }
+        .join(", ")}
 ]);
 
 export

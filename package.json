@@ -1,18 +1,27 @@
 {
-  "name": "goodluck",
-  "version": "0.0.1",
-  "description": "A tiny WebGL2 game engine with ECS",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/stasm/goodluck.git"
-  },
-  "author": "Staś Małolepszy <stas@piesku.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/stasm/goodluck/issues"
-  },
-  "homepage": "https://github.com/stasm/goodluck#readme"
+    "name": "goodluck",
+    "version": "0.0.1",
+    "description": "A tiny WebGL2 game engine with ECS",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/stasm/goodluck.git"
+    },
+    "author": "Staś Małolepszy <stas@piesku.com>",
+    "license": "MIT",
+    "scripts": {
+        "build": "compile",
+        "compile": "tsc",
+        "compile:watch": "tsc --watch -p .",
+        "lint": "prettier --check src/**/*.ts",
+        "pretty": "prettier --write src/**/*.ts",
+        "serve": "live-server --port=1234 --no-browser --quiet public",
+        "start": "npm-run-all --parallel compile:watch serve"
+    },
+    "devDependencies": {
+        "@types/webgl2": "0.0.4",
+        "live-server": "1.2.1",
+        "npm-run-all": "4.1.5",
+        "prettier": "1.18.2",
+        "typescript": "3.5.1"
+    }
 }
