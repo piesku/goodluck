@@ -2,6 +2,7 @@ import {Camera} from "./components/com_camera.js";
 import {Component, TRANSFORM} from "./components/com_index.js";
 import {Transform, transform} from "./components/com_transform.js";
 import {Material} from "./materials/mat_common.js";
+import {mat_flat} from "./materials/mat_flat.js";
 import {mat_gouraud} from "./materials/mat_gouraud.js";
 import {Mat} from "./materials/mat_index.js";
 import {mat_points} from "./materials/mat_points.js";
@@ -77,6 +78,7 @@ export class Game extends Array<Array<Component>> {
 
         this.materials[Mat.Points] = mat_points(this.gl);
         this.materials[Mat.Wireframe] = mat_wireframe(this.gl);
+        this.materials[Mat.Flat] = mat_flat(this.gl);
         this.materials[Mat.Gouraud] = mat_gouraud(this.gl);
     }
 

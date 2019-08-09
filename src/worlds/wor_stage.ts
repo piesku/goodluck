@@ -41,6 +41,14 @@ export function world_stage(game: Game) {
     game.add({
         translation: [3, 0, 0],
         using: [
+            render_shaded(game.materials[Mat.Flat], Icosphere, [1, 1, 0.3, 1]),
+            rotate(10, 20, 30),
+        ],
+    });
+
+    game.add({
+        translation: [6, 0, 0],
+        using: [
             render_shaded(game.materials[Mat.Gouraud], Icosphere, [1, 1, 0.3, 1]),
             rotate(10, 20, 30),
         ],
