@@ -4,4 +4,5 @@ export const enum Mat {
     Basic,
     Flat,
     Gouraud,
+    Phong,
 }

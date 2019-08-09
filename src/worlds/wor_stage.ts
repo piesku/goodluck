@@ -18,8 +18,8 @@ export function world_stage(game: Game) {
     });
 
     game.add({
-        translation: [0, 4, 4],
-        using: [light([1, 1, 1], 5)],
+        translation: [0, 0, 10],
+        using: [light([1, 1, 1], 8)],
     });
 
     game.add({
@@ -58,6 +58,14 @@ export function world_stage(game: Game) {
         translation: [0, 0, 0],
         using: [
             render_shaded(game.materials[Mat.Gouraud], Icosphere, [1, 1, 0.3, 1]),
+            rotate(10, 20, 30),
+        ],
+    });
+
+    game.add({
+        translation: [3, 0, 0],
+        using: [
+            render_shaded(game.materials[Mat.Phong], Icosphere, [1, 1, 0.3, 1]),
             rotate(10, 20, 30),
         ],
     });

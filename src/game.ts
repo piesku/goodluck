@@ -6,6 +6,7 @@ import {Material} from "./materials/mat_common.js";
 import {mat_flat} from "./materials/mat_flat.js";
 import {mat_gouraud} from "./materials/mat_gouraud.js";
 import {Mat} from "./materials/mat_index.js";
+import {mat_phong} from "./materials/mat_phong.js";
 import {mat_points} from "./materials/mat_points.js";
 import {mat_wireframe} from "./materials/mat_wireframe.js";
 import {Quat, Vec3, Vec4} from "./math/index.js";
@@ -82,6 +83,7 @@ export class Game extends Array<Array<Component>> {
         this.materials[Mat.Basic] = mat_basic(this.gl);
         this.materials[Mat.Flat] = mat_flat(this.gl);
         this.materials[Mat.Gouraud] = mat_gouraud(this.gl);
+        this.materials[Mat.Phong] = mat_phong(this.gl);
     }
 
     create_entity(mask: number) {
