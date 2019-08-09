@@ -9,6 +9,7 @@ let vertex = `#version 300 es
 
     void main() {
         gl_Position = pv * world * vec4(position, 1.0);
+        gl_PointSize = 2.0;
     }
 `;
 
@@ -23,6 +24,6 @@ let fragment = `#version 300 es
     }
 `;
 
-export function mat_wireframe(gl: WebGL2RenderingContext) {
-    return mat_create(gl, gl.LINE_LOOP, vertex, fragment);
+export function mat_points(gl: WebGL2RenderingContext) {
+    return mat_create(gl, gl.POINTS, vertex, fragment);
 }

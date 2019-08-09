@@ -4,6 +4,7 @@ import {Transform, transform} from "./components/com_transform.js";
 import {Material} from "./materials/mat_common.js";
 import {mat_gouraud} from "./materials/mat_gouraud.js";
 import {Mat} from "./materials/mat_index.js";
+import {mat_points} from "./materials/mat_points.js";
 import {mat_wireframe} from "./materials/mat_wireframe.js";
 import {Quat, Vec3, Vec4} from "./math/index.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -74,6 +75,7 @@ export class Game extends Array<Array<Component>> {
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.frontFace(this.gl.CW);
 
+        this.materials[Mat.Points] = mat_points(this.gl);
         this.materials[Mat.Wireframe] = mat_wireframe(this.gl);
         this.materials[Mat.Gouraud] = mat_gouraud(this.gl);
     }

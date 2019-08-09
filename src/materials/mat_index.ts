@@ -1,4 +1,5 @@
 export const enum Mat {
-    Wireframe = 0,
-    Gouraud = 1,
+    Points,
+    Wireframe,
+    Gouraud,
 }
