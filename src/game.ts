@@ -2,6 +2,8 @@ import {Camera} from "./components/com_camera.js";
 import {Component, TRANSFORM} from "./components/com_index.js";
 import {Transform, transform} from "./components/com_transform.js";
 import {Material} from "./materials/mat_common.js";
+import {mat_gouraud} from "./materials/mat_gouraud.js";
+import {Mat} from "./materials/mat_index.js";
 import {mat_wireframe} from "./materials/mat_wireframe.js";
 import {Quat, Vec3, Vec4} from "./math/index.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -38,8 +40,8 @@ export class Game extends Array<Array<Component>> {
     public gl: WebGL2RenderingContext;
     public input: Input = {mouse_x: 0, mouse_y: 0};
     public fog_color: Vec4 = [0, 0, 0, 1];
-    public materials: Array<Material>;
-    public cameras: Array<Camera>;
+    public materials: Array<Material> = [];
+    public cameras: Array<Camera> = [];
     private raf: number = 0;
 
     constructor() {
@@ -72,8 +74,8 @@ export class Game extends Array<Array<Component>> {
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.frontFace(this.gl.CW);
 
-        this.cameras = [];
-        this.materials = [mat_wireframe(this.gl)];
+        this.materials[Mat.Wireframe] = mat_wireframe(this.gl);
+        this.materials[Mat.Gouraud] = mat_gouraud(this.gl);
     }
 
     create_entity(mask: number) {

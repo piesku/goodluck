@@ -34,7 +34,7 @@ export function render_shaded(material: Material, shape: Shape, color: Vec4) {
 
 export const enum ShadedAttribute {
     position = 1,
-    normal = 1,
+    normal = 2,
 }
 
 function buffer(gl: WebGL2RenderingContext, shape: Shape) {
@@ -44,12 +44,12 @@ function buffer(gl: WebGL2RenderingContext, shape: Shape) {
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
     gl.bufferData(gl.ARRAY_BUFFER, shape.vertices, gl.STATIC_DRAW);
     gl.enableVertexAttribArray(ShadedAttribute.position);
-    gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(ShadedAttribute.position, 3, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
     gl.bufferData(gl.ARRAY_BUFFER, shape.normals, gl.STATIC_DRAW);
     gl.enableVertexAttribArray(ShadedAttribute.normal);
-    gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(ShadedAttribute.normal, 3, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer());
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, shape.indices, gl.STATIC_DRAW);

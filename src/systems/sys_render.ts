@@ -74,7 +74,7 @@ function use(material: Material, camera: Camera, lights: LightDetails) {
 
 function draw_basic(transform: Transform, render: RenderBasic) {
     let {gl, mode, uniforms} = render.material;
-    gl.uniformMatrix4fv(uniforms.model, false, transform.world);
+    gl.uniformMatrix4fv(uniforms.world, false, transform.world);
     gl.uniform4fv(uniforms.color, render.color);
     gl.bindVertexArray(render.vao);
     gl.drawElements(mode, render.count, gl.UNSIGNED_SHORT, 0);
@@ -83,7 +83,8 @@ function draw_basic(transform: Transform, render: RenderBasic) {
 
 function draw_shaded(transform: Transform, render: RenderShaded) {
     let {gl, mode, uniforms} = render.material;
-    gl.uniformMatrix4fv(uniforms.model, false, transform.world);
+    gl.uniformMatrix4fv(uniforms.world, false, transform.world);
+    gl.uniformMatrix4fv(uniforms.self, false, transform.self);
     gl.uniform4fv(uniforms.color, render.color);
     gl.bindVertexArray(render.vao);
     gl.drawElements(mode, render.count, gl.UNSIGNED_SHORT, 0);

@@ -3,14 +3,14 @@ import {mat_create} from "./mat_common.js";
 
 let vertex = `#version 300 es
     uniform mat4 pv;
-    uniform mat4 model;
+    uniform mat4 world;
     uniform vec4 color;
 
     layout(location=${BasicAttribute.position}) in vec3 position;
     out vec4 vert_color;
 
     void main() {
-        gl_Position = pv * model * vec4(position, 1.0);
+        gl_Position = pv * world * vec4(position, 1.0);
         vert_color = color;
     }
 `;
