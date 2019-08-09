@@ -23,7 +23,7 @@ export function world_stage(game: Game) {
     });
 
     game.add({
-        translation: [-3, 0, 0],
+        translation: [-3, 3, 0],
         using: [
             render_basic(game.materials[Mat.Points], Icosphere, [1, 1, 0.3, 1]),
             rotate(10, 20, 30),
@@ -31,7 +31,7 @@ export function world_stage(game: Game) {
     });
 
     game.add({
-        translation: [0, 0, 0],
+        translation: [0, 3, 0],
         using: [
             render_basic(game.materials[Mat.Wireframe], Icosphere, [1, 1, 0.3, 1]),
             rotate(10, 20, 30),
@@ -39,7 +39,15 @@ export function world_stage(game: Game) {
     });
 
     game.add({
-        translation: [3, 0, 0],
+        translation: [3, 3, 0],
+        using: [
+            render_basic(game.materials[Mat.Basic], Icosphere, [1, 1, 0.3, 1]),
+            rotate(10, 20, 30),
+        ],
+    });
+
+    game.add({
+        translation: [-3, 0, 0],
         using: [
             render_shaded(game.materials[Mat.Flat], Icosphere, [1, 1, 0.3, 1]),
             rotate(10, 20, 30),
@@ -47,7 +55,7 @@ export function world_stage(game: Game) {
     });
 
     game.add({
-        translation: [6, 0, 0],
+        translation: [0, 0, 0],
         using: [
             render_shaded(game.materials[Mat.Gouraud], Icosphere, [1, 1, 0.3, 1]),
             rotate(10, 20, 30),
