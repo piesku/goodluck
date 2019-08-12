@@ -16,6 +16,7 @@ import {mat_wireframe} from "./materials/mat_wireframe.js";
 import {Quat, Vec3, Vec4} from "./math/index.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
+import {sys_light} from "./systems/sys_light.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_rotate} from "./systems/sys_rotate.js";
 import {sys_transform} from "./systems/sys_transform.js";
@@ -53,6 +54,7 @@ export class Game implements ComponentData {
     public fog_color: Vec4 = [0, 0, 0, 1];
     public materials: Array<Material> = [];
     public cameras: Array<Camera> = [];
+    public lights: Array<Light> = [];
     private raf: number = 0;
 
     constructor() {
@@ -107,6 +109,7 @@ export class Game implements ComponentData {
 
     frame_update(delta: number) {
         sys_camera(this, delta);
+        sys_light(this, delta);
         sys_render(this, delta);
         sys_framerate(this, delta);
     }

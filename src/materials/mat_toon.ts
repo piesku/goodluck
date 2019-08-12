@@ -23,8 +23,8 @@ let fragment = `#version 300 es
 
     uniform vec4 color;
     uniform int light_count;
-    uniform vec3 light_positions[100];
-    uniform vec4 light_details[100];
+    uniform vec3 light_positions[10];
+    uniform vec4 light_details[10];
 
     in vec4 vert_pos;
     in vec3 vert_normal;
