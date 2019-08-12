@@ -40,7 +40,7 @@ export interface Blueprint {
     children?: Array<Blueprint>;
 }
 
-export class Game extends Array<Array<unknown>> implements ComponentData {
+export class Game implements ComponentData {
     public world: Array<number>;
     public [Get.Transform]: Array<Transform> = [];
     public [Get.Render]: Array<Render> = [];
@@ -56,7 +56,6 @@ export class Game extends Array<Array<unknown>> implements ComponentData {
     private raf: number = 0;
 
     constructor() {
-        super();
         this.world = [];
 
         document.addEventListener("visibilitychange", () =>

@@ -13,7 +13,6 @@ export const enum Get {
 }
 
 export interface ComponentData {
-    [index: number]: Array<unknown>;
     [Get.Transform]: Array<Transform>;
     [Get.Render]: Array<Render>;
     [Get.Camera]: Array<Camera>;

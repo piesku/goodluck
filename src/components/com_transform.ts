@@ -47,17 +47,17 @@ export function transform(
  *
  * @param game Game object which stores the component data.
  * @param transform The transform to traverse.
- * @param mask Component mask to look for.
+ * @param component Component mask to look for.
  */
 export function* components_of_type<T>(
     game: Game,
     transform: Transform,
-    mask: number
+    component: Get
 ): IterableIterator<T> {
-    if (game.world[transform.entity] & mask) {
-        yield game[mask][transform.entity] as T;
+    if (game.world[transform.entity] & component) {
+        yield (game[component][transform.entity] as unknown) as T;
     }
     for (let child of transform.children) {
-        yield* components_of_type<T>(game, child, mask);
+        yield* components_of_type<T>(game, child, component);
     }
 }
