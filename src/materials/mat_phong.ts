@@ -12,8 +12,8 @@ let vertex = `#version 300 es
     out vec3 vert_normal;
 
     void main() {
-        vert_normal = (vec4(normal, 1.0) * self).xyz;
         vert_pos = world * vec4(position, 1.0);
+        vert_normal = (vec4(normal, 1.0) * self).xyz;
         gl_Position = pv * vert_pos;
     }
 `;
