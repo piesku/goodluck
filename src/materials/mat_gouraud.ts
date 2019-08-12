@@ -16,7 +16,7 @@ let vertex = `#version 300 es
 
     void main() {
         vec4 world_pos = world * vec4(position, 1.0);
-        vec3 world_normal = normalize((vec4(normal, 0.0) * self).xyz);
+        vec3 world_normal = normalize((vec4(normal, 1.0) * self).xyz);
         gl_Position = pv * world_pos;
 
         vec3 rgb = vec3(0.0, 0.0, 0.0);
