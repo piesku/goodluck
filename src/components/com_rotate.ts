@@ -1,7 +1,7 @@
 import {Entity, Game} from "../game.js";
-import {Component, ROTATE} from "./com_index.js";
+import {Get} from "./com_index.js";
 
-export interface Rotate extends Component {
+export interface Rotate {
     x: number;
     y: number;
     z: number;
@@ -9,7 +9,7 @@ export interface Rotate extends Component {
 
 export function rotate(x: number, y: number, z: number) {
     return (game: Game) => (entity: Entity) => {
-        game.world[entity] |= ROTATE;
-        game[ROTATE][entity] = <Rotate>{x, y, z};
+        game.world[entity] |= Get.Rotate;
+        game[Get.Rotate][entity] = <Rotate>{x, y, z};
     };
 }

@@ -1,14 +1,14 @@
-import {TRANSFORM} from "../components/com_index.js";
+import {Get} from "../components/com_index.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {from_rotation_translation_scale, invert, multiply} from "../math/mat4.js";
 
-const QUERY = TRANSFORM;
+const QUERY = Get.Transform;
 
 export function sys_transform(game: Game, delta: number) {
     for (let i = 0; i < game.world.length; i++) {
         if ((game.world[i] & QUERY) === QUERY) {
-            update(game[TRANSFORM][i] as Transform);
+            update(game[Get.Transform][i]);
         }
     }
 }

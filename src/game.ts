@@ -1,6 +1,9 @@
 import {Camera} from "./components/com_camera.js";
-import {Component, TRANSFORM} from "./components/com_index.js";
-import {Transform, transform} from "./components/com_transform.js";
+import {ComponentData, Get} from "./components/com_index.js";
+import {Light} from "./components/com_light.js";
+import {Render} from "./components/com_render.js";
+import {Rotate} from "./components/com_rotate.js";
+import {transform, Transform} from "./components/com_transform.js";
 import {mat_basic} from "./materials/mat_basic.js";
 import {Material} from "./materials/mat_common.js";
 import {mat_flat} from "./materials/mat_flat.js";
@@ -14,12 +17,10 @@ import {Quat, Vec3, Vec4} from "./math/index.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_render} from "./systems/sys_render.js";
-import sys_rotate from "./systems/sys_rotate.js";
+import {sys_rotate} from "./systems/sys_rotate.js";
 import {sys_transform} from "./systems/sys_transform.js";
 
 const MAX_ENTITIES = 10000;
-const COMPONENT_COUNT = 32;
-const COMPONENT_NONE = 0;
 
 export type Entity = number;
 
@@ -39,8 +40,13 @@ export interface Blueprint {
     children?: Array<Blueprint>;
 }
 
-export class Game extends Array<Array<Component>> {
+export class Game extends Array<Array<unknown>> implements ComponentData {
     public world: Array<number>;
+    public [Get.Transform]: Array<Transform> = [];
+    public [Get.Render]: Array<Render> = [];
+    public [Get.Camera]: Array<Camera> = [];
+    public [Get.Light]: Array<Light> = [];
+    public [Get.Rotate]: Array<Rotate> = [];
     public canvas: HTMLCanvasElement;
     public gl: WebGL2RenderingContext;
     public input: Input = {mouse_x: 0, mouse_y: 0};
@@ -52,9 +58,6 @@ export class Game extends Array<Array<Component>> {
     constructor() {
         super();
         this.world = [];
-        for (let i = 0; i < COMPONENT_COUNT; i++) {
-            this[2 ** i] = [];
-        }
 
         document.addEventListener("visibilitychange", () =>
             document.hidden ? this.stop() : this.start()
@@ -144,15 +147,15 @@ export class Game extends Array<Array<Component>> {
     }
 
     add({translation, rotation, scale, using = [], children = []}: Blueprint) {
-        let entity = this.create_entity(TRANSFORM);
+        let entity = this.create_entity(Get.Transform);
         transform(translation, rotation, scale)(this)(entity);
         for (let mixin of using) {
             mixin(this)(entity);
         }
-        let entity_transform = this[TRANSFORM][entity] as Transform;
+        let entity_transform = this[Get.Transform][entity];
         for (let subtree of children) {
             let child = this.add(subtree);
-            let child_transform = this[TRANSFORM][child] as Transform;
+            let child_transform = this[Get.Transform][child];
             child_transform.parent = entity_transform;
             entity_transform.children.push(child_transform);
         }
@@ -161,11 +164,11 @@ export class Game extends Array<Array<Component>> {
 
     destroy(entity: Entity) {
         let mask = this.world[entity];
-        if (mask & TRANSFORM) {
-            for (let child of (this[TRANSFORM][entity] as Transform).children) {
+        if (mask & Get.Transform) {
+            for (let child of this[Get.Transform][entity].children) {
                 this.destroy(child.entity);
             }
         }
-        this.world[entity] = COMPONENT_NONE;
+        this.world[entity] = 0;
     }
 }

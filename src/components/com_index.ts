@@ -1,7 +1,22 @@
-export interface Component {}
+import {Camera} from "./com_camera";
+import {Light} from "./com_light";
+import {Render} from "./com_render";
+import {Rotate} from "./com_rotate";
+import {Transform} from "./com_transform";
 
-export const TRANSFORM = 1 << 0;
-export const RENDER = 1 << 1;
-export const ROTATE = 1 << 2;
-export const LIGHT = 1 << 3;
-export const CAMERA = 1 << 4;
+export const enum Get {
+    Transform = 1,
+    Render = 2,
+    Camera = 4,
+    Light = 8,
+    Rotate = 16,
+}
+
+export interface ComponentData {
+    [index: number]: Array<unknown>;
+    [Get.Transform]: Array<Transform>;
+    [Get.Render]: Array<Render>;
+    [Get.Camera]: Array<Camera>;
+    [Get.Light]: Array<Light>;
+    [Get.Rotate]: Array<Rotate>;
+}

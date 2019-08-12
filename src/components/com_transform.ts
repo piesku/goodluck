@@ -1,9 +1,9 @@
 import {Entity, Game} from "../game.js";
 import {Mat4, Quat, Vec3} from "../math/index.js";
 import {create} from "../math/mat4.js";
-import {Component, TRANSFORM} from "./com_index.js";
+import {Get} from "./com_index.js";
 
-export interface Transform extends Component {
+export interface Transform {
     /** Absolute matrix relative to the world. */
     world: Mat4;
     /** World to self matrix. */
@@ -27,8 +27,8 @@ export function transform(
     scale: Vec3 = [1, 1, 1]
 ) {
     return (game: Game) => (entity: Entity) => {
-        game.world[entity] |= TRANSFORM;
-        game[TRANSFORM][entity] = <Transform>{
+        game.world[entity] |= Get.Transform;
+        game[Get.Transform][entity] = <Transform>{
             entity,
             world: create(),
             self: create(),

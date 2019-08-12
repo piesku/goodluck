@@ -1,11 +1,11 @@
 import {Entity, Game} from "../game.js";
 import {Material, Shape} from "../materials/mat_common.js";
 import {Vec4} from "../math/index.js";
-import {Component, RENDER} from "./com_index.js";
-import {Render} from "./com_render.js";
+import {Get} from "./com_index.js";
+import {RenderKind} from "./com_render.js";
 
-export interface RenderShaded extends Component {
-    readonly kind: Render.Shaded;
+export interface RenderShaded {
+    readonly kind: RenderKind.Shaded;
     readonly material: Material;
     readonly vao: WebGLVertexArrayObject;
     readonly count: number;
@@ -21,9 +21,9 @@ export function render_shaded(material: Material, shape: Shape, color: Vec4) {
             vaos.set(shape, buffer(game.gl, shape)!);
         }
 
-        game.world[entity] |= RENDER;
-        game[RENDER][entity] = <RenderShaded>{
-            kind: Render.Shaded,
+        game.world[entity] |= Get.Render;
+        game[Get.Render][entity] = <RenderShaded>{
+            kind: RenderKind.Shaded,
             material,
             vao: vaos.get(shape),
             count: shape.indices.length,

@@ -1,7 +1,7 @@
 import {Camera} from "../components/com_camera.js";
-import {LIGHT, RENDER, TRANSFORM} from "../components/com_index.js";
-import {Light, LightDetails} from "../components/com_light.js";
-import {Render, RenderGeneric} from "../components/com_render.js";
+import {Get} from "../components/com_index.js";
+import {LightDetails} from "../components/com_light.js";
+import {RenderKind} from "../components/com_render.js";
 import {RenderBasic} from "../components/com_render_basic.js";
 import {RenderShaded} from "../components/com_render_shaded.js";
 import {Transform} from "../components/com_transform.js";
@@ -9,7 +9,7 @@ import {Game} from "../game.js";
 import {Material} from "../materials/mat_common.js";
 import {get_translation} from "../math/mat4.js";
 
-const QUERY = TRANSFORM | RENDER;
+const QUERY = Get.Transform | Get.Render;
 
 export function sys_render(game: Game, delta: number) {
     game.gl.clear(game.gl.COLOR_BUFFER_BIT | game.gl.DEPTH_BUFFER_BIT);
@@ -19,29 +19,29 @@ export function sys_render(game: Game, delta: number) {
     let lights_details = [];
 
     for (let i = 0; i < game.world.length; i++) {
-        if ((game.world[i] & LIGHT) === LIGHT) {
+        if ((game.world[i] & Get.Light) === Get.Light) {
             lights_count++;
-            let light_transform = game[TRANSFORM][i] as Transform;
+            let light_transform = game[Get.Transform][i];
             let position = get_translation([], light_transform.world);
             lights_positions.push(...position);
-            let light = game[LIGHT][i] as Light;
+            let light = game[Get.Light][i];
             lights_details.push(...light.color, light.intensity);
         }
     }
 
-    let lights = {
+    let lights = <LightDetails>{
         count: lights_count,
         positions: new Float32Array(lights_positions),
         details: new Float32Array(lights_details),
-    } as LightDetails;
+    };
 
     // Keep track of the current material to minimize switching.
     let current_material = null;
 
     for (let i = 0; i < game.world.length; i++) {
         if ((game.world[i] & QUERY) === QUERY) {
-            let transform = game[TRANSFORM][i] as Transform;
-            let render = game[RENDER][i] as RenderGeneric;
+            let transform = game[Get.Transform][i];
+            let render = game[Get.Render][i];
 
             // TODO Sort by material.
             if (render.material !== current_material) {
@@ -51,10 +51,10 @@ export function sys_render(game: Game, delta: number) {
             }
 
             switch (render.kind) {
-                case Render.Basic:
+                case RenderKind.Basic:
                     draw_basic(transform, render);
                     break;
-                case Render.Shaded:
+                case RenderKind.Shaded:
                     draw_shaded(transform, render);
                     break;
             }
