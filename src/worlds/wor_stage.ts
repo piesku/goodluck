@@ -5,7 +5,7 @@ import {render_shaded} from "../components/com_render_shaded.js";
 import {rotate} from "../components/com_rotate.js";
 import {Game} from "../game.js";
 import {Mat} from "../materials/mat_index.js";
-import {Icosphere} from "../shapes/index.js";
+import {Icosphere} from "../shapes/Icosphere.js";
 
 export function world_stage(game: Game) {
     game.world = [];
