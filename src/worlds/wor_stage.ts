@@ -1,3 +1,4 @@
+import {audio_source} from "../components/com_audio_source.js";
 import {camera} from "../components/com_camera.js";
 import {light} from "../components/com_light.js";
 import {render_basic} from "../components/com_render_basic.js";
@@ -6,6 +7,7 @@ import {rotate} from "../components/com_rotate.js";
 import {Game} from "../game.js";
 import {Mat} from "../materials/mat_index.js";
 import {Icosphere} from "../shapes/Icosphere.js";
+import {snd_music} from "../sounds/snd_music.js";
 
 export function world_stage(game: Game) {
     game.world = [];
@@ -14,7 +16,10 @@ export function world_stage(game: Game) {
 
     game.add({
         translation: [0, 0, 10],
-        using: [camera(game.canvas.width / game.canvas.height, 1, 0.1, 1000)],
+        using: [
+            camera(game.canvas.width / game.canvas.height, 1, 0.1, 1000),
+            audio_source({music: snd_music}, "music"),
+        ],
     });
 
     game.add({

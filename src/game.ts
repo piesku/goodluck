@@ -1,3 +1,4 @@
+import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
 import {ComponentData, Get} from "./components/com_index.js";
 import {Light} from "./components/com_light.js";
@@ -13,6 +14,7 @@ import {mat_phong} from "./materials/mat_phong.js";
 import {mat_points} from "./materials/mat_points.js";
 import {mat_wireframe} from "./materials/mat_wireframe.js";
 import {Quat, Vec3, Vec4} from "./math/index.js";
+import {sys_audio} from "./systems/sys_audio.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -47,8 +49,10 @@ export class Game implements ComponentData {
     public [Get.Camera]: Array<Camera> = [];
     public [Get.Light]: Array<Light> = [];
     public [Get.Rotate]: Array<Rotate> = [];
+    public [Get.AudioSource]: Array<AudioSource> = [];
     public canvas: HTMLCanvasElement;
     public gl: WebGL2RenderingContext;
+    public audio: AudioContext = new AudioContext();
     public input: Input = {mouse_x: 0, mouse_y: 0};
     public fog_color: Vec4 = [0, 0, 0, 1];
     public materials: Array<Material> = [];
@@ -106,6 +110,7 @@ export class Game implements ComponentData {
     }
 
     frame_update(delta: number) {
+        sys_audio(this, delta);
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render(this, delta);
@@ -139,10 +144,12 @@ export class Game implements ComponentData {
         };
 
         this.stop();
+        this.audio.resume();
         tick(last);
     }
 
     stop() {
+        this.audio.suspend();
         cancelAnimationFrame(this.raf);
     }
 
