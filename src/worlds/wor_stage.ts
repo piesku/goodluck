@@ -11,7 +11,6 @@ import {snd_music} from "../sounds/snd_music.js";
 
 export function world_stage(game: Game) {
     game.world = [];
-    game.fog_color = [1, 0.3, 0.3, 1];
     game.gl.clearColor(1, 0.3, 0.3, 1);
 
     game.add({

@@ -14,7 +14,6 @@ import {Mat} from "./materials/mat_index.js";
 import {mat_phong} from "./materials/mat_phong.js";
 import {mat_points} from "./materials/mat_points.js";
 import {mat_wireframe} from "./materials/mat_wireframe.js";
-import {Vec4} from "./math/index.js";
 import {sys_audio} from "./systems/sys_audio.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -45,7 +44,6 @@ export class Game implements ComponentData {
     public gl: WebGL2RenderingContext;
     public audio: AudioContext = new AudioContext();
     public input: Input = {mouse_x: 0, mouse_y: 0};
-    public fog_color: Vec4 = [0, 0, 0, 1];
     public materials: Array<Material> = [];
     public cameras: Array<Camera> = [];
     public lights: Array<Light> = [];
