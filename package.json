@@ -1,13 +1,16 @@
 {
     "name": "goodluck",
     "version": "0.0.1",
-    "description": "A tiny WebGL2 game engine with ECS",
+    "description": "A template for creating small and fast browser games",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/stasm/goodluck.git"
+        "url": "git+https://github.com/piesku/goodluck.git"
     },
-    "author": "Staś Małolepszy <stas@piesku.com>",
-    "license": "MIT",
+    "contributors": [
+        "Staś Małolepszy <stas@piesku.com>",
+        "Michał Budzyński <michal@virtualdesign.pl>"
+    ],
+    "license": "ISC",
     "scripts": {
         "build": "npm-run-all --serial compile rollup",
         "compile": "tsc",
