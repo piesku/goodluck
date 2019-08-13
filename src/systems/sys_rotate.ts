@@ -2,7 +2,7 @@ import {Get} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 import {from_euler, multiply} from "../math/quat.js";
 
-const QUERY = Get.Transform | Get.Rotate;
+const QUERY = (1 << Get.Transform) | (1 << Get.Rotate);
 
 export function sys_rotate(game: Game, delta: number) {
     for (let i = 0; i < game.world.length; i++) {

@@ -6,7 +6,7 @@ import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {get_translation} from "../math/mat4.js";
 
-const QUERY = Get.Transform | Get.Render;
+const QUERY = (1 << Get.Transform) | (1 << Get.Render);
 
 export function sys_render(game: Game, delta: number) {
     game.gl.clear(game.gl.COLOR_BUFFER_BIT | game.gl.DEPTH_BUFFER_BIT);

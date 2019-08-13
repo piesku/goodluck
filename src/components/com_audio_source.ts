@@ -24,7 +24,7 @@ export interface AudioSource {
  */
 export function audio_source(clips: {[k: string]: AudioClip}, idle?: string) {
     return (game: Game) => (entity: Entity) => {
-        game.world[entity] |= Get.AudioSource;
+        game.world[entity] |= 1 << Get.AudioSource;
         game[Get.AudioSource][entity] = <AudioSource>{
             clips,
             idle,

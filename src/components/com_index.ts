@@ -6,12 +6,12 @@ import {Rotate} from "./com_rotate";
 import {Transform} from "./com_transform";
 
 export const enum Get {
-    Transform = 1,
-    Render = 2,
-    Camera = 4,
-    Light = 8,
-    Rotate = 16,
-    AudioSource = 32,
+    Transform,
+    Render,
+    Camera,
+    Light,
+    Rotate,
+    AudioSource,
 }
 
 export interface ComponentData {

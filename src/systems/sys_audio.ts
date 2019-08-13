@@ -3,7 +3,7 @@ import {AudioSource} from "../components/com_audio_source.js";
 import {Get} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 
-const QUERY = Get.AudioSource;
+const QUERY = 1 << Get.AudioSource;
 
 export function sys_audio(game: Game, delta: number) {
     for (let i = 0; i < game.world.length; i++) {

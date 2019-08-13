@@ -21,7 +21,7 @@ export function render_basic(material: Material, shape: Shape, color: Vec4) {
             vaos.set(shape, buffer(game.gl, shape)!);
         }
 
-        game.world[entity] |= Get.Render;
+        game.world[entity] |= 1 << Get.Render;
         game[Get.Render][entity] = <RenderBasic>{
             kind: RenderKind.Basic,
             material,

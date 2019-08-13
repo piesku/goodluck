@@ -27,7 +27,7 @@ export function transform(
     scale: Vec3 = [1, 1, 1]
 ) {
     return (game: Game) => (entity: Entity) => {
-        game.world[entity] |= Get.Transform;
+        game.world[entity] |= 1 << Get.Transform;
         game[Get.Transform][entity] = <Transform>{
             entity,
             world: create(),

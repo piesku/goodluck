@@ -2,7 +2,7 @@ import {Get} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 import {get_translation, invert, multiply} from "../math/mat4.js";
 
-const QUERY = Get.Transform | Get.Camera;
+const QUERY = (1 << Get.Transform) | (1 << Get.Camera);
 
 export function sys_camera(game: Game, delta: number) {
     game.cameras = [];
