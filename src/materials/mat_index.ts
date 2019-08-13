@@ -5,5 +5,4 @@ export const enum Mat {
     Flat,
     Gouraud,
     Phong,
-    Toon,
 }
