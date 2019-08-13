@@ -20,7 +20,7 @@ let {vertices, normals, faces} = scene.meshes[0];
 console.log(`\
 export const ${win32.basename(filename, ".obj")} = {
     vertices: Float32Array.from([
-        ${vertices.join(", ")}
+        ${vertices.join(",\n        ")},
     ]),
 
     indices: Uint16Array.from([
@@ -36,10 +36,10 @@ export const ${win32.basename(filename, ".obj")} = {
             // array, the tri get drawn in reverse order and the shared vertices
             // become last.
             .reverse()
-            .join(", ")}
+            .join(",\n        ")},
     ]),
 
     normals: Float32Array.from([
-        ${normals.join(", ")}
+        ${normals.join(",\n        ")},
     ]),
 };`);
