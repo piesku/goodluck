@@ -1,6 +1,6 @@
+import {light_blueprint} from "../blueprints/blu_light.js";
 import {audio_source} from "../components/com_audio_source.js";
 import {camera} from "../components/com_camera.js";
-import {light} from "../components/com_light.js";
 import {render_basic} from "../components/com_render_basic.js";
 import {render_shaded} from "../components/com_render_shaded.js";
 import {rotate} from "../components/com_rotate.js";
@@ -24,7 +24,7 @@ export function world_stage(game: Game) {
 
     game.add({
         translation: [0, 3, 5],
-        using: [light([1, 1, 1], 5)],
+        ...light_blueprint,
     });
 
     game.add({

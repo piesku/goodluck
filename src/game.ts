@@ -1,3 +1,4 @@
+import {Blueprint} from "./blueprints/blu_common.js";
 import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
 import {ComponentData, Get} from "./components/com_index.js";
@@ -13,7 +14,7 @@ import {Mat} from "./materials/mat_index.js";
 import {mat_phong} from "./materials/mat_phong.js";
 import {mat_points} from "./materials/mat_points.js";
 import {mat_wireframe} from "./materials/mat_wireframe.js";
-import {Quat, Vec3, Vec4} from "./math/index.js";
+import {Vec4} from "./math/index.js";
 import {sys_audio} from "./systems/sys_audio.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -30,16 +31,6 @@ export interface Input {
     [k: string]: number;
     mouse_x: number;
     mouse_y: number;
-}
-
-type Mixin = (game: Game) => (entity: Entity) => void;
-
-export interface Blueprint {
-    translation?: Vec3;
-    rotation?: Quat;
-    scale?: Vec3;
-    using?: Array<Mixin>;
-    children?: Array<Blueprint>;
 }
 
 export class Game implements ComponentData {
