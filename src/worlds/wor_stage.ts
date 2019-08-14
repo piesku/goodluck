@@ -1,8 +1,8 @@
 import {ani_scale} from "../animations/ani_scale.js";
+import {fly_camera_blueprint} from "../blueprints/blu_fly_camera.js";
 import {light_blueprint} from "../blueprints/blu_light.js";
 import {animate} from "../components/com_animate.js";
 import {audio_source} from "../components/com_audio_source.js";
-import {camera} from "../components/com_camera.js";
 import {render_basic} from "../components/com_render_basic.js";
 import {render_shaded} from "../components/com_render_shaded.js";
 import {rotate} from "../components/com_rotate.js";
@@ -17,10 +17,11 @@ export function world_stage(game: Game) {
 
     game.add({
         translation: [0, 0, 10],
-        using: [
-            camera(game.canvas.width / game.canvas.height, 1, 0.1, 1000),
-            audio_source({music: snd_music}, "music"),
-        ],
+        ...fly_camera_blueprint,
+    });
+
+    game.add({
+        using: [audio_source({music: snd_music}, "music")],
     });
 
     game.add({

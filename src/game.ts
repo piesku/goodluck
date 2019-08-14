@@ -5,7 +5,9 @@ import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
 import {ComponentData, Get} from "./components/com_index.js";
 import {Light} from "./components/com_light.js";
+import {Move} from "./components/com_move.js";
 import {Named} from "./components/com_named.js";
+import {PlayerControl} from "./components/com_player_control.js";
 import {Render} from "./components/com_render.js";
 import {Rotate} from "./components/com_rotate.js";
 import {transform, Transform} from "./components/com_transform.js";
@@ -22,6 +24,8 @@ import {sys_audio} from "./systems/sys_audio.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
+import {sys_move} from "./systems/sys_move.js";
+import {sys_player_move} from "./systems/sys_player_move.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_rotate} from "./systems/sys_rotate.js";
 import {sys_transform} from "./systems/sys_transform.js";
@@ -48,6 +52,8 @@ export class Game implements ComponentData {
     public [Get.AudioSource]: Array<AudioSource> = [];
     public [Get.Animate]: Array<Animate> = [];
     public [Get.Named]: Array<Named> = [];
+    public [Get.Move]: Array<Move> = [];
+    public [Get.PlayerControl]: Array<PlayerControl> = [];
     public canvas: HTMLCanvasElement;
     public gl: WebGL2RenderingContext;
     public audio: AudioContext = new AudioContext();
@@ -107,8 +113,12 @@ export class Game implements ComponentData {
     }
 
     fixed_update(delta: number) {
+        // Player input.
+        sys_player_move(this, delta);
+        // Game logic.
         sys_rotate(this, delta);
         sys_animate(this, delta);
+        sys_move(this, delta);
         sys_transform(this, delta);
     }
 

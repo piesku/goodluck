@@ -2,7 +2,9 @@ import {Animate} from "./com_animate";
 import {AudioSource} from "./com_audio_source";
 import {Camera} from "./com_camera";
 import {Light} from "./com_light";
+import {Move} from "./com_move";
 import {Named} from "./com_named";
+import {PlayerControl} from "./com_player_control";
 import {Render} from "./com_render";
 import {Rotate} from "./com_rotate";
 import {Transform} from "./com_transform";
@@ -16,6 +18,8 @@ export const enum Get {
     AudioSource,
     Animate,
     Named,
+    PlayerControl,
+    Move,
 }
 
 export interface ComponentData {
@@ -27,4 +31,6 @@ export interface ComponentData {
     [Get.AudioSource]: Array<AudioSource>;
     [Get.Animate]: Array<Animate>;
     [Get.Named]: Array<Named>;
+    [Get.Move]: Array<Move>;
+    [Get.PlayerControl]: Array<PlayerControl>;
 }

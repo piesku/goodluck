@@ -54,7 +54,7 @@ export function* components_of_type<T>(
     transform: Transform,
     component: Get
 ): IterableIterator<T> {
-    if (game.world[transform.entity] & component) {
+    if (game.world[transform.entity] & (1 << component)) {
         yield (game[component][transform.entity] as unknown) as T;
     }
     for (let child of transform.children) {
