@@ -9,6 +9,7 @@ import {PlayerControl} from "./com_player_control";
 import {Render} from "./com_render";
 import {RigidBody} from "./com_rigid_body";
 import {Transform} from "./com_transform";
+import {Trigger} from "./com_trigger";
 
 export const enum Get {
     Transform,
@@ -22,6 +23,7 @@ export const enum Get {
     Move,
     Collide,
     RigidBody,
+    Trigger,
 }
 
 export interface ComponentData {
@@ -36,4 +38,5 @@ export interface ComponentData {
     [Get.PlayerControl]: Array<PlayerControl>;
     [Get.Collide]: Array<Collide>;
     [Get.RigidBody]: Array<RigidBody>;
+    [Get.Trigger]: Array<Trigger>;
 }

@@ -12,6 +12,7 @@ import {PlayerControl} from "./components/com_player_control.js";
 import {Render} from "./components/com_render.js";
 import {RigidBody} from "./components/com_rigid_body.js";
 import {transform, Transform} from "./components/com_transform.js";
+import {Trigger} from "./components/com_trigger.js";
 import {mat_basic} from "./materials/mat_basic.js";
 import {Material} from "./materials/mat_common.js";
 import {mat_flat} from "./materials/mat_flat.js";
@@ -32,6 +33,7 @@ import {sys_physics} from "./systems/sys_physics.js";
 import {sys_player_move} from "./systems/sys_player_move.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_transform} from "./systems/sys_transform.js";
+import {sys_trigger} from "./systems/sys_trigger.js";
 import {sys_ui} from "./systems/sys_ui.js";
 import {INIT_UI_STATE, reducer, UIState} from "./ui/state.js";
 
@@ -58,6 +60,7 @@ export class Game implements ComponentData {
     public [Get.PlayerControl]: Array<PlayerControl> = [];
     public [Get.Collide]: Array<Collide> = [];
     public [Get.RigidBody]: Array<RigidBody> = [];
+    public [Get.Trigger]: Array<Trigger> = [];
     public canvas: HTMLCanvasElement;
     public gl: WebGL2RenderingContext;
     public audio: AudioContext = new AudioContext();
@@ -123,6 +126,7 @@ export class Game implements ComponentData {
         sys_animate(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
+        sys_trigger(this, delta);
         // Collisions and physics.
         sys_collide(this, delta);
         sys_physics(this, delta);
