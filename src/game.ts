@@ -1,3 +1,4 @@
+import {Action, effect} from "./actions.js";
 import {Blueprint} from "./blueprints/blu_common.js";
 import {Animate} from "./components/com_animate.js";
 import {AudioSource} from "./components/com_audio_source.js";
@@ -23,6 +24,8 @@ import {sys_light} from "./systems/sys_light.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_rotate} from "./systems/sys_rotate.js";
 import {sys_transform} from "./systems/sys_transform.js";
+import {sys_ui} from "./systems/sys_ui.js";
+import {INIT_UI_STATE, reducer, UIState} from "./ui/state.js";
 
 const MAX_ENTITIES = 10000;
 
@@ -47,6 +50,11 @@ export class Game implements ComponentData {
     public gl: WebGL2RenderingContext;
     public audio: AudioContext = new AudioContext();
     public input: Input = {mouse_x: 0, mouse_y: 0};
+    public ui: UIState = INIT_UI_STATE;
+    public dispatch = (action: Action, ...args: Array<unknown>) => {
+        this.ui = reducer(this.ui, action, args);
+        effect(this, action, args);
+    };
     public materials: Array<Material> = [];
     public cameras: Array<Camera> = [];
     public lights: Array<Light> = [];
@@ -108,6 +116,7 @@ export class Game implements ComponentData {
         sys_light(this, delta);
         sys_render(this, delta);
         sys_framerate(this, delta);
+        sys_ui(this, delta);
     }
 
     start() {
