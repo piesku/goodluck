@@ -11,7 +11,6 @@ import {Named} from "./components/com_named.js";
 import {PlayerControl} from "./components/com_player_control.js";
 import {Render} from "./components/com_render.js";
 import {RigidBody} from "./components/com_rigid_body.js";
-import {Rotate} from "./components/com_rotate.js";
 import {transform, Transform} from "./components/com_transform.js";
 import {mat_basic} from "./materials/mat_basic.js";
 import {Material} from "./materials/mat_common.js";
@@ -32,7 +31,6 @@ import {sys_move} from "./systems/sys_move.js";
 import {sys_physics} from "./systems/sys_physics.js";
 import {sys_player_move} from "./systems/sys_player_move.js";
 import {sys_render} from "./systems/sys_render.js";
-import {sys_rotate} from "./systems/sys_rotate.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {sys_ui} from "./systems/sys_ui.js";
 import {INIT_UI_STATE, reducer, UIState} from "./ui/state.js";
@@ -53,7 +51,6 @@ export class Game implements ComponentData {
     public [Get.Render]: Array<Render> = [];
     public [Get.Camera]: Array<Camera> = [];
     public [Get.Light]: Array<Light> = [];
-    public [Get.Rotate]: Array<Rotate> = [];
     public [Get.AudioSource]: Array<AudioSource> = [];
     public [Get.Animate]: Array<Animate> = [];
     public [Get.Named]: Array<Named> = [];
@@ -123,7 +120,6 @@ export class Game implements ComponentData {
         // Player input.
         sys_player_move(this, delta);
         // Game logic.
-        sys_rotate(this, delta);
         sys_animate(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);

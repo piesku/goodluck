@@ -7,7 +7,6 @@ import {light} from "../components/com_light.js";
 import {render_basic} from "../components/com_render_basic.js";
 import {render_shaded} from "../components/com_render_shaded.js";
 import {rigid_body} from "../components/com_rigid_body.js";
-import {rotate} from "../components/com_rotate.js";
 import {Game} from "../game.js";
 import {Mat} from "../materials/mat_index.js";
 import {Cube} from "../shapes/Cube.js";
@@ -20,7 +19,7 @@ export function world_stage(game: Game) {
 
     // Player-controlled camera.
     game.add({
-        translation: [0, 0, 10],
+        translation: [0, 0, 5],
         ...fly_camera_blueprint,
     });
 
@@ -42,12 +41,11 @@ export function world_stage(game: Game) {
     });
 
     game.add({
-        translation: [-3, 5, 0],
+        translation: [-2, 5, 0],
         using: [
             render_basic(game.materials[Mat.Points], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
-            rotate(10, 20, 30),
             animate({
                 idle: ani_scale,
             }),
@@ -60,7 +58,6 @@ export function world_stage(game: Game) {
             render_basic(game.materials[Mat.Wireframe], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
-            rotate(10, 20, 30),
             animate({
                 idle: ani_scale,
             }),
@@ -68,12 +65,11 @@ export function world_stage(game: Game) {
     });
 
     game.add({
-        translation: [3, 5, 0],
+        translation: [2, 5, 0],
         using: [
             render_basic(game.materials[Mat.Basic], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
-            rotate(10, 20, 30),
             animate({
                 idle: ani_scale,
             }),
@@ -81,12 +77,11 @@ export function world_stage(game: Game) {
     });
 
     game.add({
-        translation: [-3, 1, 0],
+        translation: [-2, 1, 0],
         using: [
             render_shaded(game.materials[Mat.Flat], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
-            rotate(10, 20, 30),
             animate({
                 idle: ani_scale,
             }),
@@ -99,7 +94,6 @@ export function world_stage(game: Game) {
             render_shaded(game.materials[Mat.Gouraud], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
-            rotate(10, 20, 30),
             animate({
                 idle: ani_scale,
             }),
@@ -107,12 +101,11 @@ export function world_stage(game: Game) {
     });
 
     game.add({
-        translation: [3, 1, 0],
+        translation: [2, 1, 0],
         using: [
             render_shaded(game.materials[Mat.Phong], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
-            rotate(10, 20, 30),
             animate({
                 idle: ani_scale,
             }),

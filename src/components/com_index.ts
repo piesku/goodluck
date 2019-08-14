@@ -8,7 +8,6 @@ import {Named} from "./com_named";
 import {PlayerControl} from "./com_player_control";
 import {Render} from "./com_render";
 import {RigidBody} from "./com_rigid_body";
-import {Rotate} from "./com_rotate";
 import {Transform} from "./com_transform";
 
 export const enum Get {
@@ -16,7 +15,6 @@ export const enum Get {
     Render,
     Camera,
     Light,
-    Rotate,
     AudioSource,
     Animate,
     Named,
@@ -31,7 +29,6 @@ export interface ComponentData {
     [Get.Render]: Array<Render>;
     [Get.Camera]: Array<Camera>;
     [Get.Light]: Array<Light>;
-    [Get.Rotate]: Array<Rotate>;
     [Get.AudioSource]: Array<AudioSource>;
     [Get.Animate]: Array<Animate>;
     [Get.Named]: Array<Named>;
