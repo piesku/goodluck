@@ -3,12 +3,14 @@ import {Blueprint} from "./blueprints/blu_common.js";
 import {Animate} from "./components/com_animate.js";
 import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
+import {Collide} from "./components/com_collide.js";
 import {ComponentData, Get} from "./components/com_index.js";
 import {Light} from "./components/com_light.js";
 import {Move} from "./components/com_move.js";
 import {Named} from "./components/com_named.js";
 import {PlayerControl} from "./components/com_player_control.js";
 import {Render} from "./components/com_render.js";
+import {RigidBody} from "./components/com_rigid_body.js";
 import {Rotate} from "./components/com_rotate.js";
 import {transform, Transform} from "./components/com_transform.js";
 import {mat_basic} from "./materials/mat_basic.js";
@@ -22,9 +24,12 @@ import {mat_wireframe} from "./materials/mat_wireframe.js";
 import {sys_animate} from "./systems/sys_animate.js";
 import {sys_audio} from "./systems/sys_audio.js";
 import {sys_camera} from "./systems/sys_camera.js";
+import {sys_collide} from "./systems/sys_collide.js";
+import {sys_debug} from "./systems/sys_debug.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
+import {sys_physics} from "./systems/sys_physics.js";
 import {sys_player_move} from "./systems/sys_player_move.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_rotate} from "./systems/sys_rotate.js";
@@ -54,6 +59,8 @@ export class Game implements ComponentData {
     public [Get.Named]: Array<Named> = [];
     public [Get.Move]: Array<Move> = [];
     public [Get.PlayerControl]: Array<PlayerControl> = [];
+    public [Get.Collide]: Array<Collide> = [];
+    public [Get.RigidBody]: Array<RigidBody> = [];
     public canvas: HTMLCanvasElement;
     public gl: WebGL2RenderingContext;
     public audio: AudioContext = new AudioContext();
@@ -120,6 +127,12 @@ export class Game implements ComponentData {
         sys_animate(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
+        // Collisions and physics.
+        sys_collide(this, delta);
+        sys_physics(this, delta);
+        sys_transform(this, delta);
+        // Debug.
+        true && sys_debug(this, delta);
     }
 
     frame_update(delta: number) {
