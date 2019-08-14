@@ -1,3 +1,4 @@
+import {Animate} from "./com_animate";
 import {AudioSource} from "./com_audio_source";
 import {Camera} from "./com_camera";
 import {Light} from "./com_light";
@@ -12,6 +13,7 @@ export const enum Get {
     Light,
     Rotate,
     AudioSource,
+    Animate,
 }
 
 export interface ComponentData {
@@ -21,4 +23,5 @@ export interface ComponentData {
     [Get.Light]: Array<Light>;
     [Get.Rotate]: Array<Rotate>;
     [Get.AudioSource]: Array<AudioSource>;
+    [Get.Animate]: Array<Animate>;
 }

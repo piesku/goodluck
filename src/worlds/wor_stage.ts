@@ -1,4 +1,6 @@
+import {ani_scale} from "../animations/ani_scale.js";
 import {light_blueprint} from "../blueprints/blu_light.js";
+import {animate} from "../components/com_animate.js";
 import {audio_source} from "../components/com_audio_source.js";
 import {camera} from "../components/com_camera.js";
 import {render_basic} from "../components/com_render_basic.js";
@@ -31,6 +33,9 @@ export function world_stage(game: Game) {
         using: [
             render_basic(game.materials[Mat.Points], Icosphere, [1, 1, 0.3, 1]),
             rotate(10, 20, 30),
+            animate({
+                idle: ani_scale,
+            }),
         ],
     });
 
@@ -39,6 +44,9 @@ export function world_stage(game: Game) {
         using: [
             render_basic(game.materials[Mat.Wireframe], Icosphere, [1, 1, 0.3, 1]),
             rotate(10, 20, 30),
+            animate({
+                idle: ani_scale,
+            }),
         ],
     });
 
@@ -47,6 +55,9 @@ export function world_stage(game: Game) {
         using: [
             render_basic(game.materials[Mat.Basic], Icosphere, [1, 1, 0.3, 1]),
             rotate(10, 20, 30),
+            animate({
+                idle: ani_scale,
+            }),
         ],
     });
 
@@ -55,6 +66,9 @@ export function world_stage(game: Game) {
         using: [
             render_shaded(game.materials[Mat.Flat], Icosphere, [1, 1, 0.3, 1]),
             rotate(10, 20, 30),
+            animate({
+                idle: ani_scale,
+            }),
         ],
     });
 
@@ -63,6 +77,9 @@ export function world_stage(game: Game) {
         using: [
             render_shaded(game.materials[Mat.Gouraud], Icosphere, [1, 1, 0.3, 1]),
             rotate(10, 20, 30),
+            animate({
+                idle: ani_scale,
+            }),
         ],
     });
 
@@ -71,6 +88,9 @@ export function world_stage(game: Game) {
         using: [
             render_shaded(game.materials[Mat.Phong], Icosphere, [1, 1, 0.3, 1]),
             rotate(10, 20, 30),
+            animate({
+                idle: ani_scale,
+            }),
         ],
     });
 }

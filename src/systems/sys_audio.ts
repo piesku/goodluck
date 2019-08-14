@@ -1,5 +1,4 @@
 import {play_note} from "../audio.js";
-import {AudioSource} from "../components/com_audio_source.js";
 import {Get} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 
@@ -14,7 +13,7 @@ export function sys_audio(game: Game, delta: number) {
 }
 
 function update(game: Game, entity: Entity, delta: number) {
-    let audio_source = game[Get.AudioSource][entity] as AudioSource;
+    let audio_source = game[Get.AudioSource][entity];
     let next = audio_source.trigger && audio_source.clips[audio_source.trigger];
     let can_exit = !audio_source.current || audio_source.time > audio_source.current.exit;
 

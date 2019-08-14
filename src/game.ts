@@ -1,4 +1,5 @@
 import {Blueprint} from "./blueprints/blu_common.js";
+import {Animate} from "./components/com_animate.js";
 import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
 import {ComponentData, Get} from "./components/com_index.js";
@@ -14,6 +15,7 @@ import {Mat} from "./materials/mat_index.js";
 import {mat_phong} from "./materials/mat_phong.js";
 import {mat_points} from "./materials/mat_points.js";
 import {mat_wireframe} from "./materials/mat_wireframe.js";
+import {sys_animate} from "./systems/sys_animate.js";
 import {sys_audio} from "./systems/sys_audio.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -40,6 +42,7 @@ export class Game implements ComponentData {
     public [Get.Light]: Array<Light> = [];
     public [Get.Rotate]: Array<Rotate> = [];
     public [Get.AudioSource]: Array<AudioSource> = [];
+    public [Get.Animate]: Array<Animate> = [];
     public canvas: HTMLCanvasElement;
     public gl: WebGL2RenderingContext;
     public audio: AudioContext = new AudioContext();
@@ -95,6 +98,7 @@ export class Game implements ComponentData {
 
     fixed_update(delta: number) {
         sys_rotate(this, delta);
+        sys_animate(this, delta);
         sys_transform(this, delta);
     }
 
