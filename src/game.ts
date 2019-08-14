@@ -5,6 +5,7 @@ import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
 import {ComponentData, Get} from "./components/com_index.js";
 import {Light} from "./components/com_light.js";
+import {Named} from "./components/com_named.js";
 import {Render} from "./components/com_render.js";
 import {Rotate} from "./components/com_rotate.js";
 import {transform, Transform} from "./components/com_transform.js";
@@ -46,6 +47,7 @@ export class Game implements ComponentData {
     public [Get.Rotate]: Array<Rotate> = [];
     public [Get.AudioSource]: Array<AudioSource> = [];
     public [Get.Animate]: Array<Animate> = [];
+    public [Get.Named]: Array<Named> = [];
     public canvas: HTMLCanvasElement;
     public gl: WebGL2RenderingContext;
     public audio: AudioContext = new AudioContext();
