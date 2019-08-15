@@ -10,12 +10,13 @@ const QUERY = (1 << Get.Transform) | (1 << Get.Collide);
 
 export function sys_collide(game: Game, delta: number) {
     // Collect all colliders.
-    let colliders: Collide[] = [];
+    let all_colliders: Collide[] = [];
+    let dyn_colliders: Collide[] = [];
     for (let i = 0; i < game.world.length; i++) {
         if ((game.world[i] & QUERY) === QUERY) {
             let transform = game[Get.Transform][i];
             let collider = game[Get.Collide][i];
-            colliders.push(collider);
+            all_colliders.push(collider);
 
             // Prepare the collider for this tick's detection.
             collider.collisions.length = 0;
@@ -24,29 +25,27 @@ export function sys_collide(game: Game, delta: number) {
                 compute_aabb(transform, collider);
             } else if (collider.dynamic) {
                 compute_aabb(transform, collider);
+                dyn_colliders.push(collider);
             }
         }
     }
 
-    for (let i = 0; i < colliders.length; i++) {
-        check_collisions(colliders[i], colliders, i);
+    for (let i = 0; i < dyn_colliders.length; i++) {
+        check_collisions(dyn_colliders[i], all_colliders);
     }
 }
 
 /**
- * Check for collisions between the current collider and all others. Because
- * collisions are symmetric, it's sufficient to check only the upper-right half
- * of the n x n matrix of colliders.
+ * Check for collisions between a dynamic collider and all others.
  *
  * @param game The game instance.
  * @param collider The current collider.
  * @param colliders All other colliders.
- * @param max_index The number of colliders to check.
  */
-function check_collisions(collider: Collide, colliders: Collide[], max_index: number) {
-    for (let i = 0; i < max_index; i++) {
+function check_collisions(collider: Collide, colliders: Collide[]) {
+    for (let i = 0; i < colliders.length; i++) {
         let other = colliders[i];
-        if (collider.dynamic || other.dynamic) {
+        if (collider !== other) {
             let hit = intersect_aabb(collider, other);
             if (hit) {
                 collider.collisions.push({
