@@ -15,8 +15,8 @@
         "build": "npm-run-all --serial compile rollup",
         "compile": "tsc",
         "compile:watch": "tsc --watch -p .",
-        "lint": "prettier --check src/**/*.ts",
-        "pretty": "prettier --write src/**/*.ts",
+        "lint": "prettier --check \"src/**/*.ts\"",
+        "pretty": "prettier --write \"src/**/*.ts\"",
         "rollup": "rollup -c && printf \"Size gzipped (including HTML): %s bytes\n\" $(gzip -r public/opt/*  --stdout | wc -c)",
         "serve": "live-server --port=1234 --no-browser --quiet public",
         "start": "npm-run-all --parallel compile:watch serve"
