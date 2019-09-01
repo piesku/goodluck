@@ -2,16 +2,12 @@ import {Entity, Game} from "../game.js";
 import {Get} from "./com_index.js";
 
 export interface AudioSource {
-    /** Named clips this source can play. */
-    readonly clips: {
-        [k: string]: AudioClip;
-    };
-    /** The name of the next clip to play. */
-    trigger?: string;
+    /** The next clip to play. */
+    trigger?: AudioClip;
     /** The clip which was triggered most recently. */
     current?: AudioClip;
     /** The clip to play by default, in a loop. */
-    idle?: string;
+    idle?: AudioClip;
     /** Elapsed time since the last clip change. */
     time: number;
 }
@@ -19,14 +15,12 @@ export interface AudioSource {
 /**
  * Add the AudioSource component.
  *
- * @param clips Named audio clips this source can play.
  * @param idle The name of the clip to play by default, in a loop.
  */
-export function audio_source(clips: {[k: string]: AudioClip}, idle?: string) {
+export function audio_source(idle?: AudioClip) {
     return (game: Game) => (entity: Entity) => {
         game.world[entity] |= 1 << Get.AudioSource;
         game[Get.AudioSource][entity] = <AudioSource>{
-            clips,
             idle,
             time: 0,
         };

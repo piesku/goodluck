@@ -14,22 +14,21 @@ export function sys_audio(game: Game, delta: number) {
 
 function update(game: Game, entity: Entity, delta: number) {
     let audio_source = game[Get.AudioSource][entity];
-    let next = audio_source.trigger && audio_source.clips[audio_source.trigger];
     let can_exit = !audio_source.current || audio_source.time > audio_source.current.exit;
 
-    if (next && can_exit) {
+    if (audio_source.trigger && can_exit) {
         // Seconds per beat, corresponding to a quarter note.
-        let spb = 60 / (next.bpm || 120);
+        let spb = 60 / (audio_source.trigger.bpm || 120);
         // Track timing is based on sixteenth notes.
         let interval = spb / 4;
-        for (let track of next.tracks) {
+        for (let track of audio_source.trigger.tracks) {
             for (let i = 0; i < track.notes.length; i++) {
                 if (track.notes[i]) {
                     play_note(game.audio, track.instrument, track.notes[i], i * interval);
                 }
             }
         }
-        audio_source.current = next;
+        audio_source.current = audio_source.trigger;
         audio_source.time = 0;
     } else {
         audio_source.time += delta;
