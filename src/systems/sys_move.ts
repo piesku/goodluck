@@ -1,4 +1,4 @@
-import {Animate} from "../components/com_animate.js";
+import {Anim, Animate} from "../components/com_animate.js";
 import {Get} from "../components/com_index.js";
 import {components_of_type} from "../components/com_transform.js";
 import {Entity, Game} from "../game.js";
@@ -22,7 +22,7 @@ function update(game: Game, entity: Entity, delta: number) {
     let move = game[Get.Move][entity];
     for (let animate of components_of_type<Animate>(game, transform, Get.Animate)) {
         if (!animate.trigger) {
-            animate.trigger = move.directions.length ? "move" : "idle";
+            animate.trigger = move.directions.length ? Anim.Move : Anim.Idle;
         }
     }
 

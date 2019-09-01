@@ -1,6 +1,6 @@
 import {ani_scale} from "../animations/ani_scale.js";
 import {fly_camera_blueprint} from "../blueprints/blu_fly_camera.js";
-import {animate} from "../components/com_animate.js";
+import {Anim, animate} from "../components/com_animate.js";
 import {audio_source} from "../components/com_audio_source.js";
 import {collide} from "../components/com_collide.js";
 import {light} from "../components/com_light.js";
@@ -47,7 +47,7 @@ export function world_stage(game: Game) {
             collide(true),
             rigid_body(true),
             animate({
-                idle: ani_scale,
+                [Anim.Idle]: ani_scale,
             }),
         ],
     });
@@ -59,7 +59,7 @@ export function world_stage(game: Game) {
             collide(true),
             rigid_body(true),
             animate({
-                idle: ani_scale,
+                [Anim.Idle]: ani_scale,
             }),
         ],
     });
@@ -71,7 +71,7 @@ export function world_stage(game: Game) {
             collide(true),
             rigid_body(true),
             animate({
-                idle: ani_scale,
+                [Anim.Idle]: ani_scale,
             }),
         ],
     });
@@ -83,7 +83,7 @@ export function world_stage(game: Game) {
             collide(true),
             rigid_body(true),
             animate({
-                idle: ani_scale,
+                [Anim.Idle]: ani_scale,
             }),
         ],
     });
@@ -95,7 +95,7 @@ export function world_stage(game: Game) {
             collide(true),
             rigid_body(true),
             animate({
-                idle: ani_scale,
+                [Anim.Idle]: ani_scale,
             }),
         ],
     });
@@ -107,7 +107,7 @@ export function world_stage(game: Game) {
             collide(true),
             rigid_body(true),
             animate({
-                idle: ani_scale,
+                [Anim.Idle]: ani_scale,
             }),
         ],
     });

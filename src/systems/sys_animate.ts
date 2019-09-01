@@ -1,4 +1,4 @@
-import {AnimationFlag, AnimationKeyframe} from "../components/com_animate.js";
+import {Anim, AnimationFlag, AnimationKeyframe} from "../components/com_animate.js";
 import {Get} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 import {slerp} from "../math/quat.js";
@@ -107,6 +107,6 @@ function update(game: Game, entity: Entity, delta: number) {
         animate.current = next;
         animate.trigger = undefined;
     } else if (!(animate.current.flags & AnimationFlag.Loop)) {
-        animate.current = animate.states.idle;
+        animate.current = animate.states[Anim.Idle];
     }
 }
