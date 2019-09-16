@@ -1,4 +1,5 @@
 import {BasicAttribute} from "../components/com_render_basic.js";
+import {GL_POINTS} from "../webgl.js";
 import {mat_create} from "./mat_common.js";
 
 let vertex = `#version 300 es
@@ -25,5 +26,5 @@ let fragment = `#version 300 es
 `;
 
 export function mat_points(gl: WebGL2RenderingContext) {
-    return mat_create(gl, gl.POINTS, vertex, fragment);
+    return mat_create(gl, GL_POINTS, vertex, fragment);
 }

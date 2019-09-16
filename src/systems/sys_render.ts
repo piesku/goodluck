@@ -5,11 +5,12 @@ import {RenderShaded} from "../components/com_render_shaded.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {get_translation} from "../math/mat4.js";
+import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../webgl.js";
 
 const QUERY = (1 << Get.Transform) | (1 << Get.Render);
 
 export function sys_render(game: Game, delta: number) {
-    game.GL.clear(game.GL.COLOR_BUFFER_BIT | game.GL.DEPTH_BUFFER_BIT);
+    game.GL.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     let light_positions: Array<number> = [];
     let light_details: Array<number> = [];
@@ -65,7 +66,7 @@ function draw_basic(transform: Transform, render: RenderBasic) {
     GL.uniformMatrix4fv(Uniforms.world, false, transform.World);
     GL.uniform4fv(Uniforms.color, render.Color);
     GL.bindVertexArray(render.VAO);
-    GL.drawElements(Mode, render.Count, GL.UNSIGNED_SHORT, 0);
+    GL.drawElements(Mode, render.Count, GL_UNSIGNED_SHORT, 0);
     GL.bindVertexArray(null);
 }
 
@@ -75,6 +76,6 @@ function draw_shaded(transform: Transform, render: RenderShaded) {
     GL.uniformMatrix4fv(Uniforms.self, false, transform.Self);
     GL.uniform4fv(Uniforms.color, render.Color);
     GL.bindVertexArray(render.VAO);
-    GL.drawElements(Mode, render.Count, GL.UNSIGNED_SHORT, 0);
+    GL.drawElements(Mode, render.Count, GL_UNSIGNED_SHORT, 0);
     GL.bindVertexArray(null);
 }

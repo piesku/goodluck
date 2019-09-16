@@ -1,6 +1,7 @@
 import {Entity, Game} from "../game.js";
 import {Material, Shape} from "../materials/mat_common.js";
 import {Vec4} from "../math/index.js";
+import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT, GL_STATIC_DRAW} from "../webgl.js";
 import {Get} from "./com_index.js";
 import {RenderKind} from "./com_render.js";
 
@@ -40,13 +41,13 @@ function buffer(gl: WebGL2RenderingContext, shape: Shape) {
     let vao = gl.createVertexArray();
     gl.bindVertexArray(vao);
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(gl.ARRAY_BUFFER, shape.Vertices, gl.STATIC_DRAW);
+    gl.bindBuffer(GL_ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(GL_ARRAY_BUFFER, shape.Vertices, GL_STATIC_DRAW);
     gl.enableVertexAttribArray(BasicAttribute.Position);
-    gl.vertexAttribPointer(BasicAttribute.Position, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(BasicAttribute.Position, 3, GL_FLOAT, false, 0, 0);
 
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, shape.Indices, gl.STATIC_DRAW);
+    gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(GL_ELEMENT_ARRAY_BUFFER, shape.Indices, GL_STATIC_DRAW);
 
     gl.bindVertexArray(null);
     return vao;

@@ -1,3 +1,11 @@
+import {
+    GL_ACTIVE_UNIFORMS,
+    GL_COMPILE_STATUS,
+    GL_FRAGMENT_SHADER,
+    GL_LINK_STATUS,
+    GL_VERTEX_SHADER,
+} from "../webgl.js";
+
 export interface Shape {
     Vertices: Float32Array;
     Indices: Uint16Array;
@@ -25,7 +33,7 @@ export function mat_create(
     };
 
     // Reflect uniforms.
-    let uniform_count = GL.getProgramParameter(material.Program, GL.ACTIVE_UNIFORMS);
+    let uniform_count = GL.getProgramParameter(material.Program, GL_ACTIVE_UNIFORMS);
     for (let i = 0; i < uniform_count; ++i) {
         let {name} = GL.getActiveUniform(material.Program, i)!;
         // Array uniforms are named foo[0]; strip the [0] part.
@@ -40,11 +48,11 @@ export function mat_create(
 
 function link(gl: WebGL2RenderingContext, vertex: string, fragment: string) {
     let program = gl.createProgram()!;
-    gl.attachShader(program, compile(gl, gl.VERTEX_SHADER, vertex));
-    gl.attachShader(program, compile(gl, gl.FRAGMENT_SHADER, fragment));
+    gl.attachShader(program, compile(gl, GL_VERTEX_SHADER, vertex));
+    gl.attachShader(program, compile(gl, GL_FRAGMENT_SHADER, fragment));
     gl.linkProgram(program);
 
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    if (!gl.getProgramParameter(program, GL_LINK_STATUS)) {
         throw new Error(gl.getProgramInfoLog(program)!);
     }
 
@@ -56,7 +64,7 @@ function compile(gl: WebGL2RenderingContext, type: GLint, source: string) {
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
 
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    if (!gl.getShaderParameter(shader, GL_COMPILE_STATUS)) {
         throw new Error(gl.getShaderInfoLog(shader)!);
     }
 

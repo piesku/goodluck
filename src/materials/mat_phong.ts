@@ -1,4 +1,5 @@
 import {ShadedAttribute} from "../components/com_render_shaded.js";
+import {GL_TRIANGLES} from "../webgl.js";
 import {mat_create} from "./mat_common.js";
 
 let vertex = `#version 300 es
@@ -51,5 +52,5 @@ let fragment = `#version 300 es
 `;
 
 export function mat_phong(gl: WebGL2RenderingContext) {
-    return mat_create(gl, gl.TRIANGLES, vertex, fragment);
+    return mat_create(gl, GL_TRIANGLES, vertex, fragment);
 }
