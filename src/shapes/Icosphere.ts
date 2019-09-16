@@ -1,5 +1,7 @@
-export const Icosphere = {
-    vertices: Float32Array.from([
+import {Shape} from "../materials/mat_common";
+
+export const Icosphere = <Shape>{
+    Vertices: Float32Array.from([
         0,
         -0.5,
         0,
@@ -128,7 +130,7 @@ export const Icosphere = {
         0,
     ]),
 
-    indices: Uint16Array.from([
+    Indices: Uint16Array.from([
         38,
         39,
         25,
@@ -371,7 +373,7 @@ export const Icosphere = {
         0,
     ]),
 
-    normals: Float32Array.from([
+    Normals: Float32Array.from([
         0,
         -1,
         0,

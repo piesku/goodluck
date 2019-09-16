@@ -1,5 +1,7 @@
-export const Cube = {
-    vertices: Float32Array.from([
+import {Shape} from "../materials/mat_common";
+
+export const Cube = <Shape>{
+    Vertices: Float32Array.from([
         -0.5,
         -0.5,
         0.5,
@@ -74,7 +76,7 @@ export const Cube = {
         0.5,
     ]),
 
-    indices: Uint16Array.from([
+    Indices: Uint16Array.from([
         23,
         22,
         20,
@@ -113,7 +115,7 @@ export const Cube = {
         0,
     ]),
 
-    normals: Float32Array.from([
+    Normals: Float32Array.from([
         -1,
         0,
         0,

@@ -26,7 +26,7 @@ export function render_basic(Material: Material, Shape: Shape, Color: Vec4) {
             Kind: RenderKind.Basic,
             Material,
             VAO: vaos.get(Shape),
-            Count: Shape.indices.length,
+            Count: Shape.Indices.length,
             Color: Color,
         };
     };
@@ -41,12 +41,12 @@ function buffer(gl: WebGL2RenderingContext, shape: Shape) {
     gl.bindVertexArray(vao);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(gl.ARRAY_BUFFER, shape.vertices, gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, shape.Vertices, gl.STATIC_DRAW);
     gl.enableVertexAttribArray(BasicAttribute.Position);
     gl.vertexAttribPointer(BasicAttribute.Position, 3, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, shape.indices, gl.STATIC_DRAW);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, shape.Indices, gl.STATIC_DRAW);
 
     gl.bindVertexArray(null);
     return vao;

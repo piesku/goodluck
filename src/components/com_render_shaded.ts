@@ -26,7 +26,7 @@ export function render_shaded(Material: Material, shape: Shape, color: Vec4) {
             Kind: RenderKind.Shaded,
             Material,
             VAO: vaos.get(shape),
-            Count: shape.indices.length,
+            Count: shape.Indices.length,
             Color: color,
         };
     };
@@ -42,17 +42,17 @@ function buffer(gl: WebGL2RenderingContext, shape: Shape) {
     gl.bindVertexArray(vao);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(gl.ARRAY_BUFFER, shape.vertices, gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, shape.Vertices, gl.STATIC_DRAW);
     gl.enableVertexAttribArray(ShadedAttribute.Position);
     gl.vertexAttribPointer(ShadedAttribute.Position, 3, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(gl.ARRAY_BUFFER, shape.normals, gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, shape.Normals, gl.STATIC_DRAW);
     gl.enableVertexAttribArray(ShadedAttribute.Normal);
     gl.vertexAttribPointer(ShadedAttribute.Normal, 3, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, shape.indices, gl.STATIC_DRAW);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, shape.Indices, gl.STATIC_DRAW);
 
     gl.bindVertexArray(null);
     return vao;

@@ -34,16 +34,16 @@ export function sys_render(game: Game, delta: number) {
             if (render.Material !== current_material) {
                 current_material = render.Material;
 
-                let {gl, program, uniforms} = current_material;
-                gl.useProgram(program);
+                let {GL, Program, Uniforms} = current_material;
+                GL.useProgram(Program);
                 // TODO Support more than one camera.
-                gl.uniformMatrix4fv(uniforms.pv, false, game.Cameras[0].PV);
+                GL.uniformMatrix4fv(Uniforms.pv, false, game.Cameras[0].PV);
 
                 switch (render.Kind) {
                     case RenderKind.Shaded:
-                        gl.uniform1i(uniforms.light_count, game.Lights.length);
-                        gl.uniform3fv(uniforms.light_positions, light_positions);
-                        gl.uniform4fv(uniforms.light_details, light_details);
+                        GL.uniform1i(Uniforms.light_count, game.Lights.length);
+                        GL.uniform3fv(Uniforms.light_positions, light_positions);
+                        GL.uniform4fv(Uniforms.light_details, light_details);
                         break;
                 }
             }
@@ -61,20 +61,20 @@ export function sys_render(game: Game, delta: number) {
 }
 
 function draw_basic(transform: Transform, render: RenderBasic) {
-    let {gl, mode, uniforms} = render.Material;
-    gl.uniformMatrix4fv(uniforms.world, false, transform.World);
-    gl.uniform4fv(uniforms.color, render.Color);
-    gl.bindVertexArray(render.VAO);
-    gl.drawElements(mode, render.Count, gl.UNSIGNED_SHORT, 0);
-    gl.bindVertexArray(null);
+    let {GL, Mode, Uniforms} = render.Material;
+    GL.uniformMatrix4fv(Uniforms.world, false, transform.World);
+    GL.uniform4fv(Uniforms.color, render.Color);
+    GL.bindVertexArray(render.VAO);
+    GL.drawElements(Mode, render.Count, GL.UNSIGNED_SHORT, 0);
+    GL.bindVertexArray(null);
 }
 
 function draw_shaded(transform: Transform, render: RenderShaded) {
-    let {gl, mode, uniforms} = render.Material;
-    gl.uniformMatrix4fv(uniforms.world, false, transform.World);
-    gl.uniformMatrix4fv(uniforms.self, false, transform.Self);
-    gl.uniform4fv(uniforms.color, render.Color);
-    gl.bindVertexArray(render.VAO);
-    gl.drawElements(mode, render.Count, gl.UNSIGNED_SHORT, 0);
-    gl.bindVertexArray(null);
+    let {GL, Mode, Uniforms} = render.Material;
+    GL.uniformMatrix4fv(Uniforms.world, false, transform.World);
+    GL.uniformMatrix4fv(Uniforms.self, false, transform.Self);
+    GL.uniform4fv(Uniforms.color, render.Color);
+    GL.bindVertexArray(render.VAO);
+    GL.drawElements(Mode, render.Count, GL.UNSIGNED_SHORT, 0);
+    GL.bindVertexArray(null);
 }

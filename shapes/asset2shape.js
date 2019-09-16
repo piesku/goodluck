@@ -19,11 +19,11 @@ let {vertices, normals, faces} = scene.meshes[0];
 
 console.log(`\
 export const ${win32.basename(filename, ".obj")} = {
-    vertices: Float32Array.from([
+    Vertices: Float32Array.from([
         ${vertices.join(",\n        ")},
     ]),
 
-    indices: Uint16Array.from([
+    Indices: Uint16Array.from([
         ${faces
             // Flatten faces into one big index array.
             .reduce((acc, cur) => acc.concat(cur))
@@ -39,7 +39,7 @@ export const ${win32.basename(filename, ".obj")} = {
             .join(",\n        ")},
     ]),
 
-    normals: Float32Array.from([
+    Normals: Float32Array.from([
         ${normals.join(",\n        ")},
     ]),
 };`);
