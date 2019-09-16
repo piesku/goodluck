@@ -16,7 +16,7 @@ export interface RenderBasic {
 let vaos: WeakMap<Shape, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_basic(Material: Material, Shape: Shape, Color: Vec4) {
-    return (game: Game) => (entity: Entity) => {
+    return (game: Game, entity: Entity) => {
         if (!vaos.has(Shape)) {
             // We only need to create the VAO once.
             vaos.set(Shape, buffer(game.GL, Shape)!);

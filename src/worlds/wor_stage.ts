@@ -1,5 +1,5 @@
 import {ani_scale} from "../animations/ani_scale.js";
-import {fly_camera_blueprint} from "../blueprints/blu_fly_camera.js";
+import {create_fly_camera} from "../blueprints/blu_fly_camera.js";
 import {Anim, animate} from "../components/com_animate.js";
 import {audio_source} from "../components/com_audio_source.js";
 import {collide} from "../components/com_collide.js";
@@ -20,7 +20,7 @@ export function world_stage(game: Game) {
     // Player-controlled camera.
     game.Add({
         translation: [0, 0, 5],
-        ...fly_camera_blueprint,
+        ...create_fly_camera(game),
     });
 
     // Ground.

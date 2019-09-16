@@ -1,7 +1,7 @@
 import {Entity, Game} from "../game";
 import {Quat, Vec3} from "../math";
 
-type Mixin = (game: Game) => (entity: Entity) => void;
+type Mixin = (game: Game, entity: Entity) => void;
 
 export interface Blueprint {
     translation?: Vec3;

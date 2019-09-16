@@ -18,7 +18,7 @@ export interface AudioSource {
  * @param idle The name of the clip to play by default, in a loop.
  */
 export function audio_source(idle?: AudioClip) {
-    return (game: Game) => (entity: Entity) => {
+    return (game: Game, entity: Entity) => {
         game.World[entity] |= 1 << Get.AudioSource;
         game[Get.AudioSource][entity] = <AudioSource>{
             Idle: idle,

@@ -16,7 +16,7 @@ export interface Animate {
 }
 
 export function animate(clips: {[Anim.Idle]: AnimationClip; [k: number]: AnimationClip}) {
-    return (game: Game) => (entity: Entity) => {
+    return (game: Game, entity: Entity) => {
         let States: Record<string, AnimationState> = {};
         for (let name in clips) {
             let {Keyframes, Flags = AnimationFlag.Default} = clips[name];

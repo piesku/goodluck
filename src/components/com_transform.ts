@@ -26,7 +26,7 @@ export function transform(
     Rotation: Quat = [0, 0, 0, 1],
     Scale: Vec3 = [1, 1, 1]
 ) {
-    return (game: Game) => (EntityId: Entity) => {
+    return (game: Game, EntityId: Entity) => {
         game.World[EntityId] |= 1 << Get.Transform;
         game[Get.Transform][EntityId] = <Transform>{
             EntityId,
