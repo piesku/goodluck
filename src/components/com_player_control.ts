@@ -9,7 +9,7 @@ export interface PlayerControl {
 
 export function player_control(Move: boolean, Yaw: boolean, Pitch: boolean) {
     return (game: Game) => (entity: Entity) => {
-        game.world[entity] |= 1 << Get.PlayerControl;
+        game.World[entity] |= 1 << Get.PlayerControl;
         game[Get.PlayerControl][entity] = <PlayerControl>{
             Move,
             Yaw,

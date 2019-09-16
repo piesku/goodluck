@@ -15,7 +15,7 @@ export interface Move {
 
 export function move(MoveSpeed: number = 3.5, RotateSpeed: number = 0.5) {
     return (game: Game) => (entity: Entity) => {
-        game.world[entity] |= 1 << Get.Move;
+        game.World[entity] |= 1 << Get.Move;
         game[Get.Move][entity] = <Move>{
             MoveSpeed,
             RotateSpeed,

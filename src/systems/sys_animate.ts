@@ -7,8 +7,8 @@ import {lerp} from "../math/vec3.js";
 const QUERY = (1 << Get.Transform) | (1 << Get.Animate);
 
 export function sys_animate(game: Game, delta: number) {
-    for (let i = 0; i < game.world.length; i++) {
-        if ((game.world[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.length; i++) {
+        if ((game.World[i] & QUERY) === QUERY) {
             update(game, i, delta);
         }
     }

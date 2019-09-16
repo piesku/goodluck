@@ -12,8 +12,8 @@ export function sys_collide(game: Game, delta: number) {
     // Collect all colliders.
     let all_colliders: Collide[] = [];
     let dyn_colliders: Collide[] = [];
-    for (let i = 0; i < game.world.length; i++) {
-        if ((game.world[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.length; i++) {
+        if ((game.World[i] & QUERY) === QUERY) {
             let transform = game[Get.Transform][i];
             let collider = game[Get.Collide][i];
             all_colliders.push(collider);

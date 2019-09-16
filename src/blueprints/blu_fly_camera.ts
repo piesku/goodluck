@@ -11,7 +11,7 @@ export let fly_camera_blueprint: Blueprint = {
         {
             rotation: [0, 1, 0, 0],
             using: [
-                (game: Game) => camera(game.canvas.width / game.canvas.height, 1, 0.1, 1000)(game),
+                (game: Game) => camera(game.Canvas.width / game.Canvas.height, 1, 0.1, 1000)(game),
             ],
         },
     ],

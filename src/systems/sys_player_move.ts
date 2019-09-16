@@ -7,8 +7,8 @@ const AXIS_X = [1, 0, 0];
 const AXIS_Y = [0, 1, 0];
 
 export function sys_player_move(game: Game, delta: number) {
-    for (let i = 0; i < game.world.length; i++) {
-        if ((game.world[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.length; i++) {
+        if ((game.World[i] & QUERY) === QUERY) {
             update(game, i, delta);
         }
     }
@@ -19,19 +19,19 @@ function update(game: Game, entity: Entity, delta: number) {
 
     if (control.Move) {
         let move = game[Get.Move][entity];
-        if (game.input.KeyW) {
+        if (game.Input.KeyW) {
             // Move forward
             move.Directions.push([0, 0, 1]);
         }
-        if (game.input.KeyA) {
+        if (game.Input.KeyA) {
             // Strafe left
             move.Directions.push([1, 0, 0]);
         }
-        if (game.input.KeyS) {
+        if (game.Input.KeyS) {
             // Move backward
             move.Directions.push([0, 0, -1]);
         }
-        if (game.input.KeyD) {
+        if (game.Input.KeyD) {
             // Strafe right
             move.Directions.push([-1, 0, 0]);
         }
@@ -39,7 +39,7 @@ function update(game: Game, entity: Entity, delta: number) {
 
     if (control.Yaw) {
         let move = game[Get.Move][entity];
-        let yaw_delta = game.input.mouse_x * move.RotateSpeed * delta;
+        let yaw_delta = game.Input.mouse_x * move.RotateSpeed * delta;
         if (yaw_delta !== 0) {
             move.Yaws.push(from_axis([], AXIS_Y, -yaw_delta));
         }
@@ -47,7 +47,7 @@ function update(game: Game, entity: Entity, delta: number) {
 
     if (control.Pitch) {
         let move = game[Get.Move][entity];
-        let pitch_delta = game.input.mouse_y * move.RotateSpeed * delta;
+        let pitch_delta = game.Input.mouse_y * move.RotateSpeed * delta;
         if (pitch_delta !== 0) {
             move.Pitches.push(from_axis([], AXIS_X, pitch_delta));
         }

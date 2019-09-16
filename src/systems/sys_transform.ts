@@ -6,8 +6,8 @@ import {from_rotation_translation_scale, invert, multiply} from "../math/mat4.js
 const QUERY = 1 << Get.Transform;
 
 export function sys_transform(game: Game, delta: number) {
-    for (let i = 0; i < game.world.length; i++) {
-        if ((game.world[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.length; i++) {
+        if ((game.World[i] & QUERY) === QUERY) {
             update(game[Get.Transform][i]);
         }
     }

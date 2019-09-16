@@ -18,10 +18,10 @@ export function render_basic(Material: Material, Shape: Shape, Color: Vec4) {
     return (game: Game) => (entity: Entity) => {
         if (!vaos.has(Shape)) {
             // We only need to create the VAO once.
-            vaos.set(Shape, buffer(game.gl, Shape)!);
+            vaos.set(Shape, buffer(game.GL, Shape)!);
         }
 
-        game.world[entity] |= 1 << Get.Render;
+        game.World[entity] |= 1 << Get.Render;
         game[Get.Render][entity] = <RenderBasic>{
             Kind: RenderKind.Basic,
             Material,

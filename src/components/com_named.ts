@@ -7,7 +7,7 @@ export interface Named {
 
 export function named(Name: string) {
     return (game: Game) => (entity: Entity) => {
-        game.world[entity] |= 1 << Get.Named;
+        game.World[entity] |= 1 << Get.Named;
         game[Get.Named][entity] = <Named>{Name};
     };
 }

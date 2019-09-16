@@ -18,10 +18,10 @@ export function render_shaded(Material: Material, shape: Shape, color: Vec4) {
     return (game: Game) => (entity: Entity) => {
         if (!vaos.has(shape)) {
             // We only need to create the VAO once.
-            vaos.set(shape, buffer(game.gl, shape)!);
+            vaos.set(shape, buffer(game.GL, shape)!);
         }
 
-        game.world[entity] |= 1 << Get.Render;
+        game.World[entity] |= 1 << Get.Render;
         game[Get.Render][entity] = <RenderShaded>{
             Kind: RenderKind.Shaded,
             Material,

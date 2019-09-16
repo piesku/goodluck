@@ -19,7 +19,7 @@ export function sys_debug(game: Game, delta: number) {
     for (let [key, wireframe] of wireframes) {
         if (
             // If the entity doesn't have TRANSFORM...
-            !(game.world[wireframe.entity] & (1 << Get.Transform)) ||
+            !(game.World[wireframe.entity] & (1 << Get.Transform)) ||
             // ...or if it's not the same TRANSFORM.
             game[Get.Transform][wireframe.entity] !== wireframe.anchor
         ) {
@@ -28,17 +28,17 @@ export function sys_debug(game: Game, delta: number) {
         }
     }
 
-    for (let i = 0; i < game.world.length; i++) {
-        if (game.world[i] & (1 << Get.Transform)) {
+    for (let i = 0; i < game.World.length; i++) {
+        if (game.World[i] & (1 << Get.Transform)) {
             // Draw colliders first. If the collider's wireframe overlaps
             // exactly with the transform's wireframe, we want the collider to
             // take priority.
-            if (game.world[i] & (1 << Get.Collide)) {
+            if (game.World[i] & (1 << Get.Collide)) {
                 wireframe_collider(game, i);
             }
 
             // Draw invisible entities.
-            if (!(game.world[i] & (1 << Get.Render))) {
+            if (!(game.World[i] & (1 << Get.Render))) {
                 wireframe_entity(game, i);
             }
         }
@@ -51,7 +51,7 @@ function wireframe_entity(game: Game, entity: Entity) {
 
     if (!wireframe) {
         let box = game.add({
-            using: [render_basic(game.materials[Mat.Wireframe], Cube, [1, 0, 1, 1])],
+            using: [render_basic(game.Materials[Mat.Wireframe], Cube, [1, 0, 1, 1])],
         });
         let wireframe_transform = game[Get.Transform][box];
         wireframe_transform.World = entity_transform.World;
@@ -73,7 +73,7 @@ function wireframe_collider(game: Game, entity: Entity) {
         let box = game.add({
             translation: collide.Center,
             scale: scale([], collide.Half, 2),
-            using: [render_basic(game.materials[Mat.Wireframe], Cube, [0, 1, 0, 1])],
+            using: [render_basic(game.Materials[Mat.Wireframe], Cube, [0, 1, 0, 1])],
         });
         wireframes.set(collide, {
             entity,

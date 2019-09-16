@@ -33,7 +33,7 @@ export function animate(clips: {[Anim.Idle]: AnimationClip; [k: number]: Animati
                 Time: 0,
             };
         }
-        game.world[entity] |= 1 << Get.Animate;
+        game.World[entity] |= 1 << Get.Animate;
         game[Get.Animate][entity] = <Animate>{
             States,
             Current: States[Anim.Idle],

@@ -48,7 +48,7 @@ export interface Input {
 }
 
 export class Game implements ComponentData {
-    public world: Array<number>;
+    public World: Array<number>;
     public [Get.Transform]: Array<Transform> = [];
     public [Get.Render]: Array<Render> = [];
     public [Get.Camera]: Array<Camera> = [];
@@ -61,58 +61,58 @@ export class Game implements ComponentData {
     public [Get.Collide]: Array<Collide> = [];
     public [Get.RigidBody]: Array<RigidBody> = [];
     public [Get.Trigger]: Array<Trigger> = [];
-    public canvas: HTMLCanvasElement;
-    public gl: WebGL2RenderingContext;
-    public audio: AudioContext = new AudioContext();
-    public input: Input = {mouse_x: 0, mouse_y: 0};
-    public ui: UIState = INIT_UI_STATE;
-    public dispatch = (action: Action, ...args: Array<unknown>) => {
-        this.ui = reducer(this.ui, action, args);
+    public Canvas: HTMLCanvasElement;
+    public GL: WebGL2RenderingContext;
+    public Audio: AudioContext = new AudioContext();
+    public Input: Input = {mouse_x: 0, mouse_y: 0};
+    public UI: UIState = INIT_UI_STATE;
+    public Dispatch = (action: Action, ...args: Array<unknown>) => {
+        this.UI = reducer(this.UI, action, args);
         effect(this, action, args);
     };
-    public materials: Array<Material> = [];
-    public cameras: Array<Camera> = [];
-    public lights: Array<Light> = [];
-    private raf: number = 0;
+    public Materials: Array<Material> = [];
+    public Cameras: Array<Camera> = [];
+    public Lights: Array<Light> = [];
+    private RAF: number = 0;
 
     constructor() {
-        this.world = [];
+        this.World = [];
 
         document.addEventListener("visibilitychange", () =>
             document.hidden ? this.stop() : this.start()
         );
 
-        this.canvas = document.querySelector("canvas")!;
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-        this.canvas.addEventListener("click", () => this.canvas.requestPointerLock());
+        this.Canvas = document.querySelector("canvas")!;
+        this.Canvas.width = window.innerWidth;
+        this.Canvas.height = window.innerHeight;
+        this.Canvas.addEventListener("click", () => this.Canvas.requestPointerLock());
 
-        window.addEventListener("keydown", evt => (this.input[evt.code] = 1));
-        window.addEventListener("keyup", evt => (this.input[evt.code] = 0));
-        this.canvas.addEventListener("mousedown", evt => (this.input[`mouse_${evt.button}`] = 1));
-        this.canvas.addEventListener("mouseup", evt => (this.input[`mouse_${evt.button}`] = 0));
-        this.canvas.addEventListener("mousemove", evt => {
-            this.input.mouse_x = evt.movementX;
-            this.input.mouse_y = evt.movementY;
+        window.addEventListener("keydown", evt => (this.Input[evt.code] = 1));
+        window.addEventListener("keyup", evt => (this.Input[evt.code] = 0));
+        this.Canvas.addEventListener("mousedown", evt => (this.Input[`mouse_${evt.button}`] = 1));
+        this.Canvas.addEventListener("mouseup", evt => (this.Input[`mouse_${evt.button}`] = 0));
+        this.Canvas.addEventListener("mousemove", evt => {
+            this.Input.mouse_x = evt.movementX;
+            this.Input.mouse_y = evt.movementY;
         });
 
-        this.gl = this.canvas.getContext("webgl2")!;
-        this.gl.enable(this.gl.DEPTH_TEST);
-        this.gl.enable(this.gl.CULL_FACE);
-        this.gl.frontFace(this.gl.CW);
+        this.GL = this.Canvas.getContext("webgl2")!;
+        this.GL.enable(this.GL.DEPTH_TEST);
+        this.GL.enable(this.GL.CULL_FACE);
+        this.GL.frontFace(this.GL.CW);
 
-        this.materials[Mat.Points] = mat_points(this.gl);
-        this.materials[Mat.Wireframe] = mat_wireframe(this.gl);
-        this.materials[Mat.Basic] = mat_basic(this.gl);
-        this.materials[Mat.Flat] = mat_flat(this.gl);
-        this.materials[Mat.Gouraud] = mat_gouraud(this.gl);
-        this.materials[Mat.Phong] = mat_phong(this.gl);
+        this.Materials[Mat.Points] = mat_points(this.GL);
+        this.Materials[Mat.Wireframe] = mat_wireframe(this.GL);
+        this.Materials[Mat.Basic] = mat_basic(this.GL);
+        this.Materials[Mat.Flat] = mat_flat(this.GL);
+        this.Materials[Mat.Gouraud] = mat_gouraud(this.GL);
+        this.Materials[Mat.Phong] = mat_phong(this.GL);
     }
 
     create_entity(mask: number) {
         for (let i = 0; i < MAX_ENTITIES; i++) {
-            if (!this.world[i]) {
-                this.world[i] = mask;
+            if (!this.World[i]) {
+                this.World[i] = mask;
                 return i;
             }
         }
@@ -155,8 +155,8 @@ export class Game implements ComponentData {
 
             // Scale down mouse input (collected every frame) to match the step.
             let fixed_updates_count = accumulator / step;
-            this.input.mouse_x /= fixed_updates_count;
-            this.input.mouse_y /= fixed_updates_count;
+            this.Input.mouse_x /= fixed_updates_count;
+            this.Input.mouse_y /= fixed_updates_count;
 
             while (accumulator > step) {
                 accumulator -= step;
@@ -165,19 +165,19 @@ export class Game implements ComponentData {
             this.frame_update(delta);
 
             last = now;
-            this.input.mouse_x = 0;
-            this.input.mouse_y = 0;
-            this.raf = requestAnimationFrame(tick);
+            this.Input.mouse_x = 0;
+            this.Input.mouse_y = 0;
+            this.RAF = requestAnimationFrame(tick);
         };
 
         this.stop();
-        this.audio.resume();
+        this.Audio.resume();
         tick(last);
     }
 
     stop() {
-        this.audio.suspend();
-        cancelAnimationFrame(this.raf);
+        this.Audio.suspend();
+        cancelAnimationFrame(this.RAF);
     }
 
     add({translation, rotation, scale, using = [], children = []}: Blueprint) {
@@ -197,12 +197,12 @@ export class Game implements ComponentData {
     }
 
     destroy(entity: Entity) {
-        let mask = this.world[entity];
+        let mask = this.World[entity];
         if (mask & Get.Transform) {
             for (let child of this[Get.Transform][entity].Children) {
                 this.destroy(child.EntityId);
             }
         }
-        this.world[entity] = 0;
+        this.World[entity] = 0;
     }
 }

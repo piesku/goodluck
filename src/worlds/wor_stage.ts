@@ -14,8 +14,8 @@ import {Icosphere} from "../shapes/Icosphere.js";
 import {snd_music} from "../sounds/snd_music.js";
 
 export function world_stage(game: Game) {
-    game.world = [];
-    game.gl.clearColor(1, 0.3, 0.3, 1);
+    game.World = [];
+    game.GL.clearColor(1, 0.3, 0.3, 1);
 
     // Player-controlled camera.
     game.add({
@@ -28,7 +28,7 @@ export function world_stage(game: Game) {
         translation: [0, -2, 0],
         scale: [10, 1, 10],
         using: [
-            render_shaded(game.materials[Mat.Gouraud], Cube, [1, 1, 0.3, 1]),
+            render_shaded(game.Materials[Mat.Gouraud], Cube, [1, 1, 0.3, 1]),
             collide(false),
             rigid_body(false),
         ],
@@ -43,7 +43,7 @@ export function world_stage(game: Game) {
     game.add({
         translation: [-2, 5, 0],
         using: [
-            render_basic(game.materials[Mat.Points], Icosphere, [1, 1, 0.3, 1]),
+            render_basic(game.Materials[Mat.Points], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
             animate({
@@ -55,7 +55,7 @@ export function world_stage(game: Game) {
     game.add({
         translation: [0, 5, 0],
         using: [
-            render_basic(game.materials[Mat.Wireframe], Icosphere, [1, 1, 0.3, 1]),
+            render_basic(game.Materials[Mat.Wireframe], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
             animate({
@@ -67,7 +67,7 @@ export function world_stage(game: Game) {
     game.add({
         translation: [2, 5, 0],
         using: [
-            render_basic(game.materials[Mat.Basic], Icosphere, [1, 1, 0.3, 1]),
+            render_basic(game.Materials[Mat.Basic], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
             animate({
@@ -79,7 +79,7 @@ export function world_stage(game: Game) {
     game.add({
         translation: [-2, 1, 0],
         using: [
-            render_shaded(game.materials[Mat.Flat], Icosphere, [1, 1, 0.3, 1]),
+            render_shaded(game.Materials[Mat.Flat], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
             animate({
@@ -91,7 +91,7 @@ export function world_stage(game: Game) {
     game.add({
         translation: [0, 1, 0],
         using: [
-            render_shaded(game.materials[Mat.Gouraud], Icosphere, [1, 1, 0.3, 1]),
+            render_shaded(game.Materials[Mat.Gouraud], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
             animate({
@@ -103,7 +103,7 @@ export function world_stage(game: Game) {
     game.add({
         translation: [2, 1, 0],
         using: [
-            render_shaded(game.materials[Mat.Phong], Icosphere, [1, 1, 0.3, 1]),
+            render_shaded(game.Materials[Mat.Phong], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
             animate({

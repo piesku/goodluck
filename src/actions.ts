@@ -7,7 +7,7 @@ export const enum Action {
 export function effect(game: Game, action: Action, args: Array<unknown>) {
     switch (action) {
         case Action.ToggleClearColor: {
-            game.gl.clearColor(...game.ui.clear_color);
+            game.GL.clearColor(...game.UI.clear_color);
         }
     }
 }

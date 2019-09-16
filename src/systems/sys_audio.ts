@@ -5,8 +5,8 @@ import {Entity, Game} from "../game.js";
 const QUERY = 1 << Get.AudioSource;
 
 export function sys_audio(game: Game, delta: number) {
-    for (let i = 0; i < game.world.length; i++) {
-        if ((game.world[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.length; i++) {
+        if ((game.World[i] & QUERY) === QUERY) {
             update(game, i, delta);
         }
     }
@@ -24,7 +24,7 @@ function update(game: Game, entity: Entity, delta: number) {
         for (let track of audio_source.Trigger.Tracks) {
             for (let i = 0; i < track.Notes.length; i++) {
                 if (track.Notes[i]) {
-                    play_note(game.audio, track.Instrument, track.Notes[i], i * interval);
+                    play_note(game.Audio, track.Instrument, track.Notes[i], i * interval);
                 }
             }
         }
