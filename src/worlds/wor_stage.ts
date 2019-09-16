@@ -19,15 +19,15 @@ export function world_stage(game: Game) {
 
     // Player-controlled camera.
     game.Add({
-        translation: [0, 0, 5],
+        Translation: [0, 0, 5],
         ...create_fly_camera(game),
     });
 
     // Ground.
     game.Add({
-        translation: [0, -2, 0],
-        scale: [10, 1, 10],
-        using: [
+        Translation: [0, -2, 0],
+        Scale: [10, 1, 10],
+        Using: [
             render_shaded(game.Materials[Mat.Gouraud], Cube, [1, 1, 0.3, 1]),
             collide(false),
             rigid_body(false),
@@ -36,13 +36,13 @@ export function world_stage(game: Game) {
 
     // Light and audio source.
     game.Add({
-        translation: [0, 3, 5],
-        using: [light([1, 1, 1], 5), audio_source(snd_music)],
+        Translation: [0, 3, 5],
+        Using: [light([1, 1, 1], 5), audio_source(snd_music)],
     });
 
     game.Add({
-        translation: [-2, 5, 0],
-        using: [
+        Translation: [-2, 5, 0],
+        Using: [
             render_basic(game.Materials[Mat.Points], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
@@ -53,8 +53,8 @@ export function world_stage(game: Game) {
     });
 
     game.Add({
-        translation: [0, 5, 0],
-        using: [
+        Translation: [0, 5, 0],
+        Using: [
             render_basic(game.Materials[Mat.Wireframe], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
@@ -65,8 +65,8 @@ export function world_stage(game: Game) {
     });
 
     game.Add({
-        translation: [2, 5, 0],
-        using: [
+        Translation: [2, 5, 0],
+        Using: [
             render_basic(game.Materials[Mat.Basic], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
@@ -77,8 +77,8 @@ export function world_stage(game: Game) {
     });
 
     game.Add({
-        translation: [-2, 1, 0],
-        using: [
+        Translation: [-2, 1, 0],
+        Using: [
             render_shaded(game.Materials[Mat.Flat], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
@@ -89,8 +89,8 @@ export function world_stage(game: Game) {
     });
 
     game.Add({
-        translation: [0, 1, 0],
-        using: [
+        Translation: [0, 1, 0],
+        Using: [
             render_shaded(game.Materials[Mat.Gouraud], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
@@ -101,8 +101,8 @@ export function world_stage(game: Game) {
     });
 
     game.Add({
-        translation: [2, 1, 0],
-        using: [
+        Translation: [2, 1, 0],
+        Using: [
             render_shaded(game.Materials[Mat.Phong], Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),

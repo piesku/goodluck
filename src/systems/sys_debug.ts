@@ -51,7 +51,7 @@ function wireframe_entity(game: Game, entity: Entity) {
 
     if (!wireframe) {
         let box = game.Add({
-            using: [render_basic(game.Materials[Mat.Wireframe], Cube, [1, 0, 1, 1])],
+            Using: [render_basic(game.Materials[Mat.Wireframe], Cube, [1, 0, 1, 1])],
         });
         let wireframe_transform = game[Get.Transform][box];
         wireframe_transform.World = entity_transform.World;
@@ -71,9 +71,9 @@ function wireframe_collider(game: Game, entity: Entity) {
 
     if (!wireframe) {
         let box = game.Add({
-            translation: collide.Center,
-            scale: scale([], collide.Half, 2),
-            using: [render_basic(game.Materials[Mat.Wireframe], Cube, [0, 1, 0, 1])],
+            Translation: collide.Center,
+            Scale: scale([], collide.Half, 2),
+            Using: [render_basic(game.Materials[Mat.Wireframe], Cube, [0, 1, 0, 1])],
         });
         wireframes.set(collide, {
             entity,

@@ -4,9 +4,9 @@ import {Quat, Vec3} from "../math";
 type Mixin = (game: Game, entity: Entity) => void;
 
 export interface Blueprint {
-    translation?: Vec3;
-    rotation?: Quat;
-    scale?: Vec3;
-    using?: Array<Mixin>;
-    children?: Array<Blueprint>;
+    Translation?: Vec3;
+    Rotation?: Quat;
+    Scale?: Vec3;
+    Using?: Array<Mixin>;
+    Children?: Array<Blueprint>;
 }

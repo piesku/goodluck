@@ -185,14 +185,14 @@ export class Game implements ComponentData, GameState {
         cancelAnimationFrame(this.RAF);
     }
 
-    Add({translation, rotation, scale, using = [], children = []}: Blueprint) {
+    Add({Translation, Rotation, Scale, Using = [], Children = []}: Blueprint) {
         let entity = this.CreateEntity(Get.Transform);
-        transform(translation, rotation, scale)(this, entity);
-        for (let mixin of using) {
+        transform(Translation, Rotation, Scale)(this, entity);
+        for (let mixin of Using) {
             mixin(this, entity);
         }
         let entity_transform = this[Get.Transform][entity];
-        for (let subtree of children) {
+        for (let subtree of Children) {
             let child = this.Add(subtree);
             let child_transform = this[Get.Transform][child];
             child_transform.Parent = entity_transform;
