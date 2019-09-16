@@ -1,0 +1,47 @@
+# Remove strict mode
+s/'use strict';//
+
+# Remove indents
+s/^ *//
+
+# Remove double-slash comments
+s/\/\/.*//
+
+## WebGL
+
+# components
+s/createVertexArray/crVA/g
+s/bindVertexArray/biVA/g
+s/createBuffer()/crB()/g
+s/bindBuffer/biB/g
+s/bufferData/buD/g
+s/enableVertexAttribArray/enVAA/g
+s/vertexAttribPointer/veAP/g
+s/vertexAttribDivisor/veAD/g
+
+# materials
+s/getProgramParameter/gePP/g
+s/getActiveUniform/geAU/g
+s/getUniformLocation/geUL/g
+s/createProgram/crP/g
+s/attachShader/atS/g
+s/linkProgram/liP/g
+s/createShader/crS/g
+s/shaderSource/shS/g
+s/compileShader/coS/g
+
+# systems
+s/useProgram/usP/g
+s/uniformMatrix4fv/unM4fv/g
+s/uniform1i/un1i/g
+s/uniform3fv/un3fv/g
+s/uniform4fv/un4fv/g
+s/drawElements\b/drE/g
+s/drawElementsInstanced/drEI/g
+
+# worlds
+s/clearColor/clC/g
+
+# game.ts
+s/enable/en/g
+s/frontFace/frF/g

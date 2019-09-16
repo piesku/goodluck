@@ -1,4 +1,4 @@
 node_modules
 package-lock.json
 public/js
-public/opt/game.min.js
+public/opt/*.js

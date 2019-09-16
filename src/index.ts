@@ -1,11 +1,12 @@
 import {Game} from "./game.js";
 import {world_stage} from "./worlds/wor_stage.js";
 
-export let game = new Game();
+let game = new Game();
+world_stage(game);
+game.start();
 
-async function start() {
-    world_stage(game);
-    game.start();
-}
+// @ts-ignore
+window.$ = (...args) => game.Dispatch(...args);
 
-start();
+// @ts-ignore
+window.game = game;
