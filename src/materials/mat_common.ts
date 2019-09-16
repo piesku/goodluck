@@ -1,10 +1,4 @@
-import {
-    GL_ACTIVE_UNIFORMS,
-    GL_COMPILE_STATUS,
-    GL_FRAGMENT_SHADER,
-    GL_LINK_STATUS,
-    GL_VERTEX_SHADER,
-} from "../webgl.js";
+import {GL_COMPILE_STATUS, GL_FRAGMENT_SHADER, GL_LINK_STATUS, GL_VERTEX_SHADER} from "../webgl.js";
 
 export interface Shape {
     Vertices: Float32Array;
@@ -13,40 +7,12 @@ export interface Shape {
 }
 
 export interface Material {
-    GL: WebGL2RenderingContext;
     Mode: GLint;
     Program: WebGLProgram;
-    Uniforms: Record<string, WebGLUniformLocation>;
+    Uniforms: Array<WebGLUniformLocation>;
 }
 
-export function mat_create(
-    GL: WebGL2RenderingContext,
-    Mode: GLint,
-    vertex: string,
-    fragment: string
-) {
-    let material: Material = {
-        GL,
-        Mode,
-        Program: link(GL, vertex, fragment),
-        Uniforms: {},
-    };
-
-    // Reflect uniforms.
-    let uniform_count = GL.getProgramParameter(material.Program, GL_ACTIVE_UNIFORMS);
-    for (let i = 0; i < uniform_count; ++i) {
-        let {name} = GL.getActiveUniform(material.Program, i)!;
-        // Array uniforms are named foo[0]; strip the [0] part.
-        material.Uniforms[name.replace(/\[0\]$/, "")] = GL.getUniformLocation(
-            material.Program,
-            name
-        )!;
-    }
-
-    return material;
-}
-
-function link(gl: WebGL2RenderingContext, vertex: string, fragment: string) {
+export function link(gl: WebGL2RenderingContext, vertex: string, fragment: string) {
     let program = gl.createProgram()!;
     gl.attachShader(program, compile(gl, GL_VERTEX_SHADER, vertex));
     gl.attachShader(program, compile(gl, GL_FRAGMENT_SHADER, fragment));

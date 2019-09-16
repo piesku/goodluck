@@ -38,6 +38,16 @@ export const enum ShadedAttribute {
     Normal = 2,
 }
 
+export const enum ShadedUniform {
+    PV,
+    World,
+    Self,
+    Color,
+    LightCount,
+    LightPositions,
+    LightDetails,
+}
+
 function buffer(gl: WebGL2RenderingContext, shape: Shape) {
     let vao = gl.createVertexArray();
     gl.bindVertexArray(vao);

@@ -37,6 +37,12 @@ export const enum BasicAttribute {
     Position = 1,
 }
 
+export const enum BasicUniform {
+    PV,
+    World,
+    Color,
+}
+
 function buffer(gl: WebGL2RenderingContext, shape: Shape) {
     let vao = gl.createVertexArray();
     gl.bindVertexArray(vao);

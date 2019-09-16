@@ -1,6 +1,6 @@
 import {BasicAttribute} from "../components/com_render_basic.js";
 import {GL_POINTS} from "../webgl.js";
-import {mat_create} from "./mat_common.js";
+import {link, Material} from "./mat_common.js";
 
 let vertex = `#version 300 es
     uniform mat4 pv;
@@ -26,5 +26,15 @@ let fragment = `#version 300 es
 `;
 
 export function mat_points(gl: WebGL2RenderingContext) {
-    return mat_create(gl, GL_POINTS, vertex, fragment);
+    let material = <Material>{
+        Mode: GL_POINTS,
+        Program: link(gl, vertex, fragment),
+        Uniforms: [],
+    };
+
+    for (let name of ["pv", "world", "color"]) {
+        material.Uniforms.push(gl.getUniformLocation(material.Program, name)!);
+    }
+
+    return material;
 }

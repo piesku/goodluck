@@ -1,7 +1,7 @@
 import {Get} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
-import {RenderBasic} from "../components/com_render_basic.js";
-import {RenderShaded} from "../components/com_render_shaded.js";
+import {BasicUniform, RenderBasic} from "../components/com_render_basic.js";
+import {RenderShaded, ShadedUniform} from "../components/com_render_shaded.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {get_translation} from "../math/mat4.js";
@@ -35,47 +35,54 @@ export function sys_render(game: Game, delta: number) {
             if (render.Material !== current_material) {
                 current_material = render.Material;
 
-                let {GL, Program, Uniforms} = current_material;
-                GL.useProgram(Program);
+                game.GL.useProgram(current_material.Program);
                 // TODO Support more than one camera.
-                GL.uniformMatrix4fv(Uniforms.pv, false, game.Cameras[0].PV);
+                // XXX Uniforms[0] should always be PV.
+                game.GL.uniformMatrix4fv(current_material.Uniforms[0], false, game.Cameras[0].PV);
 
                 switch (render.Kind) {
                     case RenderKind.Shaded:
-                        GL.uniform1i(Uniforms.light_count, game.Lights.length);
-                        GL.uniform3fv(Uniforms.light_positions, light_positions);
-                        GL.uniform4fv(Uniforms.light_details, light_details);
+                        game.GL.uniform1i(
+                            current_material.Uniforms[ShadedUniform.LightCount],
+                            game.Lights.length
+                        );
+                        game.GL.uniform3fv(
+                            current_material.Uniforms[ShadedUniform.LightPositions],
+                            light_positions
+                        );
+                        game.GL.uniform4fv(
+                            current_material.Uniforms[ShadedUniform.LightDetails],
+                            light_details
+                        );
                         break;
                 }
             }
 
             switch (render.Kind) {
                 case RenderKind.Basic:
-                    draw_basic(transform, render);
+                    draw_basic(game, transform, render);
                     break;
                 case RenderKind.Shaded:
-                    draw_shaded(transform, render);
+                    draw_shaded(game, transform, render);
                     break;
             }
         }
     }
 }
 
-function draw_basic(transform: Transform, render: RenderBasic) {
-    let {GL, Mode, Uniforms} = render.Material;
-    GL.uniformMatrix4fv(Uniforms.world, false, transform.World);
-    GL.uniform4fv(Uniforms.color, render.Color);
-    GL.bindVertexArray(render.VAO);
-    GL.drawElements(Mode, render.Count, GL_UNSIGNED_SHORT, 0);
-    GL.bindVertexArray(null);
+function draw_basic(game: Game, transform: Transform, render: RenderBasic) {
+    game.GL.uniformMatrix4fv(render.Material.Uniforms[BasicUniform.World], false, transform.World);
+    game.GL.uniform4fv(render.Material.Uniforms[BasicUniform.Color], render.Color);
+    game.GL.bindVertexArray(render.VAO);
+    game.GL.drawElements(render.Material.Mode, render.Count, GL_UNSIGNED_SHORT, 0);
+    game.GL.bindVertexArray(null);
 }
 
-function draw_shaded(transform: Transform, render: RenderShaded) {
-    let {GL, Mode, Uniforms} = render.Material;
-    GL.uniformMatrix4fv(Uniforms.world, false, transform.World);
-    GL.uniformMatrix4fv(Uniforms.self, false, transform.Self);
-    GL.uniform4fv(Uniforms.color, render.Color);
-    GL.bindVertexArray(render.VAO);
-    GL.drawElements(Mode, render.Count, GL_UNSIGNED_SHORT, 0);
-    GL.bindVertexArray(null);
+function draw_shaded(game: Game, transform: Transform, render: RenderShaded) {
+    game.GL.uniformMatrix4fv(render.Material.Uniforms[ShadedUniform.World], false, transform.World);
+    game.GL.uniformMatrix4fv(render.Material.Uniforms[ShadedUniform.Self], false, transform.Self);
+    game.GL.uniform4fv(render.Material.Uniforms[ShadedUniform.Color], render.Color);
+    game.GL.bindVertexArray(render.VAO);
+    game.GL.drawElements(render.Material.Mode, render.Count, GL_UNSIGNED_SHORT, 0);
+    game.GL.bindVertexArray(null);
 }

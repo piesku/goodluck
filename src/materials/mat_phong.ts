@@ -1,6 +1,6 @@
 import {ShadedAttribute} from "../components/com_render_shaded.js";
 import {GL_TRIANGLES} from "../webgl.js";
-import {mat_create} from "./mat_common.js";
+import {link, Material} from "./mat_common.js";
 
 let vertex = `#version 300 es
     uniform mat4 pv;
@@ -52,5 +52,23 @@ let fragment = `#version 300 es
 `;
 
 export function mat_phong(gl: WebGL2RenderingContext) {
-    return mat_create(gl, GL_TRIANGLES, vertex, fragment);
+    let material = <Material>{
+        Mode: GL_TRIANGLES,
+        Program: link(gl, vertex, fragment),
+        Uniforms: [],
+    };
+
+    for (let name of [
+        "pv",
+        "world",
+        "self",
+        "color",
+        "light_count",
+        "light_positions",
+        "light_details",
+    ]) {
+        material.Uniforms.push(gl.getUniformLocation(material.Program, name)!);
+    }
+
+    return material;
 }
