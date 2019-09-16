@@ -23,7 +23,7 @@ export function sys_debug(game: Game, delta: number) {
             // ...or if it's not the same TRANSFORM.
             game[Get.Transform][wireframe.entity] !== wireframe.anchor
         ) {
-            game.destroy(wireframe.transform.EntityId);
+            game.Destroy(wireframe.transform.EntityId);
             wireframes.delete(key);
         }
     }
@@ -50,7 +50,7 @@ function wireframe_entity(game: Game, entity: Entity) {
     let wireframe = wireframes.get(entity_transform);
 
     if (!wireframe) {
-        let box = game.add({
+        let box = game.Add({
             using: [render_basic(game.Materials[Mat.Wireframe], Cube, [1, 0, 1, 1])],
         });
         let wireframe_transform = game[Get.Transform][box];
@@ -70,7 +70,7 @@ function wireframe_collider(game: Game, entity: Entity) {
     let wireframe = wireframes.get(collide);
 
     if (!wireframe) {
-        let box = game.add({
+        let box = game.Add({
             translation: collide.Center,
             scale: scale([], collide.Half, 2),
             using: [render_basic(game.Materials[Mat.Wireframe], Cube, [0, 1, 0, 1])],

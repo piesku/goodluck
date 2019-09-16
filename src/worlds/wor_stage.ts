@@ -18,13 +18,13 @@ export function world_stage(game: Game) {
     game.GL.clearColor(1, 0.3, 0.3, 1);
 
     // Player-controlled camera.
-    game.add({
+    game.Add({
         translation: [0, 0, 5],
         ...fly_camera_blueprint,
     });
 
     // Ground.
-    game.add({
+    game.Add({
         translation: [0, -2, 0],
         scale: [10, 1, 10],
         using: [
@@ -35,12 +35,12 @@ export function world_stage(game: Game) {
     });
 
     // Light and audio source.
-    game.add({
+    game.Add({
         translation: [0, 3, 5],
         using: [light([1, 1, 1], 5), audio_source(snd_music)],
     });
 
-    game.add({
+    game.Add({
         translation: [-2, 5, 0],
         using: [
             render_basic(game.Materials[Mat.Points], Icosphere, [1, 1, 0.3, 1]),
@@ -52,7 +52,7 @@ export function world_stage(game: Game) {
         ],
     });
 
-    game.add({
+    game.Add({
         translation: [0, 5, 0],
         using: [
             render_basic(game.Materials[Mat.Wireframe], Icosphere, [1, 1, 0.3, 1]),
@@ -64,7 +64,7 @@ export function world_stage(game: Game) {
         ],
     });
 
-    game.add({
+    game.Add({
         translation: [2, 5, 0],
         using: [
             render_basic(game.Materials[Mat.Basic], Icosphere, [1, 1, 0.3, 1]),
@@ -76,7 +76,7 @@ export function world_stage(game: Game) {
         ],
     });
 
-    game.add({
+    game.Add({
         translation: [-2, 1, 0],
         using: [
             render_shaded(game.Materials[Mat.Flat], Icosphere, [1, 1, 0.3, 1]),
@@ -88,7 +88,7 @@ export function world_stage(game: Game) {
         ],
     });
 
-    game.add({
+    game.Add({
         translation: [0, 1, 0],
         using: [
             render_shaded(game.Materials[Mat.Gouraud], Icosphere, [1, 1, 0.3, 1]),
@@ -100,7 +100,7 @@ export function world_stage(game: Game) {
         ],
     });
 
-    game.add({
+    game.Add({
         translation: [2, 1, 0],
         using: [
             render_shaded(game.Materials[Mat.Phong], Icosphere, [1, 1, 0.3, 1]),
