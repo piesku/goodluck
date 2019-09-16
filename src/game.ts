@@ -49,10 +49,7 @@ export interface Input {
 }
 
 export class Game implements ComponentData, GameState {
-    GL_DEPTH_TEST(GL_DEPTH_TEST: any) {
-        throw new Error("Method not implemented.");
-    }
-    public World: Array<number>;
+    public World: Array<number> = [];
 
     // Implement ComponentData
     public [Get.Transform]: Array<Transform> = [];
@@ -81,8 +78,6 @@ export class Game implements ComponentData, GameState {
     private RAF: number = 0;
 
     constructor() {
-        this.World = [];
-
         document.addEventListener("visibilitychange", () =>
             document.hidden ? this.Stop() : this.Start()
         );

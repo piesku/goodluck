@@ -15,6 +15,8 @@ import {snd_music} from "../sounds/snd_music.js";
 
 export function world_stage(game: Game) {
     game.World = [];
+    game.Cameras = [];
+    game.Lights = [];
     game.GL.clearColor(1, 0.3, 0.3, 1);
 
     // Player-controlled camera.
