@@ -1,4 +1,4 @@
-import {Action, effect} from "./actions.js";
+import {GameState} from "./actions.js";
 import {Blueprint} from "./blueprints/blu_common.js";
 import {Animate} from "./components/com_animate.js";
 import {AudioSource} from "./components/com_audio_source.js";
@@ -21,6 +21,7 @@ import {Mat} from "./materials/mat_index.js";
 import {mat_phong} from "./materials/mat_phong.js";
 import {mat_points} from "./materials/mat_points.js";
 import {mat_wireframe} from "./materials/mat_wireframe.js";
+import {Vec4} from "./math/index.js";
 import {sys_animate} from "./systems/sys_animate.js";
 import {sys_audio} from "./systems/sys_audio.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -35,7 +36,6 @@ import {sys_render} from "./systems/sys_render.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {sys_trigger} from "./systems/sys_trigger.js";
 import {sys_ui} from "./systems/sys_ui.js";
-import {INIT_UI_STATE, reducer, UIState} from "./ui/state.js";
 
 const MAX_ENTITIES = 10000;
 
@@ -47,8 +47,10 @@ export interface Input {
     mouse_y: number;
 }
 
-export class Game implements ComponentData {
+export class Game implements ComponentData, GameState {
     public World: Array<number>;
+
+    // Implement ComponentData
     public [Get.Transform]: Array<Transform> = [];
     public [Get.Render]: Array<Render> = [];
     public [Get.Camera]: Array<Camera> = [];
@@ -65,11 +67,10 @@ export class Game implements ComponentData {
     public GL: WebGL2RenderingContext;
     public Audio: AudioContext = new AudioContext();
     public Input: Input = {mouse_x: 0, mouse_y: 0};
-    public UI: UIState = INIT_UI_STATE;
-    public Dispatch = (action: Action, ...args: Array<unknown>) => {
-        this.UI = reducer(this.UI, action, args);
-        effect(this, action, args);
-    };
+
+    // Implement GameState
+    public ClearColor = <Vec4>[1, 0.3, 0.3, 1];
+
     public Materials: Array<Material> = [];
     public Cameras: Array<Camera> = [];
     public Lights: Array<Light> = [];

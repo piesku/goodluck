@@ -1,8 +1,8 @@
+import {GameState} from "../actions.js";
 import {ColorToggle} from "./ColorToggle.js";
 import {html} from "./html.js";
-import {UIState} from "./state.js";
 
-export function App(state: UIState) {
+export function App(state: GameState) {
     return html`
         <div
             style="

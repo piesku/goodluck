@@ -5,7 +5,7 @@ let root = document.querySelector("main")!;
 let prev: string;
 
 export function sys_ui(game: Game, delta: number) {
-    let next = App(game.UI);
+    let next = App(game);
     if (next !== prev) {
         root.innerHTML = prev = next;
     }

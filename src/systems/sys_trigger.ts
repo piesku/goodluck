@@ -1,3 +1,4 @@
+import {dispatch} from "../actions.js";
 import {Get} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 
@@ -13,6 +14,6 @@ export function sys_trigger(game: Game, delta: number) {
 
 function update(game: Game, entity: Entity) {
     if (game[Get.Collide][entity].Collisions.length > 0) {
-        game.Dispatch(game[Get.Trigger][entity].Action, entity);
+        dispatch(game, game[Get.Trigger][entity].Action, [entity]);
     }
 }
