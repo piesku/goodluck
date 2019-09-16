@@ -119,7 +119,7 @@ function lazy_noise_buffer(audio: AudioContext) {
     if (!noise_buffer) {
         noise_buffer = audio.createBuffer(1, audio.sampleRate * 2, audio.sampleRate);
         let channel = noise_buffer.getChannelData(0);
-        for (var i = 0; i < channel.length; i++) {
+        for (let i = 0; i < channel.length; i++) {
             channel[i] = Math.random() * 2 - 1;
         }
     }

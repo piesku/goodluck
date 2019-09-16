@@ -30,10 +30,10 @@ export function negate(out: Vec3, a: Vec3) {
 }
 
 export function normalize(out: Vec3, a: Vec3) {
-    var x = a[0];
-    var y = a[1];
-    var z = a[2];
-    var len = x * x + y * y + z * z;
+    let x = a[0];
+    let y = a[1];
+    let z = a[2];
+    let len = x * x + y * y + z * z;
 
     if (len > 0) {
         //TODO: evaluate use of glm_invsqrt here?
@@ -65,10 +65,10 @@ export function cross(out: Vec3, a: Vec3, b: Vec3) {
 }
 
 export function transform_mat4(out: Vec3, a: Vec3, m: Mat4) {
-    var x = a[0],
+    let x = a[0],
         y = a[1],
         z = a[2];
-    var w = m[3] * x + m[7] * y + m[11] * z + m[15];
+    let w = m[3] * x + m[7] * y + m[11] * z + m[15];
     w = w || 1.0;
     out[0] = (m[0] * x + m[4] * y + m[8] * z + m[12]) / w;
     out[1] = (m[1] * x + m[5] * y + m[9] * z + m[13]) / w;
