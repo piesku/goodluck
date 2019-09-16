@@ -12,7 +12,7 @@ export function sys_trigger(game: Game, delta: number) {
 }
 
 function update(game: Game, entity: Entity) {
-    if (game[Get.Collide][entity].collisions.length > 0) {
-        game.dispatch(game[Get.Trigger][entity].action, entity);
+    if (game[Get.Collide][entity].Collisions.length > 0) {
+        game.dispatch(game[Get.Trigger][entity].Action, entity);
     }
 }

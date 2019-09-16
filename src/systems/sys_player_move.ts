@@ -17,39 +17,39 @@ export function sys_player_move(game: Game, delta: number) {
 function update(game: Game, entity: Entity, delta: number) {
     let control = game[Get.PlayerControl][entity];
 
-    if (control.move) {
+    if (control.Move) {
         let move = game[Get.Move][entity];
         if (game.input.KeyW) {
             // Move forward
-            move.directions.push([0, 0, 1]);
+            move.Directions.push([0, 0, 1]);
         }
         if (game.input.KeyA) {
             // Strafe left
-            move.directions.push([1, 0, 0]);
+            move.Directions.push([1, 0, 0]);
         }
         if (game.input.KeyS) {
             // Move backward
-            move.directions.push([0, 0, -1]);
+            move.Directions.push([0, 0, -1]);
         }
         if (game.input.KeyD) {
             // Strafe right
-            move.directions.push([-1, 0, 0]);
+            move.Directions.push([-1, 0, 0]);
         }
     }
 
-    if (control.yaw) {
+    if (control.Yaw) {
         let move = game[Get.Move][entity];
-        let yaw_delta = game.input.mouse_x * move.rotate_speed * delta;
+        let yaw_delta = game.input.mouse_x * move.RotateSpeed * delta;
         if (yaw_delta !== 0) {
-            move.yaws.push(from_axis([], AXIS_Y, -yaw_delta));
+            move.Yaws.push(from_axis([], AXIS_Y, -yaw_delta));
         }
     }
 
-    if (control.pitch) {
+    if (control.Pitch) {
         let move = game[Get.Move][entity];
-        let pitch_delta = game.input.mouse_y * move.rotate_speed * delta;
+        let pitch_delta = game.input.mouse_y * move.RotateSpeed * delta;
         if (pitch_delta !== 0) {
-            move.pitches.push(from_axis([], AXIS_X, pitch_delta));
+            move.Pitches.push(from_axis([], AXIS_X, pitch_delta));
         }
     }
 }

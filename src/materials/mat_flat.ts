@@ -10,8 +10,8 @@ let vertex = `#version 300 es
     uniform vec3 light_positions[10];
     uniform vec4 light_details[10];
 
-    layout(location=${ShadedAttribute.position}) in vec3 position;
-    layout(location=${ShadedAttribute.normal}) in vec3 normal;
+    layout(location=${ShadedAttribute.Position}) in vec3 position;
+    layout(location=${ShadedAttribute.Normal}) in vec3 normal;
     flat out vec4 vert_color;
 
     void main() {

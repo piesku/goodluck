@@ -3,13 +3,13 @@ import {Get} from "./com_index.js";
 
 export interface AudioSource {
     /** The next clip to play. */
-    trigger?: AudioClip;
+    Trigger?: AudioClip;
     /** The clip which was triggered most recently. */
-    current?: AudioClip;
+    Current?: AudioClip;
     /** The clip to play by default, in a loop. */
-    idle?: AudioClip;
+    Idle?: AudioClip;
     /** Elapsed time since the last clip change. */
-    time: number;
+    Time: number;
 }
 
 /**
@@ -21,24 +21,24 @@ export function audio_source(idle?: AudioClip) {
     return (game: Game) => (entity: Entity) => {
         game.world[entity] |= 1 << Get.AudioSource;
         game[Get.AudioSource][entity] = <AudioSource>{
-            idle,
-            time: 0,
+            Idle: idle,
+            Time: 0,
         };
     };
 }
 
 export interface AudioClip {
     /** Audio tracks making up this clip. */
-    tracks: Array<AudioTrack>;
+    Tracks: Array<AudioTrack>;
     /** How soon after starting this clip can we play another one (in seconds)? */
-    exit: number;
+    Exit: number;
     /** Beats per minute (default 120). */
-    bpm?: number;
+    BPM?: number;
 }
 
 export interface AudioTrack {
-    instrument: Instrument;
-    notes: Array<number>;
+    Instrument: Instrument;
+    Notes: Array<number>;
 }
 
 export interface Instrument {

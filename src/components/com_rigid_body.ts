@@ -2,14 +2,14 @@ import {Entity, Game} from "../game.js";
 import {Get} from "./com_index.js";
 
 export interface RigidBody {
-    readonly dynamic: boolean;
-    vy: number;
-    ay: number;
+    readonly Dynamic: boolean;
+    VelY: number;
+    AccY: number;
 }
 
-export function rigid_body(dynamic: boolean = true) {
+export function rigid_body(Dynamic: boolean = true) {
     return (game: Game) => (entity: Entity) => {
         game.world[entity] |= 1 << Get.RigidBody;
-        game[Get.RigidBody][entity] = <RigidBody>{dynamic, vy: 0, ay: 0};
+        game[Get.RigidBody][entity] = <RigidBody>{Dynamic, VelY: 0, AccY: 0};
     };
 }

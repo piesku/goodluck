@@ -2,20 +2,20 @@ import {Entity, Game} from "../game.js";
 import {Get} from "./com_index.js";
 
 export interface Named {
-    name: string;
+    Name: string;
 }
 
-export function named(name: string) {
+export function named(Name: string) {
     return (game: Game) => (entity: Entity) => {
         game.world[entity] |= 1 << Get.Named;
-        game[Get.Named][entity] = <Named>{name};
+        game[Get.Named][entity] = <Named>{Name};
     };
 }
 
 export function find_first(game: Game, name: string) {
     for (let i = 0; i < game[Get.Named].length; i++) {
         let named = game[Get.Named][i];
-        if (named && named.name === name) {
+        if (named && named.Name === name) {
             return i;
         }
     }

@@ -190,8 +190,8 @@ export class Game implements ComponentData {
         for (let subtree of children) {
             let child = this.add(subtree);
             let child_transform = this[Get.Transform][child];
-            child_transform.parent = entity_transform;
-            entity_transform.children.push(child_transform);
+            child_transform.Parent = entity_transform;
+            entity_transform.Children.push(child_transform);
         }
         return entity;
     }
@@ -199,8 +199,8 @@ export class Game implements ComponentData {
     destroy(entity: Entity) {
         let mask = this.world[entity];
         if (mask & Get.Transform) {
-            for (let child of this[Get.Transform][entity].children) {
-                this.destroy(child.entity);
+            for (let child of this[Get.Transform][entity].Children) {
+                this.destroy(child.EntityId);
             }
         }
         this.world[entity] = 0;

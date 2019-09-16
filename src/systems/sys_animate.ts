@@ -20,22 +20,22 @@ function update(game: Game, entity: Entity, delta: number) {
 
     // 1. Switch to the trigger this frame if early exits are allowed.
 
-    let next = animate.trigger && animate.states[animate.trigger];
-    if (next && animate.current.flags & AnimationFlag.EarlyExit) {
+    let next = animate.Trigger && animate.States[animate.Trigger];
+    if (next && animate.Current.Flags & AnimationFlag.EarlyExit) {
         // We don't reset the current state's timer because the trigger may be
         // the same state as the current. If the states are different, this may
         // result in clips not starting from the first keyframe, which should
         // be generally OK for animations with EarlyExit.
-        animate.current = next;
-        animate.trigger = undefined;
+        animate.Current = next;
+        animate.Trigger = undefined;
     }
 
     // 2. Find the current and the next keyframe.
 
     let current_keyframe: AnimationKeyframe | null = null;
     let next_keyframe: AnimationKeyframe | null = null;
-    for (let keyframe of animate.current.keyframes) {
-        if (animate.current.time < keyframe.timestamp) {
+    for (let keyframe of animate.Current.Keyframes) {
+        if (animate.Current.Time < keyframe.Timestamp) {
             next_keyframe = keyframe;
             break;
         } else {
@@ -46,57 +46,57 @@ function update(game: Game, entity: Entity, delta: number) {
     // 3. Interpolate transform properties between keyframes.
 
     if (current_keyframe && next_keyframe) {
-        let keyframe_duration = next_keyframe.timestamp - current_keyframe.timestamp;
-        let current_keyframe_time = animate.current.time - current_keyframe.timestamp;
+        let keyframe_duration = next_keyframe.Timestamp - current_keyframe.Timestamp;
+        let current_keyframe_time = animate.Current.Time - current_keyframe.Timestamp;
         let interpolant = current_keyframe_time / keyframe_duration;
-        if (next_keyframe.ease) {
-            interpolant = next_keyframe.ease(interpolant);
+        if (next_keyframe.Ease) {
+            interpolant = next_keyframe.Ease(interpolant);
         }
 
-        if (current_keyframe.translation && next_keyframe.translation) {
+        if (current_keyframe.Translation && next_keyframe.Translation) {
             lerp(
-                transform.translation,
-                current_keyframe.translation,
-                next_keyframe.translation,
+                transform.Translation,
+                current_keyframe.Translation,
+                next_keyframe.Translation,
                 interpolant
             );
-            transform.dirty = true;
+            transform.Dirty = true;
         }
 
-        if (current_keyframe.rotation && next_keyframe.rotation) {
+        if (current_keyframe.Rotation && next_keyframe.Rotation) {
             slerp(
-                transform.rotation,
-                current_keyframe.rotation,
-                next_keyframe.rotation,
+                transform.Rotation,
+                current_keyframe.Rotation,
+                next_keyframe.Rotation,
                 interpolant
             );
-            transform.dirty = true;
+            transform.Dirty = true;
         }
 
-        if (current_keyframe.scale && next_keyframe.scale) {
-            lerp(transform.scale, current_keyframe.scale, next_keyframe.scale, interpolant);
-            transform.dirty = true;
+        if (current_keyframe.Scale && next_keyframe.Scale) {
+            lerp(transform.Scale, current_keyframe.Scale, next_keyframe.Scale, interpolant);
+            transform.Dirty = true;
         }
     }
 
     // 4. Check if the animation is still running.
 
-    let new_time = animate.current.time + delta;
-    if (new_time < animate.current.duration) {
+    let new_time = animate.Current.Time + delta;
+    if (new_time < animate.Current.Duration) {
         // The animation isn't done yet; continue.
-        animate.current.time = new_time;
+        animate.Current.Time = new_time;
         return;
     } else {
         // The animation has completed; reset its timer.
-        animate.current.time = 0;
+        animate.Current.Time = 0;
     }
 
     // 5. The animation has completed. Determine what to do next.
 
-    if (animate.current.flags & AnimationFlag.Alternate) {
+    if (animate.Current.Flags & AnimationFlag.Alternate) {
         // Reverse the keyframes of the clip and recalculate their timestamps.
-        for (let keyframe of animate.current.keyframes.reverse()) {
-            keyframe.timestamp = animate.current.duration - keyframe.timestamp;
+        for (let keyframe of animate.Current.Keyframes.reverse()) {
+            keyframe.Timestamp = animate.Current.Duration - keyframe.Timestamp;
         }
     }
 
@@ -104,9 +104,9 @@ function update(game: Game, entity: Entity, delta: number) {
         // Switch to the trigger. All clips can be exited from when they finish,
         // regardless of the lack of the EarlyExit flag. The trigger may be the
         // same state as the current.
-        animate.current = next;
-        animate.trigger = undefined;
-    } else if (!(animate.current.flags & AnimationFlag.Loop)) {
-        animate.current = animate.states[Anim.Idle];
+        animate.Current = next;
+        animate.Trigger = undefined;
+    } else if (!(animate.Current.Flags & AnimationFlag.Loop)) {
+        animate.Current = animate.States[Anim.Idle];
     }
 }

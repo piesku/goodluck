@@ -6,8 +6,8 @@ let vertex = `#version 300 es
     uniform mat4 world;
     uniform mat4 self;
 
-    layout(location=${ShadedAttribute.position}) in vec3 position;
-    layout(location=${ShadedAttribute.normal}) in vec3 normal;
+    layout(location=${ShadedAttribute.Position}) in vec3 position;
+    layout(location=${ShadedAttribute.Normal}) in vec3 normal;
     out vec4 vert_pos;
     out vec3 vert_normal;
 

@@ -18,28 +18,28 @@ function update(game: Game, entity: Entity, delta: number) {
     let collide = game[Get.Collide][entity];
     let rigid_body = game[Get.RigidBody][entity];
 
-    if (rigid_body.dynamic) {
-        transform.dirty = true;
-        transform.translation[1] += rigid_body.vy * delta;
-        rigid_body.vy += GRAVITY * delta;
-        rigid_body.vy += rigid_body.ay * delta;
-        rigid_body.ay = 0;
+    if (rigid_body.Dynamic) {
+        transform.Dirty = true;
+        transform.Translation[1] += rigid_body.VelY * delta;
+        rigid_body.VelY += GRAVITY * delta;
+        rigid_body.VelY += rigid_body.AccY * delta;
+        rigid_body.AccY = 0;
 
-        for (let i = 0; i < collide.collisions.length; i++) {
-            let collision = collide.collisions[i];
-            if (game.world[collision.other.entity] & (1 << Get.RigidBody)) {
+        for (let i = 0; i < collide.Collisions.length; i++) {
+            let collision = collide.Collisions[i];
+            if (game.world[collision.Other.EntityId] & (1 << Get.RigidBody)) {
                 // Dynamic rigid bodies are only supported for top-level
                 // entities. Thus, no need to apply the world → self → local
                 // conversion to the collision response. Local space is world space.
-                add(transform.translation, transform.translation, collision.hit);
+                add(transform.Translation, transform.Translation, collision.Hit);
 
                 if (
                     // The rigid body was falling and hit something below it.
-                    (collision.hit[1] > 0 && rigid_body.vy < 0) ||
+                    (collision.Hit[1] > 0 && rigid_body.VelY < 0) ||
                     // The rigid body was going up and hit something above it.
-                    (collision.hit[1] < 0 && rigid_body.vy > 0)
+                    (collision.Hit[1] < 0 && rigid_body.VelY > 0)
                 ) {
-                    rigid_body.vy = 0;
+                    rigid_body.VelY = 0;
                 }
             }
         }

@@ -14,29 +14,29 @@ export function sys_audio(game: Game, delta: number) {
 
 function update(game: Game, entity: Entity, delta: number) {
     let audio_source = game[Get.AudioSource][entity];
-    let can_exit = !audio_source.current || audio_source.time > audio_source.current.exit;
+    let can_exit = !audio_source.Current || audio_source.Time > audio_source.Current.Exit;
 
-    if (audio_source.trigger && can_exit) {
+    if (audio_source.Trigger && can_exit) {
         // Seconds per beat, corresponding to a quarter note.
-        let spb = 60 / (audio_source.trigger.bpm || 120);
+        let spb = 60 / (audio_source.Trigger.BPM || 120);
         // Track timing is based on sixteenth notes.
         let interval = spb / 4;
-        for (let track of audio_source.trigger.tracks) {
-            for (let i = 0; i < track.notes.length; i++) {
-                if (track.notes[i]) {
-                    play_note(game.audio, track.instrument, track.notes[i], i * interval);
+        for (let track of audio_source.Trigger.Tracks) {
+            for (let i = 0; i < track.Notes.length; i++) {
+                if (track.Notes[i]) {
+                    play_note(game.audio, track.Instrument, track.Notes[i], i * interval);
                 }
             }
         }
-        audio_source.current = audio_source.trigger;
-        audio_source.time = 0;
+        audio_source.Current = audio_source.Trigger;
+        audio_source.Time = 0;
     } else {
-        audio_source.time += delta;
+        audio_source.Time += delta;
     }
 
     // Audio triggers are only valid in the frame they're set; they don't stack
     // up. Otherwise sound effects would go out of sync with the game logic.
     // Reset the trigger to the default or undefined, regardless of whether it
     // triggered a new clip to play.
-    audio_source.trigger = audio_source.idle;
+    audio_source.Trigger = audio_source.Idle;
 }

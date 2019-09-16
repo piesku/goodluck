@@ -23,7 +23,7 @@ export function sys_debug(game: Game, delta: number) {
             // ...or if it's not the same TRANSFORM.
             game[Get.Transform][wireframe.entity] !== wireframe.anchor
         ) {
-            game.destroy(wireframe.transform.entity);
+            game.destroy(wireframe.transform.EntityId);
             wireframes.delete(key);
         }
     }
@@ -54,8 +54,8 @@ function wireframe_entity(game: Game, entity: Entity) {
             using: [render_basic(game.materials[Mat.Wireframe], Cube, [1, 0, 1, 1])],
         });
         let wireframe_transform = game[Get.Transform][box];
-        wireframe_transform.world = entity_transform.world;
-        wireframe_transform.dirty = false;
+        wireframe_transform.World = entity_transform.World;
+        wireframe_transform.Dirty = false;
         wireframes.set(entity_transform, {
             entity,
             anchor: entity_transform,
@@ -71,8 +71,8 @@ function wireframe_collider(game: Game, entity: Entity) {
 
     if (!wireframe) {
         let box = game.add({
-            translation: collide.center,
-            scale: scale([], collide.half, 2),
+            translation: collide.Center,
+            scale: scale([], collide.Half, 2),
             using: [render_basic(game.materials[Mat.Wireframe], Cube, [0, 1, 0, 1])],
         });
         wireframes.set(collide, {
@@ -80,9 +80,9 @@ function wireframe_collider(game: Game, entity: Entity) {
             anchor: transform,
             transform: game[Get.Transform][box],
         });
-    } else if (collide.dynamic) {
-        wireframe.transform.translation = collide.center;
-        scale(wireframe.transform.scale, collide.half, 2);
-        wireframe.transform.dirty = true;
+    } else if (collide.Dynamic) {
+        wireframe.transform.Translation = collide.Center;
+        scale(wireframe.transform.Scale, collide.Half, 2);
+        wireframe.transform.Dirty = true;
     }
 }

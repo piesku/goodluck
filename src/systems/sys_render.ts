@@ -16,10 +16,10 @@ export function sys_render(game: Game, delta: number) {
 
     for (let i = 0; i < game.lights.length; i++) {
         let light = game.lights[i];
-        let transform = game[Get.Transform][light.entity];
-        let position = get_translation([], transform.world);
+        let transform = game[Get.Transform][light.EntityId];
+        let position = get_translation([], transform.World);
         light_positions.push(...position);
-        light_details.push(...light.color, light.intensity);
+        light_details.push(...light.Color, light.Intensity);
     }
 
     // Keep track of the current material to minimize switching.
@@ -31,15 +31,15 @@ export function sys_render(game: Game, delta: number) {
             let render = game[Get.Render][i];
 
             // TODO Sort by material.
-            if (render.material !== current_material) {
-                current_material = render.material;
+            if (render.Material !== current_material) {
+                current_material = render.Material;
 
                 let {gl, program, uniforms} = current_material;
                 gl.useProgram(program);
                 // TODO Support more than one camera.
-                gl.uniformMatrix4fv(uniforms.pv, false, game.cameras[0].pv);
+                gl.uniformMatrix4fv(uniforms.pv, false, game.cameras[0].PV);
 
-                switch (render.kind) {
+                switch (render.Kind) {
                     case RenderKind.Shaded:
                         gl.uniform1i(uniforms.light_count, game.lights.length);
                         gl.uniform3fv(uniforms.light_positions, light_positions);
@@ -48,7 +48,7 @@ export function sys_render(game: Game, delta: number) {
                 }
             }
 
-            switch (render.kind) {
+            switch (render.Kind) {
                 case RenderKind.Basic:
                     draw_basic(transform, render);
                     break;
@@ -61,20 +61,20 @@ export function sys_render(game: Game, delta: number) {
 }
 
 function draw_basic(transform: Transform, render: RenderBasic) {
-    let {gl, mode, uniforms} = render.material;
-    gl.uniformMatrix4fv(uniforms.world, false, transform.world);
-    gl.uniform4fv(uniforms.color, render.color);
-    gl.bindVertexArray(render.vao);
-    gl.drawElements(mode, render.count, gl.UNSIGNED_SHORT, 0);
+    let {gl, mode, uniforms} = render.Material;
+    gl.uniformMatrix4fv(uniforms.world, false, transform.World);
+    gl.uniform4fv(uniforms.color, render.Color);
+    gl.bindVertexArray(render.VAO);
+    gl.drawElements(mode, render.Count, gl.UNSIGNED_SHORT, 0);
     gl.bindVertexArray(null);
 }
 
 function draw_shaded(transform: Transform, render: RenderShaded) {
-    let {gl, mode, uniforms} = render.material;
-    gl.uniformMatrix4fv(uniforms.world, false, transform.world);
-    gl.uniformMatrix4fv(uniforms.self, false, transform.self);
-    gl.uniform4fv(uniforms.color, render.color);
-    gl.bindVertexArray(render.vao);
-    gl.drawElements(mode, render.count, gl.UNSIGNED_SHORT, 0);
+    let {gl, mode, uniforms} = render.Material;
+    gl.uniformMatrix4fv(uniforms.world, false, transform.World);
+    gl.uniformMatrix4fv(uniforms.self, false, transform.Self);
+    gl.uniform4fv(uniforms.color, render.Color);
+    gl.bindVertexArray(render.VAO);
+    gl.drawElements(mode, render.Count, gl.UNSIGNED_SHORT, 0);
     gl.bindVertexArray(null);
 }

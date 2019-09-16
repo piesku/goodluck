@@ -21,46 +21,46 @@ function update(game: Game, entity: Entity, delta: number) {
     let transform = game[Get.Transform][entity];
     let move = game[Get.Move][entity];
     for (let animate of components_of_type<Animate>(game, transform, Get.Animate)) {
-        if (!animate.trigger) {
-            animate.trigger = move.directions.length ? Anim.Move : Anim.Idle;
+        if (!animate.Trigger) {
+            animate.Trigger = move.Directions.length ? Anim.Move : Anim.Idle;
         }
     }
 
-    if (move.directions.length) {
-        let direction = move.directions.reduce(add_directions);
-        let world_position = get_translation([], transform.world);
+    if (move.Directions.length) {
+        let direction = move.Directions.reduce(add_directions);
+        let world_position = get_translation([], transform.World);
 
         // Transform the movement vector into a direction in the world space.
-        let world_direction = transform_direction([], direction, transform.world);
+        let world_direction = transform_direction([], direction, transform.World);
         normalize(world_direction, world_direction);
 
         // Scale by the distance travelled in this tick.
-        scale(world_direction, world_direction, move.move_speed * delta);
+        scale(world_direction, world_direction, move.MoveSpeed * delta);
         let new_position = add([], world_position, world_direction);
 
-        if (transform.parent) {
+        if (transform.Parent) {
             // Transform the movement vector into a point in the local space.
-            transform_mat4(new_position, new_position, transform.parent.self);
+            transform_mat4(new_position, new_position, transform.Parent.Self);
         }
-        transform.translation = new_position;
-        transform.dirty = true;
-        move.directions.length = 0;
+        transform.Translation = new_position;
+        transform.Dirty = true;
+        move.Directions.length = 0;
     }
 
-    if (move.yaws.length) {
-        let yaw = move.yaws.reduce(multiply_rotations);
+    if (move.Yaws.length) {
+        let yaw = move.Yaws.reduce(multiply_rotations);
         // Yaw is applied relative to the world space.
-        multiply(transform.rotation, yaw, transform.rotation);
-        transform.dirty = true;
-        move.yaws.length = 0;
+        multiply(transform.Rotation, yaw, transform.Rotation);
+        transform.Dirty = true;
+        move.Yaws.length = 0;
     }
 
-    if (move.pitches.length) {
-        let pitch = move.pitches.reduce(multiply_rotations);
+    if (move.Pitches.length) {
+        let pitch = move.Pitches.reduce(multiply_rotations);
         // Pitch is applied relative to the self space.
-        multiply(transform.rotation, transform.rotation, pitch);
-        transform.dirty = true;
-        move.pitches.length = 0;
+        multiply(transform.Rotation, transform.Rotation, pitch);
+        transform.Dirty = true;
+        move.Pitches.length = 0;
     }
 }
 

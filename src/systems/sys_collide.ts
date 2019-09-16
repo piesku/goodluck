@@ -19,11 +19,11 @@ export function sys_collide(game: Game, delta: number) {
             all_colliders.push(collider);
 
             // Prepare the collider for this tick's detection.
-            collider.collisions.length = 0;
-            if (collider.new) {
-                collider.new = false;
+            collider.Collisions.length = 0;
+            if (collider.New) {
+                collider.New = false;
                 compute_aabb(transform, collider);
-            } else if (collider.dynamic) {
+            } else if (collider.Dynamic) {
                 compute_aabb(transform, collider);
                 dyn_colliders.push(collider);
             }
@@ -48,13 +48,13 @@ function check_collisions(collider: Collide, colliders: Collide[]) {
         if (collider !== other) {
             let hit = intersect_aabb(collider, other);
             if (hit) {
-                collider.collisions.push({
-                    other,
-                    hit,
+                collider.Collisions.push({
+                    Other: other,
+                    Hit: hit,
                 });
-                other.collisions.push({
-                    other: collider,
-                    hit: negate([], hit),
+                other.Collisions.push({
+                    Other: collider,
+                    Hit: negate([], hit),
                 });
             }
         }
@@ -73,13 +73,13 @@ const BOX = [
 ];
 
 function compute_aabb(transform: Transform, collide: Collide) {
-    get_translation(collide.center, transform.world);
+    get_translation(collide.Center, transform.World);
 
     // Start with the extents on each axis set to the position of the center.
     let min_x, min_y, min_z, max_x, max_y, max_z;
-    min_x = max_x = collide.center[0];
-    min_y = max_y = collide.center[1];
-    min_z = max_z = collide.center[2];
+    min_x = max_x = collide.Center[0];
+    min_y = max_y = collide.Center[1];
+    min_z = max_z = collide.Center[2];
 
     // Expand the extents outwards from the center by finding the farthest
     // vertex on each axis in both the negative and the positive direction.
@@ -88,11 +88,11 @@ function compute_aabb(transform: Transform, collide: Collide) {
         let bb_vertex = BOX[i];
 
         // Scale the bounding box according to the size of the collider.
-        world_vertex[0] = bb_vertex[0] * collide.size[0];
-        world_vertex[1] = bb_vertex[1] * collide.size[1];
-        world_vertex[2] = bb_vertex[2] * collide.size[2];
+        world_vertex[0] = bb_vertex[0] * collide.Size[0];
+        world_vertex[1] = bb_vertex[1] * collide.Size[1];
+        world_vertex[2] = bb_vertex[2] * collide.Size[2];
 
-        transform_mat4(world_vertex, world_vertex, transform.world);
+        transform_mat4(world_vertex, world_vertex, transform.World);
         if (world_vertex[0] < min_x) {
             min_x = world_vertex[0];
         }
@@ -114,26 +114,26 @@ function compute_aabb(transform: Transform, collide: Collide) {
     }
 
     // Calculate the half-extents.
-    collide.half[0] = (max_x - min_x) / 2;
-    collide.half[1] = (max_y - min_y) / 2;
-    collide.half[2] = (max_z - min_z) / 2;
+    collide.Half[0] = (max_x - min_x) / 2;
+    collide.Half[1] = (max_y - min_y) / 2;
+    collide.Half[2] = (max_z - min_z) / 2;
 }
 
 function intersect_aabb(a: Collide, b: Collide): Vec3 | null {
-    let distance_x = a.center[0] - b.center[0];
-    let penetration_x = a.half[0] + b.half[0] - Math.abs(distance_x);
+    let distance_x = a.Center[0] - b.Center[0];
+    let penetration_x = a.Half[0] + b.Half[0] - Math.abs(distance_x);
     if (penetration_x <= 0) {
         return null;
     }
 
-    let distance_y = a.center[1] - b.center[1];
-    let penetration_y = a.half[1] + b.half[1] - Math.abs(distance_y);
+    let distance_y = a.Center[1] - b.Center[1];
+    let penetration_y = a.Half[1] + b.Half[1] - Math.abs(distance_y);
     if (penetration_y <= 0) {
         return null;
     }
 
-    let distance_z = a.center[2] - b.center[2];
-    let penetration_z = a.half[2] + b.half[2] - Math.abs(distance_z);
+    let distance_z = a.Center[2] - b.Center[2];
+    let penetration_z = a.Half[2] + b.Half[2] - Math.abs(distance_z);
     if (penetration_z <= 0) {
         return null;
     }

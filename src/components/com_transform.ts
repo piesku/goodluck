@@ -5,38 +5,38 @@ import {Get} from "./com_index.js";
 
 export interface Transform {
     /** Absolute matrix relative to the world. */
-    world: Mat4;
+    World: Mat4;
     /** World to self matrix. */
-    self: Mat4;
+    Self: Mat4;
     /** Local translation relative to the parent. */
-    translation: Vec3;
+    Translation: Vec3;
     /** Local rotation relative to the parent. */
-    rotation: Quat;
+    Rotation: Quat;
     /** Local scale relative to the parent. */
-    scale: Vec3;
+    Scale: Vec3;
     /** This Transform's entity id. */
-    readonly entity: Entity;
-    parent?: Transform;
-    children: Array<Transform>;
-    dirty: boolean;
+    readonly EntityId: Entity;
+    Parent?: Transform;
+    Children: Array<Transform>;
+    Dirty: boolean;
 }
 
 export function transform(
-    translation: Vec3 = [0, 0, 0],
-    rotation: Quat = [0, 0, 0, 1],
-    scale: Vec3 = [1, 1, 1]
+    Translation: Vec3 = [0, 0, 0],
+    Rotation: Quat = [0, 0, 0, 1],
+    Scale: Vec3 = [1, 1, 1]
 ) {
-    return (game: Game) => (entity: Entity) => {
-        game.world[entity] |= 1 << Get.Transform;
-        game[Get.Transform][entity] = <Transform>{
-            entity,
-            world: create(),
-            self: create(),
-            translation,
-            rotation,
-            scale,
-            children: [],
-            dirty: true,
+    return (game: Game) => (EntityId: Entity) => {
+        game.world[EntityId] |= 1 << Get.Transform;
+        game[Get.Transform][EntityId] = <Transform>{
+            EntityId,
+            World: create(),
+            Self: create(),
+            Translation,
+            Rotation,
+            Scale,
+            Children: [],
+            Dirty: true,
         };
     };
 }
@@ -54,10 +54,10 @@ export function* components_of_type<T>(
     transform: Transform,
     component: Get
 ): IterableIterator<T> {
-    if (game.world[transform.entity] & (1 << component)) {
-        yield (game[component][transform.entity] as unknown) as T;
+    if (game.world[transform.EntityId] & (1 << component)) {
+        yield (game[component][transform.EntityId] as unknown) as T;
     }
-    for (let child of transform.children) {
+    for (let child of transform.Children) {
         yield* components_of_type<T>(game, child, component);
     }
 }

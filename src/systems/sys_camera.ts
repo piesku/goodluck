@@ -17,7 +17,7 @@ function update(game: Game, entity: Entity) {
     let transform = game[Get.Transform][entity];
     let camera = game[Get.Camera][entity];
     game.cameras.push(camera);
-    get_translation(camera.position, transform.world);
-    invert(camera.view, transform.world);
-    multiply(camera.pv, camera.projection, camera.view);
+    get_translation(camera.Position, transform.World);
+    invert(camera.View, transform.World);
+    multiply(camera.PV, camera.Projection, camera.View);
 }

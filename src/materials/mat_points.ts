@@ -5,7 +5,7 @@ let vertex = `#version 300 es
     uniform mat4 pv;
     uniform mat4 world;
 
-    layout(location=${BasicAttribute.position}) in vec3 position;
+    layout(location=${BasicAttribute.Position}) in vec3 position;
 
     void main() {
         gl_Position = pv * world * vec4(position, 1.0);
