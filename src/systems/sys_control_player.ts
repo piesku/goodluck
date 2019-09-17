@@ -6,7 +6,7 @@ const QUERY = (1 << Get.Move) | (1 << Get.PlayerControl);
 const AXIS_X = [1, 0, 0];
 const AXIS_Y = [0, 1, 0];
 
-export function sys_player_move(game: Game, delta: number) {
+export function sys_control_player(game: Game, delta: number) {
     for (let i = 0; i < game.World.length; i++) {
         if ((game.World[i] & QUERY) === QUERY) {
             update(game, i, delta);
