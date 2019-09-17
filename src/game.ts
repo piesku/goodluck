@@ -109,7 +109,7 @@ export class Game implements ComponentData, GameState {
         this.Materials[Mat.Phong] = mat_phong(this.GL);
     }
 
-    CreateEntity(mask: number) {
+    CreateEntity(mask: number = 0) {
         for (let i = 0; i < MAX_ENTITIES; i++) {
             if (!this.World[i]) {
                 this.World[i] = mask;

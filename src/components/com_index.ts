@@ -12,7 +12,7 @@ import {Transform} from "./com_transform";
 import {Trigger} from "./com_trigger";
 
 export const enum Get {
-    Transform,
+    Transform = 1,
     Render,
     Camera,
     Light,
