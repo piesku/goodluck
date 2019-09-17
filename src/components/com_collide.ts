@@ -12,6 +12,10 @@ export interface Collide {
     Dynamic: boolean;
     /** The size of the collider in self units. */
     Size: [number, number, number];
+    /** The min corner of the AABB. */
+    Min: Vec3;
+    /** The max corner of the AABB. */
+    Max: Vec3;
     /** The world position of the AABB. */
     Center: Vec3;
     /** The half-extents of the AABB on the three axes. */
@@ -28,6 +32,8 @@ export function collide(Dynamic: boolean = true, Size: [number, number, number] 
             New: true,
             Dynamic,
             Size,
+            Min: [0, 0, 0],
+            Max: [0, 0, 0],
             Center: [0, 0, 0],
             Half: [0, 0, 0],
             Collisions: [],
