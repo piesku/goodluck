@@ -43,10 +43,17 @@ const MAX_ENTITIES = 10000;
 
 export type Entity = number;
 
-export interface Input {
+export interface InputState {
     [k: string]: number;
     mouse_x: number;
     mouse_y: number;
+}
+
+export interface InputEvent {
+    [k: string]: number;
+    mouse_x: number;
+    mouse_y: number;
+    wheel_y: number;
 }
 
 export class Game implements ComponentData, GameState {
@@ -68,7 +75,8 @@ export class Game implements ComponentData, GameState {
     public Canvas: HTMLCanvasElement;
     public GL: WebGL2RenderingContext;
     public Audio: AudioContext = new AudioContext();
-    public Input: Input = {mouse_x: 0, mouse_y: 0};
+    public InputState: InputState = {mouse_x: 0, mouse_y: 0};
+    public InputEvent: InputEvent = {mouse_x: 0, mouse_y: 0, wheel_y: 0};
 
     // Implement GameState
     public ClearColor = <Vec4>[1, 0.3, 0.3, 1];
@@ -88,13 +96,25 @@ export class Game implements ComponentData, GameState {
         this.Canvas.height = window.innerHeight;
         this.Canvas.addEventListener("click", () => this.Canvas.requestPointerLock());
 
-        window.addEventListener("keydown", evt => (this.Input[evt.code] = 1));
-        window.addEventListener("keyup", evt => (this.Input[evt.code] = 0));
-        this.Canvas.addEventListener("mousedown", evt => (this.Input[`mouse_${evt.button}`] = 1));
-        this.Canvas.addEventListener("mouseup", evt => (this.Input[`mouse_${evt.button}`] = 0));
+        window.addEventListener("keydown", evt => (this.InputState[evt.code] = 1));
+        window.addEventListener("keyup", evt => (this.InputState[evt.code] = 0));
+        this.Canvas.addEventListener("contextmenu", evt => evt.preventDefault());
+        this.Canvas.addEventListener("mousedown", evt => {
+            this.InputState[`mouse_${evt.button}`] = 1;
+            this.InputEvent[`mouse_${evt.button}_down`] = 1;
+        });
+        this.Canvas.addEventListener("mouseup", evt => {
+            this.InputState[`mouse_${evt.button}`] = 0;
+            this.InputEvent[`mouse_${evt.button}_up`] = 1;
+        });
         this.Canvas.addEventListener("mousemove", evt => {
-            this.Input.mouse_x = evt.movementX;
-            this.Input.mouse_y = evt.movementY;
+            this.InputState.mouse_x = evt.offsetX;
+            this.InputState.mouse_y = evt.offsetY;
+            this.InputEvent.mouse_x = evt.movementX;
+            this.InputEvent.mouse_y = evt.movementY;
+        });
+        this.Canvas.addEventListener("wheel", evt => {
+            this.InputEvent.wheel_y = evt.deltaY;
         });
 
         this.GL = this.Canvas.getContext("webgl2")!;
@@ -140,6 +160,10 @@ export class Game implements ComponentData, GameState {
 
         // Debug.
         true && sys_debug(this, delta);
+
+        for (let name in this.InputEvent) {
+            this.InputEvent[name] = 0;
+        }
     }
 
     FrameUpdate(delta: number) {
@@ -167,8 +191,8 @@ export class Game implements ComponentData, GameState {
 
             // Scale down mouse input (collected every frame) to match the step.
             let fixed_updates_count = accumulator / step;
-            this.Input.mouse_x /= fixed_updates_count;
-            this.Input.mouse_y /= fixed_updates_count;
+            this.InputState.mouse_x /= fixed_updates_count;
+            this.InputState.mouse_y /= fixed_updates_count;
 
             while (accumulator > step) {
                 accumulator -= step;
@@ -177,8 +201,8 @@ export class Game implements ComponentData, GameState {
             this.FrameUpdate(delta);
 
             last = now;
-            this.Input.mouse_x = 0;
-            this.Input.mouse_y = 0;
+            this.InputState.mouse_x = 0;
+            this.InputState.mouse_y = 0;
             this.RAF = requestAnimationFrame(tick);
         };
 
