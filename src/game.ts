@@ -30,6 +30,7 @@ import {sys_debug} from "./systems/sys_debug.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
+import {sys_performance} from "./systems/sys_performance.js";
 import {sys_physics} from "./systems/sys_physics.js";
 import {sys_player_move} from "./systems/sys_player_move.js";
 import {sys_render} from "./systems/sys_render.js";
@@ -120,6 +121,8 @@ export class Game implements ComponentData, GameState {
     }
 
     FixedUpdate(delta: number) {
+        let now = performance.now();
+
         // Player input.
         sys_player_move(this, delta);
         // Game logic.
@@ -131,17 +134,26 @@ export class Game implements ComponentData, GameState {
         sys_collide(this, delta);
         sys_physics(this, delta);
         sys_transform(this, delta);
+
+        // Performance.
+        sys_performance(this, performance.now() - now, document.querySelector("#fixed"));
+
         // Debug.
         true && sys_debug(this, delta);
     }
 
     FrameUpdate(delta: number) {
+        let now = performance.now();
+
         sys_audio(this, delta);
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render(this, delta);
         sys_framerate(this, delta);
         sys_ui(this, delta);
+
+        // Performance.
+        sys_performance(this, performance.now() - now, document.querySelector("#frame"));
     }
 
     Start() {
