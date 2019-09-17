@@ -44,7 +44,7 @@ function update(game: Game, entity: Entity, delta: number) {
         }
         transform.Translation = new_position;
         transform.Dirty = true;
-        move.Directions.length = 0;
+        move.Directions = [];
     }
 
     if (move.Yaws.length) {
@@ -52,7 +52,7 @@ function update(game: Game, entity: Entity, delta: number) {
         // Yaw is applied relative to the world space.
         multiply(transform.Rotation, yaw, transform.Rotation);
         transform.Dirty = true;
-        move.Yaws.length = 0;
+        move.Yaws = [];
     }
 
     if (move.Pitches.length) {
@@ -60,7 +60,7 @@ function update(game: Game, entity: Entity, delta: number) {
         // Pitch is applied relative to the self space.
         multiply(transform.Rotation, transform.Rotation, pitch);
         transform.Dirty = true;
-        move.Pitches.length = 0;
+        move.Pitches = [];
     }
 }
 
