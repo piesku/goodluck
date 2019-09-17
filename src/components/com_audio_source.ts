@@ -43,40 +43,32 @@ export interface AudioTrack {
 
 export interface Instrument {
     [InstrumentParam.MasterGainAmount]: number;
-    [InstrumentParam.FilterEnabled]: boolean;
-    [InstrumentParam.FilterType]: BiquadFilterType;
-    [InstrumentParam.FilterFreq]: number;
-    [InstrumentParam.FilterQ]: number;
-    [InstrumentParam.LFOEnabled]: boolean;
-    [InstrumentParam.LFOType]: OscillatorType;
-    [InstrumentParam.LFOAmount]: number;
-    [InstrumentParam.LFOFreq]: number;
-    [InstrumentParam.FilterDetuneLFO]: boolean;
+    [InstrumentParam.FilterType]?: false | BiquadFilterType;
+    [InstrumentParam.FilterFreq]?: number;
+    [InstrumentParam.FilterQ]?: number;
+    [InstrumentParam.FilterDetuneLFO]?: boolean;
+    [InstrumentParam.LFOType]?: false | OscillatorType;
+    [InstrumentParam.LFOAmount]?: number;
+    [InstrumentParam.LFOFreq]?: number;
     [InstrumentParam.Sources]: Array<Oscillator | Buffer>;
 }
 
-export const enum SourceKind {
-    Oscillator,
-    Buffer,
-}
-
 interface Oscillator {
-    [SourceParam.Kind]: SourceKind.Oscillator;
+    [SourceParam.SourceType]: OscillatorType;
     [SourceParam.GainAmount]: number;
     [SourceParam.GainAttack]: number;
     [SourceParam.GainSustain]: number;
     [SourceParam.GainRelease]: number;
-    [SourceParam.OscillatorType]: OscillatorType;
     [SourceParam.DetuneAmount]: number;
-    [SourceParam.DetuneLFO]: boolean;
-    [SourceParam.FreqEnabled]: boolean;
-    [SourceParam.FreqAttack]: number;
-    [SourceParam.FreqSustain]: number;
-    [SourceParam.FreqRelease]: number;
+    [SourceParam.DetuneLFO]?: boolean;
+    [SourceParam.FreqEnabled]?: boolean;
+    [SourceParam.FreqAttack]?: number;
+    [SourceParam.FreqSustain]?: number;
+    [SourceParam.FreqRelease]?: number;
 }
 
 interface Buffer {
-    [SourceParam.Kind]: SourceKind.Buffer;
+    [SourceParam.SourceType]: false;
     [SourceParam.GainAmount]: number;
     [SourceParam.GainAttack]: number;
     [SourceParam.GainSustain]: number;
@@ -85,12 +77,10 @@ interface Buffer {
 
 export const enum InstrumentParam {
     MasterGainAmount,
-    FilterEnabled,
     FilterType,
     FilterFreq,
     FilterQ,
     FilterDetuneLFO,
-    LFOEnabled,
     LFOType,
     LFOAmount,
     LFOFreq,
@@ -98,12 +88,11 @@ export const enum InstrumentParam {
 }
 
 export const enum SourceParam {
-    Kind,
+    SourceType,
     GainAmount,
     GainAttack,
     GainSustain,
     GainRelease,
-    OscillatorType,
     DetuneAmount,
     DetuneLFO,
     FreqEnabled,
