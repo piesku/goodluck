@@ -5,12 +5,15 @@ import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
 import {Collide} from "./components/com_collide.js";
 import {ComponentData, Get} from "./components/com_index.js";
+import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
+import {Mimic} from "./components/com_mimic.js";
 import {Move} from "./components/com_move.js";
 import {Named} from "./components/com_named.js";
 import {PlayerControl} from "./components/com_player_control.js";
 import {Render} from "./components/com_render.js";
 import {RigidBody} from "./components/com_rigid_body.js";
+import {Shake} from "./components/com_shake.js";
 import {transform, Transform} from "./components/com_transform.js";
 import {Trigger} from "./components/com_trigger.js";
 import {mat_basic} from "./materials/mat_basic.js";
@@ -29,11 +32,14 @@ import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
 import {sys_debug} from "./systems/sys_debug.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
+import {sys_lifespan} from "./systems/sys_lifespan.js";
 import {sys_light} from "./systems/sys_light.js";
+import {sys_mimic} from "./systems/sys_mimic.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_performance} from "./systems/sys_performance.js";
 import {sys_physics} from "./systems/sys_physics.js";
 import {sys_render} from "./systems/sys_render.js";
+import {sys_shake} from "./systems/sys_shake.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {sys_trigger} from "./systems/sys_trigger.js";
 import {sys_ui} from "./systems/sys_ui.js";
@@ -72,6 +78,10 @@ export class Game implements ComponentData, GameState {
     public [Get.Collide]: Array<Collide> = [];
     public [Get.RigidBody]: Array<RigidBody> = [];
     public [Get.Trigger]: Array<Trigger> = [];
+    public [Get.Mimic]: Array<Mimic> = [];
+    public [Get.Lifespan]: Array<Lifespan> = [];
+    public [Get.Shake]: Array<Shake> = [];
+
     public Canvas: HTMLCanvasElement;
     public GL: WebGL2RenderingContext;
     public Audio: AudioContext = new AudioContext();
@@ -143,17 +153,26 @@ export class Game implements ComponentData, GameState {
     FixedUpdate(delta: number) {
         let now = performance.now();
 
+        // Destroy entities past their age.
+        sys_lifespan(this, delta);
+
         // Player input.
         sys_control_player(this, delta);
-        // Game logic.
+
+        // Animation and movement.
+        sys_mimic(this, delta);
+        sys_shake(this, delta);
         sys_animate(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
-        sys_trigger(this, delta);
+
         // Collisions and physics.
         sys_collide(this, delta);
         sys_physics(this, delta);
         sys_transform(this, delta);
+
+        // Post-transform systems.
+        sys_trigger(this, delta);
 
         // Performance.
         sys_performance(this, performance.now() - now, document.querySelector("#fixed"));
