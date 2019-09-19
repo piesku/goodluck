@@ -236,7 +236,7 @@ export class Game implements ComponentData, GameState {
     }
 
     Add({Translation, Rotation, Scale, Using = [], Children = []}: Blueprint) {
-        let entity = this.CreateEntity(Get.Transform);
+        let entity = this.CreateEntity();
         transform(Translation, Rotation, Scale)(this, entity);
         for (let mixin of Using) {
             mixin(this, entity);
@@ -253,7 +253,7 @@ export class Game implements ComponentData, GameState {
 
     Destroy(entity: Entity) {
         let mask = this.World[entity];
-        if (mask & Get.Transform) {
+        if (mask & (1 << Get.Transform)) {
             for (let child of this[Get.Transform][entity].Children) {
                 this.Destroy(child.EntityId);
             }
