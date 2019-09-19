@@ -5,7 +5,7 @@ import {Entity, Game} from "../game.js";
 import {Quat, Vec3} from "../math/index.js";
 import {get_translation} from "../math/mat4.js";
 import {multiply} from "../math/quat.js";
-import {add, normalize, scale, transform_direction, transform_mat4} from "../math/vec3.js";
+import {add, normalize, scale, transform_direction, transform_point} from "../math/vec3.js";
 
 const QUERY = (1 << Get.Transform) | (1 << Get.Move);
 
@@ -40,7 +40,7 @@ function update(game: Game, entity: Entity, delta: number) {
 
         if (transform.Parent) {
             // Transform the movement vector into a point in the local space.
-            transform_mat4(new_position, new_position, transform.Parent.Self);
+            transform_point(new_position, new_position, transform.Parent.Self);
         }
         transform.Translation = new_position;
         transform.Dirty = true;

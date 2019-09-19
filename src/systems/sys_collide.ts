@@ -4,7 +4,7 @@ import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Vec3} from "../math/index.js";
 import {get_translation} from "../math/mat4.js";
-import {negate, transform_mat4} from "../math/vec3.js";
+import {negate, transform_point} from "../math/vec3.js";
 
 const QUERY = (1 << Get.Transform) | (1 << Get.Collide);
 
@@ -98,7 +98,7 @@ function compute_aabb(transform: Transform, collide: Collide) {
         world_vertex[1] = bb_vertex[1] * collide.Size[1];
         world_vertex[2] = bb_vertex[2] * collide.Size[2];
 
-        transform_mat4(world_vertex, world_vertex, transform.World);
+        transform_point(world_vertex, world_vertex, transform.World);
         if (world_vertex[0] < min_x) {
             min_x = world_vertex[0];
         }

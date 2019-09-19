@@ -64,7 +64,7 @@ export function cross(out: Vec3, a: Vec3, b: Vec3) {
     return out;
 }
 
-export function transform_mat4(out: Vec3, a: Vec3, m: Mat4) {
+export function transform_point(out: Vec3, a: Vec3, m: Mat4) {
     let x = a[0],
         y = a[1],
         z = a[2];
@@ -77,7 +77,7 @@ export function transform_mat4(out: Vec3, a: Vec3, m: Mat4) {
 }
 
 export function transform_direction(out: Vec3, a: Vec3, m: Mat4) {
-    let tip = transform_mat4([], a, m);
+    let tip = transform_point([], a, m);
     let base = get_translation([], m);
     return subtract(out, tip, base);
 }
