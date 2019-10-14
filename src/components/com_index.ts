@@ -15,55 +15,55 @@ import {Transform} from "./com_transform";
 import {Trigger} from "./com_trigger";
 
 export const enum Get {
-    Transform,
-    Render,
-    Camera,
-    Light,
-    AudioSource,
     Animate,
+    AudioSource,
+    Camera,
+    Collide,
+    Lifespan,
+    Light,
+    Mimic,
+    Move,
     Named,
     PlayerControl,
-    Move,
-    Collide,
+    Render,
     RigidBody,
-    Trigger,
-    Mimic,
-    Lifespan,
     Shake,
+    Transform,
+    Trigger,
 }
 
 export interface ComponentData {
-    [Get.Transform]: Array<Transform>;
-    [Get.Render]: Array<Render>;
-    [Get.Camera]: Array<Camera>;
-    [Get.Light]: Array<Light>;
-    [Get.AudioSource]: Array<AudioSource>;
     [Get.Animate]: Array<Animate>;
-    [Get.Named]: Array<Named>;
-    [Get.Move]: Array<Move>;
-    [Get.PlayerControl]: Array<PlayerControl>;
+    [Get.AudioSource]: Array<AudioSource>;
+    [Get.Camera]: Array<Camera>;
     [Get.Collide]: Array<Collide>;
-    [Get.RigidBody]: Array<RigidBody>;
-    [Get.Trigger]: Array<Trigger>;
-    [Get.Mimic]: Array<Mimic>;
     [Get.Lifespan]: Array<Lifespan>;
+    [Get.Light]: Array<Light>;
+    [Get.Mimic]: Array<Mimic>;
+    [Get.Move]: Array<Move>;
+    [Get.Named]: Array<Named>;
+    [Get.PlayerControl]: Array<PlayerControl>;
+    [Get.Render]: Array<Render>;
+    [Get.RigidBody]: Array<RigidBody>;
     [Get.Shake]: Array<Shake>;
+    [Get.Transform]: Array<Transform>;
+    [Get.Trigger]: Array<Trigger>;
 }
 
 export const enum Has {
-    Transform = 1 << Get.Transform,
-    Render = 1 << Get.Render,
-    Camera = 1 << Get.Camera,
-    Light = 1 << Get.Light,
-    AudioSource = 1 << Get.AudioSource,
     Animate = 1 << Get.Animate,
+    AudioSource = 1 << Get.AudioSource,
+    Camera = 1 << Get.Camera,
+    Collide = 1 << Get.Collide,
+    Lifespan = 1 << Get.Lifespan,
+    Light = 1 << Get.Light,
+    Mimic = 1 << Get.Mimic,
+    Move = 1 << Get.Move,
     Named = 1 << Get.Named,
     PlayerControl = 1 << Get.PlayerControl,
-    Move = 1 << Get.Move,
-    Collide = 1 << Get.Collide,
+    Render = 1 << Get.Render,
     RigidBody = 1 << Get.RigidBody,
-    Trigger = 1 << Get.Trigger,
-    Mimic = 1 << Get.Mimic,
-    Lifespan = 1 << Get.Lifespan,
     Shake = 1 << Get.Shake,
+    Transform = 1 << Get.Transform,
+    Trigger = 1 << Get.Trigger,
 }

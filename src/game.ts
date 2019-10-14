@@ -66,21 +66,21 @@ export class Game implements ComponentData, GameState {
     public World: Array<number> = [];
 
     // Implement ComponentData
-    public [Get.Transform]: Array<Transform> = [];
-    public [Get.Render]: Array<Render> = [];
-    public [Get.Camera]: Array<Camera> = [];
-    public [Get.Light]: Array<Light> = [];
-    public [Get.AudioSource]: Array<AudioSource> = [];
     public [Get.Animate]: Array<Animate> = [];
-    public [Get.Named]: Array<Named> = [];
-    public [Get.Move]: Array<Move> = [];
-    public [Get.PlayerControl]: Array<PlayerControl> = [];
+    public [Get.AudioSource]: Array<AudioSource> = [];
+    public [Get.Camera]: Array<Camera> = [];
     public [Get.Collide]: Array<Collide> = [];
-    public [Get.RigidBody]: Array<RigidBody> = [];
-    public [Get.Trigger]: Array<Trigger> = [];
-    public [Get.Mimic]: Array<Mimic> = [];
     public [Get.Lifespan]: Array<Lifespan> = [];
+    public [Get.Light]: Array<Light> = [];
+    public [Get.Mimic]: Array<Mimic> = [];
+    public [Get.Move]: Array<Move> = [];
+    public [Get.Named]: Array<Named> = [];
+    public [Get.PlayerControl]: Array<PlayerControl> = [];
+    public [Get.Render]: Array<Render> = [];
+    public [Get.RigidBody]: Array<RigidBody> = [];
     public [Get.Shake]: Array<Shake> = [];
+    public [Get.Transform]: Array<Transform> = [];
+    public [Get.Trigger]: Array<Trigger> = [];
 
     public Canvas: HTMLCanvasElement;
     public GL: WebGL2RenderingContext;
