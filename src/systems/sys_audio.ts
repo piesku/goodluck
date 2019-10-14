@@ -1,8 +1,8 @@
 import {play_note} from "../audio.js";
-import {Get} from "../components/com_index.js";
+import {Get, Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 
-const QUERY = 1 << Get.AudioSource;
+const QUERY = Has.AudioSource;
 
 export function sys_audio(game: Game, delta: number) {
     for (let i = 0; i < game.World.length; i++) {

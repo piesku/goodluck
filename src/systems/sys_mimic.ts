@@ -1,10 +1,10 @@
-import {Get} from "../components/com_index.js";
+import {Get, Has} from "../components/com_index.js";
 import {Game} from "../game.js";
 import {get_rotation, get_translation} from "../math/mat4.js";
 import {slerp} from "../math/quat.js";
 import {lerp} from "../math/vec3.js";
 
-const QUERY = (1 << Get.Transform) | (1 << Get.Mimic);
+const QUERY = Has.Transform | Has.Mimic;
 
 export function sys_mimic(game: Game, delta: number) {
     for (let i = 0; i < game.World.length; i++) {

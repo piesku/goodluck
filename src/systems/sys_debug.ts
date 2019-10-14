@@ -1,5 +1,5 @@
 import {Collide} from "../components/com_collide.js";
-import {Get} from "../components/com_index.js";
+import {Get, Has} from "../components/com_index.js";
 import {render_basic} from "../components/com_render_basic.js";
 import {Transform} from "../components/com_transform.js";
 import {Entity, Game} from "../game.js";
@@ -19,7 +19,7 @@ export function sys_debug(game: Game, delta: number) {
     for (let [key, wireframe] of wireframes) {
         if (
             // If the entity doesn't have TRANSFORM...
-            !(game.World[wireframe.entity] & (1 << Get.Transform)) ||
+            !(game.World[wireframe.entity] & Has.Transform) ||
             // ...or if it's not the same TRANSFORM.
             game[Get.Transform][wireframe.entity] !== wireframe.anchor
         ) {
@@ -29,16 +29,16 @@ export function sys_debug(game: Game, delta: number) {
     }
 
     for (let i = 0; i < game.World.length; i++) {
-        if (game.World[i] & (1 << Get.Transform)) {
+        if (game.World[i] & Has.Transform) {
             // Draw colliders first. If the collider's wireframe overlaps
             // exactly with the transform's wireframe, we want the collider to
             // take priority.
-            if (game.World[i] & (1 << Get.Collide)) {
+            if (game.World[i] & Has.Collide) {
                 wireframe_collider(game, i);
             }
 
             // Draw invisible entities.
-            if (!(game.World[i] & (1 << Get.Render))) {
+            if (!(game.World[i] & Has.Render)) {
                 wireframe_entity(game, i);
             }
         }

@@ -1,8 +1,8 @@
-import {Get} from "../components/com_index.js";
+import {Get, Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 import {invert, multiply} from "../math/mat4.js";
 
-const QUERY = (1 << Get.Transform) | (1 << Get.Camera);
+const QUERY = Has.Transform | Has.Camera;
 
 export function sys_camera(game: Game, delta: number) {
     game.Cameras = [];

@@ -1,10 +1,10 @@
 import {Anim, AnimationFlag, AnimationKeyframe} from "../components/com_animate.js";
-import {Get} from "../components/com_index.js";
+import {Get, Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 import {slerp} from "../math/quat.js";
 import {lerp} from "../math/vec3.js";
 
-const QUERY = (1 << Get.Transform) | (1 << Get.Animate);
+const QUERY = Has.Transform | Has.Animate;
 
 export function sys_animate(game: Game, delta: number) {
     for (let i = 0; i < game.World.length; i++) {

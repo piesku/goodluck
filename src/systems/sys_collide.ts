@@ -1,12 +1,12 @@
 import {Collide} from "../components/com_collide.js";
-import {Get} from "../components/com_index.js";
+import {Get, Has} from "../components/com_index.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Vec3} from "../math/index.js";
 import {get_translation} from "../math/mat4.js";
 import {negate, transform_point} from "../math/vec3.js";
 
-const QUERY = (1 << Get.Transform) | (1 << Get.Collide);
+const QUERY = Has.Transform | Has.Collide;
 
 export function sys_collide(game: Game, delta: number) {
     // Collect all colliders.

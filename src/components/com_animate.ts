@@ -1,6 +1,6 @@
 import {Entity, Game} from "../game.js";
 import {Quat, Vec3} from "../math/index.js";
-import {Get} from "./com_index.js";
+import {Get, Has} from "./com_index.js";
 
 export interface Animate {
     /** Animation states store the state of clips' playback. */
@@ -33,7 +33,7 @@ export function animate(clips: {[Anim.Idle]: AnimationClip; [k: number]: Animati
                 Time: 0,
             };
         }
-        game.World[entity] |= 1 << Get.Animate;
+        game.World[entity] |= Has.Animate;
         game[Get.Animate][entity] = <Animate>{
             States,
             Current: States[Anim.Idle],

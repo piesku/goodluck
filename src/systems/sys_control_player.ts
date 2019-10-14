@@ -1,8 +1,8 @@
-import {Get} from "../components/com_index.js";
+import {Get, Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 import {from_axis} from "../math/quat.js";
 
-const QUERY = (1 << Get.Move) | (1 << Get.PlayerControl);
+const QUERY = Has.Move | Has.PlayerControl;
 const AXIS_X = [1, 0, 0];
 const AXIS_Y = [0, 1, 0];
 

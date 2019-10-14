@@ -1,8 +1,8 @@
 import {dispatch} from "../actions.js";
-import {Get} from "../components/com_index.js";
+import {Get, Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 
-const QUERY = (1 << Get.Transform) | (1 << Get.Collide) | (1 << Get.Trigger);
+const QUERY = Has.Transform | Has.Collide | Has.Trigger;
 
 export function sys_trigger(game: Game, delta: number) {
     for (let i = 0; i < game.World.length; i++) {

@@ -1,4 +1,4 @@
-import {Get} from "../components/com_index.js";
+import {Get, Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
 import {BasicUniform, RenderBasic} from "../components/com_render_basic.js";
 import {RenderShaded, ShadedUniform} from "../components/com_render_shaded.js";
@@ -7,7 +7,7 @@ import {Game} from "../game.js";
 import {get_translation} from "../math/mat4.js";
 import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../webgl.js";
 
-const QUERY = (1 << Get.Transform) | (1 << Get.Render);
+const QUERY = Has.Transform | Has.Render;
 
 export function sys_render(game: Game, delta: number) {
     game.GL.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

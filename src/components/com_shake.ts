@@ -1,5 +1,5 @@
 import {Entity, Game} from "../game.js";
-import {Get} from "./com_index.js";
+import {Get, Has} from "./com_index.js";
 
 export interface Shake {
     Duration: number;
@@ -10,7 +10,7 @@ export interface Shake {
  */
 export function shake(Duration = 0) {
     return (game: Game, entity: Entity) => {
-        game.World[entity] |= 1 << Get.Shake;
+        game.World[entity] |= Has.Shake;
         game[Get.Shake][entity] = <Shake>{
             Duration,
         };

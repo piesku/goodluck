@@ -1,7 +1,7 @@
-import {Get} from "../components/com_index.js";
+import {Get, Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 
-const QUERY = (1 << Get.Transform) | (1 << Get.Shake);
+const QUERY = Has.Transform | Has.Shake;
 
 export function sys_shake(game: Game, delta: number) {
     for (let i = 0; i < game.World.length; i++) {

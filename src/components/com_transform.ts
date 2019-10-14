@@ -1,7 +1,7 @@
 import {Entity, Game} from "../game.js";
 import {Mat4, Quat, Vec3} from "../math/index.js";
 import {create} from "../math/mat4.js";
-import {Get} from "./com_index.js";
+import {Get, Has} from "./com_index.js";
 
 export interface Transform {
     /** Absolute matrix relative to the world. */
@@ -27,7 +27,7 @@ export function transform(
     Scale: Vec3 = [1, 1, 1]
 ) {
     return (game: Game, EntityId: Entity) => {
-        game.World[EntityId] |= 1 << Get.Transform;
+        game.World[EntityId] |= Has.Transform;
         game[Get.Transform][EntityId] = <Transform>{
             EntityId,
             World: create(),
