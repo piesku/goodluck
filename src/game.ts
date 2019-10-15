@@ -179,10 +179,6 @@ export class Game implements ComponentData, GameState {
 
         // Debug.
         true && sys_debug(this, delta);
-
-        for (let name in this.InputEvent) {
-            this.InputEvent[name] = 0;
-        }
     }
 
     FrameUpdate(delta: number) {
@@ -206,22 +202,26 @@ export class Game implements ComponentData, GameState {
 
         let tick = (now: number) => {
             let delta = (now - last) / 1000;
-            accumulator += delta;
 
+            this.FrameUpdate(delta);
+
+            accumulator += delta;
             // Scale down mouse input (collected every frame) to match the step.
             let fixed_updates_count = accumulator / step;
-            this.InputState.mouse_x /= fixed_updates_count;
-            this.InputState.mouse_y /= fixed_updates_count;
+            this.InputEvent.mouse_x /= fixed_updates_count;
+            this.InputEvent.mouse_y /= fixed_updates_count;
 
             while (accumulator > step) {
                 accumulator -= step;
                 this.FixedUpdate(step);
             }
-            this.FrameUpdate(delta);
+
+            // Reset all input events for the next frame.
+            for (let name in this.InputEvent) {
+                this.InputEvent[name] = 0;
+            }
 
             last = now;
-            this.InputState.mouse_x = 0;
-            this.InputState.mouse_y = 0;
             this.RAF = requestAnimationFrame(tick);
         };
 
