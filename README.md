@@ -17,7 +17,7 @@ remove features you don't need, and hack away.
 Production builds are bundled into a single `.js` file and optimized for
 size. You can find them in `public/opt`.
 
-5. `npm run build`
+5. `make`
 
 ## Design Principles
 
