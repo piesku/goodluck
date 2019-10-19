@@ -82,8 +82,10 @@ export class Game implements ComponentData, GameState {
     public [Get.Transform]: Array<Transform> = [];
     public [Get.Trigger]: Array<Trigger> = [];
 
-    public Canvas: HTMLCanvasElement;
+    public ViewportWidth = window.innerWidth;
+    public ViewportHeight = window.innerHeight;
     public GL: WebGL2RenderingContext;
+    public UI = document.querySelector("main")!;
     public Audio: AudioContext = new AudioContext();
     public InputState: InputState = {mouse_x: 0, mouse_y: 0};
     public InputEvent: InputEvent = {mouse_x: 0, mouse_y: 0, wheel_y: 0};
@@ -101,33 +103,33 @@ export class Game implements ComponentData, GameState {
             document.hidden ? this.Stop() : this.Start()
         );
 
-        this.Canvas = document.querySelector("canvas")!;
-        this.Canvas.width = window.innerWidth;
-        this.Canvas.height = window.innerHeight;
-        this.Canvas.addEventListener("click", () => this.Canvas.requestPointerLock());
-
         window.addEventListener("keydown", evt => (this.InputState[evt.code] = 1));
         window.addEventListener("keyup", evt => (this.InputState[evt.code] = 0));
-        this.Canvas.addEventListener("contextmenu", evt => evt.preventDefault());
-        this.Canvas.addEventListener("mousedown", evt => {
+        this.UI.addEventListener("contextmenu", evt => evt.preventDefault());
+        this.UI.addEventListener("mousedown", evt => {
             this.InputState[`mouse_${evt.button}`] = 1;
             this.InputEvent[`mouse_${evt.button}_down`] = 1;
         });
-        this.Canvas.addEventListener("mouseup", evt => {
+        this.UI.addEventListener("mouseup", evt => {
             this.InputState[`mouse_${evt.button}`] = 0;
             this.InputEvent[`mouse_${evt.button}_up`] = 1;
         });
-        this.Canvas.addEventListener("mousemove", evt => {
+        this.UI.addEventListener("mousemove", evt => {
             this.InputState.mouse_x = evt.offsetX;
             this.InputState.mouse_y = evt.offsetY;
             this.InputEvent.mouse_x = evt.movementX;
             this.InputEvent.mouse_y = evt.movementY;
         });
-        this.Canvas.addEventListener("wheel", evt => {
+        this.UI.addEventListener("wheel", evt => {
             this.InputEvent.wheel_y = evt.deltaY;
         });
+        this.UI.addEventListener("click", () => this.UI.requestPointerLock());
 
-        this.GL = this.Canvas.getContext("webgl2")!;
+        let canvas3d = document.querySelector("canvas")!;
+        canvas3d.width = this.ViewportWidth;
+        canvas3d.height = this.ViewportHeight;
+
+        this.GL = canvas3d.getContext("webgl2")!;
         this.GL.enable(GL_DEPTH_TEST);
         this.GL.enable(GL_CULL_FACE);
         this.GL.frontFace(GL_CW);
