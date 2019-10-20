@@ -3,10 +3,12 @@ import {create_fly_camera} from "../blueprints/blu_fly_camera.js";
 import {Anim, animate} from "../components/com_animate.js";
 import {audio_source} from "../components/com_audio_source.js";
 import {collide} from "../components/com_collide.js";
+import {draw} from "../components/com_draw.js";
 import {light} from "../components/com_light.js";
 import {render_basic} from "../components/com_render_basic.js";
 import {render_shaded} from "../components/com_render_shaded.js";
 import {rigid_body} from "../components/com_rigid_body.js";
+import {dra_exclamation} from "../drawings/dra_exclamation.js";
 import {Game} from "../game.js";
 import {Mat} from "../materials/mat_index.js";
 import {Cube} from "../shapes/Cube.js";
@@ -51,6 +53,12 @@ export function world_stage(game: Game) {
             animate({
                 [Anim.Idle]: ani_scale,
             }),
+        ],
+        Children: [
+            {
+                Translation: [0, 1, 0],
+                Using: [draw(dra_exclamation)],
+            },
         ],
     });
 

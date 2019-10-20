@@ -4,6 +4,7 @@ import {Animate} from "./components/com_animate.js";
 import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
 import {Collide} from "./components/com_collide.js";
+import {Draw} from "./components/com_draw.js";
 import {ComponentData, Get, Has} from "./components/com_index.js";
 import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
@@ -31,6 +32,7 @@ import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
 import {sys_debug} from "./systems/sys_debug.js";
+import {sys_draw} from "./systems/sys_draw.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_lifespan} from "./systems/sys_lifespan.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -70,6 +72,7 @@ export class Game implements ComponentData, GameState {
     public [Get.AudioSource]: Array<AudioSource> = [];
     public [Get.Camera]: Array<Camera> = [];
     public [Get.Collide]: Array<Collide> = [];
+    public [Get.Draw]: Array<Draw> = [];
     public [Get.Lifespan]: Array<Lifespan> = [];
     public [Get.Light]: Array<Light> = [];
     public [Get.Mimic]: Array<Mimic> = [];
@@ -85,6 +88,7 @@ export class Game implements ComponentData, GameState {
     public ViewportWidth = window.innerWidth;
     public ViewportHeight = window.innerHeight;
     public GL: WebGL2RenderingContext;
+    public Context2D: CanvasRenderingContext2D;
     public UI = document.querySelector("main")!;
     public Audio: AudioContext = new AudioContext();
     public InputState: InputState = {mouse_x: 0, mouse_y: 0};
@@ -128,11 +132,15 @@ export class Game implements ComponentData, GameState {
         let canvas3d = document.querySelector("canvas")!;
         canvas3d.width = this.ViewportWidth;
         canvas3d.height = this.ViewportHeight;
-
         this.GL = canvas3d.getContext("webgl2")!;
         this.GL.enable(GL_DEPTH_TEST);
         this.GL.enable(GL_CULL_FACE);
         this.GL.frontFace(GL_CW);
+
+        let canvas2d = document.querySelector("canvas + canvas")! as HTMLCanvasElement;
+        canvas2d.width = this.ViewportWidth;
+        canvas2d.height = this.ViewportHeight;
+        this.Context2D = canvas2d.getContext("2d")!;
 
         this.Materials[Mat.Points] = mat_points(this.GL);
         this.Materials[Mat.Wireframe] = mat_wireframe(this.GL);
@@ -190,6 +198,7 @@ export class Game implements ComponentData, GameState {
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render(this, delta);
+        sys_draw(this, delta);
         sys_framerate(this, delta);
         sys_ui(this, delta);
 

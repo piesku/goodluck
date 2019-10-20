@@ -2,6 +2,7 @@ import {Animate} from "./com_animate";
 import {AudioSource} from "./com_audio_source";
 import {Camera} from "./com_camera";
 import {Collide} from "./com_collide";
+import {Draw} from "./com_draw";
 import {Lifespan} from "./com_lifespan";
 import {Light} from "./com_light";
 import {Mimic} from "./com_mimic";
@@ -19,6 +20,7 @@ export const enum Get {
     AudioSource,
     Camera,
     Collide,
+    Draw,
     Lifespan,
     Light,
     Mimic,
@@ -37,6 +39,7 @@ export interface ComponentData {
     [Get.AudioSource]: Array<AudioSource>;
     [Get.Camera]: Array<Camera>;
     [Get.Collide]: Array<Collide>;
+    [Get.Draw]: Array<Draw>;
     [Get.Lifespan]: Array<Lifespan>;
     [Get.Light]: Array<Light>;
     [Get.Mimic]: Array<Mimic>;
@@ -55,6 +58,7 @@ export const enum Has {
     AudioSource = 1 << Get.AudioSource,
     Camera = 1 << Get.Camera,
     Collide = 1 << Get.Collide,
+    Draw = 1 << Get.Draw,
     Lifespan = 1 << Get.Lifespan,
     Light = 1 << Get.Light,
     Mimic = 1 << Get.Mimic,
