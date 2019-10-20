@@ -72,7 +72,7 @@ function wireframe_collider(game: Game, entity: Entity) {
     if (!wireframe) {
         let box = game.Add({
             Translation: collide.Center,
-            Scale: scale([], collide.Half, 2),
+            Scale: scale([0, 0, 0], collide.Half, 2),
             Using: [render_basic(game.Materials[Mat.Wireframe], Cube, [0, 1, 0, 1])],
         });
         wireframes.set(collide, {

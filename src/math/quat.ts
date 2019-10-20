@@ -75,9 +75,9 @@ export function from_axis(out: Quat, axis: Vec3, angle: number) {
 }
 
 export const rotation_to = (function() {
-    let tmpvec3: Vec3 = [];
-    let xUnitVec3 = [1, 0, 0];
-    let yUnitVec3 = [0, 1, 0];
+    let tmpvec3 = <Vec3>[0, 0, 0];
+    let xUnitVec3 = <Vec3>[1, 0, 0];
+    let yUnitVec3 = <Vec3>[0, 1, 0];
 
     return function(out: Quat, a: Vec3, b: Vec3) {
         let d = dot(a, b);

@@ -28,15 +28,15 @@ function update(game: Game, entity: Entity, delta: number) {
 
     if (move.Directions.length) {
         let direction = move.Directions.reduce(add_directions);
-        let world_position = get_translation([], transform.World);
+        let world_position = get_translation([0, 0, 0], transform.World);
 
         // Transform the movement vector into a direction in the world space.
-        let world_direction = transform_direction([], direction, transform.World);
+        let world_direction = transform_direction([0, 0, 0], direction, transform.World);
         normalize(world_direction, world_direction);
 
         // Scale by the distance travelled in this tick.
         scale(world_direction, world_direction, move.MoveSpeed * delta);
-        let new_position = add([], world_position, world_direction);
+        let new_position = add([0, 0, 0], world_position, world_direction);
 
         if (transform.Parent) {
             // Transform the movement vector into a point in the local space.

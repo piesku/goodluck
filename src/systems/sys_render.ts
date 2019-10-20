@@ -18,7 +18,7 @@ export function sys_render(game: Game, delta: number) {
     for (let i = 0; i < game.Lights.length; i++) {
         let light = game.Lights[i];
         let transform = game[Get.Transform][light.EntityId];
-        let position = get_translation([], transform.World);
+        let position = get_translation([0, 0, 0], transform.World);
         light_positions.push(...position);
         light_details.push(...light.Color, light.Intensity);
     }

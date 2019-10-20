@@ -12,17 +12,17 @@ export function sys_mimic(game: Game, delta: number) {
             let follower_transform = game[Get.Transform][i];
             let follower_mimic = game[Get.Mimic][i];
             let target_transform = game[Get.Transform][follower_mimic.target];
-            let target_world_position = get_translation([], target_transform.World);
-            let target_world_rotation = get_rotation([], target_transform.World);
+            let target_world_position = get_translation([0, 0, 0], target_transform.World);
+            let target_world_rotation = get_rotation([0, 0, 0, 0], target_transform.World);
             // XXX Follower must be a top-level transform for this to work.
-            follower_transform.Translation = lerp(
-                [],
+            lerp(
+                follower_transform.Translation,
                 follower_transform.Translation,
                 target_world_position,
                 follower_mimic.stiffness
             );
-            follower_transform.Rotation = slerp(
-                [],
+            slerp(
+                follower_transform.Rotation,
                 follower_transform.Rotation,
                 target_world_rotation,
                 follower_mimic.stiffness

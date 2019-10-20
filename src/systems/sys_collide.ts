@@ -61,7 +61,7 @@ function check_collisions(collider: Collide, colliders: Collide[], length: numbe
             });
             other.Collisions.push({
                 Other: collider,
-                Hit: negate([], hit),
+                Hit: negate([0, 0, 0], hit),
             });
         }
     }
@@ -89,7 +89,7 @@ function compute_aabb(transform: Transform, collide: Collide) {
 
     // Expand the extents outwards from the center by finding the farthest
     // vertex on each axis in both the negative and the positive direction.
-    let world_vertex: Vec3 = [];
+    let world_vertex = <Vec3>[0, 0, 0];
     for (let i = 0; i < 8; i++) {
         let bb_vertex = BOX[i];
 

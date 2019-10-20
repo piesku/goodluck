@@ -77,8 +77,8 @@ export function transform_point(out: Vec3, a: Vec3, m: Mat4) {
 }
 
 export function transform_direction(out: Vec3, a: Vec3, m: Mat4) {
-    let tip = transform_point([], a, m);
-    let base = get_translation([], m);
+    let tip = transform_point([0, 0, 0], a, m);
+    let base = get_translation([0, 0, 0], m);
     return subtract(out, tip, base);
 }
 

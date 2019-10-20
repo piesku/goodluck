@@ -1,12 +1,7 @@
 import {Mat4, Quat, Vec3} from "./index.js";
 
 export function create() {
-    let out = new Float32Array(16);
-    out[0] = 1;
-    out[5] = 1;
-    out[10] = 1;
-    out[15] = 1;
-    return out;
+    return <Mat4>[1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 }
 
 export function set(
@@ -254,8 +249,7 @@ export function get_scaling(out: Vec3, mat: Mat4) {
 }
 
 export function get_rotation(out: Quat, mat: Mat4) {
-    let scaling = new Float32Array(3);
-    get_scaling(scaling, mat);
+    let scaling = get_scaling([0, 0, 0], mat);
 
     let is1 = 1 / scaling[0];
     let is2 = 1 / scaling[1];
