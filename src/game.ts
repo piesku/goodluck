@@ -1,5 +1,5 @@
 import {GameState} from "./actions.js";
-import {Blueprint} from "./blueprints/blu_common.js";
+import {Blueprint, Blueprint2D} from "./blueprints/blu_common.js";
 import {Animate} from "./components/com_animate.js";
 import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
@@ -16,6 +16,7 @@ import {Render} from "./components/com_render.js";
 import {RigidBody} from "./components/com_rigid_body.js";
 import {Shake} from "./components/com_shake.js";
 import {transform, Transform} from "./components/com_transform.js";
+import {Transform2D, transform2d} from "./components/com_transform2d.js";
 import {Trigger} from "./components/com_trigger.js";
 import {mat_basic} from "./materials/mat_basic.js";
 import {Material} from "./materials/mat_common.js";
@@ -33,6 +34,7 @@ import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
 import {sys_debug} from "./systems/sys_debug.js";
 import {sys_draw} from "./systems/sys_draw.js";
+import {sys_draw2d} from "./systems/sys_draw2d.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_lifespan} from "./systems/sys_lifespan.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -43,6 +45,7 @@ import {sys_physics} from "./systems/sys_physics.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_shake} from "./systems/sys_shake.js";
 import {sys_transform} from "./systems/sys_transform.js";
+import {sys_transform2d} from "./systems/sys_transform2d.js";
 import {sys_trigger} from "./systems/sys_trigger.js";
 import {sys_ui} from "./systems/sys_ui.js";
 import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "./webgl.js";
@@ -83,6 +86,7 @@ export class Game implements ComponentData, GameState {
     public [Get.RigidBody]: Array<RigidBody> = [];
     public [Get.Shake]: Array<Shake> = [];
     public [Get.Transform]: Array<Transform> = [];
+    public [Get.Transform2D]: Array<Transform2D> = [];
     public [Get.Trigger]: Array<Trigger> = [];
 
     public ViewportWidth = window.innerWidth;
@@ -175,6 +179,7 @@ export class Game implements ComponentData, GameState {
         sys_animate(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
+        sys_transform2d(this, delta);
 
         // Collisions and physics.
         sys_collide(this, delta);
@@ -199,6 +204,7 @@ export class Game implements ComponentData, GameState {
         sys_light(this, delta);
         sys_render(this, delta);
         sys_draw(this, delta);
+        sys_draw2d(this, delta);
         sys_framerate(this, delta);
         sys_ui(this, delta);
 
@@ -267,6 +273,32 @@ export class Game implements ComponentData, GameState {
         if (mask & Has.Transform) {
             for (let child of this[Get.Transform][entity].Children) {
                 this.Destroy(child.EntityId);
+            }
+        }
+        this.World[entity] = 0;
+    }
+
+    Add2D({Translation, Rotation, Scale, Using = [], Children = []}: Blueprint2D) {
+        let entity = this.CreateEntity();
+        transform2d(Translation, Rotation, Scale)(this, entity);
+        for (let mixin of Using) {
+            mixin(this, entity);
+        }
+        let entity_transform = this[Get.Transform2D][entity];
+        for (let subtree of Children) {
+            let child = this.Add2D(subtree);
+            let child_transform = this[Get.Transform2D][child];
+            child_transform.Parent = entity_transform;
+            entity_transform.Children.push(child_transform);
+        }
+        return entity;
+    }
+
+    Destroy2D(entity: Entity) {
+        let mask = this.World[entity];
+        if (mask & Has.Transform2D) {
+            for (let child of this[Get.Transform2D][entity].Children) {
+                this.Destroy2D(child.EntityId);
             }
         }
         this.World[entity] = 0;

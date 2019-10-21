@@ -13,6 +13,7 @@ import {Render} from "./com_render";
 import {RigidBody} from "./com_rigid_body";
 import {Shake} from "./com_shake";
 import {Transform} from "./com_transform";
+import {Transform2D} from "./com_transform2d";
 import {Trigger} from "./com_trigger";
 
 export const enum Get {
@@ -31,6 +32,7 @@ export const enum Get {
     RigidBody,
     Shake,
     Transform,
+    Transform2D,
     Trigger,
 }
 
@@ -50,6 +52,7 @@ export interface ComponentData {
     [Get.RigidBody]: Array<RigidBody>;
     [Get.Shake]: Array<Shake>;
     [Get.Transform]: Array<Transform>;
+    [Get.Transform2D]: Array<Transform2D>;
     [Get.Trigger]: Array<Trigger>;
 }
 
@@ -69,5 +72,6 @@ export const enum Has {
     RigidBody = 1 << Get.RigidBody,
     Shake = 1 << Get.Shake,
     Transform = 1 << Get.Transform,
+    Transform2D = 1 << Get.Transform2D,
     Trigger = 1 << Get.Trigger,
 }
