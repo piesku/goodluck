@@ -1,3 +1,4 @@
+import {DrawKind, DrawMarker} from "../components/com_draw.js";
 import {Get, Has} from "../components/com_index.js";
 import {Game} from "../game.js";
 import {Vec3} from "../math/index.js";
@@ -26,7 +27,20 @@ export function sys_draw(game: Game, delta: number) {
                 0.5 * (position[0] + 1) * game.ViewportWidth,
                 0.5 * (-position[1] + 1) * game.ViewportHeight
             );
-            game[Get.Draw][i].Drawing(game, i);
+
+            let draw = game[Get.Draw][i];
+            switch (draw.Kind) {
+                case DrawKind.Marker:
+                    draw_marker(game, draw);
+                    break;
+            }
         }
     }
+}
+
+function draw_marker(game: Game, draw: DrawMarker) {
+    game.Context2D.font = "10vmin sans";
+    game.Context2D.textAlign = "center";
+    game.Context2D.fillStyle = "#fff";
+    game.Context2D.fillText(draw.Marker, 0, 0);
 }

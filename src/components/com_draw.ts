@@ -1,18 +1,23 @@
-import {Drawing} from "../drawings/dra_common.js";
 import {Entity, Game} from "../game.js";
 import {Get, Has} from "./com_index.js";
 
-export interface Draw {
-    Drawing: Drawing;
-    Arg?: unknown;
+export type Draw = DrawMarker;
+
+export const enum DrawKind {
+    Marker,
 }
 
-export function draw(Drawing: Drawing, Arg?: unknown) {
+export interface DrawMarker {
+    Kind: DrawKind.Marker;
+    Marker: string;
+}
+
+export function draw_marker(Marker: string) {
     return (game: Game, entity: Entity) => {
         game.World[entity] |= Has.Draw;
         game[Get.Draw][entity] = <Draw>{
-            Drawing,
-            Arg,
+            Kind: DrawKind.Marker,
+            Marker,
         };
     };
 }
