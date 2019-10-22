@@ -5,14 +5,10 @@
     "tasks": [
         {
             "type": "npm",
-            "script": "build",
-            "problemMatcher": ["$tsc"],
-            "group": "build"
-        },
-        {
-            "type": "npm",
             "script": "start",
-            "problemMatcher": ["$tsc-watch"],
+            "problemMatcher": [
+                "$tsc-watch"
+            ],
             "group": "build"
         }
     ]
