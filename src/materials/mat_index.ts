@@ -5,4 +5,5 @@ export const enum Mat {
     Flat,
     Gouraud,
     Phong,
+    Instanced,
 }

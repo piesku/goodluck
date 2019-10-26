@@ -23,6 +23,7 @@ import {Material} from "./materials/mat_common.js";
 import {mat_flat} from "./materials/mat_flat.js";
 import {mat_gouraud} from "./materials/mat_gouraud.js";
 import {Mat} from "./materials/mat_index.js";
+import {mat_instanced} from "./materials/mat_instanced.js";
 import {mat_phong} from "./materials/mat_phong.js";
 import {mat_points} from "./materials/mat_points.js";
 import {mat_wireframe} from "./materials/mat_wireframe.js";
@@ -104,6 +105,7 @@ export class Game implements ComponentData, GameState {
     public Materials: Array<Material> = [];
     public Cameras: Array<Camera> = [];
     public Lights: Array<Light> = [];
+    public Palette: Array<number> = [];
     private RAF: number = 0;
 
     constructor() {
@@ -152,6 +154,7 @@ export class Game implements ComponentData, GameState {
         this.Materials[Mat.Flat] = mat_flat(this.GL);
         this.Materials[Mat.Gouraud] = mat_gouraud(this.GL);
         this.Materials[Mat.Phong] = mat_phong(this.GL);
+        this.Materials[Mat.Instanced] = mat_instanced(this.GL);
     }
 
     CreateEntity(mask: number = 0) {
