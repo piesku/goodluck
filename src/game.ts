@@ -5,7 +5,7 @@ import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
 import {Collide} from "./components/com_collide.js";
 import {Draw} from "./components/com_draw.js";
-import {ComponentData, Get, Has} from "./components/com_index.js";
+import {Get, Has} from "./components/com_index.js";
 import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
 import {Mimic} from "./components/com_mimic.js";
@@ -68,7 +68,7 @@ export interface InputEvent {
     wheel_y: number;
 }
 
-export class Game implements ComponentData, GameState {
+export class Game implements GameState {
     public World: Array<number> = [];
 
     // Implement ComponentData
