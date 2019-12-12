@@ -1,6 +1,6 @@
 import {RenderBasic} from "./com_render_basic.js";
+import {RenderInstanced} from "./com_render_instanced.js";
 import {RenderShaded} from "./com_render_shaded.js";
-import {RenderInstanced} from "./com_render_vox.js";
 
 export type Render = RenderBasic | RenderShaded | RenderInstanced;
 

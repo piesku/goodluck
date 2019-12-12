@@ -1,4 +1,4 @@
-import {InstancedAttribute} from "../components/com_render_vox.js";
+import {InstancedAttribute} from "../components/com_render_instanced.js";
 import {GL_TRIANGLES} from "../webgl.js";
 import {link, Material} from "./mat_common.js";
 

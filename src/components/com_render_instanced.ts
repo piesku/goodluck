@@ -16,7 +16,7 @@ export interface RenderInstanced {
     readonly Palette?: Array<number>;
 }
 
-export function render_vox(model: Model, Palette?: Array<number>) {
+export function render_instanced(model: Model, Palette?: Array<number>) {
     let shape = Cube;
     return (game: Game, entity: Entity) => {
         game.World[entity] |= 1 << Get.Render;

@@ -1,8 +1,8 @@
 import {Get, Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
 import {BasicUniform, RenderBasic} from "../components/com_render_basic.js";
+import {InstancedUniform, RenderInstanced} from "../components/com_render_instanced.js";
 import {RenderShaded, ShadedUniform} from "../components/com_render_shaded.js";
-import {InstancedUniform, RenderInstanced} from "../components/com_render_vox.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {get_translation} from "../math/mat4.js";
