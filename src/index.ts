@@ -1,9 +1,9 @@
 import {dispatch} from "./actions.js";
 import {Game} from "./game.js";
-import {world_instanced} from "./worlds/wor_instanced.js";
+import {world_stage} from "./worlds/wor_stage.js";
 
 let game = new Game();
-world_instanced(game);
+world_stage(game);
 game.Start();
 
 // @ts-ignore

@@ -4,7 +4,7 @@ import {Mat} from "../materials/mat_index.js";
 import {Model} from "../model.js";
 import {Cube} from "../shapes/Cube.js";
 import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT, GL_STATIC_DRAW} from "../webgl.js";
-import {Get} from "./com_index.js";
+import {Get, Has} from "./com_index.js";
 import {RenderKind} from "./com_render.js";
 
 export interface RenderInstanced {
@@ -19,7 +19,7 @@ export interface RenderInstanced {
 export function render_instanced(model: Model, Palette?: Array<number>) {
     let shape = Cube;
     return (game: Game, entity: Entity) => {
-        game.World[entity] |= 1 << Get.Render;
+        game.World[entity] |= Has.Render;
         game[Get.Render][entity] = <RenderInstanced>{
             Kind: RenderKind.Instanced,
             Material: game.Materials[Mat.Instanced],

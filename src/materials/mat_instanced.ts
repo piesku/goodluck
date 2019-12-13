@@ -3,64 +3,56 @@ import {GL_TRIANGLES} from "../webgl.js";
 import {link, Material} from "./mat_common.js";
 
 let vertex = `#version 300 es\n
-    // Matrices: PV, world, self
-    uniform mat4 p,q,r;
-    // Color palette
-    uniform vec3 s[16];
+    uniform mat4 pv;
+    uniform mat4 world;
+    uniform mat4 self;
+    uniform vec3 palette[16];
 
-    // Light count
-    uniform int t;
-    // Light positions
-    uniform vec3 u[100];
-    // Light details
-    uniform vec4 v[100];
+    uniform int light_count;
+    uniform vec3 light_positions[100];
+    uniform vec4 light_details[100];
 
-    layout(location=${InstancedAttribute.Position}) in vec3 k;
-    layout(location=${InstancedAttribute.Normal}) in vec3 m;
-    layout(location=${InstancedAttribute.Offset}) in vec4 n;
+    layout(location=${InstancedAttribute.Position}) in vec3 position;
+    layout(location=${InstancedAttribute.Normal}) in vec3 normal;
+    layout(location=${InstancedAttribute.Offset}) in vec4 offset;
 
-    // Vertex color
-    out vec4 o;
+    out vec4 vert_color;
+    void main() {
+        vec4 world_pos = world * vec4(position + offset.xyz, 1.0);
+        vec3 world_normal = normalize((vec4(normal, 0.0) * self).xyz);
+        gl_Position = pv * world_pos;
 
-    void main(){
-        // World position
-        vec4 a=q*vec4(k+n.rgb,1.);
-        // World normal
-        vec3 b=normalize((vec4(m,0.)* r).rgb);
-        gl_Position=p*a;
-
-        // Color
-        vec3 c=s[int(n[3])].rgb*.1;
-        for(int i=0;i<t;i++){
-            if(v[i].a<1.) {
+        vec3 rgb = palette[int(offset[3])].rgb * 0.1;
+        for (int i = 0; i < light_count; i++) {
+            if (light_details[i].a == 0.0) {
                 // A directional light.
-                // max(dot()) is the diffuse factor.
-                c+=s[int(n[3])].rgb*v[i].rgb*max(dot(b,normalize(u[i])),0.);
-            }else{
+                vec3 light_normal = normalize(light_positions[i]);
+                float diffuse_factor = max(dot(world_normal, light_normal), 0.0);
+                rgb += palette[int(offset[3])].rgb * light_details[i].rgb * diffuse_factor;
+            } else {
                 // A point light.
-                // Light direction
-                vec3 ld=u[i]-a.xyz;
-                // Distance
-                float d=length(ld);
-                // max(dot()) is the diffuse factor.
-                c+=s[int(n[3])].rgb*v[i].rgb*max(dot(b,normalize(ld)),0.)*v[i].a/(d*d);
+                vec3 light_dir = light_positions[i] - world_pos.xyz ;
+                vec3 light_normal = normalize(light_dir);
+                float light_dist = length(light_dir);
+
+                float diffuse_factor = max(dot(world_normal, light_normal), 0.0);
+                rgb += palette[int(offset[3])].rgb * light_details[i].rgb * diffuse_factor
+                        * light_details[i].a / (light_dist * light_dist);
             }
         }
 
-        o=vec4(c,1.);
+        vert_color = vec4(rgb, 1.0);
     }
 `;
 
 let fragment = `#version 300 es\n
     precision mediump float;
 
-    // Vertex color
-    in vec4 o;
-    // Fragment color
-    out vec4 z;
+    in vec4 vert_color;
+    out vec4 frag_color;
 
-    void main(){
-        z=o;
+    void main() {
+        frag_color = vert_color;
     }
 `;
 
@@ -71,9 +63,16 @@ export function mat_instanced(GL: WebGL2RenderingContext) {
         Uniforms: [],
     };
 
-    for (let name of ["p", "q", "r", "s", "t", "u", "v"]) {
+    for (let name of [
+        "pv",
+        "world",
+        "self",
+        "palette",
+        "light_count",
+        "light_positions",
+        "light_details",
+    ]) {
         material.Uniforms.push(GL.getUniformLocation(material.Program, name)!);
     }
-
     return material;
 }
