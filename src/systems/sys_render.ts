@@ -59,7 +59,7 @@ export function sys_render(game: Game, delta: number) {
                     case RenderKind.Instanced:
                         game.GL.uniform1i(
                             current_material.Uniforms[InstancedUniform.LightCount],
-                            light_positions.length / 3
+                            game.Lights.length
                         );
                         game.GL.uniform3fv(
                             current_material.Uniforms[InstancedUniform.LightPositions],
