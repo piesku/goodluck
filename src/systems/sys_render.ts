@@ -1,6 +1,7 @@
 import {Get, Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
 import {BasicUniform, RenderBasic} from "../components/com_render_basic.js";
+import {InstancedUniform, RenderInstanced} from "../components/com_render_instanced.js";
 import {RenderShaded, ShadedUniform} from "../components/com_render_shaded.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
@@ -55,6 +56,20 @@ export function sys_render(game: Game, delta: number) {
                             light_details
                         );
                         break;
+                    case RenderKind.Instanced:
+                        game.GL.uniform1i(
+                            current_material.Uniforms[InstancedUniform.LightCount],
+                            game.Lights.length
+                        );
+                        game.GL.uniform3fv(
+                            current_material.Uniforms[InstancedUniform.LightPositions],
+                            light_positions
+                        );
+                        game.GL.uniform4fv(
+                            current_material.Uniforms[InstancedUniform.LightDetails],
+                            light_details
+                        );
+                        break;
                 }
             }
 
@@ -64,6 +79,9 @@ export function sys_render(game: Game, delta: number) {
                     break;
                 case RenderKind.Shaded:
                     draw_shaded(game, transform, render);
+                    break;
+                case RenderKind.Instanced:
+                    draw_instanced(game, transform, render);
                     break;
             }
         }
@@ -75,6 +93,32 @@ function draw_basic(game: Game, transform: Transform, render: RenderBasic) {
     game.GL.uniform4fv(render.Material.Uniforms[BasicUniform.Color], render.Color);
     game.GL.bindVertexArray(render.VAO);
     game.GL.drawElements(render.Material.Mode, render.Count, GL_UNSIGNED_SHORT, 0);
+    game.GL.bindVertexArray(null);
+}
+
+function draw_instanced(game: Game, transform: Transform, render: RenderInstanced) {
+    game.GL.uniformMatrix4fv(
+        render.Material.Uniforms[InstancedUniform.World],
+        false,
+        transform.World
+    );
+    game.GL.uniformMatrix4fv(
+        render.Material.Uniforms[InstancedUniform.Self],
+        false,
+        transform.Self
+    );
+    game.GL.uniform3fv(
+        render.Material.Uniforms[InstancedUniform.Palette],
+        render.Palette || game.Palette
+    );
+    game.GL.bindVertexArray(render.VAO);
+    game.GL.drawElementsInstanced(
+        render.Material.Mode,
+        render.IndexCount,
+        GL_UNSIGNED_SHORT,
+        0,
+        render.InstanceCount
+    );
     game.GL.bindVertexArray(null);
 }
 
