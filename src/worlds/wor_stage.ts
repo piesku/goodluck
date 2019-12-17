@@ -13,9 +13,10 @@ import {Mat} from "../materials/mat_index.js";
 import {Cube} from "../shapes/Cube.js";
 import {Icosphere} from "../shapes/Icosphere.js";
 import {snd_music} from "../sounds/snd_music.js";
+import {World} from "../world.js";
 
 export function world_stage(game: Game) {
-    game.World = [];
+    game.World = new World();
     game.Cameras = [];
     game.Lights = [];
     game.GL.clearColor(1, 0.3, 0.3, 1);

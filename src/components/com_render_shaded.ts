@@ -2,7 +2,7 @@ import {Entity, Game} from "../game.js";
 import {Material, Shape} from "../materials/mat_common.js";
 import {Vec4} from "../math/index.js";
 import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT, GL_STATIC_DRAW} from "../webgl.js";
-import {Get, Has} from "./com_index.js";
+import {Has} from "./com_index.js";
 import {RenderKind} from "./com_render.js";
 
 export interface RenderShaded {
@@ -22,8 +22,8 @@ export function render_shaded(Material: Material, shape: Shape, color: Vec4) {
             vaos.set(shape, buffer(game.GL, shape)!);
         }
 
-        game.World[entity] |= Has.Render;
-        game[Get.Render][entity] = <RenderShaded>{
+        game.World.Mask[entity] |= Has.Render;
+        game.World.Render[entity] = <RenderShaded>{
             Kind: RenderKind.Shaded,
             Material,
             VAO: vaos.get(shape),

@@ -1,5 +1,5 @@
 import {Entity, Game} from "../game.js";
-import {Get, Has} from "./com_index.js";
+import {Has} from "./com_index.js";
 
 export type Draw = DrawMarker | DrawRect;
 
@@ -15,8 +15,8 @@ export interface DrawMarker {
 
 export function draw_marker(Marker: string) {
     return (game: Game, entity: Entity) => {
-        game.World[entity] |= Has.Draw;
-        game[Get.Draw][entity] = <DrawMarker>{
+        game.World.Mask[entity] |= Has.Draw;
+        game.World.Draw[entity] = <DrawMarker>{
             Kind: DrawKind.Marker,
             Marker,
         };
@@ -32,8 +32,8 @@ export interface DrawRect {
 
 export function draw_rect(Width: number, Height: number, Color: string) {
     return (game: Game, entity: Entity) => {
-        game.World[entity] |= Has.Draw;
-        game[Get.Draw][entity] = <DrawRect>{
+        game.World.Mask[entity] |= Has.Draw;
+        game.World.Draw[entity] = <DrawRect>{
             Kind: DrawKind.Rect,
             Width,
             Height,

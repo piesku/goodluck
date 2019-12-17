@@ -1,5 +1,5 @@
 import {Entity, Game} from "../game.js";
-import {Get, Has} from "./com_index.js";
+import {Has} from "./com_index.js";
 
 export interface RigidBody {
     readonly Dynamic: boolean;
@@ -9,7 +9,7 @@ export interface RigidBody {
 
 export function rigid_body(Dynamic: boolean = true) {
     return (game: Game, entity: Entity) => {
-        game.World[entity] |= Has.RigidBody;
-        game[Get.RigidBody][entity] = <RigidBody>{Dynamic, VelY: 0, AccY: 0};
+        game.World.Mask[entity] |= Has.RigidBody;
+        game.World.RigidBody[entity] = <RigidBody>{Dynamic, VelY: 0, AccY: 0};
     };
 }

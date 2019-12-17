@@ -1,5 +1,5 @@
 import {Entity, Game} from "../game.js";
-import {Get, Has} from "./com_index.js";
+import {Has} from "./com_index.js";
 
 export interface AudioSource {
     /** The next clip to play. */
@@ -19,8 +19,8 @@ export interface AudioSource {
  */
 export function audio_source(idle?: AudioClip) {
     return (game: Game, entity: Entity) => {
-        game.World[entity] |= Has.AudioSource;
-        game[Get.AudioSource][entity] = <AudioSource>{
+        game.World.Mask[entity] |= Has.AudioSource;
+        game.World.AudioSource[entity] = <AudioSource>{
             Idle: idle,
             Time: 0,
         };

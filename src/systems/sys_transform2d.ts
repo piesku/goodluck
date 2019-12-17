@@ -1,4 +1,4 @@
-import {Get, Has} from "../components/com_index.js";
+import {Has} from "../components/com_index.js";
 import {Transform2D} from "../components/com_transform2d.js";
 import {Game} from "../game.js";
 import {from_translation, invert, multiply, rotate, scale} from "../math/mat2d.js";
@@ -6,9 +6,9 @@ import {from_translation, invert, multiply, rotate, scale} from "../math/mat2d.j
 const QUERY = Has.Transform2D;
 
 export function sys_transform2d(game: Game, delta: number) {
-    for (let i = 0; i < game.World.length; i++) {
-        if ((game.World[i] & QUERY) === QUERY) {
-            update(game[Get.Transform2D][i]);
+    for (let i = 0; i < game.World.Mask.length; i++) {
+        if ((game.World.Mask[i] & QUERY) === QUERY) {
+            update(game.World.Transform2D[i]);
         }
     }
 }

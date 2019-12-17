@@ -7,9 +7,10 @@ import {rigid_body} from "../components/com_rigid_body.js";
 import {Game} from "../game.js";
 import {Mat} from "../materials/mat_index.js";
 import {Cube} from "../shapes/Cube.js";
+import {World} from "../world.js";
 
 export function world_instanced(game: Game) {
-    game.World = [];
+    game.World = new World();
     game.Cameras = [];
     game.Lights = [];
     game.GL.clearColor(1, 0.3, 0.3, 1);

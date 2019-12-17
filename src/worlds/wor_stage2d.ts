@@ -1,8 +1,9 @@
 import {draw_rect} from "../components/com_draw.js";
 import {Game} from "../game.js";
+import {World} from "../world.js";
 
 export function world_stage2d(game: Game) {
-    game.World = [];
+    game.World = new World();
 
     // Player-controlled camera.
     game.Add2D({

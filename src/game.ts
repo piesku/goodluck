@@ -1,23 +1,10 @@
 import {GameState} from "./actions.js";
 import {Blueprint, Blueprint2D} from "./blueprints/blu_common.js";
-import {Animate} from "./components/com_animate.js";
-import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
-import {Collide} from "./components/com_collide.js";
-import {Draw} from "./components/com_draw.js";
-import {Get, Has} from "./components/com_index.js";
-import {Lifespan} from "./components/com_lifespan.js";
+import {Has} from "./components/com_index.js";
 import {Light} from "./components/com_light.js";
-import {Mimic} from "./components/com_mimic.js";
-import {Move} from "./components/com_move.js";
-import {Named} from "./components/com_named.js";
-import {PlayerControl} from "./components/com_player_control.js";
-import {Render} from "./components/com_render.js";
-import {RigidBody} from "./components/com_rigid_body.js";
-import {Shake} from "./components/com_shake.js";
-import {transform, Transform} from "./components/com_transform.js";
-import {Transform2D, transform2d} from "./components/com_transform2d.js";
-import {Trigger} from "./components/com_trigger.js";
+import {transform} from "./components/com_transform.js";
+import {transform2d} from "./components/com_transform2d.js";
 import {mat_basic} from "./materials/mat_basic.js";
 import {Material} from "./materials/mat_common.js";
 import {mat_flat} from "./materials/mat_flat.js";
@@ -50,6 +37,7 @@ import {sys_transform2d} from "./systems/sys_transform2d.js";
 import {sys_trigger} from "./systems/sys_trigger.js";
 import {sys_ui} from "./systems/sys_ui.js";
 import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "./webgl.js";
+import {World} from "./world.js";
 
 const MAX_ENTITIES = 10000;
 
@@ -69,26 +57,7 @@ export interface InputEvent {
 }
 
 export class Game implements GameState {
-    public World: Array<number> = [];
-
-    // Implement ComponentData
-    public [Get.Animate]: Array<Animate> = [];
-    public [Get.AudioSource]: Array<AudioSource> = [];
-    public [Get.Camera]: Array<Camera> = [];
-    public [Get.Collide]: Array<Collide> = [];
-    public [Get.Draw]: Array<Draw> = [];
-    public [Get.Lifespan]: Array<Lifespan> = [];
-    public [Get.Light]: Array<Light> = [];
-    public [Get.Mimic]: Array<Mimic> = [];
-    public [Get.Move]: Array<Move> = [];
-    public [Get.Named]: Array<Named> = [];
-    public [Get.PlayerControl]: Array<PlayerControl> = [];
-    public [Get.Render]: Array<Render> = [];
-    public [Get.RigidBody]: Array<RigidBody> = [];
-    public [Get.Shake]: Array<Shake> = [];
-    public [Get.Transform]: Array<Transform> = [];
-    public [Get.Transform2D]: Array<Transform2D> = [];
-    public [Get.Trigger]: Array<Trigger> = [];
+    public World = new World();
 
     public ViewportWidth = window.innerWidth;
     public ViewportHeight = window.innerHeight;
@@ -159,8 +128,8 @@ export class Game implements GameState {
 
     CreateEntity(mask: number = 0) {
         for (let i = 0; i < MAX_ENTITIES; i++) {
-            if (!this.World[i]) {
-                this.World[i] = mask;
+            if (!this.World.Mask[i]) {
+                this.World.Mask[i] = mask;
                 return i;
             }
         }
@@ -261,10 +230,10 @@ export class Game implements GameState {
         for (let mixin of Using) {
             mixin(this, entity);
         }
-        let entity_transform = this[Get.Transform][entity];
+        let entity_transform = this.World.Transform[entity];
         for (let subtree of Children) {
             let child = this.Add(subtree);
-            let child_transform = this[Get.Transform][child];
+            let child_transform = this.World.Transform[child];
             child_transform.Parent = entity_transform;
             entity_transform.Children.push(child_transform);
         }
@@ -272,13 +241,13 @@ export class Game implements GameState {
     }
 
     Destroy(entity: Entity) {
-        let mask = this.World[entity];
+        let mask = this.World.Mask[entity];
         if (mask & Has.Transform) {
-            for (let child of this[Get.Transform][entity].Children) {
+            for (let child of this.World.Transform[entity].Children) {
                 this.Destroy(child.EntityId);
             }
         }
-        this.World[entity] = 0;
+        this.World.Mask[entity] = 0;
     }
 
     Add2D({Translation, Rotation, Scale, Using = [], Children = []}: Blueprint2D) {
@@ -287,10 +256,10 @@ export class Game implements GameState {
         for (let mixin of Using) {
             mixin(this, entity);
         }
-        let entity_transform = this[Get.Transform2D][entity];
+        let entity_transform = this.World.Transform2D[entity];
         for (let subtree of Children) {
             let child = this.Add2D(subtree);
-            let child_transform = this[Get.Transform2D][child];
+            let child_transform = this.World.Transform2D[child];
             child_transform.Parent = entity_transform;
             entity_transform.Children.push(child_transform);
         }
@@ -298,12 +267,12 @@ export class Game implements GameState {
     }
 
     Destroy2D(entity: Entity) {
-        let mask = this.World[entity];
+        let mask = this.World.Mask[entity];
         if (mask & Has.Transform2D) {
-            for (let child of this[Get.Transform2D][entity].Children) {
+            for (let child of this.World.Transform2D[entity].Children) {
                 this.Destroy2D(child.EntityId);
             }
         }
-        this.World[entity] = 0;
+        this.World.Mask[entity] = 0;
     }
 }
