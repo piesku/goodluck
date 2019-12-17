@@ -15,7 +15,7 @@ import {Icosphere} from "../shapes/Icosphere.js";
 import {snd_music} from "../sounds/snd_music.js";
 import {World} from "../world.js";
 
-export function world_stage(game: Game) {
+export function scene_stage(game: Game) {
     game.World = new World();
     game.Cameras = [];
     game.Lights = [];

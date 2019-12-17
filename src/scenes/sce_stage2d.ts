@@ -2,7 +2,7 @@ import {draw_rect} from "../components/com_draw.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 
-export function world_stage2d(game: Game) {
+export function scene_stage2d(game: Game) {
     game.World = new World();
 
     // Player-controlled camera.

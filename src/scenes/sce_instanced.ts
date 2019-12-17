@@ -9,7 +9,7 @@ import {Mat} from "../materials/mat_index.js";
 import {Cube} from "../shapes/Cube.js";
 import {World} from "../world.js";
 
-export function world_instanced(game: Game) {
+export function scene_instanced(game: Game) {
     game.World = new World();
     game.Cameras = [];
     game.Lights = [];
