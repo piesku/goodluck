@@ -1,4 +1,4 @@
-import {Get, Has} from "../components/com_index.js";
+import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 import {add} from "../math/vec3.js";
 
@@ -6,17 +6,17 @@ const QUERY = Has.Transform | Has.Collide | Has.RigidBody;
 const GRAVITY = -9.81;
 
 export function sys_physics(game: Game, delta: number) {
-    for (let i = 0; i < game.World.length; i++) {
-        if ((game.World[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Mask.length; i++) {
+        if ((game.World.Mask[i] & QUERY) === QUERY) {
             update(game, i, delta);
         }
     }
 }
 
 function update(game: Game, entity: Entity, delta: number) {
-    let transform = game[Get.Transform][entity];
-    let collide = game[Get.Collide][entity];
-    let rigid_body = game[Get.RigidBody][entity];
+    let transform = game.World.Transform[entity];
+    let collide = game.World.Collide[entity];
+    let rigid_body = game.World.RigidBody[entity];
 
     if (rigid_body.Dynamic) {
         transform.Dirty = true;
@@ -27,7 +27,7 @@ function update(game: Game, entity: Entity, delta: number) {
 
         for (let i = 0; i < collide.Collisions.length; i++) {
             let collision = collide.Collisions[i];
-            if (game.World[collision.Other.EntityId] & Has.RigidBody) {
+            if (game.World.Mask[collision.Other.EntityId] & Has.RigidBody) {
                 // Dynamic rigid bodies are only supported for top-level
                 // entities. Thus, no need to apply the world → self → local
                 // conversion to the collision response. Local space is world space.

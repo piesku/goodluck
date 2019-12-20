@@ -1,5 +1,5 @@
 import {Anim, AnimationFlag, AnimationKeyframe} from "../components/com_animate.js";
-import {Get, Has} from "../components/com_index.js";
+import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 import {slerp} from "../math/quat.js";
 import {lerp} from "../math/vec3.js";
@@ -7,16 +7,16 @@ import {lerp} from "../math/vec3.js";
 const QUERY = Has.Transform | Has.Animate;
 
 export function sys_animate(game: Game, delta: number) {
-    for (let i = 0; i < game.World.length; i++) {
-        if ((game.World[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Mask.length; i++) {
+        if ((game.World.Mask[i] & QUERY) === QUERY) {
             update(game, i, delta);
         }
     }
 }
 
 function update(game: Game, entity: Entity, delta: number) {
-    let transform = game[Get.Transform][entity];
-    let animate = game[Get.Animate][entity];
+    let transform = game.World.Transform[entity];
+    let animate = game.World.Animate[entity];
 
     // 1. Switch to the trigger this frame if early exits are allowed.
 

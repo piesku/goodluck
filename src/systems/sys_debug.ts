@@ -1,5 +1,5 @@
 import {Collide} from "../components/com_collide.js";
-import {Get, Has} from "../components/com_index.js";
+import {Has} from "../components/com_index.js";
 import {render_basic} from "../components/com_render_basic.js";
 import {Transform} from "../components/com_transform.js";
 import {Entity, Game} from "../game.js";
@@ -19,26 +19,26 @@ export function sys_debug(game: Game, delta: number) {
     for (let [key, wireframe] of wireframes) {
         if (
             // If the entity doesn't have TRANSFORM...
-            !(game.World[wireframe.entity] & Has.Transform) ||
+            !(game.World.Mask[wireframe.entity] & Has.Transform) ||
             // ...or if it's not the same TRANSFORM.
-            game[Get.Transform][wireframe.entity] !== wireframe.anchor
+            game.World.Transform[wireframe.entity] !== wireframe.anchor
         ) {
             game.Destroy(wireframe.transform.EntityId);
             wireframes.delete(key);
         }
     }
 
-    for (let i = 0; i < game.World.length; i++) {
-        if (game.World[i] & Has.Transform) {
+    for (let i = 0; i < game.World.Mask.length; i++) {
+        if (game.World.Mask[i] & Has.Transform) {
             // Draw colliders first. If the collider's wireframe overlaps
             // exactly with the transform's wireframe, we want the collider to
             // take priority.
-            if (game.World[i] & Has.Collide) {
+            if (game.World.Mask[i] & Has.Collide) {
                 wireframe_collider(game, i);
             }
 
             // Draw invisible entities.
-            if (!(game.World[i] & Has.Render)) {
+            if (!(game.World.Mask[i] & Has.Render)) {
                 wireframe_entity(game, i);
             }
         }
@@ -46,14 +46,14 @@ export function sys_debug(game: Game, delta: number) {
 }
 
 function wireframe_entity(game: Game, entity: Entity) {
-    let entity_transform = game[Get.Transform][entity];
+    let entity_transform = game.World.Transform[entity];
     let wireframe = wireframes.get(entity_transform);
 
     if (!wireframe) {
         let box = game.Add({
             Using: [render_basic(game.Materials[Mat.Wireframe], Cube, [1, 0, 1, 1])],
         });
-        let wireframe_transform = game[Get.Transform][box];
+        let wireframe_transform = game.World.Transform[box];
         wireframe_transform.World = entity_transform.World;
         wireframe_transform.Dirty = false;
         wireframes.set(entity_transform, {
@@ -65,8 +65,8 @@ function wireframe_entity(game: Game, entity: Entity) {
 }
 
 function wireframe_collider(game: Game, entity: Entity) {
-    let transform = game[Get.Transform][entity];
-    let collide = game[Get.Collide][entity];
+    let transform = game.World.Transform[entity];
+    let collide = game.World.Collide[entity];
     let wireframe = wireframes.get(collide);
 
     if (!wireframe) {
@@ -78,7 +78,7 @@ function wireframe_collider(game: Game, entity: Entity) {
         wireframes.set(collide, {
             entity,
             anchor: transform,
-            transform: game[Get.Transform][box],
+            transform: game.World.Transform[box],
         });
     } else if (collide.Dynamic) {
         wireframe.transform.Translation = collide.Center;

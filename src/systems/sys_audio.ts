@@ -1,19 +1,19 @@
 import {play_note} from "../audio.js";
-import {Get, Has} from "../components/com_index.js";
+import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 
 const QUERY = Has.AudioSource;
 
 export function sys_audio(game: Game, delta: number) {
-    for (let i = 0; i < game.World.length; i++) {
-        if ((game.World[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Mask.length; i++) {
+        if ((game.World.Mask[i] & QUERY) === QUERY) {
             update(game, i, delta);
         }
     }
 }
 
 function update(game: Game, entity: Entity, delta: number) {
-    let audio_source = game[Get.AudioSource][entity];
+    let audio_source = game.World.AudioSource[entity];
     let can_exit = !audio_source.Current || audio_source.Time > audio_source.Current.Exit;
 
     if (audio_source.Trigger && can_exit) {

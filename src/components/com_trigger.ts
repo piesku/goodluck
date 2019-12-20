@@ -1,6 +1,6 @@
 import {Action} from "../actions.js";
 import {Entity, Game} from "../game.js";
-import {Get, Has} from "./com_index.js";
+import {Has} from "./com_index.js";
 
 export interface Trigger {
     Action: Action;
@@ -8,8 +8,8 @@ export interface Trigger {
 
 export function trigger(Action: Action) {
     return (game: Game, entity: Entity) => {
-        game.World[entity] |= Has.Trigger;
-        game[Get.Trigger][entity] = <Trigger>{
+        game.World.Mask[entity] |= Has.Trigger;
+        game.World.Trigger[entity] = <Trigger>{
             Action,
         };
     };

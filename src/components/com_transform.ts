@@ -1,7 +1,8 @@
 import {Entity, Game} from "../game.js";
 import {Mat4, Quat, Vec3} from "../math/index.js";
 import {create} from "../math/mat4.js";
-import {Get, Has} from "./com_index.js";
+import {World} from "../world.js";
+import {Has} from "./com_index.js";
 
 export interface Transform {
     /** Absolute matrix relative to the world. */
@@ -27,8 +28,8 @@ export function transform(
     Scale: Vec3 = [1, 1, 1]
 ) {
     return (game: Game, EntityId: Entity) => {
-        game.World[EntityId] |= Has.Transform;
-        game[Get.Transform][EntityId] = <Transform>{
+        game.World.Mask[EntityId] |= Has.Transform;
+        game.World.Transform[EntityId] = <Transform>{
             EntityId,
             World: create(),
             Self: create(),
@@ -45,19 +46,21 @@ export function transform(
  * Get all component instances of a given type from the current entity and all
  * its children.
  *
- * @param game Game object which stores the component data.
+ * @param world World object which stores the component data.
  * @param transform The transform to traverse.
- * @param component Component mask to look for.
+ * @param component Component data array.
+ * @param mask Component mask to look for.
  */
 export function* components_of_type<T>(
-    game: Game,
+    world: World,
     transform: Transform,
-    component: Get
+    component: Array<T>,
+    mask: Has
 ): IterableIterator<T> {
-    if (game.World[transform.EntityId] & (1 << component)) {
-        yield (game[component][transform.EntityId] as unknown) as T;
+    if (world.Mask[transform.EntityId] & mask) {
+        yield component[transform.EntityId];
     }
     for (let child of transform.Children) {
-        yield* components_of_type<T>(game, child, component);
+        yield* components_of_type(world, child, component, mask);
     }
 }

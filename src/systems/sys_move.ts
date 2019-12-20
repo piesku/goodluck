@@ -1,5 +1,5 @@
-import {Anim, Animate} from "../components/com_animate.js";
-import {Get, Has} from "../components/com_index.js";
+import {Anim} from "../components/com_animate.js";
+import {Has} from "../components/com_index.js";
 import {components_of_type} from "../components/com_transform.js";
 import {Entity, Game} from "../game.js";
 import {Quat, Vec3} from "../math/index.js";
@@ -10,17 +10,22 @@ import {add, normalize, scale, transform_direction, transform_point} from "../ma
 const QUERY = Has.Transform | Has.Move;
 
 export function sys_move(game: Game, delta: number) {
-    for (let i = 0; i < game.World.length; i++) {
-        if ((game.World[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Mask.length; i++) {
+        if ((game.World.Mask[i] & QUERY) === QUERY) {
             update(game, i, delta);
         }
     }
 }
 
 function update(game: Game, entity: Entity, delta: number) {
-    let transform = game[Get.Transform][entity];
-    let move = game[Get.Move][entity];
-    for (let animate of components_of_type<Animate>(game, transform, Get.Animate)) {
+    let transform = game.World.Transform[entity];
+    let move = game.World.Move[entity];
+    for (let animate of components_of_type(
+        game.World,
+        transform,
+        game.World.Animate,
+        Has.Animate
+    )) {
         if (!animate.Trigger) {
             animate.Trigger = move.Directions.length ? Anim.Move : Anim.Idle;
         }

@@ -2,7 +2,7 @@ import {Entity, Game} from "../game.js";
 import {Material, Shape} from "../materials/mat_common.js";
 import {Vec4} from "../math/index.js";
 import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT, GL_STATIC_DRAW} from "../webgl.js";
-import {Get, Has} from "./com_index.js";
+import {Has} from "./com_index.js";
 import {RenderKind} from "./com_render.js";
 
 export interface RenderBasic {
@@ -22,8 +22,8 @@ export function render_basic(Material: Material, Shape: Shape, Color: Vec4) {
             vaos.set(Shape, buffer(game.GL, Shape)!);
         }
 
-        game.World[entity] |= Has.Render;
-        game[Get.Render][entity] = <RenderBasic>{
+        game.World.Mask[entity] |= Has.Render;
+        game.World.Render[entity] = <RenderBasic>{
             Kind: RenderKind.Basic,
             Material,
             VAO: vaos.get(Shape),

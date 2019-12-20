@@ -1,7 +1,7 @@
 import {Entity, Game} from "../game.js";
 import {Mat2D, Rad, Vec2} from "../math/index.js";
 import {create} from "../math/mat2d.js";
-import {Get, Has} from "./com_index.js";
+import {Has} from "./com_index.js";
 
 export interface Transform2D {
     /** Absolute matrix relative to the world. */
@@ -23,8 +23,8 @@ export interface Transform2D {
 
 export function transform2d(Translation: Vec2 = [0, 0], Rotation: Rad = 0, Scale: Vec2 = [1, 1]) {
     return (game: Game, EntityId: Entity) => {
-        game.World[EntityId] |= Has.Transform2D;
-        game[Get.Transform2D][EntityId] = <Transform2D>{
+        game.World.Mask[EntityId] |= Has.Transform2D;
+        game.World.Transform2D[EntityId] = <Transform2D>{
             EntityId,
             World: create(),
             Self: create(),

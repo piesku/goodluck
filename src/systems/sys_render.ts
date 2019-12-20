@@ -1,4 +1,4 @@
-import {Get, Has} from "../components/com_index.js";
+import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
 import {BasicUniform, RenderBasic} from "../components/com_render_basic.js";
 import {InstancedUniform, RenderInstanced} from "../components/com_render_instanced.js";
@@ -18,7 +18,7 @@ export function sys_render(game: Game, delta: number) {
 
     for (let i = 0; i < game.Lights.length; i++) {
         let light = game.Lights[i];
-        let transform = game[Get.Transform][light.EntityId];
+        let transform = game.World.Transform[light.EntityId];
         let position = get_translation([0, 0, 0], transform.World);
         light_positions.push(...position);
         light_details.push(...light.Color, light.Intensity);
@@ -27,10 +27,10 @@ export function sys_render(game: Game, delta: number) {
     // Keep track of the current material to minimize switching.
     let current_material = null;
 
-    for (let i = 0; i < game.World.length; i++) {
-        if ((game.World[i] & QUERY) === QUERY) {
-            let transform = game[Get.Transform][i];
-            let render = game[Get.Render][i];
+    for (let i = 0; i < game.World.Mask.length; i++) {
+        if ((game.World.Mask[i] & QUERY) === QUERY) {
+            let transform = game.World.Transform[i];
+            let render = game.World.Render[i];
 
             // TODO Sort by material.
             if (render.Material !== current_material) {

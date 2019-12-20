@@ -1,6 +1,6 @@
 import {Entity, Game} from "../game.js";
 import {Quat, Vec3} from "../math/index.js";
-import {Get, Has} from "./com_index.js";
+import {Has} from "./com_index.js";
 
 export interface Move {
     /** Units per second. */
@@ -15,8 +15,8 @@ export interface Move {
 
 export function move(MoveSpeed: number = 3.5, RotateSpeed: number = 0.5) {
     return (game: Game, entity: Entity) => {
-        game.World[entity] |= Has.Move;
-        game[Get.Move][entity] = <Move>{
+        game.World.Mask[entity] |= Has.Move;
+        game.World.Move[entity] = <Move>{
             MoveSpeed,
             RotateSpeed,
             Directions: [],

@@ -1,5 +1,39 @@
 # Changelog
 
+## goodluck3
+
+- Entity masks and component data are stored in `World` instances.
+
+    ```js
+    class World {
+        public Mask: Array<number> = [];
+        public Animate: Array<Animate> = [];
+        public AudioSource: Array<AudioSource> = [];
+        // ...
+        public Render: Array<Render> = [];
+        public Transform: Array<Transform> = [];
+    }
+
+    class Game {
+        public World = new World();
+    }
+    ```
+
+- The `Get` enum has been removed.
+
+- Component checks are performed with bitwise operations between the
+`World.Mask` array and the `Has` enum.
+
+    ```js
+    if (game.World.Mask[entity] & Has.Transform) ...
+    ```
+
+- Component data is retrieved from `game.World`.
+
+    ```js
+    let transform = game.World.Transform[entity];
+    ```
+
 ## goodluck2
 
 - Names of all properties are PascalCase for better naming mangling and
