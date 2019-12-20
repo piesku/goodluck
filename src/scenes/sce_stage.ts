@@ -1,6 +1,5 @@
-import {ani_scale} from "../animations/ani_scale.js";
 import {create_fly_camera} from "../blueprints/blu_fly_camera.js";
-import {Anim, animate} from "../components/com_animate.js";
+import {Anim, animate, AnimationClip} from "../components/com_animate.js";
 import {audio_source} from "../components/com_audio_source.js";
 import {collide} from "../components/com_collide.js";
 import {draw_marker} from "../components/com_draw.js";
@@ -10,10 +9,26 @@ import {render_shaded} from "../components/com_render_shaded.js";
 import {rigid_body} from "../components/com_rigid_body.js";
 import {Game} from "../game.js";
 import {Mat} from "../materials/mat_index.js";
+import {ease_in_out_sine} from "../math/easing.js";
 import {Cube} from "../shapes/Cube.js";
 import {Icosphere} from "../shapes/Icosphere.js";
 import {snd_music} from "../sounds/snd_music.js";
 import {World} from "../world.js";
+
+const anim_scale: AnimationClip = {
+    Keyframes: [
+        {
+            Timestamp: 0,
+            Scale: [1, 1, 1],
+            Ease: ease_in_out_sine,
+        },
+        {
+            Timestamp: 1,
+            Scale: [0.8, 0.8, 0.8],
+            Ease: ease_in_out_sine,
+        },
+    ],
+};
 
 export function scene_stage(game: Game) {
     game.World = new World();
@@ -51,7 +66,7 @@ export function scene_stage(game: Game) {
             collide(true),
             rigid_body(true),
             animate({
-                [Anim.Idle]: ani_scale,
+                [Anim.Idle]: anim_scale,
             }),
         ],
         Children: [
@@ -69,7 +84,7 @@ export function scene_stage(game: Game) {
             collide(true),
             rigid_body(true),
             animate({
-                [Anim.Idle]: ani_scale,
+                [Anim.Idle]: anim_scale,
             }),
         ],
     });
@@ -81,7 +96,7 @@ export function scene_stage(game: Game) {
             collide(true),
             rigid_body(true),
             animate({
-                [Anim.Idle]: ani_scale,
+                [Anim.Idle]: anim_scale,
             }),
         ],
     });
@@ -93,7 +108,7 @@ export function scene_stage(game: Game) {
             collide(true),
             rigid_body(true),
             animate({
-                [Anim.Idle]: ani_scale,
+                [Anim.Idle]: anim_scale,
             }),
         ],
     });
@@ -105,7 +120,7 @@ export function scene_stage(game: Game) {
             collide(true),
             rigid_body(true),
             animate({
-                [Anim.Idle]: ani_scale,
+                [Anim.Idle]: anim_scale,
             }),
         ],
     });
@@ -117,7 +132,7 @@ export function scene_stage(game: Game) {
             collide(true),
             rigid_body(true),
             animate({
-                [Anim.Idle]: ani_scale,
+                [Anim.Idle]: anim_scale,
             }),
         ],
     });
