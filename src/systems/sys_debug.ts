@@ -3,7 +3,6 @@ import {Has} from "../components/com_index.js";
 import {render_basic} from "../components/com_render_basic.js";
 import {Transform} from "../components/com_transform.js";
 import {Entity, Game} from "../game.js";
-import {Mat} from "../materials/mat_index.js";
 import {scale} from "../math/vec3.js";
 import {Cube} from "../shapes/Cube.js";
 
@@ -51,7 +50,7 @@ function wireframe_entity(game: Game, entity: Entity) {
 
     if (!wireframe) {
         let box = game.Add({
-            Using: [render_basic(game.Materials[Mat.Wireframe], Cube, [1, 0, 1, 1])],
+            Using: [render_basic(game.MaterialWireframe, Cube, [1, 0, 1, 1])],
         });
         let wireframe_transform = game.World.Transform[box];
         wireframe_transform.World = entity_transform.World;
@@ -73,7 +72,7 @@ function wireframe_collider(game: Game, entity: Entity) {
         let box = game.Add({
             Translation: collide.Center,
             Scale: scale([0, 0, 0], collide.Half, 2),
-            Using: [render_basic(game.Materials[Mat.Wireframe], Cube, [0, 1, 0, 1])],
+            Using: [render_basic(game.MaterialWireframe, Cube, [0, 1, 0, 1])],
         });
         wireframes.set(collide, {
             entity,

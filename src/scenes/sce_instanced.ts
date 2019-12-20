@@ -5,7 +5,6 @@ import {render_instanced} from "../components/com_render_instanced.js";
 import {render_shaded} from "../components/com_render_shaded.js";
 import {rigid_body} from "../components/com_rigid_body.js";
 import {Game} from "../game.js";
-import {Mat} from "../materials/mat_index.js";
 import {Cube} from "../shapes/Cube.js";
 import {World} from "../world.js";
 
@@ -26,7 +25,7 @@ export function scene_instanced(game: Game) {
         Translation: [0, -2, 0],
         Scale: [10, 1, 10],
         Using: [
-            render_shaded(game.Materials[Mat.Gouraud], Cube, [1, 1, 0.3, 1]),
+            render_shaded(game.MaterialGouraud, Cube, [1, 1, 0.3, 1]),
             collide(false),
             rigid_body(false),
         ],

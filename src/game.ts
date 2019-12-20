@@ -9,7 +9,6 @@ import {mat_basic} from "./materials/mat_basic.js";
 import {Material} from "./materials/mat_common.js";
 import {mat_flat} from "./materials/mat_flat.js";
 import {mat_gouraud} from "./materials/mat_gouraud.js";
-import {Mat} from "./materials/mat_index.js";
 import {mat_instanced} from "./materials/mat_instanced.js";
 import {mat_phong} from "./materials/mat_phong.js";
 import {mat_points} from "./materials/mat_points.js";
@@ -68,10 +67,17 @@ export class Game implements GameState {
     public InputState: InputState = {mouse_x: 0, mouse_y: 0};
     public InputEvent: InputEvent = {mouse_x: 0, mouse_y: 0, wheel_y: 0};
 
+    public MaterialPoints: Material;
+    public MaterialWireframe: Material;
+    public MaterialBasic: Material;
+    public MaterialFlat: Material;
+    public MaterialGouraud: Material;
+    public MaterialPhong: Material;
+    public MaterialInstanced: Material;
+
     // Implement GameState
     public ClearColor = <Vec4>[1, 0.3, 0.3, 1];
 
-    public Materials: Array<Material> = [];
     public Cameras: Array<Camera> = [];
     public Lights: Array<Light> = [];
     public Palette: Array<number> = [];
@@ -112,18 +118,18 @@ export class Game implements GameState {
         this.GL.enable(GL_CULL_FACE);
         this.GL.frontFace(GL_CW);
 
+        this.MaterialPoints = mat_points(this.GL);
+        this.MaterialWireframe = mat_wireframe(this.GL);
+        this.MaterialBasic = mat_basic(this.GL);
+        this.MaterialFlat = mat_flat(this.GL);
+        this.MaterialGouraud = mat_gouraud(this.GL);
+        this.MaterialPhong = mat_phong(this.GL);
+        this.MaterialInstanced = mat_instanced(this.GL);
+
         let canvas2d = document.querySelector("canvas + canvas")! as HTMLCanvasElement;
         canvas2d.width = this.ViewportWidth;
         canvas2d.height = this.ViewportHeight;
         this.Context2D = canvas2d.getContext("2d")!;
-
-        this.Materials[Mat.Points] = mat_points(this.GL);
-        this.Materials[Mat.Wireframe] = mat_wireframe(this.GL);
-        this.Materials[Mat.Basic] = mat_basic(this.GL);
-        this.Materials[Mat.Flat] = mat_flat(this.GL);
-        this.Materials[Mat.Gouraud] = mat_gouraud(this.GL);
-        this.Materials[Mat.Phong] = mat_phong(this.GL);
-        this.Materials[Mat.Instanced] = mat_instanced(this.GL);
     }
 
     CreateEntity(mask: number = 0) {

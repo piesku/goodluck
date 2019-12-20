@@ -8,7 +8,6 @@ import {render_basic} from "../components/com_render_basic.js";
 import {render_shaded} from "../components/com_render_shaded.js";
 import {rigid_body} from "../components/com_rigid_body.js";
 import {Game} from "../game.js";
-import {Mat} from "../materials/mat_index.js";
 import {ease_in_out_sine} from "../math/easing.js";
 import {Cube} from "../shapes/Cube.js";
 import {Icosphere} from "../shapes/Icosphere.js";
@@ -47,7 +46,7 @@ export function scene_stage(game: Game) {
         Translation: [0, -2, 0],
         Scale: [10, 1, 10],
         Using: [
-            render_shaded(game.Materials[Mat.Gouraud], Cube, [1, 1, 0.3, 1]),
+            render_shaded(game.MaterialGouraud, Cube, [1, 1, 0.3, 1]),
             collide(false),
             rigid_body(false),
         ],
@@ -62,7 +61,7 @@ export function scene_stage(game: Game) {
     game.Add({
         Translation: [-2, 5, 0],
         Using: [
-            render_basic(game.Materials[Mat.Points], Icosphere, [1, 1, 0.3, 1]),
+            render_basic(game.MaterialPoints, Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
             animate({
@@ -80,7 +79,7 @@ export function scene_stage(game: Game) {
     game.Add({
         Translation: [0, 5, 0],
         Using: [
-            render_basic(game.Materials[Mat.Wireframe], Icosphere, [1, 1, 0.3, 1]),
+            render_basic(game.MaterialWireframe, Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
             animate({
@@ -92,7 +91,7 @@ export function scene_stage(game: Game) {
     game.Add({
         Translation: [2, 5, 0],
         Using: [
-            render_basic(game.Materials[Mat.Basic], Icosphere, [1, 1, 0.3, 1]),
+            render_basic(game.MaterialBasic, Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
             animate({
@@ -104,7 +103,7 @@ export function scene_stage(game: Game) {
     game.Add({
         Translation: [-2, 1, 0],
         Using: [
-            render_shaded(game.Materials[Mat.Flat], Icosphere, [1, 1, 0.3, 1]),
+            render_shaded(game.MaterialFlat, Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
             animate({
@@ -116,7 +115,7 @@ export function scene_stage(game: Game) {
     game.Add({
         Translation: [0, 1, 0],
         Using: [
-            render_shaded(game.Materials[Mat.Gouraud], Icosphere, [1, 1, 0.3, 1]),
+            render_shaded(game.MaterialGouraud, Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
             animate({
@@ -128,7 +127,7 @@ export function scene_stage(game: Game) {
     game.Add({
         Translation: [2, 1, 0],
         Using: [
-            render_shaded(game.Materials[Mat.Phong], Icosphere, [1, 1, 0.3, 1]),
+            render_shaded(game.MaterialPhong, Icosphere, [1, 1, 0.3, 1]),
             collide(true),
             rigid_body(true),
             animate({

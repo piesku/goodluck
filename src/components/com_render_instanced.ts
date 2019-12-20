@@ -1,6 +1,5 @@
 import {Entity, Game} from "../game.js";
 import {Material, Shape} from "../materials/mat_common.js";
-import {Mat} from "../materials/mat_index.js";
 import {Model} from "../model.js";
 import {Cube} from "../shapes/Cube.js";
 import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT, GL_STATIC_DRAW} from "../webgl.js";
@@ -22,7 +21,7 @@ export function render_instanced(model: Model, Palette?: Array<number>) {
         game.World.Mask[entity] |= Has.Render;
         game.World.Render[entity] = <RenderInstanced>{
             Kind: RenderKind.Instanced,
-            Material: game.Materials[Mat.Instanced],
+            Material: game.MaterialInstanced,
             VAO: buffer(game.GL, shape, model),
             IndexCount: shape.Indices.length,
             InstanceCount: model.length / 4,
