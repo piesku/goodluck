@@ -1,4 +1,5 @@
 import {Entity, Game} from "../game.js";
+import {World} from "../world.js";
 import {Has} from "./com_index.js";
 
 export interface Named {
@@ -12,10 +13,9 @@ export function named(Name: string) {
     };
 }
 
-export function find_first(game: Game, name: string) {
-    for (let i = 0; i < game.World.Named.length; i++) {
-        let named = game.World.Named[i];
-        if (named && named.Name === name) {
+export function find_first(world: World, name: string) {
+    for (let i = 0; i < world.Mask.length; i++) {
+        if (world.Mask[i] & Has.Named && world.Named[i].Name === name) {
             return i;
         }
     }
