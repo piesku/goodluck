@@ -14,6 +14,6 @@ all: $(SHAPES_TS)
 		"$(shell wslpath -w $@)" \
 		1> /dev/null
 
-../src/shapes/%.ts: %.obj
+%.ts: %.obj
 	@echo "$< → $@"
 	@node asset2shape "$(shell wslpath -w $(CURDIR)/$<)" > $@

@@ -1,5 +1,5 @@
+import {Vec4} from "../common/index.js";
 import {Game} from "./game.js";
-import {Vec4} from "./math/index.js";
 
 export interface GameState {
     ClearColor: Vec4;

@@ -1,6 +1,6 @@
+import {Mat2D, Rad, Vec2} from "../../common/index.js";
+import {create} from "../../common/mat2d.js";
 import {Entity, Game} from "../game.js";
-import {Mat2D, Rad, Vec2} from "../math/index.js";
-import {create} from "../math/mat2d.js";
 import {Has} from "./com_index.js";
 
 export interface Transform2D {

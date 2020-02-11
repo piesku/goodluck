@@ -12,7 +12,7 @@
                 "--window-size=1280,720",
                 "--app=http://localhost:1234"
             ],
-            "webRoot": "${workspaceFolder}/public"
+            "webRoot": "${workspaceFolder}"
         },
         {
             "type": "chrome",
@@ -22,22 +22,14 @@
                 "--window-size=854,480",
                 "--app=http://localhost:1234"
             ],
-            "webRoot": "${workspaceFolder}/public"
+            "webRoot": "${workspaceFolder}"
         },
         {
             "type": "chrome",
             "request": "launch",
             "name": "Chrome",
             "url": "http://localhost:1234",
-            "webRoot": "${workspaceFolder}/public"
-        },
-        {
-            "type": "edge",
-            "request": "launch",
-            "version": "dev",
-            "name": "Edge (Dev)",
-            "url": "http://localhost:1234",
-            "webRoot": "${workspaceFolder}/public"
+            "webRoot": "${workspaceFolder}"
         },
     ]
 }

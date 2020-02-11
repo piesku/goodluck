@@ -1,5 +1,5 @@
+import {GL_TRIANGLES} from "../../common/webgl.js";
 import {InstancedAttribute} from "../components/com_render_instanced.js";
-import {GL_TRIANGLES} from "../webgl.js";
 import {link, Material} from "./mat_common.js";
 
 let vertex = `#version 300 es\n

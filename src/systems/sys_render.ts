@@ -1,3 +1,5 @@
+import {get_translation} from "../../common/mat4.js";
+import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
 import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
 import {BasicUniform, RenderBasic} from "../components/com_render_basic.js";
@@ -5,8 +7,6 @@ import {InstancedUniform, RenderInstanced} from "../components/com_render_instan
 import {RenderShaded, ShadedUniform} from "../components/com_render_shaded.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {get_translation} from "../math/mat4.js";
-import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../webgl.js";
 
 const QUERY = Has.Transform | Has.Render;
 

@@ -1,8 +1,8 @@
+import {get_rotation, get_translation} from "../../common/mat4.js";
+import {slerp} from "../../common/quat.js";
+import {lerp} from "../../common/vec3.js";
 import {Has} from "../components/com_index.js";
 import {Game} from "../game.js";
-import {get_rotation, get_translation} from "../math/mat4.js";
-import {slerp} from "../math/quat.js";
-import {lerp} from "../math/vec3.js";
 
 const QUERY = Has.Transform | Has.Mimic;
 

@@ -1,9 +1,9 @@
+import {Vec3} from "../../common/index.js";
+import {get_translation} from "../../common/mat4.js";
+import {transform_point} from "../../common/vec3.js";
 import {DrawKind, DrawMarker} from "../components/com_draw.js";
 import {Has} from "../components/com_index.js";
 import {Game} from "../game.js";
-import {Vec3} from "../math/index.js";
-import {get_translation} from "../math/mat4.js";
-import {transform_point} from "../math/vec3.js";
 
 const QUERY = Has.Transform | Has.Draw;
 

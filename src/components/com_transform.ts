@@ -1,6 +1,6 @@
+import {Mat4, Quat, Vec3} from "../../common/index.js";
+import {create} from "../../common/mat4.js";
 import {Entity, Game} from "../game.js";
-import {Mat4, Quat, Vec3} from "../math/index.js";
-import {create} from "../math/mat4.js";
 import {World} from "../world.js";
 import {Has} from "./com_index.js";
 

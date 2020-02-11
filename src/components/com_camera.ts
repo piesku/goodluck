@@ -1,6 +1,6 @@
+import {Mat4} from "../../common/index.js";
+import {create, perspective} from "../../common/mat4.js";
 import {Entity, Game} from "../game.js";
-import {Mat4} from "../math/index.js";
-import {create, perspective} from "../math/mat4.js";
 import {Has} from "./com_index.js";
 
 export interface Camera {

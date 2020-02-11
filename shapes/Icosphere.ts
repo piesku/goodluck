@@ -1,4 +1,4 @@
-import {Shape} from "../materials/mat_common";
+import {Shape} from "../src/materials/mat_common";
 
 export const Icosphere = <Shape>{
     Vertices: Float32Array.from([

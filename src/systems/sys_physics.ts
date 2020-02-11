@@ -1,6 +1,6 @@
+import {add} from "../../common/vec3.js";
 import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
-import {add} from "../math/vec3.js";
 
 const QUERY = Has.Transform | Has.Collide | Has.RigidBody;
 const GRAVITY = -9.81;

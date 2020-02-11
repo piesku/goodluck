@@ -1,7 +1,7 @@
+import {from_rotation_translation_scale, invert, multiply} from "../../common/mat4.js";
 import {Has} from "../components/com_index.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {from_rotation_translation_scale, invert, multiply} from "../math/mat4.js";
 
 const QUERY = Has.Transform;
 

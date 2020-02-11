@@ -1,30 +1,30 @@
-SOURCES = $(shell find src -name "*.ts")
+INDEX = ../src/index.js
 
-all: public/opt/game.terser.js
+all: game.terser.js
 	@printf "Size gzipped: %s bytes\n" \
-		$(shell gzip public/opt/index.html public/opt/game.terser.js --stdout | wc -c)
+		$(shell gzip index.html game.terser.js --stdout | wc -c)
 
-public/js/index.js: $(SOURCES)
+$(INDEX): $(shell find .. -name "*.ts")
 	@echo -n "Compiling project... "
 	@npx tsc
 	@echo "Done"
 
-public/opt/game.rollup.js: public/js/index.js
+game.rollup.js: $(INDEX)
 	@echo -n "Bundling files into one... "
-	@npx rollup -c bundle_config.js --silent
+	@npx rollup --format iife $< --silent > $@
 	@echo "Done"
 
-public/opt/game.sed.js: public/opt/game.rollup.js
+game.sed.js: game.rollup.js
 	@echo -n "Running replacements... "
 	@sed  -f sed.txt  $< > $@
 	@echo "Done"
 
-public/opt/game.tr.js: public/opt/game.sed.js
+game.tr.js: game.sed.js
 	@echo -n "Stripping newlines... "
 	@cat $< | tr -d "\n" > $@
 	@echo "Done"
 
-public/opt/game.terser.js: public/opt/game.tr.js
+game.terser.js: game.tr.js
 	@echo "Minifying... "
 	@npx --quiet terser $< \
 		--timings \

@@ -1,5 +1,5 @@
+import {Vec3} from "../../common/index.js";
 import {Entity, Game} from "../game.js";
-import {Vec3} from "../math/index.js";
 import {Has} from "./com_index.js";
 
 export interface Light {

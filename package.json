@@ -12,11 +12,12 @@
     ],
     "license": "ISC",
     "scripts": {
+        "clean": "find . -type d -name node_modules -prune -o \\( -name '*.js' -o -name '*.js.map' \\) -exec rm {} +",
         "compile": "tsc",
         "compile:watch": "tsc --watch -p .",
-        "lint": "prettier --check \"src/**/*.ts\"",
-        "pretty": "prettier --write \"src/**/*.ts\"",
-        "serve": "live-server --port=1234 --no-browser --quiet public",
+        "lint": "prettier --check \"**/*.ts\"",
+        "pretty": "prettier --write \"**/*.ts\"",
+        "serve": "live-server --port=1234 --no-browser --quiet .",
         "start": "npm-run-all --parallel compile:watch serve"
     },
     "devDependencies": {

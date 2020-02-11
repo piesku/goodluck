@@ -1,5 +1,5 @@
+import {GL_POINTS} from "../../common/webgl.js";
 import {BasicAttribute} from "../components/com_render_basic.js";
-import {GL_POINTS} from "../webgl.js";
 import {link, Material} from "./mat_common.js";
 
 let vertex = `#version 300 es

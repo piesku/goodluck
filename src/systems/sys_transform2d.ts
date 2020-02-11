@@ -1,7 +1,7 @@
+import {from_translation, invert, multiply, rotate, scale} from "../../common/mat2d.js";
 import {Has} from "../components/com_index.js";
 import {Transform2D} from "../components/com_transform2d.js";
 import {Game} from "../game.js";
-import {from_translation, invert, multiply, rotate, scale} from "../math/mat2d.js";
 
 const QUERY = Has.Transform2D;
 

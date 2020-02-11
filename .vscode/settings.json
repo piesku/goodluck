@@ -1,4 +1,9 @@
 {
+    "files.exclude": {
+        "**/*.js": true,
+        "**/*.js.map": true,
+        "package-lock.json": true
+    },
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
         "source.organizeImports": true
