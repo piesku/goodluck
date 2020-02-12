@@ -9,7 +9,6 @@ import {mat_gouraud} from "./materials/mat_gouraud.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
-import {sys_performance} from "./systems/sys_performance.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
@@ -91,8 +90,7 @@ export class Game {
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render(this, delta);
-        sys_framerate(this, delta);
-        sys_performance(this, performance.now() - now, document.querySelector("#frame"));
+        sys_framerate(this, delta, performance.now() - now);
     }
 
     Start() {

@@ -3,7 +3,6 @@ import {Has} from "./components/com_index.js";
 import {transform2d} from "./components/com_transform2d.js";
 import {sys_draw2d} from "./systems/sys_draw2d.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
-import {sys_performance} from "./systems/sys_performance.js";
 import {sys_transform2d} from "./systems/sys_transform2d.js";
 import {World} from "./world.js";
 
@@ -73,8 +72,7 @@ export class Game {
         let now = performance.now();
         sys_transform2d(this, delta);
         sys_draw2d(this, delta);
-        sys_framerate(this, delta);
-        sys_performance(this, performance.now() - now, document.querySelector("#frame"));
+        sys_framerate(this, delta, performance.now() - now);
     }
 
     Start() {
