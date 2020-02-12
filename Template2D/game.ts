@@ -1,17 +1,10 @@
-import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
-import {Blueprint} from "./blueprints/blu_common.js";
-import {Camera} from "./components/com_camera.js";
+import {Blueprint2D} from "./blueprints/blu_common.js";
 import {Has} from "./components/com_index.js";
-import {Light} from "./components/com_light.js";
-import {transform} from "./components/com_transform.js";
-import {Material} from "./materials/mat_common.js";
-import {mat_gouraud} from "./materials/mat_gouraud.js";
-import {sys_camera} from "./systems/sys_camera.js";
+import {transform2d} from "./components/com_transform2d.js";
+import {sys_draw2d} from "./systems/sys_draw2d.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
-import {sys_light} from "./systems/sys_light.js";
 import {sys_performance} from "./systems/sys_performance.js";
-import {sys_render} from "./systems/sys_render.js";
-import {sys_transform} from "./systems/sys_transform.js";
+import {sys_transform2d} from "./systems/sys_transform2d.js";
 import {World} from "./world.js";
 
 const MAX_ENTITIES = 10000;
@@ -36,15 +29,11 @@ export class Game {
 
     public ViewportWidth = window.innerWidth;
     public ViewportHeight = window.innerHeight;
+    public Context2D: CanvasRenderingContext2D;
     public UI = document.querySelector("main")!;
-    public GL: WebGL2RenderingContext;
     public InputState: InputState = {mouse_x: 0, mouse_y: 0};
     public InputEvent: InputEvent = {mouse_x: 0, mouse_y: 0, wheel_y: 0};
 
-    public MaterialGouraud: Material;
-
-    public Cameras: Array<Camera> = [];
-    public Lights: Array<Light> = [];
     private RAF: number = 0;
 
     constructor() {
@@ -74,29 +63,23 @@ export class Game {
         });
         this.UI.addEventListener("click", () => this.UI.requestPointerLock());
 
-        let canvas3d = document.querySelector("canvas")!;
-        canvas3d.width = this.ViewportWidth;
-        canvas3d.height = this.ViewportHeight;
-        this.GL = canvas3d.getContext("webgl2")!;
-        this.GL.enable(GL_DEPTH_TEST);
-        this.GL.enable(GL_CULL_FACE);
-        this.GL.frontFace(GL_CW);
-
-        this.MaterialGouraud = mat_gouraud(this.GL);
+        let canvas2d = document.querySelector("canvas")!;
+        canvas2d.width = this.ViewportWidth;
+        canvas2d.height = this.ViewportHeight;
+        this.Context2D = canvas2d.getContext("2d")!;
     }
 
     Update(delta: number) {
         let now = performance.now();
-        sys_transform(this, delta);
-        sys_camera(this, delta);
-        sys_light(this, delta);
-        sys_render(this, delta);
+        sys_transform2d(this, delta);
+        sys_draw2d(this, delta);
         sys_framerate(this, delta);
         sys_performance(this, performance.now() - now, document.querySelector("#frame"));
     }
 
     Start() {
         let last = performance.now();
+
         let tick = (now: number) => {
             let delta = (now - last) / 1000;
             this.Update(delta);
@@ -128,16 +111,16 @@ export class Game {
         throw new Error("No more entities available.");
     }
 
-    Add({Translation, Rotation, Scale, Using = [], Children = []}: Blueprint) {
+    Add({Translation, Rotation, Scale, Using = [], Children = []}: Blueprint2D) {
         let entity = this.CreateEntity();
-        transform(Translation, Rotation, Scale)(this, entity);
+        transform2d(Translation, Rotation, Scale)(this, entity);
         for (let mixin of Using) {
             mixin(this, entity);
         }
-        let entity_transform = this.World.Transform[entity];
+        let entity_transform = this.World.Transform2D[entity];
         for (let subtree of Children) {
             let child = this.Add(subtree);
-            let child_transform = this.World.Transform[child];
+            let child_transform = this.World.Transform2D[child];
             child_transform.Parent = entity_transform;
             entity_transform.Children.push(child_transform);
         }
@@ -146,8 +129,8 @@ export class Game {
 
     Destroy(entity: Entity) {
         let mask = this.World.Mask[entity];
-        if (mask & Has.Transform) {
-            for (let child of this.World.Transform[entity].Children) {
+        if (mask & Has.Transform2D) {
+            for (let child of this.World.Transform2D[entity].Children) {
                 this.Destroy(child.EntityId);
             }
         }
