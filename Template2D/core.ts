@@ -1,4 +1,4 @@
-import {Rad, Vec2} from "../common/index.js";
+import {Rad, Vec2} from "../common/math.js";
 import {Has} from "./components/com_index.js";
 import {transform2d} from "./components/com_transform2d.js";
 import {Entity, Game} from "./game.js";

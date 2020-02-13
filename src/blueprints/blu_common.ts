@@ -1,4 +1,4 @@
-import {Quat, Rad, Vec2, Vec3} from "../../common";
+import {Quat, Rad, Vec2, Vec3} from "../../common/math";
 import {Entity, Game} from "../game";
 
 type Mixin = (game: Game, entity: Entity) => void;

@@ -1,4 +1,4 @@
-import {Vec4} from "../common/index.js";
+import {Vec4} from "../common/math.js";
 import {Game} from "./game.js";
 
 export interface GameState {

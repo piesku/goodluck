@@ -1,4 +1,4 @@
-import {Quat, Vec3} from "../common/index.js";
+import {Quat, Vec3} from "../common/math.js";
 import {Has} from "./components/com_index.js";
 import {transform} from "./components/com_transform.js";
 import {Entity, Game} from "./game.js";

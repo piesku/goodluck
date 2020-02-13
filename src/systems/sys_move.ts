@@ -1,5 +1,5 @@
-import {Quat, Vec3} from "../../common/index.js";
 import {get_translation} from "../../common/mat4.js";
+import {Quat, Vec3} from "../../common/math.js";
 import {multiply} from "../../common/quat.js";
 import {add, normalize, scale, transform_direction, transform_point} from "../../common/vec3.js";
 import {Anim} from "../components/com_animate.js";

@@ -1,4 +1,4 @@
-import {Mat2D, Rad, Vec2} from "./index.js";
+import {Mat2D, Rad, Vec2} from "./math.js";
 
 export function create() {
     return [1, 0, 0, 1, 0, 0] as Mat2D;

@@ -1,4 +1,4 @@
-import {Vec4} from "../common/index.js";
+import {Vec4} from "../common/math.js";
 import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
 import {GameState} from "./actions.js";
 import {Blueprint, Blueprint2D} from "./blueprints/blu_common.js";

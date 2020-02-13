@@ -1,5 +1,5 @@
-import {Vec3} from "../../common/index.js";
 import {get_translation} from "../../common/mat4.js";
+import {Vec3} from "../../common/math.js";
 import {negate, transform_point} from "../../common/vec3.js";
 import {Collide} from "../components/com_collide.js";
 import {Has} from "../components/com_index.js";

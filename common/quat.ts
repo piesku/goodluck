@@ -1,4 +1,4 @@
-import {EPSILON, Quat, Vec3} from "./index.js";
+import {EPSILON, Quat, Vec3} from "./math.js";
 import {cross, dot, length, normalize as normalize_vec3} from "./vec3.js";
 
 export function set_axis_angle(out: Quat, axis: Vec3, rad: number) {

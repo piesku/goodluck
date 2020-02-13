@@ -1,4 +1,4 @@
-import {Mat4, Quat, Vec3} from "./index.js";
+import {Mat4, Quat, Vec3} from "./math.js";
 
 export function create() {
     return <Mat4>[1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
