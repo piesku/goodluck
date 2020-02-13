@@ -1,3 +1,4 @@
+import {Material, Shape} from "../../common/material.js";
 import {Vec4} from "../../common/math.js";
 import {
     GL_ARRAY_BUFFER,
@@ -6,7 +7,6 @@ import {
     GL_STATIC_DRAW,
 } from "../../common/webgl.js";
 import {Entity, Game} from "../game.js";
-import {Material, Shape} from "../materials/mat_common.js";
 import {Has} from "./com_index.js";
 import {RenderKind} from "./com_render.js";
 

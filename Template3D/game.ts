@@ -1,8 +1,8 @@
+import {Material} from "../common/material.js";
 import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
 import {Camera} from "./components/com_camera.js";
 import {Light} from "./components/com_light.js";
 import {start, stop} from "./core.js";
-import {Material} from "./materials/mat_common.js";
 import {mat_gouraud} from "./materials/mat_gouraud.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
