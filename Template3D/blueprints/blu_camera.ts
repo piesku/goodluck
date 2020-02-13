@@ -1,6 +1,6 @@
 import {camera} from "../components/com_camera.js";
+import {Blueprint} from "../core.js";
 import {Game} from "../game.js";
-import {Blueprint} from "./blu_common";
 
 export function blueprint_camera(game: Game) {
     return <Blueprint>{
