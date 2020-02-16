@@ -33,7 +33,7 @@ export function scene_stage(game: Game) {
         Scale: [10, 1, 10],
         Using: [
             render_shaded(game.MaterialGouraud, Cube, [1, 1, 0.3, 1]),
-            collide(false, [10, 1, 10]),
+            collide(false),
             rigid_body(false),
         ],
     });
