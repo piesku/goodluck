@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<meta charset="utf8" />
+<meta name="viewport" content="width=device-width, user-scalable=0" />
+<title>Particles</title>
+<style>
+    html,
+    body {
+        overflow: hidden;
+        margin: 0;
+    }
+    canvas,
+    main {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        user-select: none;
+    }
+    #debug {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: flex-end;
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #fff;
+        font-family: monospace;
+    }
+    #debug button {
+        cursor: pointer;
+        padding: 0;
+        background: none;
+        border: none;
+        font: inherit;
+        color: inherit;
+    }
+    #debug div {
+        width: max-content;
+        background: #000;
+        color: #fff;
+    }
+</style>
+<body>
+    <canvas></canvas>
+    <main></main>
+
+    <div id="debug">
+        <div>update: <span id="update"></span></div>
+        <div>delta: <span id="delta"></span></div>
+        <div>fps: <span id="fps"></span></div>
+        <div><button onclick="toggle(this)">pause</button></div>
+    </div>
+    <script type="module">
+        import {start, stop} from "./core.js";
+        import "./index.js";
+
+        let running = true;
+        window.toggle = function toggle(button) {
+            if (running) {
+                running = false;
+                stop();
+                button.textContent = "resume";
+            } else {
+                running = true;
+                start(game);
+                button.textContent = "pause";
+            }
+        };
+    </script>
+</body>
