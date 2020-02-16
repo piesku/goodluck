@@ -1,5 +1,7 @@
 import {Cube} from "../../shapes/Cube.js";
 import {Icosphere} from "../../shapes/Icosphere.js";
+import {MonkeyFlat} from "../../shapes/MonkeyFlat.js";
+import {MonkeySmooth} from "../../shapes/MonkeySmooth.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light} from "../components/com_light.js";
 import {render_basic} from "../components/com_render_basic.js";
@@ -16,7 +18,7 @@ export function scene_stage(game: Game) {
 
     // Camera.
     instantiate(game, {
-        Translation: [0, 2, 5],
+        Translation: [0, 2, 4],
         ...blueprint_camera(game),
     });
 
@@ -41,7 +43,7 @@ export function scene_stage(game: Game) {
 
     // Points.
     instantiate(game, {
-        Translation: [-3, 3, 0],
+        Translation: [-2, 3, 0],
         Using: [render_basic(game.MaterialPoints, Icosphere, [1, 1, 0.3, 1])],
     });
 
@@ -53,25 +55,25 @@ export function scene_stage(game: Game) {
 
     // Basic.
     instantiate(game, {
-        Translation: [3, 3, 0],
+        Translation: [2, 3, 0],
         Using: [render_basic(game.MaterialBasic, Icosphere, [1, 1, 0.3, 1])],
     });
 
     // Flat.
     instantiate(game, {
-        Translation: [-3, 1, 0],
-        Using: [render_shaded(game.MaterialFlat, Icosphere, [1, 1, 0.3, 1])],
+        Translation: [-2, 1, 0],
+        Using: [render_shaded(game.MaterialFlat, MonkeyFlat, [1, 1, 0.3, 1])],
     });
 
     // Gouraud.
     instantiate(game, {
         Translation: [0, 1, 0],
-        Using: [render_shaded(game.MaterialGouraud, Icosphere, [1, 1, 0.3, 1])],
+        Using: [render_shaded(game.MaterialGouraud, MonkeySmooth, [1, 1, 0.3, 1])],
     });
 
     // Phong.
     instantiate(game, {
-        Translation: [3, 1, 0],
-        Using: [render_shaded(game.MaterialPhong, Icosphere, [1, 1, 0.3, 1])],
+        Translation: [2, 1, 0],
+        Using: [render_shaded(game.MaterialPhong, MonkeySmooth, [1, 1, 0.3, 1])],
     });
 }
