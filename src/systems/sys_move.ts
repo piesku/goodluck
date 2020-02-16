@@ -1,11 +1,11 @@
+import {get_translation} from "../../common/mat4.js";
+import {Quat, Vec3} from "../../common/math.js";
+import {multiply} from "../../common/quat.js";
+import {add, normalize, scale, transform_direction, transform_point} from "../../common/vec3.js";
 import {Anim} from "../components/com_animate.js";
 import {Has} from "../components/com_index.js";
 import {components_of_type} from "../components/com_transform.js";
 import {Entity, Game} from "../game.js";
-import {Quat, Vec3} from "../math/index.js";
-import {get_translation} from "../math/mat4.js";
-import {multiply} from "../math/quat.js";
-import {add, normalize, scale, transform_direction, transform_point} from "../math/vec3.js";
 
 const QUERY = Has.Transform | Has.Move;
 

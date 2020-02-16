@@ -1,3 +1,5 @@
+import {Vec4} from "../common/math.js";
+import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
 import {GameState} from "./actions.js";
 import {Blueprint, Blueprint2D} from "./blueprints/blu_common.js";
 import {Camera} from "./components/com_camera.js";
@@ -13,7 +15,6 @@ import {mat_instanced} from "./materials/mat_instanced.js";
 import {mat_phong} from "./materials/mat_phong.js";
 import {mat_points} from "./materials/mat_points.js";
 import {mat_wireframe} from "./materials/mat_wireframe.js";
-import {Vec4} from "./math/index.js";
 import {sys_animate} from "./systems/sys_animate.js";
 import {sys_audio} from "./systems/sys_audio.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -35,7 +36,6 @@ import {sys_transform} from "./systems/sys_transform.js";
 import {sys_transform2d} from "./systems/sys_transform2d.js";
 import {sys_trigger} from "./systems/sys_trigger.js";
 import {sys_ui} from "./systems/sys_ui.js";
-import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "./webgl.js";
 import {World} from "./world.js";
 
 const MAX_ENTITIES = 10000;

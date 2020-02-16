@@ -1,3 +1,4 @@
+import {Cube} from "../../shapes/Cube.js";
 import {create_fly_camera} from "../blueprints/blu_fly_camera.js";
 import {collide} from "../components/com_collide.js";
 import {light} from "../components/com_light.js";
@@ -5,7 +6,6 @@ import {render_instanced} from "../components/com_render_instanced.js";
 import {render_shaded} from "../components/com_render_shaded.js";
 import {rigid_body} from "../components/com_rigid_body.js";
 import {Game} from "../game.js";
-import {Cube} from "../shapes/Cube.js";
 import {World} from "../world.js";
 
 export function scene_instanced(game: Game) {

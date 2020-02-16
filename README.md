@@ -14,11 +14,6 @@ remove features you don't need, and hack away.
 3. `npm install` the build tools.
 4. `npm start` the development server.
 
-Production builds are bundled into a single `.js` file and optimized for
-size. You can find them in `public/opt`.
-
-5. `make`
-
 ## Design Principles
 
 _goodluck_ is a template for creating small browser games. Apart from the
@@ -42,19 +37,19 @@ decisions, and tools.
 
 _goodluck_ implements the entity-component-system (ECS) architecture:
 
-1.  _Entities_ are indices into arrays storing component data. Furthermore, a
-    special array called `world` stores masks defining which components are
-    enabled for which entities. Component masks are implemented using
-    bitflags, which limits the total number of available components to 32.
-    This should still be plenty for small and even medium-sized games.
+1.  _Entities_ are indices into arrays storing component data. A special
+    array called `Mask` stores masks defining which components are enabled
+    for which entities. Component masks are implemented using bitflags, which
+    limits the total number of available components to 32. This should still
+    be plenty for small and even medium-sized games.
 
-2.  _Components_ are simple objects storing data, and only data. No logic goes
-    into components. Each component defines an interface describing its data.
+2.  _Components_ are simple objects storing data, and only data. No logic
+    goes into components. Each component defines an interface describing its
+    data. Component data is stored in arrays in `World` instances.
 
 3.  _Systems_ store the game logic which runs for entities which have certain
-    components enabled. Systems are executed either in `fixed_update` (guaranteed
-    to run with the delta of 16 ms), or in `frame_update` which runs once per
-    animation frame, as menaged by the browser.
+    components enabled. Systems are executed in a deterministic order in
+    `Game#Update`, once per animation frame, as managed by the browser.
 
 _goodluck_ is written in TypeScript, but it only uses a small subset of its
 features. The goal is to take advantage of the typing system and excellent
@@ -71,3 +66,28 @@ features are strictly compile-only: they compile to zero bytes of JavaScript.
     typed system works well for _goodluck_ because the code is only written with
     the current project in mind, and you have the total control over all types
     used across the project.
+
+## Creating a New Project
+
+When you're ready to start a new project, rename `NewProject2D` or
+`NewProject3D` to a name of your choosing (or simply `src`). Alternatively,
+you may want to start basing on one of the included example projects. Feel
+free to copy components and systems from other examples as needed, but keep in
+mind that you might need to adjust the code slightly to make it work for your
+use-case.
+
+When copying components, remember to add corresponding `Has` enum variants in
+`components/com_index.ts`. If the added components store data, make room for
+it in `World` in `world.ts`.
+
+Once you've copied everything you need, feel free to remove all other project
+directories in the repository! It's completely yours to hack and customize.
+
+## Optimized Builds
+
+Production builds are bundled into a single `.js` file and optimized for
+size. You can find them in `play/`.
+
+1. Edit the `INDEX` path in `play/Makefile` to match the entry point of your project.
+2. `make -C play`
+3. Open `play/index.html` in the browser.

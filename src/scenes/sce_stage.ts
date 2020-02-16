@@ -1,3 +1,6 @@
+import {ease_in_out_sine} from "../../common/easing.js";
+import {Cube} from "../../shapes/Cube.js";
+import {Icosphere} from "../../shapes/Icosphere.js";
 import {create_fly_camera} from "../blueprints/blu_fly_camera.js";
 import {Anim, animate, AnimationClip} from "../components/com_animate.js";
 import {audio_source} from "../components/com_audio_source.js";
@@ -8,9 +11,6 @@ import {render_basic} from "../components/com_render_basic.js";
 import {render_shaded} from "../components/com_render_shaded.js";
 import {rigid_body} from "../components/com_rigid_body.js";
 import {Game} from "../game.js";
-import {ease_in_out_sine} from "../math/easing.js";
-import {Cube} from "../shapes/Cube.js";
-import {Icosphere} from "../shapes/Icosphere.js";
 import {snd_music} from "../sounds/snd_music.js";
 import {World} from "../world.js";
 
