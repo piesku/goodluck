@@ -1,4 +1,4 @@
-import {blueprint_camera} from "../blueprints/blu_camera.js";
+import {blueprint_camera_follow} from "../blueprints/blu_camera_follow.js";
 import {blueprint_ground} from "../blueprints/blu_ground.js";
 import {blueprint_player} from "../blueprints/blu_player.js";
 import {instantiate} from "../core.js";
@@ -30,5 +30,5 @@ export function scene_stage(game: Game) {
     });
 
     // Camera.
-    instantiate(game, blueprint_camera(game));
+    instantiate(game, blueprint_camera_follow(game));
 }

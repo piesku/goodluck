@@ -1,5 +1,5 @@
 import {Cube} from "../../shapes/Cube.js";
-import {blueprint_camera} from "../blueprints/blu_camera.js";
+import {blueprint_camera_fly} from "../blueprints/blu_camera_fly.js";
 import {light} from "../components/com_light.js";
 import {render_shaded} from "../components/com_render_shaded.js";
 import {instantiate} from "../core.js";
@@ -15,7 +15,7 @@ export function scene_stage(game: Game) {
     // Camera.
     instantiate(game, {
         Translation: [1, 2, 5],
-        ...blueprint_camera(game),
+        ...blueprint_camera_fly(game),
     });
 
     // Light.
