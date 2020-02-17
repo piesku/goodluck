@@ -33,19 +33,13 @@ export function scene_stage(game: Game) {
 
     // Flat.
     instantiate(game, {
-        Translation: [-2, 0, 0],
+        Translation: [-0.7, 0.5, 0],
         Using: [render_shaded(game.MaterialFlat, MonkeyFlat, [1, 1, 0.3, 1])],
-    });
-
-    // Gouraud.
-    instantiate(game, {
-        Translation: [0, 0, 0],
-        Using: [render_shaded(game.MaterialGouraud, MonkeySmooth, [1, 1, 0.3, 1])],
     });
 
     // Phong.
     instantiate(game, {
-        Translation: [2, 0, 0],
+        Translation: [0.7, -0.5, 0],
         Using: [render_shaded(game.MaterialPhong, MonkeySmooth, [1, 1, 0.3, 1])],
     });
 }

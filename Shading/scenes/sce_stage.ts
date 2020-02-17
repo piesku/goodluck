@@ -42,7 +42,7 @@ export function scene_stage(game: Game) {
 
     // Points.
     instantiate(game, {
-        Translation: [-2, 3, 0],
+        Translation: [-1.5, 3, 0],
         Using: [render_basic(game.MaterialPoints, IcosphereSmooth, [1, 1, 0.3, 1])],
     });
 
@@ -54,13 +54,13 @@ export function scene_stage(game: Game) {
 
     // Basic.
     instantiate(game, {
-        Translation: [2, 3, 0],
+        Translation: [1.5, 3, 0],
         Using: [render_basic(game.MaterialBasic, IcosphereSmooth, [1, 1, 0.3, 1])],
     });
 
     // Flat.
     instantiate(game, {
-        Translation: [-2, 1, 0],
+        Translation: [-1.5, 1, 0],
         Using: [render_shaded(game.MaterialFlat, IcosphereFlat, [1, 1, 0.3, 1])],
     });
 
@@ -72,7 +72,7 @@ export function scene_stage(game: Game) {
 
     // Phong.
     instantiate(game, {
-        Translation: [2, 1, 0],
+        Translation: [1.5, 1, 0],
         Using: [render_shaded(game.MaterialPhong, IcosphereSmooth, [1, 1, 0.3, 1])],
     });
 }

@@ -4,7 +4,6 @@ import {Camera} from "./components/com_camera.js";
 import {Light} from "./components/com_light.js";
 import {start, stop} from "./core.js";
 import {mat_flat} from "./materials/mat_flat.js";
-import {mat_gouraud} from "./materials/mat_gouraud.js";
 import {mat_phong} from "./materials/mat_phong.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -39,7 +38,6 @@ export class Game {
     public InputEvent: InputEvent = {mouse_x: 0, mouse_y: 0, wheel_y: 0};
 
     public MaterialFlat: Material;
-    public MaterialGouraud: Material;
     public MaterialPhong: Material;
 
     public Cameras: Array<Camera> = [];
@@ -81,7 +79,6 @@ export class Game {
         this.GL.frontFace(GL_CW);
 
         this.MaterialFlat = mat_flat(this.GL);
-        this.MaterialGouraud = mat_gouraud(this.GL);
         this.MaterialPhong = mat_phong(this.GL);
     }
 
