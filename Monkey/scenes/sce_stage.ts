@@ -1,5 +1,3 @@
-import {MonkeyFlat} from "../../shapes/MonkeyFlat.js";
-import {MonkeySmooth} from "../../shapes/MonkeySmooth.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light} from "../components/com_light.js";
 import {render_shaded} from "../components/com_render_shaded.js";
@@ -34,12 +32,12 @@ export function scene_stage(game: Game) {
     // Flat.
     instantiate(game, {
         Translation: [-0.7, 0.5, 0],
-        Using: [render_shaded(game.MaterialFlat, MonkeyFlat, [1, 1, 0.3, 1])],
+        Using: [render_shaded(game.MaterialFlat, game.MeshMonkeyFlat, [1, 1, 0.3, 1])],
     });
 
     // Phong.
     instantiate(game, {
         Translation: [0.7, -0.5, 0],
-        Using: [render_shaded(game.MaterialPhong, MonkeySmooth, [1, 1, 0.3, 1])],
+        Using: [render_shaded(game.MaterialPhong, game.MeshMonkeySmooth, [1, 1, 0.3, 1])],
     });
 }

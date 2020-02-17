@@ -1,4 +1,3 @@
-import {Cube} from "../../shapes/Cube.js";
 import {collide} from "../components/com_collide.js";
 import {control_player} from "../components/com_control_player.js";
 import {light} from "../components/com_light.js";
@@ -16,7 +15,7 @@ export function blueprint_player(game: Game) {
         Children: [
             {
                 // Body.
-                Using: [render_shaded(game.MaterialGouraud, Cube, [1, 1, 0.3, 1])],
+                Using: [render_shaded(game.MaterialGouraud, game.MeshCube, [1, 1, 0.3, 1])],
             },
             {
                 // Camera rig anchor.

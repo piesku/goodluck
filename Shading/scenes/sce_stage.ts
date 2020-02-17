@@ -1,6 +1,3 @@
-import {Cube} from "../../shapes/Cube.js";
-import {IcosphereFlat} from "../../shapes/IcosphereFlat.js";
-import {IcosphereSmooth} from "../../shapes/IcosphereSmooth.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light} from "../components/com_light.js";
 import {render_basic} from "../components/com_render_basic.js";
@@ -37,42 +34,42 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [0, 0, 0],
         Scale: [10, 1, 10],
-        Using: [render_shaded(game.MaterialGouraud, Cube, [1, 1, 0.3, 1])],
+        Using: [render_shaded(game.MaterialGouraud, game.MeshCube, [1, 1, 0.3, 1])],
     });
 
     // Points.
     instantiate(game, {
         Translation: [-1.5, 3, 0],
-        Using: [render_basic(game.MaterialPoints, IcosphereSmooth, [1, 1, 0.3, 1])],
+        Using: [render_basic(game.MaterialPoints, game.MeshIcosphereSmooth, [1, 1, 0.3, 1])],
     });
 
     // Wireframe.
     instantiate(game, {
         Translation: [0, 3, 0],
-        Using: [render_basic(game.MaterialWireframe, IcosphereSmooth, [1, 1, 0.3, 1])],
+        Using: [render_basic(game.MaterialWireframe, game.MeshIcosphereSmooth, [1, 1, 0.3, 1])],
     });
 
     // Basic.
     instantiate(game, {
         Translation: [1.5, 3, 0],
-        Using: [render_basic(game.MaterialBasic, IcosphereSmooth, [1, 1, 0.3, 1])],
+        Using: [render_basic(game.MaterialBasic, game.MeshIcosphereSmooth, [1, 1, 0.3, 1])],
     });
 
     // Flat.
     instantiate(game, {
         Translation: [-1.5, 1, 0],
-        Using: [render_shaded(game.MaterialFlat, IcosphereFlat, [1, 1, 0.3, 1])],
+        Using: [render_shaded(game.MaterialFlat, game.MeshIcosphereFlat, [1, 1, 0.3, 1])],
     });
 
     // Gouraud.
     instantiate(game, {
         Translation: [0, 1, 0],
-        Using: [render_shaded(game.MaterialGouraud, IcosphereSmooth, [1, 1, 0.3, 1])],
+        Using: [render_shaded(game.MaterialGouraud, game.MeshIcosphereSmooth, [1, 1, 0.3, 1])],
     });
 
     // Phong.
     instantiate(game, {
         Translation: [1.5, 1, 0],
-        Using: [render_shaded(game.MaterialPhong, IcosphereSmooth, [1, 1, 0.3, 1])],
+        Using: [render_shaded(game.MaterialPhong, game.MeshIcosphereSmooth, [1, 1, 0.3, 1])],
     });
 }
