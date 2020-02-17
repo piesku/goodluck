@@ -1,7 +1,7 @@
 import {Material, Shape} from "../common/material.js";
 import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
-import {mesh_MonkeyFlat} from "../shapes/MonkeyFlat.js";
-import {mesh_MonkeySmooth} from "../shapes/MonkeySmooth.js";
+import {mesh_monkey_flat} from "../shapes/monkey_flat.js";
+import {mesh_monkey_smooth} from "../shapes/monkey_smooth.js";
 import {Camera} from "./components/com_camera.js";
 import {Light} from "./components/com_light.js";
 import {start, stop} from "./core.js";
@@ -84,8 +84,8 @@ export class Game {
 
         this.MaterialFlat = mat_flat(this.GL);
         this.MaterialPhong = mat_phong(this.GL);
-        this.MeshMonkeyFlat = mesh_MonkeyFlat(this.GL);
-        this.MeshMonkeySmooth = mesh_MonkeySmooth(this.GL);
+        this.MeshMonkeyFlat = mesh_monkey_flat(this.GL);
+        this.MeshMonkeySmooth = mesh_monkey_smooth(this.GL);
     }
 
     Update(delta: number) {

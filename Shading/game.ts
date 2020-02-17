@@ -1,8 +1,8 @@
 import {Material, Shape} from "../common/material.js";
 import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
-import {mesh_Cube} from "../shapes/Cube.js";
-import {mesh_IcosphereFlat} from "../shapes/IcosphereFlat.js";
-import {mesh_IcosphereSmooth} from "../shapes/IcosphereSmooth.js";
+import {mesh_cube} from "../shapes/cube.js";
+import {mesh_icosphere_flat} from "../shapes/icosphere_flat.js";
+import {mesh_icosphere_smooth} from "../shapes/icosphere_smooth.js";
 import {Camera} from "./components/com_camera.js";
 import {Light} from "./components/com_light.js";
 import {start, stop} from "./core.js";
@@ -100,9 +100,9 @@ export class Game {
         this.MaterialGouraud = mat_gouraud(this.GL);
         this.MaterialPhong = mat_phong(this.GL);
 
-        this.MeshCube = mesh_Cube(this.GL);
-        this.MeshIcosphereFlat = mesh_IcosphereFlat(this.GL);
-        this.MeshIcosphereSmooth = mesh_IcosphereSmooth(this.GL);
+        this.MeshCube = mesh_cube(this.GL);
+        this.MeshIcosphereFlat = mesh_icosphere_flat(this.GL);
+        this.MeshIcosphereSmooth = mesh_icosphere_smooth(this.GL);
     }
 
     Update(delta: number) {

@@ -1,6 +1,6 @@
 import {Material, Shape} from "../common/material.js";
 import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
-import {mesh_Cube} from "../shapes/Cube.js";
+import {mesh_cube} from "../shapes/cube.js";
 import {Camera} from "./components/com_camera.js";
 import {Light} from "./components/com_light.js";
 import {start, stop} from "./core.js";
@@ -88,7 +88,7 @@ export class Game {
         this.Context2D = canvas2d.getContext("2d")!;
 
         this.MaterialGouraud = mat_gouraud(this.GL);
-        this.MeshCube = mesh_Cube(this.GL);
+        this.MeshCube = mesh_cube(this.GL);
     }
 
     Update(delta: number) {
