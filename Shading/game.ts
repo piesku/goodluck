@@ -1,4 +1,4 @@
-import {Material, Shape} from "../common/material.js";
+import {Material, Mesh} from "../common/material.js";
 import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
@@ -51,9 +51,9 @@ export class Game {
     public MaterialGouraud: Material;
     public MaterialPhong: Material;
 
-    public MeshCube: Shape;
-    public MeshIcosphereFlat: Shape;
-    public MeshIcosphereSmooth: Shape;
+    public MeshCube: Mesh;
+    public MeshIcosphereFlat: Mesh;
+    public MeshIcosphereSmooth: Mesh;
 
     public Cameras: Array<Camera> = [];
     public Lights: Array<Light> = [];

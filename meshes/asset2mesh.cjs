@@ -20,7 +20,7 @@ let {vertices, normals, faces} = scene.meshes[0];
 let name = win32.basename(filename, ".obj");
 
 console.log(`\
-import {Shape} from "../common/material.js";
+import {Mesh} from "../common/material.js";
 import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW} from "../common/webgl.js";
 
 export function mesh_${name}(gl: WebGL2RenderingContext) {
@@ -33,7 +33,7 @@ export function mesh_${name}(gl: WebGL2RenderingContext) {
     let Indices = gl.createBuffer();
     gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Indices);
     gl.bufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
-    return <Shape>{
+    return <Mesh>{
         Vertices,
         Normals,
         Indices,

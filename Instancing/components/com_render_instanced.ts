@@ -1,4 +1,4 @@
-import {Material, Shape} from "../../common/material.js";
+import {Material, Mesh} from "../../common/material.js";
 import {
     GL_ARRAY_BUFFER,
     GL_ELEMENT_ARRAY_BUFFER,
@@ -19,16 +19,16 @@ export interface RenderInstanced {
     readonly Palette: Array<number>;
 }
 
-export function render_instanced(shape: Shape, offsets: Model, Palette?: Array<number>) {
+export function render_instanced(mesh: Mesh, offsets: Model, Palette?: Array<number>) {
     return (game: Game, entity: Entity) => {
         let VAO = game.GL.createVertexArray();
         game.GL.bindVertexArray(VAO);
 
-        game.GL.bindBuffer(GL_ARRAY_BUFFER, shape.Vertices);
+        game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.Vertices);
         game.GL.enableVertexAttribArray(InstancedAttribute.Position);
         game.GL.vertexAttribPointer(InstancedAttribute.Position, 3, GL_FLOAT, false, 0, 0);
 
-        game.GL.bindBuffer(GL_ARRAY_BUFFER, shape.Normals);
+        game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.Normals);
         game.GL.enableVertexAttribArray(InstancedAttribute.Normal);
         game.GL.vertexAttribPointer(InstancedAttribute.Normal, 3, GL_FLOAT, false, 0, 0);
 
@@ -38,7 +38,7 @@ export function render_instanced(shape: Shape, offsets: Model, Palette?: Array<n
         game.GL.vertexAttribPointer(InstancedAttribute.Offset, 4, GL_FLOAT, false, 0, 0);
         game.GL.vertexAttribDivisor(InstancedAttribute.Offset, 1);
 
-        game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, shape.Indices);
+        game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.Indices);
 
         game.GL.bindVertexArray(null);
         game.World.Mask[entity] |= Has.Render;
@@ -46,7 +46,7 @@ export function render_instanced(shape: Shape, offsets: Model, Palette?: Array<n
             Kind: RenderKind.Instanced,
             Material: game.MaterialInstanced,
             VAO,
-            IndexCount: shape.Count,
+            IndexCount: mesh.Count,
             InstanceCount: offsets.length / 4,
             Palette,
         };

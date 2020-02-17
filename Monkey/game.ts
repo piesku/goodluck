@@ -1,4 +1,4 @@
-import {Material, Shape} from "../common/material.js";
+import {Material, Mesh} from "../common/material.js";
 import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_monkey_flat} from "../meshes/monkey_flat.js";
 import {mesh_monkey_smooth} from "../meshes/monkey_smooth.js";
@@ -41,8 +41,8 @@ export class Game {
 
     public MaterialFlat: Material;
     public MaterialPhong: Material;
-    public MeshMonkeyFlat: Shape;
-    public MeshMonkeySmooth: Shape;
+    public MeshMonkeyFlat: Mesh;
+    public MeshMonkeySmooth: Mesh;
 
     public Cameras: Array<Camera> = [];
     public Lights: Array<Light> = [];
