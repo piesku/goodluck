@@ -1,7 +1,6 @@
 import {Cube} from "../../shapes/Cube.js";
-import {Icosphere} from "../../shapes/Icosphere.js";
-import {MonkeyFlat} from "../../shapes/MonkeyFlat.js";
-import {MonkeySmooth} from "../../shapes/MonkeySmooth.js";
+import {IcosphereFlat} from "../../shapes/IcosphereFlat.js";
+import {IcosphereSmooth} from "../../shapes/IcosphereSmooth.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light} from "../components/com_light.js";
 import {render_basic} from "../components/com_render_basic.js";
@@ -30,7 +29,7 @@ export function scene_stage(game: Game) {
 
     // Light 2.
     instantiate(game, {
-        Translation: [1, 3, 5],
+        Translation: [1, 4, 5],
         Using: [light([1, 1, 1], 5)],
     });
 
@@ -44,36 +43,36 @@ export function scene_stage(game: Game) {
     // Points.
     instantiate(game, {
         Translation: [-2, 3, 0],
-        Using: [render_basic(game.MaterialPoints, Icosphere, [1, 1, 0.3, 1])],
+        Using: [render_basic(game.MaterialPoints, IcosphereSmooth, [1, 1, 0.3, 1])],
     });
 
     // Wireframe.
     instantiate(game, {
         Translation: [0, 3, 0],
-        Using: [render_basic(game.MaterialWireframe, Icosphere, [1, 1, 0.3, 1])],
+        Using: [render_basic(game.MaterialWireframe, IcosphereSmooth, [1, 1, 0.3, 1])],
     });
 
     // Basic.
     instantiate(game, {
         Translation: [2, 3, 0],
-        Using: [render_basic(game.MaterialBasic, Icosphere, [1, 1, 0.3, 1])],
+        Using: [render_basic(game.MaterialBasic, IcosphereSmooth, [1, 1, 0.3, 1])],
     });
 
     // Flat.
     instantiate(game, {
         Translation: [-2, 1, 0],
-        Using: [render_shaded(game.MaterialFlat, MonkeyFlat, [1, 1, 0.3, 1])],
+        Using: [render_shaded(game.MaterialFlat, IcosphereFlat, [1, 1, 0.3, 1])],
     });
 
     // Gouraud.
     instantiate(game, {
         Translation: [0, 1, 0],
-        Using: [render_shaded(game.MaterialGouraud, MonkeySmooth, [1, 1, 0.3, 1])],
+        Using: [render_shaded(game.MaterialGouraud, IcosphereSmooth, [1, 1, 0.3, 1])],
     });
 
     // Phong.
     instantiate(game, {
         Translation: [2, 1, 0],
-        Using: [render_shaded(game.MaterialPhong, MonkeySmooth, [1, 1, 0.3, 1])],
+        Using: [render_shaded(game.MaterialPhong, IcosphereSmooth, [1, 1, 0.3, 1])],
     });
 }

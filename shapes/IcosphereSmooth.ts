@@ -1,6 +1,6 @@
 import {Shape} from "../common/material.js";
 
-export const Icosphere = <Shape>{
+export const IcosphereSmooth = <Shape>{
     Vertices: Float32Array.from([
         0,
         -0.5,
