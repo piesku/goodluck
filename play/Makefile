@@ -1,4 +1,5 @@
-INDEX = ../src/index.js
+EXAMPLE ?= src
+INDEX := ../$(EXAMPLE)/index.js
 
 all: game.terser.js
 	@printf "Size gzipped: %s bytes\n" \
