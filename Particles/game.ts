@@ -1,13 +1,10 @@
 import {Material} from "../common/material.js";
 import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
 import {Camera} from "./components/com_camera.js";
-import {Light} from "./components/com_light.js";
 import {start, stop} from "./core.js";
-import {mat_gouraud} from "./materials/mat_gouraud.js";
 import {mat_particles} from "./materials/mat_particles.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
-import {sys_light} from "./systems/sys_light.js";
 import {sys_particles} from "./systems/sys_particles.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_shake} from "./systems/sys_shake.js";
@@ -39,11 +36,9 @@ export class Game {
     public InputState: InputState = {mouse_x: 0, mouse_y: 0};
     public InputEvent: InputEvent = {mouse_x: 0, mouse_y: 0, wheel_y: 0};
 
-    public MaterialGouraud: Material;
     public MaterialParticles: Material;
 
     public Cameras: Array<Camera> = [];
-    public Lights: Array<Light> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>
@@ -80,7 +75,6 @@ export class Game {
         this.GL.enable(GL_CULL_FACE);
         this.GL.frontFace(GL_CW);
 
-        this.MaterialGouraud = mat_gouraud(this.GL);
         this.MaterialParticles = mat_particles(this.GL);
     }
 
@@ -90,7 +84,6 @@ export class Game {
         sys_shake(this, delta);
         sys_transform(this, delta);
         sys_camera(this, delta);
-        sys_light(this, delta);
         sys_render(this, delta);
         sys_framerate(this, delta, performance.now() - now);
     }
