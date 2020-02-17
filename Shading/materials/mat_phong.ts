@@ -52,23 +52,18 @@ let fragment = `#version 300 es
 `;
 
 export function mat_phong(gl: WebGL2RenderingContext) {
-    let material = <Material>{
+    let Program = link(gl, vertex, fragment);
+    return <Material>{
         Mode: GL_TRIANGLES,
-        Program: link(gl, vertex, fragment),
-        Uniforms: [],
+        Program,
+        Uniforms: [
+            gl.getUniformLocation(Program, "pv")!,
+            gl.getUniformLocation(Program, "world")!,
+            gl.getUniformLocation(Program, "self")!,
+            gl.getUniformLocation(Program, "color")!,
+            gl.getUniformLocation(Program, "light_count")!,
+            gl.getUniformLocation(Program, "light_positions")!,
+            gl.getUniformLocation(Program, "light_details")!,
+        ],
     };
-
-    for (let name of [
-        "pv",
-        "world",
-        "self",
-        "color",
-        "light_count",
-        "light_positions",
-        "light_details",
-    ]) {
-        material.Uniforms.push(gl.getUniformLocation(material.Program, name)!);
-    }
-
-    return material;
 }

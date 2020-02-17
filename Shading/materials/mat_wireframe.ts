@@ -25,15 +25,14 @@ let fragment = `#version 300 es
 `;
 
 export function mat_wireframe(gl: WebGL2RenderingContext) {
-    let material = <Material>{
+    let Program = link(gl, vertex, fragment);
+    return <Material>{
         Mode: GL_LINE_LOOP,
-        Program: link(gl, vertex, fragment),
-        Uniforms: [],
+        Program,
+        Uniforms: [
+            gl.getUniformLocation(Program, "pv")!,
+            gl.getUniformLocation(Program, "world")!,
+            gl.getUniformLocation(Program, "color")!,
+        ],
     };
-
-    for (let name of ["pv", "world", "color"]) {
-        material.Uniforms.push(gl.getUniformLocation(material.Program, name)!);
-    }
-
-    return material;
 }
