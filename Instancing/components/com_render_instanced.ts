@@ -5,7 +5,6 @@ import {
     GL_FLOAT,
     GL_STATIC_DRAW,
 } from "../../common/webgl.js";
-import {Cube} from "../../shapes/Cube.js";
 import {Entity, Game} from "../game.js";
 import {Model} from "../model.js";
 import {Has} from "./com_index.js";
@@ -20,16 +19,38 @@ export interface RenderInstanced {
     readonly Palette: Array<number>;
 }
 
-export function render_instanced(model: Model, Palette?: Array<number>) {
-    let shape = Cube;
+export function render_instanced(shape: Shape, offsets: Model, Palette?: Array<number>) {
     return (game: Game, entity: Entity) => {
+        let VAO = game.GL.createVertexArray();
+        game.GL.bindVertexArray(VAO);
+
+        game.GL.bindBuffer(GL_ARRAY_BUFFER, game.GL.createBuffer());
+        game.GL.bufferData(GL_ARRAY_BUFFER, shape.Vertices, GL_STATIC_DRAW);
+        game.GL.enableVertexAttribArray(InstancedAttribute.Position);
+        game.GL.vertexAttribPointer(InstancedAttribute.Position, 3, GL_FLOAT, false, 0, 0);
+
+        game.GL.bindBuffer(GL_ARRAY_BUFFER, game.GL.createBuffer());
+        game.GL.bufferData(GL_ARRAY_BUFFER, shape.Normals, GL_STATIC_DRAW);
+        game.GL.enableVertexAttribArray(InstancedAttribute.Normal);
+        game.GL.vertexAttribPointer(InstancedAttribute.Normal, 3, GL_FLOAT, false, 0, 0);
+
+        game.GL.bindBuffer(GL_ARRAY_BUFFER, game.GL.createBuffer());
+        game.GL.bufferData(GL_ARRAY_BUFFER, offsets, GL_STATIC_DRAW);
+        game.GL.enableVertexAttribArray(InstancedAttribute.Offset);
+        game.GL.vertexAttribPointer(InstancedAttribute.Offset, 4, GL_FLOAT, false, 0, 0);
+        game.GL.vertexAttribDivisor(InstancedAttribute.Offset, 1);
+
+        game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, game.GL.createBuffer());
+        game.GL.bufferData(GL_ELEMENT_ARRAY_BUFFER, shape.Indices, GL_STATIC_DRAW);
+
+        game.GL.bindVertexArray(null);
         game.World.Mask[entity] |= Has.Render;
         game.World.Render[entity] = <RenderInstanced>{
             Kind: RenderKind.Instanced,
             Material: game.MaterialInstanced,
-            VAO: buffer(game.GL, shape, model),
+            VAO,
             IndexCount: shape.Indices.length,
-            InstanceCount: model.length / 4,
+            InstanceCount: offsets.length / 4,
             Palette,
         };
     };
@@ -49,31 +70,4 @@ export const enum InstancedUniform {
     LightCount,
     LightPositions,
     LightDetails,
-}
-
-function buffer(gl: WebGL2RenderingContext, shape: Shape, offsets: Float32Array) {
-    let vao = gl.createVertexArray();
-    gl.bindVertexArray(vao);
-
-    gl.bindBuffer(GL_ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(GL_ARRAY_BUFFER, shape.Vertices, GL_STATIC_DRAW);
-    gl.enableVertexAttribArray(InstancedAttribute.Position);
-    gl.vertexAttribPointer(InstancedAttribute.Position, 3, GL_FLOAT, false, 0, 0);
-
-    gl.bindBuffer(GL_ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(GL_ARRAY_BUFFER, shape.Normals, GL_STATIC_DRAW);
-    gl.enableVertexAttribArray(InstancedAttribute.Normal);
-    gl.vertexAttribPointer(InstancedAttribute.Normal, 3, GL_FLOAT, false, 0, 0);
-
-    gl.bindBuffer(GL_ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(GL_ARRAY_BUFFER, offsets, GL_STATIC_DRAW);
-    gl.enableVertexAttribArray(InstancedAttribute.Offset);
-    gl.vertexAttribPointer(InstancedAttribute.Offset, 4, GL_FLOAT, false, 0, 0);
-    gl.vertexAttribDivisor(InstancedAttribute.Offset, 1);
-
-    gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, gl.createBuffer());
-    gl.bufferData(GL_ELEMENT_ARRAY_BUFFER, shape.Indices, GL_STATIC_DRAW);
-
-    gl.bindVertexArray(null);
-    return vao;
 }

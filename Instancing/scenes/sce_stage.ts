@@ -1,3 +1,4 @@
+import {Cube} from "../../shapes/Cube.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light} from "../components/com_light.js";
 import {render_instanced} from "../components/com_render_instanced.js";
@@ -33,7 +34,7 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [0, 0, 0],
         Using: [
-            render_instanced(Float32Array.from([0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1]), [
+            render_instanced(Cube, Float32Array.from([0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1]), [
                 1,
                 1,
                 0.3,
