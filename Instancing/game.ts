@@ -1,5 +1,6 @@
-import {Material} from "../common/material.js";
+import {Material, Mesh} from "../common/material.js";
 import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
+import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
 import {Light} from "./components/com_light.js";
 import {start, stop} from "./core.js";
@@ -37,6 +38,7 @@ export class Game {
     public InputEvent: InputEvent = {mouse_x: 0, mouse_y: 0, wheel_y: 0};
 
     public MaterialInstanced: Material;
+    public MeshCube: Mesh;
 
     public Cameras: Array<Camera> = [];
     public Lights: Array<Light> = [];
@@ -77,6 +79,7 @@ export class Game {
         this.GL.frontFace(GL_CW);
 
         this.MaterialInstanced = mat_instanced(this.GL);
+        this.MeshCube = mesh_cube(this.GL);
     }
 
     Update(delta: number) {

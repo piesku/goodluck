@@ -16,4 +16,4 @@ all: $(SHAPES_TS)
 
 %.ts: %.obj
 	@echo "$< → $@"
-	@node asset2shape.cjs "$(shell wslpath -w $(CURDIR)/$<)" > $@
+	@node asset2mesh.cjs "$(shell wslpath -w $(CURDIR)/$<)" > $@

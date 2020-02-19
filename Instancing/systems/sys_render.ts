@@ -79,7 +79,7 @@ function draw_instanced(game: Game, transform: Transform, render: RenderInstance
     game.GL.bindVertexArray(render.VAO);
     game.GL.drawElementsInstanced(
         render.Material.Mode,
-        render.IndexCount,
+        render.Mesh.Count,
         GL_UNSIGNED_SHORT,
         0,
         render.InstanceCount

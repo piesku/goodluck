@@ -1,4 +1,3 @@
-import {Cube} from "../../shapes/Cube.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {collide} from "../components/com_collide.js";
 import {control_spawner} from "../components/com_control_spawner.js";
@@ -32,7 +31,7 @@ export function scene_stage(game: Game) {
         Translation: [0, 0, 0],
         Scale: [10, 1, 10],
         Using: [
-            render_shaded(game.MaterialGouraud, Cube, [1, 1, 0.3, 1]),
+            render_shaded(game.MaterialGouraud, game.MeshCube, [1, 1, 0.3, 1]),
             collide(false),
             rigid_body(false),
         ],

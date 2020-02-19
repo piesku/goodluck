@@ -1,4 +1,3 @@
-import {Cube} from "../../shapes/Cube.js";
 import {blueprint_camera_fly} from "../blueprints/blu_camera_fly.js";
 import {draw_marker} from "../components/com_draw.js";
 import {light} from "../components/com_light.js";
@@ -29,13 +28,13 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [0, 0, 0],
         Scale: [10, 1, 10],
-        Using: [render_shaded(game.MaterialGouraud, Cube, [1, 1, 0.3, 1])],
+        Using: [render_shaded(game.MaterialGouraud, game.MeshCube, [1, 1, 0.3, 1])],
     });
 
     // Box.
     instantiate(game, {
         Translation: [0, 1, 0],
-        Using: [render_shaded(game.MaterialGouraud, Cube, [1, 1, 0.3, 1])],
+        Using: [render_shaded(game.MaterialGouraud, game.MeshCube, [1, 1, 0.3, 1])],
         Children: [
             {
                 Translation: [0, 1, 0],

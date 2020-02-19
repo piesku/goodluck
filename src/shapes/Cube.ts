@@ -1,4 +1,4 @@
-import {Shape} from "../common/material.js";
+import {Shape} from "../materials/mat_common.js";
 
 export const Cube = <Shape>{
     Vertices: Float32Array.from([

@@ -1,5 +1,8 @@
-import {Material} from "../common/material.js";
+import {Material, Mesh} from "../common/material.js";
 import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
+import {mesh_cube} from "../meshes/cube.js";
+import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
+import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {Camera} from "./components/com_camera.js";
 import {Light} from "./components/com_light.js";
 import {start, stop} from "./core.js";
@@ -48,6 +51,10 @@ export class Game {
     public MaterialGouraud: Material;
     public MaterialPhong: Material;
 
+    public MeshCube: Mesh;
+    public MeshIcosphereFlat: Mesh;
+    public MeshIcosphereSmooth: Mesh;
+
     public Cameras: Array<Camera> = [];
     public Lights: Array<Light> = [];
 
@@ -92,6 +99,10 @@ export class Game {
         this.MaterialFlat = mat_flat(this.GL);
         this.MaterialGouraud = mat_gouraud(this.GL);
         this.MaterialPhong = mat_phong(this.GL);
+
+        this.MeshCube = mesh_cube(this.GL);
+        this.MeshIcosphereFlat = mesh_icosphere_flat(this.GL);
+        this.MeshIcosphereSmooth = mesh_icosphere_smooth(this.GL);
     }
 
     Update(delta: number) {

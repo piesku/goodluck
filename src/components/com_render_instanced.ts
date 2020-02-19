@@ -4,10 +4,10 @@ import {
     GL_FLOAT,
     GL_STATIC_DRAW,
 } from "../../common/webgl.js";
-import {Cube} from "../../shapes/Cube.js";
 import {Entity, Game} from "../game.js";
 import {Material, Shape} from "../materials/mat_common.js";
 import {Model} from "../model.js";
+import {Cube} from "../shapes/Cube.js";
 import {Has} from "./com_index.js";
 import {RenderKind} from "./com_render.js";
 
