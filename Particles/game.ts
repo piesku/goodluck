@@ -33,7 +33,7 @@ export class Game {
     public ViewportHeight = 0;
     public ViewportResized = false;
     public UI = document.querySelector("main")!;
-    public Canvas3D = document.querySelector("canvas")!;
+    public Canvas = document.querySelector("canvas")!;
     public GL: WebGL2RenderingContext;
     public InputState: InputState = {mouse_x: 0, mouse_y: 0};
     public InputEvent: InputEvent = {mouse_x: 0, mouse_y: 0, wheel_y: 0};
@@ -69,7 +69,7 @@ export class Game {
         });
         this.UI.addEventListener("click", () => this.UI.requestPointerLock());
 
-        this.GL = this.Canvas3D.getContext("webgl2")!;
+        this.GL = this.Canvas.getContext("webgl2")!;
         this.GL.enable(GL_DEPTH_TEST);
         this.GL.enable(GL_CULL_FACE);
         this.GL.frontFace(GL_CW);
