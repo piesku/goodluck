@@ -81,6 +81,14 @@ export class Game {
         this.MeshCube = mesh_cube(this.GL);
     }
 
+    Reset() {
+        // Reset event flags for the next frame.
+        this.ViewportResized = false;
+        for (let name in this.InputEvent) {
+            this.InputEvent[name] = 0;
+        }
+    }
+
     Update(delta: number) {
         let now = performance.now();
         sys_transform(this, delta);

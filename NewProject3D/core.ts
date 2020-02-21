@@ -14,13 +14,7 @@ export function start(game: Game) {
     let tick = (now: number) => {
         let delta = (now - last) / 1000;
         game.Update(delta);
-
-        // Reset all events for the next frame.
-        game.ViewportResized = false;
-        for (let name in game.InputEvent) {
-            game.InputEvent[name] = 0;
-        }
-
+        game.Reset();
         last = now;
         raf = requestAnimationFrame(tick);
     };
