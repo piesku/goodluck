@@ -29,11 +29,9 @@ function update(game: Game, entity: Entity) {
         if (aspect > 1) {
             // Landscape orientation.
             perspective(camera.Projection, camera.FOVy, aspect, camera.Near, camera.Far);
-        } else if (aspect > 0.4) {
-            // Portrait orientation, up to the ultratall 9:21 aspect ratio.
-            perspective(camera.Projection, camera.FOVy / aspect, aspect, camera.Near, camera.Far);
         } else {
-            perspective(camera.Projection, camera.FOVy / 0.4, aspect, camera.Near, camera.Far);
+            // Portrait orientation.
+            perspective(camera.Projection, camera.FOVy / aspect, aspect, camera.Near, camera.Far);
         }
     }
 
