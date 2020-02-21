@@ -18,6 +18,7 @@ export function start(game: Game) {
         // Reset all input events for the next frame.
         for (let name in game.InputEvent) {
             game.InputEvent[name] = 0;
+            game.Resized = false;
         }
 
         last = now;

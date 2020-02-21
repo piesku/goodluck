@@ -30,12 +30,14 @@ export interface InputEvent {
 export class Game {
     public World = new World();
 
-    public ViewportWidth = window.innerWidth;
-    public ViewportHeight = window.innerHeight;
+    public ViewportWidth = 0;
+    public ViewportHeight = 0;
     public UI = document.querySelector("main")!;
+    public Canvas3D = document.querySelector("canvas")!;
     public GL: WebGL2RenderingContext;
     public InputState: InputState = {mouse_x: 0, mouse_y: 0};
     public InputEvent: InputEvent = {mouse_x: 0, mouse_y: 0, wheel_y: 0};
+    public Resized = false;
 
     public MaterialGouraud: Material;
     public MeshCube: Mesh;
@@ -70,10 +72,7 @@ export class Game {
         });
         this.UI.addEventListener("click", () => this.UI.requestPointerLock());
 
-        let canvas3d = document.querySelector("canvas")!;
-        canvas3d.width = this.ViewportWidth;
-        canvas3d.height = this.ViewportHeight;
-        this.GL = canvas3d.getContext("webgl2")!;
+        this.GL = this.Canvas3D.getContext("webgl2")!;
         this.GL.enable(GL_DEPTH_TEST);
         this.GL.enable(GL_CULL_FACE);
         this.GL.frontFace(GL_CW);
