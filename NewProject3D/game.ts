@@ -32,12 +32,12 @@ export class Game {
 
     public ViewportWidth = 0;
     public ViewportHeight = 0;
+    public ViewportResized = false;
     public UI = document.querySelector("main")!;
     public Canvas3D = document.querySelector("canvas")!;
     public GL: WebGL2RenderingContext;
     public InputState: InputState = {mouse_x: 0, mouse_y: 0};
     public InputEvent: InputEvent = {mouse_x: 0, mouse_y: 0, wheel_y: 0};
-    public Resized = false;
 
     public MaterialGouraud: Material;
     public MeshCube: Mesh;

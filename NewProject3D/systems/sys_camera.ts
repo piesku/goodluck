@@ -8,7 +8,7 @@ export function sys_camera(game: Game, delta: number) {
     if (game.ViewportWidth != window.innerWidth || game.ViewportHeight != window.innerHeight) {
         game.ViewportWidth = game.Canvas3D.width = window.innerWidth;
         game.ViewportHeight = game.Canvas3D.height = window.innerHeight;
-        game.Resized = true;
+        game.ViewportResized = true;
     }
 
     game.Cameras = [];
@@ -24,7 +24,7 @@ function update(game: Game, entity: Entity) {
     let camera = game.World.Camera[entity];
     game.Cameras.push(camera);
 
-    if (game.Resized) {
+    if (game.ViewportResized) {
         let aspect = game.ViewportWidth / game.ViewportHeight;
         if (aspect > 1) {
             // Landscape orientation.
