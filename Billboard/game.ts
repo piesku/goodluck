@@ -33,9 +33,12 @@ export interface InputEvent {
 export class Game {
     public World = new World();
 
-    public ViewportWidth = window.innerWidth;
-    public ViewportHeight = window.innerHeight;
+    public ViewportWidth = 0;
+    public ViewportHeight = 0;
+    public ViewportResized = false;
     public UI = document.querySelector("main")!;
+    public CanvasScene = document.querySelector("canvas#scene")! as HTMLCanvasElement;
+    public CanvasBillboard = document.querySelector("canvas#billboard")! as HTMLCanvasElement;
     public GL: WebGL2RenderingContext;
     public Context2D: CanvasRenderingContext2D;
     public InputState: InputState = {mouse_x: 0, mouse_y: 0};
@@ -74,24 +77,26 @@ export class Game {
         });
         this.UI.addEventListener("click", () => this.UI.requestPointerLock());
 
-        let canvas3d = document.querySelector("canvas#scene")! as HTMLCanvasElement;
-        canvas3d.width = this.ViewportWidth;
-        canvas3d.height = this.ViewportHeight;
-        this.GL = canvas3d.getContext("webgl2")!;
+        this.GL = this.CanvasScene.getContext("webgl2")!;
         this.GL.enable(GL_DEPTH_TEST);
         this.GL.enable(GL_CULL_FACE);
         this.GL.frontFace(GL_CW);
 
-        let canvas2d = document.querySelector("canvas#billboard")! as HTMLCanvasElement;
-        canvas2d.width = this.ViewportWidth;
-        canvas2d.height = this.ViewportHeight;
-        this.Context2D = canvas2d.getContext("2d")!;
+        this.Context2D = this.CanvasBillboard.getContext("2d")!;
 
         this.MaterialGouraud = mat_gouraud(this.GL);
         this.MeshCube = mesh_cube(this.GL);
     }
 
-    Update(delta: number) {
+    FrameReset() {
+        // Reset event flags for the next frame.
+        this.ViewportResized = false;
+        for (let name in this.InputEvent) {
+            this.InputEvent[name] = 0;
+        }
+    }
+
+    FrameUpdate(delta: number) {
         let now = performance.now();
         sys_control_player(this, delta);
         sys_move(this, delta);

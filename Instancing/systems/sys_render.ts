@@ -10,6 +10,9 @@ const QUERY = Has.Transform | Has.Render;
 
 export function sys_render(game: Game, delta: number) {
     game.GL.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    if (game.ViewportResized) {
+        game.GL.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
+    }
 
     let light_positions: Array<number> = [];
     let light_details: Array<number> = [];

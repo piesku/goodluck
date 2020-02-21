@@ -14,7 +14,7 @@ export function blueprint_camera_follow(game: Game) {
                 // camera
                 Translation: [0, 1, -6],
                 Rotation: [0, 1, 0, 0],
-                Using: [camera(game.ViewportWidth / game.ViewportHeight, 1, 0.1, 1000)],
+                Using: [camera(1, 0.1, 1000)],
             },
         ],
     };

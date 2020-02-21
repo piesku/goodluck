@@ -11,7 +11,7 @@ export function blueprint_camera_fly(game: Game) {
         Children: [
             {
                 Rotation: [0, 1, 0, 0],
-                Using: [camera(game.ViewportWidth / game.ViewportHeight, 1, 0.1, 1000)],
+                Using: [camera(1, 0.1, 1000)],
             },
         ],
     };
