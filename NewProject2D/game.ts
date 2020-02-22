@@ -56,7 +56,13 @@ export class Game {
         this.Context2D = canvas2d.getContext("2d")!;
     }
 
-    Update(delta: number) {
+    FrameReset() {
+        for (let name in this.InputDelta) {
+            this.InputDelta[name] = 0;
+        }
+    }
+
+    FrameUpdate(delta: number) {
         let now = performance.now();
         sys_transform2d(this, delta);
         sys_draw2d(this, delta);
