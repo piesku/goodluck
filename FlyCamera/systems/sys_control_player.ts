@@ -20,35 +20,35 @@ function update(game: Game, entity: Entity, delta: number) {
 
     if (control.Move) {
         let move = game.World.Move[entity];
-        if (game.InputState.KeyW) {
+        if (game.InputState["KeyW"]) {
             // Move forward
             move.Directions.push([0, 0, 1]);
         }
-        if (game.InputState.KeyA) {
+        if (game.InputState["KeyA"]) {
             // Strafe left
             move.Directions.push([1, 0, 0]);
         }
-        if (game.InputState.KeyS) {
+        if (game.InputState["KeyS"]) {
             // Move backward
             move.Directions.push([0, 0, -1]);
         }
-        if (game.InputState.KeyD) {
+        if (game.InputState["KeyD"]) {
             // Strafe right
             move.Directions.push([-1, 0, 0]);
         }
     }
 
-    if (control.Yaw) {
+    if (control.Yaw && game.InputEvent.MouseX) {
         let move = game.World.Move[entity];
-        let yaw_delta = game.InputEvent.mouse_x * move.RotateSpeed * delta;
+        let yaw_delta = game.InputEvent.MouseX * move.RotateSpeed * delta;
         if (yaw_delta !== 0) {
             move.Yaws.push(from_axis([0, 0, 0, 0], AXIS_Y, -yaw_delta));
         }
     }
 
-    if (control.Pitch) {
+    if (control.Pitch && game.InputEvent.MouseY) {
         let move = game.World.Move[entity];
-        let pitch_delta = game.InputEvent.mouse_y * move.RotateSpeed * delta;
+        let pitch_delta = game.InputEvent.MouseY * move.RotateSpeed * delta;
         if (pitch_delta !== 0) {
             move.Pitches.push(from_axis([0, 0, 0, 0], AXIS_X, pitch_delta));
         }
