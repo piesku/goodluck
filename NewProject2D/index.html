@@ -52,18 +52,18 @@
         <div><button onclick="toggle(this)">pause</button></div>
     </div>
     <script type="module">
-        import {start, stop} from "./core.js";
+        import {loop_start, loop_stop} from "./core.js";
         import "./index.js";
 
         let running = true;
         window.toggle = function toggle(button) {
             if (running) {
                 running = false;
-                stop();
+                loop_stop();
                 button.textContent = "resume";
             } else {
                 running = true;
-                start(game);
+                loop_start(game);
                 button.textContent = "pause";
             }
         };

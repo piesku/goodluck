@@ -8,7 +8,7 @@ const MAX_ENTITIES = 10000;
 
 let raf = 0;
 
-export function start(game: Game) {
+export function loop_start(game: Game) {
     let last = performance.now();
 
     let tick = (now: number) => {
@@ -19,11 +19,11 @@ export function start(game: Game) {
         raf = requestAnimationFrame(tick);
     };
 
-    stop();
+    loop_stop();
     tick(last);
 }
 
-export function stop() {
+export function loop_stop() {
     cancelAnimationFrame(raf);
 }
 

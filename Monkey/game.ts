@@ -4,7 +4,7 @@ import {mesh_monkey_flat} from "../meshes/monkey_flat.js";
 import {mesh_monkey_smooth} from "../meshes/monkey_smooth.js";
 import {Camera} from "./components/com_camera.js";
 import {Light} from "./components/com_light.js";
-import {start, stop} from "./core.js";
+import {loop_start, loop_stop} from "./core.js";
 import {mat_flat} from "./materials/mat_flat.js";
 import {mat_phong} from "./materials/mat_phong.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -36,7 +36,7 @@ export class Game {
 
     constructor() {
         document.addEventListener("visibilitychange", () =>
-            document.hidden ? stop() : start(this)
+            document.hidden ? loop_stop() : loop_start(this)
         );
 
         this.GL = this.Canvas.getContext("webgl2")!;

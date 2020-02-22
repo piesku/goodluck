@@ -1,4 +1,4 @@
-import {start, stop} from "./core.js";
+import {loop_start, loop_stop} from "./core.js";
 import {sys_draw2d} from "./systems/sys_draw2d.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_transform2d} from "./systems/sys_transform2d.js";
@@ -17,7 +17,7 @@ export class Game {
 
     constructor() {
         document.addEventListener("visibilitychange", () =>
-            document.hidden ? stop() : start(this)
+            document.hidden ? loop_stop() : loop_start(this)
         );
 
         window.addEventListener("keydown", evt => {
