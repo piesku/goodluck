@@ -16,8 +16,8 @@ export function start(game: Game) {
         game.Update(delta);
 
         // Reset all input events for the next frame.
-        for (let name in game.InputEvent) {
-            game.InputEvent[name] = 0;
+        for (let name in game.InputDelta) {
+            game.InputDelta[name] = 0;
         }
 
         last = now;

@@ -29,7 +29,7 @@ export class Game {
     public Canvas = document.querySelector("canvas")!;
     public GL: WebGL2RenderingContext;
     public InputState: Record<string, number> = {};
-    public InputEvent: Record<string, number> = {};
+    public InputDelta: Record<string, number> = {};
 
     public MaterialGouraud: Material;
     public MeshCube: Mesh;
@@ -45,29 +45,29 @@ export class Game {
         window.addEventListener("keydown", evt => {
             if (!evt.repeat) {
                 this.InputState[evt.code] = 1;
-                this.InputEvent[evt.code] = 1;
+                this.InputDelta[evt.code] = 1;
             }
         });
         window.addEventListener("keyup", evt => {
             this.InputState[evt.code] = 0;
-            this.InputEvent[evt.code] = -1;
+            this.InputDelta[evt.code] = -1;
         });
         this.UI.addEventListener("mousedown", evt => {
             this.InputState[`Mouse${evt.button}`] = 1;
-            this.InputEvent[`Mouse${evt.button}`] = 1;
+            this.InputDelta[`Mouse${evt.button}`] = 1;
         });
         this.UI.addEventListener("mouseup", evt => {
             this.InputState[`Mouse${evt.button}`] = 0;
-            this.InputEvent[`Mouse${evt.button}`] = -1;
+            this.InputDelta[`Mouse${evt.button}`] = -1;
         });
         this.UI.addEventListener("mousemove", evt => {
             this.InputState.MouseX = evt.offsetX;
             this.InputState.MouseY = evt.offsetY;
-            this.InputEvent.MouseX = evt.movementX;
-            this.InputEvent.MouseY = evt.movementY;
+            this.InputDelta.MouseX = evt.movementX;
+            this.InputDelta.MouseY = evt.movementY;
         });
         this.UI.addEventListener("wheel", evt => {
-            this.InputEvent.WheelY = evt.deltaY;
+            this.InputDelta.WheelY = evt.deltaY;
         });
         this.UI.addEventListener("contextmenu", evt => evt.preventDefault());
         this.UI.addEventListener("click", () => this.UI.requestPointerLock());
@@ -84,8 +84,8 @@ export class Game {
     FrameReset() {
         // Reset event flags for the next frame.
         this.ViewportResized = false;
-        for (let name in this.InputEvent) {
-            this.InputEvent[name] = 0;
+        for (let name in this.InputDelta) {
+            this.InputDelta[name] = 0;
         }
     }
 

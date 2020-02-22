@@ -13,7 +13,7 @@ export class Game {
     Context2D: CanvasRenderingContext2D;
     UI = document.querySelector("main")!;
     InputState: Record<string, number> = {};
-    InputEvent: Record<string, number> = {};
+    InputDelta: Record<string, number> = {};
 
     constructor() {
         document.addEventListener("visibilitychange", () =>
@@ -23,29 +23,29 @@ export class Game {
         window.addEventListener("keydown", evt => {
             if (!evt.repeat) {
                 this.InputState[evt.code] = 1;
-                this.InputEvent[evt.code] = 1;
+                this.InputDelta[evt.code] = 1;
             }
         });
         window.addEventListener("keyup", evt => {
             this.InputState[evt.code] = 0;
-            this.InputEvent[evt.code] = -1;
+            this.InputDelta[evt.code] = -1;
         });
         this.UI.addEventListener("mousedown", evt => {
             this.InputState[`Mouse${evt.button}`] = 1;
-            this.InputEvent[`Mouse${evt.button}`] = 1;
+            this.InputDelta[`Mouse${evt.button}`] = 1;
         });
         this.UI.addEventListener("mouseup", evt => {
             this.InputState[`Mouse${evt.button}`] = 0;
-            this.InputEvent[`Mouse${evt.button}`] = -1;
+            this.InputDelta[`Mouse${evt.button}`] = -1;
         });
         this.UI.addEventListener("mousemove", evt => {
             this.InputState.MouseX = evt.offsetX;
             this.InputState.MouseY = evt.offsetY;
-            this.InputEvent.MouseX = evt.movementX;
-            this.InputEvent.MouseY = evt.movementY;
+            this.InputDelta.MouseX = evt.movementX;
+            this.InputDelta.MouseY = evt.movementY;
         });
         this.UI.addEventListener("wheel", evt => {
-            this.InputEvent.WheelY = evt.deltaY;
+            this.InputDelta.WheelY = evt.deltaY;
         });
         this.UI.addEventListener("contextmenu", evt => evt.preventDefault());
         this.UI.addEventListener("click", () => this.UI.requestPointerLock());

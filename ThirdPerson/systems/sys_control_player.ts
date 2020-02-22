@@ -38,17 +38,17 @@ function update(game: Game, entity: Entity, delta: number) {
         }
     }
 
-    if (control.Yaw && game.InputEvent.MouseX) {
+    if (control.Yaw && game.InputDelta.MouseX) {
         let move = game.World.Move[entity];
-        let yaw_delta = game.InputEvent.MouseX * move.RotateSpeed * delta;
+        let yaw_delta = game.InputDelta.MouseX * move.RotateSpeed * delta;
         if (yaw_delta !== 0) {
             move.Yaws.push(from_axis([0, 0, 0, 0], AXIS_Y, -yaw_delta));
         }
     }
 
-    if (control.Pitch && game.InputEvent.MouseY) {
+    if (control.Pitch && game.InputDelta.MouseY) {
         let move = game.World.Move[entity];
-        let pitch_delta = game.InputEvent.MouseY * move.RotateSpeed * delta;
+        let pitch_delta = game.InputDelta.MouseY * move.RotateSpeed * delta;
         if (pitch_delta !== 0) {
             let new_pitch = control.CurrentPitch + pitch_delta;
             if (-0.2 < new_pitch && new_pitch < Math.PI / 2) {
