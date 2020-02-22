@@ -21,8 +21,10 @@ export class Game {
         );
 
         window.addEventListener("keydown", evt => {
-            this.InputState[evt.code] = 1;
-            this.InputEvent[evt.code] = 1;
+            if (!evt.repeat) {
+                this.InputState[evt.code] = 1;
+                this.InputEvent[evt.code] = 1;
+            }
         });
         window.addEventListener("keyup", evt => {
             this.InputState[evt.code] = 0;
