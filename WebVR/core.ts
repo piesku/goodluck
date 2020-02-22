@@ -76,3 +76,23 @@ export function destroy(world: World, entity: Entity) {
     }
     world.Mask[entity] = 0;
 }
+
+export async function vr_init(game: Game) {
+    let displays = await navigator.getVRDisplays();
+    game.VrDisplay = displays[0];
+}
+
+export async function vr_present(game: Game) {
+    if (!game.VrDisplay) {
+        return;
+    }
+    try {
+        await game.VrDisplay.requestPresent([{source: game.Canvas}]);
+        let left = game.VrDisplay.getEyeParameters("left");
+        let right = game.VrDisplay.getEyeParameters("right");
+        game.ViewportWidth = game.Canvas.width = Math.max(left.renderWidth, right.renderWidth) * 2;
+        game.ViewportHeight = game.Canvas.height = Math.max(left.renderHeight, right.renderHeight);
+    } catch (e) {
+        alert(e);
+    }
+}

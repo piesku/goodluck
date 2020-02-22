@@ -48,10 +48,10 @@
         <div>delta: <span id="delta"></span></div>
         <div>fps: <span id="fps"></span></div>
         <div><button onclick="toggle(this)">pause</button></div>
-        <div><button onclick="entervr()">enter vr</button></div>
+        <div><button onclick="vr_present(game)">enter vr</button></div>
     </div>
     <script type="module">
-        import {loop_start, loop_stop} from "./core.js";
+        import {loop_start, loop_stop, vr_present} from "./core.js";
         import "./index.js";
 
         let running = true;
@@ -67,8 +67,6 @@
             }
         };
 
-        window.entervr = function() {
-            game.VrPresent();
-        };
+        window.vr_present = vr_present;
     </script>
 </body>

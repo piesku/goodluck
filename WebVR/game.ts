@@ -2,7 +2,7 @@ import {Material, Mesh} from "../common/material.js";
 import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./core.js";
+import {loop_start, loop_stop, vr_init} from "./core.js";
 import {mat_gouraud} from "./materials/mat_gouraud.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -79,31 +79,7 @@ export class Game {
         this.MeshCube = mesh_cube(this.GL);
 
         if (navigator.getVRDisplays !== undefined) {
-            this.VrSetup();
-        }
-    }
-
-    async VrSetup() {
-        let displays = await navigator.getVRDisplays();
-        this.VrDisplay = displays[0];
-    }
-
-    async VrPresent() {
-        if (!this.VrDisplay) {
-            return;
-        }
-        try {
-            await this.VrDisplay.requestPresent([{source: this.Canvas}]);
-            let left = this.VrDisplay.getEyeParameters("left");
-            let right = this.VrDisplay.getEyeParameters("right");
-            this.ViewportWidth = this.Canvas.width =
-                Math.max(left.renderWidth, right.renderWidth) * 2;
-            this.ViewportHeight = this.Canvas.height = Math.max(
-                left.renderHeight,
-                right.renderHeight
-            );
-        } catch (e) {
-            alert(e);
+            vr_init(this);
         }
     }
 
