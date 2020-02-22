@@ -15,22 +15,22 @@ import {World} from "./world.js";
 export type Entity = number;
 
 export class Game {
-    public World = new World();
+    World = new World();
 
-    public ViewportWidth = 0;
-    public ViewportHeight = 0;
-    public ViewportResized = false;
-    public UI = document.querySelector("main")!;
-    public Canvas = document.querySelector("canvas")!;
-    public GL: WebGL2RenderingContext;
-    public InputState: Record<string, number> = {};
-    public InputDelta: Record<string, number> = {};
+    ViewportWidth = 0;
+    ViewportHeight = 0;
+    ViewportResized = false;
+    UI = document.querySelector("main")!;
+    Canvas = document.querySelector("canvas")!;
+    GL: WebGL2RenderingContext;
+    InputState: Record<string, number> = {};
+    InputDelta: Record<string, number> = {};
 
-    public MaterialGouraud: Material;
-    public MeshCube: Mesh;
+    MaterialGouraud: Material;
+    MeshCube: Mesh;
 
-    public Cameras: Array<Camera> = [];
-    public Lights: Array<Light> = [];
+    Cameras: Array<Camera> = [];
+    Lights: Array<Light> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>

@@ -14,18 +14,18 @@ import {World} from "./world.js";
 export type Entity = number;
 
 export class Game {
-    public World = new World();
+    World = new World();
 
-    public ViewportWidth = 0;
-    public ViewportHeight = 0;
-    public ViewportResized = false;
-    public UI = document.querySelector("main")!;
-    public Canvas = document.querySelector("canvas")!;
-    public GL: WebGL2RenderingContext;
+    ViewportWidth = 0;
+    ViewportHeight = 0;
+    ViewportResized = false;
+    UI = document.querySelector("main")!;
+    Canvas = document.querySelector("canvas")!;
+    GL: WebGL2RenderingContext;
 
-    public MaterialParticles: Material;
+    MaterialParticles: Material;
 
-    public Cameras: Array<Camera> = [];
+    Cameras: Array<Camera> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>
