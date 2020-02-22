@@ -31,6 +31,6 @@ game.terser.js: game.tr.js
 		--timings \
 		--ecma 9 \
 		--mangle toplevel \
-		--mangle-props regex=/^[A-Z]/ \
+		--mangle-props keep_quoted,regex=/^[A-Z]/ \
 		--compress $(shell paste -sd, terser_compress.txt) \
 	> $@

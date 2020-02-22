@@ -17,19 +17,6 @@ import {World} from "./world.js";
 
 export type Entity = number;
 
-export interface InputState {
-    [k: string]: number;
-    mouse_x: number;
-    mouse_y: number;
-}
-
-export interface InputEvent {
-    [k: string]: number;
-    mouse_x: number;
-    mouse_y: number;
-    wheel_y: number;
-}
-
 export class Game {
     public World = new World();
 
@@ -41,8 +28,8 @@ export class Game {
     public CanvasBillboard = document.querySelector("canvas#billboard")! as HTMLCanvasElement;
     public GL: WebGL2RenderingContext;
     public Context2D: CanvasRenderingContext2D;
-    public InputState: InputState = {mouse_x: 0, mouse_y: 0};
-    public InputEvent: InputEvent = {mouse_x: 0, mouse_y: 0, wheel_y: 0};
+    public InputState: Record<string, number> = {};
+    public InputDelta: Record<string, number> = {};
 
     public MaterialGouraud: Material;
     public MeshCube: Mesh;
@@ -55,26 +42,34 @@ export class Game {
             document.hidden ? stop() : start(this)
         );
 
-        window.addEventListener("keydown", evt => (this.InputState[evt.code] = 1));
-        window.addEventListener("keyup", evt => (this.InputState[evt.code] = 0));
-        this.UI.addEventListener("contextmenu", evt => evt.preventDefault());
+        window.addEventListener("keydown", evt => {
+            if (!evt.repeat) {
+                this.InputState[evt.code] = 1;
+                this.InputDelta[evt.code] = 1;
+            }
+        });
+        window.addEventListener("keyup", evt => {
+            this.InputState[evt.code] = 0;
+            this.InputDelta[evt.code] = -1;
+        });
         this.UI.addEventListener("mousedown", evt => {
-            this.InputState[`mouse_${evt.button}`] = 1;
-            this.InputEvent[`mouse_${evt.button}_down`] = 1;
+            this.InputState[`Mouse${evt.button}`] = 1;
+            this.InputDelta[`Mouse${evt.button}`] = 1;
         });
         this.UI.addEventListener("mouseup", evt => {
-            this.InputState[`mouse_${evt.button}`] = 0;
-            this.InputEvent[`mouse_${evt.button}_up`] = 1;
+            this.InputState[`Mouse${evt.button}`] = 0;
+            this.InputDelta[`Mouse${evt.button}`] = -1;
         });
         this.UI.addEventListener("mousemove", evt => {
-            this.InputState.mouse_x = evt.offsetX;
-            this.InputState.mouse_y = evt.offsetY;
-            this.InputEvent.mouse_x = evt.movementX;
-            this.InputEvent.mouse_y = evt.movementY;
+            this.InputState.MouseX = evt.offsetX;
+            this.InputState.MouseY = evt.offsetY;
+            this.InputDelta.MouseX = evt.movementX;
+            this.InputDelta.MouseY = evt.movementY;
         });
         this.UI.addEventListener("wheel", evt => {
-            this.InputEvent.wheel_y = evt.deltaY;
+            this.InputDelta.WheelY = evt.deltaY;
         });
+        this.UI.addEventListener("contextmenu", evt => evt.preventDefault());
         this.UI.addEventListener("click", () => this.UI.requestPointerLock());
 
         this.GL = this.CanvasScene.getContext("webgl2")!;
@@ -89,10 +84,9 @@ export class Game {
     }
 
     FrameReset() {
-        // Reset event flags for the next frame.
         this.ViewportResized = false;
-        for (let name in this.InputEvent) {
-            this.InputEvent[name] = 0;
+        for (let name in this.InputDelta) {
+            this.InputDelta[name] = 0;
         }
     }
 

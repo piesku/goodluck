@@ -13,13 +13,8 @@ export function start(game: Game) {
 
     let tick = (now: number) => {
         let delta = (now - last) / 1000;
-        game.Update(delta);
-
-        // Reset all input events for the next frame.
-        for (let name in game.InputEvent) {
-            game.InputEvent[name] = 0;
-        }
-
+        game.FrameUpdate(delta);
+        game.FrameReset();
         last = now;
         raf = requestAnimationFrame(tick);
     };
