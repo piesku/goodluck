@@ -4,7 +4,6 @@ import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {Camera} from "./components/com_camera.js";
-import {Light} from "./components/com_light.js";
 import {loop_start, loop_stop} from "./core.js";
 import {mat_basic} from "./materials/mat_basic.js";
 import {mat_flat} from "./materials/mat_flat.js";
@@ -43,7 +42,8 @@ export class Game {
     MeshIcosphereSmooth: Mesh;
 
     Cameras: Array<Camera> = [];
-    Lights: Array<Light> = [];
+    LightPositions: Array<number> = [];
+    LightDetails: Array<number> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>

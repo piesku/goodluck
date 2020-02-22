@@ -3,7 +3,6 @@ import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_monkey_flat} from "../meshes/monkey_flat.js";
 import {mesh_monkey_smooth} from "../meshes/monkey_smooth.js";
 import {Camera} from "./components/com_camera.js";
-import {Light} from "./components/com_light.js";
 import {loop_start, loop_stop} from "./core.js";
 import {mat_flat} from "./materials/mat_flat.js";
 import {mat_phong} from "./materials/mat_phong.js";
@@ -32,7 +31,8 @@ export class Game {
     MeshMonkeySmooth: Mesh;
 
     Cameras: Array<Camera> = [];
-    Lights: Array<Light> = [];
+    LightPositions: Array<number> = [];
+    LightDetails: Array<number> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>

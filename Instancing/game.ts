@@ -2,7 +2,6 @@ import {Material, Mesh} from "../common/material.js";
 import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
-import {Light} from "./components/com_light.js";
 import {loop_start, loop_stop} from "./core.js";
 import {mat_instanced} from "./materials/mat_instanced.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -28,7 +27,8 @@ export class Game {
     MeshCube: Mesh;
 
     Cameras: Array<Camera> = [];
-    Lights: Array<Light> = [];
+    LightPositions: Array<number> = [];
+    LightDetails: Array<number> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>

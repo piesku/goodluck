@@ -9,7 +9,8 @@ import {World} from "../world.js";
 export function scene_stage(game: Game) {
     game.World = new World();
     game.Cameras = [];
-    game.Lights = [];
+    game.LightPositions = [];
+    game.LightDetails = [];
     game.ViewportResized = true;
     game.GL.clearColor(1, 0.3, 0.3, 1);
 

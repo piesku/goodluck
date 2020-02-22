@@ -1,4 +1,3 @@
-import {get_translation} from "../../common/mat4.js";
 import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
 import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
@@ -12,17 +11,6 @@ export function sys_render(game: Game, delta: number) {
     game.GL.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (game.ViewportResized) {
         game.GL.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
-    }
-
-    let light_positions: Array<number> = [];
-    let light_details: Array<number> = [];
-
-    for (let i = 0; i < game.Lights.length; i++) {
-        let light = game.Lights[i];
-        let transform = game.World.Transform[light.EntityId];
-        let position = get_translation([0, 0, 0], transform.World);
-        light_positions.push(...position);
-        light_details.push(...light.Color, light.Intensity);
     }
 
     // Keep track of the current material to minimize switching.
@@ -44,15 +32,15 @@ export function sys_render(game: Game, delta: number) {
                     case RenderKind.Shaded:
                         game.GL.uniform1i(
                             current_material.Uniforms[ShadedUniform.LightCount],
-                            game.Lights.length
+                            game.LightPositions.length / 3
                         );
                         game.GL.uniform3fv(
                             current_material.Uniforms[ShadedUniform.LightPositions],
-                            light_positions
+                            game.LightPositions
                         );
                         game.GL.uniform4fv(
                             current_material.Uniforms[ShadedUniform.LightDetails],
-                            light_details
+                            game.LightDetails
                         );
                         break;
                 }
