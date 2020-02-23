@@ -8,7 +8,6 @@ export interface Camera {
     Near: number;
     Far: number;
     Projection: Mat4;
-    View: Mat4;
     PV: Mat4;
 }
 
@@ -20,7 +19,6 @@ export function camera(fovy: number, near: number, far: number) {
             Near: near,
             Far: far,
             Projection: create(),
-            View: create(),
             PV: create(),
         };
     };

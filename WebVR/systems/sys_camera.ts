@@ -1,4 +1,4 @@
-import {invert, multiply, perspective} from "../../common/mat4.js";
+import {multiply, perspective} from "../../common/mat4.js";
 import {CameraKind, CameraPerspective, CameraVr, Eye} from "../components/com_camera.js";
 import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
@@ -51,8 +51,7 @@ function update_perspective(game: Game, entity: Entity, camera: CameraPerspectiv
         }
     }
 
-    invert(camera.View, transform.World);
-    multiply(camera.PV, camera.Projection, camera.View);
+    multiply(camera.PV, camera.Projection, transform.Self);
 }
 
 function update_vr(game: Game, entity: Entity, camera: CameraVr) {
