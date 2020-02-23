@@ -7,7 +7,7 @@ const QUERY = Has.Transform | Has.Camera;
 
 export function sys_camera(game: Game, delta: number) {
     if (game.VrDisplay?.isPresenting) {
-        game.VrDisplay.getFrameData(game.VrFrameData);
+        game.VrDisplay.getFrameData(game.VrFrameData!);
     } else if (
         game.ViewportWidth != window.innerWidth ||
         game.ViewportHeight != window.innerHeight
@@ -35,15 +35,15 @@ function update(game: Game, entity: Entity) {
             case Eye.Left:
                 multiply(
                     camera.PV,
-                    game.VrFrameData.leftProjectionMatrix,
-                    game.VrFrameData.leftViewMatrix
+                    game.VrFrameData!.leftProjectionMatrix,
+                    game.VrFrameData!.leftViewMatrix
                 );
                 return;
             case Eye.Right:
                 multiply(
                     camera.PV,
-                    game.VrFrameData.rightProjectionMatrix,
-                    game.VrFrameData.rightViewMatrix
+                    game.VrFrameData!.rightProjectionMatrix,
+                    game.VrFrameData!.rightViewMatrix
                 );
                 return;
         }

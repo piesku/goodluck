@@ -9,6 +9,7 @@ import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_transform} from "./systems/sys_transform.js";
+import {sys_ui} from "./systems/sys_ui.js";
 import {World} from "./world.js";
 
 export type Entity = number;
@@ -22,11 +23,9 @@ export class Game {
     UI = document.querySelector("main")!;
     Canvas = document.querySelector("canvas")!;
     GL: WebGL2RenderingContext;
-    InputState: Record<string, number> = {};
-    InputDelta: Record<string, number> = {};
 
     VrDisplay?: VRDisplay;
-    VrFrameData = new VRFrameData();
+    VrFrameData?: VRFrameData;
 
     MaterialGouraud: Material;
     MeshCube: Mesh;
@@ -39,36 +38,6 @@ export class Game {
         document.addEventListener("visibilitychange", () =>
             document.hidden ? loop_stop() : loop_start(this)
         );
-
-        window.addEventListener("keydown", evt => {
-            if (!evt.repeat) {
-                this.InputState[evt.code] = 1;
-                this.InputDelta[evt.code] = 1;
-            }
-        });
-        window.addEventListener("keyup", evt => {
-            this.InputState[evt.code] = 0;
-            this.InputDelta[evt.code] = -1;
-        });
-        this.UI.addEventListener("mousedown", evt => {
-            this.InputState[`Mouse${evt.button}`] = 1;
-            this.InputDelta[`Mouse${evt.button}`] = 1;
-        });
-        this.UI.addEventListener("mouseup", evt => {
-            this.InputState[`Mouse${evt.button}`] = 0;
-            this.InputDelta[`Mouse${evt.button}`] = -1;
-        });
-        this.UI.addEventListener("mousemove", evt => {
-            this.InputState.MouseX = evt.offsetX;
-            this.InputState.MouseY = evt.offsetY;
-            this.InputDelta.MouseX = evt.movementX;
-            this.InputDelta.MouseY = evt.movementY;
-        });
-        this.UI.addEventListener("wheel", evt => {
-            this.InputDelta.WheelY = evt.deltaY;
-        });
-        this.UI.addEventListener("contextmenu", evt => evt.preventDefault());
-        this.UI.addEventListener("click", () => this.UI.requestPointerLock());
 
         this.GL = this.Canvas.getContext("webgl2")!;
         this.GL.enable(GL_DEPTH_TEST);
@@ -84,11 +53,7 @@ export class Game {
     }
 
     FrameReset() {
-        // Reset event flags for the next frame.
         this.ViewportResized = false;
-        for (let name in this.InputDelta) {
-            this.InputDelta[name] = 0;
-        }
     }
 
     FrameUpdate(delta: number) {
@@ -97,6 +62,7 @@ export class Game {
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render(this, delta);
+        sys_ui(this, delta);
         sys_framerate(this, delta, performance.now() - now);
     }
 }

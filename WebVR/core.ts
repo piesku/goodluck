@@ -79,7 +79,10 @@ export function destroy(world: World, entity: Entity) {
 
 export async function vr_init(game: Game) {
     let displays = await navigator.getVRDisplays();
-    game.VrDisplay = displays[0];
+    if (displays.length > 0) {
+        game.VrDisplay = displays[0];
+        game.VrFrameData = new VRFrameData();
+    }
 }
 
 export async function vr_present(game: Game) {
