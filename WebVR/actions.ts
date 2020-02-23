@@ -9,7 +9,7 @@ export function dispatch(game: Game, action: Action, args: unknown) {
     switch (action) {
         case Action.EnterVr: {
             if (game.VrDisplay) {
-                vr_present(game);
+                vr_present(game, game.VrDisplay);
             }
             break;
         }

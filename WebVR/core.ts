@@ -85,17 +85,14 @@ export async function vr_init(game: Game) {
     }
 }
 
-export async function vr_present(game: Game) {
-    if (!game.VrDisplay) {
-        return;
-    }
+export async function vr_present(game: Game, display: VRDisplay) {
     try {
-        await game.VrDisplay.requestPresent([{source: game.Canvas}]);
-        let left = game.VrDisplay.getEyeParameters("left");
-        let right = game.VrDisplay.getEyeParameters("right");
-        game.ViewportWidth = game.Canvas.width = Math.max(left.renderWidth, right.renderWidth) * 2;
-        game.ViewportHeight = game.Canvas.height = Math.max(left.renderHeight, right.renderHeight);
+        await display.requestPresent([{source: game.Canvas}]);
     } catch (e) {
-        alert(e);
+        console.error(e);
     }
+    let left = display.getEyeParameters("left");
+    let right = display.getEyeParameters("right");
+    game.ViewportWidth = game.Canvas.width = Math.max(left.renderWidth, right.renderWidth) * 2;
+    game.ViewportHeight = game.Canvas.height = Math.max(left.renderHeight, right.renderHeight);
 }
