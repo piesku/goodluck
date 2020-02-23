@@ -3,13 +3,13 @@ import {Mat4} from "../../common/math.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "./com_index.js";
 
-export type Camera = CameraPersp | CameraVr;
+export type Camera = CameraPerspective | CameraVr;
 export const enum CameraKind {
     Perspective,
     Vr,
 }
 
-interface CameraPersp {
+export interface CameraPerspective {
     Kind: CameraKind.Perspective;
     FOVy: number;
     Near: number;
@@ -39,7 +39,7 @@ export const enum Eye {
     Right,
 }
 
-interface CameraVr {
+export interface CameraVr {
     Kind: CameraKind.Vr;
     Eye: Eye;
     PV: Mat4;
