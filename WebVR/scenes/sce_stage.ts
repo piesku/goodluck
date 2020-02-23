@@ -21,20 +21,20 @@ export function scene_stage(game: Game) {
 
     // Light.
     instantiate(game, {
-        Translation: [0, 1, -1],
+        Translation: [0, 2, -1],
         Using: [light([1, 1, 1], 5)],
     });
 
     // Ground.
     instantiate(game, {
-        Translation: [-1, -3, -5],
+        Translation: [-1, -2, -5],
         Scale: [7, 1, 7],
         Using: [render_shaded(game.MaterialGouraud, game.MeshCube, [1, 1, 0.3, 1])],
     });
 
     // Box.
     instantiate(game, {
-        Translation: [-1, -2, -5],
+        Translation: [-1, -1, -5],
         Using: [render_shaded(game.MaterialGouraud, game.MeshCube, [1, 1, 0.3, 1])],
     });
 }
