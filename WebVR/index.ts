@@ -8,7 +8,7 @@ scene_stage(game);
 loop_start(game);
 
 // @ts-ignore
-window.$ = args => dispatch(game, args);
+window.$ = dispatch.bind(null, game);
 
 // @ts-ignore
 window.game = game;
