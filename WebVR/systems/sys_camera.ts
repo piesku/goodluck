@@ -30,7 +30,7 @@ function update(game: Game, entity: Entity) {
     let camera = game.World.Camera[entity];
 
     if (camera.Kind === CameraKind.Vr && game.VrDisplay?.isPresenting) {
-        update_vr(game, camera);
+        update_vr(game, entity, camera);
     } else if (camera.Kind === CameraKind.Perspective && !game.VrDisplay?.isPresenting) {
         update_perspective(game, entity, camera);
     }
@@ -55,20 +55,43 @@ function update_perspective(game: Game, entity: Entity, camera: CameraPerspectiv
     multiply(camera.PV, camera.Projection, camera.View);
 }
 
-function update_vr(game: Game, camera: CameraVr) {
+function update_vr(game: Game, entity: Entity, camera: CameraVr) {
+    let transform = game.World.Transform[entity];
     game.Cameras.push(camera);
 
+    // Compute PV, where V is the inverse of eye's World (We) matrix, which is
+    // unknown. Instead, we have frame.{left,right}ViewMatrix, which are eyes'
+    // inverted local matrices (Le), relative to the camera's transform's space,
+    // and the camera entity's World and Self.
+
+    // Definitions:
+    //     M^ denotes an inverse of M.
+    //     Le: eye's matrix in camera's space
+    //     We: eye's matrix in world space
+    //     Wc: camera's matrix in world space
+    //     Sc: camera's self matrix (world -> camera space)
+
+    // Given that:
+    //     (AB)^ == B^ * A^
+    //     {left,right}ViewMatrix == Le^
+
+    // Compute PV as:
+    //     PV = P * V
+    //     PV = P * We^
+    //     PV = P * (Wc * Le)^
+    //     PV = P * Le^ * Wc^
+    //     PV = P * {left,right}ViewMatrix * Sc
+
+    // Or, using multiply()'s two-operand multiplication:
+    //     PV = P * {left,right}ViewMatrix
+    //     PV = PV * Sc
+
+    let frame = game.VrFrameData!;
     if (camera.Eye === Eye.Left) {
-        multiply(
-            camera.PV,
-            game.VrFrameData!.leftProjectionMatrix,
-            game.VrFrameData!.leftViewMatrix
-        );
+        multiply(camera.PV, frame.leftProjectionMatrix, frame.leftViewMatrix);
+        multiply(camera.PV, camera.PV, transform.Self);
     } else {
-        multiply(
-            camera.PV,
-            game.VrFrameData!.rightProjectionMatrix,
-            game.VrFrameData!.rightViewMatrix
-        );
+        multiply(camera.PV, frame.rightProjectionMatrix, frame.rightViewMatrix);
+        multiply(camera.PV, camera.PV, transform.Self);
     }
 }
