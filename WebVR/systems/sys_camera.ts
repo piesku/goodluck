@@ -58,20 +58,17 @@ function update_perspective(game: Game, entity: Entity, camera: CameraPerspectiv
 function update_vr(game: Game, camera: CameraVr) {
     game.Cameras.push(camera);
 
-    switch (camera.Eye) {
-        case Eye.Left:
-            multiply(
-                camera.PV,
-                game.VrFrameData!.leftProjectionMatrix,
-                game.VrFrameData!.leftViewMatrix
-            );
-            return;
-        case Eye.Right:
-            multiply(
-                camera.PV,
-                game.VrFrameData!.rightProjectionMatrix,
-                game.VrFrameData!.rightViewMatrix
-            );
-            return;
+    if (camera.Eye === Eye.Left) {
+        multiply(
+            camera.PV,
+            game.VrFrameData!.leftProjectionMatrix,
+            game.VrFrameData!.leftViewMatrix
+        );
+    } else {
+        multiply(
+            camera.PV,
+            game.VrFrameData!.rightProjectionMatrix,
+            game.VrFrameData!.rightViewMatrix
+        );
     }
 }

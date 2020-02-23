@@ -1,5 +1,5 @@
 import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
-import {Camera, CameraKind, Eye} from "../components/com_camera.js";
+import {Camera, CameraKind, CameraPerspective, CameraVr, Eye} from "../components/com_camera.js";
 import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
 import {RenderShaded, ShadedUniform} from "../components/com_render_shaded.js";
@@ -12,29 +12,34 @@ export function sys_render(game: Game, delta: number) {
     game.GL.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     for (let camera of game.Cameras) {
-        if (camera.Kind === CameraKind.Perspective && game.ViewportResized) {
-            game.GL.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
+        if (camera.Kind === CameraKind.Perspective) {
+            render_screen(game, camera);
         } else if (camera.Kind === CameraKind.Vr) {
-            switch (camera.Eye) {
-                case Eye.Left:
-                    game.GL.viewport(0, 0, game.ViewportWidth / 2, game.ViewportHeight);
-                    break;
-                case Eye.Right:
-                    game.GL.viewport(
-                        game.ViewportWidth / 2,
-                        0,
-                        game.ViewportWidth / 2,
-                        game.ViewportHeight
-                    );
-                    break;
-            }
+            render_vr(game, camera);
         }
-        render(game, camera);
     }
 
     if (game.VrDisplay?.isPresenting) {
         game.VrDisplay.submitFrame();
     }
+}
+
+function render_screen(game: Game, camera: CameraPerspective) {
+    if (game.ViewportResized) {
+        game.GL.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
+    }
+
+    render(game, camera);
+}
+
+function render_vr(game: Game, camera: CameraVr) {
+    if (camera.Eye === Eye.Left) {
+        game.GL.viewport(0, 0, game.ViewportWidth / 2, game.ViewportHeight);
+    } else {
+        game.GL.viewport(game.ViewportWidth / 2, 0, game.ViewportWidth / 2, game.ViewportHeight);
+    }
+
+    render(game, camera);
 }
 
 function render(game: Game, camera: Camera) {
