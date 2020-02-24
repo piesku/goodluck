@@ -1,13 +1,11 @@
 import {multiply, perspective} from "../../common/mat4.js";
-import {CameraKind, CameraPerspective, CameraVr, Eye} from "../components/com_camera.js";
+import {CameraKind, CameraPerspective, CameraVr} from "../components/com_camera.js";
 import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 
 const QUERY = Has.Transform | Has.Camera;
 
 export function sys_camera(game: Game, delta: number) {
-    game.Cameras = [];
-
     if (game.VrDisplay?.isPresenting) {
         game.VrDisplay.getFrameData(game.VrFrameData!);
     } else if (
@@ -19,26 +17,31 @@ export function sys_camera(game: Game, delta: number) {
         game.ViewportResized = true;
     }
 
+    game.Camera = undefined;
     for (let i = 0; i < game.World.Mask.length; i++) {
         if ((game.World.Mask[i] & QUERY) === QUERY) {
-            update(game, i);
+            let camera = game.World.Camera[i];
+
+            if (camera.Kind === CameraKind.Vr && game.VrDisplay?.isPresenting) {
+                update_vr(game, i, camera);
+
+                // Support only one camera per scene;
+                return;
+            }
+
+            if (camera.Kind !== CameraKind.Vr && !game.VrDisplay?.isPresenting) {
+                update_perspective(game, i, camera);
+
+                // Support only one camera per scene;
+                return;
+            }
         }
-    }
-}
-
-function update(game: Game, entity: Entity) {
-    let camera = game.World.Camera[entity];
-
-    if (camera.Kind === CameraKind.Vr && game.VrDisplay?.isPresenting) {
-        update_vr(game, entity, camera);
-    } else if (camera.Kind === CameraKind.Perspective && !game.VrDisplay?.isPresenting) {
-        update_perspective(game, entity, camera);
     }
 }
 
 function update_perspective(game: Game, entity: Entity, camera: CameraPerspective) {
     let transform = game.World.Transform[entity];
-    game.Cameras.push(camera);
+    game.Camera = camera;
 
     if (game.ViewportResized) {
         let aspect = game.ViewportWidth / game.ViewportHeight;
@@ -56,7 +59,7 @@ function update_perspective(game: Game, entity: Entity, camera: CameraPerspectiv
 
 function update_vr(game: Game, entity: Entity, camera: CameraVr) {
     let transform = game.World.Transform[entity];
-    game.Cameras.push(camera);
+    game.Camera = camera;
 
     // Compute PV, where V is the inverse of eye's World (We) matrix, which is
     // unknown. Instead, we have frame.{left,right}ViewMatrix, which are eyes'
@@ -74,23 +77,20 @@ function update_vr(game: Game, entity: Entity, camera: CameraVr) {
     //     (AB)^ == B^ * A^
     //     {left,right}ViewMatrix == Le^
 
-    // Compute PV as:
+    // Compute left PV as:
     //     PV = P * V
     //     PV = P * We^
     //     PV = P * (Wc * Le)^
     //     PV = P * Le^ * Wc^
-    //     PV = P * {left,right}ViewMatrix * Sc
+    //     PV = P * leftViewMatrix * Sc
 
     // Or, using multiply()'s two-operand multiplication:
-    //     PV = P * {left,right}ViewMatrix
+    //     PV = P * leftViewMatrix
     //     PV = PV * Sc
 
     let frame = game.VrFrameData!;
-    if (camera.Eye === Eye.Left) {
-        multiply(camera.PV, frame.leftProjectionMatrix, frame.leftViewMatrix);
-        multiply(camera.PV, camera.PV, transform.Self);
-    } else {
-        multiply(camera.PV, frame.rightProjectionMatrix, frame.rightViewMatrix);
-        multiply(camera.PV, camera.PV, transform.Self);
-    }
+    multiply(camera.PvLeft, frame.leftProjectionMatrix, frame.leftViewMatrix);
+    multiply(camera.PvLeft, camera.PvLeft, transform.Self);
+    multiply(camera.PvRight, frame.rightProjectionMatrix, frame.rightViewMatrix);
+    multiply(camera.PvRight, camera.PvRight, transform.Self);
 }

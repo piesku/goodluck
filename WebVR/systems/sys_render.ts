@@ -1,5 +1,6 @@
+import {Mat4} from "../../common/math.js";
 import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
-import {Camera, CameraKind, CameraPerspective, CameraVr, Eye} from "../components/com_camera.js";
+import {CameraKind, CameraPerspective, CameraVr} from "../components/com_camera.js";
 import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
 import {RenderShaded, ShadedUniform} from "../components/com_render_shaded.js";
@@ -11,12 +12,11 @@ const QUERY = Has.Transform | Has.Render;
 export function sys_render(game: Game, delta: number) {
     game.GL.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    for (let camera of game.Cameras) {
-        if (camera.Kind === CameraKind.Perspective) {
-            render_screen(game, camera);
-        } else if (camera.Kind === CameraKind.Vr) {
-            render_vr(game, camera);
-        }
+    let camera = game.Camera!;
+    if (camera.Kind === CameraKind.Vr) {
+        render_vr(game, camera);
+    } else {
+        render_screen(game, camera);
     }
 
     if (game.VrDisplay?.isPresenting) {
@@ -29,20 +29,17 @@ function render_screen(game: Game, camera: CameraPerspective) {
         game.GL.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
     }
 
-    render(game, camera);
+    render(game, camera.PV);
 }
 
 function render_vr(game: Game, camera: CameraVr) {
-    if (camera.Eye === Eye.Left) {
-        game.GL.viewport(0, 0, game.ViewportWidth / 2, game.ViewportHeight);
-    } else {
-        game.GL.viewport(game.ViewportWidth / 2, 0, game.ViewportWidth / 2, game.ViewportHeight);
-    }
-
-    render(game, camera);
+    game.GL.viewport(0, 0, game.ViewportWidth / 2, game.ViewportHeight);
+    render(game, camera.PvLeft);
+    game.GL.viewport(game.ViewportWidth / 2, 0, game.ViewportWidth / 2, game.ViewportHeight);
+    render(game, camera.PvRight);
 }
 
-function render(game: Game, camera: Camera) {
+function render(game: Game, pv: Mat4) {
     // Keep track of the current material to minimize switching.
     let current_material = null;
 
@@ -56,7 +53,7 @@ function render(game: Game, camera: Camera) {
 
                 game.GL.useProgram(current_material.Program);
                 // XXX Uniforms[0] should always be PV.
-                game.GL.uniformMatrix4fv(current_material.Uniforms[0], false, camera.PV);
+                game.GL.uniformMatrix4fv(current_material.Uniforms[0], false, pv);
 
                 switch (render.Kind) {
                     case RenderKind.Shaded:

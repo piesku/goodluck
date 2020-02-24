@@ -32,24 +32,19 @@ export function camera_persp(fovy: number, near: number, far: number) {
     };
 }
 
-export const enum Eye {
-    Left,
-    Right,
-}
-
 export interface CameraVr {
     Kind: CameraKind.Vr;
-    Eye: Eye;
-    PV: Mat4;
+    PvLeft: Mat4;
+    PvRight: Mat4;
 }
 
-export function camera_vr(eye: Eye) {
+export function camera_vr() {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Camera;
         game.World.Camera[entity] = <Camera>{
             Kind: CameraKind.Vr,
-            Eye: eye,
-            PV: create(),
+            PvLeft: create(),
+            PvRight: create(),
         };
     };
 }
