@@ -14,10 +14,12 @@ export function EnterVr(game: Game) {
                 font: 13px Arial;
             "
         >
-            ${window.isSecureContext
+            ${game.XrFrame
+                ? ExitButton()
+                : window.isSecureContext
                 ? navigator.xr
                     ? game.XrSupported
-                        ? Button()
+                        ? EnterButton()
                         : `<div style="padding: 1vmin">WebXR headset not found</div>`
                     : `<div style="padding: 1vmin">WebXR not supported</div>`
                 : `<div style="padding: 1vmin">WebXR requires HTTPS</div>`}
@@ -25,7 +27,7 @@ export function EnterVr(game: Game) {
     `;
 }
 
-function Button() {
+function EnterButton() {
     return html`
         <button
             onclick="$(${Action.EnterVr})"
@@ -37,6 +39,22 @@ function Button() {
             "
         >
             Enter VR
+        </button>
+    `;
+}
+
+function ExitButton() {
+    return html`
+        <button
+            onclick="$(${Action.ExitVr})"
+            style="
+                padding: 1vmin;
+                background: #000;
+                color: #fff;
+                border: none;
+            "
+        >
+            Exit VR
         </button>
     `;
 }

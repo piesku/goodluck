@@ -14,16 +14,18 @@ export function EnterVr(game: Game) {
                 font: 13px Arial;
             "
         >
-            ${navigator.getVRDisplays
+            ${game.VrDisplay?.isPresenting
+                ? ExitButton()
+                : navigator.getVRDisplays
                 ? game.VrDisplay
-                    ? Button()
+                    ? EnterButton()
                     : `<div style="padding: 1vmin">WebVR headset not found</div>`
                 : `<div style="padding: 1vmin">WebVR not supported</div>`}
         </div>
     `;
 }
 
-function Button() {
+function EnterButton() {
     return html`
         <button
             onclick="$(${Action.EnterVr})"
@@ -34,7 +36,23 @@ function Button() {
                 border: none;
             "
         >
-            Enter WebVR
+            Enter VR
+        </button>
+    `;
+}
+
+function ExitButton() {
+    return html`
+        <button
+            onclick="$(${Action.ExitVr})"
+            style="
+                padding: 1vmin;
+                background: #000;
+                color: #fff;
+                border: none;
+            "
+        >
+            Exit VR
         </button>
     `;
 }
