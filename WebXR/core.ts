@@ -13,7 +13,7 @@ export function loop_start(game: Game) {
 
     function tick(now: number, frame?: XRFrame) {
         let delta = (now - last) / 1000;
-        game.XrFrame = frame;
+        game.XrFrame = game.XrSession && frame;
         game.FrameUpdate(delta);
         game.FrameReset();
         last = now;

@@ -17,14 +17,14 @@ export function sys_camera(game: Game, delta: number) {
         if ((game.World.Mask[i] & QUERY) === QUERY) {
             let camera = game.World.Camera[i];
 
-            if (camera.Kind === CameraKind.Xr && game.XrSession) {
+            if (camera.Kind === CameraKind.Xr && game.XrFrame) {
                 update_vr(game, i, camera);
 
                 // Support only one camera per scene.
                 return;
             }
 
-            if (camera.Kind !== CameraKind.Xr && !game.XrSession) {
+            if (camera.Kind !== CameraKind.Xr && !game.XrFrame) {
                 update_perspective(game, i, camera);
 
                 // Support only one camera per scene.
@@ -57,7 +57,7 @@ function update_vr(game: Game, entity: Entity, camera: CameraXr) {
     camera.Views = [];
 
     let transform = game.World.Transform[entity];
-    let layer = game.XrSession!.renderState.baseLayer!;
+    let layer = game.XrFrame!.session.renderState.baseLayer!;
     let pose = game.XrFrame!.getViewerPose(game.XrSpace);
 
     for (let view of pose.views) {

@@ -26,8 +26,9 @@ export class Game {
 
     XrSupported = false;
     XrSession?: XRSession;
-    XrFrame?: XRFrame;
     XrSpace?: XRReferenceSpace;
+    // XrFrame can be used to check whether we're presenting to a VR display.
+    XrFrame?: XRFrame;
 
     MaterialGouraud: Material;
     MeshCube: Mesh;
