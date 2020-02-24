@@ -32,15 +32,14 @@ export function camera_persp(fovy: number, near: number, far: number) {
     };
 }
 
-export interface CameraView {
+export interface CameraEye {
     View: XRView;
-    Viewport: XRViewport;
     Pv: Mat4;
 }
 
 export interface CameraXr {
     Kind: CameraKind.Xr;
-    Views: Array<CameraView>;
+    Eyes: Array<CameraEye>;
 }
 
 export function camera_xr() {
@@ -48,7 +47,7 @@ export function camera_xr() {
         game.World.Mask[entity] |= Has.Camera;
         game.World.Camera[entity] = <Camera>{
             Kind: CameraKind.Xr,
-            Views: [],
+            Eyes: [],
         };
     };
 }

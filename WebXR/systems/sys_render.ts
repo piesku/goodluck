@@ -34,17 +34,14 @@ function render_screen(game: Game, camera: CameraPerspective) {
 }
 
 function render_vr(game: Game, camera: CameraXr) {
-    game.GL.bindFramebuffer(GL_FRAMEBUFFER, game.XrSession!.renderState.baseLayer!.framebuffer);
+    let layer = game.XrFrame!.session.renderState.baseLayer!;
+    game.GL.bindFramebuffer(GL_FRAMEBUFFER, layer.framebuffer);
     game.GL.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    for (let view of camera.Views) {
-        game.GL.viewport(
-            view.Viewport.x,
-            view.Viewport.y,
-            view.Viewport.width,
-            view.Viewport.height
-        );
-        render(game, view.Pv);
+    for (let eye of camera.Eyes) {
+        let viewport = layer.getViewport(eye.View);
+        game.GL.viewport(viewport.x, viewport.y, viewport.width, viewport.height);
+        render(game, eye.Pv);
     }
 }
 

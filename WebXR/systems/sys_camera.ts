@@ -54,14 +54,13 @@ function update_perspective(game: Game, entity: Entity, camera: CameraPerspectiv
 
 function update_vr(game: Game, entity: Entity, camera: CameraXr) {
     game.Camera = camera;
-    camera.Views = [];
+    camera.Eyes = [];
 
     let transform = game.World.Transform[entity];
-    let layer = game.XrFrame!.session.renderState.baseLayer!;
     let pose = game.XrFrame!.getViewerPose(game.XrSpace);
 
     for (let view of pose.views) {
-        let viewport = layer.getViewport(view);
+        let pv = create();
 
         // Compute PV, where V is the inverse of eye's World (We) matrix, which is
         // unknown. Instead, we have view.transform.inverse.matrix, which are eyes'
@@ -89,13 +88,11 @@ function update_vr(game: Game, entity: Entity, camera: CameraXr) {
         // Or, using multiply()'s two-operand multiplication:
         //     PV = PV * view.transform.inverse.matrix
         //     PV = PV * Sc
-        let pv = create();
         multiply(pv, view.projectionMatrix, view.transform.inverse.matrix);
         multiply(pv, pv, transform.Self);
 
-        camera.Views.push({
+        camera.Eyes.push({
             View: view,
-            Viewport: viewport,
             Pv: pv,
         });
     }
