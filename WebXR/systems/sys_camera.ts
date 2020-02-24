@@ -62,6 +62,33 @@ function update_vr(game: Game, entity: Entity, camera: CameraXr) {
 
     for (let view of pose.views) {
         let viewport = layer.getViewport(view);
+
+        // Compute PV, where V is the inverse of eye's World (We) matrix, which is
+        // unknown. Instead, we have view.transform.inverse.matrix, which are eyes'
+        // inverted local matrices (Le), relative to the camera's transform's space,
+        // and the camera entity's World and Self.
+
+        // Definitions:
+        //     M^ denotes an inverse of M.
+        //     Le: eye's matrix in camera's space
+        //     We: eye's matrix in world space
+        //     Wc: camera's matrix in world space
+        //     Sc: camera's self matrix (world -> camera space)
+
+        // Given that:
+        //     (AB)^ == B^ * A^
+        //     view.transform.inverse.matrix == Le^
+
+        // Compute PV as:
+        //     PV = P * V
+        //     PV = P * We^
+        //     PV = P * (Wc * Le)^
+        //     PV = P * Le^ * Wc^
+        //     PV = P * view.transform.inverse.matrix * Sc
+
+        // Or, using multiply()'s two-operand multiplication:
+        //     PV = PV * view.transform.inverse.matrix
+        //     PV = PV * Sc
         let pv = create();
         multiply(pv, view.projectionMatrix, view.transform.inverse.matrix);
         multiply(pv, pv, transform.Self);
