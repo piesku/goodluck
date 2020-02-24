@@ -28,7 +28,7 @@ export class Game {
     MaterialGouraud: Material;
     MeshCube: Mesh;
 
-    Cameras: Array<Camera> = [];
+    Camera?: Camera;
     LightPositions: Array<number> = [];
     LightDetails: Array<number> = [];
 

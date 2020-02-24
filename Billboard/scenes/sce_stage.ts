@@ -8,7 +8,7 @@ import {World} from "../world.js";
 
 export function scene_stage(game: Game) {
     game.World = new World();
-    game.Cameras = [];
+    game.Camera = undefined;
     game.LightPositions = [];
     game.LightDetails = [];
     game.ViewportResized = true;

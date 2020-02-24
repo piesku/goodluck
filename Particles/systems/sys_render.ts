@@ -35,7 +35,7 @@ export function sys_render(game: Game, delta: number) {
 
                 game.GL.useProgram(current_material.Program);
                 // XXX Uniforms[0] should always be PV.
-                game.GL.uniformMatrix4fv(current_material.Uniforms[0], false, game.Cameras[0].PV);
+                game.GL.uniformMatrix4fv(current_material.Uniforms[0], false, game.Camera!.PV);
             }
 
             switch (render.Kind) {

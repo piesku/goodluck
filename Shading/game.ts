@@ -41,7 +41,7 @@ export class Game {
     MeshIcosphereFlat: Mesh;
     MeshIcosphereSmooth: Mesh;
 
-    Cameras: Array<Camera> = [];
+    Camera?: Camera;
     LightPositions: Array<number> = [];
     LightDetails: Array<number> = [];
 

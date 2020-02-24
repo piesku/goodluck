@@ -30,7 +30,7 @@ export class Game {
     MeshMonkeyFlat: Mesh;
     MeshMonkeySmooth: Mesh;
 
-    Cameras: Array<Camera> = [];
+    Camera?: Camera;
     LightPositions: Array<number> = [];
     LightDetails: Array<number> = [];
 

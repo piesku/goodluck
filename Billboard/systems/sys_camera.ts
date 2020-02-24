@@ -13,10 +13,13 @@ export function sys_camera(game: Game, delta: number) {
         game.ViewportResized = true;
     }
 
-    game.Cameras = [];
+    game.Camera = undefined;
     for (let i = 0; i < game.World.Mask.length; i++) {
         if ((game.World.Mask[i] & QUERY) === QUERY) {
             update(game, i);
+
+            // Support only one camera per scene.
+            return;
         }
     }
 }
@@ -24,7 +27,7 @@ export function sys_camera(game: Game, delta: number) {
 function update(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
     let camera = game.World.Camera[entity];
-    game.Cameras.push(camera);
+    game.Camera = camera;
 
     if (game.ViewportResized) {
         let aspect = game.ViewportWidth / game.ViewportHeight;

@@ -26,7 +26,7 @@ export class Game {
     MaterialInstanced: Material;
     MeshCube: Mesh;
 
-    Cameras: Array<Camera> = [];
+    Camera?: Camera;
     LightPositions: Array<number> = [];
     LightDetails: Array<number> = [];
 
