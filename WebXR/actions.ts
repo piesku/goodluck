@@ -1,4 +1,4 @@
-import {vr_present} from "./core.js";
+import {xr_enter} from "./core.js";
 import {Game} from "./game.js";
 
 export const enum Action {
@@ -9,14 +9,14 @@ export const enum Action {
 export function dispatch(game: Game, action: Action, args: unknown) {
     switch (action) {
         case Action.EnterVr: {
-            if (game.VrDisplay) {
-                vr_present(game, game.VrDisplay);
+            if (game.XrSupported) {
+                xr_enter(game);
             }
             break;
         }
         case Action.ExitVr: {
-            if (game.VrDisplay?.isPresenting) {
-                game.VrDisplay.exitPresent();
+            if (game.XrFrame) {
+                game.XrFrame.session.end();
             }
             break;
         }

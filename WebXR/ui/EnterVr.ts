@@ -14,13 +14,15 @@ export function EnterVr(game: Game) {
                 font: 13px Arial;
             "
         >
-            ${game.VrDisplay?.isPresenting
+            ${game.XrFrame
                 ? ExitButton()
-                : navigator.getVRDisplays
-                ? game.VrDisplay
-                    ? EnterButton()
-                    : `<div style="padding: 1vmin">WebVR headset not found</div>`
-                : `<div style="padding: 1vmin">WebVR not supported</div>`}
+                : window.isSecureContext
+                ? navigator.xr
+                    ? game.XrSupported
+                        ? EnterButton()
+                        : `<div style="padding: 1vmin">WebXR headset not found</div>`
+                    : `<div style="padding: 1vmin">WebXR not supported</div>`
+                : `<div style="padding: 1vmin">WebXR requires HTTPS</div>`}
         </div>
     `;
 }
