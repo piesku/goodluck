@@ -1,16 +1,15 @@
 EXAMPLE ?= src
-INDEX := ../$(EXAMPLE)/index.js
 
 all: game.terser.js
 	@printf "Size gzipped: %s bytes\n" \
 		$(shell gzip index.html game.terser.js --stdout | wc -c)
 
-$(INDEX): $(shell find .. -name "*.ts")
+../$(EXAMPLE)/index.js: $(shell find .. -name "*.ts")
 	@echo -n "Compiling project... "
 	@npx tsc
 	@echo "Done"
 
-game.rollup.js: $(INDEX)
+game.rollup.js: ../$(EXAMPLE)/index.js
 	@echo -n "Bundling files into one... "
 	@npx rollup --format iife $< --silent > $@
 	@echo "Done"
