@@ -13,16 +13,18 @@ export function loop_start(game: Game) {
 
     function tick(now: number, frame?: XRFrame) {
         let delta = (now - last) / 1000;
-        game.XrFrame = game.XrSession && frame;
-        game.FrameUpdate(delta);
-        game.FrameReset();
         last = now;
 
-        if (game.XrSession) {
-            raf = game.XrSession.requestAnimationFrame(tick);
+        if (frame) {
+            game.XrFrame = frame;
+            raf = game.XrFrame.session.requestAnimationFrame(tick);
         } else {
+            game.XrFrame = undefined;
             raf = requestAnimationFrame(tick);
         }
+
+        game.FrameUpdate(delta);
+        game.FrameReset();
     }
 
     if (game.XrSession) {
@@ -93,12 +95,13 @@ export async function xr_init(game: Game) {
 }
 
 export async function xr_enter(game: Game) {
-    loop_stop(game);
     let session = await navigator.xr.requestSession("immersive-vr");
     session.updateRenderState({
         baseLayer: new XRWebGLLayer(session, game.GL),
     });
     game.XrSpace = await session.requestReferenceSpace("local");
+
+    loop_stop(game);
     game.XrSession = session;
     loop_start(game);
 
