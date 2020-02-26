@@ -5,6 +5,7 @@ import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop, xr_init} from "./core.js";
 import {mat_gouraud} from "./materials/mat_gouraud.js";
 import {sys_camera} from "./systems/sys_camera.js";
+import {sys_control_xr} from "./systems/sys_control_xr.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_render} from "./systems/sys_render.js";
@@ -61,6 +62,7 @@ export class Game {
 
     FrameUpdate(delta: number) {
         let now = performance.now();
+        sys_control_xr(this, delta);
         sys_transform(this, delta);
         sys_camera(this, delta);
         sys_light(this, delta);
