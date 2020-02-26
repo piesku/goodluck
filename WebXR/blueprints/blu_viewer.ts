@@ -1,3 +1,4 @@
+import {GL_CCW} from "../../common/webgl.js";
 import {camera_xr} from "../components/com_camera.js";
 import {control_xr} from "../components/com_control_xr.js";
 import {pose} from "../components/com_pose.js";
@@ -17,8 +18,15 @@ export function blueprint_viewer(game: Game) {
                 Using: [pose(), control_xr("left")],
                 Children: [
                     {
-                        Scale: [0.1, 0.1, 0.2],
-                        Using: [render_shaded(game.MaterialGouraud, game.MeshCube, [1, 1, 0.3, 1])],
+                        Scale: [-1, 1, 1],
+                        Using: [
+                            render_shaded(
+                                game.MaterialGouraud,
+                                game.MeshHand,
+                                [1, 1, 0.3, 1],
+                                GL_CCW
+                            ),
+                        ],
                     },
                 ],
             },
@@ -27,9 +35,7 @@ export function blueprint_viewer(game: Game) {
                 Using: [pose(), control_xr("right")],
                 Children: [
                     {
-                        Rotation: [0.966, -0.259, 0, 0],
-                        Scale: [0.1, 0.1, 0.2],
-                        Using: [render_shaded(game.MaterialGouraud, game.MeshCube, [1, 1, 0.3, 1])],
+                        Using: [render_shaded(game.MaterialGouraud, game.MeshHand, [1, 1, 0.3, 1])],
                     },
                 ],
             },

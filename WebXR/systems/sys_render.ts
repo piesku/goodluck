@@ -48,6 +48,7 @@ function render_vr(game: Game, camera: CameraXr) {
 function render(game: Game, pv: Mat4) {
     // Keep track of the current material to minimize switching.
     let current_material = null;
+    let current_front_face = null;
 
     for (let i = 0; i < game.World.Mask.length; i++) {
         if ((game.World.Mask[i] & QUERY) === QUERY) {
@@ -77,6 +78,10 @@ function render(game: Game, pv: Mat4) {
                         );
                         break;
                 }
+            }
+
+            if (render.FrontFace !== current_front_face) {
+                game.GL.frontFace(render.FrontFace);
             }
 
             switch (render.Kind) {
