@@ -1,10 +1,12 @@
 import {Material, Mesh} from "../common/material.js";
-import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
+import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
+import {mesh_hand} from "../meshes/hand.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop, xr_init} from "./core.js";
 import {mat_gouraud} from "./materials/mat_gouraud.js";
 import {sys_camera} from "./systems/sys_camera.js";
+import {sys_control_xr} from "./systems/sys_control_xr.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_render} from "./systems/sys_render.js";
@@ -32,6 +34,7 @@ export class Game {
 
     MaterialGouraud: Material;
     MeshCube: Mesh;
+    MeshHand: Mesh;
 
     Camera?: Camera;
     LightPositions: Array<number> = [];
@@ -45,10 +48,10 @@ export class Game {
         this.GL = this.Canvas.getContext("webgl2", {xrCompatible: true})! as WebGL2RenderingContext;
         this.GL.enable(GL_DEPTH_TEST);
         this.GL.enable(GL_CULL_FACE);
-        this.GL.frontFace(GL_CW);
 
         this.MaterialGouraud = mat_gouraud(this.GL);
         this.MeshCube = mesh_cube(this.GL);
+        this.MeshHand = mesh_hand(this.GL);
 
         if (navigator.xr) {
             xr_init(this);
@@ -61,6 +64,7 @@ export class Game {
 
     FrameUpdate(delta: number) {
         let now = performance.now();
+        sys_control_xr(this, delta);
         sys_transform(this, delta);
         sys_camera(this, delta);
         sys_light(this, delta);
