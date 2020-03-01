@@ -22,7 +22,10 @@ let vertex = `#version 300 es
 let fragment = `#version 300 es
     precision mediump float;
 
-    uniform vec4 color;
+    uniform vec3 eye;
+    uniform vec4 color_diffuse;
+    uniform vec4 color_specular;
+    uniform float shininess;
     uniform int light_count;
     uniform vec3 light_positions[10];
     uniform vec4 light_details[10];
@@ -32,19 +35,39 @@ let fragment = `#version 300 es
     out vec4 frag_color;
 
     void main() {
-        vec3 rgb = vec3(0.0, 0.0, 0.0);
+        // Ambient light.
+        vec3 rgb = color_diffuse.rgb * 0.1;
+
+        vec3 view_dir = eye - vert_pos.xyz;
+        vec3 view_normal = normalize(view_dir);
+
         vec3 frag_normal = normalize(vert_normal);
         for (int i = 0; i < light_count; i++) {
+            vec3 light_color = light_details[i].rgb;
+
+            // Distance attenuation.
             vec3 light_dir = light_positions[i] - vert_pos.xyz;
-            vec3 light_normal = normalize(light_dir);
             float light_dist = length(light_dir);
-
-            float diffuse_factor = max(dot(frag_normal, light_normal), 0.0);
+            vec3 light_normal = light_dir / light_dist;
             float distance_factor = light_dist * light_dist;
-            float intensity_factor = light_details[i].a;
-            float attenuation = distance_factor / intensity_factor;
+            float light_intensity = light_details[i].a;
+            float attenuation = distance_factor / light_intensity;
 
-            rgb += color.rgb * light_details[i].rgb * diffuse_factor / attenuation;
+            // Diffuse color.
+            float diffuse_factor = max(dot(frag_normal, light_normal), 0.0);
+            rgb += color_diffuse.rgb * diffuse_factor * light_color / attenuation;
+
+            // Specular color. Phong reflection model.
+            // vec3 r = reflect(-light_normal, frag_normal);
+            // float specular_angle = max(dot(r, view_normal), 0.0);
+            // float specular_factor = pow(specular_angle, shininess);
+
+            // Specular color. Blinn-Phong reflection model.
+            vec3 h = normalize(light_normal + view_normal);
+            float specular_angle = max(dot(h, frag_normal), 0.0);
+            float specular_factor = pow(specular_angle, shininess);
+
+            rgb += color_specular.rgb * specular_factor * light_color / attenuation;
         }
 
         frag_color = vec4(rgb, 1.0);
@@ -60,7 +83,10 @@ export function mat_phong(gl: WebGL2RenderingContext) {
             gl.getUniformLocation(Program, "pv")!,
             gl.getUniformLocation(Program, "world")!,
             gl.getUniformLocation(Program, "self")!,
-            gl.getUniformLocation(Program, "color")!,
+            gl.getUniformLocation(Program, "eye")!,
+            gl.getUniformLocation(Program, "color_diffuse")!,
+            gl.getUniformLocation(Program, "color_specular")!,
+            gl.getUniformLocation(Program, "shininess")!,
             gl.getUniformLocation(Program, "light_count")!,
             gl.getUniformLocation(Program, "light_positions")!,
             gl.getUniformLocation(Program, "light_details")!,

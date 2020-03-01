@@ -3,6 +3,7 @@ import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
 import {BasicUniform, RenderBasic} from "../components/com_render_basic.js";
 import {RenderShaded, ShadedUniform} from "../components/com_render_shaded.js";
+import {RenderSpecular, SpecularUniform} from "../components/com_render_specular.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 
@@ -24,13 +25,21 @@ export function sys_render(game: Game, delta: number) {
 
             if (render.Material !== current_material) {
                 current_material = render.Material;
-
                 game.GL.useProgram(current_material.Program);
-                // XXX Uniforms[0] should always be PV.
-                game.GL.uniformMatrix4fv(current_material.Uniforms[0], false, game.Camera!.PV);
-
                 switch (render.Kind) {
+                    case RenderKind.Basic:
+                        game.GL.uniformMatrix4fv(
+                            current_material.Uniforms[BasicUniform.PV],
+                            false,
+                            game.Camera!.PV
+                        );
+                        break;
                     case RenderKind.Shaded:
+                        game.GL.uniformMatrix4fv(
+                            current_material.Uniforms[ShadedUniform.PV],
+                            false,
+                            game.Camera!.PV
+                        );
                         game.GL.uniform1i(
                             current_material.Uniforms[ShadedUniform.LightCount],
                             game.LightPositions.length / 3
@@ -44,6 +53,29 @@ export function sys_render(game: Game, delta: number) {
                             game.LightDetails
                         );
                         break;
+                    case RenderKind.Specular:
+                        game.GL.uniformMatrix4fv(
+                            current_material.Uniforms[SpecularUniform.PV],
+                            false,
+                            game.Camera!.PV
+                        );
+                        game.GL.uniform3fv(
+                            current_material.Uniforms[SpecularUniform.Eye],
+                            game.Camera!.Eye
+                        );
+                        game.GL.uniform1i(
+                            current_material.Uniforms[SpecularUniform.LightCount],
+                            game.LightPositions.length / 3
+                        );
+                        game.GL.uniform3fv(
+                            current_material.Uniforms[SpecularUniform.LightPositions],
+                            game.LightPositions
+                        );
+                        game.GL.uniform4fv(
+                            current_material.Uniforms[SpecularUniform.LightDetails],
+                            game.LightDetails
+                        );
+                        break;
                 }
             }
 
@@ -53,6 +85,9 @@ export function sys_render(game: Game, delta: number) {
                     break;
                 case RenderKind.Shaded:
                     draw_shaded(game, transform, render);
+                    break;
+                case RenderKind.Specular:
+                    draw_specular(game, transform, render);
                     break;
             }
         }
@@ -71,6 +106,24 @@ function draw_shaded(game: Game, transform: Transform, render: RenderShaded) {
     game.GL.uniformMatrix4fv(render.Material.Uniforms[ShadedUniform.World], false, transform.World);
     game.GL.uniformMatrix4fv(render.Material.Uniforms[ShadedUniform.Self], false, transform.Self);
     game.GL.uniform4fv(render.Material.Uniforms[ShadedUniform.Color], render.Color);
+    game.GL.bindVertexArray(render.VAO);
+    game.GL.drawElements(render.Material.Mode, render.Mesh.Count, GL_UNSIGNED_SHORT, 0);
+    game.GL.bindVertexArray(null);
+}
+
+function draw_specular(game: Game, transform: Transform, render: RenderSpecular) {
+    game.GL.uniformMatrix4fv(
+        render.Material.Uniforms[SpecularUniform.World],
+        false,
+        transform.World
+    );
+    game.GL.uniformMatrix4fv(render.Material.Uniforms[SpecularUniform.Self], false, transform.Self);
+    game.GL.uniform4fv(render.Material.Uniforms[SpecularUniform.ColorDiffuse], render.ColorDiffuse);
+    game.GL.uniform4fv(
+        render.Material.Uniforms[SpecularUniform.ColorSpecular],
+        render.ColorSpecular
+    );
+    game.GL.uniform1f(render.Material.Uniforms[SpecularUniform.Shininess], render.Shininess);
     game.GL.bindVertexArray(render.VAO);
     game.GL.drawElements(render.Material.Mode, render.Mesh.Count, GL_UNSIGNED_SHORT, 0);
     game.GL.bindVertexArray(null);
