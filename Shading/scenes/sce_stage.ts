@@ -22,25 +22,23 @@ export function scene_stage(game: Game) {
         ...blueprint_camera(game),
     });
 
+    let light_spread = 7;
+    let light_range = 5;
     instantiate(game, {
         Translation: [0, 0, 5],
         Using: [rotate([0, 0, 30])],
         Children: [
             {
-                Translation: [0, 4, 0],
-                Using: [light([1, 1, 1], 3)],
+                Translation: [1 * light_spread, 0, 0],
+                Using: [light([1, 1, 1], light_range)],
             },
             {
-                Translation: [-4, 0, 0],
-                Using: [light([1, 1, 1], 3)],
+                Translation: [-0.5 * light_spread, 0.866 * light_spread, 0],
+                Using: [light([1, 1, 1], light_range)],
             },
             {
-                Translation: [0, -4, 0],
-                Using: [light([1, 1, 1], 3)],
-            },
-            {
-                Translation: [4, 0, 0],
-                Using: [light([1, 1, 1], 3)],
+                Translation: [-0.5 * light_spread, -0.866 * light_spread, 0],
+                Using: [light([1, 1, 1], light_range)],
             },
         ],
     });
