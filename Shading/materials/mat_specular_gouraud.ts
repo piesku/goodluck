@@ -31,30 +31,33 @@ let vertex = `#version 300 es
 
         for (int i = 0; i < light_count; i++) {
             vec3 light_color = light_details[i].rgb;
+            float light_intensity = light_details[i].a;
 
-            // Distance attenuation.
             vec3 light_dir = light_positions[i] - vert_pos.xyz;
             float light_dist = length(light_dir);
             vec3 light_normal = light_dir / light_dist;
-            float distance_factor = light_dist * light_dist;
-            float light_intensity = light_details[i].a;
-            float attenuation = distance_factor / light_intensity;
 
-            // Diffuse color.
-            float diffuse_factor = max(dot(vert_normal, light_normal), 0.0);
-            rgb += color_diffuse.rgb * diffuse_factor * light_color / attenuation;
+            float diffuse_factor = dot(vert_normal, light_normal);
+            if (diffuse_factor > 0.0) {
+                // Distance attenuation.
+                float distance_factor = light_dist * light_dist;
+                float attenuation = distance_factor / light_intensity;
 
-            // Specular color. Phong reflection model.
-            // vec3 r = reflect(-light_normal, frag_normal);
-            // float specular_angle = max(dot(r, view_normal), 0.0);
-            // float specular_factor = pow(specular_angle, shininess);
+                // Diffuse color.
+                rgb += color_diffuse.rgb * diffuse_factor * light_color / attenuation;
 
-            // Specular color. Blinn-Phong reflection model.
-            vec3 h = normalize(light_normal + view_normal);
-            float specular_angle = max(dot(h, vert_normal), 0.0);
-            float specular_factor = pow(specular_angle, shininess);
+                // Specular color. Phong reflection model.
+                // vec3 r = reflect(-light_normal, frag_normal);
+                // float specular_angle = max(dot(r, view_normal), 0.0);
+                // float specular_factor = pow(specular_angle, shininess);
 
-            rgb += color_specular.rgb * specular_factor * light_color / attenuation;
+                // Specular color. Blinn-Phong reflection model.
+                vec3 h = normalize(light_normal + view_normal);
+                float specular_angle = max(dot(h, vert_normal), 0.0);
+                float specular_factor = pow(specular_angle, shininess);
+
+                rgb += color_specular.rgb * specular_factor * light_color / attenuation;
+            }
         }
 
         vert_color = vec4(rgb, 1.0);
