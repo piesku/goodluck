@@ -32,19 +32,24 @@ let fragment = `#version 300 es
     out vec4 frag_color;
 
     void main() {
-        vec3 rgb = vec3(0.0, 0.0, 0.0);
+        // Ambient light.
+        vec3 rgb = color.rgb * 0.1;
+
         vec3 frag_normal = normalize(vert_normal);
         for (int i = 0; i < light_count; i++) {
+            vec3 light_color = light_details[i].rgb;
+
+            // Distance attenuation.
             vec3 light_dir = light_positions[i] - vert_pos.xyz;
-            vec3 light_normal = normalize(light_dir);
             float light_dist = length(light_dir);
-
-            float diffuse_factor = max(dot(frag_normal, light_normal), 0.0);
+            vec3 light_normal = light_dir / light_dist;
             float distance_factor = light_dist * light_dist;
-            float intensity_factor = light_details[i].a;
-            float attenuation = distance_factor / intensity_factor;
+            float light_intensity = light_details[i].a;
+            float attenuation = distance_factor / light_intensity;
 
-            rgb += color.rgb * light_details[i].rgb * diffuse_factor / attenuation;
+            // Diffuse color.
+            float diffuse_factor = max(dot(frag_normal, light_normal), 0.0);
+            rgb += color.rgb * light_color * diffuse_factor / attenuation;
         }
 
         frag_color = vec4(rgb, 1.0);

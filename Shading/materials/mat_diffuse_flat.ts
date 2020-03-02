@@ -16,22 +16,27 @@ let vertex = `#version 300 es
     flat out vec4 vert_color;
 
     void main() {
-        vec4 world_pos = world * vec4(position, 1.0);
-        vec3 world_normal = normalize((vec4(normal, 0.0) * self).xyz);
-        gl_Position = pv * world_pos;
+        vec4 vert_pos = world * vec4(position, 1.0);
+        vec3 vert_normal = normalize((vec4(normal, 1.0) * self).xyz);
+        gl_Position = pv * vert_pos;
 
-        vec3 rgb = vec3(0.0, 0.0, 0.0);
+        // Ambient light.
+        vec3 rgb = color.rgb * 0.1;
+
         for (int i = 0; i < light_count; i++) {
-            vec3 light_dir = light_positions[i] - world_pos.xyz ;
-            vec3 light_normal = normalize(light_dir);
+            vec3 light_color = light_details[i].rgb;
+
+            // Distance attenuation.
+            vec3 light_dir = light_positions[i] - vert_pos.xyz;
             float light_dist = length(light_dir);
-
-            float diffuse_factor = max(dot(world_normal, light_normal), 0.0);
+            vec3 light_normal = light_dir / light_dist;
             float distance_factor = light_dist * light_dist;
-            float intensity_factor = light_details[i].a;
+            float light_intensity = light_details[i].a;
+            float attenuation = distance_factor / light_intensity;
 
-            rgb += color.rgb * light_details[i].rgb * diffuse_factor
-                    * intensity_factor / distance_factor;
+            // Diffuse color.
+            float diffuse_factor = max(dot(vert_normal, light_normal), 0.0);
+            rgb += color.rgb * light_color * diffuse_factor / attenuation;
         }
 
         vert_color = vec4(rgb, 1.0);
