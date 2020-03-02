@@ -1,7 +1,7 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light} from "../components/com_light.js";
 import {render_basic} from "../components/com_render_basic.js";
-import {render_shaded} from "../components/com_render_shaded.js";
+import {render_diffuse} from "../components/com_render_diffuse.js";
 import {render_specular} from "../components/com_render_specular.js";
 import {rotate} from "../components/com_rotate.js";
 import {instantiate} from "../core.js";
@@ -50,9 +50,9 @@ export function scene_stage(game: Game) {
         render_basic(game.MaterialWireframe, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
         render_basic(game.MaterialBasic, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
 
-        render_shaded(game.MaterialFlat, game.MeshIcosphereFlat, [1, 1, 0.3, 1]),
-        render_shaded(game.MaterialGouraud, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
-        render_shaded(game.MaterialPhong, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
+        render_diffuse(game.MaterialDiffuseFlat, game.MeshIcosphereFlat, [1, 1, 0.3, 1]),
+        render_diffuse(game.MaterialDiffuseGouraud, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
+        render_diffuse(game.MaterialDiffusePhong, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
 
         render_specular(game.MaterialSpecularFlat, game.MeshIcosphereFlat, [1, 1, 0.3, 1], 100, [
             1,

@@ -1,6 +1,6 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
-import {ShadedAttribute} from "../components/com_render_shaded.js";
+import {DiffuseAttribute} from "../components/com_render_diffuse.js";
 
 let vertex = `#version 300 es
     uniform mat4 pv;
@@ -11,8 +11,8 @@ let vertex = `#version 300 es
     uniform vec3 light_positions[10];
     uniform vec4 light_details[10];
 
-    layout(location=${ShadedAttribute.Position}) in vec3 position;
-    layout(location=${ShadedAttribute.Normal}) in vec3 normal;
+    layout(location=${DiffuseAttribute.Position}) in vec3 position;
+    layout(location=${DiffuseAttribute.Normal}) in vec3 normal;
     out vec4 vert_color;
 
     void main() {
@@ -49,7 +49,7 @@ let fragment = `#version 300 es
     }
 `;
 
-export function mat_gouraud(gl: WebGL2RenderingContext) {
+export function mat_diffuse_gouraud(gl: WebGL2RenderingContext) {
     let Program = link(gl, vertex, fragment);
     return <Material>{
         Mode: GL_TRIANGLES,

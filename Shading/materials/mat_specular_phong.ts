@@ -1,14 +1,14 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
-import {ShadedAttribute} from "../components/com_render_shaded.js";
+import {DiffuseAttribute} from "../components/com_render_diffuse.js";
 
 let vertex = `#version 300 es
     uniform mat4 pv;
     uniform mat4 world;
     uniform mat4 self;
 
-    layout(location=${ShadedAttribute.Position}) in vec3 position;
-    layout(location=${ShadedAttribute.Normal}) in vec3 normal;
+    layout(location=${DiffuseAttribute.Position}) in vec3 position;
+    layout(location=${DiffuseAttribute.Normal}) in vec3 normal;
     out vec4 vert_pos;
     out vec3 vert_normal;
 
