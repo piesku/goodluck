@@ -25,7 +25,7 @@ let fragment = `#version 300 es
     }
 `;
 
-export function mat_points(gl: WebGL2RenderingContext) {
+export function mat_basic_points(gl: WebGL2RenderingContext) {
     let Program = link(gl, vertex, fragment);
     return <Material>{
         Mode: GL_POINTS,

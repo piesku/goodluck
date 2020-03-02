@@ -5,15 +5,15 @@ import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
-import {mat_basic} from "./materials/mat_basic.js";
+import {mat_basic_points} from "./materials/mat_basic_points.js";
+import {mat_basic_triangles} from "./materials/mat_basic_triangles.js";
+import {mat_basic_wireframe} from "./materials/mat_basic_wireframe.js";
 import {mat_diffuse_flat} from "./materials/mat_diffuse_flat.js";
 import {mat_diffuse_gouraud} from "./materials/mat_diffuse_gouraud.js";
 import {mat_diffuse_phong} from "./materials/mat_diffuse_phong.js";
-import {mat_points} from "./materials/mat_points.js";
 import {mat_specular_flat} from "./materials/mat_specular_flat.js";
 import {mat_specular_gouraud} from "./materials/mat_specular_gouraud.js";
 import {mat_specular_phong} from "./materials/mat_specular_phong.js";
-import {mat_wireframe} from "./materials/mat_wireframe.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -34,9 +34,9 @@ export class Game {
     Canvas = document.querySelector("canvas")!;
     GL: WebGL2RenderingContext;
 
-    MaterialPoints: Material;
-    MaterialWireframe: Material;
-    MaterialBasic: Material;
+    MaterialBasicPoints: Material;
+    MaterialBasicWireframe: Material;
+    MaterialBasicTriangles: Material;
     MaterialDiffuseFlat: Material;
     MaterialDiffuseGouraud: Material;
     MaterialDiffusePhong: Material;
@@ -62,9 +62,9 @@ export class Game {
         this.GL.enable(GL_CULL_FACE);
         this.GL.frontFace(GL_CW);
 
-        this.MaterialPoints = mat_points(this.GL);
-        this.MaterialWireframe = mat_wireframe(this.GL);
-        this.MaterialBasic = mat_basic(this.GL);
+        this.MaterialBasicPoints = mat_basic_points(this.GL);
+        this.MaterialBasicWireframe = mat_basic_wireframe(this.GL);
+        this.MaterialBasicTriangles = mat_basic_triangles(this.GL);
         this.MaterialDiffuseFlat = mat_diffuse_flat(this.GL);
         this.MaterialDiffuseGouraud = mat_diffuse_gouraud(this.GL);
         this.MaterialDiffusePhong = mat_diffuse_phong(this.GL);

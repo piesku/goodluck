@@ -46,9 +46,9 @@ export function scene_stage(game: Game) {
     });
 
     let shadings = [
-        render_basic(game.MaterialPoints, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
-        render_basic(game.MaterialWireframe, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
-        render_basic(game.MaterialBasic, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
+        render_basic(game.MaterialBasicPoints, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
+        render_basic(game.MaterialBasicWireframe, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
+        render_basic(game.MaterialBasicTriangles, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
 
         render_diffuse(game.MaterialDiffuseFlat, game.MeshIcosphereFlat, [1, 1, 0.3, 1]),
         render_diffuse(game.MaterialDiffuseGouraud, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
