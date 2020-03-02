@@ -10,6 +10,9 @@ import {mat_flat} from "./materials/mat_flat.js";
 import {mat_gouraud} from "./materials/mat_gouraud.js";
 import {mat_phong} from "./materials/mat_phong.js";
 import {mat_points} from "./materials/mat_points.js";
+import {mat_specular_flat} from "./materials/mat_specular_flat.js";
+import {mat_specular_gouraud} from "./materials/mat_specular_gouraud.js";
+import {mat_specular_phong} from "./materials/mat_specular_phong.js";
 import {mat_wireframe} from "./materials/mat_wireframe.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -37,6 +40,9 @@ export class Game {
     MaterialFlat: Material;
     MaterialGouraud: Material;
     MaterialPhong: Material;
+    MaterialSpecularFlat: Material;
+    MaterialSpecularGouraud: Material;
+    MaterialSpecularPhong: Material;
 
     MeshCube: Mesh;
     MeshIcosphereFlat: Mesh;
@@ -62,6 +68,9 @@ export class Game {
         this.MaterialFlat = mat_flat(this.GL);
         this.MaterialGouraud = mat_gouraud(this.GL);
         this.MaterialPhong = mat_phong(this.GL);
+        this.MaterialSpecularFlat = mat_specular_flat(this.GL);
+        this.MaterialSpecularGouraud = mat_specular_gouraud(this.GL);
+        this.MaterialSpecularPhong = mat_specular_phong(this.GL);
 
         this.MeshCube = mesh_cube(this.GL);
         this.MeshIcosphereFlat = mesh_icosphere_flat(this.GL);
