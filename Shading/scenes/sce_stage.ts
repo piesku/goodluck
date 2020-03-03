@@ -1,7 +1,9 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light} from "../components/com_light.js";
 import {render_basic} from "../components/com_render_basic.js";
-import {render_shaded} from "../components/com_render_shaded.js";
+import {render_diffuse} from "../components/com_render_diffuse.js";
+import {render_specular} from "../components/com_render_specular.js";
+import {rotate} from "../components/com_rotate.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
@@ -16,62 +18,73 @@ export function scene_stage(game: Game) {
 
     // Camera.
     instantiate(game, {
-        Translation: [0, 2, 4],
+        Translation: [0, 0, 4],
         ...blueprint_camera(game),
     });
 
-    // Light 1.
+    let light_spread = 7;
+    let light_range = 5;
     instantiate(game, {
-        Translation: [-2, 5, 5],
-        Using: [light([1, 1, 1], 3)],
+        Translation: [0, 0, 5],
+        Using: [rotate([0, 0, 30])],
+        Children: [
+            {
+                Translation: [1 * light_spread, 0, 0],
+                Using: [light([1, 1, 1], light_range)],
+            },
+            {
+                Translation: [-0.5 * light_spread, 0.866 * light_spread, 0],
+                Using: [light([1, 1, 1], light_range)],
+            },
+            {
+                Translation: [-0.5 * light_spread, -0.866 * light_spread, 0],
+                Using: [light([1, 1, 1], light_range)],
+            },
+        ],
     });
 
-    // Light 2.
-    instantiate(game, {
-        Translation: [1, 4, 5],
-        Using: [light([1, 1, 1], 5)],
-    });
+    let shadings = [
+        render_basic(game.MaterialBasicPoints, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
+        render_basic(game.MaterialBasicWireframe, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
+        render_basic(game.MaterialBasicTriangles, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
 
-    // Ground.
-    instantiate(game, {
-        Translation: [0, 0, 0],
-        Scale: [10, 1, 10],
-        Using: [render_shaded(game.MaterialGouraud, game.MeshCube, [1, 1, 0.3, 1])],
-    });
+        render_diffuse(game.MaterialDiffuseFlat, game.MeshIcosphereFlat, [1, 1, 0.3, 1]),
+        render_diffuse(game.MaterialDiffuseGouraud, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
+        render_diffuse(game.MaterialDiffusePhong, game.MeshIcosphereSmooth, [1, 1, 0.3, 1]),
 
-    // Points.
-    instantiate(game, {
-        Translation: [-1.5, 3, 0],
-        Using: [render_basic(game.MaterialPoints, game.MeshIcosphereSmooth, [1, 1, 0.3, 1])],
-    });
+        render_specular(game.MaterialSpecularFlat, game.MeshIcosphereFlat, [1, 1, 0.3, 1], 100, [
+            1,
+            1,
+            1,
+            1,
+        ]),
+        render_specular(
+            game.MaterialSpecularGouraud,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0.3, 1],
+            100
+        ),
+        render_specular(game.MaterialSpecularPhong, game.MeshIcosphereSmooth, [1, 1, 0.3, 1], 100),
+    ];
 
-    // Wireframe.
-    instantiate(game, {
-        Translation: [0, 3, 0],
-        Using: [render_basic(game.MaterialWireframe, game.MeshIcosphereSmooth, [1, 1, 0.3, 1])],
-    });
+    let rows = 3;
+    let cols = 3;
+    let pad = 0.25;
 
-    // Basic.
-    instantiate(game, {
-        Translation: [1.5, 3, 0],
-        Using: [render_basic(game.MaterialBasic, game.MeshIcosphereSmooth, [1, 1, 0.3, 1])],
-    });
+    let offset_x = (cols + pad * (cols - 1)) / 2;
+    let offset_y = (rows + pad * (rows - 1)) / 2;
 
-    // Flat.
-    instantiate(game, {
-        Translation: [-1.5, 1, 0],
-        Using: [render_shaded(game.MaterialFlat, game.MeshIcosphereFlat, [1, 1, 0.3, 1])],
-    });
-
-    // Gouraud.
-    instantiate(game, {
-        Translation: [0, 1, 0],
-        Using: [render_shaded(game.MaterialGouraud, game.MeshIcosphereSmooth, [1, 1, 0.3, 1])],
-    });
-
-    // Phong.
-    instantiate(game, {
-        Translation: [1.5, 1, 0],
-        Using: [render_shaded(game.MaterialPhong, game.MeshIcosphereSmooth, [1, 1, 0.3, 1])],
-    });
+    for (let row = rows - 1; row >= 0; row--) {
+        let y = row * (1 + pad) + 0.5;
+        for (let col = 0; col < cols; col++) {
+            let render = shadings.shift();
+            if (render) {
+                let x = col * (1 + pad) + 0.5;
+                instantiate(game, {
+                    Translation: [x - offset_x, y - offset_y, 0],
+                    Using: [render],
+                });
+            }
+        }
+    }
 }
