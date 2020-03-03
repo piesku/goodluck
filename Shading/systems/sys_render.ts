@@ -97,7 +97,7 @@ function draw_diffuse(game: Game, transform: Transform, render: RenderDiffuse) {
 function use_specular(game: Game, material: Material) {
     game.GL.useProgram(material.Program);
     game.GL.uniformMatrix4fv(material.Uniforms[SpecularUniform.PV], false, game.Camera!.PV);
-    game.GL.uniform3fv(material.Uniforms[SpecularUniform.Eye], game.Camera!.Eye);
+    game.GL.uniform3fv(material.Uniforms[SpecularUniform.Eye], game.Camera!.Position);
     game.GL.uniform1i(
         material.Uniforms[SpecularUniform.LightCount],
         game.LightPositions.length / 3

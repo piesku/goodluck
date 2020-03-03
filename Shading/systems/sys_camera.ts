@@ -39,5 +39,5 @@ function update(game: Game, entity: Entity) {
     }
 
     multiply(camera.PV, camera.Projection, transform.Self);
-    get_translation(camera.Eye, transform.World);
+    get_translation(camera.Position, transform.World);
 }
