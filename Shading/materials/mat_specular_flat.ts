@@ -46,11 +46,12 @@ let vertex = `#version 300 es
                 // Diffuse color.
                 rgb += color_diffuse.rgb * diffuse_factor * light_color / attenuation;
 
-                // Specular color. Blinn-Phong reflection model.
+                // Blinn-Phong reflection model.
                 vec3 h = normalize(light_normal + view_normal);
                 float specular_angle = max(dot(h, vert_normal), 0.0);
                 float specular_factor = pow(specular_angle, shininess);
 
+                // Specular color.
                 rgb += color_specular.rgb * specular_factor * light_color / attenuation;
             }
         }
