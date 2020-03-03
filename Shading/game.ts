@@ -1,4 +1,3 @@
-import {Material, Mesh} from "../common/material.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
@@ -30,23 +29,24 @@ export class Game {
     ViewportWidth = 0;
     ViewportHeight = 0;
     ViewportResized = false;
+
     UI = document.querySelector("main")!;
     Canvas = document.querySelector("canvas")!;
-    GL: WebGL2RenderingContext;
+    GL = this.Canvas.getContext("webgl2")!;
 
-    MaterialBasicPoints: Material;
-    MaterialBasicWireframe: Material;
-    MaterialBasicTriangles: Material;
-    MaterialDiffuseFlat: Material;
-    MaterialDiffuseGouraud: Material;
-    MaterialDiffusePhong: Material;
-    MaterialSpecularFlat: Material;
-    MaterialSpecularGouraud: Material;
-    MaterialSpecularPhong: Material;
+    MaterialBasicPoints = mat_basic_points(this.GL);
+    MaterialBasicWireframe = mat_basic_wireframe(this.GL);
+    MaterialBasicTriangles = mat_basic_triangles(this.GL);
+    MaterialDiffuseFlat = mat_diffuse_flat(this.GL);
+    MaterialDiffuseGouraud = mat_diffuse_gouraud(this.GL);
+    MaterialDiffusePhong = mat_diffuse_phong(this.GL);
+    MaterialSpecularFlat = mat_specular_flat(this.GL);
+    MaterialSpecularGouraud = mat_specular_gouraud(this.GL);
+    MaterialSpecularPhong = mat_specular_phong(this.GL);
 
-    MeshCube: Mesh;
-    MeshIcosphereFlat: Mesh;
-    MeshIcosphereSmooth: Mesh;
+    MeshCube = mesh_cube(this.GL);
+    MeshIcosphereFlat = mesh_icosphere_flat(this.GL);
+    MeshIcosphereSmooth = mesh_icosphere_smooth(this.GL);
 
     Camera?: Camera;
     LightPositions: Array<number> = [];
@@ -57,23 +57,8 @@ export class Game {
             document.hidden ? loop_stop() : loop_start(this)
         );
 
-        this.GL = this.Canvas.getContext("webgl2")!;
         this.GL.enable(GL_DEPTH_TEST);
         this.GL.enable(GL_CULL_FACE);
-
-        this.MaterialBasicPoints = mat_basic_points(this.GL);
-        this.MaterialBasicWireframe = mat_basic_wireframe(this.GL);
-        this.MaterialBasicTriangles = mat_basic_triangles(this.GL);
-        this.MaterialDiffuseFlat = mat_diffuse_flat(this.GL);
-        this.MaterialDiffuseGouraud = mat_diffuse_gouraud(this.GL);
-        this.MaterialDiffusePhong = mat_diffuse_phong(this.GL);
-        this.MaterialSpecularFlat = mat_specular_flat(this.GL);
-        this.MaterialSpecularGouraud = mat_specular_gouraud(this.GL);
-        this.MaterialSpecularPhong = mat_specular_phong(this.GL);
-
-        this.MeshCube = mesh_cube(this.GL);
-        this.MeshIcosphereFlat = mesh_icosphere_flat(this.GL);
-        this.MeshIcosphereSmooth = mesh_icosphere_smooth(this.GL);
     }
 
     FrameReset() {
