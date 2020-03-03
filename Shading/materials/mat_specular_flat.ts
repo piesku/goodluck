@@ -23,11 +23,11 @@ let vertex = `#version 300 es
         vec3 vert_normal = normalize((vec4(normal, 1.0) * self).xyz);
         gl_Position = pv * vert_pos;
 
-        // Ambient light.
-        vec3 rgb = color_diffuse.rgb * 0.1;
-
         vec3 view_dir = eye - vert_pos.xyz;
         vec3 view_normal = normalize(view_dir);
+
+        // Ambient light.
+        vec3 rgb = color_diffuse.rgb * 0.1;
 
         for (int i = 0; i < light_count; i++) {
             vec3 light_color = light_details[i].rgb;

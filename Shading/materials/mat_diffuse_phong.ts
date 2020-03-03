@@ -32,10 +32,11 @@ let fragment = `#version 300 es
     out vec4 frag_color;
 
     void main() {
+        vec3 frag_normal = normalize(vert_normal);
+
         // Ambient light.
         vec3 rgb = color.rgb * 0.1;
 
-        vec3 frag_normal = normalize(vert_normal);
         for (int i = 0; i < light_count; i++) {
             vec3 light_color = light_details[i].rgb;
             float light_intensity = light_details[i].a;

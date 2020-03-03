@@ -35,13 +35,14 @@ let fragment = `#version 300 es
     out vec4 frag_color;
 
     void main() {
-        // Ambient light.
-        vec3 rgb = color_diffuse.rgb * 0.1;
+        vec3 frag_normal = normalize(vert_normal);
 
         vec3 view_dir = eye - vert_pos.xyz;
         vec3 view_normal = normalize(view_dir);
 
-        vec3 frag_normal = normalize(vert_normal);
+        // Ambient light.
+        vec3 rgb = color_diffuse.rgb * 0.1;
+
         for (int i = 0; i < light_count; i++) {
             vec3 light_color = light_details[i].rgb;
             float light_intensity = light_details[i].a;
