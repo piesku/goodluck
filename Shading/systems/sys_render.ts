@@ -1,3 +1,4 @@
+import {Material} from "../../common/material.js";
 import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
 import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
@@ -26,56 +27,15 @@ export function sys_render(game: Game, delta: number) {
 
             if (render.Material !== current_material) {
                 current_material = render.Material;
-                game.GL.useProgram(current_material.Program);
                 switch (render.Kind) {
                     case RenderKind.Basic:
-                        game.GL.uniformMatrix4fv(
-                            current_material.Uniforms[BasicUniform.PV],
-                            false,
-                            game.Camera!.PV
-                        );
+                        use_basic(game, current_material);
                         break;
                     case RenderKind.Diffuse:
-                        game.GL.uniformMatrix4fv(
-                            current_material.Uniforms[DiffuseUniform.PV],
-                            false,
-                            game.Camera!.PV
-                        );
-                        game.GL.uniform1i(
-                            current_material.Uniforms[DiffuseUniform.LightCount],
-                            game.LightPositions.length / 3
-                        );
-                        game.GL.uniform3fv(
-                            current_material.Uniforms[DiffuseUniform.LightPositions],
-                            game.LightPositions
-                        );
-                        game.GL.uniform4fv(
-                            current_material.Uniforms[DiffuseUniform.LightDetails],
-                            game.LightDetails
-                        );
+                        use_diffuse(game, current_material);
                         break;
                     case RenderKind.Specular:
-                        game.GL.uniformMatrix4fv(
-                            current_material.Uniforms[SpecularUniform.PV],
-                            false,
-                            game.Camera!.PV
-                        );
-                        game.GL.uniform3fv(
-                            current_material.Uniforms[SpecularUniform.Eye],
-                            game.Camera!.Eye
-                        );
-                        game.GL.uniform1i(
-                            current_material.Uniforms[SpecularUniform.LightCount],
-                            game.LightPositions.length / 3
-                        );
-                        game.GL.uniform3fv(
-                            current_material.Uniforms[SpecularUniform.LightPositions],
-                            game.LightPositions
-                        );
-                        game.GL.uniform4fv(
-                            current_material.Uniforms[SpecularUniform.LightDetails],
-                            game.LightDetails
-                        );
+                        use_specular(game, current_material);
                         break;
                 }
             }
@@ -100,12 +60,25 @@ export function sys_render(game: Game, delta: number) {
     }
 }
 
+function use_basic(game: Game, material: Material) {
+    game.GL.useProgram(material.Program);
+    game.GL.uniformMatrix4fv(material.Uniforms[BasicUniform.PV], false, game.Camera!.PV);
+}
+
 function draw_basic(game: Game, transform: Transform, render: RenderBasic) {
     game.GL.uniformMatrix4fv(render.Material.Uniforms[BasicUniform.World], false, transform.World);
     game.GL.uniform4fv(render.Material.Uniforms[BasicUniform.Color], render.Color);
     game.GL.bindVertexArray(render.VAO);
     game.GL.drawElements(render.Material.Mode, render.Mesh.Count, GL_UNSIGNED_SHORT, 0);
     game.GL.bindVertexArray(null);
+}
+
+function use_diffuse(game: Game, material: Material) {
+    game.GL.useProgram(material.Program);
+    game.GL.uniformMatrix4fv(material.Uniforms[DiffuseUniform.PV], false, game.Camera!.PV);
+    game.GL.uniform1i(material.Uniforms[DiffuseUniform.LightCount], game.LightPositions.length / 3);
+    game.GL.uniform3fv(material.Uniforms[DiffuseUniform.LightPositions], game.LightPositions);
+    game.GL.uniform4fv(material.Uniforms[DiffuseUniform.LightDetails], game.LightDetails);
 }
 
 function draw_diffuse(game: Game, transform: Transform, render: RenderDiffuse) {
@@ -119,6 +92,18 @@ function draw_diffuse(game: Game, transform: Transform, render: RenderDiffuse) {
     game.GL.bindVertexArray(render.VAO);
     game.GL.drawElements(render.Material.Mode, render.Mesh.Count, GL_UNSIGNED_SHORT, 0);
     game.GL.bindVertexArray(null);
+}
+
+function use_specular(game: Game, material: Material) {
+    game.GL.useProgram(material.Program);
+    game.GL.uniformMatrix4fv(material.Uniforms[SpecularUniform.PV], false, game.Camera!.PV);
+    game.GL.uniform3fv(material.Uniforms[SpecularUniform.Eye], game.Camera!.Eye);
+    game.GL.uniform1i(
+        material.Uniforms[SpecularUniform.LightCount],
+        game.LightPositions.length / 3
+    );
+    game.GL.uniform3fv(material.Uniforms[SpecularUniform.LightPositions], game.LightPositions);
+    game.GL.uniform4fv(material.Uniforms[SpecularUniform.LightDetails], game.LightDetails);
 }
 
 function draw_specular(game: Game, transform: Transform, render: RenderSpecular) {
