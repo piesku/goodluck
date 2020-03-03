@@ -1,6 +1,5 @@
-import {Quat, Vec3} from "../../common/math.js";
+import {Quat} from "../../common/math.js";
 import {from_euler, multiply} from "../../common/quat.js";
-import {scale} from "../../common/vec3.js";
 import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 
@@ -14,14 +13,17 @@ export function sys_rotate(game: Game, delta: number) {
     }
 }
 
-let euler: Vec3 = [0, 0, 0];
-let quat: Quat = [0, 0, 0, 1];
+let rotation_delta: Quat = [0, 0, 0, 1];
 
 function update(game: Game, entity: Entity, delta: number) {
     let transform = game.World.Transform[entity];
     let rotate = game.World.Rotate[entity];
-    scale(euler, rotate.Rotation, delta);
-    from_euler(quat, ...euler);
-    multiply(transform.Rotation, quat, transform.Rotation);
+    from_euler(
+        rotation_delta,
+        rotate.Rotation[0] * delta,
+        rotate.Rotation[1] * delta,
+        rotate.Rotation[2] * delta
+    );
+    multiply(transform.Rotation, rotation_delta, transform.Rotation);
     transform.Dirty = true;
 }
