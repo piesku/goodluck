@@ -1,6 +1,6 @@
 import {Material, Mesh} from "../../common/material.js";
 import {Vec4} from "../../common/math.js";
-import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
+import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "./com_index.js";
 import {RenderKind} from "./com_render.js";
@@ -9,6 +9,7 @@ export interface RenderDiffuse {
     readonly Kind: RenderKind.Diffuse;
     readonly Material: Material;
     readonly Mesh: Mesh;
+    readonly FrontFace: GLint;
     readonly VAO: WebGLVertexArrayObject;
     Color: Vec4;
 }
@@ -41,6 +42,7 @@ export function render_diffuse(Material: Material, Mesh: Mesh, Color: Vec4) {
             Kind: RenderKind.Diffuse,
             Material,
             Mesh,
+            FrontFace: GL_CW,
             VAO: vaos.get(Mesh),
             Color,
         };

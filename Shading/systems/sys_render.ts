@@ -17,6 +17,7 @@ export function sys_render(game: Game, delta: number) {
 
     // Keep track of the current material to minimize switching.
     let current_material = null;
+    let current_front_face = null;
 
     for (let i = 0; i < game.World.Mask.length; i++) {
         if ((game.World.Mask[i] & QUERY) === QUERY) {
@@ -77,6 +78,11 @@ export function sys_render(game: Game, delta: number) {
                         );
                         break;
                 }
+            }
+
+            if (render.FrontFace !== current_front_face) {
+                current_front_face = render.FrontFace;
+                game.GL.frontFace(render.FrontFace);
             }
 
             switch (render.Kind) {

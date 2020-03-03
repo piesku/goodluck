@@ -1,5 +1,5 @@
 import {Material, Mesh} from "../common/material.js";
-import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
+import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
@@ -60,7 +60,6 @@ export class Game {
         this.GL = this.Canvas.getContext("webgl2")!;
         this.GL.enable(GL_DEPTH_TEST);
         this.GL.enable(GL_CULL_FACE);
-        this.GL.frontFace(GL_CW);
 
         this.MaterialBasicPoints = mat_basic_points(this.GL);
         this.MaterialBasicWireframe = mat_basic_wireframe(this.GL);

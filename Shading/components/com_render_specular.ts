@@ -1,6 +1,6 @@
 import {Material, Mesh} from "../../common/material.js";
 import {Vec4} from "../../common/math.js";
-import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
+import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "./com_index.js";
 import {RenderKind} from "./com_render.js";
@@ -9,6 +9,7 @@ export interface RenderSpecular {
     readonly Kind: RenderKind.Specular;
     readonly Material: Material;
     readonly Mesh: Mesh;
+    readonly FrontFace: GLint;
     readonly VAO: WebGLVertexArrayObject;
     ColorDiffuse: Vec4;
     ColorSpecular: Vec4;
@@ -49,6 +50,7 @@ export function render_specular(
             Kind: RenderKind.Specular,
             Material: material,
             Mesh: mesh,
+            FrontFace: GL_CW,
             VAO: vaos.get(mesh),
             ColorDiffuse: color_diffuse,
             ColorSpecular: color_specular,
