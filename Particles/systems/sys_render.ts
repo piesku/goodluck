@@ -1,3 +1,4 @@
+import {Material} from "../../common/material.js";
 import {
     GL_ARRAY_BUFFER,
     GL_COLOR_BUFFER_BIT,
@@ -32,10 +33,11 @@ export function sys_render(game: Game, delta: number) {
 
             if (render.Material !== current_material) {
                 current_material = render.Material;
-
-                game.GL.useProgram(current_material.Program);
-                // XXX Uniforms[0] should always be PV.
-                game.GL.uniformMatrix4fv(current_material.Uniforms[0], false, game.Camera!.PV);
+                switch (render.Kind) {
+                    case RenderKind.Particles:
+                        use_particles(game, current_material);
+                        break;
+                }
             }
 
             switch (render.Kind) {
@@ -49,6 +51,11 @@ export function sys_render(game: Game, delta: number) {
             }
         }
     }
+}
+
+function use_particles(game: Game, material: Material) {
+    game.GL.useProgram(material.Program);
+    game.GL.uniformMatrix4fv(material.Uniforms[ParticleUniform.PV], false, game.Camera!.PV);
 }
 
 function draw_particles(game: Game, render: RenderParticles, emitter: EmitParticles) {

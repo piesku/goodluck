@@ -9,7 +9,7 @@ export interface RenderBasic {
     readonly Kind: RenderKind.Basic;
     readonly Material: Material;
     readonly Mesh: Mesh;
-    readonly FrontFace: GLint;
+    readonly FrontFace: GLenum;
     readonly VAO: WebGLVertexArrayObject;
     Color: Vec4;
 }

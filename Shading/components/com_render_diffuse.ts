@@ -9,7 +9,7 @@ export interface RenderDiffuse {
     readonly Kind: RenderKind.Diffuse;
     readonly Material: Material;
     readonly Mesh: Mesh;
-    readonly FrontFace: GLint;
+    readonly FrontFace: GLenum;
     readonly VAO: WebGLVertexArrayObject;
     Color: Vec4;
 }

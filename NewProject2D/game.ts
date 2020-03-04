@@ -8,12 +8,15 @@ export type Entity = number;
 
 export class Game {
     World = new World();
+
     ViewportWidth = window.innerWidth;
     ViewportHeight = window.innerHeight;
-    Context2D: CanvasRenderingContext2D;
-    UI = document.querySelector("main")!;
+
     InputState: Record<string, number> = {};
     InputDelta: Record<string, number> = {};
+
+    UI = document.querySelector("main")!;
+    Context2D: CanvasRenderingContext2D;
 
     constructor() {
         document.addEventListener("visibilitychange", () =>

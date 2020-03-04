@@ -1,9 +1,8 @@
-import {Material, Mesh} from "../common/material.js";
-import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
+import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
-import {mat_gouraud} from "./materials/mat_gouraud.js";
+import {mat_diffuse_gouraud} from "./materials/mat_diffuse_gouraud.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
 import {sys_draw} from "./systems/sys_draw.js";
@@ -22,16 +21,18 @@ export class Game {
     ViewportWidth = 0;
     ViewportHeight = 0;
     ViewportResized = false;
-    UI = document.querySelector("main")!;
-    CanvasScene = document.querySelector("canvas#scene")! as HTMLCanvasElement;
-    CanvasBillboard = document.querySelector("canvas#billboard")! as HTMLCanvasElement;
-    GL: WebGL2RenderingContext;
-    Context2D: CanvasRenderingContext2D;
+
     InputState: Record<string, number> = {};
     InputDelta: Record<string, number> = {};
 
-    MaterialGouraud: Material;
-    MeshCube: Mesh;
+    UI = document.querySelector("main")!;
+    CanvasScene = document.querySelector("canvas#scene")! as HTMLCanvasElement;
+    GL = this.CanvasScene.getContext("webgl2")!;
+    CanvasBillboard = document.querySelector("canvas#billboard")! as HTMLCanvasElement;
+    Context2D = this.CanvasBillboard.getContext("2d")!;
+
+    MaterialDiffuseGouraud = mat_diffuse_gouraud(this.GL);
+    MeshCube = mesh_cube(this.GL);
 
     Camera?: Camera;
     LightPositions: Array<number> = [];
@@ -72,15 +73,8 @@ export class Game {
         this.UI.addEventListener("contextmenu", evt => evt.preventDefault());
         this.UI.addEventListener("click", () => this.UI.requestPointerLock());
 
-        this.GL = this.CanvasScene.getContext("webgl2")!;
         this.GL.enable(GL_DEPTH_TEST);
         this.GL.enable(GL_CULL_FACE);
-        this.GL.frontFace(GL_CW);
-
-        this.Context2D = this.CanvasBillboard.getContext("2d")!;
-
-        this.MaterialGouraud = mat_gouraud(this.GL);
-        this.MeshCube = mesh_cube(this.GL);
     }
 
     FrameReset() {

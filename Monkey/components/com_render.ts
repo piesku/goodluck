@@ -1,7 +1,9 @@
-import {RenderShaded} from "./com_render_shaded.js";
+import {RenderDiffuse} from "./com_render_diffuse.js";
+import {RenderSpecular} from "./com_render_specular.js";
 
-export type Render = RenderShaded;
+export type Render = RenderDiffuse | RenderSpecular;
 
 export const enum RenderKind {
-    Shaded,
+    Diffuse,
+    Specular,
 }

@@ -1,6 +1,7 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light} from "../components/com_light.js";
-import {render_shaded} from "../components/com_render_shaded.js";
+import {render_diffuse} from "../components/com_render_diffuse.js";
+import {render_specular} from "../components/com_render_specular.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
@@ -34,12 +35,14 @@ export function scene_stage(game: Game) {
     // Flat.
     instantiate(game, {
         Translation: [-0.7, 0.5, 0],
-        Using: [render_shaded(game.MaterialFlat, game.MeshMonkeyFlat, [1, 1, 0.3, 1])],
+        Using: [render_diffuse(game.MaterialDiffuseFlat, game.MeshMonkeyFlat, [1, 1, 0.3, 1])],
     });
 
     // Phong.
     instantiate(game, {
         Translation: [0.7, -0.5, 0],
-        Using: [render_shaded(game.MaterialPhong, game.MeshMonkeySmooth, [1, 1, 0.3, 1])],
+        Using: [
+            render_specular(game.MaterialSpecularPhong, game.MeshMonkeySmooth, [1, 1, 0.3, 1], 64),
+        ],
     });
 }

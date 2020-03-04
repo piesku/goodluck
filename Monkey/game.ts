@@ -1,11 +1,10 @@
-import {Material, Mesh} from "../common/material.js";
-import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
+import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_monkey_flat} from "../meshes/monkey_flat.js";
 import {mesh_monkey_smooth} from "../meshes/monkey_smooth.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
-import {mat_flat} from "./materials/mat_flat.js";
-import {mat_phong} from "./materials/mat_phong.js";
+import {mat_diffuse_flat} from "./materials/mat_diffuse_flat.js";
+import {mat_specular_phong} from "./materials/mat_specular_phong.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -21,14 +20,15 @@ export class Game {
     ViewportWidth = 0;
     ViewportHeight = 0;
     ViewportResized = false;
+
     UI = document.querySelector("main")!;
     Canvas = document.querySelector("canvas")!;
-    GL: WebGL2RenderingContext;
+    GL = this.Canvas.getContext("webgl2")!;
 
-    MaterialFlat: Material;
-    MaterialPhong: Material;
-    MeshMonkeyFlat: Mesh;
-    MeshMonkeySmooth: Mesh;
+    MaterialDiffuseFlat = mat_diffuse_flat(this.GL);
+    MaterialSpecularPhong = mat_specular_phong(this.GL);
+    MeshMonkeyFlat = mesh_monkey_flat(this.GL);
+    MeshMonkeySmooth = mesh_monkey_smooth(this.GL);
 
     Camera?: Camera;
     LightPositions: Array<number> = [];
@@ -39,15 +39,8 @@ export class Game {
             document.hidden ? loop_stop() : loop_start(this)
         );
 
-        this.GL = this.Canvas.getContext("webgl2")!;
         this.GL.enable(GL_DEPTH_TEST);
         this.GL.enable(GL_CULL_FACE);
-        this.GL.frontFace(GL_CW);
-
-        this.MaterialFlat = mat_flat(this.GL);
-        this.MaterialPhong = mat_phong(this.GL);
-        this.MeshMonkeyFlat = mesh_monkey_flat(this.GL);
-        this.MeshMonkeySmooth = mesh_monkey_smooth(this.GL);
     }
 
     FrameReset() {

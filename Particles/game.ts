@@ -1,5 +1,4 @@
-import {Material} from "../common/material.js";
-import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
+import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
 import {mat_particles} from "./materials/mat_particles.js";
@@ -19,11 +18,12 @@ export class Game {
     ViewportWidth = 0;
     ViewportHeight = 0;
     ViewportResized = false;
+
     UI = document.querySelector("main")!;
     Canvas = document.querySelector("canvas")!;
-    GL: WebGL2RenderingContext;
+    GL = this.Canvas.getContext("webgl2")!;
 
-    MaterialParticles: Material;
+    MaterialParticles = mat_particles(this.GL);
 
     Camera?: Camera;
 
@@ -32,12 +32,8 @@ export class Game {
             document.hidden ? loop_stop() : loop_start(this)
         );
 
-        this.GL = this.Canvas.getContext("webgl2")!;
         this.GL.enable(GL_DEPTH_TEST);
         this.GL.enable(GL_CULL_FACE);
-        this.GL.frontFace(GL_CW);
-
-        this.MaterialParticles = mat_particles(this.GL);
     }
 
     FrameReset() {

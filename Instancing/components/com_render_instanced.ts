@@ -1,6 +1,7 @@
 import {Material, Mesh} from "../../common/material.js";
 import {
     GL_ARRAY_BUFFER,
+    GL_CW,
     GL_ELEMENT_ARRAY_BUFFER,
     GL_FLOAT,
     GL_STATIC_DRAW,
@@ -14,6 +15,7 @@ export interface RenderInstanced {
     readonly Kind: RenderKind.Instanced;
     readonly Material: Material;
     readonly Mesh: Mesh;
+    readonly FrontFace: GLenum;
     readonly VAO: WebGLVertexArrayObject;
     readonly InstanceCount: number;
     readonly Palette: Array<number>;
@@ -52,6 +54,7 @@ export function render_instanced(Mesh: Mesh, offsets: Model, Palette?: Array<num
             Kind: RenderKind.Instanced,
             Material: game.MaterialInstanced,
             Mesh,
+            FrontFace: GL_CW,
             VAO,
             InstanceCount: offsets.length / 4,
             Palette,

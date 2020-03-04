@@ -12,7 +12,7 @@ export interface Shape {
 }
 
 export interface Material {
-    Mode: GLint;
+    Mode: GLenum;
     Program: WebGLProgram;
     Uniforms: Array<WebGLUniformLocation>;
 }
@@ -30,7 +30,7 @@ export function link(gl: WebGL2RenderingContext, vertex: string, fragment: strin
     return program;
 }
 
-function compile(gl: WebGL2RenderingContext, type: GLint, source: string) {
+function compile(gl: WebGL2RenderingContext, type: GLenum, source: string) {
     let shader = gl.createShader(type)!;
     gl.shaderSource(shader, source);
     gl.compileShader(shader);

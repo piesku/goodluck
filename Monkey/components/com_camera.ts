@@ -1,5 +1,5 @@
 import {create} from "../../common/mat4.js";
-import {Mat4} from "../../common/math.js";
+import {Mat4, Vec3} from "../../common/math.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "./com_index.js";
 
@@ -9,6 +9,7 @@ export interface Camera {
     Far: number;
     Projection: Mat4;
     PV: Mat4;
+    Position: Vec3;
 }
 
 export function camera(fovy: number, near: number, far: number) {
@@ -20,6 +21,7 @@ export function camera(fovy: number, near: number, far: number) {
             Far: far,
             Projection: create(),
             PV: create(),
+            Position: [0, 0, 0],
         };
     };
 }

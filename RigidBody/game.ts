@@ -1,9 +1,8 @@
-import {Material, Mesh} from "../common/material.js";
-import {GL_CULL_FACE, GL_CW, GL_DEPTH_TEST} from "../common/webgl.js";
+import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
-import {mat_gouraud} from "./materials/mat_gouraud.js";
+import {mat_diffuse_gouraud} from "./materials/mat_diffuse_gouraud.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_spawner} from "./systems/sys_control_spawner.js";
@@ -23,12 +22,13 @@ export class Game {
     ViewportWidth = 0;
     ViewportHeight = 0;
     ViewportResized = false;
+
     UI = document.querySelector("main")!;
     Canvas = document.querySelector("canvas")!;
-    GL: WebGL2RenderingContext;
+    GL = this.Canvas.getContext("webgl2")!;
 
-    MaterialGouraud: Material;
-    MeshCube: Mesh;
+    MaterialDiffuseGouraud = mat_diffuse_gouraud(this.GL);
+    MeshCube = mesh_cube(this.GL);
 
     Camera?: Camera;
     LightPositions: Array<number> = [];
@@ -39,13 +39,8 @@ export class Game {
             document.hidden ? loop_stop() : loop_start(this)
         );
 
-        this.GL = this.Canvas.getContext("webgl2")!;
         this.GL.enable(GL_DEPTH_TEST);
         this.GL.enable(GL_CULL_FACE);
-        this.GL.frontFace(GL_CW);
-
-        this.MaterialGouraud = mat_gouraud(this.GL);
-        this.MeshCube = mesh_cube(this.GL);
     }
 
     FrameReset() {
