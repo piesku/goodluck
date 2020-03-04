@@ -12,7 +12,7 @@ export interface Camera {
 export function camera(aspect: number, fovy: number, near: number, far: number) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Camera;
-        game.World.Camera[entity] = <Camera>{
+        game.World.Camera[entity] = {
             Projection: perspective(create(), fovy, aspect, near, far),
             View: create(),
             PV: create(),

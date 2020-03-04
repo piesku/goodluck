@@ -46,12 +46,12 @@ export function render_specular(
         }
 
         game.World.Mask[entity] |= Has.Render;
-        game.World.Render[entity] = <RenderSpecular>{
+        game.World.Render[entity] = {
             Kind: RenderKind.Specular,
             Material: material,
             Mesh: mesh,
             FrontFace: GL_CW,
-            VAO: vaos.get(mesh),
+            VAO: vaos.get(mesh)!,
             ColorDiffuse: color_diffuse,
             ColorSpecular: color_specular,
             Shininess: shininess,

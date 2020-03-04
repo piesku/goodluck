@@ -10,7 +10,7 @@ export interface ControlSpawner {
 export function control_spawner(Frequency: number, Spread: number) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.ControlSpawner;
-        game.World.ControlSpawner[entity] = <ControlSpawner>{
+        game.World.ControlSpawner[entity] = {
             Frequency,
             Spread,
             SinceLast: Frequency,

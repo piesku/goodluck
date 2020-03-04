@@ -16,7 +16,7 @@ export interface DrawMarker {
 export function draw_marker(Marker: string) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Draw;
-        game.World.Draw[entity] = <DrawMarker>{
+        game.World.Draw[entity] = {
             Kind: DrawKind.Marker,
             Marker,
         };
@@ -33,7 +33,7 @@ export interface DrawRect {
 export function draw_rect(Width: number, Height: number, Color: string) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Draw;
-        game.World.Draw[entity] = <DrawRect>{
+        game.World.Draw[entity] = {
             Kind: DrawKind.Rect,
             Width,
             Height,

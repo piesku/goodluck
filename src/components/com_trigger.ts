@@ -9,7 +9,7 @@ export interface Trigger {
 export function trigger(Action: Action) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Trigger;
-        game.World.Trigger[entity] = <Trigger>{
+        game.World.Trigger[entity] = {
             Action,
         };
     };

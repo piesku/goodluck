@@ -28,10 +28,10 @@ export function render_shaded(Material: Material, shape: Shape, color: Vec4) {
         }
 
         game.World.Mask[entity] |= Has.Render;
-        game.World.Render[entity] = <RenderShaded>{
+        game.World.Render[entity] = {
             Kind: RenderKind.Shaded,
             Material,
-            VAO: vaos.get(shape),
+            VAO: vaos.get(shape)!,
             Count: shape.Indices.length,
             Color: color,
         };

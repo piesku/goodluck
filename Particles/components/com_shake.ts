@@ -11,7 +11,7 @@ export interface Shake {
 export function shake(Duration = 0) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Shake;
-        game.World.Shake[entity] = <Shake>{
+        game.World.Shake[entity] = {
             Duration,
         };
     };

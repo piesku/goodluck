@@ -4,11 +4,7 @@ import {Has} from "./com_index.js";
 
 export interface Animate {
     /** Animation states store the state of clips' playback. */
-    readonly States: {
-        /** The idle animation is required. */
-        [Anim.Idle]: AnimationState;
-        [k: number]: AnimationState;
-    };
+    readonly States: Record<number, AnimationState>;
     /** The clip played currently. Defaults to Anim.Idle. */
     Current: AnimationState;
     /** The clip to play next. */
@@ -17,11 +13,11 @@ export interface Animate {
 
 export function animate(clips: {[Anim.Idle]: AnimationClip; [k: number]: AnimationClip}) {
     return (game: Game, entity: Entity) => {
-        let States: Record<string, AnimationState> = {};
+        let States: Record<number, AnimationState> = {};
         for (let name in clips) {
             let {Keyframes, Flags = AnimationFlag.Default} = clips[name];
             let duration = Keyframes[Keyframes.length - 1].Timestamp;
-            States[name] = <AnimationState>{
+            States[name] = {
                 // One-level-deep copy of the clip's keyframes. When
                 // AnimationFlag.Alternate is set, sys_animate recalculates
                 // keyframes' timestamps after each alternation. We want to
@@ -34,7 +30,7 @@ export function animate(clips: {[Anim.Idle]: AnimationClip; [k: number]: Animati
             };
         }
         game.World.Mask[entity] |= Has.Animate;
-        game.World.Animate[entity] = <Animate>{
+        game.World.Animate[entity] = {
             States,
             Current: States[Anim.Idle],
         };

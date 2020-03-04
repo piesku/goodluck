@@ -24,7 +24,7 @@ export function render_instanced(model: Model, Palette?: Array<number>) {
     let shape = Cube;
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Render;
-        game.World.Render[entity] = <RenderInstanced>{
+        game.World.Render[entity] = {
             Kind: RenderKind.Instanced,
             Material: game.MaterialInstanced,
             VAO: buffer(game.GL, shape, model),
@@ -52,7 +52,7 @@ export const enum InstancedUniform {
 }
 
 function buffer(gl: WebGL2RenderingContext, shape: Shape, offsets: Float32Array) {
-    let vao = gl.createVertexArray();
+    let vao = gl.createVertexArray()!;
     gl.bindVertexArray(vao);
 
     gl.bindBuffer(GL_ARRAY_BUFFER, gl.createBuffer());

@@ -20,12 +20,12 @@ export function render_particles(
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Render;
-        game.World.Render[entity] = <RenderParticles>{
+        game.World.Render[entity] = {
             Kind: RenderKind.Particles,
             Material: game.MaterialParticles,
-            Buffer: game.GL.createBuffer(),
-            ColorSizeStart: [...start_color, start_size],
-            ColorSizeEnd: [...end_color, end_size],
+            Buffer: game.GL.createBuffer()!,
+            ColorSizeStart: <Vec4>[...start_color, start_size],
+            ColorSizeEnd: <Vec4>[...end_color, end_size],
         };
     };
 }

@@ -9,7 +9,7 @@ export interface Lifespan {
 export function lifespan(Max = Infinity) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Lifespan;
-        game.World.Lifespan[entity] = <Lifespan>{
+        game.World.Lifespan[entity] = {
             Max,
             Age: 0,
         };

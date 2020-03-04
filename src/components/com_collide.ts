@@ -27,7 +27,7 @@ export interface Collide {
 export function collide(Dynamic: boolean = true, Size: [number, number, number] = [1, 1, 1]) {
     return (game: Game, EntityId: Entity) => {
         game.World.Mask[EntityId] |= Has.Collide;
-        game.World.Collide[EntityId] = <Collide>{
+        game.World.Collide[EntityId] = {
             EntityId,
             New: true,
             Dynamic,

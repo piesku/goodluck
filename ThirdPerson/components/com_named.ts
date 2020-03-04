@@ -9,7 +9,7 @@ export interface Named {
 export function named(Name: string) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Named;
-        game.World.Named[entity] = <Named>{Name};
+        game.World.Named[entity] = {Name};
     };
 }
 

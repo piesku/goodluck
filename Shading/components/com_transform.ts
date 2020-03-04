@@ -29,7 +29,7 @@ export function transform(
 ) {
     return (game: Game, EntityId: Entity) => {
         game.World.Mask[EntityId] |= Has.Transform;
-        game.World.Transform[EntityId] = <Transform>{
+        game.World.Transform[EntityId] = {
             EntityId,
             World: create(),
             Self: create(),

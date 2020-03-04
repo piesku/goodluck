@@ -10,7 +10,7 @@ export interface Light {
 export function light(color: Vec3 = [1, 1, 1], range: number = 1) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Light;
-        game.World.Light[entity] = <Light>{
+        game.World.Light[entity] = {
             Color: color,
             Intensity: range ** 2,
         };

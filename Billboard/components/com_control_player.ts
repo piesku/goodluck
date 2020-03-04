@@ -10,7 +10,7 @@ export interface ControlPlayer {
 export function control_player(Move: boolean, Yaw: boolean, Pitch: boolean) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.ControlPlayer;
-        game.World.ControlPlayer[entity] = <ControlPlayer>{
+        game.World.ControlPlayer[entity] = {
             Move,
             Yaw,
             Pitch,

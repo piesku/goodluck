@@ -28,10 +28,10 @@ export function render_basic(Material: Material, Shape: Shape, Color: Vec4) {
         }
 
         game.World.Mask[entity] |= Has.Render;
-        game.World.Render[entity] = <RenderBasic>{
+        game.World.Render[entity] = {
             Kind: RenderKind.Basic,
             Material,
-            VAO: vaos.get(Shape),
+            VAO: vaos.get(Shape)!,
             Count: Shape.Indices.length,
             Color: Color,
         };

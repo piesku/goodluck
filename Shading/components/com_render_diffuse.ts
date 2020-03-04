@@ -38,12 +38,12 @@ export function render_diffuse(Material: Material, Mesh: Mesh, Color: Vec4) {
         }
 
         game.World.Mask[entity] |= Has.Render;
-        game.World.Render[entity] = <RenderDiffuse>{
+        game.World.Render[entity] = {
             Kind: RenderKind.Diffuse,
             Material,
             Mesh,
             FrontFace: GL_CW,
-            VAO: vaos.get(Mesh),
+            VAO: vaos.get(Mesh)!,
             Color,
         };
     };

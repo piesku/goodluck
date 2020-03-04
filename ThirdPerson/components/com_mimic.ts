@@ -11,7 +11,7 @@ export interface Mimic {
 export function mimic(Target: Entity, Stiffness: number = 0.1) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Mimic;
-        game.World.Mimic[entity] = <Mimic>{
+        game.World.Mimic[entity] = {
             Target,
             Stiffness,
         };

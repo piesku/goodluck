@@ -10,7 +10,7 @@ export interface ControlXr {
 export function control_xr(hand: Hand) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.ControlXr;
-        game.World.ControlXr[entity] = <ControlXr>{
+        game.World.ControlXr[entity] = {
             Hand: hand,
         };
     };

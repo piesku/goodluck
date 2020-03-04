@@ -21,7 +21,7 @@ export interface CameraPerspective {
 export function camera_persp(fovy: number, near: number, far: number) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Camera;
-        game.World.Camera[entity] = <Camera>{
+        game.World.Camera[entity] = {
             Kind: CameraKind.Perspective,
             FOVy: fovy,
             Near: near,
@@ -41,7 +41,7 @@ export interface CameraVr {
 export function camera_vr() {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Camera;
-        game.World.Camera[entity] = <Camera>{
+        game.World.Camera[entity] = {
             Kind: CameraKind.Vr,
             PvLeft: create(),
             PvRight: create(),

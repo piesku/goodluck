@@ -24,7 +24,7 @@ export interface Transform2D {
 export function transform2d(Translation: Vec2 = [0, 0], Rotation: Rad = 0, Scale: Vec2 = [1, 1]) {
     return (game: Game, EntityId: Entity) => {
         game.World.Mask[EntityId] |= Has.Transform2D;
-        game.World.Transform2D[EntityId] = <Transform2D>{
+        game.World.Transform2D[EntityId] = {
             EntityId,
             World: create(),
             Self: create(),

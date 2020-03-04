@@ -34,12 +34,12 @@ export function render_basic(Material: Material, Mesh: Mesh, Color: Vec4) {
         }
 
         game.World.Mask[entity] |= Has.Render;
-        game.World.Render[entity] = <RenderBasic>{
+        game.World.Render[entity] = {
             Kind: RenderKind.Basic,
             Material,
             Mesh,
             FrontFace: GL_CW,
-            VAO: vaos.get(Mesh),
+            VAO: vaos.get(Mesh)!,
             Color,
         };
     };
