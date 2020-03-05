@@ -1,7 +1,7 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {collide} from "../components/com_collide.js";
 import {control_spawner} from "../components/com_control_spawner.js";
-import {light} from "../components/com_light.js";
+import {light_directional} from "../components/com_light.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {rigid_body} from "../components/com_rigid_body.js";
 import {instantiate} from "../core.js";
@@ -25,7 +25,7 @@ export function scene_stage(game: Game) {
     // Light.
     instantiate(game, {
         Translation: [2, 3, 5],
-        Using: [light([1, 1, 1], 5)],
+        Using: [light_directional([1, 1, 1], 1)],
     });
 
     // Ground.

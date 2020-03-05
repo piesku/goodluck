@@ -27,7 +27,7 @@ let fragment = `#version 300 es
     uniform vec4 color_specular;
     uniform float shininess;
     uniform int light_count;
-    uniform vec3 light_positions[10];
+    uniform vec4 light_positions[10];
     uniform vec4 light_details[10];
 
     in vec4 vert_pos;
@@ -47,18 +47,27 @@ let fragment = `#version 300 es
             vec3 light_color = light_details[i].rgb;
             float light_intensity = light_details[i].a;
 
-            vec3 light_dir = light_positions[i] - vert_pos.xyz;
-            float light_dist = length(light_dir);
-            vec3 light_normal = light_dir / light_dist;
+            vec3 light_normal;
+            if (light_positions[i].w == 0.0) {
+                // Directional light.
+                light_normal = light_positions[i].xyz;
+            } else {
+                vec3 light_dir = light_positions[i].xyz - vert_pos.xyz;
+                float light_dist = length(light_dir);
+                light_normal = light_dir / light_dist;
+                // Distance attenuation.
+                light_intensity /= (light_dist * light_dist);
+            }
 
             float diffuse_factor = dot(frag_normal, light_normal);
             if (diffuse_factor > 0.0) {
-                // Distance attenuation.
-                float distance_factor = light_dist * light_dist;
-                float attenuation = distance_factor / light_intensity;
-
                 // Diffuse color.
-                rgb += color_diffuse.rgb * diffuse_factor * light_color / attenuation;
+                rgb += color_diffuse.rgb * diffuse_factor * light_color * light_intensity;
+
+                // Phong reflection model.
+                // vec3 r = reflect(-light_normal, frag_normal);
+                // float specular_angle = max(dot(r, view_normal), 0.0);
+                // float specular_factor = pow(specular_angle, shininess);
 
                 // Blinn-Phong reflection model.
                 vec3 h = normalize(light_normal + view_normal);
@@ -66,7 +75,7 @@ let fragment = `#version 300 es
                 float specular_factor = pow(specular_angle, shininess);
 
                 // Specular color.
-                rgb += color_specular.rgb * specular_factor * light_color / attenuation;
+                rgb += color_specular.rgb * specular_factor * light_color * light_intensity;
             }
         }
 

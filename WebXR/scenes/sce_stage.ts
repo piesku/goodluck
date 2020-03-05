@@ -1,6 +1,6 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {blueprint_viewer} from "../blueprints/blu_viewer.js";
-import {light} from "../components/com_light.js";
+import {light_directional} from "../components/com_light.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";
@@ -29,7 +29,7 @@ export function scene_stage(game: Game) {
     // Light.
     instantiate(game, {
         Translation: [2, 4, 3],
-        Using: [light([1, 1, 1], 5)],
+        Using: [light_directional([1, 1, 1], 1)],
     });
 
     // Ground.

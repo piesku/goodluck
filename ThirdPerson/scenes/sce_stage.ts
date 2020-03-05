@@ -1,6 +1,7 @@
 import {blueprint_camera_follow} from "../blueprints/blu_camera_follow.js";
 import {blueprint_ground} from "../blueprints/blu_ground.js";
 import {blueprint_player} from "../blueprints/blu_player.js";
+import {light_directional} from "../components/com_light.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
@@ -24,6 +25,12 @@ export function scene_stage(game: Game) {
             });
         }
     }
+
+    // Directional light.
+    instantiate(game, {
+        Translation: [1, 1, 1],
+        Using: [light_directional([1, 1, 1], 0.2)],
+    });
 
     // Player.
     instantiate(game, {

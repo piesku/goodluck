@@ -1,5 +1,5 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
-import {light} from "../components/com_light.js";
+import {light_directional, light_point} from "../components/com_light.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {render_specular} from "../components/com_render_specular.js";
 import {instantiate} from "../core.js";
@@ -23,13 +23,13 @@ export function scene_stage(game: Game) {
     // Light 1.
     instantiate(game, {
         Translation: [-2, 5, 5],
-        Using: [light([1, 1, 1], 3)],
+        Using: [light_directional([1, 1, 1], 0.6)],
     });
 
     // Light 2.
     instantiate(game, {
         Translation: [1, 4, 5],
-        Using: [light([1, 1, 1], 5)],
+        Using: [light_point([1, 1, 1], 4)],
     });
 
     // Flat.
