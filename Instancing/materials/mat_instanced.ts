@@ -9,35 +9,43 @@ let vertex = `#version 300 es\n
     uniform vec3 palette[16];
 
     uniform int light_count;
-    uniform vec3 light_positions[100];
-    uniform vec4 light_details[100];
+    uniform vec4 light_positions[10];
+    uniform vec4 light_details[10];
 
     layout(location=${InstancedAttribute.Position}) in vec3 position;
     layout(location=${InstancedAttribute.Normal}) in vec3 normal;
     layout(location=${InstancedAttribute.Offset}) in vec4 offset;
-
     out vec4 vert_color;
+
     void main() {
-        vec4 world_pos = world * vec4(position + offset.xyz, 1.0);
-        vec3 world_normal = normalize((vec4(normal, 0.0) * self).xyz);
-        gl_Position = pv * world_pos;
+        vec4 vert_pos = world * vec4(position + offset.xyz, 1.0);
+        vec3 vert_normal = normalize((vec4(normal, 0.0) * self).xyz);
+        gl_Position = pv * vert_pos;
 
-        vec3 rgb = palette[int(offset[3])].rgb * 0.1;
+        // Ambient light.
+        vec3 color = palette[int(offset[3])];
+        vec3 rgb = color * 0.1;
+
         for (int i = 0; i < light_count; i++) {
-            if (light_details[i].a == 0.0) {
-                // A directional light.
-                vec3 light_normal = normalize(light_positions[i]);
-                float diffuse_factor = max(dot(world_normal, light_normal), 0.0);
-                rgb += palette[int(offset[3])].rgb * light_details[i].rgb * diffuse_factor;
-            } else {
-                // A point light.
-                vec3 light_dir = light_positions[i] - world_pos.xyz ;
-                vec3 light_normal = normalize(light_dir);
-                float light_dist = length(light_dir);
+            vec3 light_color = light_details[i].rgb;
+            float light_intensity = light_details[i].a;
 
-                float diffuse_factor = max(dot(world_normal, light_normal), 0.0);
-                rgb += palette[int(offset[3])].rgb * light_details[i].rgb * diffuse_factor
-                        * light_details[i].a / (light_dist * light_dist);
+            vec3 light_normal;
+            if (light_positions[i].w == 0.0) {
+                // Directional light.
+                light_normal = light_positions[i].xyz;
+            } else {
+                vec3 light_dir = light_positions[i].xyz - vert_pos.xyz;
+                float light_dist = length(light_dir);
+                light_normal = light_dir / light_dist;
+                // Distance attenuation.
+                light_intensity /= (light_dist * light_dist);
+            }
+
+            float diffuse_factor = dot(vert_normal, light_normal);
+            if (diffuse_factor > 0.0) {
+                // Diffuse color.
+                rgb += color * diffuse_factor * light_color * light_intensity;
             }
         }
 

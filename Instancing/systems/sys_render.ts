@@ -53,7 +53,7 @@ function use_instanced(game: Game, material: Material) {
         material.Uniforms[InstancedUniform.LightCount],
         game.LightPositions.length / 3
     );
-    game.GL.uniform3fv(material.Uniforms[InstancedUniform.LightPositions], game.LightPositions);
+    game.GL.uniform4fv(material.Uniforms[InstancedUniform.LightPositions], game.LightPositions);
     game.GL.uniform4fv(material.Uniforms[InstancedUniform.LightDetails], game.LightDetails);
 }
 

@@ -20,13 +20,13 @@ export function scene_stage(game: Game) {
         ...blueprint_camera(game),
     });
 
-    // Light 1.
+    // Directional light.
     instantiate(game, {
         Translation: [-2, 5, 5],
         Using: [light_directional([1, 1, 1], 0.6)],
     });
 
-    // Light 2.
+    // Point light.
     instantiate(game, {
         Translation: [1, 4, 5],
         Using: [light_point([1, 1, 1], 4)],

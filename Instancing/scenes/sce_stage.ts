@@ -1,5 +1,5 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
-import {light} from "../components/com_light.js";
+import {light_directional, light_point} from "../components/com_light.js";
 import {render_instanced} from "../components/com_render_instanced.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";
@@ -19,16 +19,16 @@ export function scene_stage(game: Game) {
         ...blueprint_camera(game),
     });
 
-    // Light 1.
+    // Directional light.
     instantiate(game, {
         Translation: [-2, 5, 5],
-        Using: [light([1, 1, 1], 3)],
+        Using: [light_directional([1, 1, 1], 0.6)],
     });
 
-    // Light 2.
+    // Point light.
     instantiate(game, {
-        Translation: [1, 3, 5],
-        Using: [light([1, 1, 1], 5)],
+        Translation: [1, 4, 5],
+        Using: [light_point([1, 1, 1], 4)],
     });
 
     // A voxel model.
