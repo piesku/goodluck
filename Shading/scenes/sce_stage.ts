@@ -1,5 +1,5 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
-import {light} from "../components/com_light.js";
+import {light_directional, light_point} from "../components/com_light.js";
 import {render_basic} from "../components/com_render_basic.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {render_specular} from "../components/com_render_specular.js";
@@ -22,23 +22,29 @@ export function scene_stage(game: Game) {
         ...blueprint_camera(game),
     });
 
+    // Directional light.
+    instantiate(game, {
+        Translation: [1, 1, 0],
+        Using: [light_directional([1, 1, 1], 0.5)],
+    });
+
     let light_spread = 7;
-    let light_range = 5;
+    let light_range = 4;
     instantiate(game, {
         Translation: [0, 0, 5],
         Using: [rotate([0, 0, 30])],
         Children: [
             {
                 Translation: [1 * light_spread, 0, 0],
-                Using: [light([1, 1, 1], light_range)],
+                Using: [light_point([1, 1, 1], light_range)],
             },
             {
                 Translation: [-0.5 * light_spread, 0.866 * light_spread, 0],
-                Using: [light([1, 1, 1], light_range)],
+                Using: [light_point([1, 1, 1], light_range)],
             },
             {
                 Translation: [-0.5 * light_spread, -0.866 * light_spread, 0],
-                Using: [light([1, 1, 1], light_range)],
+                Using: [light_point([1, 1, 1], light_range)],
             },
         ],
     });

@@ -8,7 +8,7 @@ let vertex = `#version 300 es
     uniform mat4 self;
     uniform vec4 color;
     uniform int light_count;
-    uniform vec3 light_positions[10];
+    uniform vec4 light_positions[10];
     uniform vec4 light_details[10];
 
     layout(location=${DiffuseAttribute.Position}) in vec3 position;
@@ -27,18 +27,22 @@ let vertex = `#version 300 es
             vec3 light_color = light_details[i].rgb;
             float light_intensity = light_details[i].a;
 
-            vec3 light_dir = light_positions[i] - vert_pos.xyz;
-            float light_dist = length(light_dir);
-            vec3 light_normal = light_dir / light_dist;
+            vec3 light_normal;
+            if (light_positions[i].w == 0.0) {
+                // Directional light.
+                light_normal = light_positions[i].xyz;
+            } else {
+                vec3 light_dir = light_positions[i].xyz - vert_pos.xyz;
+                float light_dist = length(light_dir);
+                light_normal = light_dir / light_dist;
+                // Distance attenuation.
+                light_intensity /= (light_dist * light_dist);
+            }
 
             float diffuse_factor = dot(vert_normal, light_normal);
             if (diffuse_factor > 0.0) {
-                // Distance attenuation.
-                float distance_factor = light_dist * light_dist;
-                float attenuation = distance_factor / light_intensity;
-
                 // Diffuse color.
-                rgb += color.rgb * light_color * diffuse_factor / attenuation;
+                rgb += color.rgb * diffuse_factor * light_color * light_intensity;
             }
         }
 
