@@ -5,6 +5,7 @@ import {Has} from "./com_index.js";
 export type Light = LightDirectional | LightPoint;
 
 export const enum LightKind {
+    Inactive,
     Directional,
     Point,
 }

@@ -72,7 +72,6 @@ export const enum SpecularUniform {
     ColorDiffuse,
     ColorSpecular,
     Shininess,
-    LightCount,
     LightPositions,
     LightDetails,
 }
