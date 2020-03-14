@@ -8,19 +8,20 @@ import {Entity, Game} from "../game.js";
 const QUERY = Has.Transform | Has.Light;
 
 export function sys_light(game: Game, delta: number) {
-    game.LightPositions = [];
-    game.LightDetails = [];
+    game.LightPositions.fill(0);
+    game.LightDetails.fill(0);
 
+    let counter = 0;
     for (let i = 0; i < game.World.Mask.length; i++) {
         if ((game.World.Mask[i] & QUERY) === QUERY) {
-            update(game, i);
+            update(game, i, counter++);
         }
     }
 }
 
 let world_pos: Vec3 = [0, 0, 0];
 
-function update(game: Game, entity: Entity) {
+function update(game: Game, entity: Entity, idx: number) {
     let light = game.World.Light[entity];
     let transform = game.World.Transform[entity];
 
@@ -31,6 +32,12 @@ function update(game: Game, entity: Entity) {
         normalize(world_pos, world_pos);
     }
 
-    game.LightPositions.push(world_pos[0], world_pos[1], world_pos[2], light.Kind);
-    game.LightDetails.push(light.Color[0], light.Color[1], light.Color[2], light.Intensity);
+    game.LightPositions[4 * idx + 0] = world_pos[0];
+    game.LightPositions[4 * idx + 1] = world_pos[1];
+    game.LightPositions[4 * idx + 2] = world_pos[2];
+    game.LightPositions[4 * idx + 3] = light.Kind;
+    game.LightDetails[4 * idx + 0] = light.Color[0];
+    game.LightDetails[4 * idx + 1] = light.Color[1];
+    game.LightDetails[4 * idx + 2] = light.Color[2];
+    game.LightDetails[4 * idx + 3] = light.Intensity;
 }

@@ -22,10 +22,12 @@ let vertex = `#version 300 es
 let fragment = `#version 300 es
     precision mediump float;
 
+    // See Game.LightPositions and Game.LightDetails.
+    const int MAX_LIGHTS = 8;
+
     uniform vec4 color;
-    uniform int light_count;
-    uniform vec4 light_positions[10];
-    uniform vec4 light_details[10];
+    uniform vec4 light_positions[MAX_LIGHTS];
+    uniform vec4 light_details[MAX_LIGHTS];
 
     in vec4 vert_pos;
     in vec3 vert_normal;
@@ -37,12 +39,16 @@ let fragment = `#version 300 es
         // Ambient light.
         vec3 rgb = color.rgb * 0.1;
 
-        for (int i = 0; i < light_count; i++) {
+        for (int i = 0; i < MAX_LIGHTS; i++) {
+            if (light_positions[i].w == 0.0) {
+                break;
+            }
+
             vec3 light_color = light_details[i].rgb;
             float light_intensity = light_details[i].a;
 
             vec3 light_normal;
-            if (light_positions[i].w == 0.0) {
+            if (light_positions[i].w == 1.0) {
                 // Directional light.
                 light_normal = light_positions[i].xyz;
             } else {
@@ -74,7 +80,6 @@ export function mat_diffuse_phong(gl: WebGL2RenderingContext) {
             gl.getUniformLocation(Program, "world")!,
             gl.getUniformLocation(Program, "self")!,
             gl.getUniformLocation(Program, "color")!,
-            gl.getUniformLocation(Program, "light_count")!,
             gl.getUniformLocation(Program, "light_positions")!,
             gl.getUniformLocation(Program, "light_details")!,
         ],

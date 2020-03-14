@@ -3,14 +3,18 @@ import {GL_TRIANGLES} from "../../common/webgl.js";
 import {InstancedAttribute} from "../components/com_render_instanced.js";
 
 let vertex = `#version 300 es\n
+
+    // See Game.LightPositions and Game.LightDetails.
+    const int MAX_LIGHTS = 8;
+
     uniform mat4 pv;
     uniform mat4 world;
     uniform mat4 self;
     uniform vec3 palette[16];
 
     uniform int light_count;
-    uniform vec4 light_positions[10];
-    uniform vec4 light_details[10];
+    uniform vec4 light_positions[MAX_LIGHTS];
+    uniform vec4 light_details[MAX_LIGHTS];
 
     layout(location=${InstancedAttribute.Position}) in vec3 position;
     layout(location=${InstancedAttribute.Normal}) in vec3 normal;
@@ -26,12 +30,16 @@ let vertex = `#version 300 es\n
         vec3 color = palette[int(offset[3])];
         vec3 rgb = color * 0.1;
 
-        for (int i = 0; i < light_count; i++) {
+        for (int i = 0; i < MAX_LIGHTS; i++) {
+            if (light_positions[i].w == 0.0) {
+                break;
+            }
+
             vec3 light_color = light_details[i].rgb;
             float light_intensity = light_details[i].a;
 
             vec3 light_normal;
-            if (light_positions[i].w == 0.0) {
+            if (light_positions[i].w == 1.0) {
                 // Directional light.
                 light_normal = light_positions[i].xyz;
             } else {
@@ -74,7 +82,6 @@ export function mat_instanced(gl: WebGL2RenderingContext) {
             gl.getUniformLocation(Program, "world")!,
             gl.getUniformLocation(Program, "self")!,
             gl.getUniformLocation(Program, "palette")!,
-            gl.getUniformLocation(Program, "light_count")!,
             gl.getUniformLocation(Program, "light_positions")!,
             gl.getUniformLocation(Program, "light_details")!,
         ],

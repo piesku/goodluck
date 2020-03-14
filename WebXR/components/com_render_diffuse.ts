@@ -64,7 +64,6 @@ export const enum DiffuseUniform {
     World,
     Self,
     Color,
-    LightCount,
     LightPositions,
     LightDetails,
 }

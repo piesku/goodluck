@@ -73,7 +73,6 @@ export const enum InstancedUniform {
     World,
     Self,
     Palette,
-    LightCount,
     LightPositions,
     LightDetails,
 }

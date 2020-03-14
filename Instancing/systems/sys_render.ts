@@ -49,10 +49,6 @@ export function sys_render(game: Game, delta: number) {
 function use_instanced(game: Game, material: Material) {
     game.GL.useProgram(material.Program);
     game.GL.uniformMatrix4fv(material.Uniforms[InstancedUniform.PV], false, game.Camera!.PV);
-    game.GL.uniform1i(
-        material.Uniforms[InstancedUniform.LightCount],
-        game.LightPositions.length / 3
-    );
     game.GL.uniform4fv(material.Uniforms[InstancedUniform.LightPositions], game.LightPositions);
     game.GL.uniform4fv(material.Uniforms[InstancedUniform.LightDetails], game.LightDetails);
 }

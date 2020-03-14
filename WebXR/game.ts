@@ -37,8 +37,9 @@ export class Game {
     MeshHand = mesh_hand(this.GL);
 
     Camera?: Camera;
-    LightPositions: Array<number> = [];
-    LightDetails: Array<number> = [];
+    // The rendering pipeline supports 8 lights.
+    LightPositions = new Float32Array(4 * 8);
+    LightDetails = new Float32Array(4 * 8);
 
     constructor() {
         document.addEventListener("visibilitychange", () =>

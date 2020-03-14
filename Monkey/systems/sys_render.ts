@@ -56,7 +56,6 @@ export function sys_render(game: Game, delta: number) {
 function use_diffuse(game: Game, material: Material) {
     game.GL.useProgram(material.Program);
     game.GL.uniformMatrix4fv(material.Uniforms[DiffuseUniform.PV], false, game.Camera!.PV);
-    game.GL.uniform1i(material.Uniforms[DiffuseUniform.LightCount], game.LightPositions.length / 3);
     game.GL.uniform4fv(material.Uniforms[DiffuseUniform.LightPositions], game.LightPositions);
     game.GL.uniform4fv(material.Uniforms[DiffuseUniform.LightDetails], game.LightDetails);
 }
@@ -78,10 +77,6 @@ function use_specular(game: Game, material: Material) {
     game.GL.useProgram(material.Program);
     game.GL.uniformMatrix4fv(material.Uniforms[SpecularUniform.PV], false, game.Camera!.PV);
     game.GL.uniform3fv(material.Uniforms[SpecularUniform.Eye], game.Camera!.Position);
-    game.GL.uniform1i(
-        material.Uniforms[SpecularUniform.LightCount],
-        game.LightPositions.length / 3
-    );
     game.GL.uniform4fv(material.Uniforms[SpecularUniform.LightPositions], game.LightPositions);
     game.GL.uniform4fv(material.Uniforms[SpecularUniform.LightDetails], game.LightDetails);
 }
