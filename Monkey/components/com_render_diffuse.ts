@@ -50,8 +50,8 @@ export function render_diffuse(Material: Material, Mesh: Mesh, Color: Vec4) {
 }
 
 export const enum DiffuseAttribute {
-    Position = 1,
-    Normal = 2,
+    Position,
+    Normal,
 }
 
 export const enum DiffuseUniform {

@@ -46,7 +46,7 @@ export function render_basic(Material: Material, Mesh: Mesh, Color: Vec4) {
 }
 
 export const enum BasicAttribute {
-    Position = 1,
+    Position,
 }
 
 export const enum BasicUniform {

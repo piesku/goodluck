@@ -31,7 +31,7 @@ export function render_particles(
 }
 
 export const enum ParticleAttribute {
-    Origin = 1,
+    Origin,
 }
 
 export const enum ParticleUniform {

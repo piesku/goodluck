@@ -23,7 +23,7 @@ console.log(`\
 import {Mesh} from "../common/material.js";
 import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW} from "../common/webgl.js";
 
-export function mesh_${name}(gl: WebGL2RenderingContext) {
+export function mesh_${name}(gl: WebGLRenderingContext) {
     let Vertices = gl.createBuffer();
     gl.bindBuffer(GL_ARRAY_BUFFER, Vertices);
     gl.bufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
