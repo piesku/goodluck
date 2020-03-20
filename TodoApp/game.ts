@@ -2,12 +2,11 @@ import {loop_start, loop_stop} from "./core.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_ui} from "./systems/sys_ui.js";
 
-type Todo = string;
-
 export class Game {
     UI = document.querySelector("main")!;
 
-    Todos: Array<Todo> = [];
+    Todos: Array<string> = [];
+    Completed: Array<string> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>
