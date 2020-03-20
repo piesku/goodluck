@@ -60,8 +60,8 @@ export function render_specular(
 }
 
 export const enum SpecularAttribute {
-    Position = 1,
-    Normal = 2,
+    Position,
+    Normal,
 }
 
 export const enum SpecularUniform {

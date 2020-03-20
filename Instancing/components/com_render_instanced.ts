@@ -63,9 +63,9 @@ export function render_instanced(Mesh: Mesh, offsets: Model, Palette: Array<numb
 }
 
 export const enum InstancedAttribute {
-    Position = 1,
-    Normal = 2,
-    Offset = 3,
+    Position,
+    Normal,
+    Offset,
 }
 
 export const enum InstancedUniform {

@@ -55,8 +55,8 @@ export function render_diffuse(
 }
 
 export const enum DiffuseAttribute {
-    Position = 1,
-    Normal = 2,
+    Position,
+    Normal,
 }
 
 export const enum DiffuseUniform {
