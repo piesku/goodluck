@@ -15,7 +15,7 @@ if (!filename) {
 
 let json = execFileSync(ASSIMP2JSON, [filename], {encoding: "utf8"});
 let scene = JSON.parse(json);
-let {vertices, normals, faces} = scene.meshes[0];
+let {vertices, normals, faces, texturecoords} = scene.meshes[0];
 
 let name = win32.basename(filename, ".obj");
 
@@ -47,6 +47,10 @@ let vertices = Float32Array.from([
 
 let normals = Float32Array.from([
     ${normals.join(",\n    ")},
+]);
+
+let uvs = Float32Array.from([
+    ${texturecoords[0].join(",\n    ")},
 ]);
 
 let indices = Uint16Array.from([
