@@ -1,7 +1,7 @@
-import {RenderTexture} from "./com_render_texture.js";
+import {RenderTextured} from "./com_render_textured.js";
 
-export type Render = RenderTexture;
+export type Render = RenderTextured;
 
 export const enum RenderKind {
-    Texture,
+    Textured,
 }

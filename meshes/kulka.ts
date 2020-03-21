@@ -8,16 +8,16 @@ export function mesh_kulka(gl: WebGLRenderingContext): Mesh {
     let Normals = gl.createBuffer()!;
     gl.bindBuffer(GL_ARRAY_BUFFER, Normals);
     gl.bufferData(GL_ARRAY_BUFFER, normals, GL_STATIC_DRAW);
-    let TextureCoords = gl.createBuffer()!;
-    gl.bindBuffer(GL_ARRAY_BUFFER, TextureCoords);
-    gl.bufferData(GL_ARRAY_BUFFER, uvs, GL_STATIC_DRAW);
+    let TexCoords = gl.createBuffer()!;
+    gl.bindBuffer(GL_ARRAY_BUFFER, TexCoords);
+    gl.bufferData(GL_ARRAY_BUFFER, texcoords, GL_STATIC_DRAW);
     let Indices = gl.createBuffer()!;
     gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Indices);
     gl.bufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
     return {
         Vertices,
         Normals,
-        TextureCoords,
+        TexCoords,
         Indices,
         Count: indices.length,
     };
@@ -785,7 +785,7 @@ let normals = Float32Array.from([
     0.309,
 ]);
 
-let uvs = Float32Array.from([
+let texcoords = Float32Array.from([
     0.248707,
     0.844099,
     0.193936,

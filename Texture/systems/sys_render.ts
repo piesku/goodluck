@@ -8,7 +8,7 @@ import {
 } from "../../common/webgl.js";
 import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
-import {RenderTexture, TextureUniform} from "../components/com_render_texture.js";
+import {RenderTextured, TexturedUniform} from "../components/com_render_textured.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 
@@ -32,8 +32,8 @@ export function sys_render(game: Game, delta: number) {
             if (render.Material !== current_material) {
                 current_material = render.Material;
                 switch (render.Kind) {
-                    case RenderKind.Texture:
-                        use_diffuse(game, current_material);
+                    case RenderKind.Textured:
+                        use_textured(game, current_material);
                         break;
                 }
             }
@@ -44,34 +44,31 @@ export function sys_render(game: Game, delta: number) {
             }
 
             switch (render.Kind) {
-                case RenderKind.Texture:
-                    draw_diffuse(game, transform, render);
+                case RenderKind.Textured:
+                    draw_textured(game, transform, render);
                     break;
             }
         }
     }
 }
 
-function use_diffuse(game: Game, material: Material) {
+function use_textured(game: Game, material: Material) {
     game.GL.useProgram(material.Program);
-    game.GL.uniformMatrix4fv(material.Uniforms[TextureUniform.PV], false, game.Camera!.PV);
-    game.GL.uniform4fv(material.Uniforms[TextureUniform.LightPositions], game.LightPositions);
-    game.GL.uniform4fv(material.Uniforms[TextureUniform.LightDetails], game.LightDetails);
+    game.GL.uniformMatrix4fv(material.Uniforms[TexturedUniform.PV], false, game.Camera!.PV);
 }
 
-function draw_diffuse(game: Game, transform: Transform, render: RenderTexture) {
+function draw_textured(game: Game, transform: Transform, render: RenderTextured) {
     game.GL.uniformMatrix4fv(
-        render.Material.Uniforms[TextureUniform.World],
+        render.Material.Uniforms[TexturedUniform.World],
         false,
         transform.World
     );
+    game.GL.uniformMatrix4fv(render.Material.Uniforms[TexturedUniform.Self], false, transform.Self);
 
     game.GL.activeTexture(GL_TEXTURE0);
-    // debugger;
     game.GL.bindTexture(GL_TEXTURE_2D, render.Texture);
-    game.GL.uniform1i(render.Material.Uniforms[TextureUniform.Sampler], 0);
+    game.GL.uniform1i(render.Material.Uniforms[TexturedUniform.Sampler], 0);
 
-    game.GL.uniformMatrix4fv(render.Material.Uniforms[TextureUniform.Self], false, transform.Self);
     game.GL.bindVertexArray(render.VAO);
     game.GL.drawElements(render.Material.Mode, render.Mesh.Count, GL_UNSIGNED_SHORT, 0);
     game.GL.bindVertexArray(null);

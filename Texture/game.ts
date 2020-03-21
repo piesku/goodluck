@@ -2,10 +2,9 @@ import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_kulka} from "../meshes/kulka.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
-import {mat_diffuse_gouraud} from "./materials/mat_diffuse_gouraud.js";
+import {mat_textured} from "./materials/mat_textured.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
-import {sys_light} from "./systems/sys_light.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_rotate} from "./systems/sys_rotate.js";
 import {sys_transform} from "./systems/sys_transform.js";
@@ -27,15 +26,12 @@ export class Game {
     Canvas = document.querySelector("canvas")!;
     GL = this.Canvas.getContext("webgl2")!;
 
-    MaterialDiffuseGouraud = mat_diffuse_gouraud(this.GL);
+    MaterialTextured = mat_textured(this.GL);
     MeshKulka = mesh_kulka(this.GL);
 
     Texture?: WebGLTexture;
 
     Camera?: Camera;
-    // The rendering pipeline supports 8 lights.
-    LightPositions = new Float32Array(4 * 8);
-    LightDetails = new Float32Array(4 * 8);
 
     constructor() {
         document.addEventListener("visibilitychange", () =>
@@ -89,7 +85,6 @@ export class Game {
         sys_rotate(this, delta);
         sys_transform(this, delta);
         sys_camera(this, delta);
-        sys_light(this, delta);
         sys_render(this, delta);
         sys_framerate(this, delta, performance.now() - now);
     }
