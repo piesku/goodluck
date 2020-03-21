@@ -1,19 +1,23 @@
 import {Mesh} from "../common/material.js";
 import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW} from "../common/webgl.js";
 
-export function mesh_cube(gl: WebGLRenderingContext) {
-    let Vertices = gl.createBuffer();
+export function mesh_cube(gl: WebGLRenderingContext): Mesh {
+    let Vertices = gl.createBuffer()!;
     gl.bindBuffer(GL_ARRAY_BUFFER, Vertices);
     gl.bufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
-    let Normals = gl.createBuffer();
+    let Normals = gl.createBuffer()!;
     gl.bindBuffer(GL_ARRAY_BUFFER, Normals);
     gl.bufferData(GL_ARRAY_BUFFER, normals, GL_STATIC_DRAW);
-    let Indices = gl.createBuffer();
+    let TexCoords = gl.createBuffer()!;
+    gl.bindBuffer(GL_ARRAY_BUFFER, TexCoords);
+    gl.bufferData(GL_ARRAY_BUFFER, texcoords, GL_STATIC_DRAW);
+    let Indices = gl.createBuffer()!;
     gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Indices);
     gl.bufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
-    return <Mesh>{
+    return {
         Vertices,
         Normals,
+        TexCoords,
         Indices,
         Count: indices.length,
     };
@@ -167,6 +171,57 @@ let normals = Float32Array.from([
     0,
     1,
     0,
+]);
+
+let texcoords = Float32Array.from([
+    0.375,
+    0,
+    0.625,
+    0,
+    0.625,
+    0.25,
+    0.375,
+    0.25,
+    0.375,
+    0.25,
+    0.625,
+    0.25,
+    0.625,
+    0.5,
+    0.375,
+    0.5,
+    0.375,
+    0.5,
+    0.625,
+    0.5,
+    0.625,
+    0.75,
+    0.375,
+    0.75,
+    0.375,
+    0.75,
+    0.625,
+    0.75,
+    0.625,
+    1,
+    0.375,
+    1,
+    0.125,
+    0.5,
+    0.375,
+    0.5,
+    0.375,
+    0.75,
+    0.125,
+    0.75,
+    0.625,
+    0.5,
+    0.875,
+    0.5,
+    0.875,
+    0.75,
+    0.625,
+    0.75,
 ]);
 
 let indices = Uint16Array.from([

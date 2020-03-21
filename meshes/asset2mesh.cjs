@@ -15,7 +15,7 @@ if (!filename) {
 
 let json = execFileSync(ASSIMP2JSON, [filename], {encoding: "utf8"});
 let scene = JSON.parse(json);
-let {vertices, normals, faces} = scene.meshes[0];
+let {vertices, normals, faces, texturecoords = [[]]} = scene.meshes[0];
 
 let name = win32.basename(filename, ".obj");
 
@@ -23,19 +23,23 @@ console.log(`\
 import {Mesh} from "../common/material.js";
 import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW} from "../common/webgl.js";
 
-export function mesh_${name}(gl: WebGLRenderingContext) {
-    let Vertices = gl.createBuffer();
+export function mesh_${name}(gl: WebGLRenderingContext): Mesh {
+    let Vertices = gl.createBuffer()!;
     gl.bindBuffer(GL_ARRAY_BUFFER, Vertices);
     gl.bufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
-    let Normals = gl.createBuffer();
+    let Normals = gl.createBuffer()!;
     gl.bindBuffer(GL_ARRAY_BUFFER, Normals);
     gl.bufferData(GL_ARRAY_BUFFER, normals, GL_STATIC_DRAW);
-    let Indices = gl.createBuffer();
+    let TexCoords = gl.createBuffer()!;
+    gl.bindBuffer(GL_ARRAY_BUFFER, TexCoords);
+    gl.bufferData(GL_ARRAY_BUFFER, texcoords, GL_STATIC_DRAW);
+    let Indices = gl.createBuffer()!;
     gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Indices);
     gl.bufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
-    return <Mesh>{
+    return {
         Vertices,
         Normals,
+        TexCoords,
         Indices,
         Count: indices.length,
     };
@@ -48,7 +52,17 @@ let vertices = Float32Array.from([
 let normals = Float32Array.from([
     ${normals.join(",\n    ")},
 ]);
-
+${
+    texturecoords[0].length > 0
+        ? `
+let texcoords = Float32Array.from([
+    ${texturecoords[0].join(",\n    ")},
+]);
+`
+        : `
+let texcoords = Float32Array.from([]);
+`
+}
 let indices = Uint16Array.from([
     ${faces
         // Flatten faces into one big index array.
