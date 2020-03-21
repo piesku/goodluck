@@ -23,19 +23,23 @@ console.log(`\
 import {Mesh} from "../common/material.js";
 import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW} from "../common/webgl.js";
 
-export function mesh_${name}(gl: WebGLRenderingContext) {
-    let Vertices = gl.createBuffer();
+export function mesh_${name}(gl: WebGLRenderingContext): Mesh {
+    let Vertices = gl.createBuffer()!;
     gl.bindBuffer(GL_ARRAY_BUFFER, Vertices);
     gl.bufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
-    let Normals = gl.createBuffer();
+    let Normals = gl.createBuffer()!;
     gl.bindBuffer(GL_ARRAY_BUFFER, Normals);
     gl.bufferData(GL_ARRAY_BUFFER, normals, GL_STATIC_DRAW);
-    let Indices = gl.createBuffer();
+    let TextureCoords = gl.createBuffer()!;
+    gl.bindBuffer(GL_ARRAY_BUFFER, TextureCoords);
+    gl.bufferData(GL_ARRAY_BUFFER, uvs, GL_STATIC_DRAW);
+    let Indices = gl.createBuffer()!;
     gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Indices);
     gl.bufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
-    return <Mesh>{
+    return {
         Vertices,
         Normals,
+        TextureCoords,
         Indices,
         Count: indices.length,
     };
