@@ -4,6 +4,7 @@ export interface Mesh {
     Vertices: WebGLBuffer;
     Indices: WebGLBuffer;
     Normals: WebGLBuffer;
+    TextureCoords: WebGLBuffer;
     Count: number;
 }
 

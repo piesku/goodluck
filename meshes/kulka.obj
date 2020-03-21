@@ -1,5 +1,6 @@
-# Blender v2.80 (sub 75) OBJ File: 'kulka.blend'
+# Blender v2.82 (sub 7) OBJ File: 'kulka.blend'
 # www.blender.org
+mtllib kulka.mtl
 o Icosphere
 v 0.000000 -0.500000 0.000000
 v 0.361804 -0.223610 0.262863
@@ -195,6 +196,7 @@ vn 0.3313 -0.9435 0.0000
 vn -0.0385 -0.6617 0.7488
 vn 0.1876 -0.7947 0.5773
 vn 0.4713 -0.6617 0.5831
+usemtl Material
 s off
 f 1/1/1 14/2/1 13/3/1
 f 2/4/2 14/2/2 16/5/2
