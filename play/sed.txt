@@ -22,6 +22,7 @@ s/vertexAttribDivisor/veAD/g
 # materials
 s/getProgramParameter/gePP/g
 s/getActiveUniform/geAU/g
+s/getAttribLocation/geAL/g
 s/getUniformLocation/geUL/g
 s/createProgram/crP/g
 s/attachShader/atS/g
@@ -45,3 +46,4 @@ s/clearColor/clC/g
 # game.ts
 s/enable/en/g
 s/frontFace/frF/g
+s/getExtension/geE/g
