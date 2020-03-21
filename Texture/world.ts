@@ -1,6 +1,7 @@
 import {Camera} from "./components/com_camera.js";
 import {Light} from "./components/com_light.js";
 import {Render} from "./components/com_render.js";
+import {Rotate} from "./components/com_rotate.js";
 import {Transform} from "./components/com_transform.js";
 
 export class World {
@@ -10,5 +11,6 @@ export class World {
     Camera: Array<Camera> = [];
     Light: Array<Light> = [];
     Render: Array<Render> = [];
+    Rotate: Array<Rotate> = [];
     Transform: Array<Transform> = [];
 }
