@@ -19,9 +19,6 @@ export class Game {
     ViewportHeight = 0;
     ViewportResized = false;
 
-    InputState: Record<string, number> = {};
-    InputDelta: Record<string, number> = {};
-
     UI = document.querySelector("main")!;
     Canvas = document.querySelector("canvas")!;
     GL = this.Canvas.getContext("webgl2")!;
@@ -38,36 +35,6 @@ export class Game {
             document.hidden ? loop_stop() : loop_start(this)
         );
 
-        window.addEventListener("keydown", evt => {
-            if (!evt.repeat) {
-                this.InputState[evt.code] = 1;
-                this.InputDelta[evt.code] = 1;
-            }
-        });
-        window.addEventListener("keyup", evt => {
-            this.InputState[evt.code] = 0;
-            this.InputDelta[evt.code] = -1;
-        });
-        this.UI.addEventListener("mousedown", evt => {
-            this.InputState[`Mouse${evt.button}`] = 1;
-            this.InputDelta[`Mouse${evt.button}`] = 1;
-        });
-        this.UI.addEventListener("mouseup", evt => {
-            this.InputState[`Mouse${evt.button}`] = 0;
-            this.InputDelta[`Mouse${evt.button}`] = -1;
-        });
-        this.UI.addEventListener("mousemove", evt => {
-            this.InputState.MouseX = evt.offsetX;
-            this.InputState.MouseY = evt.offsetY;
-            this.InputDelta.MouseX = evt.movementX;
-            this.InputDelta.MouseY = evt.movementY;
-        });
-        this.UI.addEventListener("wheel", evt => {
-            this.InputDelta.WheelY = evt.deltaY;
-        });
-        this.UI.addEventListener("contextmenu", evt => evt.preventDefault());
-        this.UI.addEventListener("click", () => this.UI.requestPointerLock());
-
         this.GL.enable(GL_DEPTH_TEST);
         this.GL.enable(GL_CULL_FACE);
     }
@@ -75,9 +42,6 @@ export class Game {
     FrameReset() {
         // Reset event flags for the next frame.
         this.ViewportResized = false;
-        for (let name in this.InputDelta) {
-            this.InputDelta[name] = 0;
-        }
     }
 
     FrameUpdate(delta: number) {
