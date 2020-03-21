@@ -6,7 +6,7 @@ all: $(SHAPES_TS)
 
 %.obj: %.blend
 	@echo "$< → $@"
-	@/c/Program\ Files/Blender\ Foundation/Blender/blender.exe \
+	@/c/Program\ Files/Blender\ Foundation/Blender\ 2.82/blender.exe \
 		"$(shell wslpath -w $<)" \
 		--background \
 		--python "$(shell wslpath -w blend2obj.py)" \
