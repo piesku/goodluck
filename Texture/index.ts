@@ -3,7 +3,7 @@ import {Game} from "./game.js";
 import {scene_stage} from "./scenes/sce_stage.js";
 
 let texture = new Image();
-texture.src = "/meshes/kulka.png";
+texture.src = "/textures/kulka.png";
 texture.onload = () => {
     let game = new Game();
 
