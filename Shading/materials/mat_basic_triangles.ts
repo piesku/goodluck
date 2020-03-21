@@ -2,7 +2,7 @@ import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
 import {BasicAttribute} from "../components/com_render_basic.js";
 
-let vertex = `#version 300 es
+let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
 
@@ -13,7 +13,7 @@ let vertex = `#version 300 es
     }
 `;
 
-let fragment = `#version 300 es
+let fragment = `#version 300 es\n
     precision mediump float;
     uniform vec4 color;
 

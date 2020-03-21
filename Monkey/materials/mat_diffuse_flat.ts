@@ -2,7 +2,7 @@ import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
 import {DiffuseAttribute} from "../components/com_render_diffuse.js";
 
-let vertex = `#version 300 es
+let vertex = `#version 300 es\n
 
     // See Game.LightPositions and Game.LightDetails.
     const int MAX_LIGHTS = 8;
@@ -57,7 +57,7 @@ let vertex = `#version 300 es
     }
 `;
 
-let fragment = `#version 300 es
+let fragment = `#version 300 es\n
     precision mediump float;
 
     flat in vec4 vert_color;
