@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf8" />
 <meta name="viewport" content="width=device-width, user-scalable=0" />
-<title>goodluck (opt)</title>
+<title>GoodLuck (opt)</title>
 <style>
     html,
     body {
@@ -19,4 +19,19 @@
 <canvas></canvas>
 <canvas></canvas>
 <main></main>
-<script src="game.rollup.js"></script>
+<script>
+    let webgl = WebGL2RenderingContext.prototype;
+    for (let name in webgl) {
+        if (name === "canvas" || name === "drawingBufferWidth" || name === "drawingBufferHeight") {
+            // These properties cannot be accessed on an unbound context, as it
+            // is the case when iterating over the prototype. In production,
+            // move the hashing logic into Game.constructor, where this.GL is
+            // already bound, and remove this if block.
+            continue;
+        }
+        if (typeof webgl[name] === "function") {
+            webgl[name.match(/^..|[A-Z]|([1-9].*)/g).join("")] = webgl[name];
+        }
+    }
+</script>
+<script src="game.terser.js"></script>
