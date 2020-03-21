@@ -1,8 +1,10 @@
+import {Action} from "../actions.js";
 import {blueprint_box} from "../blueprints/blu_box.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {collide} from "../components/com_collide.js";
 import {light_directional} from "../components/com_light.js";
 import {rotate} from "../components/com_rotate.js";
+import {trigger} from "../components/com_trigger.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
@@ -39,6 +41,6 @@ export function scene_stage(game: Game) {
     // Trigger.
     instantiate(game, {
         Translation: [4, 0, 0],
-        Using: [collide(false)],
+        Using: [collide(false), trigger(Action.Alert)],
     });
 }

@@ -5,6 +5,7 @@ const enum Component {
     Render,
     Rotate,
     Transform,
+    Trigger,
 }
 
 export const enum Has {
@@ -14,4 +15,5 @@ export const enum Has {
     Render = 1 << Component.Render,
     Rotate = 1 << Component.Rotate,
     Transform = 1 << Component.Transform,
+    Trigger = 1 << Component.Trigger,
 }

@@ -4,6 +4,7 @@ import {Light} from "./components/com_light.js";
 import {Render} from "./components/com_render.js";
 import {Rotate} from "./components/com_rotate.js";
 import {Transform} from "./components/com_transform.js";
+import {Trigger} from "./components/com_trigger.js";
 
 export class World {
     // Component flags
@@ -15,4 +16,5 @@ export class World {
     Render: Array<Render> = [];
     Rotate: Array<Rotate> = [];
     Transform: Array<Transform> = [];
+    Trigger: Array<Trigger> = [];
 }

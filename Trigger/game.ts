@@ -12,6 +12,7 @@ import {sys_light} from "./systems/sys_light.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_rotate} from "./systems/sys_rotate.js";
 import {sys_transform} from "./systems/sys_transform.js";
+import {sys_trigger} from "./systems/sys_trigger.js";
 import {World} from "./world.js";
 
 export type Entity = number;
@@ -56,6 +57,7 @@ export class Game {
         sys_transform(this, delta);
 
         sys_collide(this, delta);
+        sys_trigger(this, delta);
 
         sys_camera(this, delta);
         sys_light(this, delta);
