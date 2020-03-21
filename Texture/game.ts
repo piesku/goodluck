@@ -1,5 +1,7 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
+import {mesh_cube} from "../meshes/cube.js";
 import {mesh_kulka} from "../meshes/kulka.js";
+import {mesh_plane} from "../meshes/plane.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
 import {mat_diffuse_gouraud} from "./materials/mat_diffuse_gouraud.js";
@@ -28,7 +30,9 @@ export class Game {
     GL = this.Canvas.getContext("webgl2")!;
 
     MaterialDiffuseGouraud = mat_diffuse_gouraud(this.GL);
+    MeshCube = mesh_cube(this.GL);
     MeshKulka = mesh_kulka(this.GL);
+    MeshPlane = mesh_plane(this.GL);
 
     Texture?: WebGLTexture;
 

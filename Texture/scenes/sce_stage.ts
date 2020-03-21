@@ -1,3 +1,4 @@
+import {from_euler} from "../../common/quat.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light_directional} from "../components/com_light.js";
 import {render_texture} from "../components/com_render_texture.js";
@@ -13,7 +14,7 @@ export function scene_stage(game: Game) {
 
     // Camera.
     instantiate(game, {
-        Translation: [1, 2, 5],
+        Translation: [0, 0, 3],
         ...blueprint_camera(game),
     });
 
@@ -24,7 +25,7 @@ export function scene_stage(game: Game) {
     });
 
     instantiate(game, {
-        Translation: [0, 1, 0],
+        Rotation: from_euler([0, 0, 0, 0], 90, 0, 0),
         Using: [render_texture(game.MaterialDiffuseGouraud, game.MeshKulka, game.Texture!)],
     });
 }

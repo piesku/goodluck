@@ -4,6 +4,7 @@ SHAPES_TS := $(SHAPES_BLEND:%.blend=%.ts)
 
 all: $(SHAPES_TS)
 
+.PRECIOUS: %.obj
 %.obj: %.blend
 	@echo "$< → $@"
 	@/c/Program\ Files/Blender\ Foundation/Blender/blender.exe \
