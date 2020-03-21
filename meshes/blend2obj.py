@@ -15,4 +15,4 @@ bpy.ops.export_scene.obj(
     check_existing=False,
     axis_forward="-Z",
     axis_up="Y",
-    use_materials=True)
+    use_materials=False)
