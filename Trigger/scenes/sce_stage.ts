@@ -1,5 +1,6 @@
 import {blueprint_box} from "../blueprints/blu_box.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
+import {collide} from "../components/com_collide.js";
 import {light_directional} from "../components/com_light.js";
 import {rotate} from "../components/com_rotate.js";
 import {instantiate} from "../core.js";
@@ -20,10 +21,11 @@ export function scene_stage(game: Game) {
 
     // Light.
     instantiate(game, {
-        Translation: [0, 10, 0],
+        Translation: [1, 1, 1],
         Using: [light_directional([1, 1, 1], 1)],
     });
 
+    // Rotating cube.
     instantiate(game, {
         Using: [rotate([10, 20, 30])],
         Children: [
@@ -32,5 +34,11 @@ export function scene_stage(game: Game) {
                 ...blueprint_box(game),
             },
         ],
+    });
+
+    // Trigger.
+    instantiate(game, {
+        Translation: [4, 0, 0],
+        Using: [collide(false)],
     });
 }

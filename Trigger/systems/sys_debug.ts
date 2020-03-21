@@ -66,22 +66,32 @@ function wireframe_entity(game: Game, entity: Entity) {
 function wireframe_collider(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
     let collide = game.World.Collide[entity];
-    let wireframe = wireframes.get(collide);
 
+    let wireframe = wireframes.get(collide);
     if (!wireframe) {
         let box = instantiate(game, {
             Translation: collide.Center,
             Scale: scale([0, 0, 0], collide.Half, 2),
             Using: [render_basic(game.MaterialBasicWireframe, game.MeshCube, [0, 1, 0, 1])],
         });
-        wireframes.set(collide, {
+        wireframe = {
             entity,
             anchor: transform,
             transform: game.World.Transform[box],
-        });
-    } else if (collide.Dynamic) {
+        };
+        wireframes.set(collide, wireframe);
+    }
+
+    if (collide.Dynamic) {
         wireframe.transform.Translation = collide.Center;
         scale(wireframe.transform.Scale, collide.Half, 2);
         wireframe.transform.Dirty = true;
+    }
+
+    let render = game.World.Render[wireframe.transform.EntityId];
+    if (collide.Collisions.length > 0) {
+        render.Color[2] = 1;
+    } else {
+        render.Color[2] = 0;
     }
 }
