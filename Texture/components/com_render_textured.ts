@@ -27,8 +27,8 @@ export function render_textured(Material: Material, Mesh: Mesh, Texture: WebGLTe
             game.GL.vertexAttribPointer(TexturedAttribute.Position, 3, GL_FLOAT, false, 0, 0);
 
             game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.TexCoords);
-            game.GL.enableVertexAttribArray(TexturedAttribute.TextureCoord);
-            game.GL.vertexAttribPointer(TexturedAttribute.TextureCoord, 2, GL_FLOAT, false, 0, 0);
+            game.GL.enableVertexAttribArray(TexturedAttribute.TexCoord);
+            game.GL.vertexAttribPointer(TexturedAttribute.TexCoord, 2, GL_FLOAT, false, 0, 0);
 
             game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Mesh.Indices);
 
@@ -50,7 +50,7 @@ export function render_textured(Material: Material, Mesh: Mesh, Texture: WebGLTe
 
 export const enum TexturedAttribute {
     Position,
-    TextureCoord,
+    TexCoord,
 }
 
 export const enum TexturedUniform {

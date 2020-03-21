@@ -8,7 +8,7 @@ let vertex = `#version 300 es\n
     uniform mat4 self;
 
     layout(location=${TexturedAttribute.Position}) in vec3 position;
-    layout(location=${TexturedAttribute.TextureCoord}) in vec2 texcoord;
+    layout(location=${TexturedAttribute.TexCoord}) in vec2 texcoord;
 
     out vec2 vert_texcoord;
 
