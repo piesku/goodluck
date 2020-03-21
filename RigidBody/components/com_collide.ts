@@ -1,8 +1,9 @@
+import {AABB} from "../../common/aabb.js";
 import {Vec3} from "../../common/math.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "./com_index.js";
 
-export interface Collide {
+export interface Collide extends AABB {
     readonly EntityId: Entity;
     New: boolean;
     /**
@@ -10,16 +11,6 @@ export interface Collide {
      * only with dynamic colliders.
      */
     Dynamic: boolean;
-    /** The size of the collider in self units. */
-    Size: [number, number, number];
-    /** The min corner of the AABB. */
-    Min: Vec3;
-    /** The max corner of the AABB. */
-    Max: Vec3;
-    /** The world position of the AABB. */
-    Center: Vec3;
-    /** The half-extents of the AABB on the three axes. */
-    Half: [number, number, number];
     /** Collisions detected with this collider during this tick. */
     Collisions: Array<Collision>;
 }
