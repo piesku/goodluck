@@ -2,8 +2,8 @@ export type Model = Float32Array;
 
 export function load(path: string): Promise<Array<Model>> {
     return fetch(path)
-        .then(response => response.arrayBuffer())
-        .then(buffer => {
+        .then((response) => response.arrayBuffer())
+        .then((buffer) => {
             let buffer_array = new Uint16Array(buffer);
             let model_data: Array<Model> = [];
             let i = 0;

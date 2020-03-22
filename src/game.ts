@@ -88,24 +88,24 @@ export class Game implements GameState {
             document.hidden ? this.Stop() : this.Start()
         );
 
-        window.addEventListener("keydown", evt => (this.InputState[evt.code] = 1));
-        window.addEventListener("keyup", evt => (this.InputState[evt.code] = 0));
-        this.UI.addEventListener("contextmenu", evt => evt.preventDefault());
-        this.UI.addEventListener("mousedown", evt => {
+        window.addEventListener("keydown", (evt) => (this.InputState[evt.code] = 1));
+        window.addEventListener("keyup", (evt) => (this.InputState[evt.code] = 0));
+        this.UI.addEventListener("contextmenu", (evt) => evt.preventDefault());
+        this.UI.addEventListener("mousedown", (evt) => {
             this.InputState[`mouse_${evt.button}`] = 1;
             this.InputEvent[`mouse_${evt.button}_down`] = 1;
         });
-        this.UI.addEventListener("mouseup", evt => {
+        this.UI.addEventListener("mouseup", (evt) => {
             this.InputState[`mouse_${evt.button}`] = 0;
             this.InputEvent[`mouse_${evt.button}_up`] = 1;
         });
-        this.UI.addEventListener("mousemove", evt => {
+        this.UI.addEventListener("mousemove", (evt) => {
             this.InputState.mouse_x = evt.offsetX;
             this.InputState.mouse_y = evt.offsetY;
             this.InputEvent.mouse_x = evt.movementX;
             this.InputEvent.mouse_y = evt.movementY;
         });
-        this.UI.addEventListener("wheel", evt => {
+        this.UI.addEventListener("wheel", (evt) => {
             this.InputEvent.wheel_y = evt.deltaY;
         });
         this.UI.addEventListener("click", () => this.UI.requestPointerLock());
