@@ -23,34 +23,34 @@ export class Game {
             document.hidden ? loop_stop() : loop_start(this)
         );
 
-        window.addEventListener("keydown", evt => {
+        window.addEventListener("keydown", (evt) => {
             if (!evt.repeat) {
                 this.InputState[evt.code] = 1;
                 this.InputDelta[evt.code] = 1;
             }
         });
-        window.addEventListener("keyup", evt => {
+        window.addEventListener("keyup", (evt) => {
             this.InputState[evt.code] = 0;
             this.InputDelta[evt.code] = -1;
         });
-        this.UI.addEventListener("mousedown", evt => {
+        this.UI.addEventListener("mousedown", (evt) => {
             this.InputState[`Mouse${evt.button}`] = 1;
             this.InputDelta[`Mouse${evt.button}`] = 1;
         });
-        this.UI.addEventListener("mouseup", evt => {
+        this.UI.addEventListener("mouseup", (evt) => {
             this.InputState[`Mouse${evt.button}`] = 0;
             this.InputDelta[`Mouse${evt.button}`] = -1;
         });
-        this.UI.addEventListener("mousemove", evt => {
+        this.UI.addEventListener("mousemove", (evt) => {
             this.InputState.MouseX = evt.offsetX;
             this.InputState.MouseY = evt.offsetY;
             this.InputDelta.MouseX = evt.movementX;
             this.InputDelta.MouseY = evt.movementY;
         });
-        this.UI.addEventListener("wheel", evt => {
+        this.UI.addEventListener("wheel", (evt) => {
             this.InputDelta.WheelY = evt.deltaY;
         });
-        this.UI.addEventListener("contextmenu", evt => evt.preventDefault());
+        this.UI.addEventListener("contextmenu", (evt) => evt.preventDefault());
         this.UI.addEventListener("click", () => this.UI.requestPointerLock());
 
         let canvas2d = document.querySelector("canvas")!;

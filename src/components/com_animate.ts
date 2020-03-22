@@ -23,7 +23,7 @@ export function animate(clips: {[Anim.Idle]: AnimationClip; [k: number]: Animati
                 // keyframes' timestamps after each alternation. We want to
                 // modify copies of the timestamps defined in the clip. It's OK
                 // to copy other keyframe properties by reference.
-                Keyframes: Keyframes.map(keyframe => <AnimationKeyframe>{...keyframe}),
+                Keyframes: Keyframes.map((keyframe) => <AnimationKeyframe>{...keyframe}),
                 Flags,
                 Duration: duration,
                 Time: 0,
