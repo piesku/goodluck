@@ -2,8 +2,8 @@
     "compilerOptions": {
         "target": "es2019",
         "lib": [
-            "dom",
-            "esnext.array"
+            "ES2019",
+            "DOM",
         ],
         "module": "es2015",
         "moduleResolution": "node",
