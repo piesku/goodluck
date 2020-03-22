@@ -27,7 +27,7 @@
         "prettier": "1.19.1",
         "rollup": "1.27.13",
         "terser": "4.4.3",
-        "typescript": "3.7.3"
+        "typescript": "3.8.3"
     },
     "engines": {
         "node": "12.x"
