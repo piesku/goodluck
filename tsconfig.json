@@ -9,5 +9,8 @@
         "moduleResolution": "node",
         "strict": true,
         "sourceMap": true
-    }
+    },
+    "exclude": [
+        "node_modules"
+    ]
 }
