@@ -1,18 +1,7 @@
-SHAPES_BLEND := $(wildcard *.blend)
-SHAPES_OBJ := $(SHAPES_BLEND:%.blend=%.obj)
-SHAPES_TS := $(SHAPES_BLEND:%.blend=%.ts)
+OBJS := $(wildcard *.obj)
+MESHES := $(OBJS:%.obj=%.ts)
 
-all: $(SHAPES_TS)
-
-%.obj: %.blend
-	@echo "$< → $@"
-	@/c/Program\ Files/Blender\ Foundation/Blender\ 2.82/blender.exe \
-		"$(shell wslpath -w $<)" \
-		--background \
-		--python "$(shell wslpath -w blend2obj.py)" \
-		-- \
-		"$(shell wslpath -w $@)" \
-		1> /dev/null
+all: $(MESHES)
 
 %.ts: %.obj
 	@echo "$< → $@"
