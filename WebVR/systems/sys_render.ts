@@ -89,6 +89,6 @@ function draw_shaded(game: Game, transform: Transform, render: RenderDiffuse) {
     game.GL.uniformMatrix4fv(render.Material.Uniforms[DiffuseUniform.Self], false, transform.Self);
     game.GL.uniform4fv(render.Material.Uniforms[DiffuseUniform.Color], render.Color);
     game.GL.bindVertexArray(render.VAO);
-    game.GL.drawElements(render.Material.Mode, render.Mesh.Count, GL_UNSIGNED_SHORT, 0);
+    game.GL.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
     game.GL.bindVertexArray(null);
 }

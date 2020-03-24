@@ -70,6 +70,6 @@ function draw_textured(game: Game, transform: Transform, render: RenderTextured)
     game.GL.uniform1i(render.Material.Uniforms[TexturedUniform.Sampler], 0);
 
     game.GL.bindVertexArray(render.VAO);
-    game.GL.drawElements(render.Material.Mode, render.Mesh.Count, GL_UNSIGNED_SHORT, 0);
+    game.GL.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
     game.GL.bindVertexArray(null);
 }

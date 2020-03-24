@@ -6,10 +6,10 @@ import {
 } from "../common/webgl.js";
 
 export interface Mesh {
-    Vertices: WebGLBuffer;
-    Indices: WebGLBuffer;
-    Normals: WebGLBuffer;
-    Count: number;
+    VertexBuffer: WebGLBuffer;
+    NormalBuffer: WebGLBuffer;
+    IndexBuffer: WebGLBuffer;
+    IndexCount: number;
 }
 
 export interface Material {

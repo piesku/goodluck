@@ -22,15 +22,15 @@ export function render_textured(Material: Material, Mesh: Mesh, Texture: WebGLTe
             let vao = game.GL.createVertexArray()!;
             game.GL.bindVertexArray(vao);
 
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.Vertices);
+            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.VertexBuffer);
             game.GL.enableVertexAttribArray(TexturedAttribute.Position);
             game.GL.vertexAttribPointer(TexturedAttribute.Position, 3, GL_FLOAT, false, 0, 0);
 
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.TexCoords);
+            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.TexCoordBuffer);
             game.GL.enableVertexAttribArray(TexturedAttribute.TexCoord);
             game.GL.vertexAttribPointer(TexturedAttribute.TexCoord, 2, GL_FLOAT, false, 0, 0);
 
-            game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Mesh.Indices);
+            game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Mesh.IndexBuffer);
 
             game.GL.bindVertexArray(null);
             vaos.set(Mesh, vao);

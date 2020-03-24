@@ -69,7 +69,7 @@ function draw_basic(game: Game, transform: Transform, render: RenderBasic) {
     game.GL.uniformMatrix4fv(render.Material.Uniforms[BasicUniform.World], false, transform.World);
     game.GL.uniform4fv(render.Material.Uniforms[BasicUniform.Color], render.Color);
     game.GL.bindVertexArray(render.VAO);
-    game.GL.drawElements(render.Material.Mode, render.Mesh.Count, GL_UNSIGNED_SHORT, 0);
+    game.GL.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
     game.GL.bindVertexArray(null);
 }
 
@@ -89,7 +89,7 @@ function draw_diffuse(game: Game, transform: Transform, render: RenderDiffuse) {
     game.GL.uniformMatrix4fv(render.Material.Uniforms[DiffuseUniform.Self], false, transform.Self);
     game.GL.uniform4fv(render.Material.Uniforms[DiffuseUniform.Color], render.Color);
     game.GL.bindVertexArray(render.VAO);
-    game.GL.drawElements(render.Material.Mode, render.Mesh.Count, GL_UNSIGNED_SHORT, 0);
+    game.GL.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
     game.GL.bindVertexArray(null);
 }
 
@@ -115,6 +115,6 @@ function draw_specular(game: Game, transform: Transform, render: RenderSpecular)
     );
     game.GL.uniform1f(render.Material.Uniforms[SpecularUniform.Shininess], render.Shininess);
     game.GL.bindVertexArray(render.VAO);
-    game.GL.drawElements(render.Material.Mode, render.Mesh.Count, GL_UNSIGNED_SHORT, 0);
+    game.GL.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
     game.GL.bindVertexArray(null);
 }
