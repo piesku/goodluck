@@ -78,43 +78,23 @@ export function scene_stage(game: Game) {
 
     // Build the graph.
     for (let face = 0; face < face_count; face++) {
-        let v1 = mesh.IndexArray[face * 3 + 0];
-        let v2 = mesh.IndexArray[face * 3 + 1];
-        let v3 = mesh.IndexArray[face * 3 + 2];
+        let edges = [
+            [mesh.IndexArray[face * 3 + 0], mesh.IndexArray[face * 3 + 1]],
+            [mesh.IndexArray[face * 3 + 1], mesh.IndexArray[face * 3 + 2]],
+            [mesh.IndexArray[face * 3 + 2], mesh.IndexArray[face * 3 + 0]],
+        ];
 
-        for (let other of faces_containing[v1]) {
-            if (
-                other !== face &&
-                (mesh.IndexArray[other * 3 + 0] === v2 ||
-                    mesh.IndexArray[other * 3 + 1] === v2 ||
-                    mesh.IndexArray[other * 3 + 2] === v2)
-            ) {
-                graph[face].push([other, manhattan(centroids[face], centroids[other])]);
-                break;
-            }
-        }
-
-        for (let other of faces_containing[v2]) {
-            if (
-                other !== face &&
-                (mesh.IndexArray[other * 3 + 0] === v3 ||
-                    mesh.IndexArray[other * 3 + 1] === v3 ||
-                    mesh.IndexArray[other * 3 + 2] === v3)
-            ) {
-                graph[face].push([other, manhattan(centroids[face], centroids[other])]);
-                break;
-            }
-        }
-
-        for (let other of faces_containing[v3]) {
-            if (
-                other !== face &&
-                (mesh.IndexArray[other * 3 + 0] === v1 ||
-                    mesh.IndexArray[other * 3 + 1] === v1 ||
-                    mesh.IndexArray[other * 3 + 2] === v1)
-            ) {
-                graph[face].push([other, manhattan(centroids[face], centroids[other])]);
-                break;
+        for (let [a, b] of edges) {
+            for (let other of faces_containing[a]) {
+                if (
+                    other !== face &&
+                    (mesh.IndexArray[other * 3 + 0] === b ||
+                        mesh.IndexArray[other * 3 + 1] === b ||
+                        mesh.IndexArray[other * 3 + 2] === b)
+                ) {
+                    graph[face].push([other, manhattan(centroids[face], centroids[other])]);
+                    break;
+                }
             }
         }
     }
