@@ -69,14 +69,14 @@ function draw_diffuse(game: Game, transform: Transform, render: RenderDiffuse) {
     game.GL.uniformMatrix4fv(render.Material.Uniforms[DiffuseUniform.Self], false, transform.Self);
     game.GL.uniform4fv(render.Material.Uniforms[DiffuseUniform.Color], render.Color);
 
-    game.GL.bindBuffer(GL_ARRAY_BUFFER, render.Mesh.Vertices);
+    game.GL.bindBuffer(GL_ARRAY_BUFFER, render.Mesh.VertexBuffer);
     game.GL.enableVertexAttribArray(render.Material.Attributes[DiffuseAttribute.Position]);
     game.GL.vertexAttribPointer(DiffuseAttribute.Position, 3, GL_FLOAT, false, 0, 0);
 
-    game.GL.bindBuffer(GL_ARRAY_BUFFER, render.Mesh.Normals);
+    game.GL.bindBuffer(GL_ARRAY_BUFFER, render.Mesh.NormalBuffer);
     game.GL.enableVertexAttribArray(DiffuseAttribute.Normal);
     game.GL.vertexAttribPointer(DiffuseAttribute.Normal, 3, GL_FLOAT, false, 0, 0);
 
-    game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, render.Mesh.Indices);
-    game.GL.drawElements(render.Material.Mode, render.Mesh.Count, GL_UNSIGNED_SHORT, 0);
+    game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, render.Mesh.IndexBuffer);
+    game.GL.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
 }
