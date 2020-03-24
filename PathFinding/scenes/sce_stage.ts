@@ -52,26 +52,43 @@ export function scene_stage(game: Game) {
     let graph: Record<number, Array<number>> = {};
     for (let faceidx = 0; faceidx < mesh.IndexCount; faceidx += 3) {
         graph[faceidx / 3] = [];
-        for (let vertidx = 0; vertidx < 3; vertidx++) {
-            let vertex = mesh.IndexArray[faceidx + vertidx];
-            for (let otherfaceidx of vert2face[vertex]) {
-                if (otherfaceidx === faceidx) {
-                    continue;
-                }
-                other: for (let othervertidx = 0; othervertidx < 3; othervertidx++) {
-                    let othervert = mesh.IndexArray[otherfaceidx + othervertidx];
-                    if (othervert === vertex) {
-                        continue other;
-                    }
-                    if (
-                        othervert === mesh.IndexArray[faceidx + 0] ||
-                        othervert === mesh.IndexArray[faceidx + 1] ||
-                        othervert === mesh.IndexArray[faceidx + 2]
-                    ) {
-                        graph[faceidx / 3].push(otherfaceidx / 3);
-                        break other;
-                    }
-                }
+        let v1 = mesh.IndexArray[faceidx + 0];
+        let v2 = mesh.IndexArray[faceidx + 1];
+        let v3 = mesh.IndexArray[faceidx + 2];
+
+        for (let vertfaceidx of vert2face[v1]) {
+            if (
+                vertfaceidx !== faceidx &&
+                (mesh.IndexArray[vertfaceidx + 0] === v2 ||
+                    mesh.IndexArray[vertfaceidx + 1] === v2 ||
+                    mesh.IndexArray[vertfaceidx + 2] === v2)
+            ) {
+                graph[faceidx / 3].push(vertfaceidx / 3);
+                break;
+            }
+        }
+
+        for (let vertfaceidx of vert2face[v2]) {
+            if (
+                vertfaceidx !== faceidx &&
+                (mesh.IndexArray[vertfaceidx + 0] === v3 ||
+                    mesh.IndexArray[vertfaceidx + 1] === v3 ||
+                    mesh.IndexArray[vertfaceidx + 2] === v3)
+            ) {
+                graph[faceidx / 3].push(vertfaceidx / 3);
+                break;
+            }
+        }
+
+        for (let vertfaceidx of vert2face[v3]) {
+            if (
+                vertfaceidx !== faceidx &&
+                (mesh.IndexArray[vertfaceidx + 0] === v1 ||
+                    mesh.IndexArray[vertfaceidx + 1] === v1 ||
+                    mesh.IndexArray[vertfaceidx + 2] === v1)
+            ) {
+                graph[faceidx / 3].push(vertfaceidx / 3);
+                break;
             }
         }
     }
