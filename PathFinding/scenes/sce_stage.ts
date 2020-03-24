@@ -37,62 +37,62 @@ export function scene_stage(game: Game) {
 
     let mesh = game.MeshNavmesh;
 
-    let vert2face: Record<number, Array<number>> = {};
-    for (let fi = 0; fi < mesh.IndexCount; fi += 3) {
-        for (let vi = 0; vi < 3; vi++) {
-            let v = mesh.IndexArray[fi + vi];
-            if (vert2face[v]) {
-                vert2face[v].push(fi);
-            } else {
-                vert2face[v] = [fi];
-            }
+    let faces_containing: Record<number, Array<number>> = {};
+    for (let i = 0; i < mesh.IndexCount; i++) {
+        let face = Math.floor(i / 3);
+        let vert = mesh.IndexArray[i];
+        if (faces_containing[vert]) {
+            faces_containing[vert].push(face);
+        } else {
+            faces_containing[vert] = [face];
         }
     }
 
     let graph: Record<number, Array<number>> = {};
-    for (let faceidx = 0; faceidx < mesh.IndexCount; faceidx += 3) {
-        graph[faceidx / 3] = [];
-        let v1 = mesh.IndexArray[faceidx + 0];
-        let v2 = mesh.IndexArray[faceidx + 1];
-        let v3 = mesh.IndexArray[faceidx + 2];
+    let face_count = mesh.IndexCount / 3;
+    for (let face = 0; face < face_count / 3; face++) {
+        graph[face] = [];
+        let v1 = mesh.IndexArray[face * 3 + 0];
+        let v2 = mesh.IndexArray[face * 3 + 1];
+        let v3 = mesh.IndexArray[face * 3 + 2];
 
-        for (let vertfaceidx of vert2face[v1]) {
+        for (let other of faces_containing[v1]) {
             if (
-                vertfaceidx !== faceidx &&
-                (mesh.IndexArray[vertfaceidx + 0] === v2 ||
-                    mesh.IndexArray[vertfaceidx + 1] === v2 ||
-                    mesh.IndexArray[vertfaceidx + 2] === v2)
+                other !== face &&
+                (mesh.IndexArray[other * 3 + 0] === v2 ||
+                    mesh.IndexArray[other * 3 + 1] === v2 ||
+                    mesh.IndexArray[other * 3 + 2] === v2)
             ) {
-                graph[faceidx / 3].push(vertfaceidx / 3);
+                graph[face].push(other);
                 break;
             }
         }
 
-        for (let vertfaceidx of vert2face[v2]) {
+        for (let other of faces_containing[v2]) {
             if (
-                vertfaceidx !== faceidx &&
-                (mesh.IndexArray[vertfaceidx + 0] === v3 ||
-                    mesh.IndexArray[vertfaceidx + 1] === v3 ||
-                    mesh.IndexArray[vertfaceidx + 2] === v3)
+                other !== face &&
+                (mesh.IndexArray[other * 3 + 0] === v3 ||
+                    mesh.IndexArray[other * 3 + 1] === v3 ||
+                    mesh.IndexArray[other * 3 + 2] === v3)
             ) {
-                graph[faceidx / 3].push(vertfaceidx / 3);
+                graph[face].push(other);
                 break;
             }
         }
 
-        for (let vertfaceidx of vert2face[v3]) {
+        for (let other of faces_containing[v3]) {
             if (
-                vertfaceidx !== faceidx &&
-                (mesh.IndexArray[vertfaceidx + 0] === v1 ||
-                    mesh.IndexArray[vertfaceidx + 1] === v1 ||
-                    mesh.IndexArray[vertfaceidx + 2] === v1)
+                other !== face &&
+                (mesh.IndexArray[other * 3 + 0] === v1 ||
+                    mesh.IndexArray[other * 3 + 1] === v1 ||
+                    mesh.IndexArray[other * 3 + 2] === v1)
             ) {
-                graph[faceidx / 3].push(vertfaceidx / 3);
+                graph[face].push(other);
                 break;
             }
         }
     }
 
-    console.log(vert2face);
+    console.log(faces_containing);
     console.log(graph);
 }
