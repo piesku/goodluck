@@ -7,6 +7,7 @@ import {render_diffuse} from "../components/com_render_diffuse.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";
 import {nav_bake} from "../navmesh.js";
+import {path_find, path_follow} from "../pathfind.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {
@@ -18,18 +19,18 @@ export function scene_stage(game: Game) {
     // Camera.
     instantiate(game, {
         ...blueprint_camera(game),
-        Translation: [0, 100, 0],
-        Rotation: from_euler([0, 0, 0, 0], 90, 180, 0),
+        Translation: [0, 100, 30],
+        Rotation: from_euler([0, 0, 0, 0], 75, 180, 0),
     });
 
     // Light.
     instantiate(game, {
         Translation: [1, 1, 1],
-        Using: [light_directional([1, 1, 1], 1)],
+        Using: [light_directional([1, 1, 1], 1.2)],
     });
 
     instantiate(game, {
-        Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshTerrain, [0.3, 0.9, 0.9, 1])],
+        Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshTerrain, [0.3, 0.3, 0.8, 1])],
     });
 
     instantiate(game, {
@@ -46,5 +47,19 @@ export function scene_stage(game: Game) {
             Translation: nav.Centroids[face],
             Using: [draw_marker(`${face}`)],
         });
+    }
+
+    let dest = 20;
+    console.time("path_find");
+    let path = path_find(nav, 0, dest);
+    console.timeEnd("path_find");
+
+    if (path) {
+        for (let waypoint of path_follow(path, dest)) {
+            instantiate(game, {
+                Translation: nav.Centroids[waypoint],
+                Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 0, 0, 1])],
+            });
+        }
     }
 }
