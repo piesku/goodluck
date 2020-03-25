@@ -1,6 +1,5 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
-import {mesh_navmesh} from "../meshes/navmesh.js";
 import {mesh_terrain} from "../meshes/terrain.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
@@ -33,7 +32,6 @@ export class Game {
     MaterialDiffuseGouraud = mat_diffuse_gouraud(this.GL);
     MeshCube = mesh_cube(this.GL);
     MeshTerrain = mesh_terrain(this.GL);
-    MeshNavmesh = mesh_navmesh(this.GL);
 
     Camera?: Camera;
     // The rendering pipeline supports 8 lights.

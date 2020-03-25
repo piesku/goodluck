@@ -33,12 +33,12 @@ export function scene_stage(game: Game) {
     });
 
     // instantiate(game, {
-    //     Translation: [0, 0.3, 0],
-    //     Using: [render_basic(game.MaterialBasicWireframe, game.MeshNavmesh, [1, 1, 0, 1])],
+    //     Translation: [0, 0.1, 0],
+    //     Using: [render_basic(game.MaterialBasicWireframe, game.MeshTerrain, [1, 1, 0, 1])],
     // });
 
     console.time("nav_bake");
-    let nav = nav_bake(game.MeshNavmesh);
+    let nav = nav_bake(game.MeshTerrain);
     console.timeEnd("nav_bake");
 
     for (let face = 0; face < nav.Centroids.length; face++) {
