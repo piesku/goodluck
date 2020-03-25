@@ -1,4 +1,5 @@
 import {Camera} from "./components/com_camera.js";
+import {Draw} from "./components/com_draw.js";
 import {Light} from "./components/com_light.js";
 import {Render} from "./components/com_render.js";
 import {Transform} from "./components/com_transform.js";
@@ -8,6 +9,7 @@ export class World {
     Mask: Array<number> = [];
     // Component data
     Camera: Array<Camera> = [];
+    Draw: Array<Draw> = [];
     Light: Array<Light> = [];
     Render: Array<Render> = [];
     Transform: Array<Transform> = [];

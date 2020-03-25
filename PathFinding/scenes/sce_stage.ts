@@ -1,5 +1,6 @@
 import {from_euler} from "../../common/quat.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
+import {draw_marker} from "../components/com_draw.js";
 import {light_directional} from "../components/com_light.js";
 import {render_basic} from "../components/com_render_basic.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
@@ -36,5 +37,14 @@ export function scene_stage(game: Game) {
         Using: [render_basic(game.MaterialBasicWireframe, game.MeshNavmesh, [1, 1, 0, 1])],
     });
 
-    console.log(nav_bake(game.MeshNavmesh));
+    console.time("nav_bake");
+    let nav = nav_bake(game.MeshNavmesh);
+    console.timeEnd("nav_bake");
+
+    for (let face = 0; face < nav.Centroids.length; face++) {
+        instantiate(game, {
+            Translation: nav.Centroids[face],
+            Using: [draw_marker(`${face}`)],
+        });
+    }
 }

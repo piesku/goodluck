@@ -7,6 +7,7 @@ import {loop_start, loop_stop} from "./core.js";
 import {mat_basic_wireframe} from "./materials/mat_basic_wireframe.js";
 import {mat_diffuse_gouraud} from "./materials/mat_diffuse_gouraud.js";
 import {sys_camera} from "./systems/sys_camera.js";
+import {sys_draw} from "./systems/sys_draw.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_render} from "./systems/sys_render.js";
@@ -23,8 +24,10 @@ export class Game {
     ViewportResized = false;
 
     UI = document.querySelector("main")!;
-    Canvas = document.querySelector("canvas")!;
-    GL = this.Canvas.getContext("webgl2")!;
+    CanvasScene = document.querySelector("canvas#scene")! as HTMLCanvasElement;
+    GL = this.CanvasScene.getContext("webgl2")!;
+    CanvasBillboard = document.querySelector("canvas#billboard")! as HTMLCanvasElement;
+    Context2D = this.CanvasBillboard.getContext("2d")!;
 
     MaterialBasicWireframe = mat_basic_wireframe(this.GL);
     MaterialDiffuseGouraud = mat_diffuse_gouraud(this.GL);
@@ -56,6 +59,7 @@ export class Game {
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render(this, delta);
+        sys_draw(this, delta);
         sys_framerate(this, delta, performance.now() - now);
     }
 }
