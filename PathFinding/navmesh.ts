@@ -1,6 +1,6 @@
 import {Mesh} from "../common/material.js";
 import {Vec3} from "../common/math.js";
-import {manhattan} from "../common/vec3.js";
+import {cross, manhattan, normalize, subtract} from "../common/vec3.js";
 
 export interface NavMesh {
     Graph: Array<Array<[number, number]>>;
@@ -18,26 +18,18 @@ export function nav_bake(mesh: Mesh) {
 
     // Prepare data for graph building.
     for (let face = 0; face < face_count; face++) {
-        navmesh.Graph[face] = [];
-
         let v1 = mesh.IndexArray[face * 3 + 0];
         let v2 = mesh.IndexArray[face * 3 + 1];
         let v3 = mesh.IndexArray[face * 3 + 2];
 
-        navmesh.Centroids[face] = [
-            (mesh.VertexArray[v1 * 3 + 0] +
-                mesh.VertexArray[v2 * 3 + 0] +
-                mesh.VertexArray[v3 * 3 + 0]) /
-                3,
-            (mesh.VertexArray[v1 * 3 + 1] +
-                mesh.VertexArray[v2 * 3 + 1] +
-                mesh.VertexArray[v3 * 3 + 1]) /
-                3,
-            (mesh.VertexArray[v1 * 3 + 2] +
-                mesh.VertexArray[v2 * 3 + 2] +
-                mesh.VertexArray[v3 * 3 + 2]) /
-                3,
-        ];
+        let norm = normal(mesh.VertexArray, v1, v2, v3);
+        if (norm[1] < 0.9) {
+            // Skip this face, it's not horizontal enough.
+            continue;
+        }
+
+        navmesh.Graph[face] = [];
+        navmesh.Centroids[face] = centroid(mesh.VertexArray, v1, v2, v3);
 
         for (let i = 0; i < 3; i++) {
             let vert = mesh.IndexArray[face * 3 + i];
@@ -51,6 +43,10 @@ export function nav_bake(mesh: Mesh) {
 
     // Build the graph.
     for (let face = 0; face < face_count; face++) {
+        if (navmesh.Graph[face] === undefined) {
+            continue;
+        }
+
         let edges = [
             [mesh.IndexArray[face * 3 + 0], mesh.IndexArray[face * 3 + 1]],
             [mesh.IndexArray[face * 3 + 1], mesh.IndexArray[face * 3 + 2]],
@@ -79,4 +75,29 @@ export function nav_bake(mesh: Mesh) {
     }
 
     return navmesh;
+}
+
+function centroid(vertices: Float32Array, a: number, b: number, c: number): Vec3 {
+    return [
+        (vertices[a * 3 + 0] + vertices[b * 3 + 0] + vertices[c * 3 + 0]) / 3,
+        (vertices[a * 3 + 1] + vertices[b * 3 + 1] + vertices[c * 3 + 1]) / 3,
+        (vertices[a * 3 + 2] + vertices[b * 3 + 2] + vertices[c * 3 + 2]) / 3,
+    ];
+}
+
+function normal(vertices: Float32Array, a: number, b: number, c: number): Vec3 {
+    let edge1: Vec3 = subtract(
+        [0, 0, 0],
+        [vertices[b * 3 + 0], vertices[b * 3 + 1], vertices[b * 3 + 2]],
+        [vertices[a * 3 + 0], vertices[a * 3 + 1], vertices[a * 3 + 2]]
+    );
+
+    let edge2: Vec3 = subtract(
+        [0, 0, 0],
+        [vertices[c * 3 + 0], vertices[c * 3 + 1], vertices[c * 3 + 2]],
+        [vertices[b * 3 + 0], vertices[b * 3 + 1], vertices[b * 3 + 2]]
+    );
+
+    let prodcut = cross([0, 0, 0], edge2, edge1);
+    return normalize(prodcut, prodcut);
 }
