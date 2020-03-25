@@ -1,4 +1,5 @@
 import {from_euler} from "../../common/quat.js";
+import {integer, set_seed} from "../../common/random.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {draw_marker} from "../components/com_draw.js";
 import {light_directional} from "../components/com_light.js";
@@ -62,5 +63,14 @@ export function scene_stage(game: Game) {
                 Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 0, 0, 1])],
             });
         }
+        let visited = path.filter((x) => x !== undefined).length;
+        console.log({visitied: visited});
     }
+
+    set_seed(1234567890);
+    console.time("bench");
+    for (let i = 0; i < 10000; i++) {
+        path_find(nav, integer(0, 150), integer(0, 150));
+    }
+    console.timeEnd("bench");
 }
