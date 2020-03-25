@@ -23,7 +23,7 @@ export function nav_bake(mesh: Mesh) {
         let v3 = mesh.IndexArray[face * 3 + 2];
 
         let norm = normal(mesh.VertexArray, v1, v2, v3);
-        if (norm[1] < 0.9) {
+        if (norm[1] < 0.8) {
             // Skip this face, it's not horizontal enough.
             continue;
         }
