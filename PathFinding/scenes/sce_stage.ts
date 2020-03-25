@@ -2,7 +2,6 @@ import {from_euler} from "../../common/quat.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {draw_marker} from "../components/com_draw.js";
 import {light_directional} from "../components/com_light.js";
-import {render_basic} from "../components/com_render_basic.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";
@@ -33,10 +32,10 @@ export function scene_stage(game: Game) {
         Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshTerrain, [0.3, 0.3, 0.8, 1])],
     });
 
-    instantiate(game, {
-        Translation: [0, 0.3, 0],
-        Using: [render_basic(game.MaterialBasicWireframe, game.MeshNavmesh, [1, 1, 0, 1])],
-    });
+    // instantiate(game, {
+    //     Translation: [0, 0.3, 0],
+    //     Using: [render_basic(game.MaterialBasicWireframe, game.MeshNavmesh, [1, 1, 0, 1])],
+    // });
 
     console.time("nav_bake");
     let nav = nav_bake(game.MeshNavmesh);
@@ -49,8 +48,8 @@ export function scene_stage(game: Game) {
         });
     }
 
-    let origin = 0;
-    let goal = 20;
+    let origin = 74;
+    let goal = 10;
     console.time("path_find");
     let path = path_find(nav, origin, goal);
     console.timeEnd("path_find");
@@ -59,6 +58,7 @@ export function scene_stage(game: Game) {
         for (let waypoint of path_follow(path, goal)) {
             instantiate(game, {
                 Translation: nav.Centroids[waypoint],
+                Scale: [2, 2, 2],
                 Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 0, 0, 1])],
             });
         }
