@@ -1,18 +1,23 @@
-import {NavMesh} from "./navmesh";
+import {manhattan} from "../common/vec3.js";
+import {NavMesh} from "./navmesh.js";
 
 type VectorField = Array<number>;
 
-export function path_find(navmesh: NavMesh, origin: number, destination: number) {
+export function path_find(navmesh: NavMesh, origin: number, goal: number) {
     let predecessors: VectorField = [];
 
     let g: Array<number> = [];
     g[origin] = 0;
+    let h: Array<number> = [];
+    h[origin] = 0;
+    let f: Array<number> = [];
+    f[origin] = 0;
 
     let boundary = [origin];
     while (boundary.length > 0) {
-        let lowest = lowest_cost(boundary, g);
+        let lowest = lowest_cost(boundary, f);
         let current = boundary.splice(lowest, 1)[0];
-        if (current === destination) {
+        if (current === goal) {
             return predecessors;
         }
 
@@ -21,11 +26,14 @@ export function path_find(navmesh: NavMesh, origin: number, destination: number)
             let cost = navmesh.Graph[current][i][1];
             let g_next = g[current] + cost;
             if (g[next] === undefined) {
+                h[next] = manhattan(navmesh.Centroids[next], navmesh.Centroids[goal]);
                 g[next] = g_next;
+                f[next] = g_next + h[next];
                 predecessors[next] = current;
                 boundary.push(next);
             } else if (g_next < g[next]) {
                 g[next] = g_next;
+                f[next] = g_next + h[next];
                 predecessors[next] = current;
             }
         }
@@ -34,10 +42,10 @@ export function path_find(navmesh: NavMesh, origin: number, destination: number)
     return false;
 }
 
-function lowest_cost(boundary: Array<number>, g: Array<number>) {
+function lowest_cost(boundary: Array<number>, cost: Array<number>) {
     let min = 0;
     for (let i = 0; i < boundary.length; i++) {
-        if (g[min] < g[i]) {
+        if (cost[min] < cost[i]) {
             min = i;
         }
     }

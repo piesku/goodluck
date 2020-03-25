@@ -49,13 +49,14 @@ export function scene_stage(game: Game) {
         });
     }
 
-    let dest = 20;
+    let origin = 0;
+    let goal = 20;
     console.time("path_find");
-    let path = path_find(nav, 0, dest);
+    let path = path_find(nav, origin, goal);
     console.timeEnd("path_find");
 
     if (path) {
-        for (let waypoint of path_follow(path, dest)) {
+        for (let waypoint of path_follow(path, goal)) {
             instantiate(game, {
                 Translation: nav.Centroids[waypoint],
                 Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 0, 0, 1])],

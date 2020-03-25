@@ -1,5 +1,6 @@
 import {Mesh} from "../common/material.js";
 import {Vec3} from "../common/math.js";
+import {manhattan} from "../common/vec3.js";
 
 export interface NavMesh {
     Graph: Array<Array<[number, number]>>;
@@ -78,8 +79,4 @@ export function nav_bake(mesh: Mesh) {
     }
 
     return navmesh;
-}
-
-function manhattan(a: Vec3, b: Vec3) {
-    return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs(a[2] - b[2]);
 }
