@@ -1,3 +1,4 @@
+import {EPSILON} from "../common/math.js";
 import {manhattan} from "../common/vec3.js";
 import {NavMesh} from "./navmesh.js";
 
@@ -31,7 +32,7 @@ export function path_find(navmesh: NavMesh, origin: number, goal: number) {
                 f[next] = g_next + h[next];
                 predecessors[next] = current;
                 boundary.push(next);
-            } else if (g_next < g[next]) {
+            } else if (g_next + EPSILON < g[next]) {
                 g[next] = g_next;
                 f[next] = g_next + h[next];
                 predecessors[next] = current;
@@ -45,7 +46,7 @@ export function path_find(navmesh: NavMesh, origin: number, goal: number) {
 function lowest_cost(boundary: Array<number>, cost: Array<number>) {
     let min = 0;
     for (let i = 0; i < boundary.length; i++) {
-        if (cost[min] < cost[i]) {
+        if (cost[boundary[i]] + EPSILON < cost[boundary[min]]) {
             min = i;
         }
     }
