@@ -3,6 +3,10 @@ MESHES := $(OBJS:%.obj=%.ts)
 
 all: $(MESHES)
 
-%.ts: %.obj
+%.json: %.obj
 	@echo "$< → $@"
-	@node asset2mesh.cjs "$(shell wslpath -w $(CURDIR)/$<)" > $@
+	@docker run --rm -v $(CURDIR):/data piesku/assimp2json:latest /data/$< > $@
+
+%.ts: %.json
+	@echo "$< → $@"
+	@cat $< | node json2mesh.cjs $* > $@
