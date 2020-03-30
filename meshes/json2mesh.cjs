@@ -1,29 +1,25 @@
 #!/usr/bin/env node
 
-const {execFileSync} = require("child_process");
-const {win32} = require("path");
+const {readFileSync} = require("fs");
 
-// Install from https://github.com/acgessler/assimp2json.
-// Requires https://github.com/assimp/assimp (v4.1.0 works fine).
-const ASSIMP2JSON = "/c/Applications/assimp2json/assimp2json.exe";
-
-let filename = process.argv[2];
-if (!filename) {
-    console.error("Specify a path to an asset file.");
+if (process.argv.length !== 3) {
+    console.error("Provide a JOSN file on stdin and the name of the mesh:");
+    console.error("  cat foo.json | node asset2mesh.cjs foo");
     process.exit(1);
 }
 
-let json = execFileSync(ASSIMP2JSON, [filename], {encoding: "utf8"});
+process.stdin.resume();
+let json = readFileSync(process.stdin.fd, "utf8");
+process.stdin.pause();
+
 let scene = JSON.parse(json);
 let {vertices, normals, faces, texturecoords = [[]]} = scene.meshes[0];
-
-let name = win32.basename(filename, ".obj");
 
 console.log(`\
 import {Mesh} from "../common/material.js";
 import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW} from "../common/webgl.js";
 
-export function mesh_${name}(gl: WebGLRenderingContext): Mesh {
+export function mesh_${process.argv[2]}(gl: WebGLRenderingContext): Mesh {
     let vertex_buf = gl.createBuffer()!;
     gl.bindBuffer(GL_ARRAY_BUFFER, vertex_buf);
     gl.bufferData(GL_ARRAY_BUFFER, vertex_arr, GL_STATIC_DRAW);
