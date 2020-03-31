@@ -9,6 +9,7 @@ import {sys_camera} from "./systems/sys_camera.js";
 import {sys_draw} from "./systems/sys_draw.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
+import {sys_pick} from "./systems/sys_pick.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
@@ -21,6 +22,9 @@ export class Game {
     ViewportWidth = 0;
     ViewportHeight = 0;
     ViewportResized = false;
+
+    InputState: Record<string, number> = {};
+    InputDelta: Record<string, number> = {};
 
     UI = document.querySelector("main")!;
     CanvasScene = document.querySelector("canvas#scene")! as HTMLCanvasElement;
@@ -43,18 +47,37 @@ export class Game {
             document.hidden ? loop_stop() : loop_start(this)
         );
 
+        this.UI.addEventListener("mousedown", (evt) => {
+            this.InputState[`Mouse${evt.button}`] = 1;
+            this.InputDelta[`Mouse${evt.button}`] = 1;
+        });
+        this.UI.addEventListener("mouseup", (evt) => {
+            this.InputState[`Mouse${evt.button}`] = 0;
+            this.InputDelta[`Mouse${evt.button}`] = -1;
+        });
+        this.UI.addEventListener("mousemove", (evt) => {
+            this.InputState.MouseX = evt.offsetX;
+            this.InputState.MouseY = evt.offsetY;
+            this.InputDelta.MouseX = evt.movementX;
+            this.InputDelta.MouseY = evt.movementY;
+        });
+
         this.GL.enable(GL_DEPTH_TEST);
         this.GL.enable(GL_CULL_FACE);
     }
 
     FrameReset() {
         this.ViewportResized = false;
+        for (let name in this.InputDelta) {
+            this.InputDelta[name] = 0;
+        }
     }
 
     FrameUpdate(delta: number) {
         let now = performance.now();
         sys_transform(this, delta);
         sys_camera(this, delta);
+        sys_pick(this, delta);
         sys_light(this, delta);
         sys_render(this, delta);
         sys_draw(this, delta);

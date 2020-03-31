@@ -1,4 +1,4 @@
-import {multiply, perspective} from "../../common/mat4.js";
+import {invert, multiply, perspective} from "../../common/mat4.js";
 import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 
@@ -34,9 +34,11 @@ function update(game: Game, entity: Entity) {
         if (aspect > 1) {
             // Landscape orientation.
             perspective(camera.Projection, camera.FOVy, aspect, camera.Near, camera.Far);
+            invert(camera.Unproject, camera.Projection);
         } else {
             // Portrait orientation.
             perspective(camera.Projection, camera.FOVy / aspect, aspect, camera.Near, camera.Far);
+            invert(camera.Unproject, camera.Projection);
         }
     }
 

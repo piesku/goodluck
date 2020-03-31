@@ -3,6 +3,7 @@ import {integer, set_seed} from "../../common/random.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {draw_marker} from "../components/com_draw.js";
 import {light_directional} from "../components/com_light.js";
+import {pickable} from "../components/com_pickable.js";
 import {render_basic} from "../components/com_render_basic.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {instantiate} from "../core.js";
@@ -31,7 +32,10 @@ export function scene_stage(game: Game) {
     });
 
     instantiate(game, {
-        Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshTerrain, [0.3, 0.3, 0.8, 1])],
+        Using: [
+            render_diffuse(game.MaterialDiffuseGouraud, game.MeshTerrain, [0.3, 0.3, 0.8, 1]),
+            pickable(game.MeshTerrain),
+        ],
     });
 
     if (false) {
