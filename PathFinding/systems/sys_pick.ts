@@ -63,11 +63,14 @@ function update(game: Game, entity: Entity, pickables: Array<Entity>) {
     let direction_self: Vec3 = [0, 0, 0];
     for (let p of pickables) {
         let transform = game.World.Transform[p];
+        // Transform the ray to the pickable's space, which is cheaper than
+        // transforming all vertices of the pickable to the world space.
         transform_point(origin_self, origin, transform.Self);
         transform_direction(direction_self, direction, transform.Self);
         let pickable = game.World.Pickable[p];
         let info = intersect_mesh(pickable.Mesh, origin, direction);
         if (info) {
+            // Transform the intersection point back to tthe world space.
             transform_point(info.Point, info.Point, transform.World);
             console.log(info);
         }
@@ -104,33 +107,68 @@ function intersect_mesh(mesh: Mesh, origin: Vec3, direction: Vec3): PickingResul
             mesh.VertexArray[i3 * 3 + 2],
         ];
 
+        // O + tD = kK + lL + mM
+        // O + tD = kK + lL + (1 - k - l)M
+        // O + tD = kK + lL + M - kM - lM
+        // O + tD = k(K - M) + l(L - M) + M
+        // O - M = k(K - M) + l(L - M) - tD
+        // G = kE + lF - tD
+
+        // Two edges of the tri (to calculate the normal).
         let E: Vec3 = subtract([0, 0, 0], K, M);
         let F: Vec3 = subtract([0, 0, 0], L, M);
+
+        // The third "edge" between M and the ray's origin.
         let G: Vec3 = subtract([0, 0, 0], origin, M);
+
+        // Given the linear system of equations:
+        //     kE + lF - tD = G
+        // Given the Cramer's Rule for solving the system using determinants:
+        //     k = |G F -D| / |E F -D|
+        //     l = |E G -D| / |E F -D|
+        //     t = |E F  G| / |E F -D|
+        // Given the determinant as the triple product:
+        //     |A B C| = A·(B×C) = B·(C×A) = C·(A×B)
+        // Given that we can invert the sign by switching the order of the cross product:
+        //     |A B C| = A·(B×C) = -A·(C×B)
+        // We arrive at:
+        //     k = D·(F×G) / D·(F×E)
+        //     l = D·(G×E) / D·(F×E)
+        //     t = G·(E×F) / D·(F×E)
 
         let normal = cross([0, 0, 0], F, E);
         let denominator = dot(direction, normal);
         if (denominator >= 0) {
+            // The tri's normal and the ray's direction are too similar.
+            // The ray would intersect the tri from the back side.
             continue;
         }
 
-        let k = dot(direction, cross([0, 0, 0], F, G)) / denominator;
-        if (k < 0) {
+        // k = D·(F×G) / D·(F×G). Don't divide by D·(F×G) to save cycles, and
+        // flip the comparison to emulate the negative denomiator.
+        let k = dot(direction, cross([0, 0, 0], F, G));
+        if (k > 0) {
+            // Barycentric coordinate < 0, no intersection.
             continue;
         }
 
-        let l = dot(direction, cross([0, 0, 0], G, E)) / denominator;
-        if (l < 0) {
+        // l = D·(G×E) / D·(F×G). Don't divide by D·(F×G) to save cycles, and
+        // flip the comparison to emulate the negative denomiator.
+        let l = dot(direction, cross([0, 0, 0], G, E));
+        if (l > 0) {
+            // Barycentric coordinate < 0, no intersection.
             continue;
         }
 
-        let m = 1 - k - l;
-        if (m < 0) {
+        // m = 1 - k - l when k and l are divided by thhe denominator.
+        let m = denominator - k - l;
+        if (m > 0) {
+            // Barycentric coordinate < 0, no intersection.
             continue;
         }
 
+        // t = G·(E×F) / D·(F×G)
         let t = dot(G, cross([0, 0, 0], E, F)) / denominator;
-        //console.log({k, l, m, t, face});
         let intersection = scale([0, 0, 0], direction, t);
         add(intersection, intersection, origin);
         return {Tri: tri, Point: intersection};
