@@ -6,6 +6,7 @@ import {light_directional} from "../components/com_light.js";
 import {pickable} from "../components/com_pickable.js";
 import {render_basic} from "../components/com_render_basic.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
+import {render_path} from "../components/com_render_path.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";
 import {nav_bake} from "../navmesh.js";
@@ -38,12 +39,10 @@ export function scene_stage(game: Game) {
         ],
     });
 
-    if (false) {
-        instantiate(game, {
-            Translation: [0, 0.1, 0],
-            Using: [render_basic(game.MaterialBasicWireframe, game.MeshTerrain, [1, 1, 0, 1])],
-        });
-    }
+    instantiate(game, {
+        Translation: [0, 0.1, 0],
+        Using: [render_basic(game.MaterialBasicLine, game.MeshTerrain, [0.4, 0.4, 0.8, 1])],
+    });
 
     console.time("nav_bake");
     let nav = nav_bake(game.MeshTerrain);
@@ -65,13 +64,13 @@ export function scene_stage(game: Game) {
     console.timeEnd("path_find");
 
     if (path) {
-        for (let waypoint of path_follow(path, goal)) {
-            instantiate(game, {
-                Translation: nav.Centroids[waypoint],
-                Scale: [2, 2, 2],
-                Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 0, 0, 1])],
-            });
-        }
+        let waypoints = [...path_follow(path, goal)];
+        let vertices = waypoints.map((w) => nav.Centroids[w]).flat();
+        instantiate(game, {
+            Translation: [0, 1, 0],
+            Using: [render_path(game.MaterialBasicLine, vertices, [1, 1, 0, 1])],
+        });
+
         let visited = path.filter((x) => x !== undefined).length;
         console.log({visitied: visited});
     }

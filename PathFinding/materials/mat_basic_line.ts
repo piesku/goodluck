@@ -1,5 +1,5 @@
 import {link, Material} from "../../common/material.js";
-import {GL_LINE_LOOP} from "../../common/webgl.js";
+import {GL_LINE_STRIP} from "../../common/webgl.js";
 import {BasicAttribute} from "../components/com_render_basic.js";
 
 let vertex = `#version 300 es\n
@@ -24,10 +24,10 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat_basic_wireframe(gl: WebGL2RenderingContext) {
+export function mat_basic_line(gl: WebGL2RenderingContext) {
     let Program = link(gl, vertex, fragment);
     return <Material>{
-        Mode: GL_LINE_LOOP,
+        Mode: GL_LINE_STRIP,
         Program,
         Uniforms: [
             gl.getUniformLocation(Program, "pv")!,

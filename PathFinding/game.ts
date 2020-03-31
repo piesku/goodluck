@@ -3,7 +3,7 @@ import {mesh_cube} from "../meshes/cube.js";
 import {mesh_terrain} from "../meshes/terrain.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
-import {mat_basic_wireframe} from "./materials/mat_basic_wireframe.js";
+import {mat_basic_line} from "./materials/mat_basic_line.js";
 import {mat_diffuse_gouraud} from "./materials/mat_diffuse_gouraud.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_draw} from "./systems/sys_draw.js";
@@ -32,7 +32,7 @@ export class Game {
     CanvasBillboard = document.querySelector("canvas#billboard")! as HTMLCanvasElement;
     Context2D = this.CanvasBillboard.getContext("2d")!;
 
-    MaterialBasicWireframe = mat_basic_wireframe(this.GL);
+    MaterialBasicLine = mat_basic_line(this.GL);
     MaterialDiffuseGouraud = mat_diffuse_gouraud(this.GL);
     MeshCube = mesh_cube(this.GL);
     MeshTerrain = mesh_terrain(this.GL);

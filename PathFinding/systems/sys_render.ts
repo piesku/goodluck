@@ -1,9 +1,16 @@
 import {Material} from "../../common/material.js";
-import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
+import {
+    GL_ARRAY_BUFFER,
+    GL_COLOR_BUFFER_BIT,
+    GL_DEPTH_BUFFER_BIT,
+    GL_FLOAT,
+    GL_UNSIGNED_SHORT,
+} from "../../common/webgl.js";
 import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
-import {BasicUniform, RenderBasic} from "../components/com_render_basic.js";
+import {BasicAttribute, BasicUniform, RenderBasic} from "../components/com_render_basic.js";
 import {DiffuseUniform, RenderDiffuse} from "../components/com_render_diffuse.js";
+import {RenderPath} from "../components/com_render_path.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 
@@ -33,6 +40,9 @@ export function sys_render(game: Game, delta: number) {
                     case RenderKind.Diffuse:
                         use_diffuse(game, current_material);
                         break;
+                    case RenderKind.Path:
+                        use_path(game, current_material);
+                        break;
                 }
             }
 
@@ -47,6 +57,9 @@ export function sys_render(game: Game, delta: number) {
                     break;
                 case RenderKind.Diffuse:
                     draw_diffuse(game, transform, render);
+                    break;
+                case RenderKind.Path:
+                    draw_path(game, transform, render);
                     break;
             }
         }
@@ -84,4 +97,18 @@ function draw_diffuse(game: Game, transform: Transform, render: RenderDiffuse) {
     game.GL.bindVertexArray(render.VAO);
     game.GL.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
     game.GL.bindVertexArray(null);
+}
+
+function use_path(game: Game, material: Material) {
+    game.GL.useProgram(material.Program);
+    game.GL.uniformMatrix4fv(material.Uniforms[BasicUniform.PV], false, game.Camera!.PV);
+}
+
+function draw_path(game: Game, transform: Transform, render: RenderPath) {
+    game.GL.uniformMatrix4fv(render.Material.Uniforms[BasicUniform.World], false, transform.World);
+    game.GL.uniform4fv(render.Material.Uniforms[BasicUniform.Color], render.Color);
+    game.GL.bindBuffer(GL_ARRAY_BUFFER, render.VertexBuffer);
+    game.GL.enableVertexAttribArray(BasicAttribute.Position);
+    game.GL.vertexAttribPointer(BasicAttribute.Position, 3, GL_FLOAT, false, 0, 0);
+    game.GL.drawArrays(render.Material.Mode, 0, render.VertexArray.length / 3);
 }
