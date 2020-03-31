@@ -110,5 +110,5 @@ function draw_path(game: Game, transform: Transform, render: RenderPath) {
     game.GL.bindBuffer(GL_ARRAY_BUFFER, render.VertexBuffer);
     game.GL.enableVertexAttribArray(BasicAttribute.Position);
     game.GL.vertexAttribPointer(BasicAttribute.Position, 3, GL_FLOAT, false, 0, 0);
-    game.GL.drawArrays(render.Material.Mode, 0, render.VertexArray.length / 3);
+    game.GL.drawArrays(render.Material.Mode, 0, render.IndexCount);
 }

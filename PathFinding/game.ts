@@ -1,3 +1,4 @@
+import {RaycastHit} from "../common/raycast.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_terrain} from "../meshes/terrain.js";
@@ -9,6 +10,7 @@ import {sys_camera} from "./systems/sys_camera.js";
 import {sys_draw} from "./systems/sys_draw.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
+import {sys_nav} from "./systems/sys_nav.js";
 import {sys_pick} from "./systems/sys_pick.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_transform} from "./systems/sys_transform.js";
@@ -23,8 +25,14 @@ export class Game {
     ViewportHeight = 0;
     ViewportResized = false;
 
-    InputState: Record<string, number> = {};
-    InputDelta: Record<string, number> = {};
+    InputState: Record<string, number> = {
+        MouseX: 0,
+        MouseY: 0,
+    };
+    InputDelta: Record<string, number> = {
+        MouseX: 0,
+        MouseY: 0,
+    };
 
     UI = document.querySelector("main")!;
     CanvasScene = document.querySelector("canvas#scene")! as HTMLCanvasElement;
@@ -41,6 +49,8 @@ export class Game {
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
+
+    Pick?: RaycastHit;
 
     constructor() {
         document.addEventListener("visibilitychange", () =>
@@ -75,6 +85,7 @@ export class Game {
 
     FrameUpdate(delta: number) {
         let now = performance.now();
+        sys_nav(this, delta);
         sys_transform(this, delta);
         sys_camera(this, delta);
         sys_pick(this, delta);
