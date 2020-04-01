@@ -22,7 +22,10 @@ function update(game: Game, entity: Entity) {
     let agent = game.World.NavAgent[entity];
     if (agent.Goal !== undefined) {
         console.time("path_find");
-        let path = path_find(agent.NavMesh, agent.Origin, agent.Goal);
+        // Search FROM the goal TO the origin, so that the first waypoint of the
+        // path is the closest to the origin, i.e. it is in fact the first
+        // waypoint for the agent to navigate through.
+        let path = path_find(agent.NavMesh, agent.Goal, agent.Origin);
         console.timeEnd("path_find");
         if (path) {
             agent.Path = [...path];
@@ -34,13 +37,13 @@ function update(game: Game, entity: Entity) {
         let transform = game.World.Transform[entity];
         get_translation(world_pos, transform.World);
 
-        let current_waypoint = agent.Path[agent.Path.length - 1];
+        let current_waypoint = agent.Path[0];
         // XXX centroids are in the world space, so we're good for now
         let current_waypoint_pos = agent.NavMesh.Centroids[current_waypoint];
         let distance_to_current_waypoint = distance_squared(world_pos, current_waypoint_pos);
 
         if (distance_to_current_waypoint < 1) {
-            agent.Origin = agent.Path.pop()!;
+            agent.Origin = agent.Path.shift()!;
             if (agent.Path.length === 0) {
                 agent.Path = undefined;
             }

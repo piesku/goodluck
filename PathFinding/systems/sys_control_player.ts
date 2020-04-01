@@ -37,7 +37,7 @@ function update(game: Game, entity: Entity) {
 
     // The path line for debugging.
     if (goal !== undefined) {
-        let path = path_find(agent.NavMesh, agent.Origin, goal);
+        let path = path_find(agent.NavMesh, goal, agent.Origin);
         if (path) {
             // XXX centroids are in the world space, so we're good for now
             let waypoints = [...path].map((x) => agent.NavMesh.Centroids[x]);
