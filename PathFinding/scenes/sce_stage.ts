@@ -22,8 +22,8 @@ export function scene_stage(game: Game) {
     // Camera.
     instantiate(game, {
         ...blueprint_camera(game),
-        Translation: [0, 100, 30],
-        Rotation: from_euler([0, 0, 0, 0], 75, 180, 0),
+        Translation: [0, 75, 55],
+        Rotation: from_euler([0, 0, 0, 0], 60, 180, 0),
     });
 
     // Light.
