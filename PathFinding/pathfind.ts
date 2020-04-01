@@ -19,7 +19,7 @@ export function path_find(navmesh: NavMesh, origin: number, goal: number) {
         let lowest = lowest_cost(boundary, f);
         let current = boundary.splice(lowest, 1)[0];
         if (current === goal) {
-            return predecessors;
+            return path_follow(predecessors, goal);
         }
 
         for (let i = 0; i < navmesh.Graph[current].length; i++) {
@@ -53,7 +53,7 @@ function lowest_cost(boundary: Array<number>, cost: Array<number>) {
     return min;
 }
 
-export function* path_follow(path: VectorField, destination: number) {
+function* path_follow(path: VectorField, destination: number) {
     while (destination !== undefined) {
         yield destination;
         destination = path[destination];

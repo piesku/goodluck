@@ -4,7 +4,7 @@ import {Has} from "../components/com_index.js";
 import {RenderPath, render_path} from "../components/com_render_path.js";
 import {instantiate} from "../core.js";
 import {Entity, Game} from "../game.js";
-import {path_find, path_follow} from "../pathfind.js";
+import {path_find} from "../pathfind.js";
 
 const QUERY = Has.Transform | Has.NavAgent;
 
@@ -42,18 +42,14 @@ function update(game: Game, entity: Entity, pick: RaycastHit) {
     console.timeEnd("path_find");
 
     if (path) {
-        let visited = path.filter((x) => x !== undefined).length;
-        let waypoints = [...path_follow(path, goal)];
-        console.log({visited, waypoints: waypoints.length});
-
         // XXX centroids are in the world space, so we're good for now
-        let vertices = waypoints.map((w) => agent.NavMesh.Centroids[w]).flat();
+        let waypoints = [...path].map((x) => agent.NavMesh.Centroids[x]);
 
         game.World.Mask[line] |= Has.Render;
         let render = game.World.Render[line] as RenderPath;
-        render.IndexCount = vertices.length / 3;
+        render.IndexCount = waypoints.length;
         game.GL.bindBuffer(GL_ARRAY_BUFFER, render.VertexBuffer);
-        game.GL.bufferSubData(GL_ARRAY_BUFFER, 0, Float32Array.from(vertices));
+        game.GL.bufferSubData(GL_ARRAY_BUFFER, 0, Float32Array.from(waypoints.flat()));
     } else {
         game.World.Mask[line] &= ~Has.Render;
     }
