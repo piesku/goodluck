@@ -1,6 +1,6 @@
 import {Mesh} from "../common/material.js";
 import {Vec3} from "../common/math.js";
-import {cross, manhattan, normalize, subtract} from "../common/vec3.js";
+import {cross, distance_squared, normalize, subtract} from "../common/vec3.js";
 
 export interface NavMesh {
     Graph: Array<Array<[number, number]>>;
@@ -66,7 +66,7 @@ export function nav_bake(mesh: Mesh) {
                 ) {
                     navmesh.Graph[face].push([
                         other,
-                        manhattan(navmesh.Centroids[face], navmesh.Centroids[other]),
+                        distance_squared(navmesh.Centroids[face], navmesh.Centroids[other]),
                     ]);
                     break;
                 }

@@ -1,6 +1,6 @@
 import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
-import {manhattan, normalize, subtract, transform_direction} from "../../common/vec3.js";
+import {distance_squared, normalize, subtract, transform_direction} from "../../common/vec3.js";
 import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 import {path_find} from "../pathfind.js";
@@ -37,7 +37,7 @@ function update(game: Game, entity: Entity) {
         let current_waypoint = agent.Path[agent.Path.length - 1];
         // XXX centroids are in the world space, so we're good for now
         let current_waypoint_pos = agent.NavMesh.Centroids[current_waypoint];
-        let distance_to_current_waypoint = manhattan(world_pos, current_waypoint_pos);
+        let distance_to_current_waypoint = distance_squared(world_pos, current_waypoint_pos);
 
         if (distance_to_current_waypoint < 1) {
             agent.Origin = agent.Path.pop()!;

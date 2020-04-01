@@ -1,5 +1,5 @@
 import {EPSILON} from "../common/math.js";
-import {manhattan} from "../common/vec3.js";
+import {distance_squared} from "../common/vec3.js";
 import {NavMesh} from "./navmesh.js";
 
 type VectorField = Array<number>;
@@ -27,7 +27,7 @@ export function path_find(navmesh: NavMesh, origin: number, goal: number) {
             let cost = navmesh.Graph[current][i][1];
             let g_next = g[current] + cost;
             if (g[next] === undefined) {
-                h[next] = manhattan(navmesh.Centroids[next], navmesh.Centroids[goal]);
+                h[next] = distance_squared(navmesh.Centroids[next], navmesh.Centroids[goal]);
                 g[next] = g_next;
                 f[next] = g_next + h[next];
                 predecessors[next] = current;
