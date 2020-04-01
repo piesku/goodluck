@@ -26,7 +26,6 @@ function update(game: Game, entity: Entity) {
         console.timeEnd("path_find");
         if (path) {
             agent.Path = [...path];
-            console.log({path: agent.Path});
         }
         agent.Goal = undefined;
     }

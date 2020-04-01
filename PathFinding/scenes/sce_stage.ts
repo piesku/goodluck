@@ -1,5 +1,4 @@
 import {from_euler} from "../../common/quat.js";
-import {integer, set_seed} from "../../common/random.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {control_player} from "../components/com_control_player.js";
 import {draw_marker} from "../components/com_draw.js";
@@ -12,7 +11,6 @@ import {render_diffuse} from "../components/com_render_diffuse.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";
 import {nav_bake} from "../navmesh.js";
-import {path_find} from "../pathfind.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {
@@ -71,17 +69,4 @@ export function scene_stage(game: Game) {
             },
         ],
     });
-
-    if (false) {
-        set_seed(1234567890);
-        console.time("bench");
-        for (let i = 0; i < 10000; i++) {
-            let a = integer(0, nav.Graph.length - 1);
-            let b = integer(0, nav.Graph.length - 1);
-            if (nav.Graph[a] && nav.Graph[b]) {
-                path_find(nav, a, b);
-            }
-        }
-        console.timeEnd("bench");
-    }
 }
