@@ -6,6 +6,7 @@ export interface NavAgent {
     NavMesh: NavMesh;
     Origin: number;
     Goal?: number;
+    Path?: Array<number>;
 }
 
 export function nav_agent(navmesh: NavMesh, origin: number) {

@@ -4,6 +4,7 @@ import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {control_player} from "../components/com_control_player.js";
 import {draw_marker} from "../components/com_draw.js";
 import {light_directional} from "../components/com_light.js";
+import {move} from "../components/com_move.js";
 import {nav_agent} from "../components/com_nav_agent.js";
 import {pickable} from "../components/com_pickable.js";
 import {render_basic} from "../components/com_render_basic.js";
@@ -63,7 +64,7 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [26, 0, 39],
         Scale: [2, 2, 2],
-        Using: [control_player(), nav_agent(nav, 190)],
+        Using: [control_player(), nav_agent(nav, 190), move(10, 0)],
         Children: [
             {
                 Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 0, 0, 1])],

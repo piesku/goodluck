@@ -11,6 +11,7 @@ import {sys_control_player} from "./systems/sys_control_player.js";
 import {sys_draw} from "./systems/sys_draw.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
+import {sys_move} from "./systems/sys_move.js";
 import {sys_nav} from "./systems/sys_nav.js";
 import {sys_pick} from "./systems/sys_pick.js";
 import {sys_render} from "./systems/sys_render.js";
@@ -88,6 +89,7 @@ export class Game {
         let now = performance.now();
         sys_control_player(this, delta);
         sys_nav(this, delta);
+        sys_move(this, delta);
         sys_transform(this, delta);
         sys_camera(this, delta);
         sys_pick(this, delta);

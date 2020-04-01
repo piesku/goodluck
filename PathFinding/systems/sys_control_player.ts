@@ -31,7 +31,7 @@ function update(game: Game, entity: Entity) {
     // Is the cursor over a pickable mesh and over a navigable triangle?
     let goal = pick && agent.NavMesh.Graph[pick] ? pick : undefined;
 
-    if (game.InputDelta["Mouse0"] === 1 && goal) {
+    if (game.InputDelta["Mouse0"] === 1) {
         agent.Goal = goal;
     }
 
