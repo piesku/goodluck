@@ -1,6 +1,7 @@
 import {get_translation} from "../../common/mat4.js";
-import {Vec3} from "../../common/math.js";
-import {distance_squared, normalize, subtract, transform_direction} from "../../common/vec3.js";
+import {Quat, Vec3} from "../../common/math.js";
+import {rotation_to} from "../../common/quat.js";
+import {distance_squared, normalize, transform_point} from "../../common/vec3.js";
 import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 import {path_find} from "../pathfind.js";
@@ -15,8 +16,7 @@ export function sys_nav(game: Game, delta: number) {
     }
 }
 
-let world_pos: Vec3 = [0, 0, 0];
-let direction: Vec3 = [0, 0, 0];
+let look_target: Vec3 = [0, 0, 0];
 
 function update(game: Game, entity: Entity) {
     let agent = game.World.NavAgent[entity];
@@ -35,12 +35,13 @@ function update(game: Game, entity: Entity) {
 
     if (agent.Path) {
         let transform = game.World.Transform[entity];
-        get_translation(world_pos, transform.World);
+        let position: Vec3 = [0, 0, 0];
+        get_translation(position, transform.World);
 
         let current_waypoint = agent.Path[0];
         // XXX centroids are in the world space, so we're good for now
         let current_waypoint_pos = agent.NavMesh.Centroids[current_waypoint];
-        let distance_to_current_waypoint = distance_squared(world_pos, current_waypoint_pos);
+        let distance_to_current_waypoint = distance_squared(position, current_waypoint_pos);
 
         if (distance_to_current_waypoint < 1) {
             agent.Origin = agent.Path.shift()!;
@@ -49,11 +50,20 @@ function update(game: Game, entity: Entity) {
             }
         }
 
-        subtract(direction, current_waypoint_pos, world_pos);
-        transform_direction(direction, direction, transform.Self);
-        normalize(direction, direction);
+        // Transform the waypoint's position into the agent's self space which
+        // is where sys_move runs.
+        transform_point(position, current_waypoint_pos, transform.Self);
+        normalize(position, position);
+
+        // Project the waypoint's position onto the agent's self XZ plane.
+        look_target[0] = position[0];
+        look_target[2] = position[2];
+        normalize(look_target, look_target);
+        let yaw: Quat = [0, 0, 0, 0];
+        rotation_to(yaw, [0, 0, 1], look_target);
 
         let move = game.World.Move[entity];
-        move.Directions.push(direction);
+        move.Directions.push(position);
+        move.Yaws.push(yaw);
     }
 }

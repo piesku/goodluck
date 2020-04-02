@@ -59,8 +59,9 @@ export function scene_stage(game: Game) {
         }
     }
 
+    // Cube.
     instantiate(game, {
-        Translation: [26, 0, 39],
+        Translation: [26, 1, 39],
         Scale: [2, 2, 2],
         Using: [control_player(), nav_agent(nav, 190), move(10, 0)],
         Children: [
