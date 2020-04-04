@@ -1,4 +1,5 @@
 import {Camera} from "./components/com_camera.js";
+import {Collide} from "./components/com_collide.js";
 import {Draw} from "./components/com_draw.js";
 import {Light} from "./components/com_light.js";
 import {Move} from "./components/com_move.js";
@@ -12,6 +13,7 @@ export class World {
     Mask: Array<number> = [];
     // Component data
     Camera: Array<Camera> = [];
+    Collide: Array<Collide> = [];
     Draw: Array<Draw> = [];
     Light: Array<Light> = [];
     Move: Array<Move> = [];

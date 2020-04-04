@@ -26,7 +26,7 @@ export function sys_control_player(game: Game, delta: number) {
 
 function update(game: Game, entity: Entity) {
     let agent = game.World.NavAgent[entity];
-    let pick = game.Pick?.Tri;
+    let pick = game.Pick?.TriIndex;
 
     // Is the cursor over a pickable mesh and over a navigable triangle?
     let goal = pick && agent.NavMesh.Graph[pick] ? pick : undefined;

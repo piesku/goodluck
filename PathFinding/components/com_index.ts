@@ -1,5 +1,6 @@
 const enum Component {
     Camera,
+    Collide,
     ControlPlayer,
     Draw,
     Light,
@@ -13,6 +14,7 @@ const enum Component {
 
 export const enum Has {
     Camera = 1 << Component.Camera,
+    Collide = 1 << Component.Collide,
     ControlPlayer = 1 << Component.ControlPlayer,
     Draw = 1 << Component.Draw,
     Light = 1 << Component.Light,

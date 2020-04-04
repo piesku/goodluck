@@ -7,6 +7,7 @@ import {loop_start, loop_stop} from "./core.js";
 import {mat_basic_line} from "./materials/mat_basic_line.js";
 import {mat_diffuse_gouraud} from "./materials/mat_diffuse_gouraud.js";
 import {sys_camera} from "./systems/sys_camera.js";
+import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
 import {sys_draw} from "./systems/sys_draw.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -91,6 +92,7 @@ export class Game {
         sys_nav(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
+        sys_collide(this, delta);
         sys_camera(this, delta);
         sys_pick(this, delta);
         sys_light(this, delta);

@@ -1,20 +1,21 @@
 import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
-import {intersect_mesh} from "../../common/raycast.js";
+import {ray_intersect_aabb, ray_intersect_mesh} from "../../common/raycast.js";
 import {normalize, subtract, transform_direction, transform_point} from "../../common/vec3.js";
+import {Collide} from "../components/com_collide.js";
 import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 
 const QUERY = Has.Transform | Has.Camera | Has.Pick;
-const TARGET = Has.Transform | Has.Pickable;
+const TARGET = Has.Transform | Has.Collide | Has.Pickable;
 
 export function sys_pick(game: Game, delta: number) {
     game.Pick = undefined;
 
-    let pickables: Array<Entity> = [];
+    let pickables: Array<Collide> = [];
     for (let i = 0; i < game.World.Mask.length; i++) {
         if ((game.World.Mask[i] & TARGET) == TARGET) {
-            pickables.push(i);
+            pickables.push(game.World.Collide[i]);
         }
     }
 
@@ -25,7 +26,7 @@ export function sys_pick(game: Game, delta: number) {
     }
 }
 
-function update(game: Game, entity: Entity, pickables: Array<Entity>) {
+function update(game: Game, entity: Entity, pickables: Array<Collide>) {
     let transform = game.World.Transform[entity];
     let camera = game.World.Camera[entity];
 
@@ -47,24 +48,32 @@ function update(game: Game, entity: Entity, pickables: Array<Entity>) {
     subtract(direction, target, origin);
     normalize(direction, direction);
 
-    // The ray in the pickable's self space.
-    let origin_self: Vec3 = [0, 0, 0];
-    let direction_self: Vec3 = [0, 0, 0];
-    for (let p of pickables) {
-        let transform = game.World.Transform[p];
-        // Transform the ray to the pickable's space, which is cheaper than
-        // transforming all vertices of the pickable to the world space.
-        transform_point(origin_self, origin, transform.Self);
-        transform_direction(direction_self, direction, transform.Self);
-        let pickable = game.World.Pickable[p];
-        let hit = intersect_mesh(pickable.Mesh, origin, direction);
-        if (hit) {
-            // Transform the intersection point back to the world space.
-            transform_point(hit.Point, hit.Point, transform.World);
+    let hit = ray_intersect_aabb(pickables, origin, direction);
+    if (hit) {
+        // XXX Logic for selectable entities.
+        game.Pick = hit;
 
-            // XXX We only support one pickable atm.
-            game.Pick = hit;
-            return;
+        let entity = (hit.Collider as Collide).EntityId;
+        let pickable = game.World.Pickable[entity];
+        if (pickable.Mesh) {
+            // The ray in the pickable's self space.
+            let origin_self: Vec3 = [0, 0, 0];
+            let direction_self: Vec3 = [0, 0, 0];
+
+            let transform = game.World.Transform[entity];
+            // Transform the ray to the pickable's space, which is cheaper than
+            // transforming all vertices of the pickable to the world space.
+            transform_point(origin_self, origin, transform.Self);
+            transform_direction(direction_self, direction, transform.Self);
+
+            let hit = ray_intersect_mesh(pickable.Mesh, origin, direction);
+            if (hit) {
+                // Transform the intersection point back to the world space.
+                transform_point(hit.Point, hit.Point, transform.World);
+                game.Pick.Point = hit.Point;
+                game.Pick.TriIndex = hit.TriIndex;
+                return;
+            }
         }
     }
 }

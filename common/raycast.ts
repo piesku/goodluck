@@ -1,9 +1,64 @@
+import {AABB} from "./aabb.js";
 import {Mesh} from "./material.js";
 import {Vec3} from "./math.js";
 import {add, cross, dot, scale, subtract} from "./vec3.js";
 
 export interface RaycastHit {
-    Tri: number;
+    Collider: AABB;
+    Point: Vec3;
+    TriIndex?: number;
+}
+
+export function ray_intersect_aabb(
+    colliders: Array<AABB>,
+    origin: Vec3,
+    direction: Vec3
+): RaycastHit | null {
+    let nearest_t = Infinity;
+    let nearest_i = null;
+    for (let i = 0; i < colliders.length; i++) {
+        let t = intersection_time(origin, direction, colliders[i]);
+        if (t < nearest_t) {
+            nearest_t = t;
+            nearest_i = i;
+        }
+    }
+
+    if (nearest_i !== null) {
+        let intersection: Vec3 = [0, 0, 0];
+        scale(intersection, direction, nearest_t);
+        add(intersection, intersection, origin);
+        return {Collider: colliders[nearest_i], Point: intersection};
+    }
+
+    return null;
+}
+
+function intersection_time(origin: Vec3, direction: Vec3, aabb: AABB) {
+    let max_lo = -Infinity;
+    let min_hi = +Infinity;
+
+    for (let i = 0; i < 3; i++) {
+        let lo = (aabb.Min[i] - origin[i]) / direction[i];
+        let hi = (aabb.Max[i] - origin[i]) / direction[i];
+
+        if (lo > hi) {
+            [lo, hi] = [hi, lo];
+        }
+
+        if (hi < max_lo || lo > min_hi) {
+            return Infinity;
+        }
+
+        if (lo > max_lo) max_lo = lo;
+        if (hi < min_hi) min_hi = hi;
+    }
+
+    return max_lo > min_hi ? Infinity : max_lo;
+}
+
+export interface RaycastTri {
+    TriIndex: number;
     Point: Vec3;
 }
 
@@ -16,7 +71,7 @@ let G: Vec3 = [0, 0, 0];
 let N: Vec3 = [0, 0, 0];
 
 // Based on https://www.codeproject.com/Articles/625787/Pick-Selection-with-OpenGL-and-OpenCL
-export function intersect_mesh(mesh: Mesh, origin: Vec3, direction: Vec3): RaycastHit | null {
+export function ray_intersect_mesh(mesh: Mesh, origin: Vec3, direction: Vec3): RaycastTri | null {
     let tri_count = mesh.IndexCount / 3;
 
     for (let tri = 0; tri < tri_count; tri++) {
@@ -103,9 +158,10 @@ export function intersect_mesh(mesh: Mesh, origin: Vec3, direction: Vec3): Rayca
         let t = -dot(G, N) / denominator;
 
         // Intersection is O + tD.
-        scale(M, direction, t);
-        add(M, M, origin);
-        return {Tri: tri, Point: M};
+        let intersection: Vec3 = [0, 0, 0];
+        scale(intersection, direction, t);
+        add(intersection, intersection, origin);
+        return {TriIndex: tri, Point: intersection};
     }
 
     return null;
