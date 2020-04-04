@@ -4,6 +4,7 @@ import {ray_intersect_aabb, ray_intersect_mesh} from "../../common/raycast.js";
 import {normalize, subtract, transform_direction, transform_point} from "../../common/vec3.js";
 import {Collide} from "../components/com_collide.js";
 import {Has} from "../components/com_index.js";
+import {PickableFlag} from "../components/com_pickable.js";
 import {Entity, Game} from "../game.js";
 
 const QUERY = Has.Transform | Has.Camera | Has.Pick;
@@ -50,11 +51,18 @@ function update(game: Game, entity: Entity, pickables: Array<Collide>) {
 
     let hit = ray_intersect_aabb(pickables, origin, direction);
     if (hit) {
-        // XXX Logic for selectable entities.
         game.Pick = hit;
-
         let entity = (hit.Collider as Collide).EntityId;
         let pickable = game.World.Pickable[entity];
+
+        if (pickable.Flags & PickableFlag.Selectable) {
+            // XXX Highlight the selectable entity.
+
+            if (game.InputDelta["Mouse0"] === 1) {
+                game.World.Mask[entity] |= Has.ControlPlayer;
+            }
+        }
+
         if (pickable.Mesh) {
             // The ray in the pickable's self space.
             let origin_self: Vec3 = [0, 0, 0];

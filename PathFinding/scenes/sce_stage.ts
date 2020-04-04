@@ -6,7 +6,7 @@ import {draw_marker} from "../components/com_draw.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {nav_agent} from "../components/com_nav_agent.js";
-import {pickable} from "../components/com_pickable.js";
+import {pickable, PickableFlag} from "../components/com_pickable.js";
 import {render_basic} from "../components/com_render_basic.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {instantiate} from "../core.js";
@@ -37,7 +37,7 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Using: [
             render_diffuse(game.MaterialDiffuseGouraud, game.MeshTerrain, [0.3, 0.3, 0.8, 1]),
-            pickable(game.MeshTerrain),
+            pickable(PickableFlag.None, game.MeshTerrain),
             collide(false, [100, 1, 100]),
         ],
         Children: [
@@ -65,7 +65,13 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [26, 1, 39],
         Scale: [2, 2, 2],
-        Using: [control_player(), pickable(), collide(true), nav_agent(nav, 190), move(10, 0)],
+        Using: [
+            control_player(),
+            pickable(PickableFlag.Selectable),
+            collide(true),
+            nav_agent(nav, 190),
+            move(10, 0),
+        ],
         Children: [
             {
                 Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 0, 0, 1])],
