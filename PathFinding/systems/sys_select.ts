@@ -13,29 +13,40 @@ export function sys_select(game: Game, delta: number) {
 
 function update(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
+    let selectable = game.World.Selectable[entity];
 
     if (game.Pick?.EntityId === entity) {
-        // Highlight the selectable entity.
-        transform.Scale[0] = 2;
-        transform.Scale[1] = 2;
-        transform.Scale[2] = 2;
-        transform.Dirty = true;
+        // When the cursor is over the entity…
 
-        // Select the entity.
-        if (game.InputDelta["Mouse0"] === -1) {
-            console.log(`Selected ${entity}`);
+        // …highlight it
+        if (!selectable.Highlighted) {
+            selectable.Highlighted = true;
+            transform.Scale[0] = 2;
+            transform.Scale[1] = 2;
+            transform.Scale[2] = 2;
+            transform.Dirty = true;
+        }
+
+        // …select it if the user clicks.
+        if (!selectable.Selected && game.InputDelta["Mouse0"] === -1) {
+            selectable.Selected = true;
             game.World.Mask[entity] |= Has.ControlPlayer;
         }
     } else {
-        // Remove highlight.
-        transform.Scale[0] = 1;
-        transform.Scale[1] = 1;
-        transform.Scale[2] = 1;
-        transform.Dirty = true;
+        // When the cursor is not over the entity…
 
-        // Deselect the entity.
-        if (game.InputDelta["Mouse0"] === -1) {
-            console.log(`Deselected ${entity}`);
+        // …remove the highlight
+        if (selectable.Highlighted) {
+            selectable.Highlighted = false;
+            transform.Scale[0] = 1;
+            transform.Scale[1] = 1;
+            transform.Scale[2] = 1;
+            transform.Dirty = true;
+        }
+
+        // …deselect it if the user clicks.
+        if (selectable.Selected && game.InputDelta["Mouse0"] === -1) {
+            selectable.Selected = false;
             game.World.Mask[entity] &= ~Has.ControlPlayer;
         }
     }
