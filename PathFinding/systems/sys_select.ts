@@ -12,8 +12,14 @@ export function sys_select(game: Game, delta: number) {
 }
 
 function update(game: Game, entity: Entity) {
+    let transform = game.World.Transform[entity];
+
     if (game.Pick?.EntityId === entity) {
-        // XXX Highlight the selectable entity.
+        // Highlight the selectable entity.
+        transform.Scale[0] = 2;
+        transform.Scale[1] = 2;
+        transform.Scale[2] = 2;
+        transform.Dirty = true;
 
         // Select the entity.
         if (game.InputDelta["Mouse0"] === -1) {
@@ -21,7 +27,11 @@ function update(game: Game, entity: Entity) {
             game.World.Mask[entity] |= Has.ControlPlayer;
         }
     } else {
-        // XXX Remove highlight.
+        // Remove highlight.
+        transform.Scale[0] = 1;
+        transform.Scale[1] = 1;
+        transform.Scale[2] = 1;
+        transform.Dirty = true;
 
         // Deselect the entity.
         if (game.InputDelta["Mouse0"] === -1) {

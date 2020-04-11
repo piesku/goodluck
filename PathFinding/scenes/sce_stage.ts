@@ -64,10 +64,16 @@ export function scene_stage(game: Game) {
     // Cube 1.
     instantiate(game, {
         Translation: [26, 1, 39],
-        Scale: [2, 2, 2],
-        Using: [pickable(), selectable(), collide(true), nav_agent(nav, 190), move(10, 0)],
+        Using: [
+            pickable(),
+            selectable(),
+            collide(true, [2, 2, 2]),
+            nav_agent(nav, 190),
+            move(10, 0),
+        ],
         Children: [
             {
+                Scale: [2, 2, 2],
                 Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 0, 0, 1])],
             },
         ],
@@ -76,10 +82,16 @@ export function scene_stage(game: Game) {
     // Cube 2.
     instantiate(game, {
         Translation: [-18, 1, -23],
-        Scale: [2, 2, 2],
-        Using: [pickable(), selectable(), collide(true), nav_agent(nav, 89), move(10, 0)],
+        Using: [
+            pickable(),
+            selectable(),
+            collide(true, [2, 2, 2]),
+            nav_agent(nav, 89),
+            move(10, 0),
+        ],
         Children: [
             {
+                Scale: [2, 2, 2],
                 Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [0, 1, 0, 1])],
             },
         ],
