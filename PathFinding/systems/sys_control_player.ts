@@ -16,6 +16,7 @@ export function sys_control_player(game: Game, delta: number) {
             Using: [render_path(512, [1, 1, 0, 1])],
         });
     }
+    game.World.Mask[line] &= ~Has.Render;
 
     for (let i = 0; i < game.World.Mask.length; i++) {
         if ((game.World.Mask[i] & QUERY) == QUERY) {
@@ -47,10 +48,6 @@ function update(game: Game, entity: Entity) {
             render.IndexCount = waypoints.length;
             game.GL.bindBuffer(GL_ARRAY_BUFFER, render.VertexBuffer);
             game.GL.bufferSubData(GL_ARRAY_BUFFER, 0, Float32Array.from(waypoints.flat()));
-        } else {
-            game.World.Mask[line] &= ~Has.Render;
         }
-    } else {
-        game.World.Mask[line] &= ~Has.Render;
     }
 }
