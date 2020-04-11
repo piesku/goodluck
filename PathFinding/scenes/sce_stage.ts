@@ -1,7 +1,8 @@
 import {from_euler} from "../../common/quat.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {collide} from "../components/com_collide.js";
-import {draw_marker} from "../components/com_draw.js";
+import {draw_marker, draw_selection} from "../components/com_draw.js";
+import {Has} from "../components/com_index.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {nav_agent} from "../components/com_nav_agent.js";
@@ -73,6 +74,10 @@ export function scene_stage(game: Game) {
         ],
         Children: [
             {
+                Using: [draw_selection("#ff0")],
+                Disable: Has.Draw,
+            },
+            {
                 Scale: [2, 2, 2],
                 Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 0, 0, 1])],
             },
@@ -90,6 +95,10 @@ export function scene_stage(game: Game) {
             move(10, 0),
         ],
         Children: [
+            {
+                Using: [draw_selection("#ff0")],
+                Disable: Has.Draw,
+            },
             {
                 Scale: [2, 2, 2],
                 Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [0, 1, 0, 1])],

@@ -1,23 +1,39 @@
 import {Entity, Game} from "../game.js";
 import {Has} from "./com_index.js";
 
-export type Draw = DrawMarker;
+export type Draw = DrawText | DrawSelection;
 
 export const enum DrawKind {
-    Marker,
+    Text,
+    Selection,
 }
 
-export interface DrawMarker {
-    Kind: DrawKind.Marker;
-    Marker: string;
+export interface DrawText {
+    Kind: DrawKind.Text;
+    Text: string;
 }
 
 export function draw_marker(Marker: string) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Draw;
         game.World.Draw[entity] = {
-            Kind: DrawKind.Marker,
-            Marker,
+            Kind: DrawKind.Text,
+            Text: Marker,
+        };
+    };
+}
+
+export interface DrawSelection {
+    Kind: DrawKind.Selection;
+    Color: string;
+}
+
+export function draw_selection(color: string) {
+    return (game: Game, entity: Entity) => {
+        game.World.Mask[entity] |= Has.Draw;
+        game.World.Draw[entity] = {
+            Kind: DrawKind.Selection,
+            Color: color,
         };
     };
 }

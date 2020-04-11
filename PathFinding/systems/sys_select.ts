@@ -21,9 +21,9 @@ function update(game: Game, entity: Entity) {
         // …highlight it
         if (!selectable.Highlighted) {
             selectable.Highlighted = true;
-            transform.Scale[0] = 2;
-            transform.Scale[1] = 2;
-            transform.Scale[2] = 2;
+            transform.Scale[0] = 1.2;
+            transform.Scale[1] = 1.2;
+            transform.Scale[2] = 1.2;
             transform.Dirty = true;
         }
 
@@ -31,6 +31,9 @@ function update(game: Game, entity: Entity) {
         if (!selectable.Selected && game.InputDelta["Mouse0"] === -1) {
             selectable.Selected = true;
             game.World.Mask[entity] |= Has.ControlPlayer;
+
+            let selection = transform.Children[0].EntityId;
+            game.World.Mask[selection] |= Has.Draw;
         }
     } else {
         // When the cursor is not over the entity…
@@ -48,6 +51,9 @@ function update(game: Game, entity: Entity) {
         if (selectable.Selected && game.InputDelta["Mouse0"] === -1) {
             selectable.Selected = false;
             game.World.Mask[entity] &= ~Has.ControlPlayer;
+
+            let selection = transform.Children[0].EntityId;
+            game.World.Mask[selection] &= ~Has.Draw;
         }
     }
 }
