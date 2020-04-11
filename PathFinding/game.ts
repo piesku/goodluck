@@ -1,4 +1,3 @@
-import {RaycastHit} from "../common/raycast.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_terrain} from "../meshes/terrain.js";
@@ -15,8 +14,9 @@ import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_nav} from "./systems/sys_nav.js";
-import {sys_pick} from "./systems/sys_pick.js";
+import {Picked, sys_pick} from "./systems/sys_pick.js";
 import {sys_render} from "./systems/sys_render.js";
+import {sys_select} from "./systems/sys_select.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
@@ -54,7 +54,7 @@ export class Game {
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
 
-    Pick?: RaycastHit;
+    Pick?: Picked;
 
     constructor() {
         document.addEventListener("visibilitychange", () =>
@@ -97,6 +97,7 @@ export class Game {
         sys_collide(this, delta);
         sys_camera(this, delta);
         sys_pick(this, delta);
+        sys_select(this, delta);
         sys_light(this, delta);
         sys_render(this, delta);
         sys_draw(this, delta);
