@@ -103,7 +103,7 @@ export class Game {
         sys_draw(this, delta);
         sys_framerate(this, delta, performance.now() - now);
 
-        if (true) {
+        if (false) {
             sys_debug(this, delta);
         }
     }

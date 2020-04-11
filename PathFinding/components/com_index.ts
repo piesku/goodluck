@@ -9,6 +9,7 @@ const enum Component {
     Pick,
     Pickable,
     Render,
+    Selectable,
     Transform,
 }
 
@@ -23,5 +24,6 @@ export const enum Has {
     Pick = 1 << Component.Pick,
     Pickable = 1 << Component.Pickable,
     Render = 1 << Component.Render,
+    Selectable = 1 << Component.Selectable,
     Transform = 1 << Component.Transform,
 }

@@ -1,14 +1,14 @@
 import {from_euler} from "../../common/quat.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {collide} from "../components/com_collide.js";
-import {control_player} from "../components/com_control_player.js";
 import {draw_marker} from "../components/com_draw.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {nav_agent} from "../components/com_nav_agent.js";
-import {pickable, PickableFlag} from "../components/com_pickable.js";
+import {pickable} from "../components/com_pickable.js";
 import {render_basic} from "../components/com_render_basic.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
+import {selectable} from "../components/com_selectable.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";
 import {nav_bake} from "../navmesh.js";
@@ -37,7 +37,7 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Using: [
             render_diffuse(game.MaterialDiffuseGouraud, game.MeshTerrain, [0.3, 0.3, 0.8, 1]),
-            pickable(PickableFlag.None, game.MeshTerrain),
+            pickable(game.MeshTerrain),
             collide(false, [100, 1, 100]),
         ],
         Children: [
@@ -61,20 +61,26 @@ export function scene_stage(game: Game) {
         }
     }
 
-    // Cube.
+    // Cube 1.
     instantiate(game, {
         Translation: [26, 1, 39],
         Scale: [2, 2, 2],
-        Using: [
-            control_player(),
-            pickable(PickableFlag.Selectable),
-            collide(true),
-            nav_agent(nav, 190),
-            move(10, 0),
-        ],
+        Using: [pickable(), selectable(), collide(true), nav_agent(nav, 190), move(10, 0)],
         Children: [
             {
                 Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 0, 0, 1])],
+            },
+        ],
+    });
+
+    // Cube 2.
+    instantiate(game, {
+        Translation: [-18, 1, -23],
+        Scale: [2, 2, 2],
+        Using: [pickable(), selectable(), collide(true), nav_agent(nav, 89), move(10, 0)],
+        Children: [
+            {
+                Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [0, 1, 0, 1])],
             },
         ],
     });
