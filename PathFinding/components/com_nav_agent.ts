@@ -9,6 +9,13 @@ export interface NavAgent {
     Path?: Array<number>;
 }
 
+/**
+ * The NavAgent mixin.
+ *
+ * @param navmesh - The navmesh used for path finding.
+ * @param origin - The node of the path finding graph that this entity is
+ * currently at.
+ */
 export function nav_agent(navmesh: NavMesh, origin: number) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.NavAgent;

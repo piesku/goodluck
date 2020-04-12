@@ -54,11 +54,11 @@ export function scene_stage(game: Game) {
     let nav = nav_bake(game.MeshTerrain);
     console.timeEnd("nav_bake");
 
-    for (let face = 0; face < nav.Centroids.length; face++) {
-        if (false && nav.Centroids[face]) {
+    for (let node = 0; node < nav.Centroids.length; node++) {
+        if (false && nav.Centroids[node]) {
             instantiate(game, {
-                Translation: nav.Centroids[face],
-                Using: [draw_marker(`${face}`)],
+                Translation: nav.Centroids[node],
+                Using: [draw_marker(`${node}`)],
             });
         }
     }
@@ -71,6 +71,7 @@ export function scene_stage(game: Game) {
             pickable(),
             selectable(),
             collide(true, [2, 2, 2]),
+            // The origin node must match the entity's translation.
             nav_agent(nav, 190),
             move(10, 10),
         ],
@@ -95,6 +96,7 @@ export function scene_stage(game: Game) {
             pickable(),
             selectable(),
             collide(true, [2, 2, 2]),
+            // The origin node must match the entity's translation.
             nav_agent(nav, 89),
             move(15, 15),
         ],
