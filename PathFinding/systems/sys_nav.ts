@@ -27,8 +27,8 @@ function update(game: Game, entity: Entity) {
         let path = path_find(agent.NavMesh, agent.Goal, agent.Origin);
         console.timeEnd("path_find");
         if (path) {
-            // Discard the first waypoint, i.e. the origin. Proceed directly to
-            // the second waypoint.
+            // Discard the first waypoint, which is always the origin. Proceed
+            // directly to the second waypoint.
             agent.Path = [...path].slice(1);
         }
         agent.Goal = undefined;
@@ -40,9 +40,10 @@ function update(game: Game, entity: Entity) {
         get_translation(position, transform.World);
 
         let current_waypoint_pos;
-        if (agent.Path.length === 1) {
+        if (agent.Path.length <= 1) {
             // If this is the last waypoint, ignore it and move directly to the
-            // destination point.
+            // destination point. This also handles cases when the path is
+            // empty, i.e. the origin and the goal were the same node.
             current_waypoint_pos = agent.Destination;
         } else {
             // Otherwise, move to the center of the current waypoint's node.
@@ -52,7 +53,10 @@ function update(game: Game, entity: Entity) {
 
         let distance_to_current_waypoint = distance_squared(position, current_waypoint_pos);
         if (distance_to_current_waypoint < 1) {
-            agent.Origin = agent.Path.shift()!;
+            let origin = agent.Path.shift();
+            if (origin !== undefined) {
+                agent.Origin = origin;
+            }
             if (agent.Path.length === 0) {
                 agent.Path = undefined;
             }
