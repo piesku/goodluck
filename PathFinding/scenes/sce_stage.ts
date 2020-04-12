@@ -1,6 +1,7 @@
 import {from_euler} from "../../common/quat.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {collide} from "../components/com_collide.js";
+import {control_player} from "../components/com_control_player.js";
 import {draw_marker, draw_selection} from "../components/com_draw.js";
 import {Has} from "../components/com_index.js";
 import {light_directional} from "../components/com_light.js";
@@ -66,12 +67,14 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [26, 1, 39],
         Using: [
+            control_player(),
             pickable(),
             selectable(),
             collide(true, [2, 2, 2]),
             nav_agent(nav, 190),
             move(10, 10),
         ],
+        Disable: Has.ControlPlayer,
         Children: [
             {
                 Using: [draw_selection("#ff0")],
@@ -88,12 +91,14 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [-18, 1, -23],
         Using: [
+            control_player(),
             pickable(),
             selectable(),
             collide(true, [2, 2, 2]),
             nav_agent(nav, 89),
             move(15, 15),
         ],
+        Disable: Has.ControlPlayer,
         Children: [
             {
                 Using: [draw_selection("#ff0")],
