@@ -51,8 +51,10 @@ function update(game: Game, entity: Entity, delta: number) {
     // Rotations applied relative to the local space (parent's or world).
     if (move.LocalRotations.length) {
         let rotation = move.LocalRotations.reduce(multiply_rotations);
-        lerp(rotation, NO_ROTATION, rotation, Math.min(move.RotateSpeed * delta, 1));
-        normalize_quat(rotation, rotation);
+        if (move.RotateSpeed < Infinity) {
+            lerp(rotation, NO_ROTATION, rotation, Math.min(move.RotateSpeed * delta, 1));
+            normalize_quat(rotation, rotation);
+        }
 
         // Pre-multiply.
         multiply(transform.Rotation, rotation, transform.Rotation);
@@ -63,8 +65,10 @@ function update(game: Game, entity: Entity, delta: number) {
     // Rotations applied relative to the self space.
     if (move.SelfRotations.length) {
         let rotation = move.SelfRotations.reduce(multiply_rotations);
-        lerp(rotation, NO_ROTATION, rotation, Math.min(move.RotateSpeed * delta, 1));
-        normalize_quat(rotation, rotation);
+        if (move.RotateSpeed < Infinity) {
+            lerp(rotation, NO_ROTATION, rotation, Math.min(move.RotateSpeed * delta, 1));
+            normalize_quat(rotation, rotation);
+        }
 
         // Post-multiply.
         multiply(transform.Rotation, transform.Rotation, rotation);
