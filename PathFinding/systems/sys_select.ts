@@ -1,3 +1,4 @@
+import {scale} from "../../common/vec3.js";
 import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 
@@ -21,9 +22,7 @@ function update(game: Game, entity: Entity) {
         // …highlight it
         if (!selectable.Highlighted) {
             selectable.Highlighted = true;
-            transform.Scale[0] = 1.2;
-            transform.Scale[1] = 1.2;
-            transform.Scale[2] = 1.2;
+            scale(transform.Scale, transform.Scale, 1.3);
             transform.Dirty = true;
         }
 
@@ -41,9 +40,7 @@ function update(game: Game, entity: Entity) {
         // …remove the highlight
         if (selectable.Highlighted) {
             selectable.Highlighted = false;
-            transform.Scale[0] = 1;
-            transform.Scale[1] = 1;
-            transform.Scale[2] = 1;
+            scale(transform.Scale, transform.Scale, 1 / 1.3);
             transform.Dirty = true;
         }
 
