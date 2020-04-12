@@ -22,27 +22,35 @@ function update(game: Game, entity: Entity) {
     let agent = game.World.NavAgent[entity];
     if (agent.Goal !== undefined) {
         console.time("path_find");
-        // Search FROM the goal TO the origin, so that the first waypoint of the
-        // path is the closest to the origin, i.e. it is in fact the first
-        // waypoint for the agent to navigate through.
+        // Search FROM the goal TO the origin, so that the waypoints are ordered
+        // from the one closest to the origin.
         let path = path_find(agent.NavMesh, agent.Goal, agent.Origin);
         console.timeEnd("path_find");
         if (path) {
-            agent.Path = [...path];
+            // Discard the first waypoint, i.e. the origin. Proceed directly to
+            // the second waypoint.
+            agent.Path = [...path].slice(1);
         }
         agent.Goal = undefined;
     }
 
-    if (agent.Path) {
+    if (agent.Path && agent.Destination) {
         let transform = game.World.Transform[entity];
         let position: Vec3 = [0, 0, 0];
         get_translation(position, transform.World);
 
-        let current_waypoint = agent.Path[0];
-        // Centroids are in the world space; use them directly without further transformations.
-        let current_waypoint_pos = agent.NavMesh.Centroids[current_waypoint];
-        let distance_to_current_waypoint = distance_squared(position, current_waypoint_pos);
+        let current_waypoint_pos;
+        if (agent.Path.length === 1) {
+            // If this is the last waypoint, ignore it and move directly to the
+            // destination point.
+            current_waypoint_pos = agent.Destination;
+        } else {
+            // Otherwise, move to the center of the current waypoint's node.
+            // Centroids are defined in the world space.
+            current_waypoint_pos = agent.NavMesh.Centroids[agent.Path[0]];
+        }
 
+        let distance_to_current_waypoint = distance_squared(position, current_waypoint_pos);
         if (distance_to_current_waypoint < 1) {
             agent.Origin = agent.Path.shift()!;
             if (agent.Path.length === 0) {

@@ -4,6 +4,7 @@ import {RenderPath, render_path} from "../components/com_render_path.js";
 import {instantiate} from "../core.js";
 import {Entity, Game} from "../game.js";
 import {path_find} from "../pathfind.js";
+import {Picked} from "./sys_pick.js";
 
 const QUERY = Has.ControlPlayer | Has.NavAgent;
 
@@ -18,30 +19,33 @@ export function sys_control_player(game: Game, delta: number) {
     }
     game.World.Mask[line] &= ~Has.Render;
 
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) == QUERY) {
-            update(game, i);
+    if (game.Pick) {
+        for (let i = 0; i < game.World.Mask.length; i++) {
+            if ((game.World.Mask[i] & QUERY) == QUERY) {
+                update(game, i, game.Pick);
+            }
         }
     }
 }
 
-function update(game: Game, entity: Entity) {
+function update(game: Game, entity: Entity, pick: Picked) {
     let agent = game.World.NavAgent[entity];
-    let pick = game.Pick?.TriIndex;
+    let node = pick.TriIndex;
 
     // Is the cursor over a pickable mesh and over a navigable triangle?
-    let goal = pick && agent.NavMesh.Graph[pick] ? pick : undefined;
+    let goal = node && agent.NavMesh.Graph[node] ? node : undefined;
 
     if (game.InputDelta["Mouse2"] === 1) {
         agent.Goal = goal;
+        agent.Destination = pick.Point;
     }
 
     // The path line for debugging.
     if (goal !== undefined) {
         let path = path_find(agent.NavMesh, goal, agent.Origin);
         if (path) {
-            // XXX centroids are in the world space, so we're good for now
-            let waypoints = [...path].map((x) => agent.NavMesh.Centroids[x]);
+            // Centroids are in the world space.
+            let waypoints = [...path].map((x) => agent.NavMesh.Centroids[x]).concat([pick.Point]);
 
             game.World.Mask[line] |= Has.Render;
             let render = game.World.Render[line] as RenderPath;
