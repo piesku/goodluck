@@ -70,7 +70,7 @@ export function scene_stage(game: Game) {
             selectable(),
             collide(true, [2, 2, 2]),
             nav_agent(nav, 190),
-            move(10, 0),
+            move(10, 10),
         ],
         Children: [
             {
@@ -92,7 +92,7 @@ export function scene_stage(game: Game) {
             selectable(),
             collide(true, [2, 2, 2]),
             nav_agent(nav, 89),
-            move(10, 0),
+            move(15, 15),
         ],
         Children: [
             {

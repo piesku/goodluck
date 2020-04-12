@@ -59,11 +59,12 @@ function update(game: Game, entity: Entity) {
         look_target[0] = position[0];
         look_target[2] = position[2];
         normalize(look_target, look_target);
+
         let yaw: Quat = [0, 0, 0, 0];
         rotation_to(yaw, [0, 0, 1], look_target);
 
         let move = game.World.Move[entity];
         move.Directions.push(position);
-        move.Yaws.push(yaw);
+        move.LocalRotations.push(yaw);
     }
 }
