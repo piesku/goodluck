@@ -1,13 +1,15 @@
 import {Mesh} from "../common/material.js";
 import {Vec3} from "../common/math.js";
-import {cross, distance_squared, normalize, subtract} from "../common/vec3.js";
+import {cross, distance_squared, dot, normalize, subtract} from "../common/vec3.js";
 
 export interface NavMesh {
     Graph: Array<Array<[number, number]>>;
     Centroids: Array<Vec3>;
 }
 
-export function nav_bake(mesh: Mesh) {
+const UP: Vec3 = [0, 1, 0];
+
+export function nav_bake(mesh: Mesh, max_slope: number) {
     let face_count = mesh.IndexCount / 3;
     let faces_containing_vertex: Record<number, Array<number>> = {};
 
@@ -23,7 +25,7 @@ export function nav_bake(mesh: Mesh) {
         let v3 = mesh.IndexArray[face * 3 + 2];
 
         let norm = normal(mesh.VertexArray, v1, v2, v3);
-        if (norm[1] < 0.8) {
+        if (Math.acos(dot(norm, UP)) > max_slope) {
             // Skip this face, it's not horizontal enough.
             continue;
         }
@@ -85,19 +87,22 @@ function centroid(vertices: Float32Array, a: number, b: number, c: number): Vec3
     ];
 }
 
+let edge1: Vec3 = [0, 0, 0];
+let edge2: Vec3 = [0, 0, 0];
+
 function normal(vertices: Float32Array, a: number, b: number, c: number): Vec3 {
-    let edge1: Vec3 = subtract(
-        [0, 0, 0],
+    subtract(
+        edge1,
         [vertices[b * 3 + 0], vertices[b * 3 + 1], vertices[b * 3 + 2]],
         [vertices[a * 3 + 0], vertices[a * 3 + 1], vertices[a * 3 + 2]]
     );
 
-    let edge2: Vec3 = subtract(
-        [0, 0, 0],
+    subtract(
+        edge2,
         [vertices[c * 3 + 0], vertices[c * 3 + 1], vertices[c * 3 + 2]],
         [vertices[b * 3 + 0], vertices[b * 3 + 1], vertices[b * 3 + 2]]
     );
 
-    let prodcut = cross([0, 0, 0], edge2, edge1);
-    return normalize(prodcut, prodcut);
+    let product = cross([0, 0, 0], edge2, edge1);
+    return normalize(product, product);
 }

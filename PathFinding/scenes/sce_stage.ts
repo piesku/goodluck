@@ -51,7 +51,8 @@ export function scene_stage(game: Game) {
     });
 
     console.time("nav_bake");
-    let nav = nav_bake(game.MeshTerrain);
+    // Bake the nav mesh; maximum walkable slope is 30°.
+    let nav = nav_bake(game.MeshTerrain, Math.PI / 6);
     console.timeEnd("nav_bake");
 
     for (let node = 0; node < nav.Centroids.length; node++) {
