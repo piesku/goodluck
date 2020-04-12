@@ -39,7 +39,7 @@ function update(game: Game, entity: Entity) {
         get_translation(position, transform.World);
 
         let current_waypoint = agent.Path[0];
-        // XXX centroids are in the world space, so we're good for now
+        // Centroids are in the world space; use them directly without further transformations.
         let current_waypoint_pos = agent.NavMesh.Centroids[current_waypoint];
         let distance_to_current_waypoint = distance_squared(position, current_waypoint_pos);
 

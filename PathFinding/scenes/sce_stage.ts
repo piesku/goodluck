@@ -35,7 +35,8 @@ export function scene_stage(game: Game) {
         Using: [light_directional([1, 1, 1], 1.2)],
     });
 
-    // Terrain.
+    // Terrain. For the nav mesh to work properly, it must be in the world space
+    // and have the scale of 1.
     instantiate(game, {
         Using: [
             render_diffuse(game.MaterialDiffuseGouraud, game.MeshTerrain, [0.3, 0.3, 0.8, 1]),
