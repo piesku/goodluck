@@ -6,9 +6,13 @@ import {Has} from "./com_index.js";
 export interface NavAgent {
     NavMesh: NavMesh;
     Origin: number;
-    Goal?: number;
-    Destination?: Vec3;
-    Path?: Array<number>;
+    Goal?: NavDestination;
+    Waypoints?: Array<NavDestination>;
+}
+
+export interface NavDestination {
+    Node: number;
+    Position: Vec3;
 }
 
 /**

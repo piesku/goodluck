@@ -24,47 +24,47 @@ function update(game: Game, entity: Entity) {
         console.time("path_find");
         // Search FROM the goal TO the origin, so that the waypoints are ordered
         // from the one closest to the origin.
-        let path = path_find(agent.NavMesh, agent.Goal, agent.Origin);
+        let path_gen = path_find(agent.NavMesh, agent.Goal.Node, agent.Origin);
         console.timeEnd("path_find");
-        if (path) {
-            // Discard the first waypoint, which is always the origin. Proceed
-            // directly to the second waypoint.
-            agent.Path = [...path].slice(1);
+
+        if (path_gen) {
+            let path = [...path_gen];
+            // Discard the first waypoint, which is always the origin node, and
+            // the last waypoint, which is the goal's node.
+            let waypoints = path.slice(1, path.length - 1);
+            agent.Waypoints = waypoints.map((w) => ({
+                Node: w,
+                Position: agent.NavMesh.Centroids[w],
+            }));
+            // Add the destination's world position as the last waypoint. The
+            // waypoint list has always at least one waypoint, which is
+            // important for cases when the path is empty, i.e. the origin and
+            // the goal were the same node.
+            agent.Waypoints.push(agent.Goal);
         }
         agent.Goal = undefined;
     }
 
-    if (agent.Path && agent.Destination) {
+    if (agent.Waypoints) {
         let transform = game.World.Transform[entity];
         let position: Vec3 = [0, 0, 0];
         get_translation(position, transform.World);
 
-        let current_waypoint_pos;
-        if (agent.Path.length <= 1) {
-            // If this is the last waypoint, ignore it and move directly to the
-            // destination point. This also handles cases when the path is
-            // empty, i.e. the origin and the goal were the same node.
-            current_waypoint_pos = agent.Destination;
-        } else {
-            // Otherwise, move to the center of the current waypoint's node.
-            // Centroids are defined in the world space.
-            current_waypoint_pos = agent.NavMesh.Centroids[agent.Path[0]];
-        }
-
-        let distance_to_current_waypoint = distance_squared(position, current_waypoint_pos);
+        let current_waypoint = agent.Waypoints[0];
+        let distance_to_current_waypoint = distance_squared(position, current_waypoint.Position);
         if (distance_to_current_waypoint < 1) {
-            let origin = agent.Path.shift();
+            let origin = agent.Waypoints.shift();
             if (origin !== undefined) {
-                agent.Origin = origin;
+                agent.Origin = origin.Node;
             }
-            if (agent.Path.length === 0) {
-                agent.Path = undefined;
+            if (agent.Waypoints.length === 0) {
+                agent.Waypoints = undefined;
             }
         }
 
         // Transform the waypoint's position into the agent's self space which
         // is where sys_move runs.
-        transform_point(position, current_waypoint_pos, transform.Self);
+        transform_point(position, current_waypoint.Position, transform.Self);
         normalize(position, position);
 
         // Project the waypoint's position onto the agent's self XZ plane.

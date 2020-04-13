@@ -1,3 +1,4 @@
+import {get_translation} from "../../common/mat4.js";
 import {GL_ARRAY_BUFFER} from "../../common/webgl.js";
 import {Has} from "../components/com_index.js";
 import {RenderPath, render_path} from "../components/com_render_path.js";
@@ -31,21 +32,30 @@ export function sys_control_player(game: Game, delta: number) {
 function update(game: Game, entity: Entity, pick: Picked) {
     let agent = game.World.NavAgent[entity];
     let node = pick.TriIndex;
+    let goal;
 
-    // Is the cursor over a pickable mesh and over a navigable triangle?
-    let goal = node && agent.NavMesh.Graph[node] ? node : undefined;
-
-    if (game.InputDelta["Mouse2"] === 1) {
-        agent.Goal = goal;
-        agent.Destination = pick.Point;
+    if (node !== undefined && agent.NavMesh.Graph[node]) {
+        // The cursor is over a pickable mesh and over a navigable triangle?
+        goal = node;
+        if (game.InputDelta["Mouse2"] === 1) {
+            agent.Goal = {Node: goal, Position: pick.Point};
+        }
     }
 
     // The path line for debugging.
     if (goal !== undefined) {
-        let path = path_find(agent.NavMesh, goal, agent.Origin);
-        if (path) {
+        let path_gen = path_find(agent.NavMesh, goal, agent.Origin);
+        if (path_gen) {
+            let transform = game.World.Transform[entity];
+            let world_pos = get_translation([0, 0, 0], transform.World);
+
+            let path = [...path_gen];
+            // Remove the origin and the goal from the path.
+            path = path.slice(1, path.length - 1);
             // Centroids are in the world space.
-            let waypoints = [...path].map((x) => agent.NavMesh.Centroids[x]).concat([pick.Point]);
+            let waypoints = path.map((x) => agent.NavMesh.Centroids[x]);
+            // Add the entity's current position and the exact goal destination.
+            waypoints = [world_pos, ...waypoints, pick.Point];
 
             game.World.Mask[line] |= Has.Render;
             let render = game.World.Render[line] as RenderPath;
