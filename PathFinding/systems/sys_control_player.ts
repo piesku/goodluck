@@ -44,12 +44,11 @@ function update(game: Game, entity: Entity, pick: Picked) {
 
     // The path line for debugging.
     if (goal !== undefined) {
-        let path_gen = path_find(agent.NavMesh, goal, agent.Origin);
-        if (path_gen) {
+        let path = path_find(agent.NavMesh, goal, agent.Origin);
+        if (path) {
             let transform = game.World.Transform[entity];
             let world_pos = get_translation([0, 0, 0], transform.World);
 
-            let path = [...path_gen];
             // Remove the origin and the goal from the path.
             path = path.slice(1, path.length - 1);
             // Centroids are in the world space.

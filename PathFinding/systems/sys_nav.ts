@@ -24,11 +24,10 @@ function update(game: Game, entity: Entity) {
         console.time("path_find");
         // Search FROM the goal TO the origin, so that the waypoints are ordered
         // from the one closest to the origin.
-        let path_gen = path_find(agent.NavMesh, agent.Goal.Node, agent.Origin);
+        let path = path_find(agent.NavMesh, agent.Goal.Node, agent.Origin);
         console.timeEnd("path_find");
 
-        if (path_gen) {
-            let path = [...path_gen];
+        if (path) {
             // Discard the first waypoint, which is always the origin node, and
             // the last waypoint, which is the goal's node.
             let waypoints = path.slice(1, path.length - 1);

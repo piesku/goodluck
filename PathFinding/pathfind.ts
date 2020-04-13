@@ -32,9 +32,9 @@ export function path_find(navmesh: NavMesh, origin: number, goal: number) {
         let current = boundary.splice(lowest, 1)[0];
 
         if (current === goal) {
-            // We've reached the goal. Return a generator yielding nodes from
-            // the goal to the destination.
-            return path_follow(predecessors, goal);
+            // We've reached the goal. Return an array of nodes from the goal to
+            // the destination.
+            return [...path_follow(predecessors, goal)];
         }
 
         // For every neighbor `next` of the current node…
