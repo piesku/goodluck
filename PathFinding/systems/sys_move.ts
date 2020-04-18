@@ -52,6 +52,8 @@ function update(game: Game, entity: Entity, delta: number) {
     if (move.LocalRotations.length) {
         let rotation = move.LocalRotations.reduce(multiply_rotations);
         if (move.RotateSpeed < Infinity) {
+            // Ease the rotation out by lerping with t ~ delta, which isn't
+            // proper lerping, but is good enough to smooth the movement a bit.
             lerp(rotation, NO_ROTATION, rotation, Math.min(move.RotateSpeed * delta, 1));
             normalize_quat(rotation, rotation);
         }
@@ -66,6 +68,8 @@ function update(game: Game, entity: Entity, delta: number) {
     if (move.SelfRotations.length) {
         let rotation = move.SelfRotations.reduce(multiply_rotations);
         if (move.RotateSpeed < Infinity) {
+            // Ease the rotation out by lerping with t ~ delta, which isn't
+            // proper lerping, but is good enough to smooth the movement a bit.
             lerp(rotation, NO_ROTATION, rotation, Math.min(move.RotateSpeed * delta, 1));
             normalize_quat(rotation, rotation);
         }
