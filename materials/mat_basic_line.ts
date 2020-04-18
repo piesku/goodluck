@@ -1,5 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_LINE_STRIP} from "../common/webgl.js";
+import {BasicLayout} from "./layout_basic.js";
 
 let vertex = `#version 300 es\n
     uniform mat4 pv;
@@ -23,16 +24,16 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat_basic_line(gl: WebGL2RenderingContext): Material {
+export function mat_basic_line(gl: WebGL2RenderingContext): Material<BasicLayout> {
     let Program = link(gl, vertex, fragment);
     return {
         Mode: GL_LINE_STRIP,
         Program,
-        Uniforms: [
-            gl.getUniformLocation(Program, "pv")!,
-            gl.getUniformLocation(Program, "world")!,
-            gl.getUniformLocation(Program, "color")!,
-        ],
-        Attributes: [gl.getAttribLocation(Program, "position")!],
+        Locations: {
+            Pv: gl.getUniformLocation(Program, "pv")!,
+            World: gl.getUniformLocation(Program, "world")!,
+            Color: gl.getUniformLocation(Program, "color")!,
+            VertexPosition: gl.getAttribLocation(Program, "position")!,
+        },
     };
 }

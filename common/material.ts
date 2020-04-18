@@ -10,11 +10,10 @@ export interface Mesh {
     IndexCount: number;
 }
 
-export interface Material {
+export interface Material<L> {
     Mode: GLenum;
     Program: WebGLProgram;
-    Uniforms: Array<WebGLUniformLocation>;
-    Attributes: Array<GLint>;
+    Locations: L;
 }
 
 export function link(gl: WebGLRenderingContext, vertex: string, fragment: string) {

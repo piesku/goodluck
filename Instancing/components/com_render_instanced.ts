@@ -7,13 +7,14 @@ import {
     GL_STATIC_DRAW,
 } from "../../common/webgl.js";
 import {Entity, Game} from "../game.js";
+import {InstancedLayout} from "../materials/layout_instanced.js";
 import {Model} from "../model.js";
 import {Has} from "./com_index.js";
 import {RenderKind} from "./com_render.js";
 
 export interface RenderInstanced {
     readonly Kind: RenderKind.Instanced;
-    readonly Material: Material;
+    readonly Material: Material<InstancedLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
     readonly VAO: WebGLVertexArrayObject;
@@ -35,39 +36,18 @@ export function render_instanced(mesh: Mesh, offsets: Model, palette: Array<numb
         game.GL.bindVertexArray(VAO);
 
         game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
-        game.GL.enableVertexAttribArray(material.Attributes[InstancedAttribute.Position]);
-        game.GL.vertexAttribPointer(
-            material.Attributes[InstancedAttribute.Position],
-            3,
-            GL_FLOAT,
-            false,
-            0,
-            0
-        );
+        game.GL.enableVertexAttribArray(material.Locations.VertexPosition);
+        game.GL.vertexAttribPointer(material.Locations.VertexPosition, 3, GL_FLOAT, false, 0, 0);
 
         game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.NormalBuffer);
-        game.GL.enableVertexAttribArray(material.Attributes[InstancedAttribute.Normal]);
-        game.GL.vertexAttribPointer(
-            material.Attributes[InstancedAttribute.Normal],
-            3,
-            GL_FLOAT,
-            false,
-            0,
-            0
-        );
+        game.GL.enableVertexAttribArray(material.Locations.VertexNormal);
+        game.GL.vertexAttribPointer(material.Locations.VertexNormal, 3, GL_FLOAT, false, 0, 0);
 
         game.GL.bindBuffer(GL_ARRAY_BUFFER, game.GL.createBuffer());
         game.GL.bufferData(GL_ARRAY_BUFFER, offsets, GL_STATIC_DRAW);
-        game.GL.enableVertexAttribArray(material.Attributes[InstancedAttribute.Offset]);
-        game.GL.vertexAttribPointer(
-            material.Attributes[InstancedAttribute.Offset],
-            4,
-            GL_FLOAT,
-            false,
-            0,
-            0
-        );
-        game.GL.vertexAttribDivisor(material.Attributes[InstancedAttribute.Offset], 1);
+        game.GL.enableVertexAttribArray(material.Locations.VertexOffset);
+        game.GL.vertexAttribPointer(material.Locations.VertexOffset, 4, GL_FLOAT, false, 0, 0);
+        game.GL.vertexAttribDivisor(material.Locations.VertexOffset, 1);
 
         game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
@@ -83,19 +63,4 @@ export function render_instanced(mesh: Mesh, offsets: Model, palette: Array<numb
             Palette: palette,
         };
     };
-}
-
-export const enum InstancedAttribute {
-    Position,
-    Normal,
-    Offset,
-}
-
-export const enum InstancedUniform {
-    PV,
-    World,
-    Self,
-    Palette,
-    LightPositions,
-    LightDetails,
 }

@@ -1,5 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
+import {DiffuseLayout} from "./layout_diffuse.js";
 
 let vertex = `#version 300 es\n
 
@@ -67,22 +68,20 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat_diffuse_flat(gl: WebGL2RenderingContext): Material {
+export function mat_diffuse_flat(gl: WebGL2RenderingContext): Material<DiffuseLayout> {
     let Program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
         Program,
-        Uniforms: [
-            gl.getUniformLocation(Program, "pv")!,
-            gl.getUniformLocation(Program, "world")!,
-            gl.getUniformLocation(Program, "self")!,
-            gl.getUniformLocation(Program, "color")!,
-            gl.getUniformLocation(Program, "light_positions")!,
-            gl.getUniformLocation(Program, "light_details")!,
-        ],
-        Attributes: [
-            gl.getAttribLocation(Program, "position")!,
-            gl.getAttribLocation(Program, "normal")!,
-        ],
+        Locations: {
+            Pv: gl.getUniformLocation(Program, "pv")!,
+            World: gl.getUniformLocation(Program, "world")!,
+            Self: gl.getUniformLocation(Program, "self")!,
+            Color: gl.getUniformLocation(Program, "color")!,
+            LightPositions: gl.getUniformLocation(Program, "light_positions")!,
+            LightDetails: gl.getUniformLocation(Program, "light_details")!,
+            VertexPosition: gl.getAttribLocation(Program, "position")!,
+            VertexNormal: gl.getAttribLocation(Program, "normal")!,
+        },
     };
 }

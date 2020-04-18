@@ -1,8 +1,9 @@
 import {Material} from "../../common/material.js";
 import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
+import {DiffuseLayout} from "../../materials/layout_diffuse.js";
 import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
-import {DiffuseUniform, RenderDiffuse} from "../components/com_render_diffuse.js";
+import {RenderDiffuse} from "../components/com_render_diffuse.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 
@@ -27,7 +28,7 @@ export function sys_render(game: Game, delta: number) {
                 current_material = render.Material;
                 switch (render.Kind) {
                     case RenderKind.Diffuse:
-                        use_diffuse(game, current_material);
+                        use_diffuse(game, render.Material);
                         break;
                 }
             }
@@ -46,21 +47,17 @@ export function sys_render(game: Game, delta: number) {
     }
 }
 
-function use_diffuse(game: Game, material: Material) {
+function use_diffuse(game: Game, material: Material<DiffuseLayout>) {
     game.GL.useProgram(material.Program);
-    game.GL.uniformMatrix4fv(material.Uniforms[DiffuseUniform.PV], false, game.Camera!.PV);
-    game.GL.uniform4fv(material.Uniforms[DiffuseUniform.LightPositions], game.LightPositions);
-    game.GL.uniform4fv(material.Uniforms[DiffuseUniform.LightDetails], game.LightDetails);
+    game.GL.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.PV);
+    game.GL.uniform4fv(material.Locations.LightPositions, game.LightPositions);
+    game.GL.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
 function draw_diffuse(game: Game, transform: Transform, render: RenderDiffuse) {
-    game.GL.uniformMatrix4fv(
-        render.Material.Uniforms[DiffuseUniform.World],
-        false,
-        transform.World
-    );
-    game.GL.uniformMatrix4fv(render.Material.Uniforms[DiffuseUniform.Self], false, transform.Self);
-    game.GL.uniform4fv(render.Material.Uniforms[DiffuseUniform.Color], render.Color);
+    game.GL.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
+    game.GL.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
+    game.GL.uniform4fv(render.Material.Locations.Color, render.Color);
     game.GL.bindVertexArray(render.VAO);
     game.GL.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
     game.GL.bindVertexArray(null);
