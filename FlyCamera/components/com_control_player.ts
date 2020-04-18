@@ -3,27 +3,24 @@ import {Has} from "./com_index.js";
 
 export interface ControlPlayer {
     Move: boolean;
-    Pitch: boolean;
-    Yaw: boolean;
-    Sensitivity: number;
+    Pitch: number;
+    Yaw: number;
 }
 
 /**
  * The ControlPlayer mixin.
  *
  * @param Move - Whether to control the entity's movement.
- * @param Yaw - Whether to control the entity's yaw.
- * @param Pitch - Whether to control the entity's pitch.
- * @param Sensitivity - Mouse sensitivity on both axes.
+ * @param Yaw - Sensitivity of yaw control.
+ * @param Pitch - Sensitivity of pitch control.
  */
-export function control_player(Move: boolean, Yaw: boolean, Pitch: boolean, Sensitivity: number) {
+export function control_player(move: boolean, yaw: number, pitch: number) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.ControlPlayer;
         game.World.ControlPlayer[entity] = {
-            Move,
-            Yaw,
-            Pitch,
-            Sensitivity,
+            Move: move,
+            Yaw: yaw,
+            Pitch: pitch,
         };
     };
 }

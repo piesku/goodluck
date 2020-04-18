@@ -11,12 +11,7 @@ import {Game} from "../game.js";
 export function blueprint_player(game: Game) {
     return <Blueprint>{
         Rotation: [0, 1, 0, 0],
-        Using: [
-            control_player(true, true, false, 0.2),
-            move(10, Infinity),
-            collide(true),
-            rigid_body(true),
-        ],
+        Using: [control_player(true, 0.2, 0), move(10, Infinity), collide(true), rigid_body(true)],
         Children: [
             {
                 // Body.
@@ -24,11 +19,7 @@ export function blueprint_player(game: Game) {
             },
             {
                 // Camera rig anchor.
-                Using: [
-                    named("camera anchor"),
-                    move(0, Infinity),
-                    control_player(false, false, true, 0.2),
-                ],
+                Using: [named("camera anchor"), move(0, Infinity), control_player(false, 0, 0.2)],
             },
             {
                 Translation: [0, 5, 0],

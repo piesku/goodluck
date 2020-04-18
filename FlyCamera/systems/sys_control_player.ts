@@ -39,7 +39,7 @@ function update(game: Game, entity: Entity, delta: number) {
     }
 
     if (control.Yaw && game.InputDelta.MouseX) {
-        let yaw_delta = game.InputDelta.MouseX * control.Sensitivity * delta;
+        let yaw_delta = game.InputDelta.MouseX * control.Yaw * delta;
         if (yaw_delta !== 0) {
             let move = game.World.Move[entity];
             // Yaw is applied relative to the entity's local space, so that the
@@ -49,7 +49,7 @@ function update(game: Game, entity: Entity, delta: number) {
     }
 
     if (control.Pitch && game.InputDelta.MouseY) {
-        let pitch_delta = game.InputDelta.MouseY * control.Sensitivity * delta;
+        let pitch_delta = game.InputDelta.MouseY * control.Pitch * delta;
         if (pitch_delta !== 0) {
             let move = game.World.Move[entity];
             // Pitch is applied relative to the entity's self space, so that the
