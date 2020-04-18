@@ -14,9 +14,10 @@ export interface Material {
     Mode: GLenum;
     Program: WebGLProgram;
     Uniforms: Array<WebGLUniformLocation>;
+    Attributes: Array<GLint>;
 }
 
-export function link(gl: WebGL2RenderingContext, vertex: string, fragment: string) {
+export function link(gl: WebGLRenderingContext, vertex: string, fragment: string) {
     let program = gl.createProgram()!;
     gl.attachShader(program, compile(gl, GL_VERTEX_SHADER, vertex));
     gl.attachShader(program, compile(gl, GL_FRAGMENT_SHADER, fragment));
@@ -29,7 +30,7 @@ export function link(gl: WebGL2RenderingContext, vertex: string, fragment: strin
     return program;
 }
 
-function compile(gl: WebGL2RenderingContext, type: GLenum, source: string) {
+function compile(gl: WebGLRenderingContext, type: GLenum, source: string) {
     let shader = gl.createShader(type)!;
     gl.shaderSource(shader, source);
     gl.compileShader(shader);

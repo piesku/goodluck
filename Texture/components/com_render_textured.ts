@@ -15,35 +15,49 @@ export interface RenderTextured {
 
 let vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
-export function render_textured(Material: Material, Mesh: Mesh, Texture: WebGLTexture) {
+export function render_textured(material: Material, mesh: Mesh, texture: WebGLTexture) {
     return (game: Game, entity: Entity) => {
-        if (!vaos.has(Mesh)) {
+        if (!vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.GL.createVertexArray()!;
             game.GL.bindVertexArray(vao);
 
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.VertexBuffer);
-            game.GL.enableVertexAttribArray(TexturedAttribute.Position);
-            game.GL.vertexAttribPointer(TexturedAttribute.Position, 3, GL_FLOAT, false, 0, 0);
+            game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
+            game.GL.enableVertexAttribArray(material.Attributes[TexturedAttribute.Position]);
+            game.GL.vertexAttribPointer(
+                material.Attributes[TexturedAttribute.Position],
+                3,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
 
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.TexCoordBuffer);
-            game.GL.enableVertexAttribArray(TexturedAttribute.TexCoord);
-            game.GL.vertexAttribPointer(TexturedAttribute.TexCoord, 2, GL_FLOAT, false, 0, 0);
+            game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.TexCoordBuffer);
+            game.GL.enableVertexAttribArray(material.Attributes[TexturedAttribute.TexCoord]);
+            game.GL.vertexAttribPointer(
+                material.Attributes[TexturedAttribute.TexCoord],
+                2,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
 
-            game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Mesh.IndexBuffer);
+            game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
             game.GL.bindVertexArray(null);
-            vaos.set(Mesh, vao);
+            vaos.set(mesh, vao);
         }
 
         game.World.Mask[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.Textured,
-            Material,
-            Mesh,
+            Material: material,
+            Mesh: mesh,
             FrontFace: GL_CW,
-            VAO: vaos.get(Mesh)!,
-            Texture,
+            VAO: vaos.get(mesh)!,
+            Texture: texture,
         };
     };
 }

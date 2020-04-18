@@ -1,10 +1,10 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
+import {mat_diffuse_flat} from "../materials/mat_diffuse_flat.js";
+import {mat_specular_phong} from "../materials/mat_specular_phong.js";
 import {mesh_monkey_flat} from "../meshes/monkey_flat.js";
 import {mesh_monkey_smooth} from "../meshes/monkey_smooth.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
-import {mat_diffuse_flat} from "./materials/mat_diffuse_flat.js";
-import {mat_specular_phong} from "./materials/mat_specular_phong.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";

@@ -21,8 +21,10 @@ export interface RenderInstanced {
     readonly Palette: Array<number>;
 }
 
-export function render_instanced(Mesh: Mesh, offsets: Model, Palette: Array<number>) {
+export function render_instanced(mesh: Mesh, offsets: Model, palette: Array<number>) {
     return (game: Game, entity: Entity) => {
+        let material = game.MaterialInstanced;
+
         // We can't cache the VAO per mesh, like we do in com_render_shaded in
         // other examples, because the offsets vary between the instances of the
         // component.
@@ -32,32 +34,53 @@ export function render_instanced(Mesh: Mesh, offsets: Model, Palette: Array<numb
         let VAO = game.GL.createVertexArray()!;
         game.GL.bindVertexArray(VAO);
 
-        game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.VertexBuffer);
-        game.GL.enableVertexAttribArray(InstancedAttribute.Position);
-        game.GL.vertexAttribPointer(InstancedAttribute.Position, 3, GL_FLOAT, false, 0, 0);
+        game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
+        game.GL.enableVertexAttribArray(material.Attributes[InstancedAttribute.Position]);
+        game.GL.vertexAttribPointer(
+            material.Attributes[InstancedAttribute.Position],
+            3,
+            GL_FLOAT,
+            false,
+            0,
+            0
+        );
 
-        game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.NormalBuffer);
-        game.GL.enableVertexAttribArray(InstancedAttribute.Normal);
-        game.GL.vertexAttribPointer(InstancedAttribute.Normal, 3, GL_FLOAT, false, 0, 0);
+        game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.NormalBuffer);
+        game.GL.enableVertexAttribArray(material.Attributes[InstancedAttribute.Normal]);
+        game.GL.vertexAttribPointer(
+            material.Attributes[InstancedAttribute.Normal],
+            3,
+            GL_FLOAT,
+            false,
+            0,
+            0
+        );
 
         game.GL.bindBuffer(GL_ARRAY_BUFFER, game.GL.createBuffer());
         game.GL.bufferData(GL_ARRAY_BUFFER, offsets, GL_STATIC_DRAW);
-        game.GL.enableVertexAttribArray(InstancedAttribute.Offset);
-        game.GL.vertexAttribPointer(InstancedAttribute.Offset, 4, GL_FLOAT, false, 0, 0);
-        game.GL.vertexAttribDivisor(InstancedAttribute.Offset, 1);
+        game.GL.enableVertexAttribArray(material.Attributes[InstancedAttribute.Offset]);
+        game.GL.vertexAttribPointer(
+            material.Attributes[InstancedAttribute.Offset],
+            4,
+            GL_FLOAT,
+            false,
+            0,
+            0
+        );
+        game.GL.vertexAttribDivisor(material.Attributes[InstancedAttribute.Offset], 1);
 
-        game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Mesh.IndexBuffer);
+        game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
         game.GL.bindVertexArray(null);
         game.World.Mask[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.Instanced,
-            Material: game.MaterialInstanced,
-            Mesh,
+            Material: material,
+            Mesh: mesh,
             FrontFace: GL_CW,
             VAO,
             InstanceCount: offsets.length / 4,
-            Palette,
+            Palette: palette,
         };
     };
 }

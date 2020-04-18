@@ -32,12 +32,26 @@ export function render_specular(
             game.GL.bindVertexArray(vao);
 
             game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
-            game.GL.enableVertexAttribArray(SpecularAttribute.Position);
-            game.GL.vertexAttribPointer(SpecularAttribute.Position, 3, GL_FLOAT, false, 0, 0);
+            game.GL.enableVertexAttribArray(material.Attributes[SpecularAttribute.Position]);
+            game.GL.vertexAttribPointer(
+                material.Attributes[SpecularAttribute.Position],
+                3,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
 
             game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.NormalBuffer);
-            game.GL.enableVertexAttribArray(SpecularAttribute.Normal);
-            game.GL.vertexAttribPointer(SpecularAttribute.Normal, 3, GL_FLOAT, false, 0, 0);
+            game.GL.enableVertexAttribArray(material.Attributes[SpecularAttribute.Normal]);
+            game.GL.vertexAttribPointer(
+                material.Attributes[SpecularAttribute.Normal],
+                3,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
 
             game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 

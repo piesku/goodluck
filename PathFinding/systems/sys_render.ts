@@ -108,7 +108,14 @@ function draw_path(game: Game, transform: Transform, render: RenderPath) {
     game.GL.uniformMatrix4fv(render.Material.Uniforms[BasicUniform.World], false, transform.World);
     game.GL.uniform4fv(render.Material.Uniforms[BasicUniform.Color], render.Color);
     game.GL.bindBuffer(GL_ARRAY_BUFFER, render.VertexBuffer);
-    game.GL.enableVertexAttribArray(BasicAttribute.Position);
-    game.GL.vertexAttribPointer(BasicAttribute.Position, 3, GL_FLOAT, false, 0, 0);
+    game.GL.enableVertexAttribArray(render.Material.Attributes[BasicAttribute.Position]);
+    game.GL.vertexAttribPointer(
+        render.Material.Attributes[BasicAttribute.Position],
+        3,
+        GL_FLOAT,
+        false,
+        0,
+        0
+    );
     game.GL.drawArrays(render.Material.Mode, 0, render.IndexCount);
 }

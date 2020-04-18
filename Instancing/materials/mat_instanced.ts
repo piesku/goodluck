@@ -1,6 +1,5 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
-import {InstancedAttribute} from "../components/com_render_instanced.js";
 
 let vertex = `#version 300 es\n
 
@@ -16,9 +15,9 @@ let vertex = `#version 300 es\n
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    layout(location=${InstancedAttribute.Position}) in vec3 position;
-    layout(location=${InstancedAttribute.Normal}) in vec3 normal;
-    layout(location=${InstancedAttribute.Offset}) in vec4 offset;
+    in vec3 position;
+    in vec3 normal;
+    in vec4 offset;
     out vec4 vert_color;
 
     void main() {
@@ -72,9 +71,9 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat_instanced(gl: WebGL2RenderingContext) {
+export function mat_instanced(gl: WebGL2RenderingContext): Material {
     let Program = link(gl, vertex, fragment);
-    return <Material>{
+    return {
         Mode: GL_TRIANGLES,
         Program,
         Uniforms: [
@@ -84,6 +83,11 @@ export function mat_instanced(gl: WebGL2RenderingContext) {
             gl.getUniformLocation(Program, "palette")!,
             gl.getUniformLocation(Program, "light_positions")!,
             gl.getUniformLocation(Program, "light_details")!,
+        ],
+        Attributes: [
+            gl.getAttribLocation(Program, "position")!,
+            gl.getAttribLocation(Program, "normal")!,
+            gl.getAttribLocation(Program, "offset")!,
         ],
     };
 }

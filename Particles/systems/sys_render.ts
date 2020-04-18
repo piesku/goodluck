@@ -66,7 +66,14 @@ function draw_particles(game: Game, render: RenderParticles, emitter: EmitPartic
     game.GL.uniform4fv(render.Material.Uniforms[ParticleUniform.ColorSizeEnd], render.ColorSizeEnd);
     game.GL.bindBuffer(GL_ARRAY_BUFFER, render.Buffer);
     game.GL.bufferData(GL_ARRAY_BUFFER, Float32Array.from(emitter.Instances), GL_DYNAMIC_DRAW);
-    game.GL.enableVertexAttribArray(ParticleAttribute.Origin);
-    game.GL.vertexAttribPointer(ParticleAttribute.Origin, 4, GL_FLOAT, false, 4 * 4, 0);
+    game.GL.enableVertexAttribArray(render.Material.Attributes[ParticleAttribute.Origin]);
+    game.GL.vertexAttribPointer(
+        render.Material.Attributes[ParticleAttribute.Origin],
+        4,
+        GL_FLOAT,
+        false,
+        4 * 4,
+        0
+    );
     game.GL.drawArrays(render.Material.Mode, 0, emitter.Instances.length / 4);
 }

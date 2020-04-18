@@ -1,3 +1,4 @@
+import {Material} from "../../common/material.js";
 import {
     GL_ARRAY_BUFFER,
     GL_COLOR_BUFFER_BIT,
@@ -11,7 +12,6 @@ import {RenderKind} from "../components/com_render.js";
 import {DiffuseAttribute, DiffuseUniform, RenderDiffuse} from "../components/com_render_diffuse.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {Material} from "../material.js";
 
 const QUERY = Has.Transform | Has.Render;
 
@@ -71,11 +71,25 @@ function draw_diffuse(game: Game, transform: Transform, render: RenderDiffuse) {
 
     game.GL.bindBuffer(GL_ARRAY_BUFFER, render.Mesh.VertexBuffer);
     game.GL.enableVertexAttribArray(render.Material.Attributes[DiffuseAttribute.Position]);
-    game.GL.vertexAttribPointer(DiffuseAttribute.Position, 3, GL_FLOAT, false, 0, 0);
+    game.GL.vertexAttribPointer(
+        render.Material.Attributes[DiffuseAttribute.Position],
+        3,
+        GL_FLOAT,
+        false,
+        0,
+        0
+    );
 
     game.GL.bindBuffer(GL_ARRAY_BUFFER, render.Mesh.NormalBuffer);
-    game.GL.enableVertexAttribArray(DiffuseAttribute.Normal);
-    game.GL.vertexAttribPointer(DiffuseAttribute.Normal, 3, GL_FLOAT, false, 0, 0);
+    game.GL.enableVertexAttribArray(render.Material.Attributes[DiffuseAttribute.Normal]);
+    game.GL.vertexAttribPointer(
+        render.Material.Attributes[DiffuseAttribute.Normal],
+        3,
+        GL_FLOAT,
+        false,
+        0,
+        0
+    );
 
     game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, render.Mesh.IndexBuffer);
     game.GL.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);

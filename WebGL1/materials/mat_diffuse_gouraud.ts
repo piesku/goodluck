@@ -1,5 +1,5 @@
+import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
-import {link, Material} from "../material.js";
 
 let vertex = `
     // See Game.LightPositions and Game.LightDetails.

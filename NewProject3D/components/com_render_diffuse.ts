@@ -16,35 +16,49 @@ export interface RenderDiffuse {
 
 let vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
-export function render_diffuse(Material: Material, Mesh: Mesh, Color: Vec4) {
+export function render_diffuse(material: Material, mesh: Mesh, color: Vec4) {
     return (game: Game, entity: Entity) => {
-        if (!vaos.has(Mesh)) {
+        if (!vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.GL.createVertexArray()!;
             game.GL.bindVertexArray(vao);
 
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.VertexBuffer);
-            game.GL.enableVertexAttribArray(DiffuseAttribute.Position);
-            game.GL.vertexAttribPointer(DiffuseAttribute.Position, 3, GL_FLOAT, false, 0, 0);
+            game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
+            game.GL.enableVertexAttribArray(material.Attributes[DiffuseAttribute.Position]);
+            game.GL.vertexAttribPointer(
+                material.Attributes[DiffuseAttribute.Position],
+                3,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
 
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.NormalBuffer);
-            game.GL.enableVertexAttribArray(DiffuseAttribute.Normal);
-            game.GL.vertexAttribPointer(DiffuseAttribute.Normal, 3, GL_FLOAT, false, 0, 0);
+            game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.NormalBuffer);
+            game.GL.enableVertexAttribArray(material.Attributes[DiffuseAttribute.Normal]);
+            game.GL.vertexAttribPointer(
+                material.Attributes[DiffuseAttribute.Normal],
+                3,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
 
-            game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Mesh.IndexBuffer);
+            game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
             game.GL.bindVertexArray(null);
-            vaos.set(Mesh, vao);
+            vaos.set(mesh, vao);
         }
 
         game.World.Mask[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.Diffuse,
-            Material,
-            Mesh,
+            Material: material,
+            Mesh: mesh,
             FrontFace: GL_CW,
-            VAO: vaos.get(Mesh)!,
-            Color,
+            VAO: vaos.get(mesh)!,
+            Color: color,
         };
     };
 }

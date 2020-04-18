@@ -1,6 +1,5 @@
 import {link, Material} from "../../common/material.js";
 import {GL_POINTS} from "../../common/webgl.js";
-import {ParticleAttribute} from "../components/com_render_particles.js";
 
 let vertex = `#version 300 es\n
     uniform mat4 pv;
@@ -9,7 +8,7 @@ let vertex = `#version 300 es\n
     uniform vec4 color_size_end;
 
     // [x, y, z, age]
-    layout(location=${ParticleAttribute.Origin}) in vec4 origin_age;
+    in vec4 origin_age;
 
     out vec4 vert_color;
 
@@ -34,15 +33,16 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat_particles(GL: WebGL2RenderingContext) {
-    let Program = link(GL, vertex, fragment);
-    return <Material>{
+export function mat_particles(gl: WebGL2RenderingContext): Material {
+    let Program = link(gl, vertex, fragment);
+    return {
         Mode: GL_POINTS,
         Program,
         Uniforms: [
-            GL.getUniformLocation(Program, "pv")!,
-            GL.getUniformLocation(Program, "color_size_start")!,
-            GL.getUniformLocation(Program, "color_size_end")!,
+            gl.getUniformLocation(Program, "pv")!,
+            gl.getUniformLocation(Program, "color_size_start")!,
+            gl.getUniformLocation(Program, "color_size_end")!,
         ],
+        Attributes: [gl.getAttribLocation(Program, "origin_age")!],
     };
 }

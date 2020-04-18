@@ -1,40 +1,26 @@
-import {link, Material} from "../../common/material.js";
-import {GL_TRIANGLES} from "../../common/webgl.js";
-import {DiffuseAttribute} from "../components/com_render_diffuse.js";
+import {link, Material} from "../common/material.js";
+import {GL_TRIANGLES} from "../common/webgl.js";
 
 let vertex = `#version 300 es\n
-    uniform mat4 pv;
-    uniform mat4 world;
-    uniform mat4 self;
-
-    layout(location=${DiffuseAttribute.Position}) in vec3 position;
-    layout(location=${DiffuseAttribute.Normal}) in vec3 normal;
-    out vec4 vert_pos;
-    out vec3 vert_normal;
-
-    void main() {
-        vert_pos = world * vec4(position, 1.0);
-        vert_normal = (vec4(normal, 1.0) * self).xyz;
-        gl_Position = pv * vert_pos;
-    }
-`;
-
-let fragment = `#version 300 es\n
-    precision mediump float;
 
     // See Game.LightPositions and Game.LightDetails.
     const int MAX_LIGHTS = 8;
 
+    uniform mat4 pv;
+    uniform mat4 world;
+    uniform mat4 self;
     uniform vec4 color;
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    in vec4 vert_pos;
-    in vec3 vert_normal;
-    out vec4 frag_color;
+    in vec3 position;
+    in vec3 normal;
+    out vec4 vert_color;
 
     void main() {
-        vec3 frag_normal = normalize(vert_normal);
+        vec4 vert_pos = world * vec4(position, 1.0);
+        vec3 vert_normal = normalize((vec4(normal, 1.0) * self).xyz);
+        gl_Position = pv * vert_pos;
 
         // Ambient light.
         vec3 rgb = color.rgb * 0.1;
@@ -59,20 +45,31 @@ let fragment = `#version 300 es\n
                 light_intensity /= (light_dist * light_dist);
             }
 
-            float diffuse_factor = dot(frag_normal, light_normal);
+            float diffuse_factor = dot(vert_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
                 rgb += color.rgb * diffuse_factor * light_color * light_intensity;
             }
         }
 
-        frag_color = vec4(rgb, 1.0);
+        vert_color = vec4(rgb, 1.0);
     }
 `;
 
-export function mat_diffuse_phong(gl: WebGL2RenderingContext) {
+let fragment = `#version 300 es\n
+    precision mediump float;
+
+    in vec4 vert_color;
+    out vec4 frag_color;
+
+    void main() {
+        frag_color = vert_color;
+    }
+`;
+
+export function mat_diffuse_gouraud(gl: WebGL2RenderingContext): Material {
     let Program = link(gl, vertex, fragment);
-    return <Material>{
+    return {
         Mode: GL_TRIANGLES,
         Program,
         Uniforms: [
@@ -82,6 +79,10 @@ export function mat_diffuse_phong(gl: WebGL2RenderingContext) {
             gl.getUniformLocation(Program, "color")!,
             gl.getUniformLocation(Program, "light_positions")!,
             gl.getUniformLocation(Program, "light_details")!,
+        ],
+        Attributes: [
+            gl.getAttribLocation(Program, "position")!,
+            gl.getAttribLocation(Program, "normal")!,
         ],
     };
 }
