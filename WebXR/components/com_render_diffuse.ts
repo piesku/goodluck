@@ -28,15 +28,15 @@ export function render_diffuse(
             let vao = game.GL.createVertexArray()!;
             game.GL.bindVertexArray(vao);
 
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.Vertices);
+            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.VertexBuffer);
             game.GL.enableVertexAttribArray(DiffuseAttribute.Position);
             game.GL.vertexAttribPointer(DiffuseAttribute.Position, 3, GL_FLOAT, false, 0, 0);
 
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.Normals);
+            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.NormalBuffer);
             game.GL.enableVertexAttribArray(DiffuseAttribute.Normal);
             game.GL.vertexAttribPointer(DiffuseAttribute.Normal, 3, GL_FLOAT, false, 0, 0);
 
-            game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Mesh.Indices);
+            game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Mesh.IndexBuffer);
 
             game.GL.bindVertexArray(null);
             vaos.set(Mesh, vao);

@@ -2,28 +2,34 @@ import {Mesh} from "../common/material.js";
 import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW} from "../common/webgl.js";
 
 export function mesh_icosphere_flat(gl: WebGLRenderingContext): Mesh {
-    let Vertices = gl.createBuffer()!;
-    gl.bindBuffer(GL_ARRAY_BUFFER, Vertices);
-    gl.bufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
-    let Normals = gl.createBuffer()!;
-    gl.bindBuffer(GL_ARRAY_BUFFER, Normals);
-    gl.bufferData(GL_ARRAY_BUFFER, normals, GL_STATIC_DRAW);
-    let TexCoords = gl.createBuffer()!;
-    gl.bindBuffer(GL_ARRAY_BUFFER, TexCoords);
-    gl.bufferData(GL_ARRAY_BUFFER, texcoords, GL_STATIC_DRAW);
-    let Indices = gl.createBuffer()!;
-    gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Indices);
-    gl.bufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
+    let vertex_buf = gl.createBuffer()!;
+    gl.bindBuffer(GL_ARRAY_BUFFER, vertex_buf);
+    gl.bufferData(GL_ARRAY_BUFFER, vertex_arr, GL_STATIC_DRAW);
+
+    let normal_buf = gl.createBuffer()!;
+    gl.bindBuffer(GL_ARRAY_BUFFER, normal_buf);
+    gl.bufferData(GL_ARRAY_BUFFER, normal_arr, GL_STATIC_DRAW);
+
+    let texcoord_buf = gl.createBuffer()!;
+    gl.bindBuffer(GL_ARRAY_BUFFER, texcoord_buf);
+    gl.bufferData(GL_ARRAY_BUFFER, texcoord_arr, GL_STATIC_DRAW);
+
+    let index_buf = gl.createBuffer()!;
+    gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buf);
+    gl.bufferData(GL_ELEMENT_ARRAY_BUFFER, index_arr, GL_STATIC_DRAW);
+
     return {
-        Vertices,
-        Normals,
-        TexCoords,
-        Indices,
-        Count: indices.length,
+        VertexBuffer: vertex_buf,
+        VertexArray: vertex_arr,
+        NormalBuffer: normal_buf,
+        TexCoordBuffer: texcoord_buf,
+        IndexBuffer: index_buf,
+        IndexArray: index_arr,
+        IndexCount: index_arr.length,
     };
 }
 
-let vertices = Float32Array.from([
+let vertex_arr = Float32Array.from([
     0,
     -0.5,
     0,
@@ -746,7 +752,7 @@ let vertices = Float32Array.from([
     0.404506,
 ]);
 
-let normals = Float32Array.from([
+let normal_arr = Float32Array.from([
     0.0974,
     -0.944,
     0.3152,
@@ -1469,9 +1475,9 @@ let normals = Float32Array.from([
     0.5894,
 ]);
 
-let texcoords = Float32Array.from([]);
+let texcoord_arr = Float32Array.from([]);
 
-let indices = Uint16Array.from([
+let index_arr = Uint16Array.from([
     239,
     238,
     237,

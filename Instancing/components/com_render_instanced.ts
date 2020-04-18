@@ -32,11 +32,11 @@ export function render_instanced(Mesh: Mesh, offsets: Model, Palette: Array<numb
         let VAO = game.GL.createVertexArray()!;
         game.GL.bindVertexArray(VAO);
 
-        game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.Vertices);
+        game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.VertexBuffer);
         game.GL.enableVertexAttribArray(InstancedAttribute.Position);
         game.GL.vertexAttribPointer(InstancedAttribute.Position, 3, GL_FLOAT, false, 0, 0);
 
-        game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.Normals);
+        game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.NormalBuffer);
         game.GL.enableVertexAttribArray(InstancedAttribute.Normal);
         game.GL.vertexAttribPointer(InstancedAttribute.Normal, 3, GL_FLOAT, false, 0, 0);
 
@@ -46,7 +46,7 @@ export function render_instanced(Mesh: Mesh, offsets: Model, Palette: Array<numb
         game.GL.vertexAttribPointer(InstancedAttribute.Offset, 4, GL_FLOAT, false, 0, 0);
         game.GL.vertexAttribDivisor(InstancedAttribute.Offset, 1);
 
-        game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Mesh.Indices);
+        game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Mesh.IndexBuffer);
 
         game.GL.bindVertexArray(null);
         game.World.Mask[entity] |= Has.Render;

@@ -23,11 +23,11 @@ export function render_basic(Material: Material, Mesh: Mesh, Color: Vec4) {
             let vao = game.GL.createVertexArray()!;
             game.GL.bindVertexArray(vao);
 
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.Vertices);
+            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.VertexBuffer);
             game.GL.enableVertexAttribArray(BasicAttribute.Position);
             game.GL.vertexAttribPointer(BasicAttribute.Position, 3, GL_FLOAT, false, 0, 0);
 
-            game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Mesh.Indices);
+            game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Mesh.IndexBuffer);
 
             game.GL.bindVertexArray(null);
             vaos.set(Mesh, vao);

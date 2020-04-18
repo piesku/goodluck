@@ -1,7 +1,13 @@
 import {get_translation} from "../../common/mat4.js";
 import {Quat, Vec3} from "../../common/math.js";
-import {multiply} from "../../common/quat.js";
-import {add, normalize, scale, transform_direction, transform_point} from "../../common/vec3.js";
+import {lerp, multiply, normalize as normalize_quat} from "../../common/quat.js";
+import {
+    add,
+    normalize as normalize_vec3,
+    scale,
+    transform_direction,
+    transform_point,
+} from "../../common/vec3.js";
 import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
 
@@ -15,6 +21,8 @@ export function sys_move(game: Game, delta: number) {
     }
 }
 
+const NO_ROTATION: Quat = [0, 0, 0, 1];
+
 function update(game: Game, entity: Entity, delta: number) {
     let transform = game.World.Transform[entity];
     let move = game.World.Move[entity];
@@ -25,7 +33,7 @@ function update(game: Game, entity: Entity, delta: number) {
 
         // Transform the movement vector into a direction in the world space.
         let world_direction = transform_direction([0, 0, 0], direction, transform.World);
-        normalize(world_direction, world_direction);
+        normalize_vec3(world_direction, world_direction);
 
         // Scale by the distance travelled in this tick.
         scale(world_direction, world_direction, move.MoveSpeed * delta);
@@ -40,20 +48,32 @@ function update(game: Game, entity: Entity, delta: number) {
         move.Directions = [];
     }
 
-    if (move.Yaws.length) {
-        let yaw = move.Yaws.reduce(multiply_rotations);
-        // Yaw is applied relative to the world space.
-        multiply(transform.Rotation, yaw, transform.Rotation);
+    // Rotations applied relative to the local space (parent's or world).
+    if (move.LocalRotations.length) {
+        let rotation = move.LocalRotations.reduce(multiply_rotations);
+        if (move.RotateSpeed < Infinity) {
+            lerp(rotation, NO_ROTATION, rotation, Math.min(move.RotateSpeed * delta, 1));
+            normalize_quat(rotation, rotation);
+        }
+
+        // Pre-multiply.
+        multiply(transform.Rotation, rotation, transform.Rotation);
         transform.Dirty = true;
-        move.Yaws = [];
+        move.LocalRotations = [];
     }
 
-    if (move.Pitches.length) {
-        let pitch = move.Pitches.reduce(multiply_rotations);
-        // Pitch is applied relative to the self space.
-        multiply(transform.Rotation, transform.Rotation, pitch);
+    // Rotations applied relative to the self space.
+    if (move.SelfRotations.length) {
+        let rotation = move.SelfRotations.reduce(multiply_rotations);
+        if (move.RotateSpeed < Infinity) {
+            lerp(rotation, NO_ROTATION, rotation, Math.min(move.RotateSpeed * delta, 1));
+            normalize_quat(rotation, rotation);
+        }
+
+        // Post-multiply.
+        multiply(transform.Rotation, transform.Rotation, rotation);
         transform.Dirty = true;
-        move.Pitches = [];
+        move.SelfRotations = [];
     }
 }
 

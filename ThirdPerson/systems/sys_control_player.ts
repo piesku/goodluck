@@ -39,21 +39,25 @@ function update(game: Game, entity: Entity, delta: number) {
     }
 
     if (control.Yaw && game.InputDelta.MouseX) {
-        let move = game.World.Move[entity];
-        let yaw_delta = game.InputDelta.MouseX * move.RotateSpeed * delta;
+        let yaw_delta = game.InputDelta.MouseX * control.Sensitivity * delta;
         if (yaw_delta !== 0) {
-            move.Yaws.push(from_axis([0, 0, 0, 0], AXIS_Y, -yaw_delta));
+            let move = game.World.Move[entity];
+            // Yaw is applied relative to the entity's local space, so that the
+            // Y axis is not affected by its current orientation.
+            move.LocalRotations.push(from_axis([0, 0, 0, 0], AXIS_Y, -yaw_delta));
         }
     }
 
     if (control.Pitch && game.InputDelta.MouseY) {
-        let move = game.World.Move[entity];
-        let pitch_delta = game.InputDelta.MouseY * move.RotateSpeed * delta;
+        let pitch_delta = game.InputDelta.MouseY * control.Sensitivity * delta;
         if (pitch_delta !== 0) {
             let new_pitch = control.CurrentPitch + pitch_delta;
             if (-0.2 < new_pitch && new_pitch < Math.PI / 2) {
+                let move = game.World.Move[entity];
                 control.CurrentPitch = new_pitch;
-                move.Pitches.push(from_axis([0, 0, 0, 0], AXIS_X, pitch_delta));
+                // Pitch is applied relative to the entity's self space, so that the
+                // X axis is always aligned with its left and right sides.
+                move.SelfRotations.push(from_axis([0, 0, 0, 0], AXIS_X, pitch_delta));
             }
         }
     }

@@ -96,6 +96,17 @@ export function distance(a: Vec3, b: Vec3) {
     return Math.hypot(x, y, z);
 }
 
+export function distance_squared(a: Vec3, b: Vec3) {
+    let x = b[0] - a[0];
+    let y = b[1] - a[1];
+    let z = b[2] - a[2];
+    return x * x + y * y + z * z;
+}
+
+export function manhattan(a: Vec3, b: Vec3) {
+    return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs(a[2] - b[2]);
+}
+
 export function lerp(out: Vec3, a: Vec3, b: Vec3, t: number) {
     let ax = a[0];
     let ay = a[1];
