@@ -32,8 +32,8 @@ export function render_instanced(mesh: Mesh, offsets: Model, palette: Array<numb
         // Hint: If offset models are guaranteed to only ever be rendered using
         // the same mesh as atoms (e.g. a model of a horse is always rendered
         // using cube voxels), it might be beneficial to cache VAOs per model.
-        let VAO = game.GL.createVertexArray()!;
-        game.GL.bindVertexArray(VAO);
+        let vao = game.GL.createVertexArray()!;
+        game.GL.bindVertexArray(vao);
 
         game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
         game.GL.enableVertexAttribArray(material.Locations.VertexPosition);
@@ -58,7 +58,7 @@ export function render_instanced(mesh: Mesh, offsets: Model, palette: Array<numb
             Material: material,
             Mesh: mesh,
             FrontFace: GL_CW,
-            VAO,
+            VAO: vao,
             InstanceCount: offsets.length / 4,
             Palette: palette,
         };

@@ -9,7 +9,7 @@ export function load(path: string): Promise<Array<Model>> {
             let i = 0;
 
             while (i < buffer_array.length) {
-                let Size: number[] = [0, 0, 0];
+                let size: number[] = [0, 0, 0];
                 let model_start = i + 1;
                 let model_length = buffer_array[i];
                 let model_end = model_start + model_length;
@@ -26,8 +26,8 @@ export function load(path: string): Promise<Array<Model>> {
                 }
 
                 for (let j = 0; j < model.length; j++) {
-                    if (Size[j % 4] < model[j] + 1) {
-                        Size[j % 4] = model[j] + 1;
+                    if (size[j % 4] < model[j] + 1) {
+                        size[j % 4] = model[j] + 1;
                     }
                 }
 
@@ -35,11 +35,11 @@ export function load(path: string): Promise<Array<Model>> {
                     new Float32Array(model).map((val, idx) => {
                         switch (idx % 4) {
                             case 0:
-                                return val - Size[0] / 2 + 0.5;
+                                return val - size[0] / 2 + 0.5;
                             case 1:
-                                return val - Size[1] / 2 + 0.5;
+                                return val - size[1] / 2 + 0.5;
                             case 2:
-                                return val - Size[2] / 2 + 0.5;
+                                return val - size[2] / 2 + 0.5;
                             default:
                                 return val;
                         }
