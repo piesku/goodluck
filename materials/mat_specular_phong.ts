@@ -90,22 +90,22 @@ let fragment = `#version 300 es\n
 `;
 
 export function mat_specular_phong(gl: WebGL2RenderingContext): Material<SpecularLayout> {
-    let Program = link(gl, vertex, fragment);
+    let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
-        Program,
+        Program: program,
         Locations: {
-            Pv: gl.getUniformLocation(Program, "pv")!,
-            World: gl.getUniformLocation(Program, "world")!,
-            Self: gl.getUniformLocation(Program, "self")!,
-            Eye: gl.getUniformLocation(Program, "eye")!,
-            ColorDiffuse: gl.getUniformLocation(Program, "color_diffuse")!,
-            ColorSpecular: gl.getUniformLocation(Program, "color_specular")!,
-            Shininess: gl.getUniformLocation(Program, "shininess")!,
-            LightPositions: gl.getUniformLocation(Program, "light_positions")!,
-            LightDetails: gl.getUniformLocation(Program, "light_details")!,
-            VertexPosition: gl.getAttribLocation(Program, "position")!,
-            VertexNormal: gl.getAttribLocation(Program, "normal")!,
+            Pv: gl.getUniformLocation(program, "pv")!,
+            World: gl.getUniformLocation(program, "world")!,
+            Self: gl.getUniformLocation(program, "self")!,
+            Eye: gl.getUniformLocation(program, "eye")!,
+            ColorDiffuse: gl.getUniformLocation(program, "color_diffuse")!,
+            ColorSpecular: gl.getUniformLocation(program, "color_specular")!,
+            Shininess: gl.getUniformLocation(program, "shininess")!,
+            LightPositions: gl.getUniformLocation(program, "light_positions")!,
+            LightDetails: gl.getUniformLocation(program, "light_details")!,
+            VertexPosition: gl.getAttribLocation(program, "position")!,
+            VertexNormal: gl.getAttribLocation(program, "normal")!,
         },
     };
 }

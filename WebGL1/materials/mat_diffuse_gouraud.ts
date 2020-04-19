@@ -67,19 +67,19 @@ let fragment = `
 `;
 
 export function mat_diffuse_gouraud(gl: WebGLRenderingContext): Material<DiffuseLayout> {
-    let Program = link(gl, vertex, fragment);
+    let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
-        Program,
+        Program: program,
         Locations: {
-            Pv: gl.getUniformLocation(Program, "pv")!,
-            World: gl.getUniformLocation(Program, "world")!,
-            Self: gl.getUniformLocation(Program, "self")!,
-            Color: gl.getUniformLocation(Program, "color")!,
-            LightPositions: gl.getUniformLocation(Program, "light_positions")!,
-            LightDetails: gl.getUniformLocation(Program, "light_details")!,
-            VertexPosition: gl.getAttribLocation(Program, "position")!,
-            VertexNormal: gl.getAttribLocation(Program, "normal")!,
+            Pv: gl.getUniformLocation(program, "pv")!,
+            World: gl.getUniformLocation(program, "world")!,
+            Self: gl.getUniformLocation(program, "self")!,
+            Color: gl.getUniformLocation(program, "color")!,
+            LightPositions: gl.getUniformLocation(program, "light_positions")!,
+            LightDetails: gl.getUniformLocation(program, "light_details")!,
+            VertexPosition: gl.getAttribLocation(program, "position")!,
+            VertexNormal: gl.getAttribLocation(program, "normal")!,
         },
     };
 }

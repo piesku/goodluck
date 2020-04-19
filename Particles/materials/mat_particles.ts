@@ -35,15 +35,15 @@ let fragment = `#version 300 es\n
 `;
 
 export function mat_particles(gl: WebGL2RenderingContext): Material<ParticlesLayout> {
-    let Program = link(gl, vertex, fragment);
+    let program = link(gl, vertex, fragment);
     return {
         Mode: GL_POINTS,
-        Program,
+        Program: program,
         Locations: {
-            Pv: gl.getUniformLocation(Program, "pv")!,
-            ColorSizeStart: gl.getUniformLocation(Program, "color_size_start")!,
-            ColorSizeEnd: gl.getUniformLocation(Program, "color_size_end")!,
-            OriginAge: gl.getAttribLocation(Program, "origin_age")!,
+            Pv: gl.getUniformLocation(program, "pv")!,
+            ColorSizeStart: gl.getUniformLocation(program, "color_size_start")!,
+            ColorSizeEnd: gl.getUniformLocation(program, "color_size_end")!,
+            OriginAge: gl.getAttribLocation(program, "origin_age")!,
         },
     };
 }

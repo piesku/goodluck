@@ -34,17 +34,17 @@ let fragment = `#version 300 es\n
 `;
 
 export function mat_textured(gl: WebGL2RenderingContext): Material<TexturedLayout> {
-    let Program = link(gl, vertex, fragment);
+    let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
-        Program,
+        Program: program,
         Locations: {
-            Pv: gl.getUniformLocation(Program, "pv")!,
-            World: gl.getUniformLocation(Program, "world")!,
-            Self: gl.getUniformLocation(Program, "self")!,
-            Sampler: gl.getUniformLocation(Program, "sampler")!,
-            VertexPosition: gl.getAttribLocation(Program, "position")!,
-            VertexTexCoord: gl.getAttribLocation(Program, "texcoord")!,
+            Pv: gl.getUniformLocation(program, "pv")!,
+            World: gl.getUniformLocation(program, "world")!,
+            Self: gl.getUniformLocation(program, "self")!,
+            Sampler: gl.getUniformLocation(program, "sampler")!,
+            VertexPosition: gl.getAttribLocation(program, "position")!,
+            VertexTexCoord: gl.getAttribLocation(program, "texcoord")!,
         },
     };
 }

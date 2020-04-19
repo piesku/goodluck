@@ -26,15 +26,15 @@ let fragment = `#version 300 es\n
 `;
 
 export function mat_basic_points(gl: WebGL2RenderingContext): Material<BasicLayout> {
-    let Program = link(gl, vertex, fragment);
+    let program = link(gl, vertex, fragment);
     return {
         Mode: GL_POINTS,
-        Program,
+        Program: program,
         Locations: {
-            Pv: gl.getUniformLocation(Program, "pv")!,
-            World: gl.getUniformLocation(Program, "world")!,
-            Color: gl.getUniformLocation(Program, "color")!,
-            VertexPosition: gl.getAttribLocation(Program, "position")!,
+            Pv: gl.getUniformLocation(program, "pv")!,
+            World: gl.getUniformLocation(program, "world")!,
+            Color: gl.getUniformLocation(program, "color")!,
+            VertexPosition: gl.getAttribLocation(program, "position")!,
         },
     };
 }

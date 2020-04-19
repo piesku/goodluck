@@ -73,20 +73,20 @@ let fragment = `#version 300 es\n
 `;
 
 export function mat_instanced(gl: WebGL2RenderingContext): Material<InstancedLayout> {
-    let Program = link(gl, vertex, fragment);
+    let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
-        Program,
+        Program: program,
         Locations: {
-            Pv: gl.getUniformLocation(Program, "pv")!,
-            World: gl.getUniformLocation(Program, "world")!,
-            Self: gl.getUniformLocation(Program, "self")!,
-            Palette: gl.getUniformLocation(Program, "palette")!,
-            LightPositions: gl.getUniformLocation(Program, "light_positions")!,
-            LightDetails: gl.getUniformLocation(Program, "light_details")!,
-            VertexPosition: gl.getAttribLocation(Program, "position")!,
-            VertexNormal: gl.getAttribLocation(Program, "normal")!,
-            VertexOffset: gl.getAttribLocation(Program, "offset")!,
+            Pv: gl.getUniformLocation(program, "pv")!,
+            World: gl.getUniformLocation(program, "world")!,
+            Self: gl.getUniformLocation(program, "self")!,
+            Palette: gl.getUniformLocation(program, "palette")!,
+            LightPositions: gl.getUniformLocation(program, "light_positions")!,
+            LightDetails: gl.getUniformLocation(program, "light_details")!,
+            VertexPosition: gl.getAttribLocation(program, "position")!,
+            VertexNormal: gl.getAttribLocation(program, "normal")!,
+            VertexOffset: gl.getAttribLocation(program, "offset")!,
         },
     };
 }
