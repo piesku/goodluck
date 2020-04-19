@@ -1,13 +1,14 @@
 import {Material, Mesh} from "../../common/material.js";
 import {Vec4} from "../../common/math.js";
 import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
+import {DiffuseLayout} from "../../materials/layout_diffuse.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "./com_index.js";
 import {RenderKind} from "./com_render.js";
 
 export interface RenderDiffuse {
     readonly Kind: RenderKind.Diffuse;
-    readonly Material: Material;
+    readonly Material: Material<DiffuseLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
     readonly VAO: WebGLVertexArrayObject;
@@ -17,53 +18,46 @@ export interface RenderDiffuse {
 let vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_diffuse(
-    Material: Material,
-    Mesh: Mesh,
-    Color: Vec4,
-    FrontFace: GLenum = GL_CW
+    material: Material<DiffuseLayout>,
+    mesh: Mesh,
+    color: Vec4,
+    front_face: GLenum = GL_CW
 ) {
     return (game: Game, entity: Entity) => {
-        if (!vaos.has(Mesh)) {
+        if (!vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.GL.createVertexArray()!;
             game.GL.bindVertexArray(vao);
 
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.VertexBuffer);
-            game.GL.enableVertexAttribArray(DiffuseAttribute.Position);
-            game.GL.vertexAttribPointer(DiffuseAttribute.Position, 3, GL_FLOAT, false, 0, 0);
+            game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
+            game.GL.enableVertexAttribArray(material.Locations.VertexPosition);
+            game.GL.vertexAttribPointer(
+                material.Locations.VertexPosition,
+                3,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
 
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, Mesh.NormalBuffer);
-            game.GL.enableVertexAttribArray(DiffuseAttribute.Normal);
-            game.GL.vertexAttribPointer(DiffuseAttribute.Normal, 3, GL_FLOAT, false, 0, 0);
+            game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.NormalBuffer);
+            game.GL.enableVertexAttribArray(material.Locations.VertexNormal);
+            game.GL.vertexAttribPointer(material.Locations.VertexNormal, 3, GL_FLOAT, false, 0, 0);
 
-            game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, Mesh.IndexBuffer);
+            game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
             game.GL.bindVertexArray(null);
-            vaos.set(Mesh, vao);
+            vaos.set(mesh, vao);
         }
 
         game.World.Mask[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.Diffuse,
-            Material,
-            Mesh,
-            FrontFace,
-            VAO: vaos.get(Mesh)!,
-            Color,
+            Material: material,
+            Mesh: mesh,
+            FrontFace: front_face,
+            VAO: vaos.get(mesh)!,
+            Color: color,
         };
     };
-}
-
-export const enum DiffuseAttribute {
-    Position,
-    Normal,
-}
-
-export const enum DiffuseUniform {
-    PV,
-    World,
-    Self,
-    Color,
-    LightPositions,
-    LightDetails,
 }

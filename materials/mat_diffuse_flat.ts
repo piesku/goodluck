@@ -1,6 +1,6 @@
-import {link, Material} from "../../common/material.js";
-import {GL_TRIANGLES} from "../../common/webgl.js";
-import {DiffuseAttribute} from "../components/com_render_diffuse.js";
+import {link, Material} from "../common/material.js";
+import {GL_TRIANGLES} from "../common/webgl.js";
+import {DiffuseLayout} from "./layout_diffuse.js";
 
 let vertex = `#version 300 es\n
 
@@ -14,8 +14,8 @@ let vertex = `#version 300 es\n
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    layout(location=${DiffuseAttribute.Position}) in vec3 position;
-    layout(location=${DiffuseAttribute.Normal}) in vec3 normal;
+    in vec3 position;
+    in vec3 normal;
     flat out vec4 vert_color;
 
     void main() {
@@ -68,18 +68,20 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat_diffuse_flat(gl: WebGL2RenderingContext) {
-    let Program = link(gl, vertex, fragment);
-    return <Material>{
+export function mat_diffuse_flat(gl: WebGL2RenderingContext): Material<DiffuseLayout> {
+    let program = link(gl, vertex, fragment);
+    return {
         Mode: GL_TRIANGLES,
-        Program,
-        Uniforms: [
-            gl.getUniformLocation(Program, "pv")!,
-            gl.getUniformLocation(Program, "world")!,
-            gl.getUniformLocation(Program, "self")!,
-            gl.getUniformLocation(Program, "color")!,
-            gl.getUniformLocation(Program, "light_positions")!,
-            gl.getUniformLocation(Program, "light_details")!,
-        ],
+        Program: program,
+        Locations: {
+            Pv: gl.getUniformLocation(program, "pv")!,
+            World: gl.getUniformLocation(program, "world")!,
+            Self: gl.getUniformLocation(program, "self")!,
+            Color: gl.getUniformLocation(program, "color")!,
+            LightPositions: gl.getUniformLocation(program, "light_positions")!,
+            LightDetails: gl.getUniformLocation(program, "light_details")!,
+            VertexPosition: gl.getAttribLocation(program, "position")!,
+            VertexNormal: gl.getAttribLocation(program, "normal")!,
+        },
     };
 }

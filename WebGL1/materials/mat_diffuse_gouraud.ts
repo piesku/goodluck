@@ -1,5 +1,6 @@
+import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
-import {link, Material} from "../material.js";
+import {DiffuseLayout} from "../../materials/layout_diffuse.js";
 
 let vertex = `
     // See Game.LightPositions and Game.LightDetails.
@@ -65,22 +66,20 @@ let fragment = `
     }
 `;
 
-export function mat_diffuse_gouraud(gl: WebGLRenderingContext): Material {
-    let Program = link(gl, vertex, fragment);
+export function mat_diffuse_gouraud(gl: WebGLRenderingContext): Material<DiffuseLayout> {
+    let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
-        Program,
-        Uniforms: [
-            gl.getUniformLocation(Program, "pv")!,
-            gl.getUniformLocation(Program, "world")!,
-            gl.getUniformLocation(Program, "self")!,
-            gl.getUniformLocation(Program, "color")!,
-            gl.getUniformLocation(Program, "light_positions")!,
-            gl.getUniformLocation(Program, "light_details")!,
-        ],
-        Attributes: [
-            gl.getAttribLocation(Program, "position")!,
-            gl.getAttribLocation(Program, "normal")!,
-        ],
+        Program: program,
+        Locations: {
+            Pv: gl.getUniformLocation(program, "pv")!,
+            World: gl.getUniformLocation(program, "world")!,
+            Self: gl.getUniformLocation(program, "self")!,
+            Color: gl.getUniformLocation(program, "color")!,
+            LightPositions: gl.getUniformLocation(program, "light_positions")!,
+            LightDetails: gl.getUniformLocation(program, "light_details")!,
+            VertexPosition: gl.getAttribLocation(program, "position")!,
+            VertexNormal: gl.getAttribLocation(program, "normal")!,
+        },
     };
 }

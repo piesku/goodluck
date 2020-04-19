@@ -8,9 +8,10 @@ import {
 } from "../../common/webgl.js";
 import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
-import {RenderTextured, TexturedUniform} from "../components/com_render_textured.js";
+import {RenderTextured} from "../components/com_render_textured.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
+import {TexturedLayout} from "../materials/layout_textured.js";
 
 const QUERY = Has.Transform | Has.Render;
 
@@ -33,7 +34,7 @@ export function sys_render(game: Game, delta: number) {
                 current_material = render.Material;
                 switch (render.Kind) {
                     case RenderKind.Textured:
-                        use_textured(game, current_material);
+                        use_textured(game, render.Material);
                         break;
                 }
             }
@@ -52,22 +53,18 @@ export function sys_render(game: Game, delta: number) {
     }
 }
 
-function use_textured(game: Game, material: Material) {
+function use_textured(game: Game, material: Material<TexturedLayout>) {
     game.GL.useProgram(material.Program);
-    game.GL.uniformMatrix4fv(material.Uniforms[TexturedUniform.PV], false, game.Camera!.PV);
+    game.GL.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.PV);
 }
 
 function draw_textured(game: Game, transform: Transform, render: RenderTextured) {
-    game.GL.uniformMatrix4fv(
-        render.Material.Uniforms[TexturedUniform.World],
-        false,
-        transform.World
-    );
-    game.GL.uniformMatrix4fv(render.Material.Uniforms[TexturedUniform.Self], false, transform.Self);
+    game.GL.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
+    game.GL.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
 
     game.GL.activeTexture(GL_TEXTURE0);
     game.GL.bindTexture(GL_TEXTURE_2D, render.Texture);
-    game.GL.uniform1i(render.Material.Uniforms[TexturedUniform.Sampler], 0);
+    game.GL.uniform1i(render.Material.Locations.Sampler, 0);
 
     game.GL.bindVertexArray(render.VAO);
     game.GL.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);

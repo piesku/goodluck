@@ -9,12 +9,9 @@ import {
 import {EmitParticles} from "../components/com_emit_particles.js";
 import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
-import {
-    ParticleAttribute,
-    ParticleUniform,
-    RenderParticles,
-} from "../components/com_render_particles.js";
+import {RenderParticles} from "../components/com_render_particles.js";
 import {Game} from "../game.js";
+import {ParticlesLayout} from "../materials/layout_particles.js";
 
 const QUERY = Has.Transform | Has.Render;
 
@@ -35,7 +32,7 @@ export function sys_render(game: Game, delta: number) {
                 current_material = render.Material;
                 switch (render.Kind) {
                     case RenderKind.Particles:
-                        use_particles(game, current_material);
+                        use_particles(game, render.Material);
                         break;
                 }
             }
@@ -53,20 +50,17 @@ export function sys_render(game: Game, delta: number) {
     }
 }
 
-function use_particles(game: Game, material: Material) {
+function use_particles(game: Game, material: Material<ParticlesLayout>) {
     game.GL.useProgram(material.Program);
-    game.GL.uniformMatrix4fv(material.Uniforms[ParticleUniform.PV], false, game.Camera!.PV);
+    game.GL.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.PV);
 }
 
 function draw_particles(game: Game, render: RenderParticles, emitter: EmitParticles) {
-    game.GL.uniform4fv(
-        render.Material.Uniforms[ParticleUniform.ColorSizeStart],
-        render.ColorSizeStart
-    );
-    game.GL.uniform4fv(render.Material.Uniforms[ParticleUniform.ColorSizeEnd], render.ColorSizeEnd);
+    game.GL.uniform4fv(render.Material.Locations.ColorSizeStart, render.ColorSizeStart);
+    game.GL.uniform4fv(render.Material.Locations.ColorSizeEnd, render.ColorSizeEnd);
     game.GL.bindBuffer(GL_ARRAY_BUFFER, render.Buffer);
     game.GL.bufferData(GL_ARRAY_BUFFER, Float32Array.from(emitter.Instances), GL_DYNAMIC_DRAW);
-    game.GL.enableVertexAttribArray(ParticleAttribute.Origin);
-    game.GL.vertexAttribPointer(ParticleAttribute.Origin, 4, GL_FLOAT, false, 4 * 4, 0);
+    game.GL.enableVertexAttribArray(render.Material.Locations.OriginAge);
+    game.GL.vertexAttribPointer(render.Material.Locations.OriginAge, 4, GL_FLOAT, false, 4 * 4, 0);
     game.GL.drawArrays(render.Material.Mode, 0, emitter.Instances.length / 4);
 }

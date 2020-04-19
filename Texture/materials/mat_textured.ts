@@ -1,14 +1,14 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
-import {TexturedAttribute} from "../components/com_render_textured.js";
+import {TexturedLayout} from "./layout_textured.js";
 
 let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
     uniform mat4 self;
 
-    layout(location=${TexturedAttribute.Position}) in vec3 position;
-    layout(location=${TexturedAttribute.TexCoord}) in vec2 texcoord;
+    in vec3 position;
+    in vec2 texcoord;
 
     out vec2 vert_texcoord;
 
@@ -33,16 +33,18 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat_textured(gl: WebGL2RenderingContext): Material {
-    let Program = link(gl, vertex, fragment);
+export function mat_textured(gl: WebGL2RenderingContext): Material<TexturedLayout> {
+    let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
-        Program,
-        Uniforms: [
-            gl.getUniformLocation(Program, "pv")!,
-            gl.getUniformLocation(Program, "world")!,
-            gl.getUniformLocation(Program, "self")!,
-            gl.getUniformLocation(Program, "sampler")!,
-        ],
+        Program: program,
+        Locations: {
+            Pv: gl.getUniformLocation(program, "pv")!,
+            World: gl.getUniformLocation(program, "world")!,
+            Self: gl.getUniformLocation(program, "self")!,
+            Sampler: gl.getUniformLocation(program, "sampler")!,
+            VertexPosition: gl.getAttribLocation(program, "position")!,
+            VertexTexCoord: gl.getAttribLocation(program, "texcoord")!,
+        },
     };
 }

@@ -1,14 +1,14 @@
-import {link, Material} from "../../common/material.js";
-import {GL_TRIANGLES} from "../../common/webgl.js";
-import {SpecularAttribute} from "../components/com_render_specular.js";
+import {link, Material} from "../common/material.js";
+import {GL_TRIANGLES} from "../common/webgl.js";
+import {SpecularLayout} from "./layout_specular.js";
 
 let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
     uniform mat4 self;
 
-    layout(location=${SpecularAttribute.Position}) in vec3 position;
-    layout(location=${SpecularAttribute.Normal}) in vec3 normal;
+    in vec3 position;
+    in vec3 normal;
     out vec4 vert_pos;
     out vec3 vert_normal;
 
@@ -89,21 +89,23 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat_specular_phong(gl: WebGL2RenderingContext) {
-    let Program = link(gl, vertex, fragment);
-    return <Material>{
+export function mat_specular_phong(gl: WebGL2RenderingContext): Material<SpecularLayout> {
+    let program = link(gl, vertex, fragment);
+    return {
         Mode: GL_TRIANGLES,
-        Program,
-        Uniforms: [
-            gl.getUniformLocation(Program, "pv")!,
-            gl.getUniformLocation(Program, "world")!,
-            gl.getUniformLocation(Program, "self")!,
-            gl.getUniformLocation(Program, "eye")!,
-            gl.getUniformLocation(Program, "color_diffuse")!,
-            gl.getUniformLocation(Program, "color_specular")!,
-            gl.getUniformLocation(Program, "shininess")!,
-            gl.getUniformLocation(Program, "light_positions")!,
-            gl.getUniformLocation(Program, "light_details")!,
-        ],
+        Program: program,
+        Locations: {
+            Pv: gl.getUniformLocation(program, "pv")!,
+            World: gl.getUniformLocation(program, "world")!,
+            Self: gl.getUniformLocation(program, "self")!,
+            Eye: gl.getUniformLocation(program, "eye")!,
+            ColorDiffuse: gl.getUniformLocation(program, "color_diffuse")!,
+            ColorSpecular: gl.getUniformLocation(program, "color_specular")!,
+            Shininess: gl.getUniformLocation(program, "shininess")!,
+            LightPositions: gl.getUniformLocation(program, "light_positions")!,
+            LightDetails: gl.getUniformLocation(program, "light_details")!,
+            VertexPosition: gl.getAttribLocation(program, "position")!,
+            VertexNormal: gl.getAttribLocation(program, "normal")!,
+        },
     };
 }

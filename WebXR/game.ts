@@ -1,9 +1,9 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
+import {mat_diffuse_gouraud} from "../materials/mat_diffuse_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_hand} from "../meshes/hand.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop, xr_init} from "./core.js";
-import {mat_diffuse_gouraud} from "./materials/mat_diffuse_gouraud.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_xr} from "./systems/sys_control_xr.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
