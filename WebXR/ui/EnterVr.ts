@@ -1,6 +1,6 @@
+import {html} from "../../common/html.js";
 import {Action} from "../actions.js";
 import {Game} from "../game.js";
-import {html} from "./html.js";
 
 export function EnterVr(game: Game) {
     return html`

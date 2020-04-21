@@ -1,7 +1,7 @@
+import {html} from "../../common/html.js";
 import {Game} from "../game.js";
 import {AddForm} from "./AddForm.js";
 import {CompletedItem} from "./CompletedItem.js";
-import {html} from "./html.js";
 import {TodoItem} from "./TodoItem.js";
 
 export function App(game: Game) {

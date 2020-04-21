@@ -1,5 +1,5 @@
+import {html} from "../../common/html.js";
 import {Action} from "../actions.js";
-import {html} from "./html.js";
 
 export function TodoItem(content: string, idx: number) {
     return html`
