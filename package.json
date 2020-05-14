@@ -18,7 +18,8 @@
         "lint": "prettier --check \"**/*.ts\"",
         "pretty": "prettier --write \"**/*.ts\"",
         "serve": "live-server --port=1234 --no-browser --quiet .",
-        "start": "npm-run-all --parallel compile:watch serve"
+        "start": "npm-run-all --parallel compile:watch serve",
+        "test": "npm run clean && npm run lint && npm run compile"
     },
     "devDependencies": {
         "@types/webgl2": "0.0.5",
