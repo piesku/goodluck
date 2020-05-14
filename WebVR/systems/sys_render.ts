@@ -12,7 +12,7 @@ import {Game} from "../game.js";
 const QUERY = Has.Transform | Has.Render;
 
 export function sys_render(game: Game, delta: number) {
-    game.GL.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     let camera = game.Camera!;
     if (camera.Kind === CameraKind.Vr) {
@@ -28,16 +28,16 @@ export function sys_render(game: Game, delta: number) {
 
 function render_screen(game: Game, camera: CameraPerspective) {
     if (game.ViewportResized) {
-        game.GL.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
+        game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
     }
 
-    render(game, camera.PV);
+    render(game, camera.Pv);
 }
 
 function render_vr(game: Game, camera: CameraVr) {
-    game.GL.viewport(0, 0, game.ViewportWidth / 2, game.ViewportHeight);
+    game.Gl.viewport(0, 0, game.ViewportWidth / 2, game.ViewportHeight);
     render(game, camera.PvLeft);
-    game.GL.viewport(game.ViewportWidth / 2, 0, game.ViewportWidth / 2, game.ViewportHeight);
+    game.Gl.viewport(game.ViewportWidth / 2, 0, game.ViewportWidth / 2, game.ViewportHeight);
     render(game, camera.PvRight);
 }
 
@@ -62,7 +62,7 @@ function render(game: Game, pv: Mat4) {
 
             if (render.FrontFace !== current_front_face) {
                 current_front_face = render.FrontFace;
-                game.GL.frontFace(render.FrontFace);
+                game.Gl.frontFace(render.FrontFace);
             }
 
             switch (render.Kind) {
@@ -75,17 +75,17 @@ function render(game: Game, pv: Mat4) {
 }
 
 function use_diffuse(game: Game, material: Material<DiffuseLayout>, pv: Mat4) {
-    game.GL.useProgram(material.Program);
-    game.GL.uniformMatrix4fv(material.Locations.Pv, false, pv);
-    game.GL.uniform4fv(material.Locations.LightPositions, game.LightPositions);
-    game.GL.uniform4fv(material.Locations.LightDetails, game.LightDetails);
+    game.Gl.useProgram(material.Program);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, pv);
+    game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
+    game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
 function draw_shaded(game: Game, transform: Transform, render: RenderDiffuse) {
-    game.GL.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
-    game.GL.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
-    game.GL.uniform4fv(render.Material.Locations.Color, render.Color);
-    game.GL.bindVertexArray(render.VAO);
-    game.GL.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
-    game.GL.bindVertexArray(null);
+    game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
+    game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
+    game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
+    game.Gl.bindVertexArray(render.Vao);
+    game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
+    game.Gl.bindVertexArray(null);
 }

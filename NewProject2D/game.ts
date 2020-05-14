@@ -15,7 +15,7 @@ export class Game {
     InputState: Record<string, number> = {};
     InputDelta: Record<string, number> = {};
 
-    UI = document.querySelector("main")!;
+    Ui = document.querySelector("main")!;
     Context2D: CanvasRenderingContext2D;
 
     constructor() {
@@ -33,25 +33,25 @@ export class Game {
             this.InputState[evt.code] = 0;
             this.InputDelta[evt.code] = -1;
         });
-        this.UI.addEventListener("mousedown", (evt) => {
+        this.Ui.addEventListener("mousedown", (evt) => {
             this.InputState[`Mouse${evt.button}`] = 1;
             this.InputDelta[`Mouse${evt.button}`] = 1;
         });
-        this.UI.addEventListener("mouseup", (evt) => {
+        this.Ui.addEventListener("mouseup", (evt) => {
             this.InputState[`Mouse${evt.button}`] = 0;
             this.InputDelta[`Mouse${evt.button}`] = -1;
         });
-        this.UI.addEventListener("mousemove", (evt) => {
+        this.Ui.addEventListener("mousemove", (evt) => {
             this.InputState.MouseX = evt.offsetX;
             this.InputState.MouseY = evt.offsetY;
             this.InputDelta.MouseX = evt.movementX;
             this.InputDelta.MouseY = evt.movementY;
         });
-        this.UI.addEventListener("wheel", (evt) => {
+        this.Ui.addEventListener("wheel", (evt) => {
             this.InputDelta.WheelY = evt.deltaY;
         });
-        this.UI.addEventListener("contextmenu", (evt) => evt.preventDefault());
-        this.UI.addEventListener("click", () => this.UI.requestPointerLock());
+        this.Ui.addEventListener("contextmenu", (evt) => evt.preventDefault());
+        this.Ui.addEventListener("click", () => this.Ui.requestPointerLock());
 
         let canvas2d = document.querySelector("canvas")!;
         canvas2d.width = this.ViewportWidth;

@@ -10,7 +10,7 @@ const MAX_ENTITIES = 10000;
 let raf = 0;
 
 export function load_texture(game: Game, image: HTMLImageElement) {
-    let gl = game.GL;
+    let gl = game.Gl;
     let texture = gl.createTexture()!;
     gl.bindTexture(GL_TEXTURE_2D, texture);
     gl.texImage2D(GL_TEXTURE_2D, 0, GL_RGBA, GL_RGBA, GL_PIXEL_UNSIGNED_BYTE, image);

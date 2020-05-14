@@ -24,7 +24,7 @@ export function render_particles(
         game.World.Render[entity] = {
             Kind: RenderKind.Particles,
             Material: game.MaterialParticles,
-            Buffer: game.GL.createBuffer()!,
+            Buffer: game.Gl.createBuffer()!,
             ColorSizeStart: <Vec4>[...start_color, start_size],
             ColorSizeEnd: <Vec4>[...end_color, end_size],
         };

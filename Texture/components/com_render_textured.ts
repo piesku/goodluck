@@ -10,7 +10,7 @@ export interface RenderTextured {
     readonly Material: Material<TexturedLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
-    readonly VAO: WebGLVertexArrayObject;
+    readonly Vao: WebGLVertexArrayObject;
     Texture: WebGLTexture;
 }
 
@@ -24,12 +24,12 @@ export function render_textured(
     return (game: Game, entity: Entity) => {
         if (!vaos.has(mesh)) {
             // We only need to create the VAO once.
-            let vao = game.GL.createVertexArray()!;
-            game.GL.bindVertexArray(vao);
+            let vao = game.Gl.createVertexArray()!;
+            game.Gl.bindVertexArray(vao);
 
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
-            game.GL.enableVertexAttribArray(material.Locations.VertexPosition);
-            game.GL.vertexAttribPointer(
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
+            game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
+            game.Gl.vertexAttribPointer(
                 material.Locations.VertexPosition,
                 3,
                 GL_FLOAT,
@@ -38,9 +38,9 @@ export function render_textured(
                 0
             );
 
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.TexCoordBuffer);
-            game.GL.enableVertexAttribArray(material.Locations.VertexTexCoord);
-            game.GL.vertexAttribPointer(
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.TexCoordBuffer);
+            game.Gl.enableVertexAttribArray(material.Locations.VertexTexCoord);
+            game.Gl.vertexAttribPointer(
                 material.Locations.VertexTexCoord,
                 2,
                 GL_FLOAT,
@@ -49,9 +49,9 @@ export function render_textured(
                 0
             );
 
-            game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
+            game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
-            game.GL.bindVertexArray(null);
+            game.Gl.bindVertexArray(null);
             vaos.set(mesh, vao);
         }
 
@@ -61,7 +61,7 @@ export function render_textured(
             Material: material,
             Mesh: mesh,
             FrontFace: GL_CW,
-            VAO: vaos.get(mesh)!,
+            Vao: vaos.get(mesh)!,
             Texture: texture,
         };
     };

@@ -11,11 +11,11 @@ export const enum CameraKind {
 
 export interface CameraPerspective {
     Kind: CameraKind.Perspective;
-    FOVy: number;
+    FovY: number;
     Near: number;
     Far: number;
     Projection: Mat4;
-    PV: Mat4;
+    Pv: Mat4;
 }
 
 export function camera_persp(fovy: number, near: number, far: number) {
@@ -23,11 +23,11 @@ export function camera_persp(fovy: number, near: number, far: number) {
         game.World.Mask[entity] |= Has.Camera;
         game.World.Camera[entity] = {
             Kind: CameraKind.Perspective,
-            FOVy: fovy,
+            FovY: fovy,
             Near: near,
             Far: far,
             Projection: create(),
-            PV: create(),
+            Pv: create(),
         };
     };
 }

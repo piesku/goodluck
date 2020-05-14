@@ -21,14 +21,14 @@ export class Game {
     ViewportHeight = 0;
     ViewportResized = false;
 
-    UI = document.querySelector("main")!;
+    Ui = document.querySelector("main")!;
     Canvas = document.querySelector("canvas")!;
-    GL = this.Canvas.getContext("webgl2")!;
+    Gl = this.Canvas.getContext("webgl2")!;
 
-    MaterialDiffuseFlat = mat_diffuse_flat(this.GL);
-    MaterialSpecularPhong = mat_specular_phong(this.GL);
-    MeshMonkeyFlat = mesh_monkey_flat(this.GL);
-    MeshMonkeySmooth = mesh_monkey_smooth(this.GL);
+    MaterialDiffuseFlat = mat_diffuse_flat(this.Gl);
+    MaterialSpecularPhong = mat_specular_phong(this.Gl);
+    MeshMonkeyFlat = mesh_monkey_flat(this.Gl);
+    MeshMonkeySmooth = mesh_monkey_smooth(this.Gl);
 
     Camera?: Camera;
     // The rendering pipeline supports 8 lights.
@@ -40,8 +40,8 @@ export class Game {
             document.hidden ? loop_stop() : loop_start(this)
         );
 
-        this.GL.enable(GL_DEPTH_TEST);
-        this.GL.enable(GL_CULL_FACE);
+        this.Gl.enable(GL_DEPTH_TEST);
+        this.Gl.enable(GL_CULL_FACE);
     }
 
     FrameReset() {

@@ -33,14 +33,14 @@ function update(game: Game, entity: Entity) {
         let aspect = game.ViewportWidth / game.ViewportHeight;
         if (aspect > 1) {
             // Landscape orientation.
-            perspective(camera.Projection, camera.FOVy, aspect, camera.Near, camera.Far);
+            perspective(camera.Projection, camera.FovY, aspect, camera.Near, camera.Far);
             invert(camera.Unproject, camera.Projection);
         } else {
             // Portrait orientation.
-            perspective(camera.Projection, camera.FOVy / aspect, aspect, camera.Near, camera.Far);
+            perspective(camera.Projection, camera.FovY / aspect, aspect, camera.Near, camera.Far);
             invert(camera.Unproject, camera.Projection);
         }
     }
 
-    multiply(camera.PV, camera.Projection, transform.Self);
+    multiply(camera.Pv, camera.Projection, transform.Self);
 }

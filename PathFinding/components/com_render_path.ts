@@ -17,9 +17,9 @@ export interface RenderPath {
 
 export function render_path(max: number, color: Vec4) {
     return (game: Game, entity: Entity) => {
-        let vertex_buf = game.GL.createBuffer()!;
-        game.GL.bindBuffer(GL_ARRAY_BUFFER, vertex_buf);
-        game.GL.bufferData(GL_ARRAY_BUFFER, max * Float32Array.BYTES_PER_ELEMENT, GL_DYNAMIC_DRAW);
+        let vertex_buf = game.Gl.createBuffer()!;
+        game.Gl.bindBuffer(GL_ARRAY_BUFFER, vertex_buf);
+        game.Gl.bufferData(GL_ARRAY_BUFFER, max * Float32Array.BYTES_PER_ELEMENT, GL_DYNAMIC_DRAW);
 
         game.World.Mask[entity] |= Has.Render;
         game.World.Render[entity] = {

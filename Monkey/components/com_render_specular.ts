@@ -11,7 +11,7 @@ export interface RenderSpecular {
     readonly Material: Material<SpecularLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
-    readonly VAO: WebGLVertexArrayObject;
+    readonly Vao: WebGLVertexArrayObject;
     ColorDiffuse: Vec4;
     ColorSpecular: Vec4;
     Shininess: number;
@@ -29,12 +29,12 @@ export function render_specular(
     return (game: Game, entity: Entity) => {
         if (!vaos.has(mesh)) {
             // We only need to create the VAO once.
-            let vao = game.GL.createVertexArray()!;
-            game.GL.bindVertexArray(vao);
+            let vao = game.Gl.createVertexArray()!;
+            game.Gl.bindVertexArray(vao);
 
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
-            game.GL.enableVertexAttribArray(material.Locations.VertexPosition);
-            game.GL.vertexAttribPointer(
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
+            game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
+            game.Gl.vertexAttribPointer(
                 material.Locations.VertexPosition,
                 3,
                 GL_FLOAT,
@@ -43,13 +43,13 @@ export function render_specular(
                 0
             );
 
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, mesh.NormalBuffer);
-            game.GL.enableVertexAttribArray(material.Locations.VertexNormal);
-            game.GL.vertexAttribPointer(material.Locations.VertexNormal, 3, GL_FLOAT, false, 0, 0);
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.NormalBuffer);
+            game.Gl.enableVertexAttribArray(material.Locations.VertexNormal);
+            game.Gl.vertexAttribPointer(material.Locations.VertexNormal, 3, GL_FLOAT, false, 0, 0);
 
-            game.GL.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
+            game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
-            game.GL.bindVertexArray(null);
+            game.Gl.bindVertexArray(null);
             vaos.set(mesh, vao);
         }
 
@@ -59,7 +59,7 @@ export function render_specular(
             Material: material,
             Mesh: mesh,
             FrontFace: GL_CW,
-            VAO: vaos.get(mesh)!,
+            Vao: vaos.get(mesh)!,
             ColorDiffuse: color_diffuse,
             ColorSpecular: color_specular,
             Shininess: shininess,

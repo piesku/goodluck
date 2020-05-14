@@ -3,7 +3,7 @@ import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_ui} from "./systems/sys_ui.js";
 
 export class Game {
-    UI = document.querySelector("main")!;
+    Ui = document.querySelector("main")!;
 
     Todos: Array<string> = [];
     Completed: Array<string> = [];

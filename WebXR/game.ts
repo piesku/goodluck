@@ -22,9 +22,9 @@ export class Game {
     ViewportHeight = 0;
     ViewportResized = false;
 
-    UI = document.querySelector("main")!;
+    Ui = document.querySelector("main")!;
     Canvas = document.querySelector("canvas")!;
-    GL = this.Canvas.getContext("webgl2", {xrCompatible: true})! as WebGL2RenderingContext;
+    Gl = this.Canvas.getContext("webgl2", {xrCompatible: true})! as WebGL2RenderingContext;
 
     XrSupported = false;
     XrSession?: XRSession;
@@ -32,9 +32,9 @@ export class Game {
     // XrFrame can be used to check whether we're presenting to a VR display.
     XrFrame?: XRFrame;
 
-    MaterialDiffuseGouraud = mat_diffuse_gouraud(this.GL);
-    MeshCube = mesh_cube(this.GL);
-    MeshHand = mesh_hand(this.GL);
+    MaterialDiffuseGouraud = mat_diffuse_gouraud(this.Gl);
+    MeshCube = mesh_cube(this.Gl);
+    MeshHand = mesh_hand(this.Gl);
 
     Camera?: Camera;
     // The rendering pipeline supports 8 lights.
@@ -46,8 +46,8 @@ export class Game {
             document.hidden ? loop_stop(this) : loop_start(this)
         );
 
-        this.GL.enable(GL_DEPTH_TEST);
-        this.GL.enable(GL_CULL_FACE);
+        this.Gl.enable(GL_DEPTH_TEST);
+        this.Gl.enable(GL_CULL_FACE);
 
         if (navigator.xr) {
             xr_init(this);

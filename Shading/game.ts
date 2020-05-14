@@ -30,23 +30,23 @@ export class Game {
     ViewportHeight = 0;
     ViewportResized = false;
 
-    UI = document.querySelector("main")!;
+    Ui = document.querySelector("main")!;
     Canvas = document.querySelector("canvas")!;
-    GL = this.Canvas.getContext("webgl2")!;
+    Gl = this.Canvas.getContext("webgl2")!;
 
-    MaterialBasicPoints = mat_basic_points(this.GL);
-    MaterialBasicWireframe = mat_basic_wireframe(this.GL);
-    MaterialBasicTriangles = mat_basic_triangles(this.GL);
-    MaterialDiffuseFlat = mat_diffuse_flat(this.GL);
-    MaterialDiffuseGouraud = mat_diffuse_gouraud(this.GL);
-    MaterialDiffusePhong = mat_diffuse_phong(this.GL);
-    MaterialSpecularFlat = mat_specular_flat(this.GL);
-    MaterialSpecularGouraud = mat_specular_gouraud(this.GL);
-    MaterialSpecularPhong = mat_specular_phong(this.GL);
+    MaterialBasicPoints = mat_basic_points(this.Gl);
+    MaterialBasicWireframe = mat_basic_wireframe(this.Gl);
+    MaterialBasicTriangles = mat_basic_triangles(this.Gl);
+    MaterialDiffuseFlat = mat_diffuse_flat(this.Gl);
+    MaterialDiffuseGouraud = mat_diffuse_gouraud(this.Gl);
+    MaterialDiffusePhong = mat_diffuse_phong(this.Gl);
+    MaterialSpecularFlat = mat_specular_flat(this.Gl);
+    MaterialSpecularGouraud = mat_specular_gouraud(this.Gl);
+    MaterialSpecularPhong = mat_specular_phong(this.Gl);
 
-    MeshCube = mesh_cube(this.GL);
-    MeshIcosphereFlat = mesh_icosphere_flat(this.GL);
-    MeshIcosphereSmooth = mesh_icosphere_smooth(this.GL);
+    MeshCube = mesh_cube(this.Gl);
+    MeshIcosphereFlat = mesh_icosphere_flat(this.Gl);
+    MeshIcosphereSmooth = mesh_icosphere_smooth(this.Gl);
 
     Camera?: Camera;
     // The rendering pipeline supports 8 lights.
@@ -58,8 +58,8 @@ export class Game {
             document.hidden ? loop_stop() : loop_start(this)
         );
 
-        this.GL.enable(GL_DEPTH_TEST);
-        this.GL.enable(GL_CULL_FACE);
+        this.Gl.enable(GL_DEPTH_TEST);
+        this.Gl.enable(GL_CULL_FACE);
     }
 
     FrameReset() {

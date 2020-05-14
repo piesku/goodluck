@@ -10,9 +10,9 @@ import {InstancedLayout} from "../materials/layout_instanced.js";
 const QUERY = Has.Transform | Has.Render;
 
 export function sys_render(game: Game, delta: number) {
-    game.GL.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (game.ViewportResized) {
-        game.GL.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
+        game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
     }
 
     // Keep track of the current material to minimize switching.
@@ -35,7 +35,7 @@ export function sys_render(game: Game, delta: number) {
 
             if (render.FrontFace !== current_front_face) {
                 current_front_face = render.FrontFace;
-                game.GL.frontFace(render.FrontFace);
+                game.Gl.frontFace(render.FrontFace);
             }
 
             switch (render.Kind) {
@@ -48,23 +48,23 @@ export function sys_render(game: Game, delta: number) {
 }
 
 function use_instanced(game: Game, material: Material<InstancedLayout>) {
-    game.GL.useProgram(material.Program);
-    game.GL.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.PV);
-    game.GL.uniform4fv(material.Locations.LightPositions, game.LightPositions);
-    game.GL.uniform4fv(material.Locations.LightDetails, game.LightDetails);
+    game.Gl.useProgram(material.Program);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.Pv);
+    game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
+    game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
 function draw_instanced(game: Game, transform: Transform, render: RenderInstanced) {
-    game.GL.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
-    game.GL.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
-    game.GL.uniform3fv(render.Material.Locations.Palette, render.Palette);
-    game.GL.bindVertexArray(render.VAO);
-    game.GL.drawElementsInstanced(
+    game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
+    game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
+    game.Gl.uniform3fv(render.Material.Locations.Palette, render.Palette);
+    game.Gl.bindVertexArray(render.Vao);
+    game.Gl.drawElementsInstanced(
         render.Material.Mode,
         render.Mesh.IndexCount,
         GL_UNSIGNED_SHORT,
         0,
         render.InstanceCount
     );
-    game.GL.bindVertexArray(null);
+    game.Gl.bindVertexArray(null);
 }

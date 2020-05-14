@@ -4,22 +4,22 @@ import {Entity, Game} from "../game.js";
 import {Has} from "./com_index.js";
 
 export interface Camera {
-    FOVy: number;
+    FovY: number;
     Near: number;
     Far: number;
     Projection: Mat4;
-    PV: Mat4;
+    Pv: Mat4;
 }
 
 export function camera(fovy: number, near: number, far: number) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Camera;
         game.World.Camera[entity] = {
-            FOVy: fovy,
+            FovY: fovy,
             Near: near,
             Far: far,
             Projection: create(),
-            PV: create(),
+            Pv: create(),
         };
     };
 }

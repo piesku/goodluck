@@ -19,12 +19,12 @@ export class Game {
     ViewportHeight = 0;
     ViewportResized = false;
 
-    UI = document.querySelector("main")!;
+    Ui = document.querySelector("main")!;
     Canvas = document.querySelector("canvas")!;
-    GL = this.Canvas.getContext("webgl2")!;
+    Gl = this.Canvas.getContext("webgl2")!;
 
-    MaterialTextured = mat_textured(this.GL);
-    MeshKulka = mesh_kulka(this.GL);
+    MaterialTextured = mat_textured(this.Gl);
+    MeshKulka = mesh_kulka(this.Gl);
 
     Texture?: WebGLTexture;
 
@@ -35,8 +35,8 @@ export class Game {
             document.hidden ? loop_stop() : loop_start(this)
         );
 
-        this.GL.enable(GL_DEPTH_TEST);
-        this.GL.enable(GL_CULL_FACE);
+        this.Gl.enable(GL_DEPTH_TEST);
+        this.Gl.enable(GL_CULL_FACE);
     }
 
     FrameReset() {

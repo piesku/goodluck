@@ -9,7 +9,7 @@ export function scene_stage(game: Game) {
     game.World = new World();
     game.Camera = undefined;
     game.ViewportResized = true;
-    game.GL.clearColor(1, 0.3, 0.3, 1);
+    game.Gl.clearColor(1, 0.3, 0.3, 1);
 
     // Camera.
     instantiate(game, {

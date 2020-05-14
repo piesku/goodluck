@@ -17,7 +17,7 @@ export function sys_draw(game: Game, delta: number) {
             // World position.
             get_translation(position, game.World.Transform[i].World);
             // NDC position.
-            transform_point(position, position, game.Camera!.PV);
+            transform_point(position, position, game.Camera!.Pv);
 
             game.Context2D.setTransform(
                 1,

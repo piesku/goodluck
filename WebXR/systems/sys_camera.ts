@@ -42,14 +42,14 @@ function update_perspective(game: Game, entity: Entity, camera: CameraPerspectiv
         let aspect = game.ViewportWidth / game.ViewportHeight;
         if (aspect > 1) {
             // Landscape orientation.
-            perspective(camera.Projection, camera.FOVy, aspect, camera.Near, camera.Far);
+            perspective(camera.Projection, camera.FovY, aspect, camera.Near, camera.Far);
         } else {
             // Portrait orientation.
-            perspective(camera.Projection, camera.FOVy / aspect, aspect, camera.Near, camera.Far);
+            perspective(camera.Projection, camera.FovY / aspect, aspect, camera.Near, camera.Far);
         }
     }
 
-    multiply(camera.PV, camera.Projection, transform.Self);
+    multiply(camera.Pv, camera.Projection, transform.Self);
 }
 
 function update_vr(game: Game, entity: Entity, camera: CameraXr) {

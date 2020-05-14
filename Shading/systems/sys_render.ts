@@ -14,9 +14,9 @@ import {Game} from "../game.js";
 const QUERY = Has.Transform | Has.Render;
 
 export function sys_render(game: Game, delta: number) {
-    game.GL.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (game.ViewportResized) {
-        game.GL.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
+        game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
     }
 
     // Keep track of the current material to minimize switching.
@@ -45,7 +45,7 @@ export function sys_render(game: Game, delta: number) {
 
             if (render.FrontFace !== current_front_face) {
                 current_front_face = render.FrontFace;
-                game.GL.frontFace(render.FrontFace);
+                game.Gl.frontFace(render.FrontFace);
             }
 
             switch (render.Kind) {
@@ -64,49 +64,49 @@ export function sys_render(game: Game, delta: number) {
 }
 
 function use_basic(game: Game, material: Material<BasicLayout>) {
-    game.GL.useProgram(material.Program);
-    game.GL.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.PV);
+    game.Gl.useProgram(material.Program);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.Pv);
 }
 
 function draw_basic(game: Game, transform: Transform, render: RenderBasic) {
-    game.GL.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
-    game.GL.uniform4fv(render.Material.Locations.Color, render.Color);
-    game.GL.bindVertexArray(render.VAO);
-    game.GL.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
-    game.GL.bindVertexArray(null);
+    game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
+    game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
+    game.Gl.bindVertexArray(render.Vao);
+    game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
+    game.Gl.bindVertexArray(null);
 }
 
 function use_diffuse(game: Game, material: Material<DiffuseLayout>) {
-    game.GL.useProgram(material.Program);
-    game.GL.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.PV);
-    game.GL.uniform4fv(material.Locations.LightPositions, game.LightPositions);
-    game.GL.uniform4fv(material.Locations.LightDetails, game.LightDetails);
+    game.Gl.useProgram(material.Program);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.Pv);
+    game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
+    game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
 function draw_diffuse(game: Game, transform: Transform, render: RenderDiffuse) {
-    game.GL.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
-    game.GL.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
-    game.GL.uniform4fv(render.Material.Locations.Color, render.Color);
-    game.GL.bindVertexArray(render.VAO);
-    game.GL.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
-    game.GL.bindVertexArray(null);
+    game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
+    game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
+    game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
+    game.Gl.bindVertexArray(render.Vao);
+    game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
+    game.Gl.bindVertexArray(null);
 }
 
 function use_specular(game: Game, material: Material<SpecularLayout>) {
-    game.GL.useProgram(material.Program);
-    game.GL.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.PV);
-    game.GL.uniform3fv(material.Locations.Eye, game.Camera!.Position);
-    game.GL.uniform4fv(material.Locations.LightPositions, game.LightPositions);
-    game.GL.uniform4fv(material.Locations.LightDetails, game.LightDetails);
+    game.Gl.useProgram(material.Program);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.Pv);
+    game.Gl.uniform3fv(material.Locations.Eye, game.Camera!.Position);
+    game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
+    game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
 function draw_specular(game: Game, transform: Transform, render: RenderSpecular) {
-    game.GL.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
-    game.GL.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
-    game.GL.uniform4fv(render.Material.Locations.ColorDiffuse, render.ColorDiffuse);
-    game.GL.uniform4fv(render.Material.Locations.ColorSpecular, render.ColorSpecular);
-    game.GL.uniform1f(render.Material.Locations.Shininess, render.Shininess);
-    game.GL.bindVertexArray(render.VAO);
-    game.GL.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
-    game.GL.bindVertexArray(null);
+    game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
+    game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
+    game.Gl.uniform4fv(render.Material.Locations.ColorDiffuse, render.ColorDiffuse);
+    game.Gl.uniform4fv(render.Material.Locations.ColorSpecular, render.ColorSpecular);
+    game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
+    game.Gl.bindVertexArray(render.Vao);
+    game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
+    game.Gl.bindVertexArray(null);
 }

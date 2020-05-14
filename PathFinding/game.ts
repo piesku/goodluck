@@ -38,16 +38,16 @@ export class Game {
         MouseY: 0,
     };
 
-    UI = document.querySelector("main")!;
+    Ui = document.querySelector("main")!;
     CanvasScene = document.querySelector("canvas#scene")! as HTMLCanvasElement;
-    GL = this.CanvasScene.getContext("webgl2")!;
+    Gl = this.CanvasScene.getContext("webgl2")!;
     CanvasBillboard = document.querySelector("canvas#billboard")! as HTMLCanvasElement;
     Context2D = this.CanvasBillboard.getContext("2d")!;
 
-    MaterialBasicLine = mat_basic_line(this.GL);
-    MaterialDiffuseGouraud = mat_diffuse_gouraud(this.GL);
-    MeshCube = mesh_cube(this.GL);
-    MeshTerrain = mesh_terrain(this.GL);
+    MaterialBasicLine = mat_basic_line(this.Gl);
+    MaterialDiffuseGouraud = mat_diffuse_gouraud(this.Gl);
+    MeshCube = mesh_cube(this.Gl);
+    MeshTerrain = mesh_terrain(this.Gl);
 
     Camera?: Camera;
     // The rendering pipeline supports 8 lights.
@@ -61,24 +61,24 @@ export class Game {
             document.hidden ? loop_stop() : loop_start(this)
         );
 
-        this.UI.addEventListener("contextmenu", (evt) => evt.preventDefault());
-        this.UI.addEventListener("mousedown", (evt) => {
+        this.Ui.addEventListener("contextmenu", (evt) => evt.preventDefault());
+        this.Ui.addEventListener("mousedown", (evt) => {
             this.InputState[`Mouse${evt.button}`] = 1;
             this.InputDelta[`Mouse${evt.button}`] = 1;
         });
-        this.UI.addEventListener("mouseup", (evt) => {
+        this.Ui.addEventListener("mouseup", (evt) => {
             this.InputState[`Mouse${evt.button}`] = 0;
             this.InputDelta[`Mouse${evt.button}`] = -1;
         });
-        this.UI.addEventListener("mousemove", (evt) => {
+        this.Ui.addEventListener("mousemove", (evt) => {
             this.InputState.MouseX = evt.offsetX;
             this.InputState.MouseY = evt.offsetY;
             this.InputDelta.MouseX = evt.movementX;
             this.InputDelta.MouseY = evt.movementY;
         });
 
-        this.GL.enable(GL_DEPTH_TEST);
-        this.GL.enable(GL_CULL_FACE);
+        this.Gl.enable(GL_DEPTH_TEST);
+        this.Gl.enable(GL_CULL_FACE);
     }
 
     FrameReset() {

@@ -59,8 +59,8 @@ function update(game: Game, entity: Entity, pick: Picked) {
             game.World.Mask[line] |= Has.Render;
             let render = game.World.Render[line] as RenderPath;
             render.IndexCount = waypoints.length;
-            game.GL.bindBuffer(GL_ARRAY_BUFFER, render.VertexBuffer);
-            game.GL.bufferSubData(GL_ARRAY_BUFFER, 0, Float32Array.from(waypoints.flat()));
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, render.VertexBuffer);
+            game.Gl.bufferSubData(GL_ARRAY_BUFFER, 0, Float32Array.from(waypoints.flat()));
         }
     }
 }
