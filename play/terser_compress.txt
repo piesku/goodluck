@@ -1,6 +1,5 @@
 passes=3
 ecma=9
-booleans_as_integers
 drop_console
 pure_getters
 toplevel
