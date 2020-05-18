@@ -47,26 +47,19 @@ export function mesh_${process.argv[2]}(gl: WebGLRenderingContext): Mesh {
     };
 }
 
-let vertex_arr = Float32Array.from([
-    ${vertices.join(",\n    ")},
-]);
+// prettier-ignore
+let vertex_arr = Float32Array.from([${break_every(3, vertices)}]);
 
-let normal_arr = Float32Array.from([
-    ${normals.join(",\n    ")},
-]);
-${
-    texturecoords[0].length > 0
-        ? `
-let texcoord_arr = Float32Array.from([
-    ${texturecoords[0].join(",\n    ")},
-]);
-`
-        : `
-let texcoord_arr = Float32Array.from([]);
-`
-}
-let index_arr = Uint16Array.from([
-    ${faces
+// prettier-ignore
+let normal_arr = Float32Array.from([${break_every(3, normals)}]);
+
+// prettier-ignore
+let texcoord_arr = Float32Array.from([${break_every(2, texturecoords[0])}]);
+
+// prettier-ignore
+let index_arr = Uint16Array.from([${break_every(
+    3,
+    faces
         // Flatten faces into one big index array.
         .flat(1)
         // Both Blender and Assimp triangulate polygons starting from the first
@@ -78,5 +71,21 @@ let index_arr = Uint16Array.from([
         // array, the tri get drawn in reverse order and the shared vertices
         // become last.
         .reverse()
-        .join(",\n    ")},
-]);`);
+)}]);`);
+
+function break_every(count, elements) {
+    if (elements.length === 0) {
+        return "";
+    }
+
+    let output = "\n    " + elements[0];
+    for (let i = 1; i < elements.length; i++) {
+        let elem = elements[i];
+        if (i % count > 0) {
+            output += ", " + elem;
+        } else {
+            output += ",\n    " + elem;
+        }
+    }
+    return output + "\n";
+}
