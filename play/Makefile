@@ -19,12 +19,7 @@ game.sed.js: game.rollup.js
 	@sed  -f sed.txt  $< > $@
 	@echo "Done"
 
-game.tr.js: game.sed.js
-	@echo -n "Stripping newlines... "
-	@cat $< | tr -d "\n" > $@
-	@echo "Done"
-
-game.terser.js: game.tr.js
+game.terser.js: game.sed.js
 	@echo "Minifying... "
 	@npx --quiet terser $< \
 		--timings \
