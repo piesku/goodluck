@@ -1,16 +1,19 @@
-import {load_texture, loop_start} from "./core.js";
+import {create_texture_from, fetch_image} from "../common/texture.js";
+import {loop_start} from "./core.js";
 import {Game} from "./game.js";
 import {scene_stage} from "./scenes/sce_stage.js";
 
-let texture = new Image();
-texture.src = "/textures/kulka.png";
-texture.onload = () => {
-    let game = new Game();
+let game = new Game();
 
-    load_texture(game, texture);
+// @ts-ignore
+window.game = game;
+
+Promise.all([load_texture(game, "checker1.png"), load_texture(game, "kulka.png")]).then(() => {
     scene_stage(game);
     loop_start(game);
+});
 
-    // @ts-ignore
-    window.game = game;
-};
+async function load_texture(game: Game, name: string) {
+    let image = await fetch_image("../textures/" + name);
+    game.Textures[name] = create_texture_from(game.Gl, image);
+}

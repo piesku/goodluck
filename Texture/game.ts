@@ -26,7 +26,7 @@ export class Game {
     MaterialTextured = mat_textured(this.Gl);
     MeshKulka = mesh_kulka(this.Gl);
 
-    Texture?: WebGLTexture;
+    Textures: Record<string, WebGLTexture> = {};
 
     Camera?: Camera;
 
