@@ -8,7 +8,7 @@ export function blueprint_camera_main(game: Game) {
         Children: [
             {
                 Rotation: [0, 1, 0, 0],
-                Using: [camera_display(1, 0.1, 1000, [1, 1, 1, 1])],
+                Using: [camera_display(1, 0.1, 1000, [0.9, 0.9, 0.9, 1])],
             },
         ],
     };

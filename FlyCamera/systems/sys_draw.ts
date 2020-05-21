@@ -41,6 +41,6 @@ export function sys_draw(game: Game, delta: number) {
 function draw_marker(game: Game, draw: DrawMarker) {
     game.Context2D.font = "10vmin sans";
     game.Context2D.textAlign = "center";
-    game.Context2D.fillStyle = "#fff";
+    game.Context2D.fillStyle = "#555";
     game.Context2D.fillText(draw.Marker, 0, 0);
 }

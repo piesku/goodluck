@@ -6,7 +6,8 @@ const QUERY = Has.Transform2D | Has.Draw;
 
 export function sys_draw2d(game: Game, delta: number) {
     game.Context2D.resetTransform();
-    game.Context2D.clearRect(0, 0, game.ViewportWidth, game.ViewportHeight);
+    game.Context2D.fillStyle = "#e6e6e6";
+    game.Context2D.fillRect(0, 0, game.ViewportWidth, game.ViewportHeight);
 
     for (let i = 0; i < game.World.Mask.length; i++) {
         if ((game.World.Mask[i] & QUERY) == QUERY) {
