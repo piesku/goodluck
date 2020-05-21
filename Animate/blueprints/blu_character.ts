@@ -1,7 +1,8 @@
+import {ease_in_out_quart, ease_out_quart} from "../../common/easing.js";
 import {Vec4} from "../../common/math.js";
 import {from_euler} from "../../common/quat.js";
 import {element} from "../../common/random.js";
-import {animate} from "../components/com_animate.js";
+import {animate, AnimationFlag} from "../components/com_animate.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {Blueprint} from "../core.js";
 import {Game} from "../game.js";
@@ -63,6 +64,28 @@ export function blueprint_character(game: Game): Blueprint {
                                     Rotation: from_euler([0, 0, 0, 1], 0, -5, 0),
                                 },
                             ],
+                        },
+                        jump: {
+                            Keyframes: [
+                                {
+                                    Timestamp: 0.0,
+                                    Translation: [0, 0, 0],
+                                    Rotation: [0, 0, 0, 1],
+                                },
+                                {
+                                    Timestamp: 0.2,
+                                    Translation: [0, 2, 0],
+                                    Rotation: from_euler([0, 0, 0, 1], -15, 0, 0),
+                                    Ease: ease_in_out_quart,
+                                },
+                                {
+                                    Timestamp: 0.4,
+                                    Translation: [0, 0, 0],
+                                    Rotation: from_euler([0, 0, 0, 1], 0, 0, 0),
+                                    Ease: ease_out_quart,
+                                },
+                            ],
+                            Flags: AnimationFlag.None,
                         },
                     }),
                 ],
@@ -130,6 +153,28 @@ export function blueprint_character(game: Game): Blueprint {
                                 },
                             ],
                         },
+                        jump: {
+                            Keyframes: [
+                                {
+                                    Timestamp: 0.0,
+                                    Translation: [1.5, 0, 0],
+                                    Rotation: [0, 0, 0, 1],
+                                },
+                                {
+                                    Timestamp: 0.2,
+                                    Translation: [1.5, 2, 0],
+                                    Rotation: from_euler([0, 0, 0, 1], 0, 0, 135),
+                                    Ease: ease_in_out_quart,
+                                },
+                                {
+                                    Timestamp: 0.4,
+                                    Translation: [1.5, 0, 0],
+                                    Rotation: [0, 0, 0, 1],
+                                    Ease: ease_out_quart,
+                                },
+                            ],
+                            Flags: AnimationFlag.None,
+                        },
                     }),
                 ],
                 Children: [
@@ -178,6 +223,28 @@ export function blueprint_character(game: Game): Blueprint {
                                     Rotation: from_euler([0, 0, 0, 1], 60, 0, 0),
                                 },
                             ],
+                        },
+                        jump: {
+                            Keyframes: [
+                                {
+                                    Timestamp: 0.0,
+                                    Translation: [-1.5, 0, 0],
+                                    Rotation: [0, 0, 0, 1],
+                                },
+                                {
+                                    Timestamp: 0.2,
+                                    Translation: [-1.5, 2, 0],
+                                    Rotation: from_euler([0, 0, 0, 1], 0, 0, -135),
+                                    Ease: ease_in_out_quart,
+                                },
+                                {
+                                    Timestamp: 0.4,
+                                    Translation: [-1.5, 0, 0],
+                                    Rotation: [0, 0, 0, 1],
+                                    Ease: ease_out_quart,
+                                },
+                            ],
+                            Flags: AnimationFlag.None,
                         },
                     }),
                 ],
@@ -228,6 +295,28 @@ export function blueprint_character(game: Game): Blueprint {
                                 },
                             ],
                         },
+                        jump: {
+                            Keyframes: [
+                                {
+                                    Timestamp: 0.0,
+                                    Translation: [0.5, -2, 0],
+                                    Rotation: [0, 0, 0, 1],
+                                },
+                                {
+                                    Timestamp: 0.2,
+                                    Translation: [0.5, 0, 0],
+                                    Rotation: from_euler([0, 0, 0, 1], 0, 0, 45),
+                                    Ease: ease_in_out_quart,
+                                },
+                                {
+                                    Timestamp: 0.4,
+                                    Translation: [0.5, -2, 0],
+                                    Rotation: [0, 0, 0, 1],
+                                    Ease: ease_out_quart,
+                                },
+                            ],
+                            Flags: AnimationFlag.None,
+                        },
                     }),
                 ],
                 Children: [
@@ -269,6 +358,28 @@ export function blueprint_character(game: Game): Blueprint {
                                     Rotation: from_euler([0, 0, 0, 1], -45, 0, 0),
                                 },
                             ],
+                        },
+                        jump: {
+                            Keyframes: [
+                                {
+                                    Timestamp: 0.0,
+                                    Translation: [-0.5, -2, 0],
+                                    Rotation: [0, 0, 0, 1],
+                                },
+                                {
+                                    Timestamp: 0.2,
+                                    Translation: [-0.5, 0, 0],
+                                    Rotation: from_euler([0, 0, 0, 1], 0, 0, -45),
+                                    Ease: ease_in_out_quart,
+                                },
+                                {
+                                    Timestamp: 0.4,
+                                    Translation: [-0.5, -2, 0],
+                                    Rotation: [0, 0, 0, 1],
+                                    Ease: ease_out_quart,
+                                },
+                            ],
+                            Flags: AnimationFlag.None,
                         },
                     }),
                 ],

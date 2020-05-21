@@ -21,6 +21,10 @@ function update(game: Game, entity: Entity) {
         trigger = "move";
     }
 
+    if (game.InputState["Space"]) {
+        trigger = "jump";
+    }
+
     for (let animate of components_of_type<Animate>(
         game.World,
         transform,
