@@ -15,14 +15,14 @@ export function sys_control(game: Game, delta: number) {
 
 function update(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
-    let trigger: Animate["Trigger"] = "idle";
-
-    if (game.InputState["ArrowUp"]) {
-        trigger = "move";
-    }
+    let trigger: Animate["Trigger"];
 
     if (game.InputState["Space"]) {
         trigger = "jump";
+    } else if (game.InputState["ArrowUp"]) {
+        trigger = "move";
+    } else {
+        trigger = "idle";
     }
 
     for (let animate of components_of_type<Animate>(
