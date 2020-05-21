@@ -181,6 +181,7 @@ export function blueprint_character(game: Game): Blueprint {
                     {
                         // right hand
                         Translation: [0, -2, 0],
+                        Scale: [0.9, 1, 0.9],
                         Using: [
                             render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, skin_color),
                         ],
@@ -252,6 +253,7 @@ export function blueprint_character(game: Game): Blueprint {
                     {
                         // left hand
                         Translation: [0, -2, 0],
+                        Scale: [0.9, 1, 0.9],
                         Using: [
                             render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, skin_color),
                         ],
