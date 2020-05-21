@@ -91,9 +91,9 @@ export function blueprint_character(game: Game): Blueprint {
                 ],
                 Children: [
                     {
-                        // face
-                        Translation: [0, 1.5, 1],
-                        Scale: [2, 2, 1],
+                        // head
+                        Translation: [0, 1.5, 0.5],
+                        Scale: [2, 2, 2],
                         Using: [
                             render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, skin_color),
                         ],
@@ -101,17 +101,9 @@ export function blueprint_character(game: Game): Blueprint {
                     {
                         // hair
                         Translation: [0, 2, 0],
-                        Scale: [2, 1, 1],
+                        Scale: [2.1, 1.1, 1.1],
                         Using: [
                             render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, hair_color),
-                        ],
-                    },
-                    {
-                        // neck
-                        Translation: [0, 1, 0],
-                        Scale: [2, 1, 1],
-                        Using: [
-                            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, skin_color),
                         ],
                     },
                     {
