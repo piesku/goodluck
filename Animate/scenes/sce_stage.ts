@@ -2,6 +2,7 @@ import {set_seed} from "../../common/random.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {blueprint_character} from "../blueprints/blu_character.js";
 import {animate, AnimationFlag} from "../components/com_animate.js";
+import {control} from "../components/com_control.js";
 import {light_directional} from "../components/com_light.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";
@@ -38,6 +39,7 @@ export function scene_stage(game: Game) {
         Translation: [0, 1, 0],
         ...blueprint_character(game),
         Using: [
+            control(),
             animate({
                 idle: {
                     Keyframes: [

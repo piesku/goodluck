@@ -5,6 +5,7 @@ import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
 import {sys_animate} from "./systems/sys_animate.js";
 import {sys_camera} from "./systems/sys_camera.js";
+import {sys_control} from "./systems/sys_control.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_render} from "./systems/sys_render.js";
@@ -50,25 +51,6 @@ export class Game {
             this.InputState[evt.code] = 0;
             this.InputDelta[evt.code] = -1;
         });
-        this.Ui.addEventListener("mousedown", (evt) => {
-            this.InputState[`Mouse${evt.button}`] = 1;
-            this.InputDelta[`Mouse${evt.button}`] = 1;
-        });
-        this.Ui.addEventListener("mouseup", (evt) => {
-            this.InputState[`Mouse${evt.button}`] = 0;
-            this.InputDelta[`Mouse${evt.button}`] = -1;
-        });
-        this.Ui.addEventListener("mousemove", (evt) => {
-            this.InputState.MouseX = evt.offsetX;
-            this.InputState.MouseY = evt.offsetY;
-            this.InputDelta.MouseX = evt.movementX;
-            this.InputDelta.MouseY = evt.movementY;
-        });
-        this.Ui.addEventListener("wheel", (evt) => {
-            this.InputDelta.WheelY = evt.deltaY;
-        });
-        this.Ui.addEventListener("contextmenu", (evt) => evt.preventDefault());
-        this.Ui.addEventListener("click", () => this.Ui.requestPointerLock());
 
         this.Gl.enable(GL_DEPTH_TEST);
         this.Gl.enable(GL_CULL_FACE);
@@ -84,6 +66,7 @@ export class Game {
 
     FrameUpdate(delta: number) {
         let now = performance.now();
+        sys_control(this, delta);
         sys_animate(this, delta);
         sys_transform(this, delta);
         sys_camera(this, delta);
