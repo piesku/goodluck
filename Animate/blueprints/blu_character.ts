@@ -117,7 +117,7 @@ export function blueprint_character(game: Game): Blueprint {
                 ],
             },
             {
-                // right shoulder
+                // left shoulder
                 Translation: [1.5, 0, 0],
                 Using: [
                     animate({
@@ -137,11 +137,11 @@ export function blueprint_character(game: Game): Blueprint {
                             Keyframes: [
                                 {
                                     Timestamp: 0,
-                                    Rotation: from_euler([0, 0, 0, 1], 60, 0, 0),
+                                    Rotation: from_euler([0, 0, 0, 1], 30, 0, 0),
                                 },
                                 {
                                     Timestamp: 0.2,
-                                    Rotation: from_euler([0, 0, 0, 1], -30, 0, 0),
+                                    Rotation: from_euler([0, 0, 0, 1], -60, 0, 0),
                                 },
                             ],
                         },
@@ -171,7 +171,7 @@ export function blueprint_character(game: Game): Blueprint {
                 ],
                 Children: [
                     {
-                        // right arm
+                        // left arm
                         Translation: [0, -0.5, 0],
                         Scale: [1, 2, 1],
                         Using: [
@@ -179,7 +179,7 @@ export function blueprint_character(game: Game): Blueprint {
                         ],
                     },
                     {
-                        // right hand
+                        // left hand
                         Translation: [0, -2, 0],
                         Scale: [0.9, 1, 0.9],
                         Using: [
@@ -189,7 +189,7 @@ export function blueprint_character(game: Game): Blueprint {
                 ],
             },
             {
-                // left shoulder
+                // right shoulder
                 Translation: [-1.5, 0, 0],
                 Using: [
                     animate({
@@ -209,11 +209,11 @@ export function blueprint_character(game: Game): Blueprint {
                             Keyframes: [
                                 {
                                     Timestamp: 0,
-                                    Rotation: from_euler([0, 0, 0, 1], -30, 0, 0),
+                                    Rotation: from_euler([0, 0, 0, 1], -60, 0, 0),
                                 },
                                 {
                                     Timestamp: 0.2,
-                                    Rotation: from_euler([0, 0, 0, 1], 60, 0, 0),
+                                    Rotation: from_euler([0, 0, 0, 1], 30, 0, 0),
                                 },
                             ],
                         },
@@ -243,7 +243,7 @@ export function blueprint_character(game: Game): Blueprint {
                 ],
                 Children: [
                     {
-                        // left arm
+                        // right arm
                         Translation: [0, -0.5, 0],
                         Scale: [1, 2, 1],
                         Using: [
@@ -251,7 +251,7 @@ export function blueprint_character(game: Game): Blueprint {
                         ],
                     },
                     {
-                        // left hand
+                        // right hand
                         Translation: [0, -2, 0],
                         Scale: [0.9, 1, 0.9],
                         Using: [
@@ -261,7 +261,7 @@ export function blueprint_character(game: Game): Blueprint {
                 ],
             },
             {
-                // right hip
+                // left hip
                 Translation: [0.5, -2, 0],
                 Using: [
                     animate({
@@ -315,7 +315,7 @@ export function blueprint_character(game: Game): Blueprint {
                 ],
                 Children: [
                     {
-                        // right leg
+                        // left leg
                         Translation: [0, -1.5, 0],
                         Scale: [1, 2, 1],
                         Using: [
@@ -325,7 +325,7 @@ export function blueprint_character(game: Game): Blueprint {
                 ],
             },
             {
-                // left hip
+                // right hip
                 Translation: [-0.5, -2, 0],
                 Using: [
                     animate({
@@ -379,7 +379,7 @@ export function blueprint_character(game: Game): Blueprint {
                 ],
                 Children: [
                     {
-                        // left leg
+                        // right leg
                         Translation: [0, -1.5, 0],
                         Scale: [1, 2, 1],
                         Using: [
