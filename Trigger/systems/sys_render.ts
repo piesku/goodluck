@@ -63,9 +63,9 @@ function use_basic(game: Game, material: Material<BasicLayout>) {
 function draw_basic(game: Game, transform: Transform, render: RenderBasic) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
-    game.Gl.bindVertexArray(render.Vao);
+    game.ExtVao.bindVertexArrayOES(render.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
-    game.Gl.bindVertexArray(null);
+    game.ExtVao.bindVertexArrayOES(null);
 }
 
 function use_diffuse(game: Game, material: Material<DiffuseLayout>) {
@@ -79,7 +79,7 @@ function draw_diffuse(game: Game, transform: Transform, render: RenderDiffuse) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
     game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
-    game.Gl.bindVertexArray(render.Vao);
+    game.ExtVao.bindVertexArrayOES(render.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
-    game.Gl.bindVertexArray(null);
+    game.ExtVao.bindVertexArrayOES(null);
 }

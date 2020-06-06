@@ -66,7 +66,7 @@ function draw_textured(game: Game, transform: Transform, render: RenderTextured)
     game.Gl.bindTexture(GL_TEXTURE_2D, render.Texture);
     game.Gl.uniform1i(render.Material.Locations.Sampler, 0);
 
-    game.Gl.bindVertexArray(render.Vao);
+    game.ExtVao.bindVertexArrayOES(render.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
-    game.Gl.bindVertexArray(null);
+    game.ExtVao.bindVertexArrayOES(null);
 }

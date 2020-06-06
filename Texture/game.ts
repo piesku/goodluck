@@ -2,7 +2,7 @@ import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_kulka} from "../meshes/kulka.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
-import {mat_textured} from "./materials/mat_textured.js";
+import {mat1_textured} from "./materials/mat1_textured.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_render} from "./systems/sys_render.js";
@@ -21,9 +21,10 @@ export class Game {
 
     Ui = document.querySelector("main")!;
     Canvas = document.querySelector("canvas")!;
-    Gl = this.Canvas.getContext("webgl2")!;
+    Gl = this.Canvas.getContext("webgl")!;
+    ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
-    MaterialTextured = mat_textured(this.Gl);
+    MaterialTextured = mat1_textured(this.Gl);
     MeshKulka = mesh_kulka(this.Gl);
 
     Textures: Record<string, WebGLTexture> = {};

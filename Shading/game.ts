@@ -1,13 +1,11 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
-import {mat_basic_points} from "../materials/mat_basic_points.js";
-import {mat_basic_triangles} from "../materials/mat_basic_triangles.js";
-import {mat_basic_wireframe} from "../materials/mat_basic_wireframe.js";
-import {mat_diffuse_flat} from "../materials/mat_diffuse_flat.js";
-import {mat_diffuse_gouraud} from "../materials/mat_diffuse_gouraud.js";
-import {mat_diffuse_phong} from "../materials/mat_diffuse_phong.js";
-import {mat_specular_flat} from "../materials/mat_specular_flat.js";
-import {mat_specular_gouraud} from "../materials/mat_specular_gouraud.js";
-import {mat_specular_phong} from "../materials/mat_specular_phong.js";
+import {mat1_basic_points} from "../materials/mat1_basic_points.js";
+import {mat1_basic_triangles} from "../materials/mat1_basic_triangles.js";
+import {mat1_basic_wireframe} from "../materials/mat1_basic_wireframe.js";
+import {mat1_diffuse_gouraud} from "../materials/mat1_diffuse_gouraud.js";
+import {mat1_diffuse_phong} from "../materials/mat1_diffuse_phong.js";
+import {mat1_specular_gouraud} from "../materials/mat1_specular_gouraud.js";
+import {mat1_specular_phong} from "../materials/mat1_specular_phong.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
@@ -34,15 +32,13 @@ export class Game {
     Canvas = document.querySelector("canvas")!;
     Gl = this.Canvas.getContext("webgl2")!;
 
-    MaterialBasicPoints = mat_basic_points(this.Gl);
-    MaterialBasicWireframe = mat_basic_wireframe(this.Gl);
-    MaterialBasicTriangles = mat_basic_triangles(this.Gl);
-    MaterialDiffuseFlat = mat_diffuse_flat(this.Gl);
-    MaterialDiffuseGouraud = mat_diffuse_gouraud(this.Gl);
-    MaterialDiffusePhong = mat_diffuse_phong(this.Gl);
-    MaterialSpecularFlat = mat_specular_flat(this.Gl);
-    MaterialSpecularGouraud = mat_specular_gouraud(this.Gl);
-    MaterialSpecularPhong = mat_specular_phong(this.Gl);
+    MaterialBasicPoints = mat1_basic_points(this.Gl);
+    MaterialBasicWireframe = mat1_basic_wireframe(this.Gl);
+    MaterialBasicTriangles = mat1_basic_triangles(this.Gl);
+    MaterialDiffuseGouraud = mat1_diffuse_gouraud(this.Gl);
+    MaterialDiffusePhong = mat1_diffuse_phong(this.Gl);
+    MaterialSpecularGouraud = mat1_specular_gouraud(this.Gl);
+    MaterialSpecularPhong = mat1_specular_phong(this.Gl);
 
     MeshCube = mesh_cube(this.Gl);
     MeshIcosphereFlat = mesh_icosphere_flat(this.Gl);

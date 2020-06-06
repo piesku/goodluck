@@ -8,7 +8,7 @@ import {Game} from "../game.js";
 export function blueprint_box(game: Game) {
     return <Blueprint>{
         Using: [
-            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1]),
+            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 0.3, 0, 1]),
             collide(true),
             rigid_body(true),
             lifespan(7),
