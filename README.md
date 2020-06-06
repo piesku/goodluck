@@ -69,12 +69,14 @@ features are strictly compile-only: they compile to zero bytes of JavaScript.
 
 ## Creating a New Project
 
-When you're ready to start a new project, rename `NewProject2D` or
-`NewProject3D` to a name of your choosing (or simply `src`). Alternatively,
-you may want to start basing on one of the included example projects. Feel
-free to copy components and systems from other examples as needed, but keep in
-mind that you might need to adjust the code slightly to make it work for your
-use-case.
+When you're ready to start a new project, copy or rename one of the existing
+examples to `src`. `NewProject2D` and `NewProject3D` are two minimal examples
+which can provide a good general base for your work. `WebGL2` is like
+`NewProject3D` but it uses WebGL2 which isn't supported in Safari nor iOS.
+
+Feel free to copy components and systems from other examples as needed, but
+keep in mind that you might need to adjust the code slightly to make it work
+for your use-case.
 
 When copying components, remember to add corresponding `Has` enum variants in
 `components/com_index.ts`. If the added components store data, make room for
@@ -88,6 +90,7 @@ directories in the repository! It's completely yours to hack and customize.
 Production builds are bundled into a single `.js` file and optimized for
 size. You can find them in `play/`.
 
-1. Edit the `INDEX` path in `play/Makefile` to match the entry point of your project.
+1. (Optional) Edit the `EXAMPLE` path in `play/Makefile` if you called your
+   source directory something other than `src`.
 2. `make -C play`
 3. Open `play/index.html` in the browser.
