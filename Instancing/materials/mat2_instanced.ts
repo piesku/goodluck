@@ -72,6 +72,8 @@ let fragment = `#version 300 es\n
     }
 `;
 
+// Instanced drawing can also be used in WebGL1 via an extension:
+// https://developer.mozilla.org/en-US/docs/Web/API/ANGLE_instanced_arrays
 export function mat2_instanced(gl: WebGL2RenderingContext): Material<InstancedLayout> {
     let program = link(gl, vertex, fragment);
     return {

@@ -64,7 +64,16 @@ export function create_texture_rgba(gl: WebGLRenderingContext, width: number, he
     return texture;
 }
 
-export function create_texture_depth(gl: WebGLRenderingContext, width: number, height: number) {
+export function create_render_buffer(gl: WebGLRenderingContext, width: number, height: number) {
+    let buffer = gl.createRenderbuffer()!;
+    gl.bindRenderbuffer(gl.RENDERBUFFER, buffer);
+    gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, width, height);
+    return buffer;
+}
+
+// Depth textures are a WebGL2 feature. They can also be used in WebGL1 via an extension:
+// https://developer.mozilla.org/en-US/docs/Web/API/WEBGL_draw_buffers
+export function create_texture_depth(gl: WebGL2RenderingContext, width: number, height: number) {
     let texture = gl.createTexture()!;
     gl.bindTexture(GL_TEXTURE_2D, texture);
     gl.texImage2D(

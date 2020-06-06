@@ -36,6 +36,6 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [1, 0, 0],
         Rotation: [0.707, 0, 0, 0.707],
-        Using: [render_textured(game.MaterialTextured, game.MeshPlane, game.Textures.RenderRgba)],
+        Using: [render_textured(game.MaterialTextured, game.MeshPlane, game.Textures.Minimap)],
     });
 }

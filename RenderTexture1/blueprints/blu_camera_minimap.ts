@@ -14,8 +14,8 @@ export function blueprint_camera_minimap(game: Game) {
                         1,
                         0.1,
                         1000,
-                        game.Textures.RenderRgba,
-                        game.Textures.RenderDepth,
+                        game.Textures.Minimap,
+                        game.RenderBuffers.Minimap,
                         256,
                         256,
                         [0, 0, 1, 1]

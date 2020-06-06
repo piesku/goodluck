@@ -1,10 +1,10 @@
-import {create_texture_depth, create_texture_rgba} from "../common/texture.js";
+import {create_render_buffer, create_texture_rgba} from "../common/texture.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_plane} from "../meshes/plane.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
-import {mat1_textured} from "./materials/mat_textured.js";
+import {mat1_textured} from "./materials/mat1_textured.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_render} from "./systems/sys_render.js";
@@ -30,8 +30,10 @@ export class Game {
     MeshPlane = mesh_plane(this.Gl);
 
     Textures: Record<string, WebGLTexture> = {
-        RenderRgba: create_texture_rgba(this.Gl, 256, 256),
-        RenderDepth: create_texture_depth(this.Gl, 256, 256),
+        Minimap: create_texture_rgba(this.Gl, 256, 256),
+    };
+    RenderBuffers: Record<string, WebGLRenderbuffer> = {
+        Minimap: create_render_buffer(this.Gl, 256, 256),
     };
 
     Cameras: Array<Camera> = [];
