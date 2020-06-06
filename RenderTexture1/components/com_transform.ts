@@ -1,7 +1,6 @@
 import {create} from "../../common/mat4.js";
 import {Mat4, Quat, Vec3} from "../../common/math.js";
 import {Entity, Game} from "../game.js";
-import {World} from "../world.js";
 import {Has} from "./com_index.js";
 
 export interface Transform {
@@ -40,27 +39,4 @@ export function transform(
             Dirty: true,
         };
     };
-}
-
-/**
- * Get all component instances of a given type from the current entity and all
- * its children.
- *
- * @param world World object which stores the component data.
- * @param transform The transform to traverse.
- * @param component Component data array.
- * @param mask Component mask to look for.
- */
-export function* components_of_type<T>(
-    world: World,
-    transform: Transform,
-    component: Array<T>,
-    mask: Has
-): IterableIterator<T> {
-    if (world.Mask[transform.EntityId] & mask) {
-        yield component[transform.EntityId];
-    }
-    for (let child of transform.Children) {
-        yield* components_of_type(world, child, component, mask);
-    }
 }
