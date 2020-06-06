@@ -28,7 +28,7 @@ export function create_texture_from(gl: WebGLRenderingContext, image: HTMLImageE
     gl.texImage2D(GL_TEXTURE_2D, 0, GL_RGBA, GL_RGBA, GL_PIXEL_UNSIGNED_BYTE, image);
     gl.generateMipmap(GL_TEXTURE_2D);
 
-    // WebGL1 can only generate mipmaps for square power of 2 images.
+    // WebGL1 can only mipmap images which are a power of 2 in both dimensions.
     if (is_power_of_2(image.width) && is_power_of_2(image.height)) {
         gl.generateMipmap(gl.TEXTURE_2D);
     } else {
