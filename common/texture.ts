@@ -8,6 +8,7 @@ import {
     GL_PIXEL_UNSIGNED_BYTE,
     GL_RGBA,
     GL_TEXTURE_2D,
+    GL_TEXTURE_MAG_FILTER,
     GL_TEXTURE_MIN_FILTER,
     GL_TEXTURE_WRAP_S,
     GL_TEXTURE_WRAP_T,
@@ -26,6 +27,17 @@ export function create_texture_from(gl: WebGLRenderingContext, image: HTMLImageE
     gl.bindTexture(GL_TEXTURE_2D, texture);
     gl.texImage2D(GL_TEXTURE_2D, 0, GL_RGBA, GL_RGBA, GL_PIXEL_UNSIGNED_BYTE, image);
     gl.generateMipmap(GL_TEXTURE_2D);
+
+    // WebGL1 can only generate mipmaps for square power of 2 images.
+    if (is_power_of_2(image.width) && is_power_of_2(image.height)) {
+        gl.generateMipmap(gl.TEXTURE_2D);
+    } else {
+        gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    }
+
     return texture;
 }
 
@@ -45,6 +57,7 @@ export function create_texture_rgba(gl: WebGLRenderingContext, width: number, he
     );
 
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
@@ -67,8 +80,13 @@ export function create_texture_depth(gl: WebGLRenderingContext, width: number, h
     );
 
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
     return texture;
+}
+
+function is_power_of_2(value: number) {
+    return (value & (value - 1)) == 0;
 }

@@ -1,5 +1,5 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
-import {mat_diffuse_gouraud} from "../materials/mat_diffuse_gouraud.js";
+import {mat2_diffuse_gouraud} from "../materials/mat2_diffuse_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop, vr_init} from "./core.js";
@@ -27,7 +27,7 @@ export class Game {
     VrDisplay?: VRDisplay;
     VrFrameData?: VRFrameData;
 
-    MaterialDiffuseGouraud = mat_diffuse_gouraud(this.Gl);
+    MaterialDiffuseGouraud = mat2_diffuse_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
 
     Camera?: Camera;

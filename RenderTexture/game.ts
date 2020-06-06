@@ -4,7 +4,7 @@ import {mesh_cube} from "../meshes/cube.js";
 import {mesh_plane} from "../meshes/plane.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
-import {mat_textured} from "./materials/mat_textured.js";
+import {mat1_textured} from "./materials/mat_textured.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_render} from "./systems/sys_render.js";
@@ -22,9 +22,10 @@ export class Game {
     ViewportResized = false;
 
     Canvas = document.querySelector("canvas")!;
-    Gl = this.Canvas.getContext("webgl2")!;
+    Gl = this.Canvas.getContext("webgl")!;
+    ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
-    MaterialTextured = mat_textured(this.Gl);
+    MaterialTextured = mat1_textured(this.Gl);
     MeshCube = mesh_cube(this.Gl);
     MeshPlane = mesh_plane(this.Gl);
 

@@ -1,6 +1,6 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
-import {mat_diffuse_flat} from "../materials/mat_diffuse_flat.js";
-import {mat_specular_phong} from "../materials/mat_specular_phong.js";
+import {mat1_diffuse_gouraud} from "../materials/mat1_diffuse_gouraud.js";
+import {mat1_specular_phong} from "../materials/mat1_specular_phong.js";
 import {mesh_monkey_flat} from "../meshes/monkey_flat.js";
 import {mesh_monkey_smooth} from "../meshes/monkey_smooth.js";
 import {Camera} from "./components/com_camera.js";
@@ -23,10 +23,11 @@ export class Game {
 
     Ui = document.querySelector("main")!;
     Canvas = document.querySelector("canvas")!;
-    Gl = this.Canvas.getContext("webgl2")!;
+    Gl = this.Canvas.getContext("webgl")!;
+    ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
-    MaterialDiffuseFlat = mat_diffuse_flat(this.Gl);
-    MaterialSpecularPhong = mat_specular_phong(this.Gl);
+    MaterialDiffuseGouraud = mat1_diffuse_gouraud(this.Gl);
+    MaterialSpecularPhong = mat1_specular_phong(this.Gl);
     MeshMonkeyFlat = mesh_monkey_flat(this.Gl);
     MeshMonkeySmooth = mesh_monkey_smooth(this.Gl);
 
