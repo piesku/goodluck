@@ -4,6 +4,7 @@ import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
 import {sys_animate} from "./systems/sys_animate.js";
+import {sys_audio} from "./systems/sys_audio.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control} from "./systems/sys_control.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -28,6 +29,7 @@ export class Game {
     Canvas = document.querySelector("canvas")!;
     Gl = this.Canvas.getContext("webgl")!;
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
+    Audio = new (window["AudioContext"] || window.webkitAudioContext)();
 
     MaterialDiffuseGouraud = mat1_diffuse_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
@@ -70,6 +72,7 @@ export class Game {
         sys_control(this, delta);
         sys_animate(this, delta);
         sys_transform(this, delta);
+        sys_audio(this, delta);
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render(this, delta);

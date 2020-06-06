@@ -2,8 +2,10 @@ import {Animate} from "../components/com_animate.js";
 import {Has} from "../components/com_index.js";
 import {components_of_type} from "../components/com_transform.js";
 import {Entity, Game} from "../game.js";
+import {snd_jump} from "../sounds/snd_jump.js";
+import {snd_walk} from "../sounds/snd_walk.js";
 
-const QUERY = Has.Transform | Has.Control;
+const QUERY = Has.Transform | Has.Control | Has.AudioSource;
 
 export function sys_control(game: Game, delta: number) {
     for (let i = 0; i < game.World.Mask.length; i++) {
@@ -15,14 +17,17 @@ export function sys_control(game: Game, delta: number) {
 
 function update(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
-    let trigger: Animate["Trigger"];
+    let audio = game.World.AudioSource[entity];
+    let anim: Animate["Trigger"];
 
     if (game.InputState["Space"]) {
-        trigger = "jump";
+        anim = "jump";
+        audio.Trigger = snd_jump;
     } else if (game.InputState["ArrowUp"]) {
-        trigger = "move";
+        anim = "move";
+        audio.Trigger = snd_walk;
     } else {
-        trigger = "idle";
+        anim = "idle";
     }
 
     for (let animate of components_of_type<Animate>(
@@ -31,6 +36,6 @@ function update(game: Game, entity: Entity) {
         game.World.Animate,
         Has.Animate
     )) {
-        animate.Trigger = trigger;
+        animate.Trigger = anim;
     }
 }

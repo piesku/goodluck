@@ -2,6 +2,7 @@ import {set_seed} from "../../common/random.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {blueprint_character} from "../blueprints/blu_character.js";
 import {animate, AnimationFlag} from "../components/com_animate.js";
+import {audio_source} from "../components/com_audio_source.js";
 import {control} from "../components/com_control.js";
 import {light_directional} from "../components/com_light.js";
 import {instantiate} from "../core.js";
@@ -59,6 +60,7 @@ export function scene_stage(game: Game) {
                     Flags: AnimationFlag.Loop,
                 },
             }),
+            audio_source(),
         ],
     });
 }
