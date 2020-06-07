@@ -8,8 +8,9 @@ import {Entity, Game} from "../game.js";
 
 interface Wireframe {
     entity: Entity;
-    anchor: Transform;
     transform: Transform;
+    anchor_entity: Entity;
+    anchor_transform: Transform;
 }
 const wireframes: Map<Transform | Collide, Wireframe> = new Map();
 
@@ -18,11 +19,11 @@ export function sys_debug(game: Game, delta: number) {
     for (let [key, wireframe] of wireframes) {
         if (
             // If the entity doesn't have TRANSFORM...
-            !(game.World.Mask[wireframe.entity] & Has.Transform) ||
+            !(game.World.Mask[wireframe.anchor_entity] & Has.Transform) ||
             // ...or if it's not the same TRANSFORM.
-            game.World.Transform[wireframe.entity] !== wireframe.anchor
+            game.World.Transform[wireframe.anchor_entity] !== wireframe.anchor_transform
         ) {
-            destroy(game.World, wireframe.transform.Entity);
+            destroy(game.World, wireframe.entity);
             wireframes.delete(key);
         }
     }
@@ -38,58 +39,60 @@ export function sys_debug(game: Game, delta: number) {
 
             // Draw invisible entities.
             if (!(game.World.Mask[i] & Has.Render)) {
-                wireframe_entity(game, i);
+                wireframe_invisible(game, i);
             }
         }
     }
 }
 
-function wireframe_entity(game: Game, entity: Entity) {
-    let entity_transform = game.World.Transform[entity];
-    let wireframe = wireframes.get(entity_transform);
+function wireframe_invisible(game: Game, entity: Entity) {
+    let anchor_transform = game.World.Transform[entity];
+    let wireframe = wireframes.get(anchor_transform);
 
     if (!wireframe) {
-        let box = instantiate(game, {
+        let wireframe_entity = instantiate(game, {
             Using: [render_basic(game.MaterialBasicWireframe, game.MeshCube, [1, 0, 1, 1])],
         });
-        let wireframe_transform = game.World.Transform[box];
-        wireframe_transform.World = entity_transform.World;
+        let wireframe_transform = game.World.Transform[wireframe_entity];
+        wireframe_transform.World = anchor_transform.World;
         wireframe_transform.Dirty = false;
-        wireframes.set(entity_transform, {
-            entity,
-            anchor: entity_transform,
+        wireframes.set(anchor_transform, {
+            entity: wireframe_entity,
             transform: wireframe_transform,
+            anchor_entity: entity,
+            anchor_transform: anchor_transform,
         });
     }
 }
 
 function wireframe_collider(game: Game, entity: Entity) {
-    let transform = game.World.Transform[entity];
-    let collide = game.World.Collide[entity];
+    let anchor_transform = game.World.Transform[entity];
+    let anchor_collide = game.World.Collide[entity];
 
-    let wireframe = wireframes.get(collide);
+    let wireframe = wireframes.get(anchor_collide);
     if (!wireframe) {
-        let box = instantiate(game, {
-            Translation: collide.Center,
-            Scale: scale([0, 0, 0], collide.Half, 2),
+        let wireframe_entity = instantiate(game, {
+            Translation: anchor_collide.Center,
+            Scale: scale([0, 0, 0], anchor_collide.Half, 2),
             Using: [render_basic(game.MaterialBasicWireframe, game.MeshCube, [0, 1, 0, 1])],
         });
         wireframe = {
-            entity,
-            anchor: transform,
-            transform: game.World.Transform[box],
+            entity: wireframe_entity,
+            transform: game.World.Transform[wireframe_entity],
+            anchor_entity: entity,
+            anchor_transform: anchor_transform,
         };
-        wireframes.set(collide, wireframe);
+        wireframes.set(anchor_collide, wireframe);
     }
 
-    if (collide.Dynamic) {
-        wireframe.transform.Translation = collide.Center;
-        scale(wireframe.transform.Scale, collide.Half, 2);
+    if (anchor_collide.Dynamic) {
+        wireframe.transform.Translation = anchor_collide.Center;
+        scale(wireframe.transform.Scale, anchor_collide.Half, 2);
         wireframe.transform.Dirty = true;
     }
 
-    let render = game.World.Render[wireframe.transform.Entity];
-    if (collide.Collisions.length > 0) {
+    let render = game.World.Render[wireframe.entity];
+    if (anchor_collide.Collisions.length > 0) {
         render.Color[2] = 1;
     } else {
         render.Color[2] = 0;
