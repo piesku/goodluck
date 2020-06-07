@@ -33,8 +33,8 @@ export function collide(Dynamic: boolean = true, Size: [number, number, number] 
 }
 
 export interface Collision {
-    /** The other collider in the collision. */
-    Other: Collide;
+    /** The other entity in the collision. */
+    Other: Entity;
     /** The direction and magnitude of the hit from this collider's POV. */
     Hit: Vec3;
 }
