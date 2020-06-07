@@ -1,6 +1,6 @@
 import {Animate} from "../components/com_animate.js";
 import {Has} from "../components/com_index.js";
-import {components_of_type} from "../components/com_transform.js";
+import {query_all} from "../components/com_transform.js";
 import {Entity, Game} from "../game.js";
 import {snd_jump} from "../sounds/snd_jump.js";
 import {snd_walk} from "../sounds/snd_walk.js";
@@ -29,12 +29,7 @@ function update(game: Game, entity: Entity) {
         anim = "idle";
     }
 
-    for (let animate of components_of_type<Animate>(
-        game.World,
-        entity,
-        game.World.Animate,
-        Has.Animate
-    )) {
-        animate.Trigger = anim;
+    for (let descendant of query_all(game.World, entity, Has.Animate)) {
+        game.World.Animate[descendant].Trigger = anim;
     }
 }

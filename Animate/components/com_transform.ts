@@ -40,24 +40,18 @@ export function transform(
 }
 
 /**
- * Get all component instances of a given type from the current entity and all
- * its children.
+ * Yield entities matching a component mask. The query is tested against the
+ * parent and all its descendants.
  *
  * @param world World object which stores the component data.
- * @param transform The transform to traverse.
- * @param component Component data array.
+ * @param parent Parent entity to traverse.
  * @param mask Component mask to look for.
  */
-export function* components_of_type<T>(
-    world: World,
-    entity: Entity,
-    component: Array<T>,
-    mask: Has
-): IterableIterator<T> {
-    if (world.Mask[entity] & mask) {
-        yield component[entity];
+export function* query_all(world: World, parent: Entity, mask: Has): IterableIterator<Entity> {
+    if (world.Mask[parent] & mask) {
+        yield parent;
     }
-    for (let child of world.Transform[entity].Children) {
-        yield* components_of_type(world, child, component, mask);
+    for (let child of world.Transform[parent].Children) {
+        yield* query_all(world, child, mask);
     }
 }
