@@ -16,16 +16,16 @@ export interface Transform2D {
     Scale: Vec2;
     /** This Transform's entity id. */
     readonly EntityId: Entity;
-    Parent?: Transform2D;
-    Children: Array<Transform2D>;
+    Parent?: Entity;
+    Children: Array<Entity>;
     Dirty: boolean;
 }
 
 export function transform2d(Translation: Vec2 = [0, 0], Rotation: Rad = 0, Scale: Vec2 = [1, 1]) {
-    return (game: Game, EntityId: Entity) => {
-        game.World.Mask[EntityId] |= Has.Transform2D;
-        game.World.Transform2D[EntityId] = {
-            EntityId,
+    return (game: Game, entity: Entity) => {
+        game.World.Mask[entity] |= Has.Transform2D;
+        game.World.Transform2D[entity] = {
+            EntityId: entity,
             World: create(),
             Self: create(),
             Translation,

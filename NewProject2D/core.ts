@@ -59,8 +59,8 @@ export function instantiate(
     for (let subtree of Children) {
         let child = instantiate(game, subtree);
         let child_transform = game.World.Transform2D[child];
-        child_transform.Parent = entity_transform;
-        entity_transform.Children.push(child_transform);
+        child_transform.Parent = entity;
+        entity_transform.Children.push(child);
     }
     return entity;
 }
@@ -69,7 +69,7 @@ export function destroy(world: World, entity: Entity) {
     let mask = world.Mask[entity];
     if (mask & Has.Transform2D) {
         for (let child of world.Transform2D[entity].Children) {
-            destroy(world, child.EntityId);
+            destroy(world, child);
         }
     }
     world.Mask[entity] = 0;
