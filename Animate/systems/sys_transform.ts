@@ -1,6 +1,8 @@
 import {from_rotation_translation_scale, invert, multiply} from "../../common/mat4.js";
 import {Has} from "../components/com_index.js";
+import {Transform} from "../components/com_transform.js";
 import {Entity, Game} from "../game.js";
+import {World} from "../world.js";
 
 const QUERY = Has.Transform;
 
@@ -16,7 +18,7 @@ function update(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
     if (transform.Dirty) {
         transform.Dirty = false;
-        set_children_as_dirty(game, transform.Children);
+        set_children_as_dirty(game.World, transform);
 
         from_rotation_translation_scale(
             transform.World,
@@ -34,10 +36,10 @@ function update(game: Game, entity: Entity) {
     }
 }
 
-function set_children_as_dirty(game: Game, children: Array<Entity>) {
-    for (let child of children) {
-        let transform = game.World.Transform[child];
-        transform.Dirty = true;
-        set_children_as_dirty(game, transform.Children);
+function set_children_as_dirty(world: World, transform: Transform) {
+    for (let child of transform.Children) {
+        let child_transform = world.Transform[child];
+        child_transform.Dirty = true;
+        set_children_as_dirty(world, child_transform);
     }
 }

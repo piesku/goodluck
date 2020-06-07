@@ -16,8 +16,8 @@ export interface Transform {
     Scale: Vec3;
     /** This Transform's entity id. */
     readonly EntityId: Entity;
-    Parent?: Transform;
-    Children: Array<Transform>;
+    Parent?: Entity;
+    Children: Array<Entity>;
     Dirty: boolean;
 }
 
@@ -26,10 +26,10 @@ export function transform(
     Rotation: Quat = [0, 0, 0, 1],
     Scale: Vec3 = [1, 1, 1]
 ) {
-    return (game: Game, EntityId: Entity) => {
-        game.World.Mask[EntityId] |= Has.Transform;
-        game.World.Transform[EntityId] = {
-            EntityId,
+    return (game: Game, entity: Entity) => {
+        game.World.Mask[entity] |= Has.Transform;
+        game.World.Transform[entity] = {
+            EntityId: entity,
             World: create(),
             Self: create(),
             Translation,

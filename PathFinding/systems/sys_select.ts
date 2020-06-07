@@ -31,7 +31,8 @@ function update(game: Game, entity: Entity) {
             selectable.Selected = true;
             game.World.Mask[entity] |= Has.ControlPlayer;
 
-            let selection = transform.Children[0].EntityId;
+            // Selection box is the first child.
+            let selection = transform.Children[0];
             game.World.Mask[selection] |= Has.Draw;
         }
     } else {
@@ -49,7 +50,8 @@ function update(game: Game, entity: Entity) {
             selectable.Selected = false;
             game.World.Mask[entity] &= ~Has.ControlPlayer;
 
-            let selection = transform.Children[0].EntityId;
+            // Selection box is the first child.
+            let selection = transform.Children[0];
             game.World.Mask[selection] &= ~Has.Draw;
         }
     }
