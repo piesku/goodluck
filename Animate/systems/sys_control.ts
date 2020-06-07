@@ -5,7 +5,7 @@ import {Entity, Game} from "../game.js";
 import {snd_jump} from "../sounds/snd_jump.js";
 import {snd_walk} from "../sounds/snd_walk.js";
 
-const QUERY = Has.Transform | Has.Control | Has.AudioSource;
+const QUERY = Has.Control | Has.AudioSource;
 
 export function sys_control(game: Game, delta: number) {
     for (let i = 0; i < game.World.Mask.length; i++) {
@@ -16,7 +16,6 @@ export function sys_control(game: Game, delta: number) {
 }
 
 function update(game: Game, entity: Entity) {
-    let transform = game.World.Transform[entity];
     let audio = game.World.AudioSource[entity];
     let anim: Animate["Trigger"];
 
@@ -32,7 +31,7 @@ function update(game: Game, entity: Entity) {
 
     for (let animate of components_of_type<Animate>(
         game.World,
-        transform,
+        entity,
         game.World.Animate,
         Has.Animate
     )) {

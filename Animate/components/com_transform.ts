@@ -17,8 +17,8 @@ export interface Transform {
     Scale: Vec3;
     /** This Transform's entity id. */
     readonly EntityId: Entity;
-    Parent?: Transform;
-    Children: Array<Transform>;
+    Parent?: Entity;
+    Children: Array<Entity>;
     Dirty: boolean;
 }
 
@@ -27,10 +27,10 @@ export function transform(
     Rotation: Quat = [0, 0, 0, 1],
     Scale: Vec3 = [1, 1, 1]
 ) {
-    return (game: Game, EntityId: Entity) => {
-        game.World.Mask[EntityId] |= Has.Transform;
-        game.World.Transform[EntityId] = {
-            EntityId,
+    return (game: Game, entity: Entity) => {
+        game.World.Mask[entity] |= Has.Transform;
+        game.World.Transform[entity] = {
+            EntityId: entity,
             World: create(),
             Self: create(),
             Translation,
@@ -53,14 +53,14 @@ export function transform(
  */
 export function* components_of_type<T>(
     world: World,
-    transform: Transform,
+    entity: Entity,
     component: Array<T>,
     mask: Has
 ): IterableIterator<T> {
-    if (world.Mask[transform.EntityId] & mask) {
-        yield component[transform.EntityId];
+    if (world.Mask[entity] & mask) {
+        yield component[entity];
     }
-    for (let child of transform.Children) {
+    for (let child of world.Transform[entity].Children) {
         yield* components_of_type(world, child, component, mask);
     }
 }
