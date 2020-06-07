@@ -27,7 +27,7 @@ function update(game: Game, entity: Entity, delta: number) {
 
         for (let i = 0; i < collide.Collisions.length; i++) {
             let collision = collide.Collisions[i];
-            if (game.World.Mask[collision.Other.EntityId] & Has.RigidBody) {
+            if (game.World.Mask[collision.Other] & Has.RigidBody) {
                 // Dynamic rigid bodies are only supported for top-level
                 // entities. Thus, no need to apply the world → self → local
                 // conversion to the collision response. Local space is world space.

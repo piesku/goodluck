@@ -51,10 +51,10 @@ function update(game: Game, entity: Entity, pickables: Array<Collide>) {
     let hit = ray_intersect_aabb(pickables, origin, direction);
     if (hit) {
         let collider = hit.Collider as Collide;
-        let entity = collider.EntityId;
+        let entity = collider.Entity;
 
         game.Pick = {
-            EntityId: entity,
+            Entity: entity,
             Collider: collider,
             Point: hit.Point,
         };
@@ -84,7 +84,7 @@ function update(game: Game, entity: Entity, pickables: Array<Collide>) {
 }
 
 export interface Picked {
-    EntityId: Entity;
+    Entity: Entity;
     Collider: Collide;
     Point: Vec3;
     TriIndex?: number;

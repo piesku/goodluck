@@ -4,7 +4,7 @@ import {Entity, Game} from "../game.js";
 import {Has} from "./com_index.js";
 
 export interface Collide extends AABB {
-    readonly EntityId: Entity;
+    readonly Entity: Entity;
     New: boolean;
     /**
      * Dynamic colliders collide with all colliders. Static colliders collide
@@ -16,10 +16,10 @@ export interface Collide extends AABB {
 }
 
 export function collide(Dynamic: boolean = true, Size: [number, number, number] = [1, 1, 1]) {
-    return (game: Game, EntityId: Entity) => {
-        game.World.Mask[EntityId] |= Has.Collide;
-        game.World.Collide[EntityId] = {
-            EntityId,
+    return (game: Game, entity: Entity) => {
+        game.World.Mask[entity] |= Has.Collide;
+        game.World.Collide[entity] = {
+            Entity: entity,
             New: true,
             Dynamic,
             Size,
@@ -33,8 +33,8 @@ export function collide(Dynamic: boolean = true, Size: [number, number, number] 
 }
 
 export interface Collision {
-    /** The other collider in the collision. */
-    Other: Collide;
+    /** The other entity in the collision. */
+    Other: Entity;
     /** The direction and magnitude of the hit from this collider's POV. */
     Hit: Vec3;
 }

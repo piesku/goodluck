@@ -16,7 +16,7 @@ function update(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
     let selectable = game.World.Selectable[entity];
 
-    if (game.Pick?.EntityId === entity) {
+    if (game.Pick?.Entity === entity) {
         // When the cursor is over the entity…
 
         // …highlight it
@@ -31,7 +31,8 @@ function update(game: Game, entity: Entity) {
             selectable.Selected = true;
             game.World.Mask[entity] |= Has.ControlPlayer;
 
-            let selection = transform.Children[0].EntityId;
+            // Selection box is the first child.
+            let selection = transform.Children[0];
             game.World.Mask[selection] |= Has.Draw;
         }
     } else {
@@ -49,7 +50,8 @@ function update(game: Game, entity: Entity) {
             selectable.Selected = false;
             game.World.Mask[entity] &= ~Has.ControlPlayer;
 
-            let selection = transform.Children[0].EntityId;
+            // Selection box is the first child.
+            let selection = transform.Children[0];
             game.World.Mask[selection] &= ~Has.Draw;
         }
     }

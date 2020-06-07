@@ -39,9 +39,10 @@ function update(game: Game, entity: Entity, delta: number) {
         scale(world_direction, world_direction, move.MoveSpeed * delta);
         let new_position = add([0, 0, 0], world_position, world_direction);
 
-        if (transform.Parent) {
+        if (transform.Parent !== undefined) {
+            let parent = game.World.Transform[transform.Parent];
             // Transform the movement vector into a point in the local space.
-            transform_point(new_position, new_position, transform.Parent.Self);
+            transform_point(new_position, new_position, parent.Self);
         }
         transform.Translation = new_position;
         transform.Dirty = true;

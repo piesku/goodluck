@@ -2,6 +2,7 @@ import {from_rotation_translation_scale, invert, multiply} from "../../common/ma
 import {Has} from "../components/com_index.js";
 import {Transform} from "../components/com_transform.js";
 import {Entity, Game} from "../game.js";
+import {World} from "../world.js";
 
 const QUERY = Has.Transform;
 
@@ -15,10 +16,9 @@ export function sys_transform(game: Game, delta: number) {
 
 function update(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
-
     if (transform.Dirty) {
         transform.Dirty = false;
-        set_children_as_dirty(transform);
+        set_children_as_dirty(game.World, transform);
 
         if (game.World.Mask[entity] & Has.Pose) {
             // Pose transforms have their World matrix set from XRPose by other
@@ -32,17 +32,19 @@ function update(game: Game, entity: Entity) {
             );
         }
 
-        if (transform.Parent) {
-            multiply(transform.World, transform.Parent.World, transform.World);
+        if (transform.Parent !== undefined) {
+            let parent = game.World.Transform[transform.Parent].World;
+            multiply(transform.World, parent, transform.World);
         }
 
         invert(transform.Self, transform.World);
     }
 }
 
-function set_children_as_dirty(transform: Transform) {
+function set_children_as_dirty(world: World, transform: Transform) {
     for (let child of transform.Children) {
-        child.Dirty = true;
-        set_children_as_dirty(child);
+        let child_transform = world.Transform[child];
+        child_transform.Dirty = true;
+        set_children_as_dirty(world, child_transform);
     }
 }

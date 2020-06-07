@@ -8,9 +8,9 @@ export interface Rotate {
 }
 
 export function rotate(rotation: Vec3) {
-    return (game: Game, EntityId: Entity) => {
-        game.World.Mask[EntityId] |= Has.Rotate;
-        game.World.Rotate[EntityId] = {
+    return (game: Game, entity: Entity) => {
+        game.World.Mask[entity] |= Has.Rotate;
+        game.World.Rotate[entity] = {
             Rotation: rotation,
         };
     };

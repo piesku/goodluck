@@ -8,7 +8,6 @@ import {loop_start, loop_stop} from "./core.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
-import {sys_debug} from "./systems/sys_debug.js";
 import {sys_draw} from "./systems/sys_draw.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -104,9 +103,5 @@ export class Game {
         sys_render(this, delta);
         sys_draw(this, delta);
         sys_framerate(this, delta, performance.now() - now);
-
-        if (false) {
-            sys_debug(this, delta);
-        }
     }
 }

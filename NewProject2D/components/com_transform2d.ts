@@ -1,6 +1,7 @@
 import {create} from "../../common/mat2d.js";
 import {Mat2D, Rad, Vec2} from "../../common/math.js";
 import {Entity, Game} from "../game.js";
+import {World} from "../world.js";
 import {Has} from "./com_index.js";
 
 export interface Transform2D {
@@ -14,18 +15,15 @@ export interface Transform2D {
     Rotation: Rad;
     /** Local scale relative to the parent. */
     Scale: Vec2;
-    /** This Transform's entity id. */
-    readonly EntityId: Entity;
-    Parent?: Transform2D;
-    Children: Array<Transform2D>;
+    Parent?: Entity;
+    Children: Array<Entity>;
     Dirty: boolean;
 }
 
 export function transform2d(Translation: Vec2 = [0, 0], Rotation: Rad = 0, Scale: Vec2 = [1, 1]) {
-    return (game: Game, EntityId: Entity) => {
-        game.World.Mask[EntityId] |= Has.Transform2D;
-        game.World.Transform2D[EntityId] = {
-            EntityId,
+    return (game: Game, entity: Entity) => {
+        game.World.Mask[entity] |= Has.Transform2D;
+        game.World.Transform2D[entity] = {
             World: create(),
             Self: create(),
             Translation,
@@ -35,4 +33,21 @@ export function transform2d(Translation: Vec2 = [0, 0], Rotation: Rad = 0, Scale
             Dirty: true,
         };
     };
+}
+
+/**
+ * Yield entities matching a component mask. The query is tested against the
+ * parent and all its descendants.
+ *
+ * @param world World object which stores the component data.
+ * @param parent Parent entity to traverse.
+ * @param mask Component mask to look for.
+ */
+export function* query_all(world: World, parent: Entity, mask: Has): IterableIterator<Entity> {
+    if (world.Mask[parent] & mask) {
+        yield parent;
+    }
+    for (let child of world.Transform2D[parent].Children) {
+        yield* query_all(world, child, mask);
+    }
 }
