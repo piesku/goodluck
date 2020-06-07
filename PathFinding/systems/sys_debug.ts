@@ -22,7 +22,7 @@ export function sys_debug(game: Game, delta: number) {
             // ...or if it's not the same TRANSFORM.
             game.World.Transform[wireframe.entity] !== wireframe.anchor
         ) {
-            destroy(game.World, wireframe.transform.EntityId);
+            destroy(game.World, wireframe.transform.Entity);
             wireframes.delete(key);
         }
     }
@@ -88,7 +88,7 @@ function wireframe_collider(game: Game, entity: Entity) {
         wireframe.transform.Dirty = true;
     }
 
-    let render = game.World.Render[wireframe.transform.EntityId];
+    let render = game.World.Render[wireframe.transform.Entity];
     if (collide.Collisions.length > 0) {
         render.Color[2] = 1;
     } else {

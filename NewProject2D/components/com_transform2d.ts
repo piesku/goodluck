@@ -15,7 +15,7 @@ export interface Transform2D {
     /** Local scale relative to the parent. */
     Scale: Vec2;
     /** This Transform's entity id. */
-    readonly EntityId: Entity;
+    readonly Entity: Entity;
     Parent?: Entity;
     Children: Array<Entity>;
     Dirty: boolean;
@@ -25,7 +25,7 @@ export function transform2d(Translation: Vec2 = [0, 0], Rotation: Rad = 0, Scale
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Transform2D;
         game.World.Transform2D[entity] = {
-            EntityId: entity,
+            Entity: entity,
             World: create(),
             Self: create(),
             Translation,

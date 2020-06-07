@@ -16,7 +16,7 @@ function update(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
     let selectable = game.World.Selectable[entity];
 
-    if (game.Pick?.EntityId === entity) {
+    if (game.Pick?.Entity === entity) {
         // When the cursor is over the entity…
 
         // …highlight it
