@@ -16,7 +16,7 @@ export function EnterVr(game: Game) {
         >
             ${game.VrDisplay?.isPresenting
                 ? ExitButton()
-                : navigator.getVRDisplays
+                : typeof navigator.getVRDisplays === "function"
                 ? game.VrDisplay
                     ? EnterButton()
                     : `<div style="padding: 1vmin">WebVR headset not found</div>`
