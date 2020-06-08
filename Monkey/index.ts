@@ -7,10 +7,7 @@ let game = new Game();
 // @ts-ignore
 window.game = game;
 
-Promise.all([
-    load_mesh("monkey_flat").then(report_progress),
-    load_mesh("monkey_smooth").then(report_progress),
-]).then(() => {
+Promise.all([load_mesh("monkey_flat"), load_mesh("monkey_smooth")]).then(() => {
     scene_stage(game);
     loop_start(game);
 });
@@ -18,9 +15,7 @@ Promise.all([
 async function load_mesh(name: string) {
     let module = await import("../meshes/" + name + ".js");
     game.Meshes[name] = module["mesh_" + name](game.Gl);
-    return name;
-}
 
-function report_progress(name: string) {
+    // Report loading progress.
     game.Ui.innerHTML += `Loading <code>${name}</code>... ✓<br>`;
 }
