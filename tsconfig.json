@@ -5,7 +5,7 @@
             "ES2019",
             "DOM",
         ],
-        "module": "es2015",
+        "module": "es2020",
         "moduleResolution": "node",
         "strict": true,
         "sourceMap": true

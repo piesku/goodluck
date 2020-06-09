@@ -1,8 +1,7 @@
+import {Mesh} from "../common/material.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_diffuse_gouraud} from "../materials/mat1_diffuse_gouraud.js";
 import {mat1_specular_phong} from "../materials/mat1_specular_phong.js";
-import {mesh_monkey_flat} from "../meshes/monkey_flat.js";
-import {mesh_monkey_smooth} from "../meshes/monkey_smooth.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -28,8 +27,8 @@ export class Game {
 
     MaterialDiffuseGouraud = mat1_diffuse_gouraud(this.Gl);
     MaterialSpecularPhong = mat1_specular_phong(this.Gl);
-    MeshMonkeyFlat = mesh_monkey_flat(this.Gl);
-    MeshMonkeySmooth = mesh_monkey_smooth(this.Gl);
+
+    Meshes: Record<string, Mesh> = {};
 
     Camera?: Camera;
     // The rendering pipeline supports 8 lights.

@@ -33,14 +33,21 @@ export function scene_stage(game: Game) {
     // Flat.
     instantiate(game, {
         Translation: [-0.7, 0.5, 0],
-        Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshMonkeyFlat, [1, 1, 0.3, 1])],
+        Using: [
+            render_diffuse(game.MaterialDiffuseGouraud, game.Meshes["monkey_flat"], [1, 1, 0.3, 1]),
+        ],
     });
 
     // Phong.
     instantiate(game, {
         Translation: [0.7, -0.5, 0],
         Using: [
-            render_specular(game.MaterialSpecularPhong, game.MeshMonkeySmooth, [1, 1, 0.3, 1], 64),
+            render_specular(
+                game.MaterialSpecularPhong,
+                game.Meshes["monkey_smooth"],
+                [1, 1, 0.3, 1],
+                64
+            ),
         ],
     });
 }
