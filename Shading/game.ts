@@ -30,7 +30,8 @@ export class Game {
 
     Ui = document.querySelector("main")!;
     Canvas = document.querySelector("canvas")!;
-    Gl = this.Canvas.getContext("webgl2")!;
+    Gl = this.Canvas.getContext("webgl")!;
+    ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
     MaterialBasicPoints = mat1_basic_points(this.Gl);
     MaterialBasicWireframe = mat1_basic_wireframe(this.Gl);

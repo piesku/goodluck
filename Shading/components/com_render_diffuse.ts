@@ -21,8 +21,8 @@ export function render_diffuse(material: Material<DiffuseLayout>, mesh: Mesh, co
     return (game: Game, entity: Entity) => {
         if (!vaos.has(mesh)) {
             // We only need to create the VAO once.
-            let vao = game.Gl.createVertexArray()!;
-            game.Gl.bindVertexArray(vao);
+            let vao = game.ExtVao.createVertexArrayOES()!;
+            game.ExtVao.bindVertexArrayOES(vao);
 
             game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
             game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
@@ -41,7 +41,7 @@ export function render_diffuse(material: Material<DiffuseLayout>, mesh: Mesh, co
 
             game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
-            game.Gl.bindVertexArray(null);
+            game.ExtVao.bindVertexArrayOES(null);
             vaos.set(mesh, vao);
         }
 
