@@ -1,8 +1,8 @@
 import {compute_aabb, intersect_aabb, penetrate_aabb} from "../../common/aabb.js";
 import {negate} from "../../common/vec3.js";
 import {Collide} from "../components/com_collide.js";
-import {Has} from "../components/com_index.js";
 import {Game} from "../game.js";
+import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Collide;
 

@@ -1,7 +1,7 @@
 import {Vec3} from "../../common/math.js";
 import {from_axis} from "../../common/quat.js";
-import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
+import {Has} from "../world.js";
 
 const QUERY = Has.Move | Has.ControlPlayer;
 const AXIS_X = <Vec3>[1, 0, 0];

@@ -1,6 +1,6 @@
 import {play_note} from "../../common/audio.js";
-import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
+import {Has} from "../world.js";
 
 const QUERY = Has.AudioSource;
 

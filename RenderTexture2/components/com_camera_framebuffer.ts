@@ -7,8 +7,8 @@ import {
     GL_TEXTURE_2D,
 } from "../../common/webgl.js";
 import {Entity, Game} from "../game.js";
+import {Has} from "../world.js";
 import {CameraKind} from "./com_camera.js";
-import {Has} from "./com_index.js";
 
 export interface CameraFramebuffer {
     Kind: CameraKind.Framebuffer;

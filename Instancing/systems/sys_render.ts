@@ -1,11 +1,11 @@
 import {Material} from "../../common/material.js";
 import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
-import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
 import {RenderInstanced} from "../components/com_render_instanced.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {InstancedLayout} from "../materials/layout_instanced.js";
+import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;
 

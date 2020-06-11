@@ -1,8 +1,7 @@
 import {Rad, Vec2} from "../common/math.js";
-import {Has} from "./components/com_index.js";
 import {transform2d} from "./components/com_transform2d.js";
 import {Entity, Game} from "./game.js";
-import {World} from "./world.js";
+import {Has, World} from "./world.js";
 
 const MAX_ENTITIES = 10000;
 

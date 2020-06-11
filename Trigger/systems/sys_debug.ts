@@ -1,10 +1,10 @@
 import {scale} from "../../common/vec3.js";
 import {Collide} from "../components/com_collide.js";
-import {Has} from "../components/com_index.js";
 import {render_basic} from "../components/com_render_basic.js";
 import {Transform} from "../components/com_transform.js";
 import {destroy, instantiate} from "../core.js";
 import {Entity, Game} from "../game.js";
+import {Has} from "../world.js";
 
 interface Wireframe {
     entity: Entity;

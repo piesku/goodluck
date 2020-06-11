@@ -1,10 +1,10 @@
 import {get_translation} from "../../common/mat4.js";
 import {GL_ARRAY_BUFFER} from "../../common/webgl.js";
-import {Has} from "../components/com_index.js";
 import {RenderPath, render_path} from "../components/com_render_path.js";
 import {instantiate} from "../core.js";
 import {Entity, Game} from "../game.js";
 import {path_find} from "../pathfind.js";
+import {Has} from "../world.js";
 import {Picked} from "./sys_pick.js";
 
 const QUERY = Has.ControlPlayer | Has.NavAgent;

@@ -8,11 +8,11 @@ import {
 } from "../../common/webgl.js";
 import {DiffuseLayout} from "../../materials/layout_diffuse.js";
 import {CameraKind, CameraPerspective, CameraXr} from "../components/com_camera.js";
-import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
 import {RenderDiffuse} from "../components/com_render_diffuse.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
+import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;
 

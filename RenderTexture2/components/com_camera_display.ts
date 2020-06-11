@@ -1,8 +1,8 @@
 import {create} from "../../common/mat4.js";
 import {Mat4, Vec4} from "../../common/math.js";
 import {Entity, Game} from "../game.js";
+import {Has} from "../world.js";
 import {CameraKind} from "./com_camera.js";
-import {Has} from "./com_index.js";
 
 export interface CameraDisplay {
     Kind: CameraKind.Display;

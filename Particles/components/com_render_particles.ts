@@ -2,7 +2,7 @@ import {Material} from "../../common/material.js";
 import {Vec3, Vec4} from "../../common/math.js";
 import {Entity, Game} from "../game.js";
 import {ParticlesLayout} from "../materials/layout_particles.js";
-import {Has} from "./com_index.js";
+import {Has} from "../world.js";
 import {RenderKind} from "./com_render.js";
 
 export interface RenderParticles {

@@ -2,8 +2,8 @@ import {multiply, perspective} from "../../common/mat4.js";
 import {CameraKind} from "../components/com_camera.js";
 import {CameraDisplay} from "../components/com_camera_display.js";
 import {CameraFramebuffer} from "../components/com_camera_framebuffer.js";
-import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
+import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Camera;
 

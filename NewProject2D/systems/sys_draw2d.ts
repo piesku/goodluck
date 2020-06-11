@@ -1,6 +1,6 @@
 import {DrawKind, DrawRect} from "../components/com_draw.js";
-import {Has} from "../components/com_index.js";
 import {Game} from "../game.js";
+import {Has} from "../world.js";
 
 const QUERY = Has.Transform2D | Has.Draw;
 

@@ -7,11 +7,11 @@ import {
     GL_FLOAT,
 } from "../../common/webgl.js";
 import {EmitParticles} from "../components/com_emit_particles.js";
-import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
 import {RenderParticles} from "../components/com_render_particles.js";
 import {Game} from "../game.js";
 import {ParticlesLayout} from "../materials/layout_particles.js";
+import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;
 

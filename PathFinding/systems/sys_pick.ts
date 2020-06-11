@@ -3,8 +3,8 @@ import {Vec3} from "../../common/math.js";
 import {ray_intersect_aabb, ray_intersect_mesh} from "../../common/raycast.js";
 import {normalize, subtract, transform_direction, transform_point} from "../../common/vec3.js";
 import {Collide} from "../components/com_collide.js";
-import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
+import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Camera | Has.Pick;
 const TARGET = Has.Transform | Has.Collide | Has.Pickable;

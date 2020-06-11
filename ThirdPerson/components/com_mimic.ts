@@ -1,5 +1,5 @@
 import {Entity, Game} from "../game.js";
-import {Has} from "./com_index.js";
+import {Has} from "../world.js";
 
 export interface Mimic {
     /** Entity whose transform to mimic. */

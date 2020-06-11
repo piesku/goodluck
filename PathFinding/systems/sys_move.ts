@@ -8,8 +8,8 @@ import {
     transform_direction,
     transform_point,
 } from "../../common/vec3.js";
-import {Has} from "../components/com_index.js";
 import {Entity, Game} from "../game.js";
+import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Move;
 

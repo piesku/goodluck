@@ -6,12 +6,12 @@ import {
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
 import {RenderTextured} from "../components/com_render_textured.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {TexturedLayout} from "../materials/layout_textured.js";
+import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;
 
