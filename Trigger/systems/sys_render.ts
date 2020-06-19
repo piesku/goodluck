@@ -2,12 +2,12 @@ import {Material} from "../../common/material.js";
 import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
 import {BasicLayout} from "../../materials/layout_basic.js";
 import {DiffuseLayout} from "../../materials/layout_diffuse.js";
-import {Has} from "../components/com_index.js";
 import {RenderKind} from "../components/com_render.js";
 import {RenderBasic} from "../components/com_render_basic.js";
 import {RenderDiffuse} from "../components/com_render_diffuse.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
+import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;
 

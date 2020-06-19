@@ -9,7 +9,7 @@ import {
 import {Entity, Game} from "../game.js";
 import {InstancedLayout} from "../materials/layout_instanced.js";
 import {Model} from "../model.js";
-import {Has} from "./com_index.js";
+import {Has} from "../world.js";
 import {RenderKind} from "./com_render.js";
 
 export interface RenderInstanced {

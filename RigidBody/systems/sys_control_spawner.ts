@@ -2,9 +2,9 @@ import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {float} from "../../common/random.js";
 import {blueprint_box} from "../blueprints/blu_box.js";
-import {Has} from "../components/com_index.js";
 import {instantiate} from "../core.js";
 import {Entity, Game} from "../game.js";
+import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.ControlSpawner;
 

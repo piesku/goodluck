@@ -1,6 +1,6 @@
 import {Mesh} from "../../common/material.js";
 import {Entity, Game} from "../game.js";
-import {Has} from "./com_index.js";
+import {Has} from "../world.js";
 
 export interface Pickable {
     Mesh?: Mesh;

@@ -2,7 +2,7 @@ import {Material, Mesh} from "../../common/material.js";
 import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
 import {Entity, Game} from "../game.js";
 import {TexturedLayout} from "../materials/layout_textured.js";
-import {Has} from "./com_index.js";
+import {Has} from "../world.js";
 import {RenderKind} from "./com_render.js";
 
 export interface RenderTextured {

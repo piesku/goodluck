@@ -3,7 +3,7 @@ import {Vec4} from "../../common/math.js";
 import {GL_ARRAY_BUFFER, GL_CW, GL_DYNAMIC_DRAW} from "../../common/webgl.js";
 import {BasicLayout} from "../../materials/layout_basic.js";
 import {Entity, Game} from "../game.js";
-import {Has} from "./com_index.js";
+import {Has} from "../world.js";
 import {RenderKind} from "./com_render.js";
 
 export interface RenderPath {

@@ -3,7 +3,6 @@ import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {collide} from "../components/com_collide.js";
 import {control_player} from "../components/com_control_player.js";
 import {draw_marker, draw_selection} from "../components/com_draw.js";
-import {Has} from "../components/com_index.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {nav_agent} from "../components/com_nav_agent.js";
@@ -14,7 +13,7 @@ import {selectable} from "../components/com_selectable.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";
 import {nav_bake} from "../navmesh.js";
-import {World} from "../world.js";
+import {Has, World} from "../world.js";
 
 export function scene_stage(game: Game) {
     game.World = new World();

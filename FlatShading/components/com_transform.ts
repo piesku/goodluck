@@ -1,8 +1,7 @@
 import {create} from "../../common/mat4.js";
 import {Mat4, Quat, Vec3} from "../../common/math.js";
 import {Entity, Game} from "../game.js";
-import {World} from "../world.js";
-import {Has} from "./com_index.js";
+import {Has, World} from "../world.js";
 
 export interface Transform {
     /** Absolute matrix relative to the world. */

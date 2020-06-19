@@ -1,8 +1,7 @@
 import {Quat, Vec3} from "../common/math.js";
-import {Has} from "./components/com_index.js";
 import {transform} from "./components/com_transform.js";
 import {Entity, Game} from "./game.js";
-import {World} from "./world.js";
+import {Has, World} from "./world.js";
 
 const MAX_ENTITIES = 10000;
 
