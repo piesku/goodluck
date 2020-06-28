@@ -105,3 +105,7 @@ export class Game {
         sys_framerate(this, delta, performance.now() - now);
     }
 }
+
+export const enum Layer {
+    None = 0,
+}
