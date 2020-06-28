@@ -5,7 +5,7 @@ import {light_directional} from "../components/com_light.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {rigid_body} from "../components/com_rigid_body.js";
 import {instantiate} from "../core.js";
-import {Game} from "../game.js";
+import {Game, Layer} from "../game.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {
@@ -32,7 +32,7 @@ export function scene_stage(game: Game) {
         Scale: [10, 1, 10],
         Using: [
             render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1]),
-            collide(false),
+            collide(false, Layer.Terrain, Layer.None),
             rigid_body(false),
         ],
     });
