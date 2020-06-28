@@ -1,37 +1,36 @@
+import {AABB} from "../../common/aabb.js";
 import {Vec3} from "../../common/math.js";
-import {Entity, Game} from "../game.js";
+import {Entity, Game, Layer} from "../game.js";
 import {Has} from "../world.js";
 
-export interface Collide {
+export interface Collide extends AABB {
     readonly Entity: Entity;
     New: boolean;
-    /**
-     * Dynamic colliders collide with all colliders. Static colliders collide
-     * only with dynamic colliders.
-     */
     Dynamic: boolean;
-    /** The size of the collider in self units. */
-    Size: [number, number, number];
-    /** The min corner of the AABB. */
-    Min: Vec3;
-    /** The max corner of the AABB. */
-    Max: Vec3;
-    /** The world position of the AABB. */
-    Center: Vec3;
-    /** The half-extents of the AABB on the three axes. */
-    Half: [number, number, number];
-    /** Collisions detected with this collider during this tick. */
+    Layers: Layer;
+    Receives: Layer;
     Collisions: Array<Collision>;
 }
 
-export function collide(Dynamic: boolean = true, Size: [number, number, number] = [1, 1, 1]) {
+/**
+ * Add the Collide component.
+ *
+ * @param dynamic Dynamic colliders collider with all colliders. Static
+ * colliders collide only with dynamic colliders.
+ * @param layers Bit mask with layers this collider is on.
+ * @param receives Bit mask with layers visible to this collider.
+ * @param size Size of the collider relative to the entity's transform.
+ */
+export function collide(dynamic: boolean, layers: Layer, receives: Layer, size: Vec3 = [1, 1, 1]) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Collide;
         game.World.Collide[entity] = {
             Entity: entity,
             New: true,
-            Dynamic,
-            Size,
+            Dynamic: dynamic,
+            Layers: layers,
+            Receives: receives,
+            Size: size,
             Min: [0, 0, 0],
             Max: [0, 0, 0],
             Center: [0, 0, 0],

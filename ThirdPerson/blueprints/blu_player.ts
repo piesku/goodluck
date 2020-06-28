@@ -6,12 +6,17 @@ import {named} from "../components/com_named.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {rigid_body} from "../components/com_rigid_body.js";
 import {Blueprint} from "../core.js";
-import {Game} from "../game.js";
+import {Game, Layer} from "../game.js";
 
 export function blueprint_player(game: Game): Blueprint {
     return {
         Rotation: [0, 1, 0, 0],
-        Using: [control_player(true, 0.2, 0), move(10, Infinity), collide(true), rigid_body(true)],
+        Using: [
+            control_player(true, 0.2, 0),
+            move(10, Infinity),
+            collide(true, Layer.Player, Layer.Terrain),
+            rigid_body(true),
+        ],
         Children: [
             {
                 // Body.
