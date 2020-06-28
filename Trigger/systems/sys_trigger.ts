@@ -13,7 +13,9 @@ export function sys_trigger(game: Game, delta: number) {
 }
 
 function update(game: Game, entity: Entity) {
-    if (game.World.Collide[entity].Collisions.length > 0) {
-        dispatch(game, game.World.Trigger[entity].Action, [entity]);
+    let collide = game.World.Collide[entity];
+    let trigger = game.World.Trigger[entity];
+    if (collide.Collisions.length > 0) {
+        dispatch(game, trigger.Action, [entity]);
     }
 }
