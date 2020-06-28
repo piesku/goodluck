@@ -1,4 +1,4 @@
-import {Game} from "./game.js";
+import {Entity, Game} from "./game.js";
 
 export const enum Action {
     Alert,
@@ -7,7 +7,8 @@ export const enum Action {
 export function dispatch(game: Game, action: Action, payload: unknown) {
     switch (action) {
         case Action.Alert: {
-            alert("Trigger activated!");
+            let [trigger, other] = payload as [Entity, Entity];
+            alert(`Trigger #${trigger} activated by entity #${other}!`);
             break;
         }
     }
