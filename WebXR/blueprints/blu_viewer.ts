@@ -6,8 +6,8 @@ import {render_diffuse} from "../components/com_render_diffuse.js";
 import {Blueprint} from "../core.js";
 import {Game} from "../game.js";
 
-export function blueprint_viewer(game: Game) {
-    return <Blueprint>{
+export function blueprint_viewer(game: Game): Blueprint {
+    return {
         Children: [
             {
                 // Headset.

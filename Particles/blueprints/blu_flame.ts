@@ -4,8 +4,8 @@ import {shake} from "../components/com_shake.js";
 import {Blueprint} from "../core.js";
 import {Game} from "../game.js";
 
-export function blueprint_flame(game: Game) {
-    return <Blueprint>{
+export function blueprint_flame(game: Game): Blueprint {
+    return {
         Children: [
             {
                 Using: [

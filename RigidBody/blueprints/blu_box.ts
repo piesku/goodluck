@@ -5,8 +5,8 @@ import {rigid_body} from "../components/com_rigid_body.js";
 import {Blueprint} from "../core.js";
 import {Game} from "../game.js";
 
-export function blueprint_box(game: Game) {
-    return <Blueprint>{
+export function blueprint_box(game: Game): Blueprint {
+    return {
         Using: [
             render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 0.3, 0, 1]),
             collide(true),

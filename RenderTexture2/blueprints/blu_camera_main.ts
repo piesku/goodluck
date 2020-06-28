@@ -2,8 +2,8 @@ import {camera_display} from "../components/com_camera_display.js";
 import {Blueprint} from "../core.js";
 import {Game} from "../game.js";
 
-export function blueprint_camera_main(game: Game) {
-    return <Blueprint>{
+export function blueprint_camera_main(game: Game): Blueprint {
+    return {
         Rotation: [0, 1, 0, 0],
         Children: [
             {
