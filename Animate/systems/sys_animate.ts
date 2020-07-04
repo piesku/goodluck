@@ -18,15 +18,22 @@ function update(game: Game, entity: Entity, delta: number) {
     let transform = game.World.Transform[entity];
     let animate = game.World.Animate[entity];
 
-    // 1. Switch to the trigger this frame if early exits are allowed.
+    // 1. Switch to the trigger if the clip has completed or early exits are allowed.
 
-    let next = animate.Trigger && animate.States[animate.Trigger];
-    if (next && animate.Current.Flags & AnimationFlag.EarlyExit) {
-        // We don't reset the current state's timer because the trigger may be
-        // the same state as the current. If the states are different, this may
-        // result in clips not starting from the first keyframe, which should
-        // be generally OK for animations with EarlyExit.
-        animate.Current = next;
+    if (animate.Trigger) {
+        let next = animate.States[animate.Trigger];
+        if (next && next !== animate.Current) {
+            if (animate.Current.Time === 0) {
+                // If the current clip has completed last frame, switch to the trigger.
+                animate.Current = next;
+            } else if (animate.Current.Flags & AnimationFlag.EarlyExit) {
+                // If the current clip allows early exits, reset its timer so
+                // that the next time it plays it starts from the beginning,
+                // and then switch to the trigger.
+                animate.Current.Time = 0;
+                animate.Current = next;
+            }
+        }
         animate.Trigger = undefined;
     }
 
@@ -91,7 +98,7 @@ function update(game: Game, entity: Entity, delta: number) {
         animate.Current.Time = 0;
     }
 
-    // 5. The animation has completed. Determine what to do next.
+    // 5. The animation has completed. Loop it or switch to idle.
 
     if (animate.Current.Flags & AnimationFlag.Alternate) {
         // Reverse the keyframes of the clip and recalculate their timestamps.
@@ -100,13 +107,7 @@ function update(game: Game, entity: Entity, delta: number) {
         }
     }
 
-    if (next) {
-        // Switch to the trigger. All clips can be exited from when they finish,
-        // regardless of the lack of the EarlyExit flag. The trigger may be the
-        // same state as the current.
-        animate.Current = next;
-        animate.Trigger = undefined;
-    } else if (!(animate.Current.Flags & AnimationFlag.Loop)) {
+    if (!(animate.Current.Flags & AnimationFlag.Loop)) {
         animate.Current = animate.States["idle"];
     }
 }
