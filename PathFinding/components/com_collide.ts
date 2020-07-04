@@ -8,7 +8,7 @@ export interface Collide extends AABB {
     New: boolean;
     Dynamic: boolean;
     Layers: Layer;
-    Receives: Layer;
+    Mask: Layer;
     Collisions: Array<Collision>;
 }
 
@@ -17,11 +17,11 @@ export interface Collide extends AABB {
  *
  * @param dynamic Dynamic colliders collider with all colliders. Static
  * colliders collide only with dynamic colliders.
- * @param layers Bit mask with layers this collider is on.
- * @param receives Bit mask with layers visible to this collider.
+ * @param layers Bit field with layers this collider is on.
+ * @param Mask Bit mask with layers visible to this collider.
  * @param size Size of the collider relative to the entity's transform.
  */
-export function collide(dynamic: boolean, layers: Layer, receives: Layer, size: Vec3 = [1, 1, 1]) {
+export function collide(dynamic: boolean, layers: Layer, Mask: Layer, size: Vec3 = [1, 1, 1]) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Collide;
         game.World.Collide[entity] = {
@@ -29,7 +29,7 @@ export function collide(dynamic: boolean, layers: Layer, receives: Layer, size: 
             New: true,
             Dynamic: dynamic,
             Layers: layers,
-            Receives: receives,
+            Mask: Mask,
             Size: size,
             Min: [0, 0, 0],
             Max: [0, 0, 0],
