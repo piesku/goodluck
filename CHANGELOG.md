@@ -1,6 +1,20 @@
 # Changelog
 
-## goodluck3
+Goodluck doesn't have version numbers; each commit is the latest release of
+the template from which you can generate a new project.
+
+However, we do distinguish between _generations_ of Goodluck. The core API
+changes between generations and there's a significant chance that systems
+written for one generation will not compatible with other generations.
+Adapting a system to a newer generation is usually easy, though.
+
+## Generation 4 (since February 2020)
+
+- New directory layout. Each example is now an independent Goodluck project,
+with its own copy of `core.ts`, `game.ts`, etc. Some game-agnostic code has
+been moved to the top-level `common` directory.
+
+## Generation 3 (since December 2019)
 
 - Entity masks and component data are stored in `World` instances.
 
@@ -34,7 +48,7 @@
     let transform = game.World.Transform[entity];
     ```
 
-## goodluck2
+## Generation 2 (since October 2019)
 
 - Names of all properties are PascalCase for better naming mangling and
 minification.
@@ -80,7 +94,9 @@ properties based on the `Get` enum.
     if (game.World[entity] & Has.Transform) ...
     ```
 
-## goodluck1
+## Generation 1 (since June 2019)
+
+- Source code is written in TypeScript.
 
 - Names of all properties are lowercase snake_case.
 
@@ -93,7 +109,8 @@ properties based on the `Get` enum.
     ```
 
 - `Game extends Array`. Component data is accessed with indices equal to
-component masks. The returned element must be asserted as the interface corresponding to requested component.
+component masks. The returned element must be asserted as the interface
+corresponding to requested component.
 
     ```js
     let transform = game[TRANSFORM][entity] as Transform;
@@ -104,3 +121,7 @@ component masks. The returned element must be asserted as the interface correspo
     ```js
     if (game.world[entity] & TRANSFORM) ...
     ```
+
+## Generation 0 (since October 2018)
+
+- Early experiments with ECS.
