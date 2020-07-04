@@ -22,15 +22,17 @@ function update(game: Game, entity: Entity, delta: number) {
 
     if (animate.Trigger) {
         let next = animate.States[animate.Trigger];
-        if (
-            next &&
-            (animate.Current.Flags & AnimationFlag.EarlyExit || animate.Current.Time === 0)
-        ) {
-            // We don't reset the current state's timer because the trigger may be
-            // the same state as the current. If the states are different, this may
-            // result in clips not starting from the first keyframe, which should
-            // be generally OK for animations with EarlyExit.
-            animate.Current = next;
+        if (next && next !== animate.Current) {
+            if (animate.Current.Time === 0) {
+                // If the current clip has completed last frame, switch to the trigger.
+                animate.Current = next;
+            } else if (animate.Current.Flags & AnimationFlag.EarlyExit) {
+                // If the current clip allows early exits, reset its timer so
+                // that the next time it plays it starts from the beginning,
+                // and then switch to the trigger.
+                animate.Current.Time = 0;
+                animate.Current = next;
+            }
         }
         animate.Trigger = undefined;
     }
@@ -107,6 +109,5 @@ function update(game: Game, entity: Entity, delta: number) {
 
     if (!(animate.Current.Flags & AnimationFlag.Loop)) {
         animate.Current = animate.States["idle"];
-        animate.Current.Time = 0;
     }
 }
