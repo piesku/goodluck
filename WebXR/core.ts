@@ -43,8 +43,8 @@ export function loop_stop(game: Game) {
 
 export function create(world: World, mask: number = 0) {
     for (let i = 0; i < MAX_ENTITIES; i++) {
-        if (!world.Mask[i]) {
-            world.Mask[i] = mask;
+        if (!world.Get[i]) {
+            world.Get[i] = mask;
             return i;
         }
     }
@@ -80,13 +80,13 @@ export function instantiate(
 }
 
 export function destroy(world: World, entity: Entity) {
-    let mask = world.Mask[entity];
+    let mask = world.Get[entity];
     if (mask & Has.Transform) {
         for (let child of world.Transform[entity].Children) {
             destroy(world, child);
         }
     }
-    world.Mask[entity] = 0;
+    world.Get[entity] = 0;
 }
 
 export async function xr_init(game: Game) {

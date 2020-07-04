@@ -52,7 +52,7 @@ export function render_instanced(mesh: Mesh, offsets: Model, palette: Array<numb
         game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
         game.Gl.bindVertexArray(null);
-        game.World.Mask[entity] |= Has.Render;
+        game.World.Get[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.Instanced,
             Material: material,

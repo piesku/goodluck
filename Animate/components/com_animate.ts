@@ -29,7 +29,7 @@ export function animate(clips: {idle: AnimationClip; [k: string]: AnimationClip}
                 Time: 0,
             };
         }
-        game.World.Mask[entity] |= Has.Animate;
+        game.World.Get[entity] |= Has.Animate;
         game.World.Animate[entity] = {
             States,
             Current: States["idle"],

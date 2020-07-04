@@ -8,7 +8,7 @@ export interface Selectable {
 
 export function selectable() {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.Selectable;
+        game.World.Get[entity] |= Has.Selectable;
         game.World.Selectable[entity] = {
             Highlighted: false,
             Selected: false,

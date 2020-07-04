@@ -13,7 +13,7 @@ export const enum Has {
 
 export class World {
     // Component flags
-    Mask: Array<number> = [];
+    Get: Array<number> = [];
     // Component data
     Draw: Array<Draw> = [];
     Transform2D: Array<Transform2D> = [];

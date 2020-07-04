@@ -18,11 +18,11 @@ export function sys_control_player(game: Game, delta: number) {
             Using: [render_path(512, [1, 1, 0, 1])],
         });
     }
-    game.World.Mask[line] &= ~Has.Render;
+    game.World.Get[line] &= ~Has.Render;
 
     if (game.Pick) {
-        for (let i = 0; i < game.World.Mask.length; i++) {
-            if ((game.World.Mask[i] & QUERY) == QUERY) {
+        for (let i = 0; i < game.World.Get.length; i++) {
+            if ((game.World.Get[i] & QUERY) == QUERY) {
                 update(game, i, game.Pick);
             }
         }
@@ -56,7 +56,7 @@ function update(game: Game, entity: Entity, pick: Picked) {
             // Add the entity's current position and the exact goal destination.
             waypoints = [world_pos, ...waypoints, pick.Point];
 
-            game.World.Mask[line] |= Has.Render;
+            game.World.Get[line] |= Has.Render;
             let render = game.World.Render[line] as RenderPath;
             render.IndexCount = waypoints.length;
             game.Gl.bindBuffer(GL_ARRAY_BUFFER, render.VertexBuffer);

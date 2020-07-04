@@ -16,7 +16,7 @@ export interface EmitParticles {
  */
 export function emit_particles(Lifespan: number, Frequency: number) {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.EmitParticles;
+        game.World.Get[entity] |= Has.EmitParticles;
         game.World.EmitParticles[entity] = {
             Lifespan,
             Frequency,

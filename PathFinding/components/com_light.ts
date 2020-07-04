@@ -18,7 +18,7 @@ export interface LightDirectional {
 
 export function light_directional(color: Vec3 = [1, 1, 1], range: number = 1) {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.Light;
+        game.World.Get[entity] |= Has.Light;
         game.World.Light[entity] = {
             Kind: LightKind.Directional,
             Color: color,
@@ -35,7 +35,7 @@ export interface LightPoint {
 
 export function light_point(color: Vec3 = [1, 1, 1], range: number = 1) {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.Light;
+        game.World.Get[entity] |= Has.Light;
         game.World.Light[entity] = {
             Kind: LightKind.Point,
             Color: color,

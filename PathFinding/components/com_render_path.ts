@@ -21,7 +21,7 @@ export function render_path(max: number, color: Vec4) {
         game.Gl.bindBuffer(GL_ARRAY_BUFFER, vertex_buf);
         game.Gl.bufferData(GL_ARRAY_BUFFER, max * Float32Array.BYTES_PER_ELEMENT, GL_DYNAMIC_DRAW);
 
-        game.World.Mask[entity] |= Has.Render;
+        game.World.Get[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.Path,
             Material: game.MaterialBasicLine,

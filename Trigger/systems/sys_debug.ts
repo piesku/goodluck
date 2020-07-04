@@ -19,7 +19,7 @@ export function sys_debug(game: Game, delta: number) {
     for (let [key, wireframe] of wireframes) {
         if (
             // If the entity doesn't have TRANSFORM...
-            !(game.World.Mask[wireframe.anchor_entity] & Has.Transform) ||
+            !(game.World.Get[wireframe.anchor_entity] & Has.Transform) ||
             // ...or if it's not the same TRANSFORM.
             game.World.Transform[wireframe.anchor_entity] !== wireframe.anchor_transform
         ) {
@@ -28,17 +28,17 @@ export function sys_debug(game: Game, delta: number) {
         }
     }
 
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if (game.World.Mask[i] & Has.Transform) {
+    for (let i = 0; i < game.World.Get.length; i++) {
+        if (game.World.Get[i] & Has.Transform) {
             // Draw colliders first. If the collider's wireframe overlaps
             // exactly with the transform's wireframe, we want the collider to
             // take priority.
-            if (game.World.Mask[i] & Has.Collide) {
+            if (game.World.Get[i] & Has.Collide) {
                 wireframe_collider(game, i);
             }
 
             // Draw invisible entities.
-            if (!(game.World.Mask[i] & Has.Render)) {
+            if (!(game.World.Get[i] & Has.Render)) {
                 wireframe_invisible(game, i);
             }
         }

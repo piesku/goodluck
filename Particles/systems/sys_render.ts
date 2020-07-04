@@ -24,8 +24,8 @@ export function sys_render(game: Game, delta: number) {
     // Keep track of the current material to minimize switching.
     let current_material = null;
 
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Get.length; i++) {
+        if ((game.World.Get[i] & QUERY) === QUERY) {
             let render = game.World.Render[i];
 
             if (render.Material !== current_material) {

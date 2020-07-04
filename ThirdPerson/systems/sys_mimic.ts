@@ -7,8 +7,8 @@ import {Has} from "../world.js";
 const QUERY = Has.Transform | Has.Mimic;
 
 export function sys_mimic(game: Game, delta: number) {
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Get.length; i++) {
+        if ((game.World.Get[i] & QUERY) === QUERY) {
             let follower_transform = game.World.Transform[i];
             let follower_mimic = game.World.Mimic[i];
             let target_transform = game.World.Transform[follower_mimic.Target];

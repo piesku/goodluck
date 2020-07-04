@@ -6,8 +6,8 @@ import {Has, World} from "../world.js";
 const QUERY = Has.Transform;
 
 export function sys_transform(game: Game, delta: number) {
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Get.length; i++) {
+        if ((game.World.Get[i] & QUERY) === QUERY) {
             update(game, i);
         }
     }
@@ -19,7 +19,7 @@ function update(game: Game, entity: Entity) {
         transform.Dirty = false;
         set_children_as_dirty(game.World, transform);
 
-        if (game.World.Mask[entity] & Has.Pose) {
+        if (game.World.Get[entity] & Has.Pose) {
             // Pose transforms have their World matrix set from XRPose by other
             // systems. Their translation, rotation and scale are ignored.
         } else {

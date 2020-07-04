@@ -25,7 +25,7 @@ export interface Move {
  */
 export function move(MoveSpeed: number, RotateSpeed: number) {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.Move;
+        game.World.Get[entity] |= Has.Move;
         game.World.Move[entity] = {
             MoveSpeed,
             RotateSpeed,

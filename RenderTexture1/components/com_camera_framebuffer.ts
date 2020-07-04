@@ -53,7 +53,7 @@ export function camera_framebuffer(
             GL_RENDERBUFFER,
             depth_buffer
         );
-        game.World.Mask[entity] |= Has.Camera;
+        game.World.Get[entity] |= Has.Camera;
         game.World.Camera[entity] = {
             Kind: CameraKind.Framebuffer,
             Target: target,

@@ -8,8 +8,8 @@ const AXIS_X = <Vec3>[1, 0, 0];
 const AXIS_Y = <Vec3>[0, 1, 0];
 
 export function sys_control_player(game: Game, delta: number) {
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Get.length; i++) {
+        if ((game.World.Get[i] & QUERY) === QUERY) {
             update(game, i, delta);
         }
     }

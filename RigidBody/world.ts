@@ -31,7 +31,7 @@ export const enum Has {
 
 export class World {
     // Component flags
-    Mask: Array<number> = [];
+    Get: Array<number> = [];
     // Component data
     Camera: Array<Camera> = [];
     Collide: Array<Collide> = [];

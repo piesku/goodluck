@@ -20,7 +20,7 @@ export function render_particles(
     end_size: number
 ) {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.Render;
+        game.World.Get[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.Particles,
             Material: game.MaterialParticles,

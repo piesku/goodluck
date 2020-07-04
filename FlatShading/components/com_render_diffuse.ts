@@ -45,7 +45,7 @@ export function render_diffuse(material: Material<DiffuseLayout>, mesh: Mesh, co
             vaos.set(mesh, vao);
         }
 
-        game.World.Mask[entity] |= Has.Render;
+        game.World.Get[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.Diffuse,
             Material: material,

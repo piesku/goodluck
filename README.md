@@ -46,10 +46,11 @@ good practices, architecture decisions, and tools.
 Goodluck implements the entity-component-system (ECS) architecture:
 
 1.  _Entities_ are indices into arrays storing component data. A special
-    array called `Mask` stores masks defining which components are enabled
-    for which entities. Component masks are implemented using bitflags, which
-    limits the total number of available components to 32. This should still
-    be plenty for small and even medium-sized games.
+    array called `Get` stores bit fields defining which components are
+    enabled for which entities. Since bitwise operations are only defined for
+    32-bit integers in JavaScript, the total number of available components
+    is limited to 32. This should still be plenty for small and even
+    medium-sized games.
 
 2.  _Components_ are simple objects storing data, and only data. No logic
     goes into components. Each component defines an interface describing its

@@ -6,7 +6,7 @@
 
     ```js
     class World {
-        public Mask: Array<number> = [];
+        public Get: Array<number> = [];
         public Animate: Array<Animate> = [];
         public AudioSource: Array<AudioSource> = [];
         // ...
@@ -22,10 +22,10 @@
 - The `Get` enum has been removed.
 
 - Component checks are performed with bitwise operations between the
-`World.Mask` array and the `Has` enum.
+`World.Get` array and the `Has` enum.
 
     ```js
-    if (game.World.Mask[entity] & Has.Transform) ...
+    if (game.World.Get[entity] & Has.Transform) ...
     ```
 
 - Component data is retrieved from `game.World`.

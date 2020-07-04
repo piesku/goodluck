@@ -9,8 +9,8 @@ export function sys_draw2d(game: Game, delta: number) {
     game.Context2D.fillStyle = "#e6e6e6";
     game.Context2D.fillRect(0, 0, game.ViewportWidth, game.ViewportHeight);
 
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) == QUERY) {
+    for (let i = 0; i < game.World.Get.length; i++) {
+        if ((game.World.Get[i] & QUERY) == QUERY) {
             let transform = game.World.Transform2D[i];
             game.Context2D.setTransform(
                 transform.World[0],

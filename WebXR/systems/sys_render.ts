@@ -52,8 +52,8 @@ function render(game: Game, pv: Mat4) {
     let current_material = null;
     let current_front_face = null;
 
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Get.length; i++) {
+        if ((game.World.Get[i] & QUERY) === QUERY) {
             let transform = game.World.Transform[i];
             let render = game.World.Render[i];
 

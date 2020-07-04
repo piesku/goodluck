@@ -25,7 +25,7 @@ export function transform(
     Scale: Vec3 = [1, 1, 1]
 ) {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.Transform;
+        game.World.Get[entity] |= Has.Transform;
         game.World.Transform[entity] = {
             World: create(),
             Self: create(),
@@ -47,7 +47,7 @@ export function transform(
  * @param mask Component mask to look for.
  */
 export function* query_all(world: World, parent: Entity, mask: Has): IterableIterator<Entity> {
-    if (world.Mask[parent] & mask) {
+    if (world.Get[parent] & mask) {
         yield parent;
     }
     for (let child of world.Transform[parent].Children) {
