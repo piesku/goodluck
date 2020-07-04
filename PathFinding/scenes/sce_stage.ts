@@ -11,7 +11,7 @@ import {render_basic} from "../components/com_render_basic.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {selectable} from "../components/com_selectable.js";
 import {instantiate} from "../core.js";
-import {Game} from "../game.js";
+import {Game, Layer} from "../game.js";
 import {nav_bake} from "../navmesh.js";
 import {Has, World} from "../world.js";
 
@@ -40,7 +40,7 @@ export function scene_stage(game: Game) {
         Using: [
             render_diffuse(game.MaterialDiffuseGouraud, game.MeshTerrain, [0.3, 0.3, 0.8, 1]),
             pickable(game.MeshTerrain),
-            collide(false, [100, 1, 100]),
+            collide(false, Layer.None, Layer.None, [100, 1, 100]),
         ],
         Children: [
             {
@@ -71,7 +71,7 @@ export function scene_stage(game: Game) {
             control_player(),
             pickable(),
             selectable(),
-            collide(true, [2, 2, 2]),
+            collide(true, Layer.None, Layer.None, [2, 2, 2]),
             // The origin node must match the entity's translation.
             nav_agent(nav, 190),
             move(10, 10),
@@ -96,7 +96,7 @@ export function scene_stage(game: Game) {
             control_player(),
             pickable(),
             selectable(),
-            collide(true, [2, 2, 2]),
+            collide(true, Layer.None, Layer.None, [2, 2, 2]),
             // The origin node must match the entity's translation.
             nav_agent(nav, 89),
             move(15, 15),

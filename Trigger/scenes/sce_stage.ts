@@ -6,7 +6,7 @@ import {light_directional} from "../components/com_light.js";
 import {rotate} from "../components/com_rotate.js";
 import {trigger} from "../components/com_trigger.js";
 import {instantiate} from "../core.js";
-import {Game} from "../game.js";
+import {Game, Layer} from "../game.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {
@@ -41,6 +41,6 @@ export function scene_stage(game: Game) {
     // Trigger.
     instantiate(game, {
         Translation: [4, 0, 0],
-        Using: [collide(false), trigger(Action.Alert)],
+        Using: [collide(false, Layer.None, Layer.Default), trigger(Action.Alert)],
     });
 }
