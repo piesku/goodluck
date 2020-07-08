@@ -4,7 +4,8 @@ import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
 import {sys_camera} from "./systems/sys_camera.js";
-import {sys_control_player} from "./systems/sys_control_player.js";
+import {sys_control_keyboard} from "./systems/sys_control_keyboard.js";
+import {sys_control_mouse} from "./systems/sys_control_mouse.js";
 import {sys_draw} from "./systems/sys_draw.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -89,7 +90,8 @@ export class Game {
 
     FrameUpdate(delta: number) {
         let now = performance.now();
-        sys_control_player(this, delta);
+        sys_control_keyboard(this, delta);
+        sys_control_mouse(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
         sys_camera(this, delta);
