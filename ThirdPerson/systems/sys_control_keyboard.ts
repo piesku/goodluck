@@ -1,11 +1,7 @@
-import {Vec3} from "../../common/math.js";
-import {from_axis} from "../../common/quat.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Move | Has.ControlPlayer;
-const AXIS_X = <Vec3>[1, 0, 0];
-const AXIS_Y = <Vec3>[0, 1, 0];
 
 export function sys_control_keyboard(game: Game, delta: number) {
     for (let i = 0; i < game.World.Mask.length; i++) {
@@ -44,11 +40,11 @@ function update(game: Game, entity: Entity) {
         let move = game.World.Move[entity];
         if (game.InputState["ArrowLeft"]) {
             // Look left.
-            move.LocalRotations.push(from_axis([0, 0, 0, 0], AXIS_Y, Math.PI));
+            move.LocalRotations.push([0, 1, 0, 0]);
         }
         if (game.InputState["ArrowRight"]) {
             // Look right.
-            move.LocalRotations.push(from_axis([0, 0, 0, 0], AXIS_Y, -Math.PI));
+            move.LocalRotations.push([0, -1, 0, 0]);
         }
     }
 
@@ -58,11 +54,11 @@ function update(game: Game, entity: Entity) {
         let move = game.World.Move[entity];
         if (game.InputState["ArrowUp"]) {
             // Look up.
-            move.SelfRotations.push(from_axis([0, 0, 0, 0], AXIS_X, -Math.PI));
+            move.SelfRotations.push([-1, 0, 0, 0]);
         }
         if (game.InputState["ArrowDown"]) {
             // Look down.
-            move.SelfRotations.push(from_axis([0, 0, 0, 0], AXIS_X, Math.PI));
+            move.SelfRotations.push([1, 0, 0, 0]);
         }
     }
 }

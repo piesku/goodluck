@@ -1,16 +1,6 @@
 import {EPSILON, Quat, Vec3} from "./math.js";
 import {cross, dot, length, normalize as normalize_vec3} from "./vec3.js";
 
-export function set_axis_angle(out: Quat, axis: Vec3, rad: number) {
-    rad = rad * 0.5;
-    let s = Math.sin(rad);
-    out[0] = s * axis[0];
-    out[1] = s * axis[1];
-    out[2] = s * axis[2];
-    out[3] = Math.cos(rad);
-    return out;
-}
-
 export function normalize(out: Quat, a: Quat) {
     let x = a[0];
     let y = a[1];
@@ -85,7 +75,7 @@ export const rotation_to = (function () {
             cross(tmpvec3, xUnitVec3, a);
             if (length(tmpvec3) < 0.000001) cross(tmpvec3, yUnitVec3, a);
             normalize_vec3(tmpvec3, tmpvec3);
-            set_axis_angle(out, tmpvec3, Math.PI);
+            from_axis(out, tmpvec3, Math.PI);
             return out;
         } else if (d > 0.999999) {
             out[0] = 0;
