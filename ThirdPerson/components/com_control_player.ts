@@ -3,17 +3,19 @@ import {Has} from "../world.js";
 
 export interface ControlPlayer {
     Move: boolean;
-    Pitch: number;
     Yaw: number;
+    Pitch: number;
     CurrentPitch: number;
 }
 
 /**
  * The ControlPlayer mixin.
  *
- * @param move - Whether to control the entity's movement.
- * @param yaw - Sensitivity of yaw control.
- * @param pitch - Sensitivity of pitch control.
+ * @param Move - Whether to control the entity's movement.
+ * @param Yaw - Sensitivity of the yaw control. 1 means that 1 pixel traveled
+ * by the mouse is equal to 1° of rotation; that's too sensitive usually.
+ * @param Pitch - Sensitivity of the pitch control. 1 means that 1 pixel traveled
+ * by the mouse is equal to 1° of rotation; that's too sensitive usually.
  */
 export function control_player(move: boolean, yaw: number, pitch: number) {
     return (game: Game, entity: Entity) => {

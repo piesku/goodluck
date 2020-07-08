@@ -1,13 +1,7 @@
 import {get_translation} from "../../common/mat4.js";
 import {Quat, Vec3} from "../../common/math.js";
-import {lerp, multiply, normalize as normalize_quat} from "../../common/quat.js";
-import {
-    add,
-    normalize as normalize_vec3,
-    scale,
-    transform_direction,
-    transform_point,
-} from "../../common/vec3.js";
+import {multiply, slerp} from "../../common/quat.js";
+import {add, normalize, scale, transform_direction, transform_point} from "../../common/vec3.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -33,7 +27,7 @@ function update(game: Game, entity: Entity, delta: number) {
 
         // Transform the movement vector into a direction in the world space.
         let world_direction = transform_direction([0, 0, 0], direction, transform.World);
-        normalize_vec3(world_direction, world_direction);
+        normalize(world_direction, world_direction);
 
         // Scale by the distance travelled in this tick.
         scale(world_direction, world_direction, move.MoveSpeed * delta);
@@ -52,12 +46,8 @@ function update(game: Game, entity: Entity, delta: number) {
     // Rotations applied relative to the local space (parent's or world).
     if (move.LocalRotations.length) {
         let rotation = move.LocalRotations.reduce(multiply_rotations);
-        if (move.RotateSpeed < Infinity) {
-            // Ease the rotation out by lerping with t ~ delta, which isn't
-            // proper lerping, but is good enough to smooth the movement a bit.
-            lerp(rotation, NO_ROTATION, rotation, Math.min(move.RotateSpeed * delta, 1));
-            normalize_quat(rotation, rotation);
-        }
+        let t = Math.min(1, (move.RotationSpeed / Math.PI) * delta);
+        slerp(rotation, NO_ROTATION, rotation, t);
 
         // Pre-multiply.
         multiply(transform.Rotation, rotation, transform.Rotation);
@@ -68,12 +58,8 @@ function update(game: Game, entity: Entity, delta: number) {
     // Rotations applied relative to the self space.
     if (move.SelfRotations.length) {
         let rotation = move.SelfRotations.reduce(multiply_rotations);
-        if (move.RotateSpeed < Infinity) {
-            // Ease the rotation out by lerping with t ~ delta, which isn't
-            // proper lerping, but is good enough to smooth the movement a bit.
-            lerp(rotation, NO_ROTATION, rotation, Math.min(move.RotateSpeed * delta, 1));
-            normalize_quat(rotation, rotation);
-        }
+        let t = Math.min(1, (move.RotationSpeed / Math.PI) * delta);
+        slerp(rotation, NO_ROTATION, rotation, t);
 
         // Post-multiply.
         multiply(transform.Rotation, transform.Rotation, rotation);

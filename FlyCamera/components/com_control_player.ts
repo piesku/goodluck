@@ -3,8 +3,8 @@ import {Has} from "../world.js";
 
 export interface ControlPlayer {
     Move: boolean;
-    Pitch: number;
     Yaw: number;
+    Pitch: number;
 }
 
 /**

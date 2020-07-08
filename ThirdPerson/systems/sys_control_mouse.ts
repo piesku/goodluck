@@ -39,12 +39,16 @@ function update(game: Game, entity: Entity) {
 
     if (control.Pitch && game.InputDelta.MouseY) {
         let amount = game.InputDelta.MouseY * control.Pitch;
-        from_axis(rotation, AXIS_X, amount * DEG_TO_RAD);
+        let new_pitch = control.CurrentPitch + amount;
+        if (-10 < new_pitch && new_pitch < 90) {
+            control.CurrentPitch = new_pitch;
+            from_axis(rotation, AXIS_X, amount * DEG_TO_RAD);
 
-        let transform = game.World.Transform[entity];
-        // Pitch is post-multiplied, i.e. applied relative to the entity's self
-        // space; the X axis is always aligned with its left and right sides.
-        multiply(transform.Rotation, transform.Rotation, rotation);
-        transform.Dirty = true;
+            let transform = game.World.Transform[entity];
+            // Pitch is post-multiplied, i.e. applied relative to the entity's self
+            // space; the X axis is always aligned with its left and right sides.
+            multiply(transform.Rotation, transform.Rotation, rotation);
+            transform.Dirty = true;
+        }
     }
 }
