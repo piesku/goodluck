@@ -6,6 +6,7 @@ import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Move;
+const NO_ROTATION: Quat = [0, 0, 0, 1];
 
 export function sys_move(game: Game, delta: number) {
     for (let i = 0; i < game.World.Mask.length; i++) {
@@ -14,8 +15,6 @@ export function sys_move(game: Game, delta: number) {
         }
     }
 }
-
-const NO_ROTATION: Quat = [0, 0, 0, 1];
 
 function update(game: Game, entity: Entity, delta: number) {
     let transform = game.World.Transform[entity];

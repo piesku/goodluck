@@ -4,8 +4,8 @@ import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Move | Has.ControlPlayer;
-const AXIS_Y = <Vec3>[0, 1, 0];
-const AXIS_X = <Vec3>[1, 0, 0];
+const AXIS_Y: Vec3 = [0, 1, 0];
+const AXIS_X: Vec3 = [1, 0, 0];
 const DEAD_ZONE = 0.1;
 
 export function sys_control_xbox(game: Game, delta: number) {
