@@ -40,7 +40,7 @@ function update(game: Game, entity: Entity) {
     if (control.Pitch && game.InputDelta.MouseY) {
         let amount = game.InputDelta.MouseY * control.Pitch;
         let new_pitch = control.CurrentPitch + amount;
-        if (-10 < new_pitch && new_pitch < 90) {
+        if (-10 < new_pitch && new_pitch < 80) {
             control.CurrentPitch = new_pitch;
             from_axis(rotation, AXIS_X, amount * DEG_TO_RAD);
 
