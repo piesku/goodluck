@@ -1,5 +1,5 @@
 import {Vec3} from "../../common/math.js";
-import {get_axis_angle} from "../../common/quat.js";
+import {get_axis} from "../../common/quat.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -61,7 +61,7 @@ function update(game: Game, entity: Entity) {
         // looking down and [-1, 0, 0] for looking up. The x component of the
         // axis may not be exactly 1 or -1, but it's close enough that we can
         // just multiply by it as if it was Math.sign.
-        let current_pitch = get_axis_angle(axis, transform.Rotation);
+        let current_pitch = get_axis(axis, transform.Rotation);
         current_pitch *= axis[0];
         if (game.InputState["ArrowUp"] && current_pitch > -0.2) {
             // Look up.

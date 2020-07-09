@@ -160,7 +160,7 @@ export function slerp(out: Quat, a: Quat, b: Quat, t: number) {
     return out;
 }
 
-export function get_axis_angle(out_axis: Vec3, q: Quat) {
+export function get_axis(out_axis: Vec3, q: Quat) {
     let rad = Math.acos(q[3]) * 2.0;
     let s = Math.sin(rad / 2.0);
     if (s > EPSILON) {
