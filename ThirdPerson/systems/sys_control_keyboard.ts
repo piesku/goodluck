@@ -50,9 +50,7 @@ function update(game: Game, entity: Entity) {
             // Look right.
             move.LocalRotations.push([0, -1, 0, 0]);
         }
-    }
-
-    if (control.Pitch) {
+    } else if (control.Pitch) {
         let transform = game.World.Transform[entity];
         let move = game.World.Move[entity];
 

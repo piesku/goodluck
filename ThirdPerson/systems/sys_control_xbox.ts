@@ -48,9 +48,7 @@ function update(game: Game, entity: Entity) {
         // Yaw is applied relative to the entity's local space; the Y axis is
         // not affected by its current orientation.
         move.LocalRotations.push(from_axis([0, 0, 0, 0], AXIS_Y, -amount));
-    }
-
-    if (control.Pitch && Math.abs(game.InputDelta["pad0_axis_4"]) > DEAD_ZONE) {
+    } else if (control.Pitch && Math.abs(game.InputDelta["pad0_axis_4"]) > DEAD_ZONE) {
         let transform = game.World.Transform[entity];
         let move = game.World.Move[entity];
         let amount = game.InputDelta["pad0_axis_4"] * Math.PI;

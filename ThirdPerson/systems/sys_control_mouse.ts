@@ -36,9 +36,7 @@ function update(game: Game, entity: Entity) {
         // space; the Y axis is not affected by its current orientation.
         multiply(transform.Rotation, rotation, transform.Rotation);
         transform.Dirty = true;
-    }
-
-    if (control.Pitch && game.InputDelta.MouseY) {
+    } else if (control.Pitch && game.InputDelta.MouseY) {
         let amount = game.InputDelta.MouseY * control.Pitch * DEG_TO_RAD;
         // The angle returned by get_axis_angle is always positive. The
         // direction of the rotation is indicated by the axis: [1, 0, 0] for
