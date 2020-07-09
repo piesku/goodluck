@@ -13,7 +13,7 @@ export function blueprint_player(game: Game): Blueprint {
         Rotation: [0, 1, 0, 0],
         Using: [
             control_player(true, 0.2, 0),
-            move(10, 2),
+            move(10, 3),
             collide(true, Layer.Player, Layer.Terrain),
             rigid_body(true),
         ],
@@ -24,7 +24,7 @@ export function blueprint_player(game: Game): Blueprint {
             },
             {
                 // Camera rig anchor.
-                Using: [named("camera anchor"), move(0, 2), control_player(false, 0, 0.2)],
+                Using: [named("camera anchor"), move(0, 3), control_player(false, 0, 0.2)],
             },
             {
                 Translation: [0, 5, 0],
