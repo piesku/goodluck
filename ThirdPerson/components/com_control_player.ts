@@ -5,7 +5,6 @@ export interface ControlPlayer {
     Move: boolean;
     Yaw: number;
     Pitch: number;
-    CurrentPitch: number;
 }
 
 /**
@@ -24,7 +23,6 @@ export function control_player(move: boolean, yaw: number, pitch: number) {
             Move: move,
             Yaw: yaw,
             Pitch: pitch,
-            CurrentPitch: 0,
         };
     };
 }
