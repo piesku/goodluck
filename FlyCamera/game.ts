@@ -14,6 +14,7 @@ import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_transform} from "./systems/sys_transform.js";
+import {sys_ui} from "./systems/sys_ui.js";
 import {World} from "./world.js";
 
 export type Entity = number;
@@ -138,6 +139,7 @@ export class Game {
         sys_light(this, delta);
         sys_render(this, delta);
         sys_draw(this, delta);
+        sys_ui(this, delta);
         sys_framerate(this, delta, performance.now() - now);
     }
 }
