@@ -6,6 +6,7 @@ import {loop_start, loop_stop} from "./core.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_keyboard} from "./systems/sys_control_keyboard.js";
 import {sys_control_mouse} from "./systems/sys_control_mouse.js";
+import {sys_control_touch} from "./systems/sys_control_touch.js";
 import {sys_control_xbox} from "./systems/sys_control_xbox.js";
 import {sys_draw} from "./systems/sys_draw.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -72,6 +73,42 @@ export class Game {
             this.InputDelta.MouseX = evt.movementX;
             this.InputDelta.MouseY = evt.movementY;
         });
+        this.Ui.addEventListener("touchstart", (evt) => {
+            for (let i = 0; i < evt.changedTouches.length; i++) {
+                let touch = evt.changedTouches[i];
+                this.InputState[`Touch${touch.identifier}`] = 1;
+                this.InputState[`Touch${touch.identifier}X`] = touch.screenX;
+                this.InputState[`Touch${touch.identifier}Y`] = touch.screenY;
+                this.InputDelta[`Touch${touch.identifier}`] = 1;
+                this.InputDelta[`Touch${touch.identifier}X`] = 0;
+                this.InputDelta[`Touch${touch.identifier}Y`] = 0;
+            }
+        });
+        this.Ui.addEventListener("touchmove", (evt) => {
+            for (let i = 0; i < evt.changedTouches.length; i++) {
+                let touch = evt.changedTouches[i];
+                this.InputDelta[`Touch${touch.identifier}X`] =
+                    touch.screenX - this.InputState[`Touch${touch.identifier}X`];
+                this.InputDelta[`Touch${touch.identifier}Y`] =
+                    touch.screenY - this.InputState[`Touch${touch.identifier}Y`];
+                this.InputState[`Touch${touch.identifier}X`] = touch.screenX;
+                this.InputState[`Touch${touch.identifier}Y`] = touch.screenY;
+            }
+        });
+        this.Ui.addEventListener("touchend", (evt) => {
+            for (let i = 0; i < evt.changedTouches.length; i++) {
+                let touch = evt.changedTouches[i];
+                this.InputState[`Touch${touch.identifier}`] = 0;
+                this.InputDelta[`Touch${touch.identifier}`] = -1;
+            }
+        });
+        this.Ui.addEventListener("touchcancel", (evt) => {
+            for (let i = 0; i < evt.changedTouches.length; i++) {
+                let touch = evt.changedTouches[i];
+                this.InputState[`Touch${touch.identifier}`] = 0;
+                this.InputDelta[`Touch${touch.identifier}`] = -1;
+            }
+        });
         this.Ui.addEventListener("wheel", (evt) => {
             this.InputDelta.WheelY = evt.deltaY;
         });
@@ -94,6 +131,7 @@ export class Game {
         sys_control_keyboard(this, delta);
         sys_control_mouse(this, delta);
         sys_control_xbox(this, delta);
+        sys_control_touch(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
         sys_camera(this, delta);
