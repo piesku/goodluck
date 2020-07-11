@@ -7,7 +7,7 @@ import {Game} from "../game.js";
 export function blueprint_camera_fly(game: Game): Blueprint {
     return {
         Rotation: [0, 1, 0, 0],
-        Using: [control_player(true, 0.2, 0.2), move(10, Infinity)],
+        Using: [control_player(true, 0.1, 0.1), move(10, 2)],
         Children: [
             {
                 Rotation: [0, 1, 0, 0],

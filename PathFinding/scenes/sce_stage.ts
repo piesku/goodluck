@@ -74,7 +74,7 @@ export function scene_stage(game: Game) {
             collide(true, Layer.None, Layer.None, [2, 2, 2]),
             // The origin node must match the entity's translation.
             nav_agent(nav, 190),
-            move(10, 10),
+            move(10, 5),
         ],
         Disable: Has.ControlPlayer,
         Children: [
@@ -99,7 +99,7 @@ export function scene_stage(game: Game) {
             collide(true, Layer.None, Layer.None, [2, 2, 2]),
             // The origin node must match the entity's translation.
             nav_agent(nav, 89),
-            move(15, 15),
+            move(15, 10),
         ],
         Disable: Has.ControlPlayer,
         Children: [

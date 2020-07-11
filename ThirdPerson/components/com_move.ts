@@ -5,8 +5,8 @@ import {Has} from "../world.js";
 export interface Move {
     /** Movement speed, in units per second. */
     readonly MoveSpeed: number;
-    /** Rotation responsiveness, used for lerping quaternions. */
-    readonly RotateSpeed: number;
+    /** Rotation speed, in radians per second. */
+    readonly RotationSpeed: number;
     /** Movement directions in self space, normalized. */
     Directions: Array<Vec3>;
     /** Rotations applied in the local space (pre-multiplied). */
@@ -18,17 +18,15 @@ export interface Move {
 /**
  * The Move mixin.
  *
- * @param MoveSpeed - Movement speed in units per second.
- * @param RotateSpeed - Rotation responsiveness, unitless. Larger values make
- * the entity rotate faster towards the target orientation. Set `Infinity` to
- * snap the entity instantly into the target orientation.
+ * @param move_speed - Movement speed in units per second.
+ * @param rotation_speed - Rotation speed, in radians per second.
  */
-export function move(MoveSpeed: number, RotateSpeed: number) {
+export function move(move_speed: number, rotation_speed: number) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.Move;
         game.World.Move[entity] = {
-            MoveSpeed,
-            RotateSpeed,
+            MoveSpeed: move_speed,
+            RotationSpeed: rotation_speed,
             Directions: [],
             LocalRotations: [],
             SelfRotations: [],

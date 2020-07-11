@@ -1,6 +1,5 @@
 import {get_translation} from "../../common/mat4.js";
-import {Quat, Vec3} from "../../common/math.js";
-import {rotation_to} from "../../common/quat.js";
+import {Vec3} from "../../common/math.js";
 import {distance_squared, normalize, transform_point} from "../../common/vec3.js";
 import {Entity, Game} from "../game.js";
 import {path_find} from "../pathfind.js";
@@ -15,8 +14,6 @@ export function sys_nav(game: Game, delta: number) {
         }
     }
 }
-
-let look_target: Vec3 = [0, 0, 0];
 
 function update(game: Game, entity: Entity) {
     let agent = game.World.NavAgent[entity];
@@ -66,16 +63,15 @@ function update(game: Game, entity: Entity) {
         transform_point(position, current_waypoint.Position, transform.Self);
         normalize(position, position);
 
-        // Project the waypoint's position onto the agent's self XZ plane.
-        look_target[0] = position[0];
-        look_target[2] = position[2];
-        normalize(look_target, look_target);
-
-        let yaw: Quat = [0, 0, 0, 0];
-        rotation_to(yaw, [0, 0, 1], look_target);
-
         let move = game.World.Move[entity];
         move.Directions.push(position);
-        move.LocalRotations.push(yaw);
+
+        if (position[0] < 0) {
+            // The target is on the right.
+            move.LocalRotations.push([0, -1, 0, 0]);
+        } else {
+            // The target is on the left or directly behind.
+            move.LocalRotations.push([0, 1, 0, 0]);
+        }
     }
 }
