@@ -1,7 +1,6 @@
-import {get_translation} from "../../common/mat4.js";
 import {Quat, Vec3} from "../../common/math.js";
 import {multiply, slerp} from "../../common/quat.js";
-import {add, normalize, scale, transform_direction, transform_point} from "../../common/vec3.js";
+import {add, length, normalize, scale, transform_direction} from "../../common/vec3.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -22,22 +21,19 @@ function update(game: Game, entity: Entity, delta: number) {
 
     if (move.Directions.length) {
         let direction = move.Directions.reduce(add_directions);
-        let world_position = get_translation([0, 0, 0], transform.World);
-
-        // Transform the movement vector into a direction in the world space.
-        let world_direction = transform_direction([0, 0, 0], direction, transform.World);
-        normalize(world_direction, world_direction);
-
-        // Scale by the distance travelled in this tick.
-        scale(world_direction, world_direction, move.MoveSpeed * delta);
-        let new_position = add([0, 0, 0], world_position, world_direction);
-
-        if (transform.Parent !== undefined) {
-            let parent = game.World.Transform[transform.Parent];
-            // Transform the movement vector into a point in the local space.
-            transform_point(new_position, new_position, parent.Self);
-        }
-        transform.Translation = new_position;
+        // Directions are not normalized to allow them to express slower
+        // movement from a gamepad input. They can also cancel each other out.
+        // They may not, however, intensify one another; hence max amount is 1.
+        let amount = Math.min(1, length(direction));
+        // Transform the direction into the world space. This will also scale
+        // the result by the scale encoded in the transform.
+        transform_direction(direction, direction, transform.World);
+        // Normalize the direction to remove the transform's scale. The length
+        // of the orignal direction is now lost.
+        normalize(direction, direction);
+        // Scale by the amount and distance traveled in this tick.
+        scale(direction, direction, amount * move.MoveSpeed * delta);
+        add(transform.Translation, transform.Translation, direction);
         transform.Dirty = true;
         move.Directions = [];
     }
