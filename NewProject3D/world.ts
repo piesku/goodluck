@@ -18,6 +18,7 @@ export const enum Has {
 }
 
 export class World {
+    length = 0;
     // Component flags
     Components: Array<number> = [];
     // Component data

@@ -12,7 +12,7 @@ export function sys_light(game: Game, delta: number) {
     game.LightDetails.fill(0);
 
     let counter = 0;
-    for (let i = 0; i < game.World.Components.length; i++) {
+    for (let i = 0; i < game.World.length; i++) {
         if ((game.World.Components[i] & QUERY) === QUERY) {
             update(game, i, counter++);
         }

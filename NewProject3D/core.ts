@@ -30,6 +30,7 @@ export function create(world: World, mask: number = 0) {
     for (let i = 0; i < MAX_ENTITIES; i++) {
         if (!world.Components[i]) {
             world.Components[i] = mask;
+            world.length = world.Components.length;
             return i;
         }
     }
