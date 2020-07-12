@@ -10,8 +10,8 @@ export function sys_collide(game: Game, delta: number) {
     // Collect all colliders.
     let static_colliders: Collide[] = [];
     let dynamic_colliders: Collide[] = [];
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Components.length; i++) {
+        if ((game.World.Components[i] & QUERY) === QUERY) {
             let transform = game.World.Transform[i];
             let collider = game.World.Collide[i];
 
@@ -51,8 +51,8 @@ export function sys_collide(game: Game, delta: number) {
 function check_collisions(collider: Collide, colliders: Collide[], length: number) {
     for (let i = 0; i < length; i++) {
         let other = colliders[i];
-        let collider_can_intersect = collider.Mask & other.Layers;
-        let other_can_intersect = other.Mask & collider.Layers;
+        let collider_can_intersect = collider.Components & other.Layers;
+        let other_can_intersect = other.Components & collider.Layers;
         if (collider_can_intersect || other_can_intersect) {
             if (intersect_aabb(collider, other)) {
                 let hit = penetrate_aabb(collider, other);

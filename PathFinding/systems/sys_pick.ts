@@ -13,14 +13,14 @@ export function sys_pick(game: Game, delta: number) {
     game.Pick = undefined;
 
     let pickables: Array<Collide> = [];
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & TARGET) == TARGET) {
+    for (let i = 0; i < game.World.Components.length; i++) {
+        if ((game.World.Components[i] & TARGET) == TARGET) {
             pickables.push(game.World.Collide[i]);
         }
     }
 
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) == QUERY) {
+    for (let i = 0; i < game.World.Components.length; i++) {
+        if ((game.World.Components[i] & QUERY) == QUERY) {
             update(game, i, pickables);
         }
     }

@@ -5,8 +5,8 @@ import {Has} from "../world.js";
 const QUERY = Has.Transform | Has.Lifespan;
 
 export function sys_lifespan(game: Game, delta: number) {
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) == QUERY) {
+    for (let i = 0; i < game.World.Components.length; i++) {
+        if ((game.World.Components[i] & QUERY) == QUERY) {
             update(game, i, delta);
         }
     }

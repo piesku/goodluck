@@ -41,7 +41,7 @@ export function render_basic(material: Material<BasicLayout>, mesh: Mesh, color:
             vaos.set(mesh, vao);
         }
 
-        game.World.Mask[entity] |= Has.Render;
+        game.World.Components[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.Basic,
             Material: material,

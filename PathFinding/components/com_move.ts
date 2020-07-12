@@ -23,7 +23,7 @@ export interface Move {
  */
 export function move(move_speed: number, rotation_speed: number) {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.Move;
+        game.World.Components[entity] |= Has.Move;
         game.World.Move[entity] = {
             MoveSpeed: move_speed,
             RotationSpeed: rotation_speed,

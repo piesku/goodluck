@@ -22,8 +22,8 @@ export function sys_control_touch(game: Game, delta: number) {
         joystick[1] = game.InputState["Touch0Y"];
     }
 
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Components.length; i++) {
+        if ((game.World.Components[i] & QUERY) === QUERY) {
             update(game, i);
         }
     }

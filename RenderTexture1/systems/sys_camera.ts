@@ -15,8 +15,8 @@ export function sys_camera(game: Game, delta: number) {
     }
 
     game.Cameras = [];
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Components.length; i++) {
+        if ((game.World.Components[i] & QUERY) === QUERY) {
             let camera = game.World.Camera[i];
 
             if (camera.Kind === CameraKind.Display) {

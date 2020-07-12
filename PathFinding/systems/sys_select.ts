@@ -5,8 +5,8 @@ import {Has} from "../world.js";
 const QUERY = Has.Transform | Has.Selectable;
 
 export function sys_select(game: Game, delta: number) {
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) == QUERY) {
+    for (let i = 0; i < game.World.Components.length; i++) {
+        if ((game.World.Components[i] & QUERY) == QUERY) {
             update(game, i);
         }
     }
@@ -29,11 +29,11 @@ function update(game: Game, entity: Entity) {
         // …select it if the user clicks.
         if (!selectable.Selected && game.InputDelta["Mouse0"] === -1) {
             selectable.Selected = true;
-            game.World.Mask[entity] |= Has.ControlPlayer;
+            game.World.Components[entity] |= Has.ControlPlayer;
 
             // Selection box is the first child.
             let selection = transform.Children[0];
-            game.World.Mask[selection] |= Has.Draw;
+            game.World.Components[selection] |= Has.Draw;
         }
     } else {
         // When the cursor is not over the entity…
@@ -48,11 +48,11 @@ function update(game: Game, entity: Entity) {
         // …deselect it if the user clicks.
         if (selectable.Selected && game.InputDelta["Mouse0"] === -1) {
             selectable.Selected = false;
-            game.World.Mask[entity] &= ~Has.ControlPlayer;
+            game.World.Components[entity] &= ~Has.ControlPlayer;
 
             // Selection box is the first child.
             let selection = transform.Children[0];
-            game.World.Mask[selection] &= ~Has.Draw;
+            game.World.Components[selection] &= ~Has.Draw;
         }
     }
 }

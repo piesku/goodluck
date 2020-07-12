@@ -24,7 +24,7 @@ export interface NavDestination {
  */
 export function nav_agent(navmesh: NavMesh, origin: number) {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.NavAgent;
+        game.World.Components[entity] |= Has.NavAgent;
         game.World.NavAgent[entity] = {
             NavMesh: navmesh,
             Origin: origin,

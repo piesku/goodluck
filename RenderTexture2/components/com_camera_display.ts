@@ -15,7 +15,7 @@ export interface CameraDisplay {
 }
 export function camera_display(fovy: number, near: number, far: number, clear_color: Vec4) {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.Camera;
+        game.World.Components[entity] |= Has.Camera;
         game.World.Camera[entity] = {
             Kind: CameraKind.Display,
             FovY: fovy,

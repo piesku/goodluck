@@ -3,6 +3,6 @@ import {Has} from "../world.js";
 
 export function pick() {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.Pick;
+        game.World.Components[entity] |= Has.Pick;
     };
 }

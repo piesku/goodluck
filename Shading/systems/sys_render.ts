@@ -23,8 +23,8 @@ export function sys_render(game: Game, delta: number) {
     let current_material = null;
     let current_front_face = null;
 
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Components.length; i++) {
+        if ((game.World.Components[i] & QUERY) === QUERY) {
             let transform = game.World.Transform[i];
             let render = game.World.Render[i];
 

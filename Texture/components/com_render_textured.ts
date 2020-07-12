@@ -55,7 +55,7 @@ export function render_textured(
             vaos.set(mesh, vao);
         }
 
-        game.World.Mask[entity] |= Has.Render;
+        game.World.Components[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.Textured,
             Material: material,
