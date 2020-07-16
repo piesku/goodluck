@@ -54,8 +54,8 @@ function render(game: Game, pv: Mat4, current_target?: WebGLTexture) {
     let current_material = null;
     let current_front_face = null;
 
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Signature.length; i++) {
+        if ((game.World.Signature[i] & QUERY) === QUERY) {
             let transform = game.World.Transform[i];
             let render = game.World.Render[i];
 

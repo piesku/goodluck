@@ -8,6 +8,11 @@ changes between generations and there's a significant chance that systems
 written for one generation will not compatible with other generations.
 Adapting a system to a newer generation is usually easy, though.
 
+## Generation 5 (since July 2020)
+
+- `World.Mask` was renamed to `World.Signature` in
+[#39](https://github.com/piesku/goodluck/issues/39).
+
 ## Generation 4 (since February 2020)
 
 - New directory layout. Each example is now an independent Goodluck project,

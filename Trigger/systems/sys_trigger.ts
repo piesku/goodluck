@@ -5,8 +5,8 @@ import {Has} from "../world.js";
 const QUERY = Has.Transform | Has.Collide | Has.Trigger;
 
 export function sys_trigger(game: Game, delta: number) {
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Signature.length; i++) {
+        if ((game.World.Signature[i] & QUERY) === QUERY) {
             update(game, i);
         }
     }

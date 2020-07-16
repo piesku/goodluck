@@ -21,7 +21,7 @@ export interface Transform2D {
 
 export function transform2d(Translation: Vec2 = [0, 0], Rotation: Rad = 0, Scale: Vec2 = [1, 1]) {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.Transform2D;
+        game.World.Signature[entity] |= Has.Transform2D;
         game.World.Transform2D[entity] = {
             World: create(),
             Self: create(),
@@ -43,7 +43,7 @@ export function transform2d(Translation: Vec2 = [0, 0], Rotation: Rad = 0, Scale
  * @param mask Component mask to look for.
  */
 export function* query_all(world: World, parent: Entity, mask: Has): IterableIterator<Entity> {
-    if (world.Mask[parent] & mask) {
+    if (world.Signature[parent] & mask) {
         yield parent;
     }
     for (let child of world.Transform2D[parent].Children) {

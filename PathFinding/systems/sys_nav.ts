@@ -8,8 +8,8 @@ import {Has} from "../world.js";
 const QUERY = Has.Transform | Has.NavAgent | Has.Move;
 
 export function sys_nav(game: Game, delta: number) {
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) == QUERY) {
+    for (let i = 0; i < game.World.Signature.length; i++) {
+        if ((game.World.Signature[i] & QUERY) == QUERY) {
             update(game, i);
         }
     }

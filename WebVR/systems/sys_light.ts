@@ -12,8 +12,8 @@ export function sys_light(game: Game, delta: number) {
     game.LightDetails.fill(0);
 
     let counter = 0;
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Signature.length; i++) {
+        if ((game.World.Signature[i] & QUERY) === QUERY) {
             update(game, i, counter++);
         }
     }

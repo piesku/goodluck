@@ -8,7 +8,7 @@ export interface Pickable {
 
 export function pickable(mesh?: Mesh) {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.Pickable;
+        game.World.Signature[entity] |= Has.Pickable;
         game.World.Pickable[entity] = {
             Mesh: mesh,
         };

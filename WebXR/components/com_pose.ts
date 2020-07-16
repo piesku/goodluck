@@ -3,6 +3,6 @@ import {Has} from "../world.js";
 
 export function pose() {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.Pose;
+        game.World.Signature[entity] |= Has.Pose;
     };
 }

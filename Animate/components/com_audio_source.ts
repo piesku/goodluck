@@ -20,7 +20,7 @@ export interface AudioSource {
  */
 export function audio_source(idle?: AudioClip) {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.AudioSource;
+        game.World.Signature[entity] |= Has.AudioSource;
         game.World.AudioSource[entity] = {
             Idle: idle,
             Time: 0,
