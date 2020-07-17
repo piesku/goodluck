@@ -19,6 +19,15 @@ export function sys_draw(game: Game, delta: number) {
             // NDC position.
             transform_point(position, position, game.Camera!.Pv);
 
+            if (position[2] < -1 || position[2] > 1) {
+                // The entity is outside the frustum. Only consider the Z axis
+                // which allows us to discard all positions in front of the near
+                // plane (behind the camera) and behind the far plane. We still
+                // draw the remaining XY positions outside NDC in case the
+                // drawing is wide or tall enough to be visible.
+                continue;
+            }
+
             game.Context2D.setTransform(
                 1,
                 0,
