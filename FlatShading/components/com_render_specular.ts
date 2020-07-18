@@ -53,7 +53,7 @@ export function render_specular(
             vaos.set(mesh, vao);
         }
 
-        game.World.Mask[entity] |= Has.Render;
+        game.World.Signature[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.Specular,
             Material: material,

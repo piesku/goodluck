@@ -9,7 +9,7 @@ export interface Rotate {
 
 export function rotate(rotation: Vec3) {
     return (game: Game, entity: Entity) => {
-        game.World.Mask[entity] |= Has.Rotate;
+        game.World.Signature[entity] |= Has.Rotate;
         game.World.Rotate[entity] = {
             Rotation: rotation,
         };

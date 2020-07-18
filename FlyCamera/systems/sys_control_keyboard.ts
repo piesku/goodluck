@@ -4,8 +4,8 @@ import {Has} from "../world.js";
 const QUERY = Has.Move | Has.ControlPlayer;
 
 export function sys_control_keyboard(game: Game, delta: number) {
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) === QUERY) {
+    for (let i = 0; i < game.World.Signature.length; i++) {
+        if ((game.World.Signature[i] & QUERY) === QUERY) {
             update(game, i);
         }
     }

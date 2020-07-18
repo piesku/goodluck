@@ -12,8 +12,8 @@ export function sys_draw(game: Game, delta: number) {
     game.Context2D.clearRect(0, 0, game.ViewportWidth, game.ViewportHeight);
     let position = <Vec3>[0, 0, 0];
 
-    for (let i = 0; i < game.World.Mask.length; i++) {
-        if ((game.World.Mask[i] & QUERY) == QUERY) {
+    for (let i = 0; i < game.World.Signature.length; i++) {
+        if ((game.World.Signature[i] & QUERY) == QUERY) {
             // World position.
             get_translation(position, game.World.Transform[i].World);
             // NDC position.

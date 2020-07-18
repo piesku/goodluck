@@ -19,7 +19,7 @@ export const enum Has {
 
 export class World {
     // Component flags
-    Mask: Array<number> = [];
+    Signature: Array<number> = [];
     // Component data
     Camera: Array<Camera> = [];
     Render: Array<Render> = [];

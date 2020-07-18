@@ -27,7 +27,7 @@ export const enum Has {
 
 export class World {
     // Component flags
-    Mask: Array<number> = [];
+    Signature: Array<number> = [];
     // Component data
     Animate: Array<Animate> = [];
     AudioSource: Array<AudioSource> = [];
