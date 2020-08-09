@@ -5,7 +5,6 @@ import {TexturedLayout} from "./layout_textured.js";
 let vertex = `
     uniform mat4 pv;
     uniform mat4 world;
-    uniform mat4 self;
 
     attribute vec3 position;
     attribute vec2 texcoord;
@@ -39,7 +38,6 @@ export function mat1_textured(gl: WebGLRenderingContext): Material<TexturedLayou
         Locations: {
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
-            Self: gl.getUniformLocation(program, "self")!,
             Sampler: gl.getUniformLocation(program, "sampler")!,
             VertexPosition: gl.getAttribLocation(program, "position")!,
             VertexTexCoord: gl.getAttribLocation(program, "texcoord")!,
