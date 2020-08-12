@@ -69,3 +69,7 @@ Production builds are bundled into a single `.js` file and optimized for size. Y
    source directory something other than `src`.
 2. `make -C play`
 3. Open `play/index.html` in the browser.
+
+During build, the minifier mangles all variable names as well as all property names starting with a capital letter. That's why you'll see plenty of UpperCaseCamelCase names in Goodluck. All property names starting with a lower-case letter are preserved.
+
+If you wish to preserve a name starting with an upper-case letter, use computed accessors: `game.Foo` will be mangled but `game["Foo"]` will not. This is particularly important for names defined by web standards, e.g. `KeyA` in `KeyboardEvent.key`.
