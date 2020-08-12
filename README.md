@@ -24,6 +24,8 @@ features you don't need, and hack away.
 3. `npm install` the build tools.
 4. `npm start` the development server.
 
+You will also find [Goodluck on Glitch](https://glitch.com/~goodluck) where you can [remix it into your own project](https://glitch.com/edit/#!/remix/goodluck)!
+
 ## Design Principles
 
 Goodluck is a template for creating small browser games which fit in a few
