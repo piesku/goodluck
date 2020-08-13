@@ -1,8 +1,7 @@
 EXAMPLE ?= src
 
-all: game.terser.js
-	@printf "Size gzipped: %s bytes\n" \
-		$(shell gzip index.html game.terser.js --stdout | wc -c)
+all: index.html
+	@printf "Size gzipped: %s bytes\n" $(shell gzip index.html --stdout | wc -c)
 
 ../$(EXAMPLE)/index.js: $(shell find .. -name "*.ts")
 	@echo -n "Compiling project... "
@@ -28,3 +27,6 @@ game.terser.js: game.sed.js
 		--mangle-props keep_quoted,regex=/^[A-Z]/ \
 		--compress $(shell paste -sd, terser_compress.txt) \
 	> $@
+
+index.html: game.html game.terser.js
+	@node posthtml.cjs $< > $@

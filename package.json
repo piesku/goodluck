@@ -24,8 +24,11 @@
     },
     "devDependencies": {
         "@types/webgl2": "0.0.5",
+        "htmlnano": "^0.2.6",
         "live-server": "1.2.1",
         "npm-run-all": "4.1.5",
+        "posthtml-cli": "^0.7.0",
+        "posthtml-inline-assets": "^3.1.0",
         "prettier": "2.0.5",
         "rollup": "2.15.0",
         "terser": "4.7.0",
