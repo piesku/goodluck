@@ -4,7 +4,7 @@ import {transform_point} from "./vec3.js";
 
 export interface AABB {
     /** The size of the collider in self units. */
-    Size: [number, number, number];
+    Size: [x: number, y: number, z: number];
     /** The min corner of the AABB. */
     Min: Vec3;
     /** The max corner of the AABB. */
@@ -12,10 +12,10 @@ export interface AABB {
     /** The world position of the AABB. */
     Center: Vec3;
     /** The half-extents of the AABB on the three axes. */
-    Half: [number, number, number];
+    Half: [x: number, y: number, z: number];
 }
 
-const BOX = [
+const BOX: Array<Vec3> = [
     [0.5, 0.5, 0.5],
     [0.5, 0.5, -0.5],
     [-0.5, 0.5, -0.5],
@@ -37,7 +37,7 @@ export function compute_aabb(world: Mat4, aabb: AABB) {
 
     // Expand the extents outwards from the center by finding the farthest
     // vertex on each axis in both the negative and the positive direction.
-    let world_vertex = <Vec3>[0, 0, 0];
+    let world_vertex: Vec3 = [0, 0, 0];
     for (let i = 0; i < 8; i++) {
         let bb_vertex = BOX[i];
 
