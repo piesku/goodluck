@@ -1,0 +1,35 @@
+Language: JavaScript
+
+ColumnLimit: 0
+ContinuationIndentWidth: 8
+IndentWidth: 4
+UseTab: ForContinuationAndIndentation
+TabWidth: 4
+SpacesInContainerLiterals: false
+
+AlignAfterOpenBracket: DontAlign
+AlignOperands: false
+AllowAllArgumentsOnNextLine: true
+AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine : false
+AllowShortFunctionsOnASingleLine: None
+BreakBeforeBinaryOperators: NonAssignment
+BreakBeforeTernaryOperators: false
+# InsertTrailingCommas: Wrapped
+JavaScriptQuotes: Double
+JavaScriptWrapImports: true
+
+BinPackArguments: true
+BinPackParameters: true
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+    AfterCaseLabel: false
+    AfterClass: false
+    AfterEnum: false
+    AfterFunction: false
+    AfterControlStatement: Never
+    BeforeCatch : false
+    BeforeElse : false
+
+IndentCaseLabels: true
