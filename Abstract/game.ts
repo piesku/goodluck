@@ -13,6 +13,9 @@ export interface Game {
     Canvas: HTMLCanvasElement;
     Camera?: Camera;
 
+    Gl: WebGLRenderingContext;
+    ExtVao: OES_vertex_array_object;
+
     // The rendering pipeline supports 8 lights.
     LightPositions: Float32Array;
     LightDetails: Float32Array;
