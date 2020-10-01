@@ -10,12 +10,16 @@ export interface Game {
     ViewportHeight: number;
     ViewportResized: boolean;
 
-    Canvas: HTMLCanvasElement;
+    Ui: HTMLElement;
     Audio: AudioContext;
     Camera?: Camera;
 
+    Canvas: HTMLCanvasElement;
     Gl: WebGLRenderingContext;
     ExtVao: OES_vertex_array_object;
+
+    Billboard: HTMLCanvasElement;
+    Context2D: CanvasRenderingContext2D;
 
     // The rendering pipeline supports 8 lights.
     LightPositions: Float32Array;
