@@ -11,6 +11,7 @@ export interface Game {
     ViewportResized: boolean;
 
     Canvas: HTMLCanvasElement;
+    Audio: AudioContext;
     Camera?: Camera;
 
     Gl: WebGLRenderingContext;
