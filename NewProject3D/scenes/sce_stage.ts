@@ -1,6 +1,6 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light_directional} from "../components/com_light.js";
-import {render_diffuse} from "../components/com_render_diffuse.js";
+import {render_diffuse} from "../components/com_render1.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";

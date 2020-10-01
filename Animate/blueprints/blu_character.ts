@@ -3,7 +3,7 @@ import {Vec4} from "../../common/math.js";
 import {from_euler} from "../../common/quat.js";
 import {element} from "../../common/random.js";
 import {animate, AnimationFlag} from "../components/com_animate.js";
-import {render_diffuse} from "../components/com_render_diffuse.js";
+import {render_diffuse} from "../components/com_render1.js";
 import {Blueprint} from "../core.js";
 import {Game} from "../game.js";
 

@@ -2,7 +2,7 @@ import {Animate} from "./components/com_animate.js";
 import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
 import {Light} from "./components/com_light.js";
-import {Render} from "./components/com_render.js";
+import {Render} from "./components/com_render1.js";
 import {Transform} from "./components/com_transform.js";
 
 const enum Component {

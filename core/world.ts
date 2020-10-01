@@ -4,7 +4,6 @@ import {Camera} from "./components/com_camera.js";
 import {Draw} from "./components/com_draw.js";
 import {Light} from "./components/com_light.js";
 import {Move} from "./components/com_move.js";
-import {Render} from "./components/com_render.js";
 import {Transform} from "./components/com_transform.js";
 
 const enum Component {
@@ -40,6 +39,6 @@ export interface World {
     Camera: Array<Camera>;
     Light: Array<Light>;
     Move: Array<Move>;
-    Render: Array<Render>;
+    // Render depends on the version of WebGL. See com_render*, sys_render*.
     Transform: Array<Transform>;
 }

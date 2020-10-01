@@ -15,8 +15,6 @@ export interface Game {
     Camera?: Camera;
 
     Canvas: HTMLCanvasElement;
-    Gl: WebGLRenderingContext;
-    ExtVao: OES_vertex_array_object;
 
     Billboard: HTMLCanvasElement;
     Context2D: CanvasRenderingContext2D;

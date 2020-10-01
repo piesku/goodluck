@@ -2,16 +2,22 @@ import {Material} from "../../common/material.js";
 import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
 import {DiffuseLayout} from "../../materials/layout_diffuse.js";
 import {SpecularLayout} from "../../materials/layout_specular.js";
-import {RenderKind} from "../components/com_render.js";
-import {RenderDiffuse} from "../components/com_render_diffuse.js";
-import {RenderSpecular} from "../components/com_render_specular.js";
+import {Render, RenderDiffuse, RenderKind, RenderSpecular} from "../components/com_render1.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {Has} from "../world.js";
+import {Has, World} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;
 
-export function sys_render(game: Game, delta: number) {
+interface Game1 extends Game {
+    Gl: WebGLRenderingContext;
+    ExtVao: OES_vertex_array_object;
+    World: World & {
+        Render: Array<Render>;
+    };
+}
+
+export function sys_render(game: Game1, delta: number) {
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (game.ViewportResized) {
         game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
@@ -55,14 +61,14 @@ export function sys_render(game: Game, delta: number) {
     }
 }
 
-function use_diffuse(game: Game, material: Material<DiffuseLayout>) {
+function use_diffuse(game: Game1, material: Material<DiffuseLayout>) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.Pv);
     game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
-function draw_diffuse(game: Game, transform: Transform, render: RenderDiffuse) {
+function draw_diffuse(game: Game1, transform: Transform, render: RenderDiffuse) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
     game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
@@ -71,7 +77,7 @@ function draw_diffuse(game: Game, transform: Transform, render: RenderDiffuse) {
     game.ExtVao.bindVertexArrayOES(null);
 }
 
-function use_specular(game: Game, material: Material<SpecularLayout>) {
+function use_specular(game: Game1, material: Material<SpecularLayout>) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.Pv);
     game.Gl.uniform3fv(material.Locations.Eye, game.Camera!.Position);
@@ -79,7 +85,7 @@ function use_specular(game: Game, material: Material<SpecularLayout>) {
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
-function draw_specular(game: Game, transform: Transform, render: RenderSpecular) {
+function draw_specular(game: Game1, transform: Transform, render: RenderSpecular) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
     game.Gl.uniform4fv(render.Material.Locations.ColorDiffuse, render.ColorDiffuse);
