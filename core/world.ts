@@ -6,6 +6,7 @@ import {Light} from "./components/com_light.js";
 import {Move} from "./components/com_move.js";
 import {Rotate} from "./components/com_rotate.js";
 import {Transform} from "./components/com_transform.js";
+import {Transform2D} from "./components/com_transform2d.js";
 
 const enum Component {
     Animate,
@@ -17,6 +18,7 @@ const enum Component {
     Render,
     Rotate,
     Transform,
+    Transform2D,
 }
 
 export const enum Has {
@@ -29,6 +31,7 @@ export const enum Has {
     Render = 1 << Component.Render,
     Rotate = 1 << Component.Rotate,
     Transform = 1 << Component.Transform,
+    Transform2D = 1 << Component.Transform2D,
 }
 
 export interface World {
@@ -45,4 +48,5 @@ export interface World {
     // Render depends on the version of WebGL. See com_render*, sys_render*.
     Rotate: Array<Rotate>;
     Transform: Array<Transform>;
+    Transform2D: Array<Transform2D>;
 }
