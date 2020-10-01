@@ -1,1 +1,1 @@
-../../Abstract/systems/sys_light.ts
+../../core/systems/sys_light.ts

@@ -1,1 +1,1 @@
-../Abstract/core.ts
+../core/core.ts

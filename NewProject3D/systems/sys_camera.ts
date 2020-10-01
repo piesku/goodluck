@@ -1,1 +1,1 @@
-../../Abstract/systems/sys_camera.ts
+../../core/systems/sys_camera.ts

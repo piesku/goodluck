@@ -1,1 +1,1 @@
-../../Abstract/components/com_light.ts
+../../core/components/com_light.ts

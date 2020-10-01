@@ -1,1 +1,1 @@
-../../Abstract/components/com_transform.ts
+../../core/components/com_transform.ts

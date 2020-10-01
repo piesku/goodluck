@@ -12,7 +12,16 @@ fi
 
 echo "Bootstrapping $EXAMPLE into src"
 
-echo "  Replacing symlinks by the originals from Abstract"
+echo "  Removing other examples"
+while read dir; do
+    if [ "$dir" == "$EXAMPLE/" ]; then
+        continue
+    fi
+    echo "    removing $dir"
+    rm -rf "$dir"
+done < <(ls -1d */ | grep "^[A-Z]")
+
+echo "  Replacing symlinks by the originals from core"
 while read link; do
     echo "    symlink found: $link"
     real=$(readlink "$link")
@@ -23,14 +32,8 @@ while read link; do
     echo "      replaced by: $real"
 done < <(find $EXAMPLE -type l)
 
-echo "  Removing other examples"
-while read dir; do
-    if [ "$dir" == "$EXAMPLE/" ]; then
-        continue
-    fi
-    echo "    removing $dir"
-    rm -rf "$dir"
-done < <(ls -1d */ | grep "^[A-Z]")
+echo "  Removing core"
+rm -rf core
 
 echo "  Renaming $EXAMPLE to src"
 mv "$EXAMPLE" src

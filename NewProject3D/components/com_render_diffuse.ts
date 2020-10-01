@@ -1,1 +1,1 @@
-../../Abstract/components/com_render_diffuse.ts
+../../core/components/com_render_diffuse.ts

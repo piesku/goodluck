@@ -1,1 +1,1 @@
-../../Abstract/components/com_render.ts
+../../core/components/com_render.ts

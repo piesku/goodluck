@@ -1,1 +1,1 @@
-../../Abstract/components/com_camera.ts
+../../core/components/com_camera.ts
