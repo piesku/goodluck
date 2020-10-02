@@ -1,5 +1,5 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
-import {render_textured} from "../components/com_render_textured.js";
+import {render_textured} from "../components/com_render1.js";
 import {rotate} from "../components/com_rotate.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";

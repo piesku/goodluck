@@ -1,14 +1,22 @@
 import {Material} from "../../common/material.js";
-import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
+import {
+    GL_COLOR_BUFFER_BIT,
+    GL_DEPTH_BUFFER_BIT,
+    GL_TEXTURE0,
+    GL_TEXTURE_2D,
+    GL_UNSIGNED_SHORT,
+} from "../../common/webgl.js";
 import {BasicLayout} from "../../materials/layout_basic.js";
 import {DiffuseLayout} from "../../materials/layout_diffuse.js";
 import {SpecularLayout} from "../../materials/layout_specular.js";
+import {TexturedLayout} from "../../materials/layout_textured.js";
 import {
     Render,
     RenderBasic,
     RenderDiffuse,
     RenderKind,
     RenderSpecular,
+    RenderTextured,
 } from "../components/com_render1.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
@@ -51,6 +59,9 @@ export function sys_render(game: Game1, delta: number) {
                     case RenderKind.Specular:
                         use_specular(game, render.Material);
                         break;
+                    case RenderKind.Textured:
+                        use_textured(game, render.Material);
+                        break;
                 }
             }
 
@@ -68,6 +79,9 @@ export function sys_render(game: Game1, delta: number) {
                     break;
                 case RenderKind.Specular:
                     draw_specular(game, transform, render);
+                    break;
+                case RenderKind.Textured:
+                    draw_textured(game, transform, render);
                     break;
             }
         }
@@ -117,6 +131,23 @@ function draw_specular(game: Game1, transform: Transform, render: RenderSpecular
     game.Gl.uniform4fv(render.Material.Locations.ColorDiffuse, render.ColorDiffuse);
     game.Gl.uniform4fv(render.Material.Locations.ColorSpecular, render.ColorSpecular);
     game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
+    game.ExtVao.bindVertexArrayOES(render.Vao);
+    game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
+    game.ExtVao.bindVertexArrayOES(null);
+}
+
+function use_textured(game: Game1, material: Material<TexturedLayout>) {
+    game.Gl.useProgram(material.Program);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.Pv);
+}
+
+function draw_textured(game: Game1, transform: Transform, render: RenderTextured) {
+    game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
+
+    game.Gl.activeTexture(GL_TEXTURE0);
+    game.Gl.bindTexture(GL_TEXTURE_2D, render.Texture);
+    game.Gl.uniform1i(render.Material.Locations.Sampler, 0);
+
     game.ExtVao.bindVertexArrayOES(render.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
     game.ExtVao.bindVertexArrayOES(null);

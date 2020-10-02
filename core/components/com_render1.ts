@@ -4,15 +4,17 @@ import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../c
 import {BasicLayout} from "../../materials/layout_basic.js";
 import {DiffuseLayout} from "../../materials/layout_diffuse.js";
 import {SpecularLayout} from "../../materials/layout_specular.js";
+import {TexturedLayout} from "../../materials/layout_textured.js";
 import {Entity, Game} from "../game.js";
 import {Has, World} from "../world.js";
 
-export type Render = RenderBasic | RenderDiffuse | RenderSpecular;
+export type Render = RenderBasic | RenderDiffuse | RenderSpecular | RenderTextured;
 
 export const enum RenderKind {
     Basic,
     Diffuse,
     Specular,
+    Textured,
 }
 
 interface Game1 extends Game {
@@ -178,6 +180,68 @@ export function render_specular(
             ColorDiffuse: color_diffuse,
             ColorSpecular: color_specular,
             Shininess: shininess,
+        };
+    };
+}
+
+export interface RenderTextured {
+    readonly Kind: RenderKind.Textured;
+    readonly Material: Material<TexturedLayout>;
+    readonly Mesh: Mesh;
+    readonly FrontFace: GLenum;
+    readonly Vao: WebGLVertexArrayObject;
+    Texture: WebGLTexture;
+}
+
+let render_textured_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+
+export function render_textured(
+    material: Material<TexturedLayout>,
+    mesh: Mesh,
+    texture: WebGLTexture
+) {
+    return (game: Game1, entity: Entity) => {
+        if (!render_textured_vaos.has(mesh)) {
+            // We only need to create the VAO once.
+            let vao = game.ExtVao.createVertexArrayOES()!;
+            game.ExtVao.bindVertexArrayOES(vao);
+
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
+            game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
+            game.Gl.vertexAttribPointer(
+                material.Locations.VertexPosition,
+                3,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
+
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.TexCoordBuffer);
+            game.Gl.enableVertexAttribArray(material.Locations.VertexTexCoord);
+            game.Gl.vertexAttribPointer(
+                material.Locations.VertexTexCoord,
+                2,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
+
+            game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
+
+            game.ExtVao.bindVertexArrayOES(null);
+            render_textured_vaos.set(mesh, vao);
+        }
+
+        game.World.Signature[entity] |= Has.Render;
+        game.World.Render[entity] = {
+            Kind: RenderKind.Textured,
+            Material: material,
+            Mesh: mesh,
+            FrontFace: GL_CW,
+            Vao: render_textured_vaos.get(mesh)!,
+            Texture: texture,
         };
     };
 }
