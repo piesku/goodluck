@@ -5,6 +5,7 @@ import {Draw} from "./components/com_draw.js";
 import {Light} from "./components/com_light.js";
 import {Move} from "./components/com_move.js";
 import {Rotate} from "./components/com_rotate.js";
+import {Shake} from "./components/com_shake.js";
 import {Transform} from "./components/com_transform.js";
 import {Transform2D} from "./components/com_transform2d.js";
 
@@ -17,6 +18,7 @@ const enum Component {
     Move,
     Render,
     Rotate,
+    Shake,
     Transform,
     Transform2D,
 }
@@ -30,6 +32,7 @@ export const enum Has {
     Move = 1 << Component.Move,
     Render = 1 << Component.Render,
     Rotate = 1 << Component.Rotate,
+    Shake = 1 << Component.Shake,
     Transform = 1 << Component.Transform,
     Transform2D = 1 << Component.Transform2D,
 }
@@ -47,6 +50,7 @@ export interface World {
     Move: Array<Move>;
     // Render depends on the version of WebGL. See com_render*, sys_render*.
     Rotate: Array<Rotate>;
+    Shake: Array<Shake>;
     Transform: Array<Transform>;
     Transform2D: Array<Transform2D>;
 }
