@@ -26,3 +26,7 @@ export interface Game {
     FrameReset(): void;
     FrameUpdate(delta: number): void;
 }
+
+export const enum Layer {
+    None,
+}

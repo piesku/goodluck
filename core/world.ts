@@ -1,7 +1,9 @@
 import {Animate} from "./components/com_animate.js";
 import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
+import {Collide} from "./components/com_collide.js";
 import {Draw} from "./components/com_draw.js";
+import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
 import {Move} from "./components/com_move.js";
 import {Rotate} from "./components/com_rotate.js";
@@ -13,7 +15,9 @@ const enum Component {
     Animate,
     AudioSource,
     Camera,
+    Collide,
     Draw,
+    Lifespan,
     Light,
     Move,
     Render,
@@ -27,7 +31,9 @@ export const enum Has {
     Animate = 1 << Component.Animate,
     AudioSource = 1 << Component.AudioSource,
     Camera = 1 << Component.Camera,
+    Collide = 1 << Component.Collide,
     Draw = 1 << Component.Draw,
+    Lifespan = 1 << Component.Lifespan,
     Light = 1 << Component.Light,
     Move = 1 << Component.Move,
     Render = 1 << Component.Render,
@@ -44,8 +50,10 @@ export interface World {
     // Component data
     Animate: Array<Animate>;
     AudioSource: Array<AudioSource>;
-    Draw: Array<Draw>;
     Camera: Array<Camera>;
+    Collide: Array<Collide>;
+    Draw: Array<Draw>;
+    Lifespan: Array<Lifespan>;
     Light: Array<Light>;
     Move: Array<Move>;
     // Render depends on the version of WebGL. See com_render*, sys_render*.
