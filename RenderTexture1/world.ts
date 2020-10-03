@@ -1,5 +1,5 @@
 import {Camera} from "./components/com_camera.js";
-import {Render} from "./components/com_render.js";
+import {Render} from "./components/com_render1.js";
 import {Rotate} from "./components/com_rotate.js";
 import {Transform} from "./components/com_transform.js";
 
