@@ -25,7 +25,7 @@ export class Game {
 
     MaterialParticles = mat1_particles(this.Gl);
 
-    Camera?: Camera;
+    Cameras: Array<Camera> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>

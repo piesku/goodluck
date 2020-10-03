@@ -10,9 +10,7 @@ import {World} from "../world.js";
 
 export function scene_stage(game: Game) {
     game.World = new World();
-    game.Camera = undefined;
     game.ViewportResized = true;
-    game.Gl.clearColor(0.9, 0.9, 0.9, 1);
 
     // Camera.
     instantiate(game, {

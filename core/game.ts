@@ -12,7 +12,6 @@ export interface Game {
 
     Ui: HTMLElement;
     Audio: AudioContext;
-    Camera?: Camera;
 
     Canvas: HTMLCanvasElement;
 
@@ -22,6 +21,7 @@ export interface Game {
     // The rendering pipeline supports 8 lights.
     LightPositions: Float32Array;
     LightDetails: Float32Array;
+    Cameras: Array<Camera>;
 
     FrameReset(): void;
     FrameUpdate(delta: number): void;

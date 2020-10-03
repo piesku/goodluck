@@ -6,6 +6,7 @@ import {
     GL_DYNAMIC_DRAW,
     GL_FLOAT,
 } from "../../common/webgl.js";
+import {CameraEye} from "../components/com_camera.js";
 import {EmitParticles} from "../components/com_emit_particles.js";
 import {RenderKind} from "../components/com_render.js";
 import {RenderParticles} from "../components/com_render_particles.js";
@@ -32,7 +33,7 @@ export function sys_render(game: Game, delta: number) {
                 current_material = render.Material;
                 switch (render.Kind) {
                     case RenderKind.Particles:
-                        use_particles(game, render.Material);
+                        use_particles(game, render.Material, game.Cameras[0]);
                         break;
                 }
             }
@@ -50,9 +51,9 @@ export function sys_render(game: Game, delta: number) {
     }
 }
 
-function use_particles(game: Game, material: Material<ParticlesLayout>) {
+function use_particles(game: Game, material: Material<ParticlesLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
-    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.Pv);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
 }
 
 function draw_particles(game: Game, render: RenderParticles, emitter: EmitParticles) {
