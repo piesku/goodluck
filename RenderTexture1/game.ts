@@ -43,7 +43,7 @@ export class Game {
 
     constructor() {
         document.addEventListener("visibilitychange", () =>
-            document.hidden ? loop_stop(this) : loop_start(this)
+            document.hidden ? loop_stop() : loop_start(this)
         );
 
         this.Gl.enable(GL_DEPTH_TEST);

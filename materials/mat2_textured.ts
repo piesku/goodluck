@@ -1,11 +1,10 @@
-import {link, Material} from "../../common/material.js";
-import {GL_TRIANGLES} from "../../common/webgl.js";
+import {link, Material} from "../common/material.js";
+import {GL_TRIANGLES} from "../common/webgl.js";
 import {TexturedLayout} from "./layout_textured.js";
 
 let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
-    uniform mat4 self;
 
     in vec3 position;
     in vec2 texcoord;
@@ -40,7 +39,6 @@ export function mat2_textured(gl: WebGL2RenderingContext): Material<TexturedLayo
         Locations: {
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
-            Self: gl.getUniformLocation(program, "self")!,
             Sampler: gl.getUniformLocation(program, "sampler")!,
             VertexPosition: gl.getAttribLocation(program, "position")!,
             VertexTexCoord: gl.getAttribLocation(program, "texcoord")!,
