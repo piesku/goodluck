@@ -34,11 +34,11 @@ function update(game: Game, entity: Entity) {
         if (aspect > 1) {
             // Landscape orientation.
             perspective(camera.Projection, camera.FovY, aspect, camera.Near, camera.Far);
-            invert(camera.Unproject, camera.Projection);
+            invert(camera.Unprojection, camera.Projection);
         } else {
             // Portrait orientation.
             perspective(camera.Projection, camera.FovY / aspect, aspect, camera.Near, camera.Far);
-            invert(camera.Unproject, camera.Projection);
+            invert(camera.Unprojection, camera.Projection);
         }
     }
 

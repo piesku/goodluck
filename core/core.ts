@@ -51,17 +51,21 @@ export interface Blueprint {
     Rotation?: Quat;
     Scale?: Vec3;
     Using?: Array<Mixin>;
+    Disable?: number;
     Children?: Array<Blueprint>;
 }
 
 export function instantiate(
     game: Game,
-    {Translation, Rotation, Scale, Using = [], Children = []}: Blueprint
+    {Translation, Rotation, Scale, Using = [], Disable, Children = []}: Blueprint
 ) {
     let entity = create(game.World);
     transform(Translation, Rotation, Scale)(game, entity);
     for (let mixin of Using) {
         mixin(game, entity);
+    }
+    if (Disable) {
+        game.World.Signature[entity] &= ~Disable;
     }
     let entity_transform = game.World.Transform[entity];
     for (let subtree of Children) {

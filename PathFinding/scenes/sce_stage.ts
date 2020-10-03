@@ -2,7 +2,7 @@ import {from_euler} from "../../common/quat.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {collide} from "../components/com_collide.js";
 import {control_player} from "../components/com_control_player.js";
-import {draw_marker, draw_selection} from "../components/com_draw.js";
+import {draw_selection, draw_text} from "../components/com_draw.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {nav_agent} from "../components/com_nav_agent.js";
@@ -56,10 +56,10 @@ export function scene_stage(game: Game) {
     console.timeEnd("nav_bake");
 
     for (let node = 0; node < nav.Centroids.length; node++) {
-        if (false && nav.Centroids[node]) {
+        if (true && nav.Centroids[node]) {
             instantiate(game, {
                 Translation: nav.Centroids[node],
-                Using: [draw_marker(`${node}`)],
+                Using: [draw_text(`${node}`, "12px monospace", "#fff")],
             });
         }
     }

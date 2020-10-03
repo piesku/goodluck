@@ -1,4 +1,4 @@
-import {create, perspective} from "../../common/mat4.js";
+import {create, invert, perspective} from "../../common/mat4.js";
 import {Mat4, Vec3, Vec4} from "../../common/math.js";
 import {
     GL_COLOR_ATTACHMENT0,
@@ -27,6 +27,7 @@ export interface CameraDisplay extends CameraEye {
     Near: number;
     Far: number;
     Projection: Mat4;
+    Unprojection: Mat4;
     ClearColor: Vec4;
 }
 
@@ -44,6 +45,7 @@ export function camera_display_perspective(
             Near: near,
             Far: far,
             Projection: create(),
+            Unprojection: create(),
             Pv: create(),
             Position: [0, 0, 0],
             ClearColor: clear_color,
@@ -66,6 +68,7 @@ export interface CameraFramebuffer extends CameraEye {
     Near: number;
     Far: number;
     Projection: Mat4;
+    Unprojection: Mat4;
     ClearColor: Vec4;
 }
 
@@ -82,6 +85,8 @@ export function camera_framebuffer_perspective(
     return (game: GameGl, entity: Entity) => {
         let projection = create();
         perspective(projection, fovy, 1, near, far);
+        let unprojection = create();
+        invert(unprojection, projection);
         let target = game.Gl.createFramebuffer()!;
         game.Gl.bindFramebuffer(GL_FRAMEBUFFER, target);
         game.Gl.framebufferTexture2D(
@@ -109,6 +114,7 @@ export function camera_framebuffer_perspective(
             Near: near,
             Far: far,
             Projection: projection,
+            Unprojection: unprojection,
             Pv: create(),
             Position: [0, 0, 0],
             ClearColor: clear_color,

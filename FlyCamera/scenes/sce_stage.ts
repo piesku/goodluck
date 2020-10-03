@@ -1,5 +1,5 @@
 import {blueprint_camera_fly} from "../blueprints/blu_camera_fly.js";
-import {draw_marker} from "../components/com_draw.js";
+import {draw_text} from "../components/com_draw.js";
 import {light_directional} from "../components/com_light.js";
 import {render_diffuse} from "../components/com_render1.js";
 import {instantiate} from "../core.js";
@@ -36,7 +36,7 @@ export function scene_stage(game: Game) {
         Children: [
             {
                 Translation: [0, 1, 0],
-                Using: [draw_marker("Hello!")],
+                Using: [draw_text("Hello!", "10vmin sans", "#555")],
             },
         ],
     });

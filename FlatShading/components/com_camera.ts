@@ -20,6 +20,7 @@ export interface CameraDisplay extends CameraEye {
     Near: number;
     Far: number;
     Projection: Mat4;
+    Unprojection: Mat4;
     ClearColor: Vec4;
 }
 
@@ -37,6 +38,7 @@ export function camera_display_perspective(
             Near: near,
             Far: far,
             Projection: create(),
+            Unprojection: create(),
             Pv: create(),
             Position: [0, 0, 0],
             ClearColor: clear_color,
@@ -55,5 +57,6 @@ export interface CameraFramebuffer extends CameraEye {
     Near: number;
     Far: number;
     Projection: Mat4;
+    Unprojection: Mat4;
     ClearColor: Vec4;
 }

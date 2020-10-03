@@ -2,7 +2,7 @@ import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {transform_point} from "../../common/vec3.js";
 import {CameraDisplay, CameraKind} from "../components/com_camera.js";
-import {DrawKind, DrawMarker} from "../components/com_draw.js";
+import {DrawKind, DrawSelection, DrawText} from "../components/com_draw.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -55,17 +55,26 @@ export function sys_draw(game: Game, delta: number) {
 
             let draw = game.World.Draw[i];
             switch (draw.Kind) {
-                case DrawKind.Marker:
-                    draw_marker(game, draw);
+                case DrawKind.Text:
+                    draw_text(game, draw);
+                    break;
+                case DrawKind.Selection:
+                    draw_selection(game, draw);
                     break;
             }
         }
     }
 }
 
-function draw_marker(game: Game, draw: DrawMarker) {
-    game.Context2D.font = "10vmin sans";
+function draw_text(game: Game, draw: DrawText) {
     game.Context2D.textAlign = "center";
-    game.Context2D.fillStyle = "#555";
-    game.Context2D.fillText(draw.Marker, 0, 0);
+    game.Context2D.font = draw.Font;
+    game.Context2D.fillStyle = draw.FillStyle;
+    game.Context2D.fillText(draw.Text, 0, 0);
+}
+
+function draw_selection(game: Game, draw: DrawSelection) {
+    let size = game.ViewportHeight * 0.06;
+    game.Context2D.strokeStyle = draw.Color;
+    game.Context2D.strokeRect(-size / 2, -size / 2, size, size);
 }
