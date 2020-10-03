@@ -3,7 +3,7 @@ import {control_player} from "../components/com_control_player.js";
 import {light_point} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {named} from "../components/com_named.js";
-import {render_diffuse} from "../components/com_render_diffuse.js";
+import {render_diffuse} from "../components/com_render1.js";
 import {rigid_body} from "../components/com_rigid_body.js";
 import {Blueprint} from "../core.js";
 import {Game, Layer} from "../game.js";

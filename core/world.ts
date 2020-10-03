@@ -5,7 +5,9 @@ import {Collide} from "./components/com_collide.js";
 import {Draw} from "./components/com_draw.js";
 import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
+import {Mimic} from "./components/com_mimic.js";
 import {Move} from "./components/com_move.js";
+import {Named} from "./components/com_named.js";
 import {RigidBody} from "./components/com_rigid_body.js";
 import {Rotate} from "./components/com_rotate.js";
 import {Shake} from "./components/com_shake.js";
@@ -20,7 +22,9 @@ const enum Component {
     Draw,
     Lifespan,
     Light,
+    Mimic,
     Move,
+    Named,
     Render,
     RigidBody,
     Rotate,
@@ -37,7 +41,9 @@ export const enum Has {
     Draw = 1 << Component.Draw,
     Lifespan = 1 << Component.Lifespan,
     Light = 1 << Component.Light,
+    Mimic = 1 << Component.Mimic,
     Move = 1 << Component.Move,
+    Named = 1 << Component.Named,
     Render = 1 << Component.Render,
     RigidBody = 1 << Component.RigidBody,
     Rotate = 1 << Component.Rotate,
@@ -58,7 +64,9 @@ export interface World {
     Draw: Array<Draw>;
     Lifespan: Array<Lifespan>;
     Light: Array<Light>;
+    Mimic: Array<Mimic>;
     Move: Array<Move>;
+    Named: Array<Named>;
     // Render depends on the version of WebGL. See com_render*, sys_render*.
     RigidBody: Array<RigidBody>;
     Rotate: Array<Rotate>;
