@@ -1,5 +1,5 @@
 import {collide} from "../components/com_collide.js";
-import {render_diffuse} from "../components/com_render_diffuse.js";
+import {render_diffuse} from "../components/com_render1.js";
 import {Blueprint} from "../core.js";
 import {Game, Layer} from "../game.js";
 

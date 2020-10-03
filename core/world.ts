@@ -13,6 +13,7 @@ import {Rotate} from "./components/com_rotate.js";
 import {Shake} from "./components/com_shake.js";
 import {Transform} from "./components/com_transform.js";
 import {Transform2D} from "./components/com_transform2d.js";
+import {Trigger} from "./components/com_trigger.js";
 
 const enum Component {
     Animate,
@@ -31,6 +32,7 @@ const enum Component {
     Shake,
     Transform,
     Transform2D,
+    Trigger,
 }
 
 export const enum Has {
@@ -50,6 +52,7 @@ export const enum Has {
     Shake = 1 << Component.Shake,
     Transform = 1 << Component.Transform,
     Transform2D = 1 << Component.Transform2D,
+    Trigger = 1 << Component.Trigger,
 }
 
 export interface World {
@@ -73,4 +76,5 @@ export interface World {
     Shake: Array<Shake>;
     Transform: Array<Transform>;
     Transform2D: Array<Transform2D>;
+    Trigger: Array<Trigger>;
 }
