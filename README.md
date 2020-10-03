@@ -53,7 +53,7 @@ Goodluck is written in TypeScript, but it only uses a small subset of its featur
 
 ## Creating a New Project
 
-When you're ready to start a new project, bootstrap it using one of the examples. `NewProject2D` and `NewProject3D` are two minimal examples which can provide a good general base for your work. `WebGL2` is like `NewProject3D` but it uses WebGL2 which isn't supported in Safari nor iOS.
+When you're ready to start a new project, bootstrap it using one of the examples. I recommend `NewProject3D` for a minimal base, `FlyCamera` for the FPS controls, and `ThirdPerson` for the TPP view.
 
 1. Choose one of the examples as your starting point.
 2. `./bootstrap.sh EXAMPLE_NAME`
