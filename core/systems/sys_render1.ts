@@ -1,7 +1,9 @@
 import {Material} from "../../common/material.js";
 import {
+    GL_ARRAY_BUFFER,
     GL_COLOR_BUFFER_BIT,
     GL_DEPTH_BUFFER_BIT,
+    GL_FLOAT,
     GL_FRAMEBUFFER,
     GL_TEXTURE0,
     GL_TEXTURE_2D,
@@ -19,6 +21,7 @@ import {
     RenderKind,
     RenderSpecular,
     RenderTextured,
+    RenderVertices,
 } from "../components/com_render1.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
@@ -88,6 +91,9 @@ function render(game: Game1, eye: CameraEye, current_target?: WebGLTexture) {
                     case RenderKind.Textured:
                         use_textured(game, render.Material, eye);
                         break;
+                    case RenderKind.Vertices:
+                        use_vertices(game, render.Material, eye);
+                        break;
                 }
             }
 
@@ -112,6 +118,9 @@ function render(game: Game1, eye: CameraEye, current_target?: WebGLTexture) {
                     if (render.Texture !== current_target) {
                         draw_textured(game, transform, render);
                     }
+                    break;
+                case RenderKind.Vertices:
+                    draw_vertices(game, transform, render);
                     break;
             }
         }
@@ -181,4 +190,18 @@ function draw_textured(game: Game1, transform: Transform, render: RenderTextured
     game.ExtVao.bindVertexArrayOES(render.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
     game.ExtVao.bindVertexArrayOES(null);
+}
+
+function use_vertices(game: Game1, material: Material<BasicLayout>, eye: CameraEye) {
+    game.Gl.useProgram(material.Program);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
+}
+
+function draw_vertices(game: Game1, transform: Transform, render: RenderVertices) {
+    game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
+    game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
+    game.Gl.bindBuffer(GL_ARRAY_BUFFER, render.VertexBuffer);
+    game.Gl.enableVertexAttribArray(render.Material.Locations.VertexPosition);
+    game.Gl.vertexAttribPointer(render.Material.Locations.VertexPosition, 3, GL_FLOAT, false, 0, 0);
+    game.Gl.drawArrays(render.Material.Mode, 0, render.IndexCount);
 }

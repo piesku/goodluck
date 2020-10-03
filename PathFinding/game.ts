@@ -14,7 +14,7 @@ import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_nav} from "./systems/sys_nav.js";
 import {Picked, sys_pick} from "./systems/sys_pick.js";
-import {sys_render} from "./systems/sys_render.js";
+import {sys_render} from "./systems/sys_render1.js";
 import {sys_select} from "./systems/sys_select.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
@@ -50,10 +50,10 @@ export class Game {
     MeshCube = mesh_cube(this.Gl);
     MeshTerrain = mesh_terrain(this.Gl);
 
-    Camera?: Camera;
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
+    Cameras: Array<Camera> = [];
 
     Pick?: Picked;
 

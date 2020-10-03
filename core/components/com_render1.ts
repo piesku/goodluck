@@ -1,6 +1,12 @@
 import {Material, Mesh} from "../../common/material.js";
 import {Vec4} from "../../common/math.js";
-import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
+import {
+    GL_ARRAY_BUFFER,
+    GL_CW,
+    GL_DYNAMIC_DRAW,
+    GL_ELEMENT_ARRAY_BUFFER,
+    GL_FLOAT,
+} from "../../common/webgl.js";
 import {BasicLayout} from "../../materials/layout_basic.js";
 import {DiffuseLayout} from "../../materials/layout_diffuse.js";
 import {SpecularLayout} from "../../materials/layout_specular.js";
@@ -8,13 +14,14 @@ import {TexturedLayout} from "../../materials/layout_textured.js";
 import {Entity, Game} from "../game.js";
 import {Has, World} from "../world.js";
 
-export type Render = RenderBasic | RenderDiffuse | RenderSpecular | RenderTextured;
+export type Render = RenderBasic | RenderDiffuse | RenderSpecular | RenderTextured | RenderVertices;
 
 export const enum RenderKind {
     Basic,
     Diffuse,
     Specular,
     Textured,
+    Vertices,
 }
 
 interface Game1 extends Game {
@@ -242,6 +249,33 @@ export function render_textured(
             FrontFace: GL_CW,
             Vao: render_textured_vaos.get(mesh)!,
             Texture: texture,
+        };
+    };
+}
+
+export interface RenderVertices {
+    Kind: RenderKind.Vertices;
+    Material: Material<BasicLayout>;
+    FrontFace: GLenum;
+    VertexBuffer: WebGLBuffer;
+    IndexCount: number;
+    Color: Vec4;
+}
+
+export function render_vertices(material: Material<BasicLayout>, max: number, color: Vec4) {
+    return (game: Game1, entity: Entity) => {
+        let vertex_buf = game.Gl.createBuffer()!;
+        game.Gl.bindBuffer(GL_ARRAY_BUFFER, vertex_buf);
+        game.Gl.bufferData(GL_ARRAY_BUFFER, max * Float32Array.BYTES_PER_ELEMENT, GL_DYNAMIC_DRAW);
+
+        game.World.Signature[entity] |= Has.Render;
+        game.World.Render[entity] = {
+            Kind: RenderKind.Vertices,
+            Material: material,
+            FrontFace: GL_CW,
+            VertexBuffer: vertex_buf,
+            IndexCount: 0,
+            Color: color,
         };
     };
 }

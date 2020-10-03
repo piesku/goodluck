@@ -7,8 +7,7 @@ import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {nav_agent} from "../components/com_nav_agent.js";
 import {pickable} from "../components/com_pickable.js";
-import {render_basic} from "../components/com_render_basic.js";
-import {render_diffuse} from "../components/com_render_diffuse.js";
+import {render_basic, render_diffuse} from "../components/com_render1.js";
 import {selectable} from "../components/com_selectable.js";
 import {instantiate} from "../core.js";
 import {Game, Layer} from "../game.js";
@@ -17,7 +16,6 @@ import {Has, World} from "../world.js";
 
 export function scene_stage(game: Game) {
     game.World = new World();
-    game.Camera = undefined;
     game.ViewportResized = true;
     game.Gl.clearColor(0.9, 0.9, 0.9, 1);
 
@@ -56,7 +54,7 @@ export function scene_stage(game: Game) {
     console.timeEnd("nav_bake");
 
     for (let node = 0; node < nav.Centroids.length; node++) {
-        if (true && nav.Centroids[node]) {
+        if (false && nav.Centroids[node]) {
             instantiate(game, {
                 Translation: nav.Centroids[node],
                 Using: [draw_text(`${node}`, "12px monospace", "#fff")],
