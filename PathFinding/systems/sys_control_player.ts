@@ -1,7 +1,7 @@
 import {get_translation} from "../../common/mat4.js";
 import {GL_ARRAY_BUFFER} from "../../common/webgl.js";
 import {RenderVertices, render_vertices} from "../components/com_render1.js";
-import {instantiate} from "../core.js";
+import {instantiate} from "../entity.js";
 import {Entity, Game} from "../game.js";
 import {path_find} from "../pathfind.js";
 import {Has} from "../world.js";

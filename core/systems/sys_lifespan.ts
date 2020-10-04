@@ -1,4 +1,4 @@
-import {destroy} from "../core.js";
+import {destroy_entity} from "../entity.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -16,6 +16,6 @@ function update(game: Game, entity: Entity, delta: number) {
     let lifespan = game.World.Lifespan[entity];
     lifespan.Age += delta;
     if (lifespan.Age > lifespan.Max) {
-        destroy(game.World, entity);
+        destroy_entity(game.World, entity);
     }
 }

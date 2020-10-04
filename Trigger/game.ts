@@ -3,7 +3,7 @@ import {mat1_basic_wireframe} from "../materials/mat1_basic_wireframe.js";
 import {mat1_diffuse_gouraud} from "../materials/mat1_diffuse_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./core.js";
+import {loop_start, loop_stop} from "./loop.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_debug} from "./systems/sys_debug.js";

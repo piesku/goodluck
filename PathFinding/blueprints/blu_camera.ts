@@ -1,6 +1,6 @@
 import {camera_display_perspective} from "../components/com_camera.js";
 import {pick} from "../components/com_pick.js";
-import {Blueprint} from "../core.js";
+import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
 
 export function blueprint_camera(game: Game): Blueprint {

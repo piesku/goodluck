@@ -1,7 +1,7 @@
 import {camera_display_perspective} from "../components/com_camera.js";
 import {mimic} from "../components/com_mimic.js";
 import {find_first} from "../components/com_named.js";
-import {Blueprint} from "../core.js";
+import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
 
 export function blueprint_camera_follow(game: Game): Blueprint {

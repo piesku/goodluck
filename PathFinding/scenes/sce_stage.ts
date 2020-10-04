@@ -9,7 +9,7 @@ import {nav_agent} from "../components/com_nav_agent.js";
 import {pickable} from "../components/com_pickable.js";
 import {render_basic, render_diffuse} from "../components/com_render1.js";
 import {selectable} from "../components/com_selectable.js";
-import {instantiate} from "../core.js";
+import {instantiate} from "../entity.js";
 import {Game, Layer} from "../game.js";
 import {nav_bake} from "../navmesh.js";
 import {Has, World} from "../world.js";

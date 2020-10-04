@@ -5,7 +5,7 @@ import {animate, AnimationFlag} from "../components/com_animate.js";
 import {audio_source} from "../components/com_audio_source.js";
 import {control} from "../components/com_control.js";
 import {light_directional} from "../components/com_light.js";
-import {instantiate} from "../core.js";
+import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 

@@ -10,7 +10,7 @@ import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./core.js";
+import {loop_start, loop_stop} from "./loop.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";

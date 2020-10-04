@@ -4,7 +4,7 @@ import {control_spawner} from "../components/com_control_spawner.js";
 import {light_directional} from "../components/com_light.js";
 import {render_diffuse} from "../components/com_render1.js";
 import {rigid_body} from "../components/com_rigid_body.js";
-import {instantiate} from "../core.js";
+import {instantiate} from "../entity.js";
 import {Game, Layer} from "../game.js";
 import {World} from "../world.js";
 

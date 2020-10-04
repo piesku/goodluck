@@ -1,6 +1,6 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {blueprint_flame} from "../blueprints/blu_flame.js";
-import {instantiate} from "../core.js";
+import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 

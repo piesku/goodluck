@@ -5,7 +5,7 @@ import {move} from "../components/com_move.js";
 import {named} from "../components/com_named.js";
 import {render_diffuse} from "../components/com_render1.js";
 import {rigid_body} from "../components/com_rigid_body.js";
-import {Blueprint} from "../core.js";
+import {Blueprint} from "../entity.js";
 import {Game, Layer} from "../game.js";
 
 export function blueprint_player(game: Game): Blueprint {

@@ -1,5 +1,5 @@
 import {camera_framebuffer_perspective} from "../components/com_camera.js";
-import {Blueprint} from "../core.js";
+import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
 
 export function blueprint_camera_minimap(game: Game): Blueprint {

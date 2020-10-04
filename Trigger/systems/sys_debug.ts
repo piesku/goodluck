@@ -2,7 +2,7 @@ import {scale} from "../../common/vec3.js";
 import {Collide} from "../components/com_collide.js";
 import {RenderKind, render_basic} from "../components/com_render1.js";
 import {Transform} from "../components/com_transform.js";
-import {destroy, instantiate} from "../core.js";
+import {destroy_entity, instantiate} from "../entity.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -23,7 +23,7 @@ export function sys_debug(game: Game, delta: number) {
             // ...or if it's not the same TRANSFORM.
             game.World.Transform[wireframe.anchor_entity] !== wireframe.anchor_transform
         ) {
-            destroy(game.World, wireframe.entity);
+            destroy_entity(game.World, wireframe.entity);
             wireframes.delete(key);
         }
     }

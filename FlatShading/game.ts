@@ -5,7 +5,7 @@ import {mat2_specular_gouraud} from "../materials/mat2_specular_gouraud.js";
 import {mat2_specular_phong} from "../materials/mat2_specular_phong.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./core.js";
+import {loop_start, loop_stop} from "./loop.js";
 import {mat2_diffuse_flat} from "./materials/mat2_diffuse_flat.js";
 import {mat2_specular_flat} from "./materials/mat2_specular_flat.js";
 import {sys_camera} from "./systems/sys_camera.js";

@@ -2,7 +2,7 @@ import {blueprint_camera_fly} from "../blueprints/blu_camera_fly.js";
 import {draw_text} from "../components/com_draw.js";
 import {light_directional} from "../components/com_light.js";
 import {render_diffuse} from "../components/com_render1.js";
-import {instantiate} from "../core.js";
+import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 

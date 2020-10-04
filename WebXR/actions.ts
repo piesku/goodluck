@@ -1,5 +1,5 @@
-import {xr_enter} from "./core.js";
 import {Game} from "./game.js";
+import {xr_enter} from "./xr.js";
 
 export const enum Action {
     EnterVr,

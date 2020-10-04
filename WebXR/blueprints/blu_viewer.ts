@@ -3,7 +3,7 @@ import {camera_xr} from "../components/com_camera.js";
 import {control_xr} from "../components/com_control_xr.js";
 import {pose} from "../components/com_pose.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
-import {Blueprint} from "../core.js";
+import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
 
 export function blueprint_viewer(game: Game): Blueprint {

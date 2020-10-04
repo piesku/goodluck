@@ -5,7 +5,7 @@ import {collide} from "../components/com_collide.js";
 import {light_directional} from "../components/com_light.js";
 import {rotate} from "../components/com_rotate.js";
 import {trigger} from "../components/com_trigger.js";
-import {instantiate} from "../core.js";
+import {instantiate} from "../entity.js";
 import {Game, Layer} from "../game.js";
 import {World} from "../world.js";
 

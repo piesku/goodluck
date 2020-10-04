@@ -4,7 +4,7 @@ import {mat2_textured} from "../materials/mat2_textured.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_plane} from "../meshes/plane.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./core.js";
+import {loop_start, loop_stop} from "./loop.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_render} from "./systems/sys_render2.js";

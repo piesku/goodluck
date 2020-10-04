@@ -1,6 +1,6 @@
 import {dispatch} from "./actions.js";
-import {loop_start} from "./core.js";
 import {Game} from "./game.js";
+import {loop_start} from "./loop.js";
 import {scene_stage} from "./scenes/sce_stage.js";
 
 let game = new Game();
