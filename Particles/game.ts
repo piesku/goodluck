@@ -1,6 +1,6 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./core.js";
+import {loop_start, loop_stop} from "./loop.js";
 import {mat1_particles} from "./materials/mat1_particles.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -25,7 +25,7 @@ export class Game {
 
     MaterialParticles = mat1_particles(this.Gl);
 
-    Camera?: Camera;
+    Cameras: Array<Camera> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>

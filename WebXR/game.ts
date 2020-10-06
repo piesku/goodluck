@@ -3,7 +3,7 @@ import {mat2_diffuse_gouraud} from "../materials/mat2_diffuse_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_hand} from "../meshes/hand.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop, xr_init} from "./core.js";
+import {loop_start, loop_stop} from "./loop.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_xr} from "./systems/sys_control_xr.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -12,6 +12,7 @@ import {sys_render} from "./systems/sys_render.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {sys_ui} from "./systems/sys_ui.js";
 import {World} from "./world.js";
+import {xr_init} from "./xr.js";
 
 export type Entity = number;
 

@@ -1,16 +1,14 @@
 import {blueprint_camera_fly} from "../blueprints/blu_camera_fly.js";
-import {draw_marker} from "../components/com_draw.js";
+import {draw_text} from "../components/com_draw.js";
 import {light_directional} from "../components/com_light.js";
-import {render_diffuse} from "../components/com_render_diffuse.js";
-import {instantiate} from "../core.js";
+import {render_diffuse} from "../components/com_render1.js";
+import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {
     game.World = new World();
-    game.Camera = undefined;
     game.ViewportResized = true;
-    game.Gl.clearColor(0.9, 0.9, 0.9, 1);
 
     // Camera.
     instantiate(game, {
@@ -38,7 +36,7 @@ export function scene_stage(game: Game) {
         Children: [
             {
                 Translation: [0, 1, 0],
-                Using: [draw_marker("Hello!")],
+                Using: [draw_text("Hello!", "10vmin sans", "#555")],
             },
         ],
     });

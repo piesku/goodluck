@@ -3,11 +3,11 @@ import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_diffuse_gouraud} from "../materials/mat1_diffuse_gouraud.js";
 import {mat1_specular_phong} from "../materials/mat1_specular_phong.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./core.js";
+import {loop_start, loop_stop} from "./loop.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
-import {sys_render} from "./systems/sys_render.js";
+import {sys_render} from "./systems/sys_render1.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
@@ -30,10 +30,10 @@ export class Game {
 
     Meshes: Record<string, Mesh> = {};
 
-    Camera?: Camera;
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
+    Cameras: Array<Camera> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>

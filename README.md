@@ -53,17 +53,17 @@ Goodluck is written in TypeScript, but it only uses a small subset of its featur
 
 ## Creating a New Project
 
-When you're ready to start a new project, copy or rename one of the existing examples to `src`. `NewProject2D` and `NewProject3D` are two minimal examples which can provide a good general base for your work. `WebGL2` is like `NewProject3D` but it uses WebGL2 which isn't supported in Safari nor iOS.
+When you're ready to start a new project, bootstrap it using one of the examples. I recommend `NewProject3D` for a minimal base, `FlyCamera` for the FPS controls, and `ThirdPerson` for the TPP view.
 
-Feel free to copy components and systems from other examples as needed, but keep in mind that you might need to adjust the code slightly to make it work for your use-case.
+1. Choose one of the examples as your starting point.
+2. `./bootstrap.sh EXAMPLE_NAME`
+3. The example's code is now in `src/`.
 
-When copying components, remember to add corresponding `Has` enum variants in `components/com_index.ts`. If the added components store data, make room for it in `World` in `world.ts`.
-
-Once you've copied everything you need, feel free to remove all other project directories in the repository! It's completely yours to hack and customize.
+Once bootstrapped, the repo is completely yours to hack and customize!
 
 ## Optimized Builds
 
-Production builds are bundled into a single `.js` file and optimized for size. You can find them in `play/`.
+Production builds are bundled into a single `.html` file and optimized for size. You can find them in `play/`.
 
 1. (Optional) Edit the `EXAMPLE` path in `play/Makefile` if you called your
    source directory something other than `src`.

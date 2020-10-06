@@ -1,13 +1,13 @@
 import {create_render_buffer, create_texture_rgba} from "../common/texture.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
+import {mat1_textured} from "../materials/mat1_textured.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_plane} from "../meshes/plane.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./core.js";
-import {mat1_textured} from "./materials/mat1_textured.js";
+import {loop_start, loop_stop} from "./loop.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
-import {sys_render} from "./systems/sys_render.js";
+import {sys_render} from "./systems/sys_render1.js";
 import {sys_rotate} from "./systems/sys_rotate.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
@@ -36,11 +36,14 @@ export class Game {
         Minimap: create_render_buffer(this.Gl, 256, 256),
     };
 
+    // The rendering pipeline supports 8 lights.
+    LightPositions = new Float32Array(4 * 8);
+    LightDetails = new Float32Array(4 * 8);
     Cameras: Array<Camera> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>
-            document.hidden ? loop_stop(this) : loop_start(this)
+            document.hidden ? loop_stop() : loop_start(this)
         );
 
         this.Gl.enable(GL_DEPTH_TEST);

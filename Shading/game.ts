@@ -10,11 +10,11 @@ import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./core.js";
+import {loop_start, loop_stop} from "./loop.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
-import {sys_render} from "./systems/sys_render.js";
+import {sys_render} from "./systems/sys_render1.js";
 import {sys_rotate} from "./systems/sys_rotate.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
@@ -45,10 +45,10 @@ export class Game {
     MeshIcosphereFlat = mesh_icosphere_flat(this.Gl);
     MeshIcosphereSmooth = mesh_icosphere_smooth(this.Gl);
 
-    Camera?: Camera;
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
+    Cameras: Array<Camera> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>

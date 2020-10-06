@@ -1,4 +1,5 @@
-import {multiply, perspective} from "../../common/mat4.js";
+import {get_translation, invert, multiply, perspective} from "../../common/mat4.js";
+import {CameraDisplay, CameraKind} from "../components/com_camera.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -13,32 +14,34 @@ export function sys_camera(game: Game, delta: number) {
         game.ViewportResized = true;
     }
 
-    game.Camera = undefined;
+    game.Cameras = [];
     for (let i = 0; i < game.World.Signature.length; i++) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
-            update(game, i);
+            let camera = game.World.Camera[i];
 
-            // Support only one camera per scene.
-            return;
+            if (camera.Kind === CameraKind.Display) {
+                update_display(game, i, camera);
+                game.Cameras.push(camera);
+            }
         }
     }
 }
 
-function update(game: Game, entity: Entity) {
-    let transform = game.World.Transform[entity];
-    let camera = game.World.Camera[entity];
-    game.Camera = camera;
-
+function update_display(game: Game, entity: Entity, camera: CameraDisplay) {
     if (game.ViewportResized) {
         let aspect = game.ViewportWidth / game.ViewportHeight;
         if (aspect > 1) {
             // Landscape orientation.
             perspective(camera.Projection, camera.FovY, aspect, camera.Near, camera.Far);
+            invert(camera.Unprojection, camera.Projection);
         } else {
             // Portrait orientation.
             perspective(camera.Projection, camera.FovY / aspect, aspect, camera.Near, camera.Far);
+            invert(camera.Unprojection, camera.Projection);
         }
     }
 
+    let transform = game.World.Transform[entity];
     multiply(camera.Pv, camera.Projection, transform.Self);
+    get_translation(camera.Position, transform.World);
 }

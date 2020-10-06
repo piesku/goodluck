@@ -1,7 +1,7 @@
 import {emit_particles} from "../components/com_emit_particles.js";
 import {render_particles} from "../components/com_render_particles.js";
 import {shake} from "../components/com_shake.js";
-import {Blueprint} from "../core.js";
+import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
 
 export function blueprint_flame(game: Game): Blueprint {

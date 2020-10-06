@@ -1,5 +1,6 @@
 import {Material} from "../../common/material.js";
 import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
+import {CameraDisplay, CameraEye, CameraKind} from "../components/com_camera.js";
 import {RenderKind} from "../components/com_render.js";
 import {RenderInstanced} from "../components/com_render_instanced.js";
 import {Transform} from "../components/com_transform.js";
@@ -15,6 +16,16 @@ export function sys_render(game: Game, delta: number) {
         game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
     }
 
+    for (let camera of game.Cameras) {
+        switch (camera.Kind) {
+            case CameraKind.Display:
+                render_display(game, camera);
+                break;
+        }
+    }
+}
+
+function render_display(game: Game, camera: CameraDisplay) {
     // Keep track of the current material to minimize switching.
     let current_material = null;
     let current_front_face = null;
@@ -28,7 +39,7 @@ export function sys_render(game: Game, delta: number) {
                 current_material = render.Material;
                 switch (render.Kind) {
                     case RenderKind.Instanced:
-                        use_instanced(game, render.Material);
+                        use_instanced(game, render.Material, camera);
                         break;
                 }
             }
@@ -47,9 +58,9 @@ export function sys_render(game: Game, delta: number) {
     }
 }
 
-function use_instanced(game: Game, material: Material<InstancedLayout>) {
+function use_instanced(game: Game, material: Material<InstancedLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
-    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.Pv);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }

@@ -1,15 +1,13 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
-import {render_textured} from "../components/com_render_textured.js";
+import {render_textured} from "../components/com_render1.js";
 import {rotate} from "../components/com_rotate.js";
-import {instantiate} from "../core.js";
+import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {
     game.World = new World();
-    game.Camera = undefined;
     game.ViewportResized = true;
-    game.Gl.clearColor(0.9, 0.9, 0.9, 1);
 
     // Camera.
     instantiate(game, {

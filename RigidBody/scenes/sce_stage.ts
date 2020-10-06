@@ -2,17 +2,15 @@ import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {collide} from "../components/com_collide.js";
 import {control_spawner} from "../components/com_control_spawner.js";
 import {light_directional} from "../components/com_light.js";
-import {render_diffuse} from "../components/com_render_diffuse.js";
+import {render_diffuse} from "../components/com_render1.js";
 import {rigid_body} from "../components/com_rigid_body.js";
-import {instantiate} from "../core.js";
+import {instantiate} from "../entity.js";
 import {Game, Layer} from "../game.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {
     game.World = new World();
-    game.Camera = undefined;
     game.ViewportResized = true;
-    game.Gl.clearColor(0.9, 0.9, 0.9, 1);
 
     // Camera.
     instantiate(game, {

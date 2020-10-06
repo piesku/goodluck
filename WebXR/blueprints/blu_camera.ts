@@ -1,5 +1,5 @@
 import {camera_persp} from "../components/com_camera.js";
-import {Blueprint} from "../core.js";
+import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
 
 export function blueprint_camera(game: Game): Blueprint {

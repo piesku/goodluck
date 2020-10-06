@@ -3,13 +3,13 @@ import {mat1_basic_wireframe} from "../materials/mat1_basic_wireframe.js";
 import {mat1_diffuse_gouraud} from "../materials/mat1_diffuse_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./core.js";
+import {loop_start, loop_stop} from "./loop.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_debug} from "./systems/sys_debug.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
-import {sys_render} from "./systems/sys_render.js";
+import {sys_render} from "./systems/sys_render1.js";
 import {sys_rotate} from "./systems/sys_rotate.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {sys_trigger} from "./systems/sys_trigger.js";
@@ -33,10 +33,10 @@ export class Game {
     MaterialDiffuseGouraud = mat1_diffuse_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
 
-    Camera?: Camera;
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
+    Cameras: Array<Camera> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>

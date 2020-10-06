@@ -1,5 +1,5 @@
 import {draw_rect} from "../components/com_draw.js";
-import {instantiate} from "../core.js";
+import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 

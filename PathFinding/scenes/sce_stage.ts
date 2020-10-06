@@ -2,22 +2,20 @@ import {from_euler} from "../../common/quat.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {collide} from "../components/com_collide.js";
 import {control_player} from "../components/com_control_player.js";
-import {draw_marker, draw_selection} from "../components/com_draw.js";
+import {draw_selection, draw_text} from "../components/com_draw.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {nav_agent} from "../components/com_nav_agent.js";
 import {pickable} from "../components/com_pickable.js";
-import {render_basic} from "../components/com_render_basic.js";
-import {render_diffuse} from "../components/com_render_diffuse.js";
+import {render_basic, render_diffuse} from "../components/com_render1.js";
 import {selectable} from "../components/com_selectable.js";
-import {instantiate} from "../core.js";
+import {instantiate} from "../entity.js";
 import {Game, Layer} from "../game.js";
 import {nav_bake} from "../navmesh.js";
 import {Has, World} from "../world.js";
 
 export function scene_stage(game: Game) {
     game.World = new World();
-    game.Camera = undefined;
     game.ViewportResized = true;
     game.Gl.clearColor(0.9, 0.9, 0.9, 1);
 
@@ -59,7 +57,7 @@ export function scene_stage(game: Game) {
         if (false && nav.Centroids[node]) {
             instantiate(game, {
                 Translation: nav.Centroids[node],
-                Using: [draw_marker(`${node}`)],
+                Using: [draw_text(`${node}`, "12px monospace", "#fff")],
             });
         }
     }

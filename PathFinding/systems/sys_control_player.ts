@@ -1,7 +1,7 @@
 import {get_translation} from "../../common/mat4.js";
 import {GL_ARRAY_BUFFER} from "../../common/webgl.js";
-import {RenderPath, render_path} from "../components/com_render_path.js";
-import {instantiate} from "../core.js";
+import {RenderVertices, render_vertices} from "../components/com_render1.js";
+import {instantiate} from "../entity.js";
 import {Entity, Game} from "../game.js";
 import {path_find} from "../pathfind.js";
 import {Has} from "../world.js";
@@ -15,10 +15,10 @@ export function sys_control_player(game: Game, delta: number) {
     if (!line) {
         line = instantiate(game, {
             Translation: [0, 1, 0],
-            Using: [render_path(512, [1, 1, 0, 1])],
+            Using: [render_vertices(game.MaterialBasicLine, 512, [1, 1, 0, 1])],
+            Disable: Has.Render,
         });
     }
-    game.World.Signature[line] &= ~Has.Render;
 
     if (game.Pick) {
         for (let i = 0; i < game.World.Signature.length; i++) {
@@ -57,7 +57,7 @@ function update(game: Game, entity: Entity, pick: Picked) {
             waypoints = [world_pos, ...waypoints, pick.Point];
 
             game.World.Signature[line] |= Has.Render;
-            let render = game.World.Render[line] as RenderPath;
+            let render = game.World.Render[line] as RenderVertices;
             render.IndexCount = waypoints.length;
             game.Gl.bindBuffer(GL_ARRAY_BUFFER, render.VertexBuffer);
             game.Gl.bufferSubData(GL_ARRAY_BUFFER, 0, Float32Array.from(waypoints.flat()));

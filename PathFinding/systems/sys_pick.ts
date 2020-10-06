@@ -40,7 +40,7 @@ function update(game: Game, entity: Entity, pickables: Array<Collide>) {
     // The target is the point on the far plane where the mouse click happens;
     // first transform it to the eye space, and then to the world space.
     let target: Vec3 = [x, y, -1];
-    transform_point(target, target, camera.Unproject);
+    transform_point(target, target, camera.Unprojection);
     transform_point(target, target, transform.World);
 
     // The ray's direction.

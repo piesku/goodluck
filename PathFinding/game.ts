@@ -4,7 +4,7 @@ import {mat1_diffuse_gouraud} from "../materials/mat1_diffuse_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_terrain} from "../meshes/terrain.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./core.js";
+import {loop_start, loop_stop} from "./loop.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
@@ -14,7 +14,7 @@ import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_nav} from "./systems/sys_nav.js";
 import {Picked, sys_pick} from "./systems/sys_pick.js";
-import {sys_render} from "./systems/sys_render.js";
+import {sys_render} from "./systems/sys_render1.js";
 import {sys_select} from "./systems/sys_select.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
@@ -50,10 +50,10 @@ export class Game {
     MeshCube = mesh_cube(this.Gl);
     MeshTerrain = mesh_terrain(this.Gl);
 
-    Camera?: Camera;
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
+    Cameras: Array<Camera> = [];
 
     Pick?: Picked;
 
