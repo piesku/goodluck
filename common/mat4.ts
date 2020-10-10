@@ -1,7 +1,7 @@
 import {Mat4, Quat, Vec3} from "./math.js";
 
-export function create() {
-    return <Mat4>[1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+export function create(): Mat4 {
+    return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 }
 
 export function set(

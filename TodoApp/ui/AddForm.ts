@@ -9,8 +9,6 @@ export function AddForm() {
                 $(${Action.AddTodo}, this.value);
             }"
         />
-        <button onclick="$(${Action.AddTodo}, this.previousElementSibling.value)">
-            Add
-        </button>
+        <button onclick="$(${Action.AddTodo}, this.previousElementSibling.value)">Add</button>
     `;
 }

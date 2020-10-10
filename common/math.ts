@@ -3,29 +3,39 @@ export const DEG_TO_RAD = Math.PI / 180;
 export const RAD_TO_DEG = 180 / Math.PI;
 
 export type Rad = number;
-export type Quat = [number, number, number, number];
-export type Vec2 = [number, number];
-export type Vec3 = [number, number, number];
-export type Vec4 = [number, number, number, number];
-export type Mat2D = [number, number, number, number, number, number];
-export type Mat3 = [number, number, number, number, number, number, number, number, number];
+export type Quat = [x: number, y: number, z: number, w: number];
+export type Vec2 = [x: number, y: number];
+export type Vec3 = [x: number, y: number, z: number];
+export type Vec4 = [x: number, y: number, z: number, w: number];
+export type Mat2D = [a: number, b: number, c: number, d: number, e: number, f: number];
+export type Mat3 = [
+    m00: number,
+    m01: number,
+    m02: number,
+    m10: number,
+    m11: number,
+    m12: number,
+    m20: number,
+    m21: number,
+    m22: number
+];
 export type Mat4 =
     | Float32Array
     | [
-          number,
-          number,
-          number,
-          number,
-          number,
-          number,
-          number,
-          number,
-          number,
-          number,
-          number,
-          number,
-          number,
-          number,
-          number,
-          number
+          m00: number,
+          m01: number,
+          m02: number,
+          m03: number,
+          m10: number,
+          m11: number,
+          m12: number,
+          m13: number,
+          m20: number,
+          m21: number,
+          m22: number,
+          m23: number,
+          m30: number,
+          n31: number,
+          m32: number,
+          m33: number
       ];

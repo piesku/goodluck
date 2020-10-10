@@ -8,9 +8,7 @@ export function App(game: Game) {
     return html`
         <div style="padding: 20px; font: 14px Arial, sans-serif;">
             <h1>Todo App</h1>
-            <div>
-                ${AddForm()}
-            </div>
+            <div>${AddForm()}</div>
             <div style="display: flex;">
                 <div style="flex: 1;">
                     <ul>
