@@ -36,6 +36,7 @@ echo "  Removing core"
 rm -rf core
 
 echo "  Renaming $EXAMPLE to src"
+rm -rf src
 mv "$EXAMPLE" src
 
 echo "  Updating README"
