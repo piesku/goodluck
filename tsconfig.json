@@ -8,7 +8,7 @@
         "module": "es2020",
         "moduleResolution": "node",
         "strict": true,
-        "sourceMap": true
+        "inlineSourceMap": true
     },
     "exclude": [
         "node_modules"

@@ -13,7 +13,7 @@
     ],
     "license": "ISC",
     "scripts": {
-        "clean": "find . -type d -name node_modules -prune -o \\( -name '*.js' -o -name '*.js.map' \\) -exec rm {} +",
+        "clean": "find . -type d -name node_modules -prune -o -name '*.js' -exec rm {} +",
         "compile": "tsc",
         "compile:watch": "tsc --watch -p .",
         "lint": "prettier --check \"**/*.ts\"",
