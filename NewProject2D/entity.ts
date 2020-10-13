@@ -5,10 +5,10 @@ import {Has, World} from "./world.js";
 
 const MAX_ENTITIES = 10000;
 
-export function create_entity(world: World, signature: number = 0) {
+export function create_entity(world: World) {
     for (let i = 0; i < MAX_ENTITIES; i++) {
-        if (!world.Signature[i]) {
-            world.Signature[i] = signature;
+        if (i === world.Signature.length || world.Signature[i] === 0) {
+            world.Signature[i] = 0;
             return i;
         }
     }
