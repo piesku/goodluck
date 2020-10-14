@@ -3,7 +3,7 @@ EXAMPLE ?= src
 all: index.html
 	@printf "Size gzipped: %s bytes\n" $(shell gzip index.html --stdout | wc -c)
 
-../$(EXAMPLE)/index.js: $(shell find .. -name "*.ts")
+../$(EXAMPLE)/index.js: $(shell find .. -type f -name "*.ts")
 	@echo -n "Compiling project... "
 	@npx tsc
 	@echo "Done"
