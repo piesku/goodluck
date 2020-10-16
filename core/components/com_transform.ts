@@ -54,3 +54,20 @@ export function* query_all(world: World, parent: Entity, mask: Has): IterableIte
         yield* query_all(world, child, mask);
     }
 }
+
+export function reparent(world: World, parent: Entity, child: Entity) {
+    let child_transform = world.Transform[child];
+    let prev_parent = child_transform.Parent;
+    if (prev_parent !== undefined) {
+        let prev_siblings = world.Transform[prev_parent].Children;
+        let child_index = prev_siblings.indexOf(child);
+        if (child_index > -1) {
+            prev_siblings.splice(child_index, 1);
+        }
+    }
+
+    child_transform.Parent = parent;
+
+    let parent_transform = world.Transform[parent];
+    parent_transform.Children.push(child);
+}
