@@ -55,26 +55,26 @@ export const enum Has {
     Trigger = 1 << Component.Trigger,
 }
 
-export interface World {
+export class World {
     // Component flags
-    Signature: Array<number>;
+    Signature: Array<number> = [];
 
     // Component data
-    Animate: Array<Animate>;
-    AudioSource: Array<AudioSource>;
-    Camera: Array<Camera>;
-    Collide: Array<Collide>;
-    Draw: Array<Draw>;
-    Lifespan: Array<Lifespan>;
-    Light: Array<Light>;
-    Mimic: Array<Mimic>;
-    Move: Array<Move>;
-    Named: Array<Named>;
+    Animate: Array<Animate> = [];
+    AudioSource: Array<AudioSource> = [];
+    Camera: Array<Camera> = [];
+    Collide: Array<Collide> = [];
+    Draw: Array<Draw> = [];
+    Lifespan: Array<Lifespan> = [];
+    Light: Array<Light> = [];
+    Mimic: Array<Mimic> = [];
+    Move: Array<Move> = [];
+    Named: Array<Named> = [];
     // Render depends on the version of WebGL. See com_render*, sys_render*.
-    RigidBody: Array<RigidBody>;
-    Rotate: Array<Rotate>;
-    Shake: Array<Shake>;
-    Transform: Array<Transform>;
-    Transform2D: Array<Transform2D>;
-    Trigger: Array<Trigger>;
+    RigidBody: Array<RigidBody> = [];
+    Rotate: Array<Rotate> = [];
+    Shake: Array<Shake> = [];
+    Transform: Array<Transform> = [];
+    Transform2D: Array<Transform2D> = [];
+    Trigger: Array<Trigger> = [];
 }

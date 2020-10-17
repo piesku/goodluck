@@ -3,28 +3,27 @@ import {World} from "./world.js";
 
 export type Entity = number;
 
-export interface Game {
-    World: World;
+export class Game {
+    World: World = new World();
 
-    ViewportWidth: number;
-    ViewportHeight: number;
-    ViewportResized: boolean;
+    ViewportWidth: number = 0;
+    ViewportHeight: number = 0;
+    ViewportResized: boolean = true;
 
-    Ui: HTMLElement;
-    Audio: AudioContext;
+    Ui: HTMLElement = new HTMLElement();
+    Audio: AudioContext = new AudioContext();
 
-    Canvas: HTMLCanvasElement;
+    Canvas: HTMLCanvasElement = new HTMLCanvasElement();
 
-    Billboard: HTMLCanvasElement;
-    Context2D: CanvasRenderingContext2D;
+    Billboard: HTMLCanvasElement = new HTMLCanvasElement();
+    Context2D: CanvasRenderingContext2D = new CanvasRenderingContext2D();
 
-    // The rendering pipeline supports 8 lights.
-    LightPositions: Float32Array;
-    LightDetails: Float32Array;
-    Cameras: Array<Camera>;
+    LightPositions: Float32Array = new Float32Array();
+    LightDetails: Float32Array = new Float32Array();
+    Cameras: Array<Camera> = [];
 
-    FrameReset(): void;
-    FrameUpdate(delta: number): void;
+    FrameReset() {}
+    FrameUpdate(delta: number) {}
 }
 
 export const enum Layer {

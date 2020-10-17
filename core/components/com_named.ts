@@ -1,3 +1,4 @@
+import {instantiate} from "../entity.js";
 import {Entity, Game} from "../game.js";
 import {Has, World} from "../world.js";
 
@@ -19,4 +20,13 @@ export function find_first(world: World, name: string) {
         }
     }
     throw `No entity named ${name}.`;
+}
+
+export function test_find_first(assert: any) {
+    let game = new Game();
+    instantiate(game, {
+        Using: [named("foo")],
+    });
+
+    assert.equal(find_first(game.World, "foo"), 0);
 }
