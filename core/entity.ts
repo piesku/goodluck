@@ -3,16 +3,19 @@ import {transform} from "./components/com_transform.js";
 import {Entity, Game} from "./game.js";
 import {Has, World} from "./world.js";
 
-const MAX_ENTITIES = 10000;
-
 export function create_entity(world: World) {
-    for (let i = 0; i < MAX_ENTITIES; i++) {
-        if (i === world.Signature.length || world.Signature[i] === 0) {
-            world.Signature[i] = 0;
-            return i;
-        }
+    if (world.Graveyard.length > 0) {
+        return world.Graveyard.pop()!;
     }
-    throw new Error("No more entities available.");
+
+    // Remove this in release builds.
+    if (world.Signature.length > 10000) {
+        throw new Error("No more entities available.");
+    }
+
+    let entity = world.Signature.length;
+    world.Signature.push(0);
+    return entity;
 }
 
 export function destroy_entity(world: World, entity: Entity) {
@@ -22,6 +25,7 @@ export function destroy_entity(world: World, entity: Entity) {
         }
     }
     world.Signature[entity] = 0;
+    world.Graveyard.push(entity);
 }
 
 type Mixin = (game: Game, entity: Entity) => void;

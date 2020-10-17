@@ -56,8 +56,8 @@ export const enum Has {
 }
 
 export interface World {
-    // Component flags
     Signature: Array<number>;
+    Graveyard: Array<number>;
 
     // Component data
     Animate: Array<Animate>;

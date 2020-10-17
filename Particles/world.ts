@@ -21,8 +21,9 @@ export const enum Has {
 }
 
 export class World {
-    // Component flags
     Signature: Array<number> = [];
+    Graveyard: Array<number> = [];
+
     // Component data
     Camera: Array<Camera> = [];
     EmitParticles: Array<EmitParticles> = [];
