@@ -8,9 +8,8 @@ export function create_entity(world: World) {
         return world.Graveyard.pop()!;
     }
 
-    // Remove this in release builds.
     if (world.Signature.length > 10000) {
-        throw new Error("No more entities available.");
+        throw new Error("No more entities available."); // DEBUG
     }
 
     let entity = world.Signature.length;

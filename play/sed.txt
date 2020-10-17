@@ -1,3 +1,6 @@
+# Remove lines with DEBUG
+/DEBUG/d
+
 # Remove strict mode
 s/'use strict';//
 
