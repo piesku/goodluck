@@ -12,9 +12,7 @@ export function create_entity(world: World) {
         throw new Error("No more entities available."); // DEBUG
     }
 
-    let entity = world.Signature.length;
-    world.Signature.push(0);
-    return entity;
+    return world.Signature.push(0) - 1;
 }
 
 export function destroy_entity(world: World, entity: Entity) {
