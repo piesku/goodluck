@@ -1,40 +1,37 @@
 import {from_translation, invert, multiply, rotate, scale} from "../../common/mat2d.js";
-import {Entity, Game} from "../game.js";
-import {Has} from "../world.js";
+import {Transform2D} from "../components/com_transform2d.js";
+import {Game} from "../game.js";
+import {Has, World} from "../world.js";
 
 const QUERY = Has.Transform2D;
 
 export function sys_transform2d(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
-            update(game, i);
+            let transform = game.World.Transform2D[i];
+            if (transform.Dirty) {
+                update_transform(game.World, transform);
+            }
         }
     }
 }
 
-function update(game: Game, entity: Entity) {
-    let transform = game.World.Transform2D[entity];
-    if (transform.Dirty) {
-        transform.Dirty = false;
-        set_children_as_dirty(game, transform.Children);
+function update_transform(world: World, transform: Transform2D) {
+    transform.Dirty = false;
 
-        from_translation(transform.World, transform.Translation);
-        rotate(transform.World, transform.World, transform.Rotation);
-        scale(transform.World, transform.World, transform.Scale);
+    from_translation(transform.World, transform.Translation);
+    rotate(transform.World, transform.World, transform.Rotation);
+    scale(transform.World, transform.World, transform.Scale);
 
-        if (transform.Parent !== undefined) {
-            let parent = game.World.Transform2D[transform.Parent].World;
-            multiply(transform.World, parent, transform.World);
-        }
-
-        invert(transform.Self, transform.World);
+    if (transform.Parent !== undefined) {
+        let parent = world.Transform2D[transform.Parent].World;
+        multiply(transform.World, parent, transform.World);
     }
-}
 
-function set_children_as_dirty(game: Game, children: Array<Entity>) {
-    for (let child of children) {
-        let transform = game.World.Transform2D[child];
-        transform.Dirty = true;
-        set_children_as_dirty(game, transform.Children);
+    invert(transform.Self, transform.World);
+
+    for (let child of transform.Children) {
+        let child_transform = world.Transform2D[child];
+        update_transform(world, child_transform);
     }
 }

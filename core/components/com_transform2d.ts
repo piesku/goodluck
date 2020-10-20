@@ -50,3 +50,28 @@ export function* query_all(world: World, parent: Entity, mask: Has): IterableIte
         yield* query_all(world, child, mask);
     }
 }
+
+/**
+ * Anchor an entity as a child of another entity. The previous parent-child
+ * relationship of the entity will be severed, if it exists.
+ *
+ * @param world The World object with component data.
+ * @param parent The parent at which to anchor the entity.
+ * @param child The entity to anchor at the specified parent.
+ */
+export function reparent(world: World, parent: Entity, child: Entity) {
+    let child_transform = world.Transform2D[child];
+    let prev_parent = child_transform.Parent;
+    if (prev_parent !== undefined) {
+        let prev_siblings = world.Transform2D[prev_parent].Children;
+        let child_index = prev_siblings.indexOf(child);
+        if (child_index > -1) {
+            prev_siblings.splice(child_index, 1);
+        }
+    }
+
+    child_transform.Parent = parent;
+
+    let parent_transform = world.Transform2D[parent];
+    parent_transform.Children.push(child);
+}
