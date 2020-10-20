@@ -51,6 +51,14 @@ export function* query_all(world: World, parent: Entity, mask: Has): IterableIte
     }
 }
 
+/**
+ * Anchor an entity as a child of another entity. The previous parent-child
+ * relationship of the entity will be severed, if it exists.
+ *
+ * @param world The World object with component data.
+ * @param parent The parent at which to anchor the entity.
+ * @param child The entity to anchor at the specified parent.
+ */
 export function reparent(world: World, parent: Entity, child: Entity) {
     let child_transform = world.Transform2D[child];
     let prev_parent = child_transform.Parent;
