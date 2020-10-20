@@ -8,42 +8,38 @@ const QUERY = Has.Transform;
 export function sys_transform(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
-            update(game, i);
+            let transform = game.World.Transform[i];
+            if (transform.Dirty) {
+                update_transform(game.World, i, transform);
+            }
         }
     }
 }
 
-function update(game: Game, entity: Entity) {
-    let transform = game.World.Transform[entity];
-    if (transform.Dirty) {
-        transform.Dirty = false;
-        set_children_as_dirty(game.World, transform);
+function update_transform(world: World, entity: Entity, transform: Transform) {
+    transform.Dirty = false;
 
-        if (game.World.Signature[entity] & Has.Pose) {
-            // Pose transforms have their World matrix set from XRPose by other
-            // systems. Their translation, rotation and scale are ignored.
-        } else {
-            from_rotation_translation_scale(
-                transform.World,
-                transform.Rotation,
-                transform.Translation,
-                transform.Scale
-            );
-        }
-
-        if (transform.Parent !== undefined) {
-            let parent = game.World.Transform[transform.Parent].World;
-            multiply(transform.World, parent, transform.World);
-        }
-
-        invert(transform.Self, transform.World);
+    if (world.Signature[entity] & Has.Pose) {
+        // Pose transforms have their World matrix set from XRPose by other
+        // systems. Their translation, rotation and scale are ignored.
+    } else {
+        from_rotation_translation_scale(
+            transform.World,
+            transform.Rotation,
+            transform.Translation,
+            transform.Scale
+        );
     }
-}
 
-function set_children_as_dirty(world: World, transform: Transform) {
+    if (transform.Parent !== undefined) {
+        let parent = world.Transform[transform.Parent].World;
+        multiply(transform.World, parent, transform.World);
+    }
+
+    invert(transform.Self, transform.World);
+
     for (let child of transform.Children) {
         let child_transform = world.Transform[child];
-        child_transform.Dirty = true;
-        set_children_as_dirty(world, child_transform);
+        update_transform(world, child, child_transform);
     }
 }
