@@ -24,6 +24,11 @@ export function destroy_entity(world: World, entity: Entity) {
     }
 
     world.Signature[entity] = 0;
+
+    if (DEBUG && world.Graveyard.includes(entity)) {
+        throw new Error("Entity already in graveyard.");
+    }
+
     world.Graveyard.push(entity);
 }
 
