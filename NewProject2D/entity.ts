@@ -8,8 +8,8 @@ export function create_entity(world: World) {
         return world.Graveyard.pop()!;
     }
 
-    if (world.Signature.length > 10000) {
-        throw new Error("No more entities available."); // DEBUG
+    if (DEBUG && world.Signature.length > 10000) {
+        throw new Error("No more entities available.");
     }
 
     // Push a new signature and return its index.
@@ -22,6 +22,7 @@ export function destroy_entity(world: World, entity: Entity) {
             destroy_entity(world, child);
         }
     }
+
     world.Signature[entity] = 0;
     world.Graveyard.push(entity);
 }
