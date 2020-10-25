@@ -2,6 +2,7 @@ import {Camera} from "./components/com_camera.js";
 import {Light} from "./components/com_light.js";
 import {Render} from "./components/com_render.js";
 import {Transform} from "./components/com_transform.js";
+import {Entity} from "./game.js";
 
 const enum Component {
     Camera,
@@ -18,8 +19,9 @@ export const enum Has {
 }
 
 export class World {
-    // Component flags
     Signature: Array<number> = [];
+    Graveyard: Array<Entity> = [];
+
     // Component data
     Camera: Array<Camera> = [];
     Light: Array<Light> = [];

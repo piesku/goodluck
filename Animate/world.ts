@@ -4,6 +4,7 @@ import {Camera} from "./components/com_camera.js";
 import {Light} from "./components/com_light.js";
 import {Render} from "./components/com_render1.js";
 import {Transform} from "./components/com_transform.js";
+import {Entity} from "./game.js";
 
 const enum Component {
     Animate,
@@ -26,8 +27,9 @@ export const enum Has {
 }
 
 export class World {
-    // Component flags
     Signature: Array<number> = [];
+    Graveyard: Array<Entity> = [];
+
     // Component data
     Animate: Array<Animate> = [];
     AudioSource: Array<AudioSource> = [];

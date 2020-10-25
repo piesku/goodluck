@@ -1,5 +1,6 @@
 import {Draw} from "./components/com_draw.js";
 import {Transform2D} from "./components/com_transform2d.js";
+import {Entity} from "./game.js";
 
 const enum Component {
     Draw,
@@ -12,8 +13,9 @@ export const enum Has {
 }
 
 export class World {
-    // Component flags
     Signature: Array<number> = [];
+    Graveyard: Array<Entity> = [];
+
     // Component data
     Draw: Array<Draw> = [];
     Transform2D: Array<Transform2D> = [];

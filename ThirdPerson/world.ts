@@ -8,6 +8,7 @@ import {Named} from "./components/com_named.js";
 import {Render} from "./components/com_render1.js";
 import {RigidBody} from "./components/com_rigid_body.js";
 import {Transform} from "./components/com_transform.js";
+import {Entity} from "./game.js";
 
 const enum Component {
     Camera,
@@ -36,8 +37,9 @@ export const enum Has {
 }
 
 export class World {
-    // Component flags
     Signature: Array<number> = [];
+    Graveyard: Array<Entity> = [];
+
     // Component data
     Camera: Array<Camera> = [];
     Collide: Array<Collide> = [];

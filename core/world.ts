@@ -14,6 +14,7 @@ import {Shake} from "./components/com_shake.js";
 import {Transform} from "./components/com_transform.js";
 import {Transform2D} from "./components/com_transform2d.js";
 import {Trigger} from "./components/com_trigger.js";
+import {Entity} from "./game.js";
 
 const enum Component {
     Animate,
@@ -56,8 +57,8 @@ export const enum Has {
 }
 
 export interface World {
-    // Component flags
     Signature: Array<number>;
+    Graveyard: Array<Entity>;
 
     // Component data
     Animate: Array<Animate>;

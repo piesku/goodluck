@@ -21,6 +21,7 @@ game.sed.js: game.rollup.js
 game.terser.js: game.sed.js
 	@echo "Minifying... "
 	@npx --quiet terser $< \
+		--define DEBUG=false \
 		--timings \
 		--ecma 9 \
 		--mangle toplevel \
