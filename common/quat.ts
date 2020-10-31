@@ -1,4 +1,4 @@
-import {EPSILON, Quat, Vec3} from "./math.js";
+import {DEG_TO_RAD, EPSILON, Quat, Vec3} from "./math.js";
 import {cross, dot, length, normalize as normalize_vec3} from "./vec3.js";
 
 export function normalize(out: Quat, a: Quat) {
@@ -34,27 +34,42 @@ export function multiply(out: Quat, a: Quat, b: Quat) {
     return out;
 }
 
-export function from_euler(out: Quat, x: number, y: number, z: number) {
-    let halfToRad = (0.5 * Math.PI) / 180.0;
-    x *= halfToRad;
-    y *= halfToRad;
-    z *= halfToRad;
-
-    let sx = Math.sin(x);
-    let cx = Math.cos(x);
-    let sy = Math.sin(y);
-    let cy = Math.cos(y);
-    let sz = Math.sin(z);
-    let cz = Math.cos(z);
-
-    out[0] = sx * cy * cz - cx * sy * sz;
-    out[1] = cx * sy * cz + sx * cy * sz;
-    out[2] = cx * cy * sz - sx * sy * cz;
-    out[3] = cx * cy * cz + sx * sy * sz;
-
+export function conjugate(out: Quat, a: Quat) {
+    out[0] = -a[0];
+    out[1] = -a[1];
+    out[2] = -a[2];
+    out[3] = a[3];
     return out;
 }
 
+/**
+ * Compute a quaternion out of three Euler angles given in degrees. The order of rotation is YXZ.
+ * @param out Quaternion to write to.
+ * @param x Rotation about the X axis, in degrees.
+ * @param y Rotation around the Y axis, in degress.
+ * @param z Rotation around the Z axis, in degress.
+ */
+export function from_euler(out: Quat, x: number, y: number, z: number) {
+    let sx = Math.sin((x / 2) * DEG_TO_RAD);
+    let cx = Math.cos((x / 2) * DEG_TO_RAD);
+    let sy = Math.sin((y / 2) * DEG_TO_RAD);
+    let cy = Math.cos((y / 2) * DEG_TO_RAD);
+    let sz = Math.sin((z / 2) * DEG_TO_RAD);
+    let cz = Math.cos((z / 2) * DEG_TO_RAD);
+
+    out[0] = sx * cy * cz + cx * sy * sz;
+    out[1] = cx * sy * cz - sx * cy * sz;
+    out[2] = cx * cy * sz - sx * sy * cz;
+    out[3] = cx * cy * cz + sx * sy * sz;
+    return out;
+}
+
+/**
+ * Compute a quaternion from an axis and an angle of rotation around the axis.
+ * @param out Quaternion to write to.
+ * @param axis Axis of rotation.
+ * @param angle Rotation in radians.
+ */
 export function from_axis(out: Quat, axis: Vec3, angle: number) {
     let half = angle / 2;
     out[0] = Math.sin(half) * axis[0];
