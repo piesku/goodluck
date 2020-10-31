@@ -78,6 +78,6 @@ rm $0
 
 echo "  Committing to git"
 git add .
-git ci -m "Bootstrap src from $EXAMPLE" --quiet
+git commit -m "Bootstrap src from $EXAMPLE" --quiet
 
 echo "Done."
