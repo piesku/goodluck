@@ -1,4 +1,5 @@
 import {Mat4, Quat, Vec3} from "./math.js";
+import {normalize} from "./vec3.js";
 
 export function create(): Mat4 {
     return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
@@ -220,6 +221,27 @@ export function perspective(out: Mat4, fovy: number, aspect: number, near: numbe
     }
 
     return out;
+}
+
+export function get_left(out: Vec3, mat: Mat4) {
+    out[0] = mat[0];
+    out[1] = mat[1];
+    out[2] = mat[2];
+    return normalize(out, out);
+}
+
+export function get_up(out: Vec3, mat: Mat4) {
+    out[0] = mat[4];
+    out[1] = mat[5];
+    out[2] = mat[6];
+    return normalize(out, out);
+}
+
+export function get_forward(out: Vec3, mat: Mat4) {
+    out[0] = mat[8];
+    out[1] = mat[9];
+    out[2] = mat[10];
+    return normalize(out, out);
 }
 
 export function get_translation(out: Vec3, mat: Mat4) {
