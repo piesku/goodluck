@@ -18,7 +18,8 @@ export function ray_intersect_aabb(
     let nearest_i = null;
     for (let i = 0; i < colliders.length; i++) {
         let t = intersection_time(origin, direction, colliders[i]);
-        if (t < nearest_t) {
+        if (0 < t && t < nearest_t) {
+            // Find the smallest positive t.
             nearest_t = t;
             nearest_i = i;
         }
