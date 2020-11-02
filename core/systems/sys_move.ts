@@ -25,9 +25,13 @@ function update(game: Game, entity: Entity, delta: number) {
         // movement from a gamepad input. They can also cancel each other out.
         // They may not, however, intensify one another; hence max amount is 1.
         let amount = Math.min(1, length(direction));
-        // Transform the direction into the world space. This will also scale
-        // the result by the scale encoded in the transform.
+        // Transform the direction into the world or the parent space. This will
+        // also scale the result by the scale encoded in the transform.
         transform_direction(direction, direction, transform.World);
+        if (transform.Parent !== undefined) {
+            let parent = game.World.Transform[transform.Parent];
+            transform_direction(direction, direction, parent.Self);
+        }
         // Normalize the direction to remove the transform's scale. The length
         // of the orignal direction is now lost.
         normalize(direction, direction);
