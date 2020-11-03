@@ -1,5 +1,4 @@
 import {Material} from "../../common/material.js";
-import {Mat4} from "../../common/math.js";
 import {
     GL_COLOR_BUFFER_BIT,
     GL_DEPTH_BUFFER_BIT,
@@ -7,7 +6,7 @@ import {
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
 import {DiffuseLayout} from "../../materials/layout_diffuse.js";
-import {CameraKind, CameraPerspective, CameraXr} from "../components/com_camera.js";
+import {CameraEye, CameraKind, CameraPerspective, CameraXr} from "../components/com_camera.js";
 import {RenderKind} from "../components/com_render.js";
 import {RenderDiffuse} from "../components/com_render_diffuse.js";
 import {Transform} from "../components/com_transform.js";
@@ -32,7 +31,7 @@ function render_screen(game: Game, camera: CameraPerspective) {
         game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
     }
 
-    render(game, camera.Pv);
+    render(game, camera);
 }
 
 function render_vr(game: Game, camera: CameraXr) {
@@ -41,13 +40,13 @@ function render_vr(game: Game, camera: CameraXr) {
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     for (let eye of camera.Eyes) {
-        let viewport = layer.getViewport(eye.View);
+        let viewport = layer.getViewport(eye.Viewpoint);
         game.Gl.viewport(viewport.x, viewport.y, viewport.width, viewport.height);
-        render(game, eye.Pv);
+        render(game, eye);
     }
 }
 
-function render(game: Game, pv: Mat4) {
+function render(game: Game, eye: CameraEye) {
     // Keep track of the current material to minimize switching.
     let current_material = null;
     let current_front_face = null;
@@ -61,7 +60,7 @@ function render(game: Game, pv: Mat4) {
                 current_material = render.Material;
                 switch (render.Kind) {
                     case RenderKind.Diffuse:
-                        use_diffuse(game, render.Material, pv);
+                        use_diffuse(game, render.Material, eye);
                         break;
                 }
             }
@@ -80,9 +79,9 @@ function render(game: Game, pv: Mat4) {
     }
 }
 
-function use_diffuse(game: Game, material: Material<DiffuseLayout>, pv: Mat4) {
+function use_diffuse(game: Game, material: Material<DiffuseLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
-    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, pv);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
