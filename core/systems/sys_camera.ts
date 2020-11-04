@@ -1,4 +1,4 @@
-import {get_translation, invert, multiply, perspective} from "../../common/mat4.js";
+import {copy, get_translation, invert, multiply, perspective} from "../../common/mat4.js";
 import {CameraDisplay, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
@@ -45,7 +45,8 @@ function update_display(game: Game, entity: Entity, camera: CameraDisplay) {
     }
 
     let transform = game.World.Transform[entity];
-    multiply(camera.Pv, camera.Projection, transform.Self);
+    copy(camera.View, transform.Self);
+    multiply(camera.Pv, camera.Projection, camera.View);
     get_translation(camera.Position, transform.World);
 }
 

@@ -17,6 +17,7 @@ export const enum CameraKind {
 }
 
 export interface CameraEye {
+    View: Mat4;
     Pv: Mat4;
     Position: Vec3;
 }
@@ -44,6 +45,7 @@ export function camera_display_perspective(
             FovY: fovy,
             Near: near,
             Far: far,
+            View: create(),
             Projection: create(),
             Unprojection: create(),
             Pv: create(),
@@ -113,6 +115,7 @@ export function camera_framebuffer_perspective(
             FovY: fovy,
             Near: near,
             Far: far,
+            View: projection,
             Projection: projection,
             Unprojection: unprojection,
             Pv: create(),
