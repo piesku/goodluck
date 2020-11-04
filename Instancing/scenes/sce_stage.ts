@@ -1,6 +1,6 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light_directional, light_point} from "../components/com_light.js";
-import {render_instanced} from "../components/com_render_instanced.js";
+import {render_instanced} from "../components/com_render.js";
 import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
