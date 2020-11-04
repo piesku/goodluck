@@ -1,30 +1,15 @@
-import {link, Material} from "../common/material.js";
-import {GL_TRIANGLES} from "../common/webgl.js";
-import {SpecularLayout} from "./layout_specular.js";
+import {link, Material} from "../../common/material.js";
+import {GL_TRIANGLES} from "../../common/webgl.js";
+import {ColoredSpecularLayout} from "../../materials/layout_colored_specular.js";
 
-let vertex = `
-    uniform mat4 pv;
-    uniform mat4 world;
-    uniform mat4 self;
-
-    attribute vec3 position;
-    attribute vec3 normal;
-    varying vec4 vert_pos;
-    varying vec3 vert_normal;
-
-    void main() {
-        vert_pos = world * vec4(position, 1.0);
-        vert_normal = (vec4(normal, 1.0) * self).xyz;
-        gl_Position = pv * vert_pos;
-    }
-`;
-
-let fragment = `
-    precision mediump float;
+let vertex = `#version 300 es\n
 
     // See Game.LightPositions and Game.LightDetails.
     const int MAX_LIGHTS = 8;
 
+    uniform mat4 pv;
+    uniform mat4 world;
+    uniform mat4 self;
     uniform vec3 eye;
     uniform vec4 color_diffuse;
     uniform vec4 color_specular;
@@ -32,11 +17,14 @@ let fragment = `
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    varying vec4 vert_pos;
-    varying vec3 vert_normal;
+    in vec3 position;
+    in vec3 normal;
+    flat out vec4 vert_color;
 
     void main() {
-        vec3 frag_normal = normalize(vert_normal);
+        vec4 vert_pos = world * vec4(position, 1.0);
+        vec3 vert_normal = normalize((vec4(normal, 1.0) * self).xyz);
+        gl_Position = pv * vert_pos;
 
         vec3 view_dir = eye - vert_pos.xyz;
         vec3 view_normal = normalize(view_dir);
@@ -64,19 +52,14 @@ let fragment = `
                 light_intensity /= (light_dist * light_dist);
             }
 
-            float diffuse_factor = dot(frag_normal, light_normal);
+            float diffuse_factor = dot(vert_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
                 rgb += color_diffuse.rgb * diffuse_factor * light_color * light_intensity;
 
-                // Phong reflection model.
-                // vec3 r = reflect(-light_normal, frag_normal);
-                // float specular_angle = max(dot(r, view_normal), 0.0);
-                // float specular_factor = pow(specular_angle, shininess);
-
                 // Blinn-Phong reflection model.
                 vec3 h = normalize(light_normal + view_normal);
-                float specular_angle = max(dot(h, frag_normal), 0.0);
+                float specular_angle = max(dot(h, vert_normal), 0.0);
                 float specular_factor = pow(specular_angle, shininess);
 
                 // Specular color.
@@ -84,11 +67,25 @@ let fragment = `
             }
         }
 
-        gl_FragColor = vec4(rgb, 1.0);
+        vert_color = vec4(rgb, 1.0);
     }
 `;
 
-export function mat1_specular_phong(gl: WebGLRenderingContext): Material<SpecularLayout> {
+let fragment = `#version 300 es\n
+
+    precision mediump float;
+
+    flat in vec4 vert_color;
+    out vec4 frag_color;
+
+    void main() {
+        frag_color = vert_color;
+    }
+`;
+
+export function mat2_colored_specular_flat(
+    gl: WebGL2RenderingContext
+): Material<ColoredSpecularLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

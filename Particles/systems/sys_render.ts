@@ -8,8 +8,7 @@ import {
 } from "../../common/webgl.js";
 import {CameraEye} from "../components/com_camera.js";
 import {EmitParticles} from "../components/com_emit_particles.js";
-import {RenderKind} from "../components/com_render.js";
-import {RenderParticles} from "../components/com_render_particles.js";
+import {RenderKind, RenderParticles} from "../components/com_render.js";
 import {Game} from "../game.js";
 import {ParticlesLayout} from "../materials/layout_particles.js";
 import {Has} from "../world.js";

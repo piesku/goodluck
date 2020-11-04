@@ -1,14 +1,14 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {TexturedLayout} from "./layout_textured.js";
+import {TexturedUnlitLayout} from "./layout_textured_unlit.js";
 
-let vertex = `#version 300 es\n
+let vertex = `
     uniform mat4 pv;
     uniform mat4 world;
 
-    in vec3 position;
-    in vec2 texcoord;
-    out vec2 vert_texcoord;
+    attribute vec3 position;
+    attribute vec2 texcoord;
+    varying vec2 vert_texcoord;
 
     void main() {
         vec4 vert_pos = world * vec4(position, 1.0);
@@ -18,20 +18,19 @@ let vertex = `#version 300 es\n
     }
 `;
 
-let fragment = `#version 300 es\n
+let fragment = `
     precision mediump float;
 
     uniform sampler2D sampler;
 
-    in vec2 vert_texcoord;
-    out vec4 frag_color;
+    varying vec2 vert_texcoord;
 
     void main() {
-        frag_color = texture(sampler, vert_texcoord);
+        gl_FragColor = texture2D(sampler, vert_texcoord);
     }
 `;
 
-export function mat2_textured(gl: WebGL2RenderingContext): Material<TexturedLayout> {
+export function mat1_textured_unlit(gl: WebGLRenderingContext): Material<TexturedUnlitLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

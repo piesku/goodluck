@@ -2,7 +2,7 @@ import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {collide} from "../components/com_collide.js";
 import {control_spawner} from "../components/com_control_spawner.js";
 import {light_directional} from "../components/com_light.js";
-import {render_diffuse} from "../components/com_render1.js";
+import {render_colored_diffuse} from "../components/com_render1.js";
 import {rigid_body} from "../components/com_rigid_body.js";
 import {instantiate} from "../entity.js";
 import {Game, Layer} from "../game.js";
@@ -29,7 +29,7 @@ export function scene_stage(game: Game) {
         Translation: [0, 0, 0],
         Scale: [10, 1, 10],
         Using: [
-            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1]),
+            render_colored_diffuse(game.MaterialUnlitDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1]),
             collide(false, Layer.Terrain, Layer.None),
             rigid_body(false),
         ],

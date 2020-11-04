@@ -1,6 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {BasicLayout} from "./layout_basic.js";
+import {ColoredUnlitLayout} from "./layout_colored_unlit.js";
 
 let vertex = `
     uniform mat4 pv;
@@ -22,7 +22,9 @@ let fragment = `
     }
 `;
 
-export function mat1_basic_triangles(gl: WebGLRenderingContext): Material<BasicLayout> {
+export function mat1_colored_unlit_triangles(
+    gl: WebGLRenderingContext
+): Material<ColoredUnlitLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

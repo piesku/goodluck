@@ -1,11 +1,11 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
-import {mat1_basic_points} from "../materials/mat1_basic_points.js";
-import {mat1_basic_triangles} from "../materials/mat1_basic_triangles.js";
-import {mat1_basic_wireframe} from "../materials/mat1_basic_wireframe.js";
-import {mat1_diffuse_gouraud} from "../materials/mat1_diffuse_gouraud.js";
-import {mat1_diffuse_phong} from "../materials/mat1_diffuse_phong.js";
-import {mat1_specular_gouraud} from "../materials/mat1_specular_gouraud.js";
-import {mat1_specular_phong} from "../materials/mat1_specular_phong.js";
+import {mat1_colored_diffuse_gouraud} from "../materials/mat1_colored_diffuse_gouraud.js";
+import {mat1_colored_diffuse_phong} from "../materials/mat1_colored_diffuse_phong.js";
+import {mat1_colored_specular_gouraud} from "../materials/mat1_colored_specular_gouraud.js";
+import {mat1_colored_specular_phong} from "../materials/mat1_colored_specular_phong.js";
+import {mat1_colored_unlit_points} from "../materials/mat1_colored_unlit_points.js";
+import {mat1_colored_unlit_triangles} from "../materials/mat1_colored_unlit_triangles.js";
+import {mat1_colored_unlit_wireframe} from "../materials/mat1_colored_unlit_wireframe.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
@@ -33,13 +33,13 @@ export class Game {
     Gl = this.Canvas.getContext("webgl")!;
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
-    MaterialBasicPoints = mat1_basic_points(this.Gl);
-    MaterialBasicWireframe = mat1_basic_wireframe(this.Gl);
-    MaterialBasicTriangles = mat1_basic_triangles(this.Gl);
-    MaterialDiffuseGouraud = mat1_diffuse_gouraud(this.Gl);
-    MaterialDiffusePhong = mat1_diffuse_phong(this.Gl);
-    MaterialSpecularGouraud = mat1_specular_gouraud(this.Gl);
-    MaterialSpecularPhong = mat1_specular_phong(this.Gl);
+    MaterialColoredUnlitPoints = mat1_colored_unlit_points(this.Gl);
+    MaterialColoredUnlitWireframe = mat1_colored_unlit_wireframe(this.Gl);
+    MaterialColoredUnlitTriangles = mat1_colored_unlit_triangles(this.Gl);
+    MaterialColoredDiffuseGouraud = mat1_colored_diffuse_gouraud(this.Gl);
+    MaterialColoredDiffusePhong = mat1_colored_diffuse_phong(this.Gl);
+    MaterialColoredSpecularGouraud = mat1_colored_specular_gouraud(this.Gl);
+    MaterialColoredSpecularPhong = mat1_colored_specular_phong(this.Gl);
 
     MeshCube = mesh_cube(this.Gl);
     MeshIcosphereFlat = mesh_icosphere_flat(this.Gl);

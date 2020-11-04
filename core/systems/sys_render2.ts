@@ -7,16 +7,16 @@ import {
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {DiffuseLayout} from "../../materials/layout_diffuse.js";
-import {SpecularLayout} from "../../materials/layout_specular.js";
-import {TexturedLayout} from "../../materials/layout_textured.js";
+import {ColoredDiffuseLayout} from "../../materials/layout_colored_diffuse.js";
+import {ColoredSpecularLayout} from "../../materials/layout_colored_specular.js";
+import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
 import {CameraDisplay, CameraEye, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
 import {
     Render,
-    RenderDiffuse,
+    RenderColoredDiffuse,
+    RenderColoredSpecular,
     RenderKind,
-    RenderSpecular,
-    RenderTextured,
+    RenderTexturedUnlit,
 } from "../components/com_render2.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
@@ -73,14 +73,14 @@ function render(game: Game2, eye: CameraEye, current_target?: WebGLTexture) {
             if (render.Material !== current_material) {
                 current_material = render.Material;
                 switch (render.Kind) {
-                    case RenderKind.Diffuse:
-                        use_diffuse(game, render.Material, eye);
+                    case RenderKind.ColoredDiffuse:
+                        use_colored_diffuse(game, render.Material, eye);
                         break;
-                    case RenderKind.Specular:
-                        use_specular(game, render.Material, eye);
+                    case RenderKind.ColoredSpecular:
+                        use_colored_specular(game, render.Material, eye);
                         break;
-                    case RenderKind.Textured:
-                        use_textured(game, render.Material, eye);
+                    case RenderKind.TexturedUnlit:
+                        use_textured_unlit(game, render.Material, eye);
                         break;
                 }
             }
@@ -91,17 +91,17 @@ function render(game: Game2, eye: CameraEye, current_target?: WebGLTexture) {
             }
 
             switch (render.Kind) {
-                case RenderKind.Diffuse:
-                    draw_diffuse(game, transform, render);
+                case RenderKind.ColoredDiffuse:
+                    draw_colored_diffuse(game, transform, render);
                     break;
-                case RenderKind.Specular:
-                    draw_specular(game, transform, render);
+                case RenderKind.ColoredSpecular:
+                    draw_colored_specular(game, transform, render);
                     break;
-                case RenderKind.Textured:
+                case RenderKind.TexturedUnlit:
                     // Prevent feedback loop between the active render target
                     // and the texture being rendered.
                     if (render.Texture !== current_target) {
-                        draw_textured(game, transform, render);
+                        draw_textured_unlit(game, transform, render);
                     }
                     break;
             }
@@ -109,14 +109,18 @@ function render(game: Game2, eye: CameraEye, current_target?: WebGLTexture) {
     }
 }
 
-function use_diffuse(game: Game2, material: Material<DiffuseLayout>, eye: CameraEye) {
+function use_colored_diffuse(
+    game: Game2,
+    material: Material<ColoredDiffuseLayout>,
+    eye: CameraEye
+) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
-function draw_diffuse(game: Game2, transform: Transform, render: RenderDiffuse) {
+function draw_colored_diffuse(game: Game2, transform: Transform, render: RenderColoredDiffuse) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
     game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
@@ -125,7 +129,11 @@ function draw_diffuse(game: Game2, transform: Transform, render: RenderDiffuse) 
     game.Gl.bindVertexArray(null);
 }
 
-function use_specular(game: Game2, material: Material<SpecularLayout>, eye: CameraEye) {
+function use_colored_specular(
+    game: Game2,
+    material: Material<ColoredSpecularLayout>,
+    eye: CameraEye
+) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform3fv(material.Locations.Eye, eye.Position);
@@ -133,7 +141,7 @@ function use_specular(game: Game2, material: Material<SpecularLayout>, eye: Came
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
-function draw_specular(game: Game2, transform: Transform, render: RenderSpecular) {
+function draw_colored_specular(game: Game2, transform: Transform, render: RenderColoredSpecular) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
     game.Gl.uniform4fv(render.Material.Locations.ColorDiffuse, render.ColorDiffuse);
@@ -144,12 +152,12 @@ function draw_specular(game: Game2, transform: Transform, render: RenderSpecular
     game.Gl.bindVertexArray(null);
 }
 
-function use_textured(game: Game2, material: Material<TexturedLayout>, eye: CameraEye) {
+function use_textured_unlit(game: Game2, material: Material<TexturedUnlitLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
 }
 
-function draw_textured(game: Game2, transform: Transform, render: RenderTextured) {
+function draw_textured_unlit(game: Game2, transform: Transform, render: RenderTexturedUnlit) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
 
     game.Gl.activeTexture(GL_TEXTURE0);

@@ -1,13 +1,13 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
-import {mat2_diffuse_gouraud} from "../materials/mat2_diffuse_gouraud.js";
-import {mat2_diffuse_phong} from "../materials/mat2_diffuse_phong.js";
-import {mat2_specular_gouraud} from "../materials/mat2_specular_gouraud.js";
-import {mat2_specular_phong} from "../materials/mat2_specular_phong.js";
+import {mat2_colored_diffuse_gouraud} from "../materials/mat2_colored_diffuse_gouraud.js";
+import {mat2_colored_diffuse_phong} from "../materials/mat2_colored_diffuse_phong.js";
+import {mat2_colored_specular_gouraud} from "../materials/mat2_colored_specular_gouraud.js";
+import {mat2_colored_specular_phong} from "../materials/mat2_colored_specular_phong.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./loop.js";
-import {mat2_diffuse_flat} from "./materials/mat2_diffuse_flat.js";
-import {mat2_specular_flat} from "./materials/mat2_specular_flat.js";
+import {mat2_colored_diffuse_flat} from "./materials/mat2_colored_diffuse_flat.js";
+import {mat2_colored_specular_flat} from "./materials/mat2_colored_specular_flat.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -29,12 +29,12 @@ export class Game {
     Canvas = document.querySelector("canvas")!;
     Gl = this.Canvas.getContext("webgl2")!;
 
-    MaterialDiffuseFlat = mat2_diffuse_flat(this.Gl);
-    MaterialDiffuseGouraud = mat2_diffuse_gouraud(this.Gl);
-    MaterialDiffusePhong = mat2_diffuse_phong(this.Gl);
-    MaterialSpecularFlat = mat2_specular_flat(this.Gl);
-    MaterialSpecularGouraud = mat2_specular_gouraud(this.Gl);
-    MaterialSpecularPhong = mat2_specular_phong(this.Gl);
+    MaterialColoredDiffuseFlat = mat2_colored_diffuse_flat(this.Gl);
+    MaterialColoredDiffuseGouraud = mat2_colored_diffuse_gouraud(this.Gl);
+    MaterialColoredDiffusePhong = mat2_colored_diffuse_phong(this.Gl);
+    MaterialColoredSpecularFlat = mat2_colored_specular_flat(this.Gl);
+    MaterialColoredSpecularGouraud = mat2_colored_specular_gouraud(this.Gl);
+    MaterialColoredSpecularPhong = mat2_colored_specular_phong(this.Gl);
 
     MeshIcosphereFlat = mesh_icosphere_flat(this.Gl);
 

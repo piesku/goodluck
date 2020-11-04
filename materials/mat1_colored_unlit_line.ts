@@ -1,6 +1,6 @@
 import {link, Material} from "../common/material.js";
-import {GL_LINE_LOOP} from "../common/webgl.js";
-import {BasicLayout} from "./layout_basic.js";
+import {GL_LINE_STRIP} from "../common/webgl.js";
+import {ColoredUnlitLayout} from "./layout_colored_unlit.js";
 
 let vertex = `
     uniform mat4 pv;
@@ -22,10 +22,10 @@ let fragment = `
     }
 `;
 
-export function mat1_basic_wireframe(gl: WebGLRenderingContext): Material<BasicLayout> {
+export function mat1_colored_unlit_line(gl: WebGLRenderingContext): Material<ColoredUnlitLayout> {
     let program = link(gl, vertex, fragment);
     return {
-        Mode: GL_LINE_LOOP,
+        Mode: GL_LINE_STRIP,
         Program: program,
         Locations: {
             Pv: gl.getUniformLocation(program, "pv")!,

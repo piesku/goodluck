@@ -1,6 +1,10 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light_directional, light_point} from "../components/com_light.js";
-import {render_basic, render_diffuse, render_specular} from "../components/com_render1.js";
+import {
+    render_colored_diffuse,
+    render_colored_specular,
+    render_colored_unlit,
+} from "../components/com_render1.js";
 import {rotate} from "../components/com_rotate.js";
 import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
@@ -44,17 +48,62 @@ export function scene_stage(game: Game) {
     });
 
     let shadings = [
-        render_basic(game.MaterialBasicPoints, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
-        render_basic(game.MaterialBasicWireframe, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
-        render_basic(game.MaterialBasicTriangles, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
+        render_colored_unlit(game.MaterialColoredUnlitPoints, game.MeshIcosphereSmooth, [
+            1,
+            1,
+            0,
+            1,
+        ]),
+        render_colored_unlit(game.MaterialColoredUnlitWireframe, game.MeshIcosphereSmooth, [
+            1,
+            1,
+            0,
+            1,
+        ]),
+        render_colored_unlit(game.MaterialColoredUnlitTriangles, game.MeshIcosphereSmooth, [
+            1,
+            1,
+            0,
+            1,
+        ]),
 
-        render_diffuse(game.MaterialDiffuseGouraud, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
-        render_diffuse(game.MaterialDiffusePhong, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
-        render_specular(game.MaterialSpecularGouraud, game.MeshIcosphereSmooth, [1, 1, 0, 1], 100),
+        render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshIcosphereSmooth, [
+            1,
+            1,
+            0,
+            1,
+        ]),
+        render_colored_diffuse(game.MaterialColoredDiffusePhong, game.MeshIcosphereSmooth, [
+            1,
+            1,
+            0,
+            1,
+        ]),
+        render_colored_specular(
+            game.MaterialColoredSpecularGouraud,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            100
+        ),
 
-        render_specular(game.MaterialSpecularPhong, game.MeshIcosphereSmooth, [1, 1, 0, 1], 10),
-        render_specular(game.MaterialSpecularPhong, game.MeshIcosphereSmooth, [1, 1, 0, 1], 100),
-        render_specular(game.MaterialSpecularPhong, game.MeshIcosphereSmooth, [1, 1, 0, 1], 1000),
+        render_colored_specular(
+            game.MaterialColoredSpecularPhong,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            10
+        ),
+        render_colored_specular(
+            game.MaterialColoredSpecularPhong,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            100
+        ),
+        render_colored_specular(
+            game.MaterialColoredSpecularPhong,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            1000
+        ),
     ];
 
     let rows = 3;

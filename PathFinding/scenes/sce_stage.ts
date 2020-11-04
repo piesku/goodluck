@@ -7,7 +7,7 @@ import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {nav_agent} from "../components/com_nav_agent.js";
 import {pickable} from "../components/com_pickable.js";
-import {render_basic, render_diffuse} from "../components/com_render1.js";
+import {render_colored_diffuse, render_colored_unlit} from "../components/com_render1.js";
 import {selectable} from "../components/com_selectable.js";
 import {instantiate} from "../entity.js";
 import {Game, Layer} from "../game.js";
@@ -36,14 +36,26 @@ export function scene_stage(game: Game) {
     // and have the scale of 1.
     instantiate(game, {
         Using: [
-            render_diffuse(game.MaterialDiffuseGouraud, game.MeshTerrain, [0.3, 0.3, 0.8, 1]),
+            render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshTerrain, [
+                0.3,
+                0.3,
+                0.8,
+                1,
+            ]),
             pickable(game.MeshTerrain),
             collide(false, Layer.None, Layer.None, [100, 1, 100]),
         ],
         Children: [
             {
                 Translation: [0, 0.1, 0],
-                Using: [render_basic(game.MaterialBasicLine, game.MeshTerrain, [0.4, 0.4, 0.8, 1])],
+                Using: [
+                    render_colored_unlit(game.MaterialColoredUnlitLine, game.MeshTerrain, [
+                        0.4,
+                        0.4,
+                        0.8,
+                        1,
+                    ]),
+                ],
             },
         ],
     });
@@ -82,7 +94,14 @@ export function scene_stage(game: Game) {
             },
             {
                 Scale: [2, 2, 2],
-                Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 0, 0, 1])],
+                Using: [
+                    render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [
+                        1,
+                        0,
+                        0,
+                        1,
+                    ]),
+                ],
             },
         ],
     });
@@ -107,7 +126,14 @@ export function scene_stage(game: Game) {
             },
             {
                 Scale: [2, 2, 2],
-                Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [0, 1, 0, 1])],
+                Using: [
+                    render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [
+                        0,
+                        1,
+                        0,
+                        1,
+                    ]),
+                ],
             },
         ],
     });

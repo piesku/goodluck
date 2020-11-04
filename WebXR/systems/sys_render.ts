@@ -5,10 +5,9 @@ import {
     GL_FRAMEBUFFER,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {DiffuseLayout} from "../../materials/layout_diffuse.js";
+import {ColoredDiffuseLayout} from "../../materials/layout_colored_diffuse.js";
 import {CameraEye, CameraKind, CameraPerspective, CameraXr} from "../components/com_camera.js";
-import {RenderKind} from "../components/com_render.js";
-import {RenderDiffuse} from "../components/com_render_diffuse.js";
+import {RenderColoredDiffuse, RenderKind} from "../components/com_render2.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -59,8 +58,8 @@ function render(game: Game, eye: CameraEye) {
             if (render.Material !== current_material) {
                 current_material = render.Material;
                 switch (render.Kind) {
-                    case RenderKind.Diffuse:
-                        use_diffuse(game, render.Material, eye);
+                    case RenderKind.ColoredDiffuse:
+                        use_colored_diffuse(game, render.Material, eye);
                         break;
                 }
             }
@@ -71,22 +70,22 @@ function render(game: Game, eye: CameraEye) {
             }
 
             switch (render.Kind) {
-                case RenderKind.Diffuse:
-                    draw_shaded(game, transform, render);
+                case RenderKind.ColoredDiffuse:
+                    draw_colored_diffuse(game, transform, render);
                     break;
             }
         }
     }
 }
 
-function use_diffuse(game: Game, material: Material<DiffuseLayout>, eye: CameraEye) {
+function use_colored_diffuse(game: Game, material: Material<ColoredDiffuseLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
-function draw_shaded(game: Game, transform: Transform, render: RenderDiffuse) {
+function draw_colored_diffuse(game: Game, transform: Transform, render: RenderColoredDiffuse) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
     game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);

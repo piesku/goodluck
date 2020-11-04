@@ -1,6 +1,6 @@
 import {create_texture_depth, create_texture_rgba} from "../common/texture.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
-import {mat2_textured} from "../materials/mat2_textured.js";
+import {mat2_textured_unlit} from "../materials/mat2_textured_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_plane} from "../meshes/plane.js";
 import {Camera} from "./components/com_camera.js";
@@ -24,7 +24,7 @@ export class Game {
     Canvas = document.querySelector("canvas")!;
     Gl = this.Canvas.getContext("webgl2")!;
 
-    MaterialTextured = mat2_textured(this.Gl);
+    MaterialTexturedUnlit = mat2_textured_unlit(this.Gl);
     MeshCube = mesh_cube(this.Gl);
     MeshPlane = mesh_plane(this.Gl);
 

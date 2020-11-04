@@ -1,6 +1,6 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light_directional, light_point} from "../components/com_light.js";
-import {render_diffuse, render_specular} from "../components/com_render2.js";
+import {render_colored_diffuse, render_colored_specular} from "../components/com_render2.js";
 import {rotate} from "../components/com_rotate.js";
 import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
@@ -44,13 +44,43 @@ export function scene_stage(game: Game) {
     });
 
     let shadings = [
-        render_diffuse(game.MaterialDiffuseFlat, game.MeshIcosphereFlat, [1, 1, 0, 1]),
-        render_diffuse(game.MaterialDiffuseGouraud, game.MeshIcosphereFlat, [1, 1, 0, 1]),
-        render_diffuse(game.MaterialDiffusePhong, game.MeshIcosphereFlat, [1, 1, 0, 1]),
+        render_colored_diffuse(game.MaterialColoredDiffuseFlat, game.MeshIcosphereFlat, [
+            1,
+            1,
+            0,
+            1,
+        ]),
+        render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshIcosphereFlat, [
+            1,
+            1,
+            0,
+            1,
+        ]),
+        render_colored_diffuse(game.MaterialColoredDiffusePhong, game.MeshIcosphereFlat, [
+            1,
+            1,
+            0,
+            1,
+        ]),
 
-        render_specular(game.MaterialSpecularFlat, game.MeshIcosphereFlat, [1, 1, 0, 1], 100),
-        render_specular(game.MaterialSpecularGouraud, game.MeshIcosphereFlat, [1, 1, 0, 1], 100),
-        render_specular(game.MaterialSpecularPhong, game.MeshIcosphereFlat, [1, 1, 0, 1], 100),
+        render_colored_specular(
+            game.MaterialColoredSpecularFlat,
+            game.MeshIcosphereFlat,
+            [1, 1, 0, 1],
+            100
+        ),
+        render_colored_specular(
+            game.MaterialColoredSpecularGouraud,
+            game.MeshIcosphereFlat,
+            [1, 1, 0, 1],
+            100
+        ),
+        render_colored_specular(
+            game.MaterialColoredSpecularPhong,
+            game.MeshIcosphereFlat,
+            [1, 1, 0, 1],
+            100
+        ),
     ];
 
     let rows = 2;

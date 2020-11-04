@@ -2,7 +2,7 @@ import {GL_CCW} from "../../common/webgl.js";
 import {camera_xr} from "../components/com_camera.js";
 import {control_xr} from "../components/com_control_xr.js";
 import {pose} from "../components/com_pose.js";
-import {render_diffuse} from "../components/com_render_diffuse.js";
+import {render_colored_diffuse} from "../components/com_render2.js";
 import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
 
@@ -20,8 +20,8 @@ export function blueprint_viewer(game: Game): Blueprint {
                     {
                         Scale: [-1, 1, 1],
                         Using: [
-                            render_diffuse(
-                                game.MaterialDiffuseGouraud,
+                            render_colored_diffuse(
+                                game.MaterialColoredDiffuseGouraud,
                                 game.MeshHand,
                                 [1, 1, 0.3, 1],
                                 GL_CCW
@@ -36,12 +36,11 @@ export function blueprint_viewer(game: Game): Blueprint {
                 Children: [
                     {
                         Using: [
-                            render_diffuse(game.MaterialDiffuseGouraud, game.MeshHand, [
-                                1,
-                                1,
-                                0.3,
-                                1,
-                            ]),
+                            render_colored_diffuse(
+                                game.MaterialColoredDiffuseGouraud,
+                                game.MeshHand,
+                                [1, 1, 0.3, 1]
+                            ),
                         ],
                     },
                 ],
