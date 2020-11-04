@@ -164,6 +164,8 @@ function draw_textured_unlit(game: Game2, transform: Transform, render: RenderTe
     game.Gl.bindTexture(GL_TEXTURE_2D, render.Texture);
     game.Gl.uniform1i(render.Material.Locations.Sampler, 0);
 
+    game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
+
     game.Gl.bindVertexArray(render.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
     game.Gl.bindVertexArray(null);
