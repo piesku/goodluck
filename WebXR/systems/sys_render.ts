@@ -5,7 +5,7 @@ import {
     GL_FRAMEBUFFER,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {DiffuseLayout} from "../../materials/layout_diffuse.js";
+import {ColoredDiffuseLayout} from "../../materials/layout_colored_diffuse.js";
 import {CameraEye, CameraKind, CameraPerspective, CameraXr} from "../components/com_camera.js";
 import {RenderKind} from "../components/com_render.js";
 import {RenderDiffuse} from "../components/com_render_diffuse.js";
@@ -79,7 +79,7 @@ function render(game: Game, eye: CameraEye) {
     }
 }
 
-function use_diffuse(game: Game, material: Material<DiffuseLayout>, eye: CameraEye) {
+function use_diffuse(game: Game, material: Material<ColoredDiffuseLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);

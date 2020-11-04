@@ -7,9 +7,9 @@ import {
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {DiffuseLayout} from "../../materials/layout_diffuse.js";
-import {SpecularLayout} from "../../materials/layout_specular.js";
-import {TexturedLayout} from "../../materials/layout_textured.js";
+import {ColoredDiffuseLayout} from "../../materials/layout_colored_diffuse.js";
+import {ColoredSpecularLayout} from "../../materials/layout_colored_specular.js";
+import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
 import {CameraDisplay, CameraEye, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
 import {
     Render,
@@ -109,7 +109,7 @@ function render(game: Game2, eye: CameraEye, current_target?: WebGLTexture) {
     }
 }
 
-function use_diffuse(game: Game2, material: Material<DiffuseLayout>, eye: CameraEye) {
+function use_diffuse(game: Game2, material: Material<ColoredDiffuseLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
@@ -125,7 +125,7 @@ function draw_diffuse(game: Game2, transform: Transform, render: RenderDiffuse) 
     game.Gl.bindVertexArray(null);
 }
 
-function use_specular(game: Game2, material: Material<SpecularLayout>, eye: CameraEye) {
+function use_specular(game: Game2, material: Material<ColoredSpecularLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform3fv(material.Locations.Eye, eye.Position);
@@ -144,7 +144,7 @@ function draw_specular(game: Game2, transform: Transform, render: RenderSpecular
     game.Gl.bindVertexArray(null);
 }
 
-function use_textured(game: Game2, material: Material<TexturedLayout>, eye: CameraEye) {
+function use_textured(game: Game2, material: Material<TexturedUnlitLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
 }

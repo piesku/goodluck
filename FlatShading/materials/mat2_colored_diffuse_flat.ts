@@ -1,6 +1,6 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
-import {DiffuseLayout} from "../../materials/layout_diffuse.js";
+import {ColoredDiffuseLayout} from "../../materials/layout_colored_diffuse.js";
 
 let vertex = `#version 300 es\n
 
@@ -69,7 +69,9 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat2_diffuse_flat(gl: WebGL2RenderingContext): Material<DiffuseLayout> {
+export function mat2_colored_diffuse_flat(
+    gl: WebGL2RenderingContext
+): Material<ColoredDiffuseLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

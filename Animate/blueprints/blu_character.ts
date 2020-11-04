@@ -95,7 +95,11 @@ export function blueprint_character(game: Game): Blueprint {
                         Translation: [0, 1.5, 0.5],
                         Scale: [2, 2, 2],
                         Using: [
-                            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, skin_color),
+                            render_diffuse(
+                                game.MaterialColoredDiffuseGouraud,
+                                game.MeshCube,
+                                skin_color
+                            ),
                         ],
                     },
                     {
@@ -103,7 +107,11 @@ export function blueprint_character(game: Game): Blueprint {
                         Translation: [0, 2, 0],
                         Scale: [2.1, 1.1, 1.1],
                         Using: [
-                            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, hair_color),
+                            render_diffuse(
+                                game.MaterialColoredDiffuseGouraud,
+                                game.MeshCube,
+                                hair_color
+                            ),
                         ],
                     },
                     {
@@ -111,7 +119,11 @@ export function blueprint_character(game: Game): Blueprint {
                         Translation: [0, -1, 0],
                         Scale: [2, 3, 1],
                         Using: [
-                            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, shirt_color),
+                            render_diffuse(
+                                game.MaterialColoredDiffuseGouraud,
+                                game.MeshCube,
+                                shirt_color
+                            ),
                         ],
                     },
                 ],
@@ -175,7 +187,11 @@ export function blueprint_character(game: Game): Blueprint {
                         Translation: [0, -0.5, 0],
                         Scale: [1, 2, 1],
                         Using: [
-                            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, shirt_color),
+                            render_diffuse(
+                                game.MaterialColoredDiffuseGouraud,
+                                game.MeshCube,
+                                shirt_color
+                            ),
                         ],
                     },
                     {
@@ -183,7 +199,11 @@ export function blueprint_character(game: Game): Blueprint {
                         Translation: [0, -2, 0],
                         Scale: [0.9, 1, 0.9],
                         Using: [
-                            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, skin_color),
+                            render_diffuse(
+                                game.MaterialColoredDiffuseGouraud,
+                                game.MeshCube,
+                                skin_color
+                            ),
                         ],
                     },
                 ],
@@ -247,7 +267,11 @@ export function blueprint_character(game: Game): Blueprint {
                         Translation: [0, -0.5, 0],
                         Scale: [1, 2, 1],
                         Using: [
-                            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, shirt_color),
+                            render_diffuse(
+                                game.MaterialColoredDiffuseGouraud,
+                                game.MeshCube,
+                                shirt_color
+                            ),
                         ],
                     },
                     {
@@ -255,7 +279,11 @@ export function blueprint_character(game: Game): Blueprint {
                         Translation: [0, -2, 0],
                         Scale: [0.9, 1, 0.9],
                         Using: [
-                            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, skin_color),
+                            render_diffuse(
+                                game.MaterialColoredDiffuseGouraud,
+                                game.MeshCube,
+                                skin_color
+                            ),
                         ],
                     },
                 ],
@@ -319,7 +347,11 @@ export function blueprint_character(game: Game): Blueprint {
                         Translation: [0, -1.5, 0],
                         Scale: [1, 2, 1],
                         Using: [
-                            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, pants_color),
+                            render_diffuse(
+                                game.MaterialColoredDiffuseGouraud,
+                                game.MeshCube,
+                                pants_color
+                            ),
                         ],
                     },
                 ],
@@ -383,7 +415,11 @@ export function blueprint_character(game: Game): Blueprint {
                         Translation: [0, -1.5, 0],
                         Scale: [1, 2, 1],
                         Using: [
-                            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, pants_color),
+                            render_diffuse(
+                                game.MaterialColoredDiffuseGouraud,
+                                game.MeshCube,
+                                pants_color
+                            ),
                         ],
                     },
                 ],

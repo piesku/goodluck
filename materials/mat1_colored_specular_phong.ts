@@ -1,17 +1,16 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {SpecularLayout} from "./layout_specular.js";
+import {ColoredSpecularLayout} from "./layout_colored_specular.js";
 
-let vertex = `#version 300 es\n
-
+let vertex = `
     uniform mat4 pv;
     uniform mat4 world;
     uniform mat4 self;
 
-    in vec3 position;
-    in vec3 normal;
-    out vec4 vert_pos;
-    out vec3 vert_normal;
+    attribute vec3 position;
+    attribute vec3 normal;
+    varying vec4 vert_pos;
+    varying vec3 vert_normal;
 
     void main() {
         vert_pos = world * vec4(position, 1.0);
@@ -20,8 +19,7 @@ let vertex = `#version 300 es\n
     }
 `;
 
-let fragment = `#version 300 es\n
-
+let fragment = `
     precision mediump float;
 
     // See Game.LightPositions and Game.LightDetails.
@@ -34,9 +32,8 @@ let fragment = `#version 300 es\n
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    in vec4 vert_pos;
-    in vec3 vert_normal;
-    out vec4 frag_color;
+    varying vec4 vert_pos;
+    varying vec3 vert_normal;
 
     void main() {
         vec3 frag_normal = normalize(vert_normal);
@@ -87,11 +84,13 @@ let fragment = `#version 300 es\n
             }
         }
 
-        frag_color = vec4(rgb, 1.0);
+        gl_FragColor = vec4(rgb, 1.0);
     }
 `;
 
-export function mat2_specular_phong(gl: WebGL2RenderingContext): Material<SpecularLayout> {
+export function mat1_colored_specular_phong(
+    gl: WebGLRenderingContext
+): Material<ColoredSpecularLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

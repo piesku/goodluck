@@ -31,7 +31,12 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [-0.7, 0.5, 0],
         Using: [
-            render_diffuse(game.MaterialDiffuseGouraud, game.Meshes["monkey_flat"], [1, 1, 0.3, 1]),
+            render_diffuse(game.MaterialColoredDiffuseGouraud, game.Meshes["monkey_flat"], [
+                1,
+                1,
+                0.3,
+                1,
+            ]),
         ],
     });
 
@@ -40,7 +45,7 @@ export function scene_stage(game: Game) {
         Translation: [0.7, -0.5, 0],
         Using: [
             render_specular(
-                game.MaterialSpecularPhong,
+                game.MaterialColoredSpecularPhong,
                 game.Meshes["monkey_smooth"],
                 [1, 1, 0.3, 1],
                 64

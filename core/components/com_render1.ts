@@ -7,10 +7,10 @@ import {
     GL_ELEMENT_ARRAY_BUFFER,
     GL_FLOAT,
 } from "../../common/webgl.js";
-import {BasicLayout} from "../../materials/layout_basic.js";
-import {DiffuseLayout} from "../../materials/layout_diffuse.js";
-import {SpecularLayout} from "../../materials/layout_specular.js";
-import {TexturedLayout} from "../../materials/layout_textured.js";
+import {ColoredDiffuseLayout} from "../../materials/layout_colored_diffuse.js";
+import {ColoredSpecularLayout} from "../../materials/layout_colored_specular.js";
+import {ColoredUnlitLayout} from "../../materials/layout_colored_unlit.js";
+import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
 import {Entity, Game} from "../game.js";
 import {Has, World} from "../world.js";
 
@@ -34,7 +34,7 @@ interface Game1 extends Game {
 
 export interface RenderBasic {
     readonly Kind: RenderKind.Basic;
-    readonly Material: Material<BasicLayout>;
+    readonly Material: Material<ColoredUnlitLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
     readonly Vao: WebGLVertexArrayObject;
@@ -43,7 +43,7 @@ export interface RenderBasic {
 
 let render_basic_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
-export function render_basic(material: Material<BasicLayout>, mesh: Mesh, color: Vec4) {
+export function render_basic(material: Material<ColoredUnlitLayout>, mesh: Mesh, color: Vec4) {
     return (game: Game1, entity: Entity) => {
         if (!render_basic_vaos.has(mesh)) {
             // We only need to create the VAO once.
@@ -81,7 +81,7 @@ export function render_basic(material: Material<BasicLayout>, mesh: Mesh, color:
 
 export interface RenderDiffuse {
     readonly Kind: RenderKind.Diffuse;
-    readonly Material: Material<DiffuseLayout>;
+    readonly Material: Material<ColoredDiffuseLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
     readonly Vao: WebGLVertexArrayObject;
@@ -90,7 +90,7 @@ export interface RenderDiffuse {
 
 let render_diffuse_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
-export function render_diffuse(material: Material<DiffuseLayout>, mesh: Mesh, color: Vec4) {
+export function render_diffuse(material: Material<ColoredDiffuseLayout>, mesh: Mesh, color: Vec4) {
     return (game: Game1, entity: Entity) => {
         if (!render_diffuse_vaos.has(mesh)) {
             // We only need to create the VAO once.
@@ -132,7 +132,7 @@ export function render_diffuse(material: Material<DiffuseLayout>, mesh: Mesh, co
 
 export interface RenderSpecular {
     readonly Kind: RenderKind.Specular;
-    readonly Material: Material<SpecularLayout>;
+    readonly Material: Material<ColoredSpecularLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
     readonly Vao: WebGLVertexArrayObject;
@@ -144,7 +144,7 @@ export interface RenderSpecular {
 let render_specular_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_specular(
-    material: Material<SpecularLayout>,
+    material: Material<ColoredSpecularLayout>,
     mesh: Mesh,
     color_diffuse: Vec4,
     shininess: number = 1,
@@ -193,7 +193,7 @@ export function render_specular(
 
 export interface RenderTextured {
     readonly Kind: RenderKind.Textured;
-    readonly Material: Material<TexturedLayout>;
+    readonly Material: Material<TexturedUnlitLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
     readonly Vao: WebGLVertexArrayObject;
@@ -203,7 +203,7 @@ export interface RenderTextured {
 let render_textured_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_textured(
-    material: Material<TexturedLayout>,
+    material: Material<TexturedUnlitLayout>,
     mesh: Mesh,
     texture: WebGLTexture
 ) {
@@ -255,14 +255,14 @@ export function render_textured(
 
 export interface RenderVertices {
     Kind: RenderKind.Vertices;
-    Material: Material<BasicLayout>;
+    Material: Material<ColoredUnlitLayout>;
     FrontFace: GLenum;
     VertexBuffer: WebGLBuffer;
     IndexCount: number;
     Color: Vec4;
 }
 
-export function render_vertices(material: Material<BasicLayout>, max: number, color: Vec4) {
+export function render_vertices(material: Material<ColoredUnlitLayout>, max: number, color: Vec4) {
     return (game: Game1, entity: Entity) => {
         let vertex_buf = game.Gl.createBuffer()!;
         game.Gl.bindBuffer(GL_ARRAY_BUFFER, vertex_buf);

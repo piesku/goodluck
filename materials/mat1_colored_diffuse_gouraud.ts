@@ -1,6 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {DiffuseLayout} from "./layout_diffuse.js";
+import {ColoredDiffuseLayout} from "./layout_colored_diffuse.js";
 
 let vertex = `
     // See Game.LightPositions and Game.LightDetails.
@@ -66,7 +66,9 @@ let fragment = `
     }
 `;
 
-export function mat1_diffuse_gouraud(gl: WebGLRenderingContext): Material<DiffuseLayout> {
+export function mat1_colored_diffuse_gouraud(
+    gl: WebGLRenderingContext
+): Material<ColoredDiffuseLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

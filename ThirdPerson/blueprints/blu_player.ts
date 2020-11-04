@@ -20,7 +20,14 @@ export function blueprint_player(game: Game): Blueprint {
         Children: [
             {
                 // Body.
-                Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1])],
+                Using: [
+                    render_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [
+                        1,
+                        1,
+                        0.3,
+                        1,
+                    ]),
+                ],
             },
             {
                 // Camera rig anchor.

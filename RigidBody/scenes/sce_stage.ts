@@ -29,7 +29,7 @@ export function scene_stage(game: Game) {
         Translation: [0, 0, 0],
         Scale: [10, 1, 10],
         Using: [
-            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1]),
+            render_diffuse(game.MaterialUnlitDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1]),
             collide(false, Layer.Terrain, Layer.None),
             rigid_body(false),
         ],

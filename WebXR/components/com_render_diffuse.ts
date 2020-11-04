@@ -1,14 +1,14 @@
 import {Material, Mesh} from "../../common/material.js";
 import {Vec4} from "../../common/math.js";
 import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
-import {DiffuseLayout} from "../../materials/layout_diffuse.js";
+import {ColoredDiffuseLayout} from "../../materials/layout_colored_diffuse.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 import {RenderKind} from "./com_render.js";
 
 export interface RenderDiffuse {
     readonly Kind: RenderKind.Diffuse;
-    readonly Material: Material<DiffuseLayout>;
+    readonly Material: Material<ColoredDiffuseLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
     readonly Vao: WebGLVertexArrayObject;
@@ -18,7 +18,7 @@ export interface RenderDiffuse {
 let vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_diffuse(
-    material: Material<DiffuseLayout>,
+    material: Material<ColoredDiffuseLayout>,
     mesh: Mesh,
     color: Vec4,
     front_face: GLenum = GL_CW

@@ -1,4 +1,4 @@
-export interface SpecularLayout {
+export interface ColoredSpecularLayout {
     // Uniforms
     Pv: WebGLUniformLocation;
     World: WebGLUniformLocation;

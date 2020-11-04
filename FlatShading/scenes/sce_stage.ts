@@ -44,13 +44,28 @@ export function scene_stage(game: Game) {
     });
 
     let shadings = [
-        render_diffuse(game.MaterialDiffuseFlat, game.MeshIcosphereFlat, [1, 1, 0, 1]),
-        render_diffuse(game.MaterialDiffuseGouraud, game.MeshIcosphereFlat, [1, 1, 0, 1]),
-        render_diffuse(game.MaterialDiffusePhong, game.MeshIcosphereFlat, [1, 1, 0, 1]),
+        render_diffuse(game.MaterialColoredDiffuseFlat, game.MeshIcosphereFlat, [1, 1, 0, 1]),
+        render_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshIcosphereFlat, [1, 1, 0, 1]),
+        render_diffuse(game.MaterialColoredDiffusePhong, game.MeshIcosphereFlat, [1, 1, 0, 1]),
 
-        render_specular(game.MaterialSpecularFlat, game.MeshIcosphereFlat, [1, 1, 0, 1], 100),
-        render_specular(game.MaterialSpecularGouraud, game.MeshIcosphereFlat, [1, 1, 0, 1], 100),
-        render_specular(game.MaterialSpecularPhong, game.MeshIcosphereFlat, [1, 1, 0, 1], 100),
+        render_specular(
+            game.MaterialColoredSpecularFlat,
+            game.MeshIcosphereFlat,
+            [1, 1, 0, 1],
+            100
+        ),
+        render_specular(
+            game.MaterialColoredSpecularGouraud,
+            game.MeshIcosphereFlat,
+            [1, 1, 0, 1],
+            100
+        ),
+        render_specular(
+            game.MaterialColoredSpecularPhong,
+            game.MeshIcosphereFlat,
+            [1, 1, 0, 1],
+            100
+        ),
     ];
 
     let rows = 2;

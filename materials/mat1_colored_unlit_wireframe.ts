@@ -1,6 +1,6 @@
 import {link, Material} from "../common/material.js";
-import {GL_POINTS} from "../common/webgl.js";
-import {BasicLayout} from "./layout_basic.js";
+import {GL_LINE_LOOP} from "../common/webgl.js";
+import {ColoredUnlitLayout} from "./layout_colored_unlit.js";
 
 let vertex = `
     uniform mat4 pv;
@@ -10,7 +10,6 @@ let vertex = `
 
     void main() {
         gl_Position = pv * world * vec4(position, 1.0);
-        gl_PointSize = 8.0;
     }
 `;
 
@@ -23,10 +22,12 @@ let fragment = `
     }
 `;
 
-export function mat1_basic_points(gl: WebGLRenderingContext): Material<BasicLayout> {
+export function mat1_colored_unlit_wireframe(
+    gl: WebGLRenderingContext
+): Material<ColoredUnlitLayout> {
     let program = link(gl, vertex, fragment);
     return {
-        Mode: GL_POINTS,
+        Mode: GL_LINE_LOOP,
         Program: program,
         Locations: {
             Pv: gl.getUniformLocation(program, "pv")!,

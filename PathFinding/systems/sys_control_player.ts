@@ -15,7 +15,7 @@ export function sys_control_player(game: Game, delta: number) {
     if (!line) {
         line = instantiate(game, {
             Translation: [0, 1, 0],
-            Using: [render_vertices(game.MaterialBasicLine, 512, [1, 1, 0, 1])],
+            Using: [render_vertices(game.MaterialColoredUnlitLine, 512, [1, 1, 0, 1])],
             Disable: Has.Render,
         });
     }

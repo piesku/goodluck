@@ -21,7 +21,7 @@ export function blueprint_viewer(game: Game): Blueprint {
                         Scale: [-1, 1, 1],
                         Using: [
                             render_diffuse(
-                                game.MaterialDiffuseGouraud,
+                                game.MaterialColoredDiffuseGouraud,
                                 game.MeshHand,
                                 [1, 1, 0.3, 1],
                                 GL_CCW
@@ -36,7 +36,7 @@ export function blueprint_viewer(game: Game): Blueprint {
                 Children: [
                     {
                         Using: [
-                            render_diffuse(game.MaterialDiffuseGouraud, game.MeshHand, [
+                            render_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshHand, [
                                 1,
                                 1,
                                 0.3,

@@ -1,6 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {SpecularLayout} from "./layout_specular.js";
+import {ColoredDiffuseLayout} from "./layout_colored_diffuse.js";
 
 let vertex = `#version 300 es\n
 
@@ -10,10 +10,7 @@ let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
     uniform mat4 self;
-    uniform vec3 eye;
-    uniform vec4 color_diffuse;
-    uniform vec4 color_specular;
-    uniform float shininess;
+    uniform vec4 color;
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
@@ -26,11 +23,8 @@ let vertex = `#version 300 es\n
         vec3 vert_normal = normalize((vec4(normal, 1.0) * self).xyz);
         gl_Position = pv * vert_pos;
 
-        vec3 view_dir = eye - vert_pos.xyz;
-        vec3 view_normal = normalize(view_dir);
-
         // Ambient light.
-        vec3 rgb = color_diffuse.rgb * 0.1;
+        vec3 rgb = color.rgb * 0.1;
 
         for (int i = 0; i < MAX_LIGHTS; i++) {
             if (light_positions[i].w == 0.0) {
@@ -55,15 +49,7 @@ let vertex = `#version 300 es\n
             float diffuse_factor = dot(vert_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
-                rgb += color_diffuse.rgb * diffuse_factor * light_color * light_intensity;
-
-                // Blinn-Phong reflection model.
-                vec3 h = normalize(light_normal + view_normal);
-                float specular_angle = max(dot(h, vert_normal), 0.0);
-                float specular_factor = pow(specular_angle, shininess);
-
-                // Specular color.
-                rgb += color_specular.rgb * specular_factor * light_color * light_intensity;
+                rgb += color.rgb * diffuse_factor * light_color * light_intensity;
             }
         }
 
@@ -83,7 +69,9 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat2_specular_gouraud(gl: WebGL2RenderingContext): Material<SpecularLayout> {
+export function mat2_colored_diffuse_gouraud(
+    gl: WebGL2RenderingContext
+): Material<ColoredDiffuseLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
@@ -92,10 +80,7 @@ export function mat2_specular_gouraud(gl: WebGL2RenderingContext): Material<Spec
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
             Self: gl.getUniformLocation(program, "self")!,
-            Eye: gl.getUniformLocation(program, "eye")!,
-            ColorDiffuse: gl.getUniformLocation(program, "color_diffuse")!,
-            ColorSpecular: gl.getUniformLocation(program, "color_specular")!,
-            Shininess: gl.getUniformLocation(program, "shininess")!,
+            Color: gl.getUniformLocation(program, "color")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
             VertexPosition: gl.getAttribLocation(program, "position")!,

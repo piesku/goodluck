@@ -19,7 +19,11 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [-1, 0, 0],
         Using: [
-            render_textured(game.MaterialTextured, game.MeshKulka, game.Textures["checker1.png"]),
+            render_textured(
+                game.MaterialTexturedUnlit,
+                game.MeshKulka,
+                game.Textures["checker1.png"]
+            ),
             rotate([0, 20, 0]),
         ],
     });
@@ -28,7 +32,7 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [1, 0, 0],
         Using: [
-            render_textured(game.MaterialTextured, game.MeshKulka, game.Textures["kulka.png"]),
+            render_textured(game.MaterialTexturedUnlit, game.MeshKulka, game.Textures["kulka.png"]),
             rotate([0, 20, 0]),
         ],
     });

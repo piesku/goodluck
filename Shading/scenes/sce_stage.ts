@@ -44,17 +44,37 @@ export function scene_stage(game: Game) {
     });
 
     let shadings = [
-        render_basic(game.MaterialBasicPoints, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
-        render_basic(game.MaterialBasicWireframe, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
-        render_basic(game.MaterialBasicTriangles, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
+        render_basic(game.MaterialColoredUnlitPoints, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
+        render_basic(game.MaterialColoredUnlitWireframe, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
+        render_basic(game.MaterialColoredUnlitTriangles, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
 
-        render_diffuse(game.MaterialDiffuseGouraud, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
-        render_diffuse(game.MaterialDiffusePhong, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
-        render_specular(game.MaterialSpecularGouraud, game.MeshIcosphereSmooth, [1, 1, 0, 1], 100),
+        render_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
+        render_diffuse(game.MaterialColoredDiffusePhong, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
+        render_specular(
+            game.MaterialColoredSpecularGouraud,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            100
+        ),
 
-        render_specular(game.MaterialSpecularPhong, game.MeshIcosphereSmooth, [1, 1, 0, 1], 10),
-        render_specular(game.MaterialSpecularPhong, game.MeshIcosphereSmooth, [1, 1, 0, 1], 100),
-        render_specular(game.MaterialSpecularPhong, game.MeshIcosphereSmooth, [1, 1, 0, 1], 1000),
+        render_specular(
+            game.MaterialColoredSpecularPhong,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            10
+        ),
+        render_specular(
+            game.MaterialColoredSpecularPhong,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            100
+        ),
+        render_specular(
+            game.MaterialColoredSpecularPhong,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            1000
+        ),
     ];
 
     let rows = 3;

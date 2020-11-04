@@ -51,7 +51,7 @@ function wireframe_invisible(game: Game, entity: Entity) {
 
     if (!wireframe) {
         let wireframe_entity = instantiate(game, {
-            Using: [render_basic(game.MaterialBasicWireframe, game.MeshCube, [1, 0, 1, 1])],
+            Using: [render_basic(game.MaterialColoredUnlitWireframe, game.MeshCube, [1, 0, 1, 1])],
         });
         let wireframe_transform = game.World.Transform[wireframe_entity];
         wireframe_transform.World = anchor_transform.World;
@@ -74,7 +74,7 @@ function wireframe_collider(game: Game, entity: Entity) {
         let wireframe_entity = instantiate(game, {
             Translation: anchor_collide.Center,
             Scale: scale([0, 0, 0], anchor_collide.Half, 2),
-            Using: [render_basic(game.MaterialBasicWireframe, game.MeshCube, [0, 1, 0, 1])],
+            Using: [render_basic(game.MaterialColoredUnlitWireframe, game.MeshCube, [0, 1, 0, 1])],
         });
         wireframe = {
             entity: wireframe_entity,

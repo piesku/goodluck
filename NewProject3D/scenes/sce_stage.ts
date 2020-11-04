@@ -25,12 +25,12 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [0, 0, 0],
         Scale: [10, 1, 10],
-        Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1])],
+        Using: [render_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1])],
     });
 
     // Box.
     instantiate(game, {
         Translation: [0, 1, 0],
-        Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1])],
+        Using: [render_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1])],
     });
 }

@@ -1,4 +1,4 @@
-export interface DiffuseLayout {
+export interface ColoredDiffuseLayout {
     // Uniforms
     Pv: WebGLUniformLocation;
     World: WebGLUniformLocation;
