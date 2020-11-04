@@ -1,6 +1,6 @@
 import {scale} from "../../common/vec3.js";
 import {Collide} from "../components/com_collide.js";
-import {RenderKind, render_basic} from "../components/com_render1.js";
+import {RenderKind, render_colored_unlit} from "../components/com_render1.js";
 import {Transform} from "../components/com_transform.js";
 import {destroy_entity, instantiate} from "../entity.js";
 import {Entity, Game} from "../game.js";
@@ -51,7 +51,14 @@ function wireframe_invisible(game: Game, entity: Entity) {
 
     if (!wireframe) {
         let wireframe_entity = instantiate(game, {
-            Using: [render_basic(game.MaterialColoredUnlitWireframe, game.MeshCube, [1, 0, 1, 1])],
+            Using: [
+                render_colored_unlit(game.MaterialColoredUnlitWireframe, game.MeshCube, [
+                    1,
+                    0,
+                    1,
+                    1,
+                ]),
+            ],
         });
         let wireframe_transform = game.World.Transform[wireframe_entity];
         wireframe_transform.World = anchor_transform.World;
@@ -74,7 +81,14 @@ function wireframe_collider(game: Game, entity: Entity) {
         let wireframe_entity = instantiate(game, {
             Translation: anchor_collide.Center,
             Scale: scale([0, 0, 0], anchor_collide.Half, 2),
-            Using: [render_basic(game.MaterialColoredUnlitWireframe, game.MeshCube, [0, 1, 0, 1])],
+            Using: [
+                render_colored_unlit(game.MaterialColoredUnlitWireframe, game.MeshCube, [
+                    0,
+                    1,
+                    0,
+                    1,
+                ]),
+            ],
         });
         wireframe = {
             entity: wireframe_entity,
@@ -92,7 +106,7 @@ function wireframe_collider(game: Game, entity: Entity) {
     }
 
     let render = game.World.Render[wireframe.entity];
-    if (render.Kind === RenderKind.Basic) {
+    if (render.Kind === RenderKind.ColoredUnlit) {
         if (anchor_collide.Collisions.length > 0) {
             render.Color[2] = 1;
         } else {

@@ -7,12 +7,12 @@ import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
 import {Entity, Game} from "../game.js";
 import {Has, World} from "../world.js";
 
-export type Render = RenderDiffuse | RenderSpecular | RenderTextured;
+export type Render = RenderColoredDiffuse | RenderColoredSpecular | RenderTexturedUnlit;
 
 export const enum RenderKind {
-    Diffuse,
-    Specular,
-    Textured,
+    ColoredDiffuse,
+    ColoredSpecular,
+    TexturedUnlit,
 }
 
 interface Game2 extends Game {
@@ -22,8 +22,8 @@ interface Game2 extends Game {
     };
 }
 
-export interface RenderDiffuse {
-    readonly Kind: RenderKind.Diffuse;
+export interface RenderColoredDiffuse {
+    readonly Kind: RenderKind.ColoredDiffuse;
     readonly Material: Material<ColoredDiffuseLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
@@ -33,7 +33,12 @@ export interface RenderDiffuse {
 
 let render_diffuse_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
-export function render_diffuse(material: Material<ColoredDiffuseLayout>, mesh: Mesh, color: Vec4) {
+export function render_colored_diffuse(
+    material: Material<ColoredDiffuseLayout>,
+    mesh: Mesh,
+    color: Vec4,
+    front_face: GLenum = GL_CW
+) {
     return (game: Game2, entity: Entity) => {
         if (!render_diffuse_vaos.has(mesh)) {
             // We only need to create the VAO once.
@@ -63,18 +68,18 @@ export function render_diffuse(material: Material<ColoredDiffuseLayout>, mesh: M
 
         game.World.Signature[entity] |= Has.Render;
         game.World.Render[entity] = {
-            Kind: RenderKind.Diffuse,
+            Kind: RenderKind.ColoredDiffuse,
             Material: material,
             Mesh: mesh,
-            FrontFace: GL_CW,
+            FrontFace: front_face,
             Vao: render_diffuse_vaos.get(mesh)!,
             Color: color,
         };
     };
 }
 
-export interface RenderSpecular {
-    readonly Kind: RenderKind.Specular;
+export interface RenderColoredSpecular {
+    readonly Kind: RenderKind.ColoredSpecular;
     readonly Material: Material<ColoredSpecularLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
@@ -86,7 +91,7 @@ export interface RenderSpecular {
 
 let render_specular_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
-export function render_specular(
+export function render_colored_specular(
     material: Material<ColoredSpecularLayout>,
     mesh: Mesh,
     color_diffuse: Vec4,
@@ -122,7 +127,7 @@ export function render_specular(
 
         game.World.Signature[entity] |= Has.Render;
         game.World.Render[entity] = {
-            Kind: RenderKind.Specular,
+            Kind: RenderKind.ColoredSpecular,
             Material: material,
             Mesh: mesh,
             FrontFace: GL_CW,
@@ -134,8 +139,8 @@ export function render_specular(
     };
 }
 
-export interface RenderTextured {
-    readonly Kind: RenderKind.Textured;
+export interface RenderTexturedUnlit {
+    readonly Kind: RenderKind.TexturedUnlit;
     readonly Material: Material<TexturedUnlitLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
@@ -145,7 +150,7 @@ export interface RenderTextured {
 
 let render_textured_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
-export function render_textured(
+export function render_textured_unlit(
     material: Material<TexturedUnlitLayout>,
     mesh: Mesh,
     texture: WebGLTexture
@@ -186,7 +191,7 @@ export function render_textured(
 
         game.World.Signature[entity] |= Has.Render;
         game.World.Render[entity] = {
-            Kind: RenderKind.Textured,
+            Kind: RenderKind.TexturedUnlit,
             Material: material,
             Mesh: mesh,
             FrontFace: GL_CW,

@@ -1,7 +1,7 @@
 import {blueprint_camera_fly} from "../blueprints/blu_camera_fly.js";
 import {draw_text} from "../components/com_draw.js";
 import {light_directional} from "../components/com_light.js";
-import {render_diffuse} from "../components/com_render1.js";
+import {render_colored_diffuse} from "../components/com_render1.js";
 import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
@@ -26,13 +26,27 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [0, 0, 0],
         Scale: [10, 1, 10],
-        Using: [render_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1])],
+        Using: [
+            render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [
+                1,
+                1,
+                0.3,
+                1,
+            ]),
+        ],
     });
 
     // Box.
     instantiate(game, {
         Translation: [0, 1, 0],
-        Using: [render_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1])],
+        Using: [
+            render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [
+                1,
+                1,
+                0.3,
+                1,
+            ]),
+        ],
         Children: [
             {
                 Translation: [0, 1, 0],

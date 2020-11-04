@@ -1,6 +1,6 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light_directional, light_point} from "../components/com_light.js";
-import {render_diffuse, render_specular} from "../components/com_render1.js";
+import {render_colored_diffuse, render_colored_specular} from "../components/com_render1.js";
 import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
@@ -31,7 +31,7 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [-0.7, 0.5, 0],
         Using: [
-            render_diffuse(game.MaterialColoredDiffuseGouraud, game.Meshes["monkey_flat"], [
+            render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.Meshes["monkey_flat"], [
                 1,
                 1,
                 0.3,
@@ -44,7 +44,7 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [0.7, -0.5, 0],
         Using: [
-            render_specular(
+            render_colored_specular(
                 game.MaterialColoredSpecularPhong,
                 game.Meshes["monkey_smooth"],
                 [1, 1, 0.3, 1],

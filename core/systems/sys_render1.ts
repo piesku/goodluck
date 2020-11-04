@@ -16,11 +16,11 @@ import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
 import {CameraDisplay, CameraEye, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
 import {
     Render,
-    RenderBasic,
-    RenderDiffuse,
+    RenderColoredDiffuse,
+    RenderColoredSpecular,
+    RenderColoredUnlit,
     RenderKind,
-    RenderSpecular,
-    RenderTextured,
+    RenderTexturedUnlit,
     RenderVertices,
 } from "../components/com_render1.js";
 import {Transform} from "../components/com_transform.js";
@@ -79,17 +79,17 @@ function render(game: Game1, eye: CameraEye, current_target?: WebGLTexture) {
             if (render.Material !== current_material) {
                 current_material = render.Material;
                 switch (render.Kind) {
-                    case RenderKind.Basic:
-                        use_basic(game, render.Material, eye);
+                    case RenderKind.ColoredUnlit:
+                        use_colored_unlit(game, render.Material, eye);
                         break;
-                    case RenderKind.Diffuse:
-                        use_diffuse(game, render.Material, eye);
+                    case RenderKind.ColoredDiffuse:
+                        use_colored_diffuse(game, render.Material, eye);
                         break;
-                    case RenderKind.Specular:
-                        use_specular(game, render.Material, eye);
+                    case RenderKind.ColoredSpecular:
+                        use_colored_specular(game, render.Material, eye);
                         break;
-                    case RenderKind.Textured:
-                        use_textured(game, render.Material, eye);
+                    case RenderKind.TexturedUnlit:
+                        use_textured_unlit(game, render.Material, eye);
                         break;
                     case RenderKind.Vertices:
                         use_vertices(game, render.Material, eye);
@@ -103,20 +103,20 @@ function render(game: Game1, eye: CameraEye, current_target?: WebGLTexture) {
             }
 
             switch (render.Kind) {
-                case RenderKind.Basic:
-                    draw_basic(game, transform, render);
+                case RenderKind.ColoredUnlit:
+                    draw_colored_unlit(game, transform, render);
                     break;
-                case RenderKind.Diffuse:
-                    draw_diffuse(game, transform, render);
+                case RenderKind.ColoredDiffuse:
+                    draw_colored_diffuse(game, transform, render);
                     break;
-                case RenderKind.Specular:
-                    draw_specular(game, transform, render);
+                case RenderKind.ColoredSpecular:
+                    draw_colored_specular(game, transform, render);
                     break;
-                case RenderKind.Textured:
+                case RenderKind.TexturedUnlit:
                     // Prevent feedback loop between the active render target
                     // and the texture being rendered.
                     if (render.Texture !== current_target) {
-                        draw_textured(game, transform, render);
+                        draw_textured_unlit(game, transform, render);
                     }
                     break;
                 case RenderKind.Vertices:
@@ -127,12 +127,12 @@ function render(game: Game1, eye: CameraEye, current_target?: WebGLTexture) {
     }
 }
 
-function use_basic(game: Game1, material: Material<ColoredUnlitLayout>, eye: CameraEye) {
+function use_colored_unlit(game: Game1, material: Material<ColoredUnlitLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
 }
 
-function draw_basic(game: Game1, transform: Transform, render: RenderBasic) {
+function draw_colored_unlit(game: Game1, transform: Transform, render: RenderColoredUnlit) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
     game.ExtVao.bindVertexArrayOES(render.Vao);
@@ -140,14 +140,18 @@ function draw_basic(game: Game1, transform: Transform, render: RenderBasic) {
     game.ExtVao.bindVertexArrayOES(null);
 }
 
-function use_diffuse(game: Game1, material: Material<ColoredDiffuseLayout>, eye: CameraEye) {
+function use_colored_diffuse(
+    game: Game1,
+    material: Material<ColoredDiffuseLayout>,
+    eye: CameraEye
+) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
-function draw_diffuse(game: Game1, transform: Transform, render: RenderDiffuse) {
+function draw_colored_diffuse(game: Game1, transform: Transform, render: RenderColoredDiffuse) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
     game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
@@ -156,7 +160,11 @@ function draw_diffuse(game: Game1, transform: Transform, render: RenderDiffuse) 
     game.ExtVao.bindVertexArrayOES(null);
 }
 
-function use_specular(game: Game1, material: Material<ColoredSpecularLayout>, eye: CameraEye) {
+function use_colored_specular(
+    game: Game1,
+    material: Material<ColoredSpecularLayout>,
+    eye: CameraEye
+) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform3fv(material.Locations.Eye, eye.Position);
@@ -164,7 +172,7 @@ function use_specular(game: Game1, material: Material<ColoredSpecularLayout>, ey
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
-function draw_specular(game: Game1, transform: Transform, render: RenderSpecular) {
+function draw_colored_specular(game: Game1, transform: Transform, render: RenderColoredSpecular) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
     game.Gl.uniform4fv(render.Material.Locations.ColorDiffuse, render.ColorDiffuse);
@@ -175,12 +183,12 @@ function draw_specular(game: Game1, transform: Transform, render: RenderSpecular
     game.ExtVao.bindVertexArrayOES(null);
 }
 
-function use_textured(game: Game1, material: Material<TexturedUnlitLayout>, eye: CameraEye) {
+function use_textured_unlit(game: Game1, material: Material<TexturedUnlitLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
 }
 
-function draw_textured(game: Game1, transform: Transform, render: RenderTextured) {
+function draw_textured_unlit(game: Game1, transform: Transform, render: RenderTexturedUnlit) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
 
     game.Gl.activeTexture(GL_TEXTURE0);

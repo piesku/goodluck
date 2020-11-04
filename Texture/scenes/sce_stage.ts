@@ -1,5 +1,5 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
-import {render_textured} from "../components/com_render1.js";
+import {render_textured_unlit} from "../components/com_render1.js";
 import {rotate} from "../components/com_rotate.js";
 import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
@@ -19,7 +19,7 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [-1, 0, 0],
         Using: [
-            render_textured(
+            render_textured_unlit(
                 game.MaterialTexturedUnlit,
                 game.MeshKulka,
                 game.Textures["checker1.png"]
@@ -32,7 +32,11 @@ export function scene_stage(game: Game) {
     instantiate(game, {
         Translation: [1, 0, 0],
         Using: [
-            render_textured(game.MaterialTexturedUnlit, game.MeshKulka, game.Textures["kulka.png"]),
+            render_textured_unlit(
+                game.MaterialTexturedUnlit,
+                game.MeshKulka,
+                game.Textures["kulka.png"]
+            ),
             rotate([0, 20, 0]),
         ],
     });
