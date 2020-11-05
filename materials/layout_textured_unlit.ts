@@ -3,6 +3,7 @@ export interface TexturedUnlitLayout {
     Pv: WebGLUniformLocation;
     World: WebGLUniformLocation;
     Sampler: WebGLUniformLocation;
+    Color: WebGLUniformLocation;
     // Attributes
     VertexPosition: GLint;
     VertexTexCoord: GLint;

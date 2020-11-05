@@ -146,6 +146,7 @@ export interface RenderTexturedUnlit {
     readonly FrontFace: GLenum;
     readonly Vao: WebGLVertexArrayObject;
     Texture: WebGLTexture;
+    Color: Vec4;
 }
 
 let render_textured_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
@@ -153,7 +154,8 @@ let render_textured_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 export function render_textured_unlit(
     material: Material<TexturedUnlitLayout>,
     mesh: Mesh,
-    texture: WebGLTexture
+    texture: WebGLTexture,
+    color: Vec4 = [1, 1, 1, 1]
 ) {
     return (game: Game2, entity: Entity) => {
         if (!render_textured_vaos.has(mesh)) {
@@ -197,6 +199,7 @@ export function render_textured_unlit(
             FrontFace: GL_CW,
             Vao: render_textured_vaos.get(mesh)!,
             Texture: texture,
+            Color: color,
         };
     };
 }
