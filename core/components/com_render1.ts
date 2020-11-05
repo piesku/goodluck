@@ -49,7 +49,7 @@ export interface RenderColoredUnlit {
     Color: Vec4;
 }
 
-let render_basic_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+let colored_unlit_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_colored_unlit(
     material: Material<ColoredUnlitLayout>,
@@ -57,7 +57,7 @@ export function render_colored_unlit(
     color: Vec4
 ) {
     return (game: Game1, entity: Entity) => {
-        if (!render_basic_vaos.has(mesh)) {
+        if (!colored_unlit_vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.ExtVao.createVertexArrayOES()!;
             game.ExtVao.bindVertexArrayOES(vao);
@@ -76,7 +76,7 @@ export function render_colored_unlit(
             game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
             game.ExtVao.bindVertexArrayOES(null);
-            render_basic_vaos.set(mesh, vao);
+            colored_unlit_vaos.set(mesh, vao);
         }
 
         game.World.Signature[entity] |= Has.Render;
@@ -85,7 +85,7 @@ export function render_colored_unlit(
             Material: material,
             Mesh: mesh,
             FrontFace: GL_CW,
-            Vao: render_basic_vaos.get(mesh)!,
+            Vao: colored_unlit_vaos.get(mesh)!,
             Color: color,
         };
     };
@@ -100,7 +100,7 @@ export interface RenderColoredDiffuse {
     Color: Vec4;
 }
 
-let render_diffuse_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+let colored_diffuse_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_colored_diffuse(
     material: Material<ColoredDiffuseLayout>,
@@ -108,7 +108,7 @@ export function render_colored_diffuse(
     color: Vec4
 ) {
     return (game: Game1, entity: Entity) => {
-        if (!render_diffuse_vaos.has(mesh)) {
+        if (!colored_diffuse_vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.ExtVao.createVertexArrayOES()!;
             game.ExtVao.bindVertexArrayOES(vao);
@@ -131,7 +131,7 @@ export function render_colored_diffuse(
             game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
             game.ExtVao.bindVertexArrayOES(null);
-            render_diffuse_vaos.set(mesh, vao);
+            colored_diffuse_vaos.set(mesh, vao);
         }
 
         game.World.Signature[entity] |= Has.Render;
@@ -140,7 +140,7 @@ export function render_colored_diffuse(
             Material: material,
             Mesh: mesh,
             FrontFace: GL_CW,
-            Vao: render_diffuse_vaos.get(mesh)!,
+            Vao: colored_diffuse_vaos.get(mesh)!,
             Color: color,
         };
     };
@@ -157,7 +157,7 @@ export interface RenderColoredSpecular {
     Shininess: number;
 }
 
-let render_specular_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+let colored_specular_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_colored_specular(
     material: Material<ColoredSpecularLayout>,
@@ -167,7 +167,7 @@ export function render_colored_specular(
     color_specular: Vec4 = color_diffuse
 ) {
     return (game: Game1, entity: Entity) => {
-        if (!render_specular_vaos.has(mesh)) {
+        if (!colored_specular_vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.ExtVao.createVertexArrayOES()!;
             game.ExtVao.bindVertexArrayOES(vao);
@@ -190,7 +190,7 @@ export function render_colored_specular(
             game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
             game.ExtVao.bindVertexArrayOES(null);
-            render_specular_vaos.set(mesh, vao);
+            colored_specular_vaos.set(mesh, vao);
         }
 
         game.World.Signature[entity] |= Has.Render;
@@ -199,7 +199,7 @@ export function render_colored_specular(
             Material: material,
             Mesh: mesh,
             FrontFace: GL_CW,
-            Vao: render_specular_vaos.get(mesh)!,
+            Vao: colored_specular_vaos.get(mesh)!,
             ColorDiffuse: color_diffuse,
             ColorSpecular: color_specular,
             Shininess: shininess,
@@ -217,7 +217,7 @@ export interface RenderTexturedUnlit {
     Color: Vec4;
 }
 
-let render_textured_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+let textured_unlit_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_textured_unlit(
     material: Material<TexturedUnlitLayout>,
@@ -226,7 +226,7 @@ export function render_textured_unlit(
     color: Vec4 = [1, 1, 1, 1]
 ) {
     return (game: Game1, entity: Entity) => {
-        if (!render_textured_vaos.has(mesh)) {
+        if (!textured_unlit_vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.ExtVao.createVertexArrayOES()!;
             game.ExtVao.bindVertexArrayOES(vao);
@@ -256,7 +256,7 @@ export function render_textured_unlit(
             game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
             game.ExtVao.bindVertexArrayOES(null);
-            render_textured_vaos.set(mesh, vao);
+            textured_unlit_vaos.set(mesh, vao);
         }
 
         game.World.Signature[entity] |= Has.Render;
@@ -265,7 +265,7 @@ export function render_textured_unlit(
             Material: material,
             Mesh: mesh,
             FrontFace: GL_CW,
-            Vao: render_textured_vaos.get(mesh)!,
+            Vao: textured_unlit_vaos.get(mesh)!,
             Texture: texture,
             Color: color,
         };
@@ -282,7 +282,7 @@ export interface RenderTexturedDiffuse {
     Color: Vec4;
 }
 
-let render_textured_diffuse_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+let textured_diffuse_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_textured_diffuse(
     material: Material<TexturedDiffuseLayout>,
@@ -291,7 +291,7 @@ export function render_textured_diffuse(
     color: Vec4 = [1, 1, 1, 1]
 ) {
     return (game: Game1, entity: Entity) => {
-        if (!render_textured_diffuse_vaos.has(mesh)) {
+        if (!textured_diffuse_vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.ExtVao.createVertexArrayOES()!;
             game.ExtVao.bindVertexArrayOES(vao);
@@ -325,7 +325,7 @@ export function render_textured_diffuse(
             game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
             game.ExtVao.bindVertexArrayOES(null);
-            render_textured_diffuse_vaos.set(mesh, vao);
+            textured_diffuse_vaos.set(mesh, vao);
         }
 
         game.World.Signature[entity] |= Has.Render;
@@ -334,7 +334,7 @@ export function render_textured_diffuse(
             Material: material,
             Mesh: mesh,
             FrontFace: GL_CW,
-            Vao: render_textured_diffuse_vaos.get(mesh)!,
+            Vao: textured_diffuse_vaos.get(mesh)!,
             Texture: texture,
             Color: color,
         };
