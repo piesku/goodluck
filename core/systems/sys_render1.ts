@@ -12,6 +12,7 @@ import {
 import {ColoredDiffuseLayout} from "../../materials/layout_colored_diffuse.js";
 import {ColoredSpecularLayout} from "../../materials/layout_colored_specular.js";
 import {ColoredUnlitLayout} from "../../materials/layout_colored_unlit.js";
+import {TexturedDiffuseLayout} from "../../materials/layout_textured_diffuse.js";
 import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
 import {CameraDisplay, CameraEye, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
 import {
@@ -20,6 +21,7 @@ import {
     RenderColoredSpecular,
     RenderColoredUnlit,
     RenderKind,
+    RenderTexturedDiffuse,
     RenderTexturedUnlit,
     RenderVertices,
 } from "../components/com_render1.js";
@@ -91,6 +93,9 @@ function render(game: Game1, eye: CameraEye, current_target?: WebGLTexture) {
                     case RenderKind.TexturedUnlit:
                         use_textured_unlit(game, render.Material, eye);
                         break;
+                    case RenderKind.TexturedDiffuse:
+                        use_textured_diffuse(game, render.Material, eye);
+                        break;
                     case RenderKind.Vertices:
                         use_vertices(game, render.Material, eye);
                         break;
@@ -117,6 +122,13 @@ function render(game: Game1, eye: CameraEye, current_target?: WebGLTexture) {
                     // and the texture being rendered.
                     if (render.Texture !== current_target) {
                         draw_textured_unlit(game, transform, render);
+                    }
+                    break;
+                case RenderKind.TexturedDiffuse:
+                    // Prevent feedback loop between the active render target
+                    // and the texture being rendered.
+                    if (render.Texture !== current_target) {
+                        draw_textured_diffuse(game, transform, render);
                     }
                     break;
                 case RenderKind.Vertices:
@@ -190,6 +202,32 @@ function use_textured_unlit(game: Game1, material: Material<TexturedUnlitLayout>
 
 function draw_textured_unlit(game: Game1, transform: Transform, render: RenderTexturedUnlit) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
+
+    game.Gl.activeTexture(GL_TEXTURE0);
+    game.Gl.bindTexture(GL_TEXTURE_2D, render.Texture);
+    game.Gl.uniform1i(render.Material.Locations.Sampler, 0);
+
+    game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
+
+    game.ExtVao.bindVertexArrayOES(render.Vao);
+    game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
+    game.ExtVao.bindVertexArrayOES(null);
+}
+
+function use_textured_diffuse(
+    game: Game1,
+    material: Material<TexturedDiffuseLayout>,
+    eye: CameraEye
+) {
+    game.Gl.useProgram(material.Program);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
+    game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
+    game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
+}
+
+function draw_textured_diffuse(game: Game1, transform: Transform, render: RenderTexturedDiffuse) {
+    game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
+    game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
 
     game.Gl.activeTexture(GL_TEXTURE0);
     game.Gl.bindTexture(GL_TEXTURE_2D, render.Texture);

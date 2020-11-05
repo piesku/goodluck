@@ -10,6 +10,7 @@ import {
 import {ColoredDiffuseLayout} from "../../materials/layout_colored_diffuse.js";
 import {ColoredSpecularLayout} from "../../materials/layout_colored_specular.js";
 import {ColoredUnlitLayout} from "../../materials/layout_colored_unlit.js";
+import {TexturedDiffuseLayout} from "../../materials/layout_textured_diffuse.js";
 import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
 import {Entity, Game} from "../game.js";
 import {Has, World} from "../world.js";
@@ -19,6 +20,7 @@ export type Render =
     | RenderColoredDiffuse
     | RenderColoredSpecular
     | RenderTexturedUnlit
+    | RenderTexturedDiffuse
     | RenderVertices;
 
 export const enum RenderKind {
@@ -26,6 +28,7 @@ export const enum RenderKind {
     ColoredDiffuse,
     ColoredSpecular,
     TexturedUnlit,
+    TexturedDiffuse,
     Vertices,
 }
 
@@ -263,6 +266,75 @@ export function render_textured_unlit(
             Mesh: mesh,
             FrontFace: GL_CW,
             Vao: render_textured_vaos.get(mesh)!,
+            Texture: texture,
+            Color: color,
+        };
+    };
+}
+
+export interface RenderTexturedDiffuse {
+    readonly Kind: RenderKind.TexturedDiffuse;
+    readonly Material: Material<TexturedDiffuseLayout>;
+    readonly Mesh: Mesh;
+    readonly FrontFace: GLenum;
+    readonly Vao: WebGLVertexArrayObject;
+    Texture: WebGLTexture;
+    Color: Vec4;
+}
+
+let render_textured_diffuse_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+
+export function render_textured_diffuse(
+    material: Material<TexturedDiffuseLayout>,
+    mesh: Mesh,
+    texture: WebGLTexture,
+    color: Vec4 = [1, 1, 1, 1]
+) {
+    return (game: Game1, entity: Entity) => {
+        if (!render_textured_diffuse_vaos.has(mesh)) {
+            // We only need to create the VAO once.
+            let vao = game.ExtVao.createVertexArrayOES()!;
+            game.ExtVao.bindVertexArrayOES(vao);
+
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
+            game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
+            game.Gl.vertexAttribPointer(
+                material.Locations.VertexPosition,
+                3,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
+
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.NormalBuffer);
+            game.Gl.enableVertexAttribArray(material.Locations.VertexNormal);
+            game.Gl.vertexAttribPointer(material.Locations.VertexNormal, 3, GL_FLOAT, false, 0, 0);
+
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.TexCoordBuffer);
+            game.Gl.enableVertexAttribArray(material.Locations.VertexTexCoord);
+            game.Gl.vertexAttribPointer(
+                material.Locations.VertexTexCoord,
+                2,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
+
+            game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
+
+            game.ExtVao.bindVertexArrayOES(null);
+            render_textured_diffuse_vaos.set(mesh, vao);
+        }
+
+        game.World.Signature[entity] |= Has.Render;
+        game.World.Render[entity] = {
+            Kind: RenderKind.TexturedDiffuse,
+            Material: material,
+            Mesh: mesh,
+            FrontFace: GL_CW,
+            Vao: render_textured_diffuse_vaos.get(mesh)!,
             Texture: texture,
             Color: color,
         };
