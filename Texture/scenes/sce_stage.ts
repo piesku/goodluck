@@ -1,5 +1,6 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
-import {render_textured_unlit} from "../components/com_render1.js";
+import {light_directional} from "../components/com_light.js";
+import {render_textured_diffuse, render_textured_unlit} from "../components/com_render1.js";
 import {rotate} from "../components/com_rotate.js";
 import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
@@ -15,7 +16,13 @@ export function scene_stage(game: Game) {
         ...blueprint_camera(game),
     });
 
-    // Checker.
+    // Directional light.
+    instantiate(game, {
+        Translation: [1, 1, 1],
+        Using: [light_directional([1, 1, 1], 1)],
+    });
+
+    // Unlit kulka.
     instantiate(game, {
         Translation: [-1, 0, 0],
         Using: [
@@ -28,14 +35,14 @@ export function scene_stage(game: Game) {
         ],
     });
 
-    // Kulka.
+    // Diffuse kulka.
     instantiate(game, {
         Translation: [1, 0, 0],
         Using: [
-            render_textured_unlit(
-                game.MaterialTexturedUnlit,
+            render_textured_diffuse(
+                game.MaterialTexturedDiffuse,
                 game.MeshKulka,
-                game.Textures["kulka.png"]
+                game.Textures["checker1.png"]
             ),
             rotate([0, 20, 0]),
         ],
