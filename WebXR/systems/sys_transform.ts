@@ -19,7 +19,7 @@ function update(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
     transform.Dirty = false;
 
-    if (game.XrFrame && game.World.Signature[entity] & Has.ControlPose) {
+    if (game.XrFrame && game.World.Signature[entity] & Has.ControlXr) {
         // Pose transforms have their World matrix set from XRPose by other
         // systems. Their translation, rotation and scale are ignored.
     } else {

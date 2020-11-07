@@ -1,8 +1,8 @@
-import {ControlPoseKind} from "../components/com_control_pose.js";
+import {ControlXrKind} from "../components/com_control_xr.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.Transform | Has.ControlPose;
+const QUERY = Has.Transform | Has.ControlXr;
 
 export function sys_control_pose(game: Game, delta: number) {
     if (!game.XrFrame) {
@@ -18,16 +18,16 @@ export function sys_control_pose(game: Game, delta: number) {
 
 function update(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
-    let control = game.World.ControlPose[entity];
+    let control = game.World.ControlXr[entity];
 
-    if (control.Kind === ControlPoseKind.Head) {
+    if (control.Kind === ControlXrKind.Head) {
         let headset = game.XrFrame!.getViewerPose(game.XrSpace);
         transform.World = headset.transform.matrix;
         transform.Dirty = true;
         return;
     }
 
-    if (control.Kind === ControlPoseKind.Left) {
+    if (control.Kind === ControlXrKind.Left) {
         let input = game.XrInputs["left"];
         if (input) {
             let pose = game.XrFrame!.getPose(input.gripSpace!, game.XrSpace!);
@@ -39,7 +39,7 @@ function update(game: Game, entity: Entity) {
         return;
     }
 
-    if (control.Kind === ControlPoseKind.Right) {
+    if (control.Kind === ControlXrKind.Right) {
         let input = game.XrInputs["right"];
         if (input) {
             let pose = game.XrFrame!.getPose(input.gripSpace!, game.XrSpace!);

@@ -1,6 +1,6 @@
 import {GL_CCW} from "../../common/webgl.js";
 import {camera_xr} from "../components/com_camera.js";
-import {ControlPoseKind, control_pose} from "../components/com_control_pose.js";
+import {ControlXrKind, control_xr} from "../components/com_control_xr.js";
 import {render_colored_diffuse} from "../components/com_render2.js";
 import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
@@ -14,7 +14,7 @@ export function blueprint_viewer(game: Game): Blueprint {
             },
             {
                 // Left hand.
-                Using: [control_pose(ControlPoseKind.Left)],
+                Using: [control_xr(ControlXrKind.Left)],
                 Children: [
                     {
                         Scale: [-1, 1, 1],
@@ -31,7 +31,7 @@ export function blueprint_viewer(game: Game): Blueprint {
             },
             {
                 // Right hand.
-                Using: [control_pose(ControlPoseKind.Right)],
+                Using: [control_xr(ControlXrKind.Right)],
                 Children: [
                     {
                         Using: [
