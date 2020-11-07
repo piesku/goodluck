@@ -2,6 +2,7 @@ import {Animate} from "./components/com_animate.js";
 import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
 import {Collide} from "./components/com_collide.js";
+import {ControlMove} from "./components/com_control_move.js";
 import {Draw} from "./components/com_draw.js";
 import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
@@ -9,7 +10,6 @@ import {Mimic} from "./components/com_mimic.js";
 import {Move} from "./components/com_move.js";
 import {Named} from "./components/com_named.js";
 import {RigidBody} from "./components/com_rigid_body.js";
-import {Rotate} from "./components/com_rotate.js";
 import {Shake} from "./components/com_shake.js";
 import {Transform} from "./components/com_transform.js";
 import {Transform2D} from "./components/com_transform2d.js";
@@ -21,6 +21,7 @@ const enum Component {
     AudioSource,
     Camera,
     Collide,
+    ControlMove,
     Draw,
     Lifespan,
     Light,
@@ -29,7 +30,6 @@ const enum Component {
     Named,
     Render,
     RigidBody,
-    Rotate,
     Shake,
     Transform,
     Transform2D,
@@ -41,6 +41,7 @@ export const enum Has {
     AudioSource = 1 << Component.AudioSource,
     Camera = 1 << Component.Camera,
     Collide = 1 << Component.Collide,
+    ControlMove = 1 << Component.ControlMove,
     Draw = 1 << Component.Draw,
     Lifespan = 1 << Component.Lifespan,
     Light = 1 << Component.Light,
@@ -49,7 +50,6 @@ export const enum Has {
     Named = 1 << Component.Named,
     Render = 1 << Component.Render,
     RigidBody = 1 << Component.RigidBody,
-    Rotate = 1 << Component.Rotate,
     Shake = 1 << Component.Shake,
     Transform = 1 << Component.Transform,
     Transform2D = 1 << Component.Transform2D,
@@ -65,6 +65,7 @@ export interface World {
     AudioSource: Array<AudioSource>;
     Camera: Array<Camera>;
     Collide: Array<Collide>;
+    ControlMove: Array<ControlMove>;
     Draw: Array<Draw>;
     Lifespan: Array<Lifespan>;
     Light: Array<Light>;
@@ -73,7 +74,6 @@ export interface World {
     Named: Array<Named>;
     // Render depends on the version of WebGL. See com_render*, sys_render*.
     RigidBody: Array<RigidBody>;
-    Rotate: Array<Rotate>;
     Shake: Array<Shake>;
     Transform: Array<Transform>;
     Transform2D: Array<Transform2D>;

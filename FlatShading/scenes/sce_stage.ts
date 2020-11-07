@@ -1,7 +1,8 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
+import {control_move} from "../components/com_control_move.js";
 import {light_directional, light_point} from "../components/com_light.js";
+import {move} from "../components/com_move.js";
 import {render_colored_diffuse, render_colored_specular} from "../components/com_render2.js";
-import {rotate} from "../components/com_rotate.js";
 import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
@@ -26,7 +27,7 @@ export function scene_stage(game: Game) {
     let light_range = 4;
     instantiate(game, {
         Translation: [0, 0, 5],
-        Using: [rotate([0, 0, 30])],
+        Using: [control_move(null, [0, 0, 1, 0]), move(0, 0.5)],
         Children: [
             {
                 Translation: [1 * light_spread, 0, 0],

@@ -6,9 +6,10 @@ import {mesh_plane} from "../meshes/plane.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./loop.js";
 import {sys_camera} from "./systems/sys_camera.js";
+import {sys_control_move} from "./systems/sys_control_move.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
+import {sys_move} from "./systems/sys_move.js";
 import {sys_render} from "./systems/sys_render1.js";
-import {sys_rotate} from "./systems/sys_rotate.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
@@ -56,7 +57,8 @@ export class Game {
 
     FrameUpdate(delta: number) {
         let now = performance.now();
-        sys_rotate(this, delta);
+        sys_control_move(this, delta);
+        sys_move(this, delta);
         sys_transform(this, delta);
         sys_camera(this, delta);
         sys_render(this, delta);
