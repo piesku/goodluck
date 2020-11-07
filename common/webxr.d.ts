@@ -89,6 +89,7 @@ type XRHandedness = "" | "left" | "right";
 type XRTargetRayMode = "gaze" | "tracked-pointer" | "screen";
 
 declare interface XRInputSource {
+    readonly gamepad: Gamepad | null;
     readonly handedness: XRHandedness;
     readonly targetRayMode: XRTargetRayMode;
     readonly targetRaySpace: XRSpace;

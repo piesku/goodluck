@@ -5,6 +5,7 @@ import {mesh_hand} from "../meshes/hand.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./loop.js";
 import {sys_camera} from "./systems/sys_camera.js";
+import {sys_control_pose} from "./systems/sys_control_pose.js";
 import {sys_control_xr} from "./systems/sys_control_xr.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -32,6 +33,7 @@ export class Game {
     XrSpace?: XRReferenceSpace;
     // XrFrame can be used to check whether we're presenting to a VR display.
     XrFrame?: XRFrame;
+    XrInputs: Record<string, XRInputSource> = {};
 
     MaterialColoredDiffuseGouraud = mat2_colored_diffuse_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
@@ -62,6 +64,7 @@ export class Game {
     FrameUpdate(delta: number) {
         let now = performance.now();
         sys_control_xr(this, delta);
+        sys_control_pose(this, delta);
         sys_transform(this, delta);
         sys_camera(this, delta);
         sys_light(this, delta);
