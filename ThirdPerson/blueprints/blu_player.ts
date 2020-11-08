@@ -4,7 +4,7 @@ import {light_point} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {named} from "../components/com_named.js";
 import {render_colored_diffuse} from "../components/com_render1.js";
-import {rigid_body} from "../components/com_rigid_body.js";
+import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
 import {Blueprint} from "../entity.js";
 import {Game, Layer} from "../game.js";
 
@@ -15,7 +15,7 @@ export function blueprint_player(game: Game): Blueprint {
             control_player(true, 0.2, 0),
             move(10, 3),
             collide(true, Layer.Player, Layer.Terrain),
-            rigid_body(true),
+            rigid_body(RigidKind.Dynamic),
         ],
         Children: [
             {

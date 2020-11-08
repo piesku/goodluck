@@ -12,7 +12,9 @@ import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_mimic} from "./systems/sys_mimic.js";
 import {sys_move} from "./systems/sys_move.js";
-import {sys_physics} from "./systems/sys_physics.js";
+import {sys_physics_integrate} from "./systems/sys_physics_integrate.js";
+import {sys_physics_kinematic} from "./systems/sys_physics_kinematic.js";
+import {sys_physics_resolve} from "./systems/sys_physics_resolve.js";
 import {sys_render} from "./systems/sys_render1.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
@@ -103,8 +105,11 @@ export class Game {
         sys_transform(this, delta);
 
         // Collisions and physics.
+        sys_physics_integrate(this, delta);
+        sys_transform(this, delta);
+        sys_physics_kinematic(this, delta);
         sys_collide(this, delta);
-        sys_physics(this, delta);
+        sys_physics_resolve(this, delta);
         sys_transform(this, delta);
 
         sys_camera(this, delta);
