@@ -38,6 +38,17 @@ export function scene_stage(game: Game) {
         ],
     });
 
+    // Static wall.
+    instantiate(game, {
+        Translation: [4, 1, 0],
+        Scale: [1, 1, 10],
+        Using: [
+            render_colored_diffuse(game.MaterialUnlitDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1]),
+            collide(false, Layer.Terrain, Layer.None),
+            rigid_body(RigidKind.Static),
+        ],
+    });
+
     // Box spawner.
     instantiate(game, {
         Translation: [0, 5, 0],

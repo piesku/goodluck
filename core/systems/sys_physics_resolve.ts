@@ -1,4 +1,5 @@
-import {add, copy, scale} from "../../common/vec3.js";
+import {Vec3} from "../../common/math.js";
+import {add, copy, dot, normalize, scale} from "../../common/vec3.js";
 import {RigidKind} from "../components/com_rigid_body.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
@@ -12,6 +13,9 @@ export function sys_physics_resolve(game: Game, delta: number) {
         }
     }
 }
+
+// Temp vector used to compute the reflection off of a static body.
+let a: Vec3 = [0, 0, 0];
 
 function update(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
@@ -38,19 +42,16 @@ function update(game: Game, entity: Entity) {
                 let other_body = game.World.RigidBody[collision.Other];
                 switch (other_body.Kind) {
                     case RigidKind.Static:
-                        // We should compute the reflection vector as
+                        // Compute the reflection vector as
                         //   r = v - 2 * (v·n) * n
                         // where
-                        //   v is the incident velocity vector
-                        //   n is the normal of the surface of reflection
-                        // The only static rigid body in the game is the ground:
-                        //   n = [0,1,0]
-                        // We simplify:
-                        //   r = v - 2 * v[1] * n
-                        //   r = v - [0, 2 * v[1], 0]
-                        //   r[1] = v[1] - 2 * v[1]
-                        //   r[1] = v[1] * -1
-                        rigid_body.VelocityResolved[1] *= -1;
+                        //   v — the incident velocity vector
+                        //   n — the normal of the surface of reflection
+                        // Compute n.
+                        normalize(a, collision.Hit);
+                        // Compute - 2 * (v·n) * n.
+                        scale(a, a, -2 * dot(rigid_body.VelocityIntegrated, a));
+                        add(rigid_body.VelocityResolved, rigid_body.VelocityIntegrated, a);
                         break;
                     case RigidKind.Dynamic:
                     case RigidKind.Kinematic:
