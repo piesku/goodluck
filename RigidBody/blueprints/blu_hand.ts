@@ -1,19 +1,20 @@
-import {float} from "../../common/random.js";
 import {collide} from "../components/com_collide.js";
 import {render_colored_diffuse} from "../components/com_render1.js";
 import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
 import {Blueprint} from "../entity.js";
 import {Game, Layer} from "../game.js";
 
-export function blueprint_ground(game: Game, size: number): Blueprint {
+export function blueprint_hand(game: Game): Blueprint {
     return {
-        Scale: [size, 1, size],
-        Using: [collide(false, Layer.Terrain, Layer.None), rigid_body(RigidKind.Static)],
+        Using: [
+            collide(true, Layer.Physics, Layer.Physics, [0.5, 0.5, 0.5]),
+            rigid_body(RigidKind.Kinematic),
+        ],
         Children: [
             {
-                Translation: [0, float(-0.2, 0.2), 0],
+                Scale: [3, 3, 3],
                 Using: [
-                    render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [
+                    render_colored_diffuse(game.MaterialUnlitDiffuseGouraud, game.MeshHand, [
                         1,
                         1,
                         0.3,

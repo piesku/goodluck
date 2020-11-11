@@ -43,6 +43,6 @@ export function collide(dynamic: boolean, layers: Layer, mask: Layer, size: Vec3
 export interface Collision {
     /** The other entity in the collision. */
     Other: Entity;
-    /** The direction and magnitude of the hit from this collider's POV. */
+    /** The direction and magnitude of the hit into this collider. */
     Hit: Vec3;
 }
