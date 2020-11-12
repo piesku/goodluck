@@ -1,8 +1,10 @@
 export interface ParticlesLayout {
     // Uniforms
     Pv: WebGLUniformLocation;
-    ColorSizeStart: WebGLUniformLocation;
-    ColorSizeEnd: WebGLUniformLocation;
+    ColorStart: WebGLUniformLocation;
+    ColorEnd: WebGLUniformLocation;
+    Details: WebGLUniformLocation;
     // Attributes
     OriginAge: GLint;
+    Direction: GLint;
 }

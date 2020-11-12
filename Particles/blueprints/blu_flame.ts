@@ -1,3 +1,4 @@
+import {from_euler} from "../../common/quat.js";
 import {emit_particles} from "../components/com_emit_particles.js";
 import {render_particles} from "../components/com_render.js";
 import {shake} from "../components/com_shake.js";
@@ -8,9 +9,10 @@ export function blueprint_flame(game: Game): Blueprint {
     return {
         Children: [
             {
+                Rotation: from_euler([0, 0, 0, 0], -90, 0, 0),
                 Using: [
-                    emit_particles(1, 0.05),
-                    render_particles([1, 1, 0], 20, [1, 0, 0], 5),
+                    emit_particles(1, 0.05, 5),
+                    render_particles([1, 1, 0, 1], 20, [1, 0, 0, 1], 5),
                     shake(Infinity),
                 ],
             },

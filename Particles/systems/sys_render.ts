@@ -3,12 +3,11 @@ import {
     GL_ARRAY_BUFFER,
     GL_COLOR_BUFFER_BIT,
     GL_DEPTH_BUFFER_BIT,
-    GL_DYNAMIC_DRAW,
     GL_FLOAT,
 } from "../../common/webgl.js";
 import {CameraEye} from "../components/com_camera.js";
 import {EmitParticles} from "../components/com_emit_particles.js";
-import {RenderKind, RenderParticles} from "../components/com_render.js";
+import {DATA_PER_PARTICLE, RenderKind, RenderParticles} from "../components/com_render.js";
 import {Game} from "../game.js";
 import {ParticlesLayout} from "../materials/layout_particles.js";
 import {Has} from "../world.js";
@@ -56,11 +55,38 @@ function use_particles(game: Game, material: Material<ParticlesLayout>, eye: Cam
 }
 
 function draw_particles(game: Game, render: RenderParticles, emitter: EmitParticles) {
-    game.Gl.uniform4fv(render.Material.Locations.ColorSizeStart, render.ColorSizeStart);
-    game.Gl.uniform4fv(render.Material.Locations.ColorSizeEnd, render.ColorSizeEnd);
+    game.Gl.uniform4fv(render.Material.Locations.ColorStart, render.ColorStart);
+    game.Gl.uniform4fv(render.Material.Locations.ColorEnd, render.ColorEnd);
+
+    game.Gl.uniform4f(
+        render.Material.Locations.Details,
+        emitter.Lifespan,
+        emitter.Speed,
+        ...render.Size
+    );
+
+    let instances = Float32Array.from(emitter.Instances);
     game.Gl.bindBuffer(GL_ARRAY_BUFFER, render.Buffer);
-    game.Gl.bufferData(GL_ARRAY_BUFFER, Float32Array.from(emitter.Instances), GL_DYNAMIC_DRAW);
+    game.Gl.bufferSubData(GL_ARRAY_BUFFER, 0, instances);
+
     game.Gl.enableVertexAttribArray(render.Material.Locations.OriginAge);
-    game.Gl.vertexAttribPointer(render.Material.Locations.OriginAge, 4, GL_FLOAT, false, 4 * 4, 0);
-    game.Gl.drawArrays(render.Material.Mode, 0, emitter.Instances.length / 4);
+    game.Gl.vertexAttribPointer(
+        render.Material.Locations.OriginAge,
+        4,
+        GL_FLOAT,
+        false,
+        DATA_PER_PARTICLE * 4,
+        0
+    );
+
+    game.Gl.enableVertexAttribArray(render.Material.Locations.Direction);
+    game.Gl.vertexAttribPointer(
+        render.Material.Locations.Direction,
+        3,
+        GL_FLOAT,
+        false,
+        DATA_PER_PARTICLE * 4,
+        4 * 4
+    );
+    game.Gl.drawArrays(render.Material.Mode, 0, emitter.Instances.length / DATA_PER_PARTICLE);
 }

@@ -3,22 +3,28 @@ import {GL_POINTS} from "../../common/webgl.js";
 import {ParticlesLayout} from "./layout_particles.js";
 
 let vertex = `
-    uniform mat4 pv;
-    // [red, green, blue, size]
-    uniform vec4 color_size_start;
-    uniform vec4 color_size_end;
 
-    // [x, y, z, age]
+    uniform mat4 pv;
+    uniform vec4 color_start;
+    uniform vec4 color_end;
+    // [x: lifespan, y: speed, z: size_start, w: size_end];
+    uniform vec4 details;
+
+    // [x, y, z, w: age]
     attribute vec4 origin_age;
+    attribute vec3 direction;
+
     varying vec4 vert_color;
 
     void main() {
-        vec4 origin = vec4(origin_age.xyz, 1.0);
-        float age = origin_age.w;
-        origin.y += age * 10.0;
-        gl_PointSize = mix(color_size_start.w, color_size_end.w, age);
-        gl_Position = pv * origin;
-        vert_color = mix(vec4(color_size_start.rgb, 1.0), vec4(color_size_end.rgb, 1.0), age);
+        // Move the particle along the direction axis.
+        vec3 velocity = direction * details.y;
+        gl_Position = pv * vec4(origin_age.xyz + velocity * origin_age.w, 1.0);
+
+        // Interpolate color and size.
+        float t = origin_age.w / details.x;
+        gl_PointSize = mix(details.z, details.w, t);
+        vert_color = mix(color_start, color_end, t);
     }
 `;
 
@@ -27,7 +33,7 @@ let fragment = `
 
     varying vec4 vert_color;
 
-    void main(){
+    void main() {
         gl_FragColor = vert_color;
     }
 `;
@@ -39,9 +45,11 @@ export function mat1_particles(gl: WebGLRenderingContext): Material<ParticlesLay
         Program: program,
         Locations: {
             Pv: gl.getUniformLocation(program, "pv")!,
-            ColorSizeStart: gl.getUniformLocation(program, "color_size_start")!,
-            ColorSizeEnd: gl.getUniformLocation(program, "color_size_end")!,
+            ColorStart: gl.getUniformLocation(program, "color_start")!,
+            ColorEnd: gl.getUniformLocation(program, "color_end")!,
+            Details: gl.getUniformLocation(program, "details")!,
             OriginAge: gl.getAttribLocation(program, "origin_age")!,
+            Direction: gl.getAttribLocation(program, "direction")!,
         },
     };
 }
