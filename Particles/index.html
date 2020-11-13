@@ -15,6 +15,9 @@
         height: 100vh;
         user-select: none;
     }
+    img {
+        display: none;
+    }
     #debug {
         display: flex;
         flex-flow: column nowrap;
@@ -42,6 +45,8 @@
 <body>
     <canvas></canvas>
     <main></main>
+
+    <img src="../textures/fire.png" id="fire" />
 
     <div id="debug">
         <div>update: <span id="update"></span></div>

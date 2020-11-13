@@ -1,37 +1,88 @@
-export type Render = RenderParticles;
-
-export const enum RenderKind {
-    Particles,
-}
-
 import {Material} from "../../common/material.js";
-import {Vec3, Vec4} from "../../common/math.js";
+import {Vec2, Vec4} from "../../common/math.js";
+import {GL_ARRAY_BUFFER, GL_CW, GL_DYNAMIC_DRAW} from "../../common/webgl.js";
 import {Entity, Game} from "../game.js";
-import {ParticlesLayout} from "../materials/layout_particles.js";
+import {ParticlesColoredLayout} from "../materials/layout_particles_colored.js";
+import {ParticlesTexturedLayout} from "../materials/layout_particles_textured.js";
 import {Has} from "../world.js";
 
-export interface RenderParticles {
-    readonly Kind: RenderKind.Particles;
-    readonly Material: Material<ParticlesLayout>;
-    readonly Buffer: WebGLBuffer;
-    readonly ColorSizeStart: Vec4;
-    readonly ColorSizeEnd: Vec4;
+export type Render = RenderParticlesColored | RenderParticlesTextured;
+
+export const enum RenderKind {
+    ParticlesColored,
+    ParticlesTextured,
 }
 
-export function render_particles(
-    start_color: Vec3,
+export const DATA_PER_PARTICLE = 8;
+export const MAX_PARTICLES = 200;
+
+export interface RenderParticlesColored {
+    readonly Kind: RenderKind.ParticlesColored;
+    readonly Material: Material<ParticlesColoredLayout>;
+    readonly Buffer: WebGLBuffer;
+    readonly ColorStart: Vec4;
+    readonly ColorEnd: Vec4;
+    readonly Size: Vec2;
+    readonly FrontFace: GLenum;
+}
+
+export function render_particles_colored(
+    start_color: Vec4,
     start_size: number,
-    end_color: Vec3,
+    end_color: Vec4,
     end_size: number
 ) {
     return (game: Game, entity: Entity) => {
+        let buffer = game.Gl.createBuffer()!;
+        game.Gl.bindBuffer(GL_ARRAY_BUFFER, buffer);
+        game.Gl.bufferData(GL_ARRAY_BUFFER, MAX_PARTICLES * DATA_PER_PARTICLE * 4, GL_DYNAMIC_DRAW);
+
         game.World.Signature[entity] |= Has.Render;
         game.World.Render[entity] = {
-            Kind: RenderKind.Particles,
-            Material: game.MaterialParticles,
-            Buffer: game.Gl.createBuffer()!,
-            ColorSizeStart: <Vec4>[...start_color, start_size],
-            ColorSizeEnd: <Vec4>[...end_color, end_size],
+            Kind: RenderKind.ParticlesColored,
+            Material: game.MaterialParticlesColored,
+            Buffer: buffer,
+            ColorStart: start_color,
+            ColorEnd: end_color,
+            Size: [start_size, end_size],
+            FrontFace: GL_CW,
+        };
+    };
+}
+
+export interface RenderParticlesTextured {
+    readonly Kind: RenderKind.ParticlesTextured;
+    readonly Material: Material<ParticlesTexturedLayout>;
+    readonly Buffer: WebGLBuffer;
+    readonly Texture: WebGLTexture;
+    readonly ColorStart: Vec4;
+    readonly ColorEnd: Vec4;
+    readonly Size: Vec2;
+    readonly FrontFace: GLenum;
+}
+
+export function render_particles_textured(
+    texture: WebGLTexture,
+    start_color: Vec4,
+    start_size: number,
+    end_color: Vec4,
+    end_size: number
+) {
+    return (game: Game, entity: Entity) => {
+        let buffer = game.Gl.createBuffer()!;
+        game.Gl.bindBuffer(GL_ARRAY_BUFFER, buffer);
+        game.Gl.bufferData(GL_ARRAY_BUFFER, MAX_PARTICLES * DATA_PER_PARTICLE * 4, GL_DYNAMIC_DRAW);
+
+        game.World.Signature[entity] |= Has.Render;
+        game.World.Render[entity] = {
+            Kind: RenderKind.ParticlesTextured,
+            Material: game.MaterialParticlesTextured,
+            Buffer: buffer,
+            Texture: texture,
+            ColorStart: start_color,
+            ColorEnd: end_color,
+            Size: [start_size, end_size],
+            FrontFace: GL_CW,
         };
     };
 }
