@@ -1,4 +1,4 @@
-export interface ParticlesLayout {
+export interface ParticlesColoredLayout {
     // Uniforms
     Pv: WebGLUniformLocation;
     ColorStart: WebGLUniformLocation;

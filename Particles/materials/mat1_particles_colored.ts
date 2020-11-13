@@ -1,9 +1,8 @@
 import {link, Material} from "../../common/material.js";
 import {GL_POINTS} from "../../common/webgl.js";
-import {ParticlesLayout} from "./layout_particles.js";
+import {ParticlesColoredLayout} from "./layout_particles_colored.js";
 
 let vertex = `
-
     uniform mat4 pv;
     uniform vec4 color_start;
     uniform vec4 color_end;
@@ -38,7 +37,9 @@ let fragment = `
     }
 `;
 
-export function mat1_particles(gl: WebGLRenderingContext): Material<ParticlesLayout> {
+export function mat1_particles_colored(
+    gl: WebGLRenderingContext
+): Material<ParticlesColoredLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_POINTS,

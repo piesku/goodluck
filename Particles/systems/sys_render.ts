@@ -4,12 +4,20 @@ import {
     GL_COLOR_BUFFER_BIT,
     GL_DEPTH_BUFFER_BIT,
     GL_FLOAT,
+    GL_TEXTURE0,
+    GL_TEXTURE_2D,
 } from "../../common/webgl.js";
 import {CameraEye} from "../components/com_camera.js";
 import {EmitParticles} from "../components/com_emit_particles.js";
-import {DATA_PER_PARTICLE, RenderKind, RenderParticles} from "../components/com_render.js";
+import {
+    DATA_PER_PARTICLE,
+    RenderKind,
+    RenderParticlesColored,
+    RenderParticlesTextured,
+} from "../components/com_render.js";
 import {Game} from "../game.js";
-import {ParticlesLayout} from "../materials/layout_particles.js";
+import {ParticlesColoredLayout} from "../materials/layout_particles_colored.js";
+import {ParticlesTexturedLayout} from "../materials/layout_particles_textured.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;
@@ -30,17 +38,27 @@ export function sys_render(game: Game, delta: number) {
             if (render.Material !== current_material) {
                 current_material = render.Material;
                 switch (render.Kind) {
-                    case RenderKind.Particles:
-                        use_particles(game, render.Material, game.Cameras[0]);
+                    case RenderKind.ParticlesColored:
+                        use_particles_colored(game, render.Material, game.Cameras[0]);
+                        break;
+                    case RenderKind.ParticlesTextured:
+                        use_particles_textured(game, render.Material, game.Cameras[0]);
                         break;
                 }
             }
 
             switch (render.Kind) {
-                case RenderKind.Particles: {
+                case RenderKind.ParticlesColored: {
                     let emitter = game.World.EmitParticles[i];
                     if (emitter.Instances.length) {
-                        draw_particles(game, render, emitter);
+                        draw_particles_colored(game, render, emitter);
+                    }
+                    break;
+                }
+                case RenderKind.ParticlesTextured: {
+                    let emitter = game.World.EmitParticles[i];
+                    if (emitter.Instances.length) {
+                        draw_particles_textured(game, render, emitter);
                     }
                     break;
                 }
@@ -49,12 +67,20 @@ export function sys_render(game: Game, delta: number) {
     }
 }
 
-function use_particles(game: Game, material: Material<ParticlesLayout>, eye: CameraEye) {
+function use_particles_colored(
+    game: Game,
+    material: Material<ParticlesColoredLayout>,
+    eye: CameraEye
+) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
 }
 
-function draw_particles(game: Game, render: RenderParticles, emitter: EmitParticles) {
+function draw_particles_colored(
+    game: Game,
+    render: RenderParticlesColored,
+    emitter: EmitParticles
+) {
     game.Gl.uniform4fv(render.Material.Locations.ColorStart, render.ColorStart);
     game.Gl.uniform4fv(render.Material.Locations.ColorEnd, render.ColorEnd);
 
@@ -83,6 +109,59 @@ function draw_particles(game: Game, render: RenderParticles, emitter: EmitPartic
     game.Gl.vertexAttribPointer(
         render.Material.Locations.Direction,
         3,
+        GL_FLOAT,
+        false,
+        DATA_PER_PARTICLE * 4,
+        4 * 4
+    );
+    game.Gl.drawArrays(render.Material.Mode, 0, emitter.Instances.length / DATA_PER_PARTICLE);
+}
+
+function use_particles_textured(
+    game: Game,
+    material: Material<ParticlesTexturedLayout>,
+    eye: CameraEye
+) {
+    game.Gl.useProgram(material.Program);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
+}
+
+function draw_particles_textured(
+    game: Game,
+    render: RenderParticlesTextured,
+    emitter: EmitParticles
+) {
+    game.Gl.uniform4fv(render.Material.Locations.ColorStart, render.ColorStart);
+    game.Gl.uniform4fv(render.Material.Locations.ColorEnd, render.ColorEnd);
+
+    game.Gl.activeTexture(GL_TEXTURE0);
+    game.Gl.bindTexture(GL_TEXTURE_2D, render.Texture);
+    game.Gl.uniform1i(render.Material.Locations.Sampler, 0);
+
+    game.Gl.uniform4f(
+        render.Material.Locations.Details,
+        emitter.Lifespan,
+        emitter.Speed,
+        ...render.Size
+    );
+
+    let instances = Float32Array.from(emitter.Instances);
+    game.Gl.bindBuffer(GL_ARRAY_BUFFER, render.Buffer);
+    game.Gl.bufferSubData(GL_ARRAY_BUFFER, 0, instances);
+
+    game.Gl.enableVertexAttribArray(render.Material.Locations.OriginAge);
+    game.Gl.vertexAttribPointer(
+        render.Material.Locations.OriginAge,
+        4,
+        GL_FLOAT,
+        false,
+        DATA_PER_PARTICLE * 4,
+        0
+    );
+    game.Gl.enableVertexAttribArray(render.Material.Locations.DirectionSeed);
+    game.Gl.vertexAttribPointer(
+        render.Material.Locations.DirectionSeed,
+        4,
         GL_FLOAT,
         false,
         DATA_PER_PARTICLE * 4,
