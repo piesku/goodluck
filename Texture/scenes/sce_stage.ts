@@ -32,7 +32,7 @@ export function scene_stage(game: Game) {
             render_textured_unlit(
                 game.MaterialTexturedUnlit,
                 game.MeshKulka,
-                game.Textures["checker1.png"]
+                game.Textures["checker1"]
             ),
         ],
     });
@@ -46,7 +46,7 @@ export function scene_stage(game: Game) {
             render_textured_diffuse(
                 game.MaterialTexturedDiffuse,
                 game.MeshKulka,
-                game.Textures["checker1.png"]
+                game.Textures["checker1"]
             ),
         ],
     });
