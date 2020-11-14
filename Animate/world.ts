@@ -8,6 +8,7 @@ import {Entity} from "./game.js";
 
 const enum Component {
     Animate,
+    AudioListener,
     AudioSource,
     Camera,
     Control,
@@ -18,6 +19,7 @@ const enum Component {
 
 export const enum Has {
     Animate = 1 << Component.Animate,
+    AudioListener = 1 << Component.AudioListener,
     AudioSource = 1 << Component.AudioSource,
     Camera = 1 << Component.Camera,
     Control = 1 << Component.Control,

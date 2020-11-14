@@ -23,7 +23,7 @@ function update(game: Game, entity: Entity) {
         anim = "jump";
         audio.Trigger = snd_jump;
     } else if (game.InputState["ArrowUp"]) {
-        anim = "move";
+        anim = "walk";
         audio.Trigger = snd_walk;
     } else {
         anim = "idle";
