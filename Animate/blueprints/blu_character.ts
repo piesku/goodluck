@@ -53,7 +53,7 @@ export function blueprint_character(game: Game): Blueprint {
                                 },
                             ],
                         },
-                        move: {
+                        walk: {
                             Keyframes: [
                                 {
                                     Timestamp: 0.0,
@@ -145,7 +145,7 @@ export function blueprint_character(game: Game): Blueprint {
                                 },
                             ],
                         },
-                        move: {
+                        walk: {
                             Keyframes: [
                                 {
                                     Timestamp: 0,
@@ -225,7 +225,7 @@ export function blueprint_character(game: Game): Blueprint {
                                 },
                             ],
                         },
-                        move: {
+                        walk: {
                             Keyframes: [
                                 {
                                     Timestamp: 0,
@@ -305,7 +305,7 @@ export function blueprint_character(game: Game): Blueprint {
                                 },
                             ],
                         },
-                        move: {
+                        walk: {
                             Keyframes: [
                                 {
                                     Timestamp: 0,
@@ -373,7 +373,7 @@ export function blueprint_character(game: Game): Blueprint {
                                 },
                             ],
                         },
-                        move: {
+                        walk: {
                             Keyframes: [
                                 {
                                     Timestamp: 0,

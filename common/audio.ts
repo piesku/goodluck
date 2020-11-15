@@ -58,9 +58,19 @@ export const enum SourceParam {
     FreqRelease,
 }
 
-export function play_note(audio: AudioContext, instr: Instrument, note: number, offset: number) {
+export function play_note(
+    audio: AudioContext,
+    panner: PannerNode | undefined,
+    instr: Instrument,
+    note: number,
+    offset: number
+) {
     let time = audio.currentTime + offset;
     let total_duration = 0;
+
+    if (panner) {
+        panner.connect(audio.destination);
+    }
 
     let master = audio.createGain();
     master.gain.value = (instr[InstrumentParam.MasterGainAmount] / 9) ** 3;
@@ -89,7 +99,13 @@ export function play_note(audio: AudioContext, instr: Instrument, note: number, 
         }
 
         master.connect(filter);
-        filter.connect(audio.destination);
+        if (panner) {
+            filter.connect(panner);
+        } else {
+            filter.connect(audio.destination);
+        }
+    } else if (panner) {
+        master.connect(panner);
     } else {
         master.connect(audio.destination);
     }

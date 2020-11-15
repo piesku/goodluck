@@ -4,7 +4,7 @@ export let snd_jump: AudioClip = {
     Tracks: [
         {
             Instrument: [
-                5,
+                8,
                 false,
                 7,
                 8,
