@@ -18,8 +18,28 @@ Goodluck is not a typical library. You don't install it via `npm install`. Inste
 
 1. [Create a new repository](https://github.com/piesku/goodluck/generate) using Goodluck as a template.
 2. Clone the newly created repository.
-3. `npm install` the build tools.
-4. `npm start` the development server.
+
+    _Note for Windows users:_ Goodluck uses symlinks to ease the maintenance of the included examples. When cloning from cmd.exe, PowerShell or GitHub Desktop you may need to set `git clone --config core.symlinks=true https://...`. Cloning from WSL1 and WSL2 should just work; I recommend WSL for Goodluck projects.
+
+### Trying Out the Examples
+
+In order to play with the examples included in the repo, run the development server.
+
+1. `npm install` the build tools.
+2. `npm start` the development server.
+3. Open http://localhost:1234 in the browser.
+
+    _Note for VS Code users:_ You can also press F5 to open a new browser window from within VS Code.
+
+### Creating a New Project
+
+When you're ready to start a new project, bootstrap it using one of the examples. I recommend `NewProject3D` for a minimal base, `FlyCamera` for the FPS controls, and `ThirdPerson` for the TPP view.
+
+1. Choose one of the examples as your starting point.
+2. `./bootstrap.sh EXAMPLE_NAME`
+3. The example's code is now in `src/`.
+
+Once bootstrapped, the repo is completely yours to hack and customize!
 
 You will also find [Goodluck on Glitch](https://glitch.com/~goodluck) where you can [remix it into your own project](https://glitch.com/edit/#!/remix/goodluck)!
 
@@ -50,16 +70,6 @@ Goodluck is written in TypeScript, but it only uses a small subset of its featur
 - `const enums` act as non-iterable `enums`. They are replaced by their number value during compilation.
 
 - `type` aliases offer a way to create discriminated type unions. A closed typed system works well for Goodluck because the code is only written with the current project in mind, and you have the total control over all types used across the project.
-
-## Creating a New Project
-
-When you're ready to start a new project, bootstrap it using one of the examples. I recommend `NewProject3D` for a minimal base, `FlyCamera` for the FPS controls, and `ThirdPerson` for the TPP view.
-
-1. Choose one of the examples as your starting point.
-2. `./bootstrap.sh EXAMPLE_NAME`
-3. The example's code is now in `src/`.
-
-Once bootstrapped, the repo is completely yours to hack and customize!
 
 ## Optimized Builds
 
