@@ -24,15 +24,15 @@
     },
     "devDependencies": {
         "@types/webgl2": "0.0.5",
-        "htmlnano": "^0.2.6",
+        "htmlnano": "^0.2.8",
         "live-server": "1.2.1",
         "npm-run-all": "4.1.5",
-        "posthtml-cli": "^0.7.0",
+        "posthtml-cli": "^0.9.1",
         "posthtml-inline-assets": "^3.1.0",
-        "prettier": "2.1.2",
-        "rollup": "2.15.0",
-        "terser": "4.7.0",
-        "typescript": "4.0.3"
+        "prettier": "2.2.1",
+        "rollup": "2.40.0",
+        "terser": "5.6.0",
+        "typescript": "4.2.3"
     },
     "engines": {
         "node": "12.x"
