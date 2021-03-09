@@ -1,4 +1,5 @@
 import {from_rotation_translation_scale, invert, multiply} from "../../common/mat4.js";
+import {Transform} from "../components/com_transform.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -9,14 +10,13 @@ export function sys_transform(game: Game, delta: number) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
             let transform = game.World.Transform[i];
             if (transform.Dirty) {
-                update(game, i);
+                update_transform(game, i, transform);
             }
         }
     }
 }
 
-function update(game: Game, entity: Entity) {
-    let transform = game.World.Transform[entity];
+function update_transform(game: Game, entity: Entity, transform: Transform) {
     transform.Dirty = false;
 
     if (game.XrFrame && game.World.Signature[entity] & Has.ControlXr) {
@@ -32,8 +32,8 @@ function update(game: Game, entity: Entity) {
     }
 
     if (transform.Parent !== undefined) {
-        let parent = game.World.Transform[transform.Parent].World;
-        multiply(transform.World, parent, transform.World);
+        let parent_transform = game.World.Transform[transform.Parent];
+        multiply(transform.World, parent_transform.World, transform.World);
     }
 
     invert(transform.Self, transform.World);
@@ -41,7 +41,9 @@ function update(game: Game, entity: Entity) {
     if (game.World.Signature[entity] & Has.Children) {
         let children = game.World.Children[entity];
         for (let child of children.Children) {
-            update(game, child);
+            let child_transform = game.World.Transform[child];
+            child_transform.Parent = entity;
+            update_transform(game, child, child_transform);
         }
     }
 }

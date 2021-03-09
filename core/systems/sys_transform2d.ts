@@ -24,8 +24,8 @@ function update_transform(world: World, entity: Entity, transform: Transform2D) 
     scale(transform.World, transform.World, transform.Scale);
 
     if (transform.Parent !== undefined) {
-        let parent = world.Transform2D[transform.Parent].World;
-        multiply(transform.World, parent, transform.World);
+        let parent_transform = world.Transform2D[transform.Parent];
+        multiply(transform.World, parent_transform.World, transform.World);
     }
 
     invert(transform.Self, transform.World);

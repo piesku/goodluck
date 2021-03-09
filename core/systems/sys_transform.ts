@@ -27,8 +27,8 @@ function update_transform(world: World, entity: Entity, transform: Transform) {
     );
 
     if (transform.Parent !== undefined) {
-        let parent = world.Transform[transform.Parent].World;
-        multiply(transform.World, parent, transform.World);
+        let parent_transform = world.Transform[transform.Parent];
+        multiply(transform.World, parent_transform.World, transform.World);
     }
 
     invert(transform.Self, transform.World);
