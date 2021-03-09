@@ -1,5 +1,5 @@
 import {Animate} from "../components/com_animate.js";
-import {query_all} from "../components/com_transform.js";
+import {query_all} from "../components/com_children.js";
 import {Entity, Game} from "../game.js";
 import {snd_jump} from "../sounds/snd_jump.js";
 import {snd_walk} from "../sounds/snd_walk.js";

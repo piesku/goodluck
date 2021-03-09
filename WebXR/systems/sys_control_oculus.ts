@@ -5,7 +5,7 @@ import {ControlXrKind} from "../components/com_control_xr.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.Transform | Has.ControlXr;
+const QUERY = Has.Transform | Has.ControlXr | Has.Children;
 const AXIS_Y: Vec3 = [0, 1, 0];
 
 export function sys_control_oculus(game: Game, delta: number) {
@@ -29,6 +29,7 @@ export function sys_control_oculus(game: Game, delta: number) {
 
 function update(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
+    let children = game.World.Children[entity];
     let control = game.World.ControlXr[entity];
 
     if (control.Kind === ControlXrKind.Left) {
@@ -37,7 +38,7 @@ function update(game: Game, entity: Entity) {
             let squeeze = input.gamepad.buttons[1];
             if (squeeze) {
                 // Open or close the hand.
-                let hand_entity = transform.Children[0];
+                let hand_entity = children.Children[0];
                 let hand_transform = game.World.Transform[hand_entity];
                 hand_transform.Scale[2] = map_range(squeeze.value, 0, 1, 1, 0.5);
                 from_axis(hand_transform.Rotation, AXIS_Y, -squeeze.value);
@@ -52,7 +53,7 @@ function update(game: Game, entity: Entity) {
             let squeeze = input.gamepad.buttons[1];
             if (squeeze) {
                 // Open or close the hand.
-                let hand_entity = transform.Children[0];
+                let hand_entity = children.Children[0];
                 let hand_transform = game.World.Transform[hand_entity];
                 hand_transform.Scale[2] = map_range(squeeze.value, 0, 1, 1, 0.5);
                 from_axis(hand_transform.Rotation, AXIS_Y, squeeze.value);

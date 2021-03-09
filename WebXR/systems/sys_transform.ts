@@ -38,7 +38,10 @@ function update(game: Game, entity: Entity) {
 
     invert(transform.Self, transform.World);
 
-    for (let child of transform.Children) {
-        update(game, child);
+    if (game.World.Signature[entity] & Has.Children) {
+        let children = game.World.Children[entity];
+        for (let child of children.Children) {
+            update(game, child);
+        }
     }
 }

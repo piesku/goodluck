@@ -1,6 +1,7 @@
 import {Animate} from "./components/com_animate.js";
 import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
+import {Children} from "./components/com_children.js";
 import {Collide} from "./components/com_collide.js";
 import {ControlMove} from "./components/com_control_move.js";
 import {Draw} from "./components/com_draw.js";
@@ -21,6 +22,7 @@ const enum Component {
     AudioListener,
     AudioSource,
     Camera,
+    Children,
     Collide,
     ControlMove,
     Draw,
@@ -42,6 +44,7 @@ export const enum Has {
     AudioListener = 1 << Component.AudioListener,
     AudioSource = 1 << Component.AudioSource,
     Camera = 1 << Component.Camera,
+    Children = 1 << Component.Children,
     Collide = 1 << Component.Collide,
     ControlMove = 1 << Component.ControlMove,
     Draw = 1 << Component.Draw,
@@ -66,6 +69,7 @@ export interface World {
     Animate: Array<Animate>;
     AudioSource: Array<AudioSource>;
     Camera: Array<Camera>;
+    Children: Array<Children>;
     Collide: Array<Collide>;
     ControlMove: Array<ControlMove>;
     Draw: Array<Draw>;

@@ -1,4 +1,5 @@
 import {Quat, Vec3} from "../common/math.js";
+import {children} from "./components/com_children.js";
 import {transform} from "./components/com_transform.js";
 import {Entity, Game} from "./game.js";
 import {Has, World} from "./world.js";
@@ -17,8 +18,8 @@ export function create_entity(world: World) {
 }
 
 export function destroy_entity(world: World, entity: Entity) {
-    if (world.Signature[entity] & Has.Transform) {
-        for (let child of world.Transform[entity].Children) {
+    if (world.Signature[entity] & Has.Children) {
+        for (let child of world.Children[entity].Children) {
             destroy_entity(world, child);
         }
     }
@@ -54,12 +55,8 @@ export function instantiate(
     if (Disable) {
         game.World.Signature[entity] &= ~Disable;
     }
-    let entity_transform = game.World.Transform[entity];
-    for (let subtree of Children) {
-        let child = instantiate(game, subtree);
-        let child_transform = game.World.Transform[child];
-        child_transform.Parent = entity;
-        entity_transform.Children.push(child);
+    if (Children.length > 0) {
+        children(...Children)(game, entity);
     }
     return entity;
 }

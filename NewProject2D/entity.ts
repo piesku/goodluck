@@ -1,4 +1,5 @@
 import {Rad, Vec2} from "../common/math.js";
+import {children} from "./components/com_children.js";
 import {transform2d} from "./components/com_transform2d.js";
 import {Entity, Game} from "./game.js";
 import {Has, World} from "./world.js";
@@ -17,8 +18,8 @@ export function create_entity(world: World) {
 }
 
 export function destroy_entity(world: World, entity: Entity) {
-    if (world.Signature[entity] & Has.Transform2D) {
-        for (let child of world.Transform2D[entity].Children) {
+    if (world.Signature[entity] & Has.Children) {
+        for (let child of world.Children[entity].Children) {
             destroy_entity(world, child);
         }
     }
@@ -50,12 +51,8 @@ export function instantiate(
     for (let mixin of Using) {
         mixin(game, entity);
     }
-    let entity_transform = game.World.Transform2D[entity];
-    for (let subtree of Children) {
-        let child = instantiate(game, subtree);
-        let child_transform = game.World.Transform2D[child];
-        child_transform.Parent = entity;
-        entity_transform.Children.push(child);
+    if (Children.length > 0) {
+        children(...Children)(game, entity);
     }
     return entity;
 }
