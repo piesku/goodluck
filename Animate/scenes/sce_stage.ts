@@ -6,7 +6,7 @@ import {audio_listener} from "../components/com_audio_listener.js";
 import {audio_source} from "../components/com_audio_source.js";
 import {control} from "../components/com_control.js";
 import {light_directional} from "../components/com_light.js";
-import {instantiate} from "../entity.js";
+import {instantiate3d} from "../entity.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 
@@ -17,26 +17,26 @@ export function scene_stage(game: Game) {
     set_seed(Date.now());
 
     // Camera.
-    instantiate(game, {
+    instantiate3d(game, {
         Translation: [0, 1, 15],
         Using: [audio_listener()],
         ...blueprint_camera(game),
     });
 
     // Light 1.
-    instantiate(game, {
+    instantiate3d(game, {
         Translation: [2, 3, 5],
         Using: [light_directional([1, 1, 1], 1)],
     });
 
     // Light 2.
-    instantiate(game, {
+    instantiate3d(game, {
         Translation: [-5, -5, -5],
         Using: [light_directional([1, 1, 1], 1)],
     });
 
     // Character.
-    instantiate(game, {
+    instantiate3d(game, {
         Translation: [0, 1, 0],
         Using: [
             animate({

@@ -5,10 +5,10 @@ import {move} from "../components/com_move.js";
 import {named} from "../components/com_named.js";
 import {render_colored_diffuse} from "../components/com_render1.js";
 import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
-import {Blueprint} from "../entity.js";
+import {Blueprint3D} from "../entity.js";
 import {Game, Layer} from "../game.js";
 
-export function blueprint_player(game: Game): Blueprint {
+export function blueprint_player(game: Game): Blueprint3D {
     return {
         Rotation: [0, 1, 0, 0],
         Using: [

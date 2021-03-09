@@ -1,10 +1,10 @@
 import {camera_display_perspective} from "../components/com_camera.js";
 import {control_player} from "../components/com_control_player.js";
 import {move} from "../components/com_move.js";
-import {Blueprint} from "../entity.js";
+import {Blueprint3D} from "../entity.js";
 import {Game} from "../game.js";
 
-export function blueprint_camera_fly(game: Game): Blueprint {
+export function blueprint_camera_fly(game: Game): Blueprint3D {
     return {
         Rotation: [0, 1, 0, 0],
         Using: [control_player(true, 0.1, 0.1), move(10, 2)],

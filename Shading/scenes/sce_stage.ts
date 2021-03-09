@@ -7,7 +7,7 @@ import {
     render_colored_specular,
     render_colored_unlit,
 } from "../components/com_render1.js";
-import {instantiate} from "../entity.js";
+import {instantiate3d} from "../entity.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 
@@ -16,20 +16,20 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
 
     // Camera.
-    instantiate(game, {
+    instantiate3d(game, {
         Translation: [0, 0, 4],
         ...blueprint_camera(game),
     });
 
     // Directional light.
-    instantiate(game, {
+    instantiate3d(game, {
         Translation: [1, 1, 0],
         Using: [light_directional([1, 1, 1], 0.5)],
     });
 
     let light_spread = 7;
     let light_range = 4;
-    instantiate(game, {
+    instantiate3d(game, {
         Translation: [0, 0, 5],
         Using: [control_move(null, [0, 0, 1, 0]), move(0, 0.5)],
         Children: [
@@ -120,7 +120,7 @@ export function scene_stage(game: Game) {
             let render = shadings.shift();
             if (render) {
                 let x = col * (1 + pad) + 0.5;
-                instantiate(game, {
+                instantiate3d(game, {
                     Translation: [x - offset_x, y - offset_y, 0],
                     Using: [render],
                 });

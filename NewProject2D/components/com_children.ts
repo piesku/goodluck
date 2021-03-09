@@ -1,4 +1,4 @@
-import {Blueprint2D, instantiate} from "../entity.js";
+import {Blueprint2D, instantiate2d} from "../entity.js";
 import {Entity, Game} from "../game.js";
 import {Has, World} from "../world.js";
 
@@ -6,11 +6,11 @@ export interface Children {
     Children: Array<Entity>;
 }
 
-export function children(...blueprints: Array<Blueprint2D>) {
+export function children2d(...blueprints: Array<Blueprint2D>) {
     return (game: Game, entity: Entity) => {
         let child_entities = [];
         for (let blueprint of blueprints) {
-            let child = instantiate(game, blueprint);
+            let child = instantiate2d(game, blueprint);
             child_entities.push(child);
         }
         game.World.Signature[entity] |= Has.Children;

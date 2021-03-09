@@ -3,7 +3,7 @@ import {control_move} from "../components/com_control_move.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {render_textured_diffuse, render_textured_unlit} from "../components/com_render1.js";
-import {instantiate} from "../entity.js";
+import {instantiate3d} from "../entity.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 
@@ -12,19 +12,19 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
 
     // Camera.
-    instantiate(game, {
+    instantiate3d(game, {
         Translation: [0, 0, 3],
         ...blueprint_camera(game),
     });
 
     // Directional light.
-    instantiate(game, {
+    instantiate3d(game, {
         Translation: [1, 1, 1],
         Using: [light_directional([1, 1, 1], 1)],
     });
 
     // Unlit kulka.
-    instantiate(game, {
+    instantiate3d(game, {
         Translation: [-1, 0, 0],
         Using: [
             control_move(null, [0, 1, 0, 0]),
@@ -38,7 +38,7 @@ export function scene_stage(game: Game) {
     });
 
     // Diffuse kulka.
-    instantiate(game, {
+    instantiate3d(game, {
         Translation: [1, 0, 0],
         Using: [
             control_move(null, [0, 1, 0, 0]),

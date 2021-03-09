@@ -2,10 +2,10 @@ import {GL_CCW} from "../../common/webgl.js";
 import {camera_xr} from "../components/com_camera.js";
 import {ControlXrKind, control_xr} from "../components/com_control_xr.js";
 import {render_colored_diffuse} from "../components/com_render2.js";
-import {Blueprint} from "../entity.js";
+import {Blueprint3D} from "../entity.js";
 import {Game} from "../game.js";
 
-export function blueprint_viewer(game: Game): Blueprint {
+export function blueprint_viewer(game: Game): Blueprint3D {
     return {
         Children: [
             {

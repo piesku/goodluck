@@ -1,8 +1,8 @@
 import {camera_framebuffer_perspective} from "../components/com_camera.js";
-import {Blueprint} from "../entity.js";
+import {Blueprint3D} from "../entity.js";
 import {Game} from "../game.js";
 
-export function blueprint_camera_minimap(game: Game): Blueprint {
+export function blueprint_camera_minimap(game: Game): Blueprint3D {
     return {
         // 90x, 0y, 0z
         Rotation: [0.707, 0, 0, 0.707],

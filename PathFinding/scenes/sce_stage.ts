@@ -9,7 +9,7 @@ import {nav_agent} from "../components/com_nav_agent.js";
 import {pickable} from "../components/com_pickable.js";
 import {render_colored_diffuse, render_colored_unlit} from "../components/com_render1.js";
 import {selectable} from "../components/com_selectable.js";
-import {instantiate} from "../entity.js";
+import {instantiate3d} from "../entity.js";
 import {Game, Layer} from "../game.js";
 import {nav_bake} from "../navmesh.js";
 import {Has, World} from "../world.js";
@@ -20,21 +20,21 @@ export function scene_stage(game: Game) {
     game.Gl.clearColor(0.9, 0.9, 0.9, 1);
 
     // Camera.
-    instantiate(game, {
+    instantiate3d(game, {
         ...blueprint_camera(game),
         Translation: [0, 75, 55],
         Rotation: from_euler([0, 0, 0, 0], 60, 180, 0),
     });
 
     // Light.
-    instantiate(game, {
+    instantiate3d(game, {
         Translation: [-1, 1, 1],
         Using: [light_directional([1, 1, 1], 1.2)],
     });
 
     // Terrain. For the nav mesh to work properly, it must be in the world space
     // and have the scale of 1.
-    instantiate(game, {
+    instantiate3d(game, {
         Using: [
             render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshTerrain, [
                 0.3,
@@ -67,7 +67,7 @@ export function scene_stage(game: Game) {
 
     for (let node = 0; node < nav.Centroids.length; node++) {
         if (false && nav.Centroids[node]) {
-            instantiate(game, {
+            instantiate3d(game, {
                 Translation: nav.Centroids[node],
                 Using: [draw_text(`${node}`, "12px monospace", "#fff")],
             });
@@ -75,7 +75,7 @@ export function scene_stage(game: Game) {
     }
 
     // Cube 1.
-    instantiate(game, {
+    instantiate3d(game, {
         Translation: [26, 1, 39],
         Using: [
             control_player(),
@@ -107,7 +107,7 @@ export function scene_stage(game: Game) {
     });
 
     // Cube 2.
-    instantiate(game, {
+    instantiate3d(game, {
         Translation: [-18, 1, -23],
         Using: [
             control_player(),

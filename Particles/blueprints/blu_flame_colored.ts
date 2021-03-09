@@ -2,10 +2,10 @@ import {from_euler} from "../../common/quat.js";
 import {emit_particles} from "../components/com_emit_particles.js";
 import {render_particles_colored} from "../components/com_render.js";
 import {shake} from "../components/com_shake.js";
-import {Blueprint} from "../entity.js";
+import {Blueprint3D} from "../entity.js";
 import {Game} from "../game.js";
 
-export function blueprint_flame_colored(game: Game): Blueprint {
+export function blueprint_flame_colored(game: Game): Blueprint3D {
     return {
         Children: [
             {

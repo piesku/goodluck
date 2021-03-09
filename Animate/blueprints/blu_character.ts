@@ -4,7 +4,7 @@ import {from_euler} from "../../common/quat.js";
 import {element} from "../../common/random.js";
 import {animate, AnimationFlag} from "../components/com_animate.js";
 import {render_colored_diffuse} from "../components/com_render1.js";
-import {Blueprint} from "../entity.js";
+import {Blueprint3D} from "../entity.js";
 import {Game} from "../game.js";
 
 let shirt_colors: Array<Vec4> = [
@@ -30,7 +30,7 @@ let pants_colors: Array<Vec4> = [
     [0.33, 0.33, 0.33, 1],
 ];
 
-export function blueprint_character(game: Game): Blueprint {
+export function blueprint_character(game: Game): Blueprint3D {
     let skin_color = element(skin_colors);
     let hair_color = element(hair_colors);
     let shirt_color = element(shirt_colors);

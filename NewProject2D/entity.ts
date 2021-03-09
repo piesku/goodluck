@@ -1,5 +1,5 @@
 import {Rad, Vec2} from "../common/math.js";
-import {children} from "./components/com_children.js";
+import {children2d} from "./components/com_children.js";
 import {transform2d} from "./components/com_transform2d.js";
 import {Entity, Game} from "./game.js";
 import {Has, World} from "./world.js";
@@ -42,7 +42,7 @@ export interface Blueprint2D {
     Children?: Array<Blueprint2D>;
 }
 
-export function instantiate(
+export function instantiate2d(
     game: Game,
     {Translation, Rotation, Scale, Using = [], Children = []}: Blueprint2D
 ) {
@@ -52,7 +52,7 @@ export function instantiate(
         mixin(game, entity);
     }
     if (Children.length > 0) {
-        children(...Children)(game, entity);
+        children2d(...Children)(game, entity);
     }
     return entity;
 }

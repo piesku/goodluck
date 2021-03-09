@@ -2,7 +2,7 @@ import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {float} from "../../common/random.js";
 import {blueprint_box} from "../blueprints/blu_box.js";
-import {instantiate} from "../entity.js";
+import {instantiate3d} from "../entity.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -30,7 +30,7 @@ function update(game: Game, entity: Entity, delta: number) {
         world_pos[0] += float(-control.Spread, control.Spread);
         world_pos[2] += float(-control.Spread, control.Spread);
 
-        instantiate(game, {
+        instantiate3d(game, {
             ...blueprint_box(game),
             Translation: [world_pos[0], world_pos[1], world_pos[2]],
         });

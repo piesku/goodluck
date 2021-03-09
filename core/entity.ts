@@ -1,5 +1,5 @@
 import {Quat, Vec3} from "../common/math.js";
-import {children} from "./components/com_children.js";
+import {children3d} from "./components/com_children.js";
 import {transform} from "./components/com_transform.js";
 import {Entity, Game} from "./game.js";
 import {Has, World} from "./world.js";
@@ -34,18 +34,18 @@ export function destroy_entity(world: World, entity: Entity) {
 }
 
 type Mixin = (game: Game, entity: Entity) => void;
-export interface Blueprint {
+export interface Blueprint3D {
     Translation?: Vec3;
     Rotation?: Quat;
     Scale?: Vec3;
     Using?: Array<Mixin>;
     Disable?: number;
-    Children?: Array<Blueprint>;
+    Children?: Array<Blueprint3D>;
 }
 
-export function instantiate(
+export function instantiate3d(
     game: Game,
-    {Translation, Rotation, Scale, Using = [], Disable, Children = []}: Blueprint
+    {Translation, Rotation, Scale, Using = [], Disable, Children = []}: Blueprint3D
 ) {
     let entity = create_entity(game.World);
     transform(Translation, Rotation, Scale)(game, entity);
@@ -56,7 +56,7 @@ export function instantiate(
         game.World.Signature[entity] &= ~Disable;
     }
     if (Children.length > 0) {
-        children(...Children)(game, entity);
+        children3d(...Children)(game, entity);
     }
     return entity;
 }
