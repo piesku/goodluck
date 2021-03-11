@@ -60,3 +60,13 @@ export function instantiate3d(
     }
     return entity;
 }
+
+export type Blueprint = Array<Mixin>;
+
+export function instantiate(game: Game, blueprint: Blueprint) {
+    let entity = create_entity(game.World);
+    for (let mixin of blueprint) {
+        mixin(game, entity);
+    }
+    return entity;
+}
