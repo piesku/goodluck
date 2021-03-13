@@ -1,6 +1,3 @@
-import {Rad, Vec2} from "../common/math.js";
-import {children2d} from "./components/com_children.js";
-import {transform2d} from "./components/com_transform2d.js";
 import {Entity, Game} from "./game.js";
 import {Has, World} from "./world.js";
 
@@ -34,25 +31,12 @@ export function destroy_entity(world: World, entity: Entity) {
 }
 
 type Mixin = (game: Game, entity: Entity) => void;
-export interface Blueprint2D {
-    Translation?: Vec2;
-    Rotation?: Rad;
-    Scale?: Vec2;
-    Using?: Array<Mixin>;
-    Children?: Array<Blueprint2D>;
-}
+export type Blueprint = Array<Mixin>;
 
-export function instantiate2d(
-    game: Game,
-    {Translation, Rotation, Scale, Using = [], Children = []}: Blueprint2D
-) {
+export function instantiate(game: Game, blueprint: Blueprint) {
     let entity = create_entity(game.World);
-    transform2d(Translation, Rotation, Scale)(game, entity);
-    for (let mixin of Using) {
+    for (let mixin of blueprint) {
         mixin(game, entity);
-    }
-    if (Children.length > 0) {
-        children2d(...Children)(game, entity);
     }
     return entity;
 }
