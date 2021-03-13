@@ -1,7 +1,9 @@
 import {get_translation} from "../../common/mat4.js";
 import {GL_ARRAY_BUFFER} from "../../common/webgl.js";
+import {disable} from "../components/com_disable.js";
 import {RenderVertices, render_vertices} from "../components/com_render1.js";
-import {instantiate3d} from "../entity.js";
+import {transform} from "../components/com_transform.js";
+import {instantiate} from "../entity.js";
 import {Entity, Game} from "../game.js";
 import {path_find} from "../pathfind.js";
 import {Has} from "../world.js";
@@ -13,11 +15,11 @@ let line: Entity;
 
 export function sys_control_player(game: Game, delta: number) {
     if (!line) {
-        line = instantiate3d(game, {
-            Translation: [0, 1, 0],
-            Using: [render_vertices(game.MaterialColoredUnlitLine, 512, [1, 1, 0, 1])],
-            Disable: Has.Render,
-        });
+        line = instantiate(game, [
+            transform([0, 1, 0]),
+            render_vertices(game.MaterialColoredUnlitLine, 512, [1, 1, 0, 1]),
+            disable(Has.Render),
+        ]);
     }
 
     if (game.Pick) {
