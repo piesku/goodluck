@@ -2,7 +2,7 @@ import {Camera} from "./components/com_camera.js";
 import {Children} from "./components/com_children.js";
 import {Collide} from "./components/com_collide.js";
 import {ControlMove} from "./components/com_control_move.js";
-import {ControlSpawner} from "./components/com_control_spawner.js";
+import {ControlSpawn} from "./components/com_control_spawn.js";
 import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
 import {Move} from "./components/com_move.js";
@@ -16,7 +16,7 @@ const enum Component {
     Children,
     Collide,
     ControlMove,
-    ControlSpawner,
+    ControlSpawn,
     Lifespan,
     Light,
     Move,
@@ -30,7 +30,7 @@ export const enum Has {
     Children = 1 << Component.Children,
     Collide = 1 << Component.Collide,
     ControlMove = 1 << Component.ControlMove,
-    ControlSpawner = 1 << Component.ControlSpawner,
+    ControlSpawn = 1 << Component.ControlSpawn,
     Lifespan = 1 << Component.Lifespan,
     Light = 1 << Component.Light,
     Move = 1 << Component.Move,
@@ -48,7 +48,7 @@ export class World {
     Children: Array<Children> = [];
     Collide: Array<Collide> = [];
     ControlMove: Array<ControlMove> = [];
-    ControlSpawner: Array<ControlSpawner> = [];
+    ControlSpawn: Array<ControlSpawn> = [];
     Lifespan: Array<Lifespan> = [];
     Light: Array<Light> = [];
     Move: Array<Move> = [];

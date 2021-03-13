@@ -3,7 +3,7 @@ import {blueprint_hand} from "../blueprints/blu_hand.js";
 import {children} from "../components/com_children.js";
 import {collide} from "../components/com_collide.js";
 import {control_move} from "../components/com_control_move.js";
-import {control_spawner} from "../components/com_control_spawner.js";
+import {control_spawn} from "../components/com_control_spawn.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {render_colored_diffuse} from "../components/com_render1.js";
@@ -40,7 +40,7 @@ export function scene_stage(game: Game) {
     ]);
 
     // Box spawner.
-    instantiate(game, [transform([0, 5, 0]), control_spawner(2, 0.3)]);
+    instantiate(game, [transform([0, 5, 0]), control_spawn(2, 0.3)]);
 
     // Rotating hand.
     instantiate(game, [
