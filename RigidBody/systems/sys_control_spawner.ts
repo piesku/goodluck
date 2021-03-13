@@ -2,7 +2,8 @@ import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {float} from "../../common/random.js";
 import {blueprint_box} from "../blueprints/blu_box.js";
-import {instantiate3d} from "../entity.js";
+import {transform} from "../components/com_transform.js";
+import {instantiate} from "../entity.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -16,8 +17,6 @@ export function sys_control_spawner(game: Game, delta: number) {
     }
 }
 
-let world_pos: Vec3 = [0, 0, 0];
-
 function update(game: Game, entity: Entity, delta: number) {
     let control = game.World.ControlSpawner[entity];
     control.SinceLast += delta;
@@ -25,14 +24,11 @@ function update(game: Game, entity: Entity, delta: number) {
         control.SinceLast = 0;
 
         // Randomize the spawn position.
-        let transform = game.World.Transform[entity];
-        get_translation(world_pos, transform.World);
-        world_pos[0] += float(-control.Spread, control.Spread);
-        world_pos[2] += float(-control.Spread, control.Spread);
-
-        instantiate3d(game, {
-            ...blueprint_box(game),
-            Translation: [world_pos[0], world_pos[1], world_pos[2]],
-        });
+        let entity_transform = game.World.Transform[entity];
+        let world_position: Vec3 = [0, 0, 0];
+        get_translation(world_position, entity_transform.World);
+        world_position[0] += float(-control.Spread, control.Spread);
+        world_position[2] += float(-control.Spread, control.Spread);
+        instantiate(game, [...blueprint_box(game), transform(world_position)]);
     }
 }
