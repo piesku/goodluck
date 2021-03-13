@@ -1,7 +1,8 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light_directional} from "../components/com_light.js";
 import {render_colored_diffuse} from "../components/com_render1.js";
-import {instantiate3d} from "../entity.js";
+import {transform} from "../components/com_transform.js";
+import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 
@@ -10,41 +11,20 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
 
     // Camera.
-    instantiate3d(game, {
-        Translation: [1, 2, 5],
-        ...blueprint_camera(game),
-    });
+    instantiate(game, [transform([1, 2, 5], [0, 1, 0, 0]), ...blueprint_camera(game)]);
 
     // Light.
-    instantiate3d(game, {
-        Translation: [2, 3, 5],
-        Using: [light_directional([1, 1, 1], 1)],
-    });
+    instantiate(game, [transform([2, 3, 5]), light_directional([1, 1, 1], 1)]);
 
     // Ground.
-    instantiate3d(game, {
-        Translation: [0, 0, 0],
-        Scale: [10, 1, 10],
-        Using: [
-            render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [
-                1,
-                1,
-                0.3,
-                1,
-            ]),
-        ],
-    });
+    instantiate(game, [
+        transform(undefined, undefined, [10, 1, 10]),
+        render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1]),
+    ]);
 
     // Box.
-    instantiate3d(game, {
-        Translation: [0, 1, 0],
-        Using: [
-            render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [
-                1,
-                1,
-                0.3,
-                1,
-            ]),
-        ],
-    });
+    instantiate(game, [
+        transform([0, 1, 0]),
+        render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1]),
+    ]);
 }
