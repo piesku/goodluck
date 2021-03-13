@@ -8,6 +8,7 @@ import {Light} from "./components/com_light.js";
 import {Move} from "./components/com_move.js";
 import {Render} from "./components/com_render1.js";
 import {RigidBody} from "./components/com_rigid_body.js";
+import {Shake} from "./components/com_shake.js";
 import {Transform} from "./components/com_transform.js";
 import {Entity} from "./game.js";
 
@@ -22,6 +23,7 @@ const enum Component {
     Move,
     Render,
     RigidBody,
+    Shake,
     Transform,
 }
 
@@ -36,6 +38,7 @@ export const enum Has {
     Move = 1 << Component.Move,
     Render = 1 << Component.Render,
     RigidBody = 1 << Component.RigidBody,
+    Shake = 1 << Component.Shake,
     Transform = 1 << Component.Transform,
 }
 
@@ -54,5 +57,6 @@ export class World {
     Move: Array<Move> = [];
     Render: Array<Render> = [];
     RigidBody: Array<RigidBody> = [];
+    Shake: Array<Shake> = [];
     Transform: Array<Transform> = [];
 }

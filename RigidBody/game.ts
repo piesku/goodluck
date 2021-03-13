@@ -16,6 +16,7 @@ import {sys_physics_integrate} from "./systems/sys_physics_integrate.js";
 import {sys_physics_kinematic} from "./systems/sys_physics_kinematic.js";
 import {sys_physics_resolve} from "./systems/sys_physics_resolve.js";
 import {sys_render} from "./systems/sys_render1.js";
+import {sys_shake} from "./systems/sys_shake.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
@@ -66,6 +67,7 @@ export class Game {
 
         // Game logic.
         sys_move(this, delta);
+        sys_shake(this, delta);
         sys_transform(this, delta);
 
         // Collisions and physics.

@@ -8,6 +8,7 @@ import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {render_colored_diffuse} from "../components/com_render1.js";
 import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
+import {shake} from "../components/com_shake.js";
 import {transform} from "../components/com_transform.js";
 import {instantiate} from "../entity.js";
 import {Game, Layer} from "../game.js";
@@ -40,7 +41,10 @@ export function scene_stage(game: Game) {
     ]);
 
     // Box spawner.
-    instantiate(game, [transform([0, 5, 0]), control_spawn(2, 0.3)]);
+    instantiate(game, [
+        transform([0, 5, 0]),
+        children([transform(), shake(Infinity), control_spawn(2)]),
+    ]);
 
     // Rotating hand.
     instantiate(game, [
