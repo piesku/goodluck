@@ -36,9 +36,11 @@ function update_transform(world: World, entity: Entity, transform: Transform) {
     if (world.Signature[entity] & Has.Children) {
         let children = world.Children[entity];
         for (let child of children.Children) {
-            let child_transform = world.Transform[child];
-            child_transform.Parent = entity;
-            update_transform(world, child, child_transform);
+            if (world.Signature[child] & Has.Transform) {
+                let child_transform = world.Transform[child];
+                child_transform.Parent = entity;
+                update_transform(world, child, child_transform);
+            }
         }
     }
 }
