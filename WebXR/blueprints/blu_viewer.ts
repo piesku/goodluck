@@ -1,49 +1,48 @@
-import {GL_CCW} from "../../common/webgl.js";
+import {GL_CCW, GL_CW} from "../../common/webgl.js";
 import {camera_xr} from "../components/com_camera.js";
+import {children} from "../components/com_children.js";
 import {ControlXrKind, control_xr} from "../components/com_control_xr.js";
 import {render_colored_diffuse} from "../components/com_render2.js";
-import {Blueprint3D} from "../entity.js";
+import {transform} from "../components/com_transform.js";
+import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
 
-export function blueprint_viewer(game: Game): Blueprint3D {
-    return {
-        Children: [
-            {
+export function blueprint_viewer(game: Game): Blueprint {
+    return [
+        children(
+            [
                 // Headset.
-                Using: [camera_xr()],
-            },
-            {
+                transform(),
+                camera_xr(),
+            ],
+            [
                 // Left hand.
-                Using: [control_xr(ControlXrKind.Left)],
-                Children: [
-                    {
-                        Scale: [-1, 1, 1],
-                        Using: [
-                            render_colored_diffuse(
-                                game.MaterialColoredDiffuseGouraud,
-                                game.MeshHand,
-                                [1, 1, 0.3, 1],
-                                GL_CCW
-                            ),
-                        ],
-                    },
-                ],
-            },
-            {
+                transform(),
+                control_xr(ControlXrKind.Left),
+                children([
+                    transform(undefined, undefined, [-1, 1, 1]),
+                    render_colored_diffuse(
+                        game.MaterialColoredDiffuseGouraud,
+                        game.MeshHand,
+                        [1, 1, 0.3, 1],
+                        GL_CCW
+                    ),
+                ]),
+            ],
+            [
                 // Right hand.
-                Using: [control_xr(ControlXrKind.Right)],
-                Children: [
-                    {
-                        Using: [
-                            render_colored_diffuse(
-                                game.MaterialColoredDiffuseGouraud,
-                                game.MeshHand,
-                                [1, 1, 0.3, 1]
-                            ),
-                        ],
-                    },
-                ],
-            },
-        ],
-    };
+                transform(),
+                control_xr(ControlXrKind.Right),
+                children([
+                    transform(),
+                    render_colored_diffuse(
+                        game.MaterialColoredDiffuseGouraud,
+                        game.MeshHand,
+                        [1, 1, 0.3, 1],
+                        GL_CW
+                    ),
+                ]),
+            ]
+        ),
+    ];
 }
