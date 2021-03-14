@@ -1,8 +1,8 @@
 import {scale} from "../../common/vec3.js";
 import {Collide} from "../components/com_collide.js";
 import {RenderKind, render_colored_unlit} from "../components/com_render1.js";
-import {Transform} from "../components/com_transform.js";
-import {destroy_entity, instantiate3d} from "../entity.js";
+import {transform, Transform} from "../components/com_transform.js";
+import {destroy_entity, instantiate} from "../entity.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -50,16 +50,10 @@ function wireframe_invisible(game: Game, entity: Entity) {
     let wireframe = wireframes.get(anchor_transform);
 
     if (!wireframe) {
-        let wireframe_entity = instantiate3d(game, {
-            Using: [
-                render_colored_unlit(game.MaterialColoredUnlitWireframe, game.MeshCube, [
-                    1,
-                    0,
-                    1,
-                    1,
-                ]),
-            ],
-        });
+        let wireframe_entity = instantiate(game, [
+            transform(),
+            render_colored_unlit(game.MaterialColoredUnlitWireframe, game.MeshCube, [1, 0, 1, 1]),
+        ]);
         let wireframe_transform = game.World.Transform[wireframe_entity];
         wireframe_transform.World = anchor_transform.World;
         wireframe_transform.Dirty = false;
@@ -78,18 +72,10 @@ function wireframe_collider(game: Game, entity: Entity) {
 
     let wireframe = wireframes.get(anchor_collide);
     if (!wireframe) {
-        let wireframe_entity = instantiate3d(game, {
-            Translation: anchor_collide.Center,
-            Scale: scale([0, 0, 0], anchor_collide.Half, 2),
-            Using: [
-                render_colored_unlit(game.MaterialColoredUnlitWireframe, game.MeshCube, [
-                    0,
-                    1,
-                    0,
-                    1,
-                ]),
-            ],
-        });
+        let wireframe_entity = instantiate(game, [
+            transform(anchor_collide.Center, undefined, scale([0, 0, 0], anchor_collide.Half, 2)),
+            render_colored_unlit(game.MaterialColoredUnlitWireframe, game.MeshCube, [0, 1, 0, 1]),
+        ]);
         wireframe = {
             entity: wireframe_entity,
             transform: game.World.Transform[wireframe_entity],
