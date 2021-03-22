@@ -1,23 +1,16 @@
 # Changelog
 
-Goodluck doesn't have version numbers; each commit is the latest release of
-the template from which you can generate a new project.
+Goodluck doesn't have version numbers; each commit is the latest release of the template from which you can generate a new project.
 
-However, we do distinguish between _generations_ of Goodluck. The core API
-changes between generations and there's a significant chance that systems
-written for one generation will not compatible with other generations.
-Adapting a system to a newer generation is usually easy, though.
+However, we do distinguish between _generations_ of Goodluck. The core API changes between generations and there's a significant chance that systems written for one generation will not compatible with other generations. Adapting a system to a newer generation is usually easy, though.
 
 ## Generation 5 (since July 2020)
 
-- `World.Mask` was renamed to `World.Signature` in
-[#39](https://github.com/piesku/goodluck/issues/39).
+- `World.Mask` was renamed to `World.Signature` in [#39](https://github.com/piesku/goodluck/issues/39).
 
 ## Generation 4 (since February 2020)
 
-- New directory layout. Each example is now an independent Goodluck project,
-with its own copy of `core.ts`, `game.ts`, etc. Some game-agnostic code has
-been moved to the top-level `common` directory.
+- New directory layout. Each example is now an independent Goodluck project, with its own copy of `core.ts`, `game.ts`, etc. Some game-agnostic code has been moved to the top-level `common` directory.
 
 ## Generation 3 (since December 2019)
 
@@ -40,8 +33,7 @@ been moved to the top-level `common` directory.
 
 - The `Get` enum has been removed.
 
-- Component checks are performed with bitwise operations between the
-`World.Mask` array and the `Has` enum.
+- Component checks are performed with bitwise operations between the `World.Mask` array and the `Has` enum.
 
     ```js
     if (game.World.Mask[entity] & Has.Transform) ...
@@ -55,11 +47,9 @@ been moved to the top-level `common` directory.
 
 ## Generation 2 (since October 2019)
 
-- Names of all properties are PascalCase for better naming mangling and
-minification.
+- Names of all properties are PascalCase for better naming mangling and minification.
 
-- Component masks are defined with a `const enum`, and are typically sorted
-alphabetically.
+- Component masks are defined with a `const enum`, and are typically sorted alphabetically.
 
     ```js
     export const enum Get {
@@ -79,8 +69,7 @@ alphabetically.
     }
     ```
 
-- `Game` is a regular class. Component data is stored under computed
-properties based on the `Get` enum.
+- `Game` is a regular class. Component data is stored under computed properties based on the `Get` enum.
 
     ```js
     class Game {
@@ -113,9 +102,7 @@ properties based on the `Get` enum.
     // ...
     ```
 
-- `Game extends Array`. Component data is accessed with indices equal to
-component masks. The returned element must be asserted as the interface
-corresponding to requested component.
+- `Game extends Array`. Component data is accessed with indices equal to component masks. The returned element must be asserted as the interface corresponding to requested component.
 
     ```js
     let transform = game[TRANSFORM][entity] as Transform;
