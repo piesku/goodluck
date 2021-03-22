@@ -4,6 +4,51 @@ Goodluck doesn't have version numbers; each commit is the latest release of the 
 
 However, we do distinguish between _generations_ of Goodluck. The core API changes between generations and there's a significant chance that systems written for one generation will not compatible with other generations. Adapting a system to a newer generation is usually easy, though.
 
+## Generation 6 (since March 2021)
+
+- Blueprints are no longer objects of the `{Translation, Rotation, Scale, Using, Children}` shape. Instead, they are now regular arrays of mixings. The transform component must be added explicitly to the blueprint.
+
+    ```js
+    // BEFORE
+    instantiate(game, {
+        Translation: [1, 1, 0],
+        Using: [light_directional([1, 1, 1], 0.5)],
+    });
+
+    // AFTER
+    instantiate(game, [
+        transform([1, 1, 0]), // Must be listed explicitly.
+        light_directional([1, 1, 1], 0.5)
+    ]);
+    ```
+
+- A new component, `Children`, now tracks the children relationships of the entity. The reverse relationship, i.e. the parent relationship, is still stored by the `Transform` and `Transform2D` component.
+
+    ```js
+    // BEFORE
+    instantiate(game, {
+        Translation: [0, 1, 5],
+        Rotation: [0, 1, 0, 0],
+        Children: [
+            {
+                Rotation: [0, 1, 0, 0],
+                Using: [camera_display_perspective(1, 0.1, 1000)],
+            },
+        ],
+    });
+
+    // AFTER
+    instantiate(game, [
+        transform([0, 1, 5], [0, 1, 0, 0]),
+        children([
+            transform(undefined, [0, 1, 0, 0]),
+            camera_display_perspective(1, 0.1, 1000)
+        ]),
+    ]);
+    ```
+
+- The parent relationship is now computed every frame by `sys_transform` and `sys_transform2d`, and it's undefined upon the creation on the entity.
+
 ## Generation 5 (since July 2020)
 
 - `World.Mask` was renamed to `World.Signature` in [#39](https://github.com/piesku/goodluck/issues/39).
