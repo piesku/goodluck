@@ -7,7 +7,7 @@ import {loop_start, loop_stop} from "./loop.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_move} from "./systems/sys_control_move.js";
-import {sys_control_spawner} from "./systems/sys_control_spawner.js";
+import {sys_control_spawn} from "./systems/sys_control_spawn.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_lifespan} from "./systems/sys_lifespan.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -16,6 +16,7 @@ import {sys_physics_integrate} from "./systems/sys_physics_integrate.js";
 import {sys_physics_kinematic} from "./systems/sys_physics_kinematic.js";
 import {sys_physics_resolve} from "./systems/sys_physics_resolve.js";
 import {sys_render} from "./systems/sys_render1.js";
+import {sys_shake} from "./systems/sys_shake.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
@@ -62,10 +63,11 @@ export class Game {
 
         // Input and AI.
         sys_control_move(this, delta);
-        sys_control_spawner(this, delta);
+        sys_control_spawn(this, delta);
 
         // Game logic.
         sys_move(this, delta);
+        sys_shake(this, delta);
         sys_transform(this, delta);
 
         // Collisions and physics.

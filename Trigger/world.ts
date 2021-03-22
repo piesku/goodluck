@@ -1,4 +1,5 @@
 import {Camera} from "./components/com_camera.js";
+import {Children} from "./components/com_children.js";
 import {Collide} from "./components/com_collide.js";
 import {ControlMove} from "./components/com_control_move.js";
 import {Light} from "./components/com_light.js";
@@ -10,6 +11,7 @@ import {Entity} from "./game.js";
 
 const enum Component {
     Camera,
+    Children,
     Collide,
     ControlMove,
     Light,
@@ -21,6 +23,7 @@ const enum Component {
 
 export const enum Has {
     Camera = 1 << Component.Camera,
+    Children = 1 << Component.Children,
     Collide = 1 << Component.Collide,
     ControlMove = 1 << Component.ControlMove,
     Light = 1 << Component.Light,
@@ -36,6 +39,7 @@ export class World {
 
     // Component data
     Camera: Array<Camera> = [];
+    Children: Array<Children> = [];
     Collide: Array<Collide> = [];
     ControlMove: Array<ControlMove> = [];
     Light: Array<Light> = [];

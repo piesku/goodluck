@@ -2,7 +2,7 @@ import {scale} from "../../common/vec3.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.Transform | Has.Selectable;
+const QUERY = Has.Transform | Has.Selectable | Has.Children;
 
 export function sys_select(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
@@ -14,6 +14,7 @@ export function sys_select(game: Game, delta: number) {
 
 function update(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
+    let children = game.World.Children[entity];
     let selectable = game.World.Selectable[entity];
 
     if (game.Pick?.Entity === entity) {
@@ -32,7 +33,7 @@ function update(game: Game, entity: Entity) {
             game.World.Signature[entity] |= Has.ControlPlayer;
 
             // Selection box is the first child.
-            let selection = transform.Children[0];
+            let selection = children.Children[0];
             game.World.Signature[selection] |= Has.Draw;
         }
     } else {
@@ -51,7 +52,7 @@ function update(game: Game, entity: Entity) {
             game.World.Signature[entity] &= ~Has.ControlPlayer;
 
             // Selection box is the first child.
-            let selection = transform.Children[0];
+            let selection = children.Children[0];
             game.World.Signature[selection] &= ~Has.Draw;
         }
     }

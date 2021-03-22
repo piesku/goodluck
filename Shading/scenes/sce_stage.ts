@@ -1,4 +1,5 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
+import {children} from "../components/com_children.js";
 import {control_move} from "../components/com_control_move.js";
 import {light_directional, light_point} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
@@ -7,6 +8,7 @@ import {
     render_colored_specular,
     render_colored_unlit,
 } from "../components/com_render1.js";
+import {transform} from "../components/com_transform.js";
 import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
@@ -16,37 +18,29 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
 
     // Camera.
-    instantiate(game, {
-        Translation: [0, 0, 4],
-        ...blueprint_camera(game),
-    });
+    instantiate(game, [...blueprint_camera(game), transform([0, 0, 4], [0, 1, 0, 0])]);
 
     // Directional light.
-    instantiate(game, {
-        Translation: [1, 1, 0],
-        Using: [light_directional([1, 1, 1], 0.5)],
-    });
+    instantiate(game, [transform([1, 1, 0]), light_directional([1, 1, 1], 0.5)]);
 
     let light_spread = 7;
     let light_range = 4;
-    instantiate(game, {
-        Translation: [0, 0, 5],
-        Using: [control_move(null, [0, 0, 1, 0]), move(0, 0.5)],
-        Children: [
-            {
-                Translation: [1 * light_spread, 0, 0],
-                Using: [light_point([1, 1, 1], light_range)],
-            },
-            {
-                Translation: [-0.5 * light_spread, 0.866 * light_spread, 0],
-                Using: [light_point([1, 1, 1], light_range)],
-            },
-            {
-                Translation: [-0.5 * light_spread, -0.866 * light_spread, 0],
-                Using: [light_point([1, 1, 1], light_range)],
-            },
-        ],
-    });
+    instantiate(game, [
+        transform([0, 0, 5]),
+        control_move(null, [0, 0, 1, 0]),
+        move(0, 0.5),
+        children(
+            [transform([1 * light_spread, 0, 0]), light_point([1, 1, 1], light_range)],
+            [
+                transform([-0.5 * light_spread, 0.866 * light_spread, 0]),
+                light_point([1, 1, 1], light_range),
+            ],
+            [
+                transform([-0.5 * light_spread, -0.866 * light_spread, 0]),
+                light_point([1, 1, 1], light_range),
+            ]
+        ),
+    ]);
 
     let shadings = [
         render_colored_unlit(game.MaterialColoredUnlitPoints, game.MeshIcosphereSmooth, [
@@ -120,10 +114,7 @@ export function scene_stage(game: Game) {
             let render = shadings.shift();
             if (render) {
                 let x = col * (1 + pad) + 0.5;
-                instantiate(game, {
-                    Translation: [x - offset_x, y - offset_y, 0],
-                    Using: [render],
-                });
+                instantiate(game, [transform([x - offset_x, y - offset_y, 0]), render]);
             }
         }
     }

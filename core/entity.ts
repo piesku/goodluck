@@ -1,5 +1,3 @@
-import {Quat, Vec3} from "../common/math.js";
-import {transform} from "./components/com_transform.js";
 import {Entity, Game} from "./game.js";
 import {Has, World} from "./world.js";
 
@@ -17,8 +15,8 @@ export function create_entity(world: World) {
 }
 
 export function destroy_entity(world: World, entity: Entity) {
-    if (world.Signature[entity] & Has.Transform) {
-        for (let child of world.Transform[entity].Children) {
+    if (world.Signature[entity] & Has.Children) {
+        for (let child of world.Children[entity].Children) {
             destroy_entity(world, child);
         }
     }
@@ -33,33 +31,12 @@ export function destroy_entity(world: World, entity: Entity) {
 }
 
 type Mixin = (game: Game, entity: Entity) => void;
-export interface Blueprint {
-    Translation?: Vec3;
-    Rotation?: Quat;
-    Scale?: Vec3;
-    Using?: Array<Mixin>;
-    Disable?: number;
-    Children?: Array<Blueprint>;
-}
+export type Blueprint = Array<Mixin>;
 
-export function instantiate(
-    game: Game,
-    {Translation, Rotation, Scale, Using = [], Disable, Children = []}: Blueprint
-) {
+export function instantiate(game: Game, blueprint: Blueprint) {
     let entity = create_entity(game.World);
-    transform(Translation, Rotation, Scale)(game, entity);
-    for (let mixin of Using) {
+    for (let mixin of blueprint) {
         mixin(game, entity);
-    }
-    if (Disable) {
-        game.World.Signature[entity] &= ~Disable;
-    }
-    let entity_transform = game.World.Transform[entity];
-    for (let subtree of Children) {
-        let child = instantiate(game, subtree);
-        let child_transform = game.World.Transform[child];
-        child_transform.Parent = entity;
-        entity_transform.Children.push(child);
     }
     return entity;
 }

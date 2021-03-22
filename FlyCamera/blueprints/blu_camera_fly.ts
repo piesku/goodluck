@@ -1,18 +1,15 @@
 import {camera_display_perspective} from "../components/com_camera.js";
+import {children} from "../components/com_children.js";
 import {control_player} from "../components/com_control_player.js";
 import {move} from "../components/com_move.js";
+import {transform} from "../components/com_transform.js";
 import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
 
 export function blueprint_camera_fly(game: Game): Blueprint {
-    return {
-        Rotation: [0, 1, 0, 0],
-        Using: [control_player(true, 0.1, 0.1), move(10, 2)],
-        Children: [
-            {
-                Rotation: [0, 1, 0, 0],
-                Using: [camera_display_perspective(1, 0.1, 1000)],
-            },
-        ],
-    };
+    return [
+        control_player(true, 0.1, 0.1),
+        move(10, 2),
+        children([transform(undefined, [0, 1, 0, 0]), camera_display_perspective(1, 0.1, 1000)]),
+    ];
 }
