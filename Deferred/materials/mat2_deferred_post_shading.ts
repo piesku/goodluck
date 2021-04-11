@@ -50,7 +50,8 @@ let fragment = `#version 300 es\n
     }
 
     void main() {
-        vec4 current_color = texture(color_map, vert_texcoord);
+        frag_color = texture(color_map, vert_texcoord);
+
         vec3 current_normal = normal_at(vert_texcoord);
         float current_depth = depth_at(vert_texcoord);
         vec3 current_position = world_position_at(vert_texcoord, current_depth);
@@ -86,36 +87,12 @@ let fragment = `#version 300 es\n
             }
 
             vec3 light_color = light_colors[i].rgb;
-            current_color = vec4(light_color, 1.0);
-        }
-
-        vec2 offsets[4] = vec2[](
-                vec2(-1, -1) / dimensions,
-                vec2(1, -1) / dimensions,
-                vec2(-1, 1) / dimensions,
-                vec2(1, 1) / dimensions
-        );
-
-        vec3 n1 = normal_at(vert_texcoord + offsets[0])
-                - normal_at(vert_texcoord + offsets[3]);
-        vec3 n2 = normal_at(vert_texcoord + offsets[1])
-                - normal_at(vert_texcoord + offsets[2]);
-        float n = sqrt(dot(n1, n1) + dot(n2, n2));
-
-        if (n > 1.0) {
-            frag_color = edge_color;
-        } else {
-            float d1 = depth_at(vert_texcoord + offsets[0])
-                    - depth_at(vert_texcoord + offsets[3]);
-            float d2 = depth_at(vert_texcoord + offsets[1])
-                    - depth_at(vert_texcoord + offsets[2]);
-            float z = sqrt(d1 * d1 + d2 * d2);
-            frag_color = mix(current_color, edge_color, step(0.01 / current_depth, z));
+            frag_color = vec4(light_color, 1.0);
         }
     }
 `;
 
-export function mat2_deferred_postprocess_outline(
+export function mat2_deferred_post_shading(
     gl: WebGLRenderingContext
 ): Material<DeferredPostprocessLayout> {
     let program = link(gl, vertex, fragment);
