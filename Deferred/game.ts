@@ -1,4 +1,9 @@
-import {create_texture_depth, create_texture_rgba} from "../common/texture.js";
+import {
+    create_texture_depth,
+    create_texture_rgba,
+    resize_texture_depth,
+    resize_texture_rgba,
+} from "../common/texture.js";
 import {
     GL_COLOR_ATTACHMENT0,
     GL_COLOR_ATTACHMENT1,
@@ -106,7 +111,21 @@ export class Game {
     }
 
     FrameReset() {
-        this.ViewportResized = false;
+        if (this.ViewportWidth != window.innerWidth || this.ViewportHeight != window.innerHeight) {
+            this.ViewportWidth = this.Canvas.width = window.innerWidth;
+            this.ViewportHeight = this.Canvas.height = window.innerHeight;
+            this.ViewportResized = true;
+
+            let target = this.Targets.Render;
+            target.Width = this.ViewportWidth;
+            target.Height = this.ViewportHeight;
+
+            resize_texture_rgba(this.Gl, target.RenderTexture, target.Width, target.Height);
+            resize_texture_rgba(this.Gl, target.NormalsTexture, target.Width, target.Height);
+            resize_texture_depth(this.Gl, target.DepthTexture, target.Width, target.Height);
+        } else {
+            this.ViewportResized = false;
+        }
     }
 
     FrameUpdate(delta: number) {

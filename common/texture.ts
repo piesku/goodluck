@@ -50,8 +50,12 @@ export function create_texture_from(gl: WebGLRenderingContext, image: HTMLImageE
     return texture;
 }
 
-export function create_texture_rgba(gl: WebGLRenderingContext, width: number, height: number) {
-    let texture = gl.createTexture()!;
+export function resize_texture_rgba(
+    gl: WebGLRenderingContext,
+    texture: WebGLTexture,
+    width: number,
+    height: number
+) {
     gl.bindTexture(GL_TEXTURE_2D, texture);
     gl.texImage2D(
         GL_TEXTURE_2D,
@@ -71,6 +75,11 @@ export function create_texture_rgba(gl: WebGLRenderingContext, width: number, he
     return texture;
 }
 
+export function create_texture_rgba(gl: WebGLRenderingContext, width: number, height: number) {
+    let texture = gl.createTexture()!;
+    return resize_texture_rgba(gl, texture, width, height);
+}
+
 export function create_render_buffer(gl: WebGLRenderingContext, width: number, height: number) {
     let buffer = gl.createRenderbuffer()!;
     gl.bindRenderbuffer(gl.RENDERBUFFER, buffer);
@@ -80,8 +89,12 @@ export function create_render_buffer(gl: WebGLRenderingContext, width: number, h
 
 // Depth textures are a WebGL2 feature. They can also be used in WebGL1 via an extension:
 // https://developer.mozilla.org/en-US/docs/Web/API/WEBGL_draw_buffers
-export function create_texture_depth(gl: WebGL2RenderingContext, width: number, height: number) {
-    let texture = gl.createTexture()!;
+export function resize_texture_depth(
+    gl: WebGL2RenderingContext,
+    texture: WebGLTexture,
+    width: number,
+    height: number
+) {
     gl.bindTexture(GL_TEXTURE_2D, texture);
     gl.texImage2D(
         GL_TEXTURE_2D,
@@ -99,6 +112,11 @@ export function create_texture_depth(gl: WebGL2RenderingContext, width: number, 
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     return texture;
+}
+
+export function create_texture_depth(gl: WebGL2RenderingContext, width: number, height: number) {
+    let texture = gl.createTexture()!;
+    return resize_texture_depth(gl, texture, width, height);
 }
 
 function is_power_of_2(value: number) {
