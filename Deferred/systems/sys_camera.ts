@@ -45,8 +45,21 @@ function update_display(game: Game, entity: Entity, camera: CameraDisplay) {
 }
 
 function update_framebuffer(game: Game, entity: Entity, camera: CameraFramebuffer) {
+    if (game.ViewportResized) {
+        let aspect = camera.Target.Width / camera.Target.Height;
+        if (aspect > 1) {
+            // Landscape orientation.
+            perspective(camera.Projection, camera.FovY, aspect, camera.Near, camera.Far);
+            invert(camera.Unprojection, camera.Projection);
+        } else {
+            // Portrait orientation.
+            perspective(camera.Projection, camera.FovY / aspect, aspect, camera.Near, camera.Far);
+            invert(camera.Unprojection, camera.Projection);
+        }
+    }
+
     let transform = game.World.Transform[entity];
     copy(camera.World, transform.World);
     copy(camera.View, transform.Self);
-    multiply(camera.Pv, camera.Projection, transform.Self);
+    multiply(camera.Pv, camera.Projection, camera.View);
 }

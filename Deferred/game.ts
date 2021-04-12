@@ -1,9 +1,4 @@
-import {
-    create_texture_depth,
-    create_texture_rgba,
-    resize_texture_depth,
-    resize_texture_rgba,
-} from "../common/texture.js";
+import {create_texture_depth, create_texture_rgba} from "../common/texture.js";
 import {
     GL_COLOR_ATTACHMENT0,
     GL_COLOR_ATTACHMENT1,
@@ -34,9 +29,9 @@ export type Entity = number;
 export class Game {
     World = new World();
 
-    ViewportWidth = 0;
-    ViewportHeight = 0;
-    ViewportResized = false;
+    ViewportWidth = window.innerWidth;
+    ViewportHeight = window.innerHeight;
+    ViewportResized = true;
 
     Canvas = document.querySelector("canvas")!;
     Gl = this.Canvas.getContext("webgl2")!;
@@ -63,17 +58,32 @@ export class Game {
         this.Gl.enable(GL_DEPTH_TEST);
         this.Gl.enable(GL_CULL_FACE);
 
+        this.Canvas.width = this.ViewportWidth;
+        this.Canvas.height = this.ViewportHeight;
+
         {
             // Create the main framebuffer for deferred rendering.
 
-            this.Textures.RenderRgba = create_texture_rgba(this.Gl, 256, 256);
-            this.Textures.RenderNormals = create_texture_rgba(this.Gl, 256, 256);
-            this.Textures.RenderDepth = create_texture_depth(this.Gl, 256, 256);
+            this.Textures.RenderRgba = create_texture_rgba(
+                this.Gl,
+                this.ViewportWidth,
+                this.ViewportHeight
+            );
+            this.Textures.RenderNormals = create_texture_rgba(
+                this.Gl,
+                this.ViewportWidth,
+                this.ViewportHeight
+            );
+            this.Textures.RenderDepth = create_texture_depth(
+                this.Gl,
+                this.ViewportWidth,
+                this.ViewportHeight
+            );
 
             let target = (this.Targets.Render = {
                 Framebuffer: this.Gl.createFramebuffer()!,
-                Width: 256,
-                Height: 256,
+                Width: this.ViewportWidth,
+                Height: this.ViewportHeight,
                 RenderTexture: this.Textures.RenderRgba,
                 NormalsTexture: this.Textures.RenderNormals,
                 DepthTexture: this.Textures.RenderDepth,
@@ -111,24 +121,16 @@ export class Game {
     }
 
     FrameReset() {
+        this.ViewportResized = false;
+    }
+
+    FrameUpdate(delta: number) {
         if (this.ViewportWidth != window.innerWidth || this.ViewportHeight != window.innerHeight) {
             this.ViewportWidth = this.Canvas.width = window.innerWidth;
             this.ViewportHeight = this.Canvas.height = window.innerHeight;
             this.ViewportResized = true;
-
-            let target = this.Targets.Render;
-            target.Width = this.ViewportWidth;
-            target.Height = this.ViewportHeight;
-
-            resize_texture_rgba(this.Gl, target.RenderTexture, target.Width, target.Height);
-            resize_texture_rgba(this.Gl, target.NormalsTexture, target.Width, target.Height);
-            resize_texture_depth(this.Gl, target.DepthTexture, target.Width, target.Height);
-        } else {
-            this.ViewportResized = false;
         }
-    }
 
-    FrameUpdate(delta: number) {
         let now = performance.now();
         sys_control_move(this, delta);
         sys_move(this, delta);

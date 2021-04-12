@@ -1,4 +1,5 @@
 import {Material} from "../../common/material.js";
+import {resize_texture_depth, resize_texture_rgba} from "../../common/texture.js";
 import {
     GL_COLOR_BUFFER_BIT,
     GL_DEPTH_BUFFER_BIT,
@@ -15,6 +16,16 @@ import {Has} from "../world.js";
 const QUERY = Has.Transform | Has.Render;
 
 export function sys_render_deferred(game: Game, delta: number) {
+    if (game.ViewportResized) {
+        let target = game.Targets.Render;
+        target.Width = game.ViewportWidth;
+        target.Height = game.ViewportHeight;
+
+        resize_texture_rgba(game.Gl, target.RenderTexture, target.Width, target.Height);
+        resize_texture_rgba(game.Gl, target.NormalsTexture, target.Width, target.Height);
+        resize_texture_depth(game.Gl, target.DepthTexture, target.Width, target.Height);
+    }
+
     for (let camera of game.Cameras) {
         switch (camera.Kind) {
             case CameraKind.Display:
