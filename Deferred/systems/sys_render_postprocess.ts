@@ -22,6 +22,7 @@ export function sys_render_postprocess(game: Game, delta: number) {
     let camera = game.Cameras[0];
     let material = game.MaterialPostprocessOutline;
     let mesh = game.MeshQuad;
+    let target = game.Targets.Render;
 
     game.Gl.useProgram(material.Program);
     game.Gl.uniform2f(material.Locations.Dimensions, game.ViewportWidth, game.ViewportHeight);
@@ -32,15 +33,15 @@ export function sys_render_postprocess(game: Game, delta: number) {
     game.Gl.uniform4fv(material.Locations.LightDirections, game.LightDirections);
 
     game.Gl.activeTexture(GL_TEXTURE0);
-    game.Gl.bindTexture(GL_TEXTURE_2D, game.Textures.RenderRgba);
+    game.Gl.bindTexture(GL_TEXTURE_2D, target.RenderTexture);
     game.Gl.uniform1i(material.Locations.ColorMap, 0);
 
     game.Gl.activeTexture(GL_TEXTURE1);
-    game.Gl.bindTexture(GL_TEXTURE_2D, game.Textures.RenderNormals);
+    game.Gl.bindTexture(GL_TEXTURE_2D, target.NormalsTexture);
     game.Gl.uniform1i(material.Locations.NormalMap, 1);
 
     game.Gl.activeTexture(GL_TEXTURE2);
-    game.Gl.bindTexture(GL_TEXTURE_2D, game.Textures.RenderDepth);
+    game.Gl.bindTexture(GL_TEXTURE_2D, target.DepthTexture);
     game.Gl.uniform1i(material.Locations.DepthMap, 2);
 
     game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);

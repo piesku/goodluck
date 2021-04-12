@@ -63,31 +63,26 @@ export class Game {
 
         {
             // Create the main framebuffer for deferred rendering.
-
-            this.Textures.RenderRgba = create_texture_rgba(
-                this.Gl,
-                this.ViewportWidth,
-                this.ViewportHeight
-            );
-            this.Textures.RenderNormals = create_texture_rgba(
-                this.Gl,
-                this.ViewportWidth,
-                this.ViewportHeight
-            );
-            this.Textures.RenderDepth = create_texture_depth(
-                this.Gl,
-                this.ViewportWidth,
-                this.ViewportHeight
-            );
-
-            let target = (this.Targets.Render = {
+            let target = {
                 Framebuffer: this.Gl.createFramebuffer()!,
                 Width: this.ViewportWidth,
                 Height: this.ViewportHeight,
-                RenderTexture: this.Textures.RenderRgba,
-                NormalsTexture: this.Textures.RenderNormals,
-                DepthTexture: this.Textures.RenderDepth,
-            });
+                RenderTexture: create_texture_rgba(
+                    this.Gl,
+                    this.ViewportWidth,
+                    this.ViewportHeight
+                ),
+                NormalsTexture: create_texture_rgba(
+                    this.Gl,
+                    this.ViewportWidth,
+                    this.ViewportHeight
+                ),
+                DepthTexture: create_texture_depth(
+                    this.Gl,
+                    this.ViewportWidth,
+                    this.ViewportHeight
+                ),
+            };
 
             this.Gl.bindFramebuffer(GL_FRAMEBUFFER, target.Framebuffer);
             this.Gl.framebufferTexture2D(
@@ -117,6 +112,8 @@ export class Game {
             if (this.Gl.checkFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
                 throw new Error("Failed to set up the framebuffer.");
             }
+
+            this.Targets.Render = target;
         }
     }
 
