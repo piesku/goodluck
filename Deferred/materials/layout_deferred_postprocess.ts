@@ -7,8 +7,7 @@ export interface DeferredPostprocessLayout {
     NormalMap: WebGLUniformLocation;
     DepthMap: WebGLUniformLocation;
     LightPositions: WebGLUniformLocation;
-    LightColors: WebGLUniformLocation;
-    LightDirections: WebGLUniformLocation;
+    LightDetails: WebGLUniformLocation;
     // Attributes
     VertexPosition: GLint;
     VertexTexcoord: GLint;

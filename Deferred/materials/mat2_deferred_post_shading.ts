@@ -25,8 +25,7 @@ let fragment = `#version 300 es\n
     uniform sampler2D normal_map;
     uniform sampler2D depth_map;
     uniform vec4 light_positions[MAX_LIGHTS];
-    uniform vec4 light_colors[MAX_LIGHTS];
-    uniform vec4 light_directions[MAX_LIGHTS];
+    uniform vec4 light_details[MAX_LIGHTS];
 
     in vec2 vert_texcoord;
     out vec4 frag_color;
@@ -50,45 +49,46 @@ let fragment = `#version 300 es\n
     }
 
     void main() {
-        frag_color = texture(color_map, vert_texcoord);
-
+        vec4 current_color = texture(color_map, vert_texcoord);
         vec3 current_normal = normal_at(vert_texcoord);
+
         float current_depth = depth_at(vert_texcoord);
-        vec3 current_position = world_position_at(vert_texcoord, current_depth);
+        vec3 current_position = world_position_at(vert_texcoord, depth_at(vert_texcoord));
+
+        // Ambient light.
+        vec3 rgb = current_color.rgb * 0.1;
 
         for (int i = 0; i < MAX_LIGHTS; i++) {
             int light_kind = int(light_positions[i].w);
             if (light_kind == 0) {
-                /* LIGHT_OFF */
+                // The first inactive light means we're done.
                 break;
             }
 
-            vec3 light_diff = light_positions[i].xyz - current_position;
-            float light_dist = length(light_diff);
-            float light_range = light_colors[i].a;
-            if (light_dist > light_range) {
-                continue;
+            vec3 light_rgb = light_details[i].rgb;
+            float light_intensity = light_details[i].a;
+
+            vec3 light_normal;
+            if (light_kind == 1) {
+                // Directional light.
+                light_normal = light_positions[i].xyz;
+            } else if (light_kind == 2) {
+                // Point light.
+                vec3 light_dir = light_positions[i].xyz - current_position;
+                float light_dist = length(light_dir);
+                light_normal = light_dir / light_dist;
+                // Distance attenuation.
+                light_intensity /= (light_dist * light_dist);
             }
 
-            vec3 light_normal = light_diff / light_dist;
             float diffuse_factor = dot(current_normal, light_normal);
-            if (diffuse_factor < 0.0) {
-                continue;
+            if (diffuse_factor > 0.0) {
+                // Diffuse color.
+                rgb += current_color.rgb * diffuse_factor * light_rgb * light_intensity;
             }
-
-            if (light_kind == 2) {
-                /* LIGHT_SPOT */
-                vec3 light_forward = light_directions[i].xyz;
-                float light_angle = light_directions[i].w;
-                float current_cos = dot(light_forward, -light_normal);
-                if (current_cos < cos(light_angle / 2.0)) {
-                    continue;
-                }
-            }
-
-            vec3 light_color = light_colors[i].rgb;
-            frag_color = vec4(light_color, 1.0);
         }
+
+        frag_color = vec4(rgb, 1.0);
     }
 `;
 
@@ -107,8 +107,7 @@ export function mat2_deferred_post_shading(
             NormalMap: gl.getUniformLocation(program, "normal_map")!,
             DepthMap: gl.getUniformLocation(program, "depth_map")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
-            LightColors: gl.getUniformLocation(program, "light_colors")!,
-            LightDirections: gl.getUniformLocation(program, "light_directions")!,
+            LightDetails: gl.getUniformLocation(program, "light_details")!,
             VertexPosition: gl.getAttribLocation(program, "position")!,
             VertexTexcoord: gl.getAttribLocation(program, "texcoord")!,
         },

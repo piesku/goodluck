@@ -9,6 +9,7 @@ import {mat2_deferred_post_shading} from "./materials/mat2_deferred_post_shading
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_move} from "./systems/sys_control_move.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
+import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_render_deferred} from "./systems/sys_render_deferred.js";
 import {sys_render_postprocess} from "./systems/sys_render_postprocess.js";
@@ -40,8 +41,7 @@ export class Game {
 
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
-    LightColors = new Float32Array(4 * 8);
-    LightDirections = new Float32Array(4 * 8);
+    LightDetails = new Float32Array(4 * 8);
     Cameras: Array<Camera> = [];
 
     constructor() {
@@ -72,6 +72,7 @@ export class Game {
         sys_move(this, delta);
         sys_transform(this, delta);
         sys_camera(this, delta);
+        sys_light(this, delta);
         sys_render_deferred(this, delta);
         sys_render_postprocess(this, delta);
         sys_framerate(this, delta, performance.now() - now);

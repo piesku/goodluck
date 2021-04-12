@@ -2,8 +2,9 @@ import {
     GL_DATA_UNSIGNED_BYTE,
     GL_DATA_UNSIGNED_INT,
     GL_DEPTH_COMPONENT,
-    GL_DEPTH_COMPONENT16,
+    GL_DEPTH_COMPONENT24,
     GL_LINEAR,
+    GL_NEAREST,
     GL_NEAREST_MIPMAP_LINEAR,
     GL_PIXEL_UNSIGNED_BYTE,
     GL_REPEAT,
@@ -99,7 +100,7 @@ export function resize_texture_depth(
     gl.texImage2D(
         GL_TEXTURE_2D,
         0,
-        GL_DEPTH_COMPONENT16,
+        GL_DEPTH_COMPONENT24,
         width,
         height,
         0,
@@ -108,8 +109,8 @@ export function resize_texture_depth(
         null
     );
 
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     return texture;
 }

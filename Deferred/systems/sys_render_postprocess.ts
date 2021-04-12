@@ -29,8 +29,7 @@ export function sys_render_postprocess(game: Game, delta: number) {
     game.Gl.uniformMatrix4fv(material.Locations.EyeWorld, false, camera.World);
     game.Gl.uniformMatrix4fv(material.Locations.EyeUnprojection, false, camera.Unprojection);
     game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
-    game.Gl.uniform4fv(material.Locations.LightColors, game.LightColors);
-    game.Gl.uniform4fv(material.Locations.LightDirections, game.LightDirections);
+    game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 
     game.Gl.activeTexture(GL_TEXTURE0);
     game.Gl.bindTexture(GL_TEXTURE_2D, target.RenderTexture);
