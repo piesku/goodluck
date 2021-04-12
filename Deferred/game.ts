@@ -1,17 +1,8 @@
-import {create_texture_depth, create_texture_rgba} from "../common/texture.js";
-import {
-    GL_COLOR_ATTACHMENT0,
-    GL_COLOR_ATTACHMENT1,
-    GL_CULL_FACE,
-    GL_DEPTH_ATTACHMENT,
-    GL_DEPTH_TEST,
-    GL_FRAMEBUFFER,
-    GL_FRAMEBUFFER_COMPLETE,
-    GL_TEXTURE_2D,
-} from "../common/webgl.js";
+import {create_render_target} from "../common/framebuffer.js";
+import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_quad} from "../meshes/quad.js";
-import {Camera, RenderTarget} from "./components/com_camera.js";
+import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./loop.js";
 import {mat2_deferred_colored} from "./materials/mat2_deferred_colored.js";
 import {mat2_deferred_post_shading} from "./materials/mat2_deferred_post_shading.js";
@@ -41,7 +32,10 @@ export class Game {
     MeshCube = mesh_cube(this.Gl);
     MeshQuad = mesh_quad(this.Gl);
 
-    Targets: Record<string, RenderTarget> = {};
+    Targets = {
+        // Create the main framebuffer for deferred rendering.
+        Gbuffer: create_render_target(this.Gl, this.ViewportWidth, this.ViewportHeight),
+    };
     Textures: Record<string, WebGLTexture> = {};
 
     // The rendering pipeline supports 8 lights.
@@ -60,61 +54,6 @@ export class Game {
 
         this.Canvas.width = this.ViewportWidth;
         this.Canvas.height = this.ViewportHeight;
-
-        {
-            // Create the main framebuffer for deferred rendering.
-            let target = {
-                Framebuffer: this.Gl.createFramebuffer()!,
-                Width: this.ViewportWidth,
-                Height: this.ViewportHeight,
-                RenderTexture: create_texture_rgba(
-                    this.Gl,
-                    this.ViewportWidth,
-                    this.ViewportHeight
-                ),
-                NormalsTexture: create_texture_rgba(
-                    this.Gl,
-                    this.ViewportWidth,
-                    this.ViewportHeight
-                ),
-                DepthTexture: create_texture_depth(
-                    this.Gl,
-                    this.ViewportWidth,
-                    this.ViewportHeight
-                ),
-            };
-
-            this.Gl.bindFramebuffer(GL_FRAMEBUFFER, target.Framebuffer);
-            this.Gl.framebufferTexture2D(
-                GL_FRAMEBUFFER,
-                GL_COLOR_ATTACHMENT0,
-                GL_TEXTURE_2D,
-                target.RenderTexture,
-                0
-            );
-            this.Gl.framebufferTexture2D(
-                GL_FRAMEBUFFER,
-                GL_COLOR_ATTACHMENT1,
-                GL_TEXTURE_2D,
-                target.NormalsTexture,
-                0
-            );
-            this.Gl.framebufferTexture2D(
-                GL_FRAMEBUFFER,
-                GL_DEPTH_ATTACHMENT,
-                GL_TEXTURE_2D,
-                target.DepthTexture,
-                0
-            );
-
-            this.Gl.drawBuffers([GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1]);
-
-            if (this.Gl.checkFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-                throw new Error("Failed to set up the framebuffer.");
-            }
-
-            this.Targets.Render = target;
-        }
     }
 
     FrameReset() {

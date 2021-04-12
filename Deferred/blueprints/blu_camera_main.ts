@@ -8,7 +8,7 @@ export function blueprint_camera_main(game: Game): Blueprint {
     return [
         children([
             transform(undefined, [0, 1, 0, 0]),
-            camera_framebuffer_perspective(game.Targets.Render, 1, 0.1, 1000, [0.9, 0.9, 0.9, 1]),
+            camera_framebuffer_perspective(game.Targets.Gbuffer, 1, 0.1, 1000, [0.9, 0.9, 0.9, 1]),
         ]),
     ];
 }

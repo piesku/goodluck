@@ -1,3 +1,4 @@
+import {RenderTarget} from "../../common/framebuffer.js";
 import {create, perspective} from "../../common/mat4.js";
 import {Mat4, Vec4} from "../../common/math.js";
 import {Entity, Game} from "../game.js";
@@ -7,15 +8,6 @@ export type Camera = CameraDisplay | CameraFramebuffer;
 export const enum CameraKind {
     Display,
     Framebuffer,
-}
-
-export interface RenderTarget {
-    Framebuffer: WebGLFramebuffer;
-    Width: number;
-    Height: number;
-    RenderTexture: WebGLTexture;
-    NormalsTexture: WebGLTexture;
-    DepthTexture: WebGLTexture;
 }
 
 export interface CameraEye {

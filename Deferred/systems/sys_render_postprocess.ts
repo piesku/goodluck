@@ -22,7 +22,7 @@ export function sys_render_postprocess(game: Game, delta: number) {
     let camera = game.Cameras[0];
     let material = game.MaterialPostprocessOutline;
     let mesh = game.MeshQuad;
-    let target = game.Targets.Render;
+    let target = game.Targets.Gbuffer;
 
     game.Gl.useProgram(material.Program);
     game.Gl.uniform2f(material.Locations.Dimensions, game.ViewportWidth, game.ViewportHeight);
