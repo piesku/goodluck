@@ -1,5 +1,5 @@
 import {RenderTarget} from "../../common/framebuffer.js";
-import {create, perspective} from "../../common/mat4.js";
+import {create} from "../../common/mat4.js";
 import {Mat4, Vec3, Vec4} from "../../common/math.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
@@ -33,9 +33,6 @@ export function camera_framebuffer_perspective(
     clear_color: Vec4
 ) {
     return (game: Game, entity: Entity) => {
-        let projection = create();
-        perspective(projection, fovy, 1, near, far);
-
         game.World.Signature[entity] |= Has.Camera;
         game.World.Camera[entity] = {
             Kind: CameraKind.Framebuffer,
@@ -44,7 +41,7 @@ export function camera_framebuffer_perspective(
             Near: near,
             Far: far,
             View: create(),
-            Projection: projection,
+            Projection: create(),
             Unprojection: create(),
             Pv: create(),
             Position: [0, 0, 0],
