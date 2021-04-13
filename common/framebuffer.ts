@@ -1,4 +1,4 @@
-import {resize_texture_depth24, resize_texture_rgba8} from "./texture.js";
+import {resize_texture_depth24, resize_texture_rgba32f, resize_texture_rgba8} from "./texture.js";
 import {
     GL_COLOR_ATTACHMENT0,
     GL_COLOR_ATTACHMENT1,
@@ -23,7 +23,7 @@ export function create_render_target(gl: WebGL2RenderingContext, width: number, 
         Width: width,
         Height: height,
         RenderTexture: resize_texture_rgba8(gl, gl.createTexture()!, width, height),
-        NormalsTexture: resize_texture_rgba8(gl, gl.createTexture()!, width, height),
+        NormalsTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
         DepthTexture: resize_texture_depth24(gl, gl.createTexture()!, width, height),
     };
 
@@ -70,6 +70,6 @@ export function resize_render_target(
     target.Height = height;
 
     resize_texture_rgba8(gl, target.RenderTexture, target.Width, target.Height);
-    resize_texture_rgba8(gl, target.NormalsTexture, target.Width, target.Height);
+    resize_texture_rgba32f(gl, target.NormalsTexture, target.Width, target.Height);
     resize_texture_depth24(gl, target.DepthTexture, target.Width, target.Height);
 }

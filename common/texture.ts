@@ -1,4 +1,5 @@
 import {
+    GL_DATA_FLOAT,
     GL_DATA_UNSIGNED_BYTE,
     GL_DATA_UNSIGNED_INT,
     GL_DEPTH_COMPONENT,
@@ -9,6 +10,7 @@ import {
     GL_PIXEL_UNSIGNED_BYTE,
     GL_REPEAT,
     GL_RGBA,
+    GL_RGBA32F,
     GL_RGBA8,
     GL_TEXTURE_2D,
     GL_TEXTURE_MAG_FILTER,
@@ -48,6 +50,21 @@ export function create_texture_from(gl: WebGLRenderingContext, image: HTMLImageE
     // GL_REPEAT is the default; make it explicit.
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    return texture;
+}
+
+export function resize_texture_rgba32f(
+    gl: WebGLRenderingContext,
+    texture: WebGLTexture,
+    width: number,
+    height: number
+) {
+    gl.bindTexture(GL_TEXTURE_2D, texture);
+    gl.texImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_DATA_FLOAT, null);
+
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     return texture;
 }

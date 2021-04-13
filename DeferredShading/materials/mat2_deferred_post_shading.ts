@@ -30,15 +30,8 @@ let fragment = `#version 300 es\n
     in vec2 vert_texcoord;
     out vec4 frag_color;
 
-    vec3 normal_at(vec2 uv) {
-        return texture(normal_map, uv).xyz * 2.0 - 1.0;
-    }
-
-    float depth_at(vec2 uv) {
-        return texture(depth_map, uv).x;
-    }
-
-    vec3 world_position_at(vec2 uv, float z) {
+    vec3 world_position_at(vec2 uv) {
+        float z = texture(depth_map, uv).x;
         vec4 clip_position = vec4(uv * 2.0 - 1.0, z * 2.0 - 1.0, 1.0);
         vec4 view_position = eye_unprojection * clip_position;
         view_position /= view_position.w;
@@ -47,14 +40,14 @@ let fragment = `#version 300 es\n
     }
 
     void main() {
-        vec3 current_normal = normal_at(vert_texcoord);
+        vec3 current_normal = texture(normal_map, vert_texcoord).xyz;
         if (current_normal == vec3(0.0, 0.0, 0.0)) {
             // "Black" normals identify fragments with no renderable objects; clear color them.
             discard;
         }
 
         vec4 current_color = texture(color_map, vert_texcoord);
-        vec3 current_position = world_position_at(vert_texcoord, depth_at(vert_texcoord));
+        vec3 current_position = world_position_at(vert_texcoord);
 
         // Ambient light.
         vec3 rgb = current_color.rgb * 0.1;

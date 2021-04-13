@@ -30,7 +30,7 @@ let fragment = `#version 300 es\n
 
     void main() {
         frag_color = color;
-        frag_normal = vert_normal * 0.5 + 0.5;
+        frag_normal = vert_normal;
     }
 `;
 

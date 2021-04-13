@@ -16,7 +16,7 @@ export function scene_stage(game: Game) {
     instantiate(game, [...blueprint_camera_main(game), transform([0, 0, 3], [0, 1, 0, 0])]);
 
     // Directional light.
-    instantiate(game, [transform([1, 1, 1]), light_directional([1, 1, 1], 0.8)]);
+    instantiate(game, [transform([1, 1, 1]), light_directional([1, 1, 1], 0.5)]);
 
     // Point light 1.
     instantiate(game, [transform([-2, 0, 4]), light_point([1, 0, 0], 3)]);
@@ -28,8 +28,7 @@ export function scene_stage(game: Game) {
     instantiate(game, [
         transform([0, 0, 0]),
         control_move(null, [0, 1, 0, 0]),
-        control_move(null, [0.1276794, 0.1448781, 0.2685358, 0.9437144]),
-        move(0, 1),
+        move(0, 0.5),
         render_colored(game.MaterialColored, game.MeshCube, [1, 1, 1, 1]),
     ]);
 }

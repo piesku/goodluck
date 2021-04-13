@@ -8,7 +8,8 @@ export function blueprint_camera_main(game: Game): Blueprint {
     return [
         children([
             transform(undefined, [0, 1, 0, 0]),
-            camera_framebuffer_perspective(game.Targets.Gbuffer, 1, 0.1, 1000, [0.5, 0.5, 0.5, 1]),
+            // Clear color must be black to not leak into the g-buffer.
+            camera_framebuffer_perspective(game.Targets.Gbuffer, 1, 0.1, 1000, [0, 0, 0, 1]),
         ]),
     ];
 }

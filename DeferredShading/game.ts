@@ -49,6 +49,9 @@ export class Game {
             document.hidden ? loop_stop() : loop_start(this)
         );
 
+        // Required for floating point g-buffer textures.
+        this.Gl.getExtension("EXT_color_buffer_float");
+
         this.Gl.enable(GL_DEPTH_TEST);
         this.Gl.enable(GL_CULL_FACE);
 
