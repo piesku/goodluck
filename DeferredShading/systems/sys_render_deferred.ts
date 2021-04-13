@@ -50,7 +50,7 @@ function render_framebuffer(game: Game, camera: CameraFramebuffer) {
     game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
     game.Gl.clearColor(...camera.ClearColor);
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    render(game, camera, camera.Target.RenderTexture);
+    render(game, camera, camera.Target.DiffuseTexture);
 }
 
 function render(game: Game, eye: CameraEye, current_target?: WebGLTexture) {

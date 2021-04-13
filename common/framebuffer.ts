@@ -12,8 +12,8 @@ export interface RenderTarget {
     Framebuffer: WebGLFramebuffer;
     Width: number;
     Height: number;
-    RenderTexture: WebGLTexture;
-    NormalsTexture: WebGLTexture;
+    DiffuseTexture: WebGLTexture;
+    NormalTexture: WebGLTexture;
     DepthTexture: WebGLTexture;
 }
 
@@ -22,8 +22,8 @@ export function create_render_target(gl: WebGL2RenderingContext, width: number, 
         Framebuffer: gl.createFramebuffer()!,
         Width: width,
         Height: height,
-        RenderTexture: resize_texture_rgba8(gl, gl.createTexture()!, width, height),
-        NormalsTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
+        DiffuseTexture: resize_texture_rgba8(gl, gl.createTexture()!, width, height),
+        NormalTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
         DepthTexture: resize_texture_depth24(gl, gl.createTexture()!, width, height),
     };
 
@@ -32,14 +32,14 @@ export function create_render_target(gl: WebGL2RenderingContext, width: number, 
         GL_FRAMEBUFFER,
         GL_COLOR_ATTACHMENT0,
         GL_TEXTURE_2D,
-        target.RenderTexture,
+        target.DiffuseTexture,
         0
     );
     gl.framebufferTexture2D(
         GL_FRAMEBUFFER,
         GL_COLOR_ATTACHMENT1,
         GL_TEXTURE_2D,
-        target.NormalsTexture,
+        target.NormalTexture,
         0
     );
     gl.framebufferTexture2D(
@@ -69,7 +69,7 @@ export function resize_render_target(
     target.Width = width;
     target.Height = height;
 
-    resize_texture_rgba8(gl, target.RenderTexture, target.Width, target.Height);
-    resize_texture_rgba32f(gl, target.NormalsTexture, target.Width, target.Height);
+    resize_texture_rgba8(gl, target.DiffuseTexture, target.Width, target.Height);
+    resize_texture_rgba32f(gl, target.NormalTexture, target.Width, target.Height);
     resize_texture_depth24(gl, target.DepthTexture, target.Width, target.Height);
 }

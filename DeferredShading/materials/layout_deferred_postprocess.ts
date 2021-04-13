@@ -3,7 +3,7 @@ export interface DeferredPostprocessLayout {
     Dimensions: WebGLUniformLocation;
     EyeWorld: WebGLUniformLocation;
     EyeUnprojection: WebGLUniformLocation;
-    ColorMap: WebGLUniformLocation;
+    DiffuseMap: WebGLUniformLocation;
     NormalMap: WebGLUniformLocation;
     DepthMap: WebGLUniformLocation;
     LightPositions: WebGLUniformLocation;

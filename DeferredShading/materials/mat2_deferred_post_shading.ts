@@ -21,7 +21,7 @@ let fragment = `#version 300 es\n
     uniform vec2 dimensions;
     uniform mat4 eye_world;
     uniform mat4 eye_unprojection;
-    uniform sampler2D color_map;
+    uniform sampler2D diffuse_map;
     uniform sampler2D normal_map;
     uniform sampler2D depth_map;
     uniform vec4 light_positions[MAX_LIGHTS];
@@ -46,7 +46,7 @@ let fragment = `#version 300 es\n
             discard;
         }
 
-        vec4 current_color = texture(color_map, vert_texcoord);
+        vec4 current_color = texture(diffuse_map, vert_texcoord);
         vec3 current_position = world_position_at(vert_texcoord);
 
         // Ambient light.
@@ -97,7 +97,7 @@ export function mat2_deferred_post_shading(
             Dimensions: gl.getUniformLocation(program, "dimensions")!,
             EyeWorld: gl.getUniformLocation(program, "eye_world")!,
             EyeUnprojection: gl.getUniformLocation(program, "eye_unprojection")!,
-            ColorMap: gl.getUniformLocation(program, "color_map")!,
+            DiffuseMap: gl.getUniformLocation(program, "diffuse_map")!,
             NormalMap: gl.getUniformLocation(program, "normal_map")!,
             DepthMap: gl.getUniformLocation(program, "depth_map")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,

@@ -32,11 +32,11 @@ export function sys_render_postprocess(game: Game, delta: number) {
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 
     game.Gl.activeTexture(GL_TEXTURE0);
-    game.Gl.bindTexture(GL_TEXTURE_2D, target.RenderTexture);
-    game.Gl.uniform1i(material.Locations.ColorMap, 0);
+    game.Gl.bindTexture(GL_TEXTURE_2D, target.DiffuseTexture);
+    game.Gl.uniform1i(material.Locations.DiffuseMap, 0);
 
     game.Gl.activeTexture(GL_TEXTURE1);
-    game.Gl.bindTexture(GL_TEXTURE_2D, target.NormalsTexture);
+    game.Gl.bindTexture(GL_TEXTURE_2D, target.NormalTexture);
     game.Gl.uniform1i(material.Locations.NormalMap, 1);
 
     game.Gl.activeTexture(GL_TEXTURE2);
