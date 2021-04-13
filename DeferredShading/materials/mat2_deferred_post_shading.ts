@@ -18,7 +18,9 @@ let fragment = `#version 300 es\n
 
     const int MAX_LIGHTS = 8;
 
+    uniform vec3 eye;
     uniform sampler2D diffuse_map;
+    uniform sampler2D specular_map;
     uniform sampler2D position_map;
     uniform sampler2D normal_map;
     uniform sampler2D depth_map;
@@ -35,11 +37,15 @@ let fragment = `#version 300 es\n
             discard;
         }
 
-        vec4 current_color = texture(diffuse_map, vert_texcoord);
+        vec4 current_diffuse = texture(diffuse_map, vert_texcoord);
+        vec4 current_specular = texture(specular_map, vert_texcoord);
         vec4 current_position = texture(position_map, vert_texcoord);
 
+        vec3 view_dir = eye - current_position.xyz;
+        vec3 view_normal = normalize(view_dir);
+
         // Ambient light.
-        vec3 rgb = current_color.rgb * 0.1;
+        vec3 rgb = current_diffuse.rgb * 0.1;
 
         for (int i = 0; i < MAX_LIGHTS; i++) {
             int light_kind = int(light_positions[i].w);
@@ -67,7 +73,17 @@ let fragment = `#version 300 es\n
             float diffuse_factor = dot(current_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
-                rgb += current_color.rgb * diffuse_factor * light_rgb * light_intensity;
+                rgb += current_diffuse.rgb * diffuse_factor * light_rgb * light_intensity;
+
+                if (current_specular.a > 0.0) {
+                    // For non-zero shininess, apply the Blinn-Phong reflection model.
+                    vec3 h = normalize(light_normal + view_normal);
+                    float specular_angle = max(dot(h, current_normal), 0.0);
+                    float specular_factor = pow(specular_angle, current_specular.a);
+
+                    // Specular color.
+                    rgb += current_specular.rgb * specular_factor * light_rgb * light_intensity;
+                }
             }
         }
 
@@ -83,7 +99,9 @@ export function mat2_deferred_post_shading(
         Mode: GL_TRIANGLES,
         Program: program,
         Locations: {
+            Eye: gl.getUniformLocation(program, "eye")!,
             DiffuseMap: gl.getUniformLocation(program, "diffuse_map")!,
+            SpecularMap: gl.getUniformLocation(program, "specular_map")!,
             PositionMap: gl.getUniformLocation(program, "position_map")!,
             NormalMap: gl.getUniformLocation(program, "normal_map")!,
             DepthMap: gl.getUniformLocation(program, "depth_map")!,

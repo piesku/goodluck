@@ -3,7 +3,9 @@ export interface DeferredColoredLayout {
     Pv: WebGLUniformLocation;
     World: WebGLUniformLocation;
     Self: WebGLUniformLocation;
-    Color: WebGLUniformLocation;
+    ColorDiffuse: WebGLUniformLocation;
+    ColorSpecular: WebGLUniformLocation;
+    Shininess: WebGLUniformLocation;
     // Attributes
     VertexPosition: GLint;
     VertexNormal: GLint;

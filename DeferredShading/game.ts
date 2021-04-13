@@ -1,6 +1,8 @@
 import {create_render_target, RenderTarget} from "../common/framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
+import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
+import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {mesh_quad} from "../meshes/quad.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./loop.js";
@@ -31,6 +33,8 @@ export class Game {
     MaterialColored = mat2_deferred_colored(this.Gl);
     MaterialPostprocessOutline = mat2_deferred_post_shading(this.Gl);
     MeshCube = mesh_cube(this.Gl);
+    MeshSphereSmooth = mesh_icosphere_smooth(this.Gl);
+    MeshSphereFlat = mesh_icosphere_flat(this.Gl);
     MeshQuad = mesh_quad(this.Gl);
 
     Targets: {

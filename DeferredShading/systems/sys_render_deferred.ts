@@ -94,7 +94,9 @@ function use_colored_unlit(game: Game, material: Material<DeferredColoredLayout>
 function draw_colored_unlit(game: Game, transform: Transform, render: RenderColored) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
-    game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
+    game.Gl.uniform4fv(render.Material.Locations.ColorDiffuse, render.ColorDiffuse);
+    game.Gl.uniform3fv(render.Material.Locations.ColorSpecular, render.ColorSpecular);
+    game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
 
     game.Gl.bindVertexArray(render.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);

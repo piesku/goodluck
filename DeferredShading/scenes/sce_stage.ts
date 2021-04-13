@@ -19,16 +19,16 @@ export function scene_stage(game: Game) {
     instantiate(game, [transform([1, 1, 1]), light_directional([1, 1, 1], 0.5)]);
 
     // Point light 1.
-    instantiate(game, [transform([-2, 0, 4]), light_point([1, 0, 0], 3)]);
+    instantiate(game, [transform([-3, 0, 4]), light_point([1, 0, 0], 3)]);
 
     // Point light 2.
-    instantiate(game, [transform([2, 0, 4]), light_point([0, 0, 1], 3)]);
+    instantiate(game, [transform([3, 0, 4]), light_point([0, 0, 1], 3)]);
 
-    // Box.
+    // Sphere.
     instantiate(game, [
-        transform([0, 0, 0]),
+        transform([0, 0, 0], undefined, [1, 1, 1]),
         control_move(null, [0, 1, 0, 0]),
         move(0, 0.5),
-        render_colored(game.MaterialColored, game.MeshCube, [1, 1, 1, 1]),
+        render_colored(game.MaterialColored, game.MeshSphereSmooth, [1, 1, 1, 1], [1, 1, 1], 100),
     ]);
 }

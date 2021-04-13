@@ -1,5 +1,5 @@
 import {Material, Mesh} from "../../common/material.js";
-import {Vec4} from "../../common/math.js";
+import {Vec3, Vec4} from "../../common/math.js";
 import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
 import {Entity, Game} from "../game.js";
 import {DeferredColoredLayout} from "../materials/layout_deferred_colored.js";
@@ -12,12 +12,14 @@ export const enum RenderKind {
 }
 
 export interface RenderColored {
-    readonly Kind: RenderKind.DeferredColored;
-    readonly Material: Material<DeferredColoredLayout>;
-    readonly Mesh: Mesh;
-    readonly FrontFace: GLenum;
-    readonly Vao: WebGLVertexArrayObject;
-    Color: Vec4;
+    Kind: RenderKind.DeferredColored;
+    Material: Material<DeferredColoredLayout>;
+    Mesh: Mesh;
+    FrontFace: GLenum;
+    Vao: WebGLVertexArrayObject;
+    ColorDiffuse: Vec4;
+    ColorSpecular: Vec3;
+    Shininess: number;
 }
 
 let colored_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
@@ -25,7 +27,9 @@ let colored_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 export function render_colored(
     material: Material<DeferredColoredLayout>,
     mesh: Mesh,
-    color: Vec4,
+    color_diffuse: Vec4,
+    color_specular: Vec3,
+    shininess: number,
     front_face: GLenum = GL_CW
 ) {
     return (game: Game, entity: Entity) => {
@@ -62,7 +66,9 @@ export function render_colored(
             Mesh: mesh,
             FrontFace: front_face,
             Vao: colored_vaos.get(mesh)!,
-            Color: color,
+            ColorDiffuse: color_diffuse,
+            ColorSpecular: color_specular,
+            Shininess: shininess,
         };
     };
 }
