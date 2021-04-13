@@ -8,6 +8,7 @@ import {
     GL_TEXTURE0,
     GL_TEXTURE1,
     GL_TEXTURE2,
+    GL_TEXTURE3,
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
@@ -36,12 +37,16 @@ export function sys_render_postprocess(game: Game, delta: number) {
     game.Gl.uniform1i(material.Locations.DiffuseMap, 0);
 
     game.Gl.activeTexture(GL_TEXTURE1);
-    game.Gl.bindTexture(GL_TEXTURE_2D, target.NormalTexture);
-    game.Gl.uniform1i(material.Locations.NormalMap, 1);
+    game.Gl.bindTexture(GL_TEXTURE_2D, target.PositionTexture);
+    game.Gl.uniform1i(material.Locations.PositionMap, 1);
 
     game.Gl.activeTexture(GL_TEXTURE2);
+    game.Gl.bindTexture(GL_TEXTURE_2D, target.NormalTexture);
+    game.Gl.uniform1i(material.Locations.NormalMap, 2);
+
+    game.Gl.activeTexture(GL_TEXTURE3);
     game.Gl.bindTexture(GL_TEXTURE_2D, target.DepthTexture);
-    game.Gl.uniform1i(material.Locations.DepthMap, 2);
+    game.Gl.uniform1i(material.Locations.DepthMap, 3);
 
     game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
     game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);

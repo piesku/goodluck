@@ -22,6 +22,7 @@ let fragment = `#version 300 es\n
     uniform mat4 eye_world;
     uniform mat4 eye_unprojection;
     uniform sampler2D diffuse_map;
+    uniform sampler2D position_map;
     uniform sampler2D normal_map;
     uniform sampler2D depth_map;
     uniform vec4 light_positions[MAX_LIGHTS];
@@ -29,15 +30,6 @@ let fragment = `#version 300 es\n
 
     in vec2 vert_texcoord;
     out vec4 frag_color;
-
-    vec3 world_position_at(vec2 uv) {
-        float z = texture(depth_map, uv).x;
-        vec4 clip_position = vec4(uv * 2.0 - 1.0, z * 2.0 - 1.0, 1.0);
-        vec4 view_position = eye_unprojection * clip_position;
-        view_position /= view_position.w;
-        vec4 world_position = eye_world * view_position;
-        return world_position.xyz;
-    }
 
     void main() {
         vec3 current_normal = texture(normal_map, vert_texcoord).xyz;
@@ -47,7 +39,7 @@ let fragment = `#version 300 es\n
         }
 
         vec4 current_color = texture(diffuse_map, vert_texcoord);
-        vec3 current_position = world_position_at(vert_texcoord);
+        vec4 current_position = texture(position_map, vert_texcoord);
 
         // Ambient light.
         vec3 rgb = current_color.rgb * 0.1;
@@ -68,7 +60,7 @@ let fragment = `#version 300 es\n
                 light_normal = light_positions[i].xyz;
             } else if (light_kind == 2) {
                 // Point light.
-                vec3 light_dir = light_positions[i].xyz - current_position;
+                vec3 light_dir = light_positions[i].xyz - current_position.xyz;
                 float light_dist = length(light_dir);
                 light_normal = light_dir / light_dist;
                 // Distance attenuation.
@@ -98,6 +90,7 @@ export function mat2_deferred_post_shading(
             EyeWorld: gl.getUniformLocation(program, "eye_world")!,
             EyeUnprojection: gl.getUniformLocation(program, "eye_unprojection")!,
             DiffuseMap: gl.getUniformLocation(program, "diffuse_map")!,
+            PositionMap: gl.getUniformLocation(program, "position_map")!,
             NormalMap: gl.getUniformLocation(program, "normal_map")!,
             DepthMap: gl.getUniformLocation(program, "depth_map")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,

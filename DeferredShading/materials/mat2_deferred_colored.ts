@@ -10,10 +10,12 @@ let vertex = `#version 300 es\n
     in vec3 position;
     in vec3 normal;
 
+    out vec4 vert_position;
     out vec3 vert_normal;
 
     void main() {
-        gl_Position = pv * world * vec4(position, 1.0);
+        vert_position = world * vec4(position, 1.0);
+        gl_Position = pv * vert_position;
         vert_normal = normalize((vec4(normal, 1.0) * self).xyz);
     }
 `;
@@ -23,13 +25,16 @@ let fragment = `#version 300 es\n
 
     uniform vec4 color;
 
+    in vec4 vert_position;
     in vec3 vert_normal;
 
     layout(location = 0) out vec4 frag_color;
-    layout(location = 1) out vec3 frag_normal;
+    layout(location = 1) out vec4 frag_position;
+    layout(location = 2) out vec3 frag_normal;
 
     void main() {
         frag_color = color;
+        frag_position = vert_position;
         frag_normal = vert_normal;
     }
 `;
