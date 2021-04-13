@@ -1,4 +1,4 @@
-import {create_render_target} from "../common/framebuffer.js";
+import {create_render_target, RenderTarget} from "../common/framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_quad} from "../meshes/quad.js";
@@ -33,9 +33,8 @@ export class Game {
     MeshCube = mesh_cube(this.Gl);
     MeshQuad = mesh_quad(this.Gl);
 
-    Targets = {
-        // Create the main framebuffer for deferred rendering.
-        Gbuffer: create_render_target(this.Gl, this.ViewportWidth, this.ViewportHeight),
+    Targets: {
+        Gbuffer: RenderTarget;
     };
     Textures: Record<string, WebGLTexture> = {};
 
@@ -51,6 +50,10 @@ export class Game {
 
         // Required for floating point g-buffer textures.
         this.Gl.getExtension("EXT_color_buffer_float");
+        this.Targets = {
+            // Create the main framebuffer for deferred rendering.
+            Gbuffer: create_render_target(this.Gl, this.ViewportWidth, this.ViewportHeight),
+        };
 
         this.Gl.enable(GL_DEPTH_TEST);
         this.Gl.enable(GL_CULL_FACE);
