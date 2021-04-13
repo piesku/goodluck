@@ -26,9 +26,6 @@ export function sys_render_postprocess(game: Game, delta: number) {
     let target = game.Targets.Gbuffer;
 
     game.Gl.useProgram(material.Program);
-    game.Gl.uniform2f(material.Locations.Dimensions, game.ViewportWidth, game.ViewportHeight);
-    game.Gl.uniformMatrix4fv(material.Locations.EyeWorld, false, camera.World);
-    game.Gl.uniformMatrix4fv(material.Locations.EyeUnprojection, false, camera.Unprojection);
     game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 

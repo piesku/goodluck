@@ -18,9 +18,6 @@ let fragment = `#version 300 es\n
 
     const int MAX_LIGHTS = 8;
 
-    uniform vec2 dimensions;
-    uniform mat4 eye_world;
-    uniform mat4 eye_unprojection;
     uniform sampler2D diffuse_map;
     uniform sampler2D position_map;
     uniform sampler2D normal_map;
@@ -86,9 +83,6 @@ export function mat2_deferred_post_shading(
         Mode: GL_TRIANGLES,
         Program: program,
         Locations: {
-            Dimensions: gl.getUniformLocation(program, "dimensions")!,
-            EyeWorld: gl.getUniformLocation(program, "eye_world")!,
-            EyeUnprojection: gl.getUniformLocation(program, "eye_unprojection")!,
             DiffuseMap: gl.getUniformLocation(program, "diffuse_map")!,
             PositionMap: gl.getUniformLocation(program, "position_map")!,
             NormalMap: gl.getUniformLocation(program, "normal_map")!,
