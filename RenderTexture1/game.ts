@@ -1,4 +1,4 @@
-import {create_render_buffer, create_texture_rgba} from "../common/texture.js";
+import {create_render_buffer, resize_texture_rgba} from "../common/texture.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_textured_unlit} from "../materials/mat1_textured_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
@@ -31,7 +31,7 @@ export class Game {
     MeshPlane = mesh_plane(this.Gl);
 
     Textures: Record<string, WebGLTexture> = {
-        Minimap: create_texture_rgba(this.Gl, 256, 256),
+        Minimap: resize_texture_rgba(this.Gl, this.Gl.createTexture()!, 256, 256),
     };
     RenderBuffers: Record<string, WebGLRenderbuffer> = {
         Minimap: create_render_buffer(this.Gl, 256, 256),
