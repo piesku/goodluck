@@ -54,17 +54,28 @@ export function create_texture_from(gl: WebGLRenderingContext, image: HTMLImageE
     return texture;
 }
 
-export function resize_texture_rgba32f(
+// In WebGL1, the internal format must be the same as the data format (GL_RGBA).
+export function resize_texture_rgba(
     gl: WebGLRenderingContext,
     texture: WebGLTexture,
     width: number,
     height: number
 ) {
     gl.bindTexture(GL_TEXTURE_2D, texture);
-    gl.texImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_DATA_FLOAT, null);
+    gl.texImage2D(
+        GL_TEXTURE_2D,
+        0,
+        GL_RGBA,
+        width,
+        height,
+        0,
+        GL_RGBA,
+        GL_DATA_UNSIGNED_BYTE,
+        null
+    );
 
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     return texture;
 }
@@ -94,9 +105,19 @@ export function resize_texture_rgba8(
     return texture;
 }
 
-export function create_texture_rgba(gl: WebGLRenderingContext, width: number, height: number) {
-    let texture = gl.createTexture()!;
-    return resize_texture_rgba8(gl, texture, width, height);
+export function resize_texture_rgba32f(
+    gl: WebGLRenderingContext,
+    texture: WebGLTexture,
+    width: number,
+    height: number
+) {
+    gl.bindTexture(GL_TEXTURE_2D, texture);
+    gl.texImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_DATA_FLOAT, null);
+
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    return texture;
 }
 
 export function create_render_buffer(gl: WebGLRenderingContext, width: number, height: number) {
@@ -131,11 +152,6 @@ export function resize_texture_depth24(
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     return texture;
-}
-
-export function create_texture_depth(gl: WebGL2RenderingContext, width: number, height: number) {
-    let texture = gl.createTexture()!;
-    return resize_texture_depth24(gl, texture, width, height);
 }
 
 function is_power_of_2(value: number) {
