@@ -6,7 +6,7 @@ import {
     GL_FRAMEBUFFER,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {CameraDisplay, CameraEye, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
+import {CameraEye, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
 import {RenderColored, RenderKind} from "../components/com_render_deferred.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
@@ -27,9 +27,6 @@ export function sys_render_deferred(game: Game, delta: number) {
 
     for (let camera of game.Cameras) {
         switch (camera.Kind) {
-            case CameraKind.Display:
-                render_display(game, camera);
-                break;
             case CameraKind.Framebuffer:
                 render_framebuffer(game, camera);
                 break;
@@ -37,23 +34,15 @@ export function sys_render_deferred(game: Game, delta: number) {
     }
 }
 
-function render_display(game: Game, camera: CameraDisplay) {
-    game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
-    game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
-    game.Gl.clearColor(...camera.ClearColor);
-    game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    render(game, camera);
-}
-
 function render_framebuffer(game: Game, camera: CameraFramebuffer) {
     game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target.Framebuffer);
     game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
     game.Gl.clearColor(...camera.ClearColor);
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    render(game, camera, camera.Target.DiffuseTexture);
+    render(game, camera);
 }
 
-function render(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
+function render(game: Game, eye: CameraEye) {
     // Keep track of the current material to minimize switching.
     let current_material = null;
     let current_front_face = null;
