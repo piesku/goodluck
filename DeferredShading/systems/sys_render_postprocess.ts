@@ -16,7 +16,7 @@ import {Game} from "../game.js";
 export function sys_render_postprocess(game: Game, delta: number) {
     game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
     game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
-    game.Gl.clearColor(0, 0, 0, 1);
+    game.Gl.clearColor(0.9, 0.9, 0.9, 1);
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     let camera = game.Cameras[0];

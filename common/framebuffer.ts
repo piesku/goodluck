@@ -1,9 +1,4 @@
-import {
-    create_texture_depth,
-    create_texture_rgba,
-    resize_texture_depth,
-    resize_texture_rgba,
-} from "./texture.js";
+import {resize_texture_depth24, resize_texture_rgba8} from "./texture.js";
 import {
     GL_COLOR_ATTACHMENT0,
     GL_COLOR_ATTACHMENT1,
@@ -23,13 +18,13 @@ export interface RenderTarget {
 }
 
 export function create_render_target(gl: WebGL2RenderingContext, width: number, height: number) {
-    let target = {
+    let target: RenderTarget = {
         Framebuffer: gl.createFramebuffer()!,
         Width: width,
         Height: height,
-        RenderTexture: create_texture_rgba(gl, width, height),
-        NormalsTexture: create_texture_rgba(gl, width, height),
-        DepthTexture: create_texture_depth(gl, width, height),
+        RenderTexture: resize_texture_rgba8(gl, gl.createTexture()!, width, height),
+        NormalsTexture: resize_texture_rgba8(gl, gl.createTexture()!, width, height),
+        DepthTexture: resize_texture_depth24(gl, gl.createTexture()!, width, height),
     };
 
     gl.bindFramebuffer(GL_FRAMEBUFFER, target.Framebuffer);
@@ -57,8 +52,9 @@ export function create_render_target(gl: WebGL2RenderingContext, width: number, 
 
     gl.drawBuffers([GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1]);
 
-    if (gl.checkFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        throw new Error("Failed to set up the framebuffer.");
+    let status = gl.checkFramebufferStatus(GL_FRAMEBUFFER);
+    if (status != GL_FRAMEBUFFER_COMPLETE) {
+        throw new Error(`Failed to set up the framebuffer (${status}).`);
     }
 
     return target;
@@ -73,7 +69,7 @@ export function resize_render_target(
     target.Width = width;
     target.Height = height;
 
-    resize_texture_rgba(gl, target.RenderTexture, target.Width, target.Height);
-    resize_texture_rgba(gl, target.NormalsTexture, target.Width, target.Height);
-    resize_texture_depth(gl, target.DepthTexture, target.Width, target.Height);
+    resize_texture_rgba8(gl, target.RenderTexture, target.Width, target.Height);
+    resize_texture_rgba8(gl, target.NormalsTexture, target.Width, target.Height);
+    resize_texture_depth24(gl, target.DepthTexture, target.Width, target.Height);
 }
