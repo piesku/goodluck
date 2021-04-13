@@ -24,11 +24,31 @@ export function scene_stage(game: Game) {
     // Point light 2.
     instantiate(game, [transform([3, 0, 4]), light_point([0, 0, 1], 3)]);
 
-    // Sphere.
     instantiate(game, [
-        transform([0, 0, 0], undefined, [1, 1, 1]),
+        transform([-0.7, 0.7, 0], undefined, [1, 1, 1]),
+        control_move(null, [0, 1, 0, 0]),
+        move(0, 0.5),
+        render_colored(game.MaterialColored, game.MeshSphereFlat, [1, 1, 1, 1], [1, 1, 1], 100),
+    ]);
+
+    instantiate(game, [
+        transform([0.7, 0.7, 0], undefined, [1, 1, 1]),
+        control_move(null, [0, 1, 0, 0]),
+        move(0, 0.5),
+        render_colored(game.MaterialColored, game.MeshSphereFlat, [1, 1, 1, 1], [1, 1, 1], 1000),
+    ]);
+
+    instantiate(game, [
+        transform([-0.7, -0.7, 0], undefined, [1, 1, 1]),
         control_move(null, [0, 1, 0, 0]),
         move(0, 0.5),
         render_colored(game.MaterialColored, game.MeshSphereSmooth, [1, 1, 1, 1], [1, 1, 1], 100),
+    ]);
+
+    instantiate(game, [
+        transform([0.7, -0.7, 0], undefined, [1, 1, 1]),
+        control_move(null, [0, 1, 0, 0]),
+        move(0, 0.5),
+        render_colored(game.MaterialColored, game.MeshSphereSmooth, [1, 1, 1, 1], [1, 1, 1], 1000),
     ]);
 }
