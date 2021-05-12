@@ -2,7 +2,7 @@ import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_colored_gouraud} from "../materials/mat1_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./loop.js";
+import {loop_start, loop_stop} from "./impl.js";
 import {sys_animate} from "./systems/sys_animate.js";
 import {sys_audio_listener} from "./systems/sys_audio_listener.js";
 import {sys_audio_source} from "./systems/sys_audio_source.js";

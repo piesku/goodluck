@@ -7,8 +7,8 @@ import {named} from "../components/com_named.js";
 import {render_colored_shaded} from "../components/com_render1.js";
 import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
 import {transform} from "../components/com_transform.js";
-import {Blueprint} from "../entity.js";
 import {Game, Layer} from "../game.js";
+import {Blueprint} from "../impl.js";
 
 export function blueprint_player(game: Game): Blueprint {
     return [

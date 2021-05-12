@@ -1,5 +1,5 @@
 import {Game} from "./game.js";
-import {loop_start, loop_stop} from "./loop.js";
+import {loop_start, loop_stop} from "./impl_ext.js";
 
 export async function xr_init(game: Game) {
     game.XrSupported = await navigator.xr.isSessionSupported("immersive-vr");

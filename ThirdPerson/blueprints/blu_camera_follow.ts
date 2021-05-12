@@ -3,8 +3,8 @@ import {children} from "../components/com_children.js";
 import {mimic} from "../components/com_mimic.js";
 import {find_first} from "../components/com_named.js";
 import {transform} from "../components/com_transform.js";
-import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
+import {Blueprint} from "../impl.js";
 
 export function blueprint_camera_follow(game: Game): Blueprint {
     return [

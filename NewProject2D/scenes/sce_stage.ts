@@ -1,7 +1,7 @@
 import {draw_rect} from "../components/com_draw.js";
 import {transform2d} from "../components/com_transform2d.js";
-import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
+import {instantiate} from "../impl.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {

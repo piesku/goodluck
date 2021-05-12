@@ -8,8 +8,8 @@ import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {transform} from "../components/com_transform.js";
 import {trigger} from "../components/com_trigger.js";
-import {instantiate} from "../entity.js";
 import {Game, Layer} from "../game.js";
+import {instantiate} from "../impl.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {

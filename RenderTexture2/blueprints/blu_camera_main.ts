@@ -1,8 +1,8 @@
 import {camera_display_perspective} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {transform} from "../components/com_transform.js";
-import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
+import {Blueprint} from "../impl.js";
 
 export function blueprint_camera_main(game: Game): Blueprint {
     return [

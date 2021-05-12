@@ -8,7 +8,7 @@ import {mat1_textured_phong} from "../materials/mat1_textured_phong.js";
 import {mat1_textured_unlit} from "../materials/mat1_textured_unlit.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./loop.js";
+import {loop_start, loop_stop} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
 import {sys_framerate} from "./systems/sys_framerate.js";

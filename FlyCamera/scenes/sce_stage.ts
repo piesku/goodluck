@@ -4,8 +4,8 @@ import {draw_text} from "../components/com_draw.js";
 import {light_directional} from "../components/com_light.js";
 import {render_colored_shaded} from "../components/com_render1.js";
 import {transform} from "../components/com_transform.js";
-import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
+import {instantiate} from "../impl.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {

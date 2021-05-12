@@ -3,8 +3,8 @@ import {children} from "../components/com_children.js";
 import {control_player} from "../components/com_control_player.js";
 import {move} from "../components/com_move.js";
 import {transform} from "../components/com_transform.js";
-import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
+import {Blueprint} from "../impl.js";
 
 export function blueprint_camera_fly(game: Game): Blueprint {
     return [

@@ -12,8 +12,8 @@ import {pickable} from "../components/com_pickable.js";
 import {render_colored_shaded, render_colored_unlit} from "../components/com_render1.js";
 import {selectable} from "../components/com_selectable.js";
 import {transform} from "../components/com_transform.js";
-import {instantiate} from "../entity.js";
 import {Game, Layer} from "../game.js";
+import {instantiate} from "../impl.js";
 import {nav_bake} from "../navmesh.js";
 import {Has, World} from "../world.js";
 
