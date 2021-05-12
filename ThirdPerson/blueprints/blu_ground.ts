@@ -13,12 +13,11 @@ export function blueprint_ground(game: Game): Blueprint {
         rigid_body(RigidKind.Static),
         children([
             transform([0, float(-0.2, 0.2), 0]),
-            render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [
-                1,
-                1,
-                0.3,
-                1,
-            ]),
+            render_colored_diffuse(
+                game.MaterialColoredDiffuseGouraud,
+                game.MeshCube,
+                [1, 1, 0.3, 1]
+            ),
         ]),
     ];
 }

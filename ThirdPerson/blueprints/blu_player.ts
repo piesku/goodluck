@@ -20,12 +20,11 @@ export function blueprint_player(game: Game): Blueprint {
             // Body.
             [
                 transform(),
-                render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [
-                    1,
-                    1,
-                    0.3,
-                    1,
-                ]),
+                render_colored_diffuse(
+                    game.MaterialColoredDiffuseGouraud,
+                    game.MeshCube,
+                    [1, 1, 0.3, 1]
+                ),
             ],
             // Camera rig anchor.
             [transform(), named("camera anchor"), move(0, 3), control_player(false, 0, 0.2)],

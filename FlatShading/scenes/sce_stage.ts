@@ -39,24 +39,21 @@ export function scene_stage(game: Game) {
     ]);
 
     let shadings = [
-        render_colored_diffuse(game.MaterialColoredDiffuseFlat, game.MeshIcosphereFlat, [
-            1,
-            1,
-            0,
-            1,
-        ]),
-        render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshIcosphereFlat, [
-            1,
-            1,
-            0,
-            1,
-        ]),
-        render_colored_diffuse(game.MaterialColoredDiffusePhong, game.MeshIcosphereFlat, [
-            1,
-            1,
-            0,
-            1,
-        ]),
+        render_colored_diffuse(
+            game.MaterialColoredDiffuseFlat,
+            game.MeshIcosphereFlat,
+            [1, 1, 0, 1]
+        ),
+        render_colored_diffuse(
+            game.MaterialColoredDiffuseGouraud,
+            game.MeshIcosphereFlat,
+            [1, 1, 0, 1]
+        ),
+        render_colored_diffuse(
+            game.MaterialColoredDiffusePhong,
+            game.MeshIcosphereFlat,
+            [1, 1, 0, 1]
+        ),
 
         render_colored_specular(
             game.MaterialColoredSpecularFlat,

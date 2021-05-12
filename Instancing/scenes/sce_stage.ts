@@ -22,13 +22,10 @@ export function scene_stage(game: Game) {
     // A voxel model.
     instantiate(game, [
         transform(),
-        render_instanced(game.MeshCube, Float32Array.from([0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1]), [
-            1,
-            1,
-            0.3,
-            0.3,
-            1,
-            0.3,
-        ]),
+        render_instanced(
+            game.MeshCube,
+            Float32Array.from([0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1]),
+            [1, 1, 0.3, 0.3, 1, 0.3]
+        ),
     ]);
 }

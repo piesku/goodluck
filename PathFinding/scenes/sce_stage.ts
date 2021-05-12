@@ -35,22 +35,20 @@ export function scene_stage(game: Game) {
     // and have the scale of 1.
     instantiate(game, [
         transform(),
-        render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshTerrain, [
-            0.3,
-            0.3,
-            0.8,
-            1,
-        ]),
+        render_colored_diffuse(
+            game.MaterialColoredDiffuseGouraud,
+            game.MeshTerrain,
+            [0.3, 0.3, 0.8, 1]
+        ),
         pickable(game.MeshTerrain),
         collide(false, Layer.None, Layer.None, [100, 1, 100]),
         children([
             transform([0, 0.1, 0]),
-            render_colored_unlit(game.MaterialColoredUnlitLine, game.MeshTerrain, [
-                0.4,
-                0.4,
-                0.8,
-                1,
-            ]),
+            render_colored_unlit(
+                game.MaterialColoredUnlitLine,
+                game.MeshTerrain,
+                [0.4, 0.4, 0.8, 1]
+            ),
         ]),
     ]);
 
@@ -83,12 +81,11 @@ export function scene_stage(game: Game) {
             [transform(), draw_selection("#ff0"), disable(Has.Draw)],
             [
                 transform(undefined, undefined, [2, 2, 2]),
-                render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [
-                    1,
-                    0,
-                    0,
-                    1,
-                ]),
+                render_colored_diffuse(
+                    game.MaterialColoredDiffuseGouraud,
+                    game.MeshCube,
+                    [1, 0, 0, 1]
+                ),
             ]
         ),
     ]);
@@ -108,12 +105,11 @@ export function scene_stage(game: Game) {
             [transform(), draw_selection("#ff0"), disable(Has.Draw)],
             [
                 transform(undefined, undefined, [2, 2, 2]),
-                render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [
-                    0,
-                    1,
-                    0,
-                    1,
-                ]),
+                render_colored_diffuse(
+                    game.MaterialColoredDiffuseGouraud,
+                    game.MeshCube,
+                    [0, 1, 0, 1]
+                ),
             ]
         ),
     ]);

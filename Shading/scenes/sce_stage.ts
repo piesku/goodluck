@@ -43,37 +43,32 @@ export function scene_stage(game: Game) {
     ]);
 
     let shadings = [
-        render_colored_unlit(game.MaterialColoredUnlitPoints, game.MeshIcosphereSmooth, [
-            1,
-            1,
-            0,
-            1,
-        ]),
-        render_colored_unlit(game.MaterialColoredUnlitWireframe, game.MeshIcosphereSmooth, [
-            1,
-            1,
-            0,
-            1,
-        ]),
-        render_colored_unlit(game.MaterialColoredUnlitTriangles, game.MeshIcosphereSmooth, [
-            1,
-            1,
-            0,
-            1,
-        ]),
+        render_colored_unlit(
+            game.MaterialColoredUnlitPoints,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1]
+        ),
+        render_colored_unlit(
+            game.MaterialColoredUnlitWireframe,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1]
+        ),
+        render_colored_unlit(
+            game.MaterialColoredUnlitTriangles,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1]
+        ),
 
-        render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshIcosphereSmooth, [
-            1,
-            1,
-            0,
-            1,
-        ]),
-        render_colored_diffuse(game.MaterialColoredDiffusePhong, game.MeshIcosphereSmooth, [
-            1,
-            1,
-            0,
-            1,
-        ]),
+        render_colored_diffuse(
+            game.MaterialColoredDiffuseGouraud,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1]
+        ),
+        render_colored_diffuse(
+            game.MaterialColoredDiffusePhong,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1]
+        ),
         render_colored_specular(
             game.MaterialColoredSpecularGouraud,
             game.MeshIcosphereSmooth,

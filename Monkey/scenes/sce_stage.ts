@@ -22,12 +22,11 @@ export function scene_stage(game: Game) {
     // Flat.
     instantiate(game, [
         transform([-0.7, 0.5, 0]),
-        render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.Meshes["monkey_flat"], [
-            1,
-            1,
-            0.3,
-            1,
-        ]),
+        render_colored_diffuse(
+            game.MaterialColoredDiffuseGouraud,
+            game.Meshes["monkey_flat"],
+            [1, 1, 0.3, 1]
+        ),
     ]);
 
     // Phong.
