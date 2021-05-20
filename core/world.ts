@@ -12,6 +12,7 @@ import {Move} from "./components/com_move.js";
 import {Named} from "./components/com_named.js";
 import {RigidBody} from "./components/com_rigid_body.js";
 import {Shake} from "./components/com_shake.js";
+import {Task} from "./components/com_task.js";
 import {Transform} from "./components/com_transform.js";
 import {Transform2D} from "./components/com_transform2d.js";
 import {Trigger} from "./components/com_trigger.js";
@@ -34,6 +35,7 @@ const enum Component {
     Render,
     RigidBody,
     Shake,
+    Task,
     Transform,
     Transform2D,
     Trigger,
@@ -56,6 +58,7 @@ export const enum Has {
     Render = 1 << Component.Render,
     RigidBody = 1 << Component.RigidBody,
     Shake = 1 << Component.Shake,
+    Task = 1 << Component.Task,
     Transform = 1 << Component.Transform,
     Transform2D = 1 << Component.Transform2D,
     Trigger = 1 << Component.Trigger,
@@ -81,6 +84,7 @@ export interface World {
     // Render depends on the version of WebGL. See com_render*, sys_render*.
     RigidBody: Array<RigidBody>;
     Shake: Array<Shake>;
+    Task: Array<Task>;
     Transform: Array<Transform>;
     Transform2D: Array<Transform2D>;
     Trigger: Array<Trigger>;
