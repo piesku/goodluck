@@ -36,7 +36,7 @@ function update(game: Game, entity: Entity) {
         listener.upY.value = up[1];
         listener.upZ.value = up[2];
     } else {
-        // Firefox.
+        // Firefox & Safari.
         listener.setPosition(...position);
         listener.setOrientation(...forward, ...up);
     }

@@ -1,6 +1,7 @@
-import {AudioClip} from "../components/com_audio_source.js";
+import {AudioClipKind, AudioSynthClip} from "../../common/audio.js";
 
-export let snd_jump: AudioClip = {
+export let snd_jump: AudioSynthClip = {
+    Kind: AudioClipKind.Synth,
     Tracks: [
         {
             Instrument: [

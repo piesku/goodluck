@@ -1,3 +1,31 @@
+export type AudioClip = AudioBufferClip | AudioSynthClip;
+
+export const enum AudioClipKind {
+    Buffer,
+    Synth,
+}
+
+export interface AudioBufferClip {
+    Kind: AudioClipKind.Buffer;
+    Buffer: AudioBuffer;
+    Exit: number;
+}
+
+export interface AudioSynthClip {
+    Kind: AudioClipKind.Synth;
+    /** Audio tracks making up this clip. */
+    Tracks: Array<AudioTrack>;
+    /** How soon after starting this clip can we play another one (in seconds)? */
+    Exit: number;
+    /** Beats per minute (default 120). */
+    BPM?: number;
+}
+
+export interface AudioTrack {
+    Instrument: Instrument;
+    Notes: Array<number>;
+}
+
 export interface Instrument {
     [InstrumentParam.MasterGainAmount]: number;
     [InstrumentParam.FilterType]?: false | BiquadFilterType;
@@ -195,13 +223,31 @@ function lazy_noise_buffer(audio: AudioContext) {
     return noise_buffer;
 }
 
-export function play_buffer(
+export function play_synth_clip(
     audio: AudioContext,
     panner: PannerNode | undefined,
-    buffer: AudioBuffer
+    clip: AudioSynthClip
+) {
+    // Seconds per beat, corresponding to a quarter note.
+    let spb = 60 / (clip.BPM || 120);
+    // Track timing is based on sixteenth notes.
+    let interval = spb / 4;
+    for (let track of clip.Tracks) {
+        for (let i = 0; i < track.Notes.length; i++) {
+            if (track.Notes[i]) {
+                play_note(audio, panner, track.Instrument, track.Notes[i], i * interval);
+            }
+        }
+    }
+}
+
+export function play_buffer_clip(
+    audio: AudioContext,
+    panner: PannerNode | undefined,
+    clip: AudioBufferClip
 ) {
     let source = audio.createBufferSource();
-    source.buffer = buffer;
+    source.buffer = clip.Buffer;
 
     if (panner) {
         source.connect(panner);
