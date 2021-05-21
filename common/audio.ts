@@ -194,3 +194,21 @@ function lazy_noise_buffer(audio: AudioContext) {
     }
     return noise_buffer;
 }
+
+export function play_buffer(
+    audio: AudioContext,
+    panner: PannerNode | undefined,
+    buffer: AudioBuffer
+) {
+    let source = audio.createBufferSource();
+    source.buffer = buffer;
+
+    if (panner) {
+        source.connect(panner);
+        panner.connect(audio.destination);
+    } else {
+        source.connect(audio.destination);
+    }
+
+    source.start();
+}
