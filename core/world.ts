@@ -3,7 +3,7 @@ import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
 import {Children} from "./components/com_children.js";
 import {Collide} from "./components/com_collide.js";
-import {ControlMove} from "./components/com_control_move.js";
+import {ControlAlways} from "./components/com_control_always.js";
 import {Draw} from "./components/com_draw.js";
 import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
@@ -25,7 +25,7 @@ const enum Component {
     Camera,
     Children,
     Collide,
-    ControlMove,
+    ControlAlways,
     Draw,
     Lifespan,
     Light,
@@ -48,7 +48,7 @@ export const enum Has {
     Camera = 1 << Component.Camera,
     Children = 1 << Component.Children,
     Collide = 1 << Component.Collide,
-    ControlMove = 1 << Component.ControlMove,
+    ControlAlways = 1 << Component.ControlAlways,
     Draw = 1 << Component.Draw,
     Lifespan = 1 << Component.Lifespan,
     Light = 1 << Component.Light,
@@ -74,7 +74,7 @@ export interface World {
     Camera: Array<Camera>;
     Children: Array<Children>;
     Collide: Array<Collide>;
-    ControlMove: Array<ControlMove>;
+    ControlAlways: Array<ControlAlways>;
     Draw: Array<Draw>;
     Lifespan: Array<Lifespan>;
     Light: Array<Light>;

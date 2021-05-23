@@ -8,7 +8,7 @@ import {loop_start, loop_stop} from "./loop.js";
 import {mat2_deferred_colored} from "./materials/mat2_deferred_colored.js";
 import {mat2_deferred_post_shading} from "./materials/mat2_deferred_post_shading.js";
 import {sys_camera} from "./systems/sys_camera.js";
-import {sys_control_move} from "./systems/sys_control_move.js";
+import {sys_control_always} from "./systems/sys_control_always.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
@@ -76,7 +76,7 @@ export class Game {
         }
 
         let now = performance.now();
-        sys_control_move(this, delta);
+        sys_control_always(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
         sys_camera(this, delta);

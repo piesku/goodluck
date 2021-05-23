@@ -1,6 +1,6 @@
 import {blueprint_camera_main} from "../blueprints/blu_camera_main.js";
 import {blueprint_camera_minimap} from "../blueprints/blu_camera_minimap.js";
-import {control_move} from "../components/com_control_move.js";
+import {control_always} from "../components/com_control_always.js";
 import {move} from "../components/com_move.js";
 import {render_textured_unlit} from "../components/com_render1.js";
 import {transform} from "../components/com_transform.js";
@@ -24,7 +24,7 @@ export function scene_stage(game: Game) {
     // Checker Box.
     instantiate(game, [
         transform([-0.5, 0, 0]),
-        control_move(null, [0.1276794, 0.1448781, 0.2685358, 0.9437144]),
+        control_always(null, [0.1276794, 0.1448781, 0.2685358, 0.9437144]),
         move(0, 1),
         render_textured_unlit(
             game.MaterialTexturedUnlit,

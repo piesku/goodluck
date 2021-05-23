@@ -1,5 +1,5 @@
 import {blueprint_camera_main} from "../blueprints/blu_camera_main.js";
-import {control_move} from "../components/com_control_move.js";
+import {control_always} from "../components/com_control_always.js";
 import {light_directional, light_point} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {render_colored} from "../components/com_render_deferred.js";
@@ -26,28 +26,28 @@ export function scene_stage(game: Game) {
 
     instantiate(game, [
         transform([-0.7, 0.7, 0], undefined, [1, 1, 1]),
-        control_move(null, [0, 1, 0, 0]),
+        control_always(null, [0, 1, 0, 0]),
         move(0, 0.5),
         render_colored(game.MaterialColored, game.MeshSphereFlat, [1, 1, 1, 1], [1, 1, 1], 100),
     ]);
 
     instantiate(game, [
         transform([0.7, 0.7, 0], undefined, [1, 1, 1]),
-        control_move(null, [0, 1, 0, 0]),
+        control_always(null, [0, 1, 0, 0]),
         move(0, 0.5),
         render_colored(game.MaterialColored, game.MeshSphereFlat, [1, 1, 1, 1], [1, 1, 1], 1000),
     ]);
 
     instantiate(game, [
         transform([-0.7, -0.7, 0], undefined, [1, 1, 1]),
-        control_move(null, [0, 1, 0, 0]),
+        control_always(null, [0, 1, 0, 0]),
         move(0, 0.5),
         render_colored(game.MaterialColored, game.MeshSphereSmooth, [1, 1, 1, 1], [1, 1, 1], 100),
     ]);
 
     instantiate(game, [
         transform([0.7, -0.7, 0], undefined, [1, 1, 1]),
-        control_move(null, [0, 1, 0, 0]),
+        control_always(null, [0, 1, 0, 0]),
         move(0, 0.5),
         render_colored(game.MaterialColored, game.MeshSphereSmooth, [1, 1, 1, 1], [1, 1, 1], 1000),
     ]);

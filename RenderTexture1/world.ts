@@ -1,6 +1,6 @@
 import {Camera} from "./components/com_camera.js";
 import {Children} from "./components/com_children.js";
-import {ControlMove} from "./components/com_control_move.js";
+import {ControlAlways} from "./components/com_control_always.js";
 import {Move} from "./components/com_move.js";
 import {Render} from "./components/com_render1.js";
 import {Transform} from "./components/com_transform.js";
@@ -9,7 +9,7 @@ import {Entity} from "./game.js";
 const enum Component {
     Camera,
     Children,
-    ControlMove,
+    ControlAlways,
     Move,
     Render,
     Transform,
@@ -18,7 +18,7 @@ const enum Component {
 export const enum Has {
     Camera = 1 << Component.Camera,
     Children = 1 << Component.Children,
-    ControlMove = 1 << Component.ControlMove,
+    ControlAlways = 1 << Component.ControlAlways,
     Move = 1 << Component.Move,
     Render = 1 << Component.Render,
     Transform = 1 << Component.Transform,
@@ -31,7 +31,7 @@ export class World {
     // Component data
     Camera: Array<Camera> = [];
     Children: Array<Children> = [];
-    ControlMove: Array<ControlMove> = [];
+    ControlAlways: Array<ControlAlways> = [];
     Move: Array<Move> = [];
     Render: Array<Render> = [];
     Transform: Array<Transform> = [];

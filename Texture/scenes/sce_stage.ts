@@ -1,5 +1,5 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
-import {control_move} from "../components/com_control_move.js";
+import {control_always} from "../components/com_control_always.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {render_textured_diffuse, render_textured_unlit} from "../components/com_render1.js";
@@ -21,7 +21,7 @@ export function scene_stage(game: Game) {
     // Unlit kulka.
     instantiate(game, [
         transform([-1, 0, 0]),
-        control_move(null, [0, 1, 0, 0]),
+        control_always(null, [0, 1, 0, 0]),
         move(0, 0.5),
         render_textured_unlit(
             game.MaterialTexturedUnlit,
@@ -33,7 +33,7 @@ export function scene_stage(game: Game) {
     // Diffuse kulka.
     instantiate(game, [
         transform([1, 0, 0]),
-        control_move(null, [0, 1, 0, 0]),
+        control_always(null, [0, 1, 0, 0]),
         move(0, 0.5),
         render_textured_diffuse(
             game.MaterialTexturedDiffuse,

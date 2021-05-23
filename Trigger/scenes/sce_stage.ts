@@ -3,7 +3,7 @@ import {blueprint_box} from "../blueprints/blu_box.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {children} from "../components/com_children.js";
 import {collide} from "../components/com_collide.js";
-import {control_move} from "../components/com_control_move.js";
+import {control_always} from "../components/com_control_always.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {transform} from "../components/com_transform.js";
@@ -25,7 +25,7 @@ export function scene_stage(game: Game) {
     // Rotating cube.
     instantiate(game, [
         transform(),
-        control_move(null, [0.1276794, 0.1448781, 0.2685358, 0.9437144]),
+        control_always(null, [0.1276794, 0.1448781, 0.2685358, 0.9437144]),
         move(0, Math.PI),
         children([...blueprint_box(game), transform([0, 4, 0])]),
     ]);
