@@ -1,4 +1,4 @@
-import {Instrument} from "../../common/audio.js";
+import {AudioClip} from "../../common/audio.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -32,18 +32,4 @@ export function audio_source(spatial: boolean, idle?: AudioClip) {
             Time: 0,
         };
     };
-}
-
-export interface AudioClip {
-    /** Audio tracks making up this clip. */
-    Tracks: Array<AudioTrack>;
-    /** How soon after starting this clip can we play another one (in seconds)? */
-    Exit: number;
-    /** Beats per minute (default 120). */
-    BPM?: number;
-}
-
-export interface AudioTrack {
-    Instrument: Instrument;
-    Notes: Array<number>;
 }
