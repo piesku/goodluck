@@ -5,8 +5,6 @@ import {mat1_colored_points} from "../materials/mat1_colored_points.js";
 import {mat1_colored_unlit} from "../materials/mat1_colored_unlit.js";
 import {mat1_textured_diffuse} from "../materials/mat1_textured_diffuse.js";
 import {mat1_textured_unlit} from "../materials/mat1_textured_unlit.js";
-import {mesh_cube} from "../meshes/cube.js";
-import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./loop.js";
@@ -41,8 +39,6 @@ export class Game {
     MaterialTexturedUnlit = mat1_textured_unlit(this.Gl);
     MaterialTexturedDiffuse = mat1_textured_diffuse(this.Gl);
 
-    MeshCube = mesh_cube(this.Gl);
-    MeshIcosphereFlat = mesh_icosphere_flat(this.Gl);
     MeshIcosphereSmooth = mesh_icosphere_smooth(this.Gl);
 
     Textures: Record<string, WebGLTexture> = {};
