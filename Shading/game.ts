@@ -3,6 +3,8 @@ import {mat1_colored_gouraud} from "../materials/mat1_colored_gouraud.js";
 import {mat1_colored_phong} from "../materials/mat1_colored_phong.js";
 import {mat1_colored_points} from "../materials/mat1_colored_points.js";
 import {mat1_colored_unlit} from "../materials/mat1_colored_unlit.js";
+import {mat1_textured_diffuse} from "../materials/mat1_textured_diffuse.js";
+import {mat1_textured_unlit} from "../materials/mat1_textured_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
@@ -36,10 +38,14 @@ export class Game {
     MaterialColoredUnlit = mat1_colored_unlit(this.Gl);
     MaterialColoredGouraud = mat1_colored_gouraud(this.Gl);
     MaterialColoredPhong = mat1_colored_phong(this.Gl);
+    MaterialTexturedUnlit = mat1_textured_unlit(this.Gl);
+    MaterialTexturedDiffuse = mat1_textured_diffuse(this.Gl);
 
     MeshCube = mesh_cube(this.Gl);
     MeshIcosphereFlat = mesh_icosphere_flat(this.Gl);
     MeshIcosphereSmooth = mesh_icosphere_smooth(this.Gl);
+
+    Textures: Record<string, WebGLTexture> = {};
 
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
