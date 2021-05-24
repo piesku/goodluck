@@ -1,17 +1,16 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {ColoredDiffuseLayout} from "./layout_colored_diffuse.js";
+import {ColoredShadedLayout} from "./layout_colored_shaded.js";
 
-let vertex = `#version 300 es\n
-
+let vertex = `
     uniform mat4 pv;
     uniform mat4 world;
     uniform mat4 self;
 
-    in vec3 position;
-    in vec3 normal;
-    out vec4 vert_pos;
-    out vec3 vert_normal;
+    attribute vec3 position;
+    attribute vec3 normal;
+    varying vec4 vert_pos;
+    varying vec3 vert_normal;
 
     void main() {
         vert_pos = world * vec4(position, 1.0);
@@ -20,26 +19,30 @@ let vertex = `#version 300 es\n
     }
 `;
 
-let fragment = `#version 300 es\n
-
+let fragment = `
     precision mediump float;
 
     // See Game.LightPositions and Game.LightDetails.
     const int MAX_LIGHTS = 8;
 
-    uniform vec4 color;
+    uniform vec3 eye;
+    uniform vec4 color_diffuse;
+    uniform vec4 color_specular;
+    uniform float shininess;
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    in vec4 vert_pos;
-    in vec3 vert_normal;
-    out vec4 frag_color;
+    varying vec4 vert_pos;
+    varying vec3 vert_normal;
 
     void main() {
         vec3 frag_normal = normalize(vert_normal);
 
+        vec3 view_dir = eye - vert_pos.xyz;
+        vec3 view_normal = normalize(view_dir);
+
         // Ambient light.
-        vec3 rgb = color.rgb * 0.1;
+        vec3 rgb = color_diffuse.rgb * 0.1;
 
         for (int i = 0; i < MAX_LIGHTS; i++) {
             if (light_positions[i].w == 0.0) {
@@ -64,17 +67,30 @@ let fragment = `#version 300 es\n
             float diffuse_factor = dot(frag_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
-                rgb += color.rgb * diffuse_factor * light_color * light_intensity;
+                rgb += color_diffuse.rgb * diffuse_factor * light_color * light_intensity;
+
+                if (shininess > 0.0) {
+                    // Phong reflection model.
+                    // vec3 r = reflect(-light_normal, frag_normal);
+                    // float specular_angle = max(dot(r, view_normal), 0.0);
+                    // float specular_factor = pow(specular_angle, shininess);
+
+                    // Blinn-Phong reflection model.
+                    vec3 h = normalize(light_normal + view_normal);
+                    float specular_angle = max(dot(h, frag_normal), 0.0);
+                    float specular_factor = pow(specular_angle, shininess);
+
+                    // Specular color.
+                    rgb += color_specular.rgb * specular_factor * light_color * light_intensity;
+                }
             }
         }
 
-        frag_color = vec4(rgb, 1.0);
+        gl_FragColor = vec4(rgb, 1.0);
     }
 `;
 
-export function mat2_colored_diffuse_phong(
-    gl: WebGL2RenderingContext
-): Material<ColoredDiffuseLayout> {
+export function mat1_colored_phong(gl: WebGLRenderingContext): Material<ColoredShadedLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
@@ -83,7 +99,10 @@ export function mat2_colored_diffuse_phong(
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
             Self: gl.getUniformLocation(program, "self")!,
-            Color: gl.getUniformLocation(program, "color")!,
+            Eye: gl.getUniformLocation(program, "eye")!,
+            ColorDiffuse: gl.getUniformLocation(program, "color_diffuse")!,
+            ColorSpecular: gl.getUniformLocation(program, "color_specular")!,
+            Shininess: gl.getUniformLocation(program, "shininess")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
             VertexPosition: gl.getAttribLocation(program, "position")!,

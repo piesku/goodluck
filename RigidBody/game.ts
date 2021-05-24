@@ -1,5 +1,5 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
-import {mat1_colored_diffuse_gouraud} from "../materials/mat1_colored_diffuse_gouraud.js";
+import {mat1_colored_gouraud} from "../materials/mat1_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_hand} from "../meshes/hand.js";
 import {Camera} from "./components/com_camera.js";
@@ -34,7 +34,7 @@ export class Game {
     Gl = this.Canvas.getContext("webgl")!;
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
-    MaterialUnlitDiffuseGouraud = mat1_colored_diffuse_gouraud(this.Gl);
+    MaterialColoredGouraud = mat1_colored_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
     MeshHand = mesh_hand(this.Gl);
 

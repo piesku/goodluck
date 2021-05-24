@@ -1,6 +1,6 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light_directional} from "../components/com_light.js";
-import {render_colored_diffuse} from "../components/com_render1.js";
+import {render_colored_shaded} from "../components/com_render1.js";
 import {transform} from "../components/com_transform.js";
 import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
@@ -19,12 +19,12 @@ export function scene_stage(game: Game) {
     // Ground.
     instantiate(game, [
         transform(undefined, undefined, [10, 1, 10]),
-        render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1]),
+        render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [1, 1, 0.3, 1]),
     ]);
 
     // Box.
     instantiate(game, [
         transform([0, 1, 0]),
-        render_colored_diffuse(game.MaterialColoredDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1]),
+        render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [1, 1, 0.3, 1]),
     ]);
 }

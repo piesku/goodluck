@@ -3,7 +3,7 @@ import {children} from "../components/com_children.js";
 import {control_always} from "../components/com_control_always.js";
 import {light_directional, light_point} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
-import {render_colored_diffuse, render_colored_specular} from "../components/com_render2.js";
+import {render_colored_shaded} from "../components/com_render2.js";
 import {transform} from "../components/com_transform.js";
 import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
@@ -39,40 +39,20 @@ export function scene_stage(game: Game) {
     ]);
 
     let shadings = [
-        render_colored_diffuse(
-            game.MaterialColoredDiffuseFlat,
-            game.MeshIcosphereFlat,
-            [1, 1, 0, 1]
-        ),
-        render_colored_diffuse(
-            game.MaterialColoredDiffuseGouraud,
-            game.MeshIcosphereFlat,
-            [1, 1, 0, 1]
-        ),
-        render_colored_diffuse(
-            game.MaterialColoredDiffusePhong,
-            game.MeshIcosphereFlat,
-            [1, 1, 0, 1]
-        ),
+        // Diffuse shading
+        render_colored_shaded(game.MaterialColoredFlat, game.MeshIcosphereFlat, [1, 1, 0, 1], 0),
+        render_colored_shaded(game.MaterialColoredGouraud, game.MeshIcosphereFlat, [1, 1, 0, 1], 0),
+        render_colored_shaded(game.MaterialColoredPhong, game.MeshIcosphereFlat, [1, 1, 0, 1], 0),
 
-        render_colored_specular(
-            game.MaterialColoredSpecularFlat,
+        // Specular shading
+        render_colored_shaded(game.MaterialColoredFlat, game.MeshIcosphereFlat, [1, 1, 0, 1], 256),
+        render_colored_shaded(
+            game.MaterialColoredGouraud,
             game.MeshIcosphereFlat,
             [1, 1, 0, 1],
-            100
+            256
         ),
-        render_colored_specular(
-            game.MaterialColoredSpecularGouraud,
-            game.MeshIcosphereFlat,
-            [1, 1, 0, 1],
-            100
-        ),
-        render_colored_specular(
-            game.MaterialColoredSpecularPhong,
-            game.MeshIcosphereFlat,
-            [1, 1, 0, 1],
-            100
-        ),
+        render_colored_shaded(game.MaterialColoredPhong, game.MeshIcosphereFlat, [1, 1, 0, 1], 256),
     ];
 
     let rows = 2;

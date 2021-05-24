@@ -4,7 +4,7 @@ import {from_euler} from "../../common/quat.js";
 import {element} from "../../common/random.js";
 import {animate, AnimationFlag} from "../components/com_animate.js";
 import {children} from "../components/com_children.js";
-import {render_colored_diffuse} from "../components/com_render1.js";
+import {render_colored_shaded} from "../components/com_render1.js";
 import {transform} from "../components/com_transform.js";
 import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
@@ -94,8 +94,8 @@ export function blueprint_character(game: Game): Blueprint {
                     // head
                     [
                         transform([0, 1.5, 0.5], undefined, [2, 2, 2]),
-                        render_colored_diffuse(
-                            game.MaterialColoredDiffuseGouraud,
+                        render_colored_shaded(
+                            game.MaterialColoredGouraud,
                             game.MeshCube,
                             skin_color
                         ),
@@ -103,8 +103,8 @@ export function blueprint_character(game: Game): Blueprint {
                     // hair
                     [
                         transform([0, 2, 0], undefined, [2.1, 1.1, 1.1]),
-                        render_colored_diffuse(
-                            game.MaterialColoredDiffuseGouraud,
+                        render_colored_shaded(
+                            game.MaterialColoredGouraud,
                             game.MeshCube,
                             hair_color
                         ),
@@ -112,8 +112,8 @@ export function blueprint_character(game: Game): Blueprint {
                     // body
                     [
                         transform([0, -1, 0], undefined, [2, 3, 1]),
-                        render_colored_diffuse(
-                            game.MaterialColoredDiffuseGouraud,
+                        render_colored_shaded(
+                            game.MaterialColoredGouraud,
                             game.MeshCube,
                             shirt_color
                         ),
@@ -175,8 +175,8 @@ export function blueprint_character(game: Game): Blueprint {
                     // left arm
                     [
                         transform([0, -0.5, 0], undefined, [1, 2, 1]),
-                        render_colored_diffuse(
-                            game.MaterialColoredDiffuseGouraud,
+                        render_colored_shaded(
+                            game.MaterialColoredGouraud,
                             game.MeshCube,
                             shirt_color
                         ),
@@ -184,8 +184,8 @@ export function blueprint_character(game: Game): Blueprint {
                     // left hand
                     [
                         transform([0, -2, 0], undefined, [0.9, 1, 0.9]),
-                        render_colored_diffuse(
-                            game.MaterialColoredDiffuseGouraud,
+                        render_colored_shaded(
+                            game.MaterialColoredGouraud,
                             game.MeshCube,
                             skin_color
                         ),
@@ -247,8 +247,8 @@ export function blueprint_character(game: Game): Blueprint {
                     // right arm
                     [
                         transform([0, -0.5, 0], undefined, [1, 2, 1]),
-                        render_colored_diffuse(
-                            game.MaterialColoredDiffuseGouraud,
+                        render_colored_shaded(
+                            game.MaterialColoredGouraud,
                             game.MeshCube,
                             shirt_color
                         ),
@@ -256,8 +256,8 @@ export function blueprint_character(game: Game): Blueprint {
                     // right hand
                     [
                         transform([0, -2, 0], undefined, [0.9, 1, 0.9]),
-                        render_colored_diffuse(
-                            game.MaterialColoredDiffuseGouraud,
+                        render_colored_shaded(
+                            game.MaterialColoredGouraud,
                             game.MeshCube,
                             skin_color
                         ),
@@ -319,8 +319,8 @@ export function blueprint_character(game: Game): Blueprint {
                     // left leg
                     [
                         transform([0, -1.5, 0], undefined, [1, 2, 1]),
-                        render_colored_diffuse(
-                            game.MaterialColoredDiffuseGouraud,
+                        render_colored_shaded(
+                            game.MaterialColoredGouraud,
                             game.MeshCube,
                             pants_color
                         ),
@@ -382,8 +382,8 @@ export function blueprint_character(game: Game): Blueprint {
                     // right leg
                     [
                         transform([0, -1.5, 0], undefined, [1, 2, 1]),
-                        render_colored_diffuse(
-                            game.MaterialColoredDiffuseGouraud,
+                        render_colored_shaded(
+                            game.MaterialColoredGouraud,
                             game.MeshCube,
                             pants_color
                         ),

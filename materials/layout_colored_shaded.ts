@@ -1,4 +1,4 @@
-export interface ColoredSpecularLayout {
+export interface ColoredShadedLayout {
     // Uniforms
     Pv: WebGLUniformLocation;
     World: WebGLUniformLocation;

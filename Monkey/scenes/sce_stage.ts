@@ -1,6 +1,6 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light_directional, light_point} from "../components/com_light.js";
-import {render_colored_diffuse, render_colored_specular} from "../components/com_render1.js";
+import {render_colored_shaded} from "../components/com_render1.js";
 import {transform} from "../components/com_transform.js";
 import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
@@ -22,18 +22,19 @@ export function scene_stage(game: Game) {
     // Flat.
     instantiate(game, [
         transform([-0.7, 0.5, 0]),
-        render_colored_diffuse(
-            game.MaterialColoredDiffuseGouraud,
+        render_colored_shaded(
+            game.MaterialColoredGouraud,
             game.Meshes["monkey_flat"],
-            [1, 1, 0.3, 1]
+            [1, 1, 0.3, 1],
+            0
         ),
     ]);
 
     // Phong.
     instantiate(game, [
         transform([0.7, -0.5, 0]),
-        render_colored_specular(
-            game.MaterialColoredSpecularPhong,
+        render_colored_shaded(
+            game.MaterialColoredPhong,
             game.Meshes["monkey_smooth"],
             [1, 1, 0.3, 1],
             64

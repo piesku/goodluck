@@ -1,9 +1,7 @@
-import {GL_CULL_FACE, GL_DEPTH_TEST, GL_LINE_LOOP, GL_TRIANGLES} from "../common/webgl.js";
-import {mat1_colored_diffuse_gouraud} from "../materials/mat1_colored_diffuse_gouraud.js";
-import {mat1_colored_diffuse_phong} from "../materials/mat1_colored_diffuse_phong.js";
+import {GL_CULL_FACE, GL_DEPTH_TEST, GL_LINE_LOOP} from "../common/webgl.js";
+import {mat1_colored_gouraud} from "../materials/mat1_colored_gouraud.js";
+import {mat1_colored_phong} from "../materials/mat1_colored_phong.js";
 import {mat1_colored_points} from "../materials/mat1_colored_points.js";
-import {mat1_colored_specular_gouraud} from "../materials/mat1_colored_specular_gouraud.js";
-import {mat1_colored_specular_phong} from "../materials/mat1_colored_specular_phong.js";
 import {mat1_colored_unlit} from "../materials/mat1_colored_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
@@ -33,13 +31,11 @@ export class Game {
     Gl = this.Canvas.getContext("webgl")!;
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
-    MaterialColoredUnlitPoints = mat1_colored_points(this.Gl);
-    MaterialColoredUnlitWireframe = mat1_colored_unlit(this.Gl, GL_LINE_LOOP);
-    MaterialColoredUnlitTriangles = mat1_colored_unlit(this.Gl, GL_TRIANGLES);
-    MaterialColoredDiffuseGouraud = mat1_colored_diffuse_gouraud(this.Gl);
-    MaterialColoredDiffusePhong = mat1_colored_diffuse_phong(this.Gl);
-    MaterialColoredSpecularGouraud = mat1_colored_specular_gouraud(this.Gl);
-    MaterialColoredSpecularPhong = mat1_colored_specular_phong(this.Gl);
+    MaterialColoredPoints = mat1_colored_points(this.Gl);
+    MaterialColoredWireframe = mat1_colored_unlit(this.Gl, GL_LINE_LOOP);
+    MaterialColoredUnlit = mat1_colored_unlit(this.Gl);
+    MaterialColoredGouraud = mat1_colored_gouraud(this.Gl);
+    MaterialColoredPhong = mat1_colored_phong(this.Gl);
 
     MeshCube = mesh_cube(this.Gl);
     MeshIcosphereFlat = mesh_icosphere_flat(this.Gl);

@@ -5,9 +5,9 @@ import {
     GL_FRAMEBUFFER,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {ColoredDiffuseLayout} from "../../materials/layout_colored_diffuse.js";
+import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {CameraEye, CameraKind, CameraPerspective, CameraXr} from "../components/com_camera.js";
-import {RenderColoredDiffuse, RenderKind} from "../components/com_render2.js";
+import {RenderColoredShaded, RenderKind} from "../components/com_render2.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -58,8 +58,8 @@ function render(game: Game, eye: CameraEye) {
             if (render.Material !== current_material) {
                 current_material = render.Material;
                 switch (render.Kind) {
-                    case RenderKind.ColoredDiffuse:
-                        use_colored_diffuse(game, render.Material, eye);
+                    case RenderKind.ColoredShaded:
+                        use_colored_shaded(game, render.Material, eye);
                         break;
                 }
             }
@@ -70,25 +70,28 @@ function render(game: Game, eye: CameraEye) {
             }
 
             switch (render.Kind) {
-                case RenderKind.ColoredDiffuse:
-                    draw_colored_diffuse(game, transform, render);
+                case RenderKind.ColoredShaded:
+                    draw_colored_shaded(game, transform, render);
                     break;
             }
         }
     }
 }
 
-function use_colored_diffuse(game: Game, material: Material<ColoredDiffuseLayout>, eye: CameraEye) {
+function use_colored_shaded(game: Game, material: Material<ColoredShadedLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
+    game.Gl.uniform3fv(material.Locations.Eye, eye.Position);
     game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
-function draw_colored_diffuse(game: Game, transform: Transform, render: RenderColoredDiffuse) {
+function draw_colored_shaded(game: Game, transform: Transform, render: RenderColoredShaded) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
-    game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
+    game.Gl.uniform4fv(render.Material.Locations.ColorDiffuse, render.ColorDiffuse);
+    game.Gl.uniform4fv(render.Material.Locations.ColorSpecular, render.ColorSpecular);
+    game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
     game.Gl.bindVertexArray(render.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
     game.Gl.bindVertexArray(null);

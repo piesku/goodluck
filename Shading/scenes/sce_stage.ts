@@ -3,11 +3,7 @@ import {children} from "../components/com_children.js";
 import {control_always} from "../components/com_control_always.js";
 import {light_directional, light_point} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
-import {
-    render_colored_diffuse,
-    render_colored_specular,
-    render_colored_unlit,
-} from "../components/com_render1.js";
+import {render_colored_shaded, render_colored_unlit} from "../components/com_render1.js";
 import {transform} from "../components/com_transform.js";
 import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
@@ -43,56 +39,46 @@ export function scene_stage(game: Game) {
     ]);
 
     let shadings = [
-        render_colored_unlit(
-            game.MaterialColoredUnlitPoints,
+        render_colored_unlit(game.MaterialColoredPoints, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
+        render_colored_unlit(game.MaterialColoredWireframe, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
+        render_colored_unlit(game.MaterialColoredUnlit, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
+
+        render_colored_shaded(
+            game.MaterialColoredGouraud,
             game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            0,
             [1, 1, 0, 1]
         ),
-        render_colored_unlit(
-            game.MaterialColoredUnlitWireframe,
+        render_colored_shaded(
+            game.MaterialColoredGouraud,
             game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            32,
             [1, 1, 0, 1]
         ),
-        render_colored_unlit(
-            game.MaterialColoredUnlitTriangles,
+        render_colored_shaded(
+            game.MaterialColoredGouraud,
             game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            512,
             [1, 1, 0, 1]
         ),
 
-        render_colored_diffuse(
-            game.MaterialColoredDiffuseGouraud,
+        render_colored_shaded(game.MaterialColoredPhong, game.MeshIcosphereSmooth, [1, 1, 0, 1], 0),
+        render_colored_shaded(
+            game.MaterialColoredPhong,
             game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            32,
             [1, 1, 0, 1]
         ),
-        render_colored_diffuse(
-            game.MaterialColoredDiffusePhong,
+        render_colored_shaded(
+            game.MaterialColoredPhong,
             game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            512,
             [1, 1, 0, 1]
-        ),
-        render_colored_specular(
-            game.MaterialColoredSpecularGouraud,
-            game.MeshIcosphereSmooth,
-            [1, 1, 0, 1],
-            100
-        ),
-
-        render_colored_specular(
-            game.MaterialColoredSpecularPhong,
-            game.MeshIcosphereSmooth,
-            [1, 1, 0, 1],
-            10
-        ),
-        render_colored_specular(
-            game.MaterialColoredSpecularPhong,
-            game.MeshIcosphereSmooth,
-            [1, 1, 0, 1],
-            100
-        ),
-        render_colored_specular(
-            game.MaterialColoredSpecularPhong,
-            game.MeshIcosphereSmooth,
-            [1, 1, 0, 1],
-            1000
         ),
     ];
 
