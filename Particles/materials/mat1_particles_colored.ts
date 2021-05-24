@@ -10,30 +10,30 @@ let vertex = `
     uniform vec4 details;
 
     // [x, y, z, w: age]
-    attribute vec4 origin_age;
-    attribute vec3 direction;
+    attribute vec4 vert_origin_age;
+    attribute vec3 vert_direction;
 
-    varying vec4 vert_color;
+    varying vec4 frag_color;
 
     void main() {
         // Move the particle along the direction axis.
-        vec3 velocity = direction * details.y;
-        gl_Position = pv * vec4(origin_age.xyz + velocity * origin_age.w, 1.0);
+        vec3 velocity = vert_direction * details.y;
+        gl_Position = pv * vec4(vert_origin_age.xyz + velocity * vert_origin_age.w, 1.0);
 
         // Interpolate color and size.
-        float t = origin_age.w / details.x;
+        float t = vert_origin_age.w / details.x;
         gl_PointSize = mix(details.z, details.w, t);
-        vert_color = mix(color_start, color_end, t);
+        frag_color = mix(color_start, color_end, t);
     }
 `;
 
 let fragment = `
     precision mediump float;
 
-    varying vec4 vert_color;
+    varying vec4 frag_color;
 
     void main() {
-        gl_FragColor = vert_color;
+        gl_FragColor = frag_color;
     }
 `;
 
@@ -49,8 +49,8 @@ export function mat1_particles_colored(
             ColorStart: gl.getUniformLocation(program, "color_start")!,
             ColorEnd: gl.getUniformLocation(program, "color_end")!,
             Details: gl.getUniformLocation(program, "details")!,
-            OriginAge: gl.getAttribLocation(program, "origin_age")!,
-            Direction: gl.getAttribLocation(program, "direction")!,
+            OriginAge: gl.getAttribLocation(program, "vert_origin_age")!,
+            Direction: gl.getAttribLocation(program, "vert_direction")!,
         },
     };
 }

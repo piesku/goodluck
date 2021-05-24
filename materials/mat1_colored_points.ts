@@ -6,10 +6,10 @@ let vertex = `
     uniform mat4 pv;
     uniform mat4 world;
 
-    attribute vec3 position;
+    attribute vec3 vert_position;
 
     void main() {
-        gl_Position = pv * world * vec4(position, 1.0);
+        gl_Position = pv * world * vec4(vert_position, 1.0);
         gl_PointSize = 8.0;
     }
 `;
@@ -32,7 +32,7 @@ export function mat1_colored_points(gl: WebGLRenderingContext): Material<Colored
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
             Color: gl.getUniformLocation(program, "color")!,
-            VertexPosition: gl.getAttribLocation(program, "position")!,
+            VertexPosition: gl.getAttribLocation(program, "vert_position")!,
         },
     };
 }

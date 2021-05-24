@@ -16,16 +16,17 @@ let vertex = `
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    attribute vec3 position;
-    attribute vec3 normal;
-    varying vec4 vert_color;
+    attribute vec3 vert_position;
+    attribute vec3 vert_normal;
+
+    varying vec4 frag_color;
 
     void main() {
-        vec4 vert_pos = world * vec4(position, 1.0);
-        vec3 vert_normal = normalize((vec4(normal, 1.0) * self).xyz);
-        gl_Position = pv * vert_pos;
+        vec4 world_position = world * vec4(vert_position, 1.0);
+        vec3 world_normal = normalize((vec4(vert_normal, 1.0) * self).xyz);
+        gl_Position = pv * world_position;
 
-        vec3 view_dir = eye - vert_pos.xyz;
+        vec3 view_dir = eye - world_position.xyz;
         vec3 view_normal = normalize(view_dir);
 
         // Ambient light.
@@ -44,14 +45,14 @@ let vertex = `
                 // Directional light.
                 light_normal = light_positions[i].xyz;
             } else {
-                vec3 light_dir = light_positions[i].xyz - vert_pos.xyz;
+                vec3 light_dir = light_positions[i].xyz - world_position.xyz;
                 float light_dist = length(light_dir);
                 light_normal = light_dir / light_dist;
                 // Distance attenuation.
                 light_intensity /= (light_dist * light_dist);
             }
 
-            float diffuse_factor = dot(vert_normal, light_normal);
+            float diffuse_factor = dot(world_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
                 rgb += color_diffuse.rgb * diffuse_factor * light_color * light_intensity;
@@ -59,7 +60,7 @@ let vertex = `
                 if (shininess > 0.0) {
                     // Blinn-Phong reflection model.
                     vec3 h = normalize(light_normal + view_normal);
-                    float specular_angle = max(dot(h, vert_normal), 0.0);
+                    float specular_angle = max(dot(h, world_normal), 0.0);
                     float specular_factor = pow(specular_angle, shininess);
 
                     // Specular color.
@@ -68,17 +69,17 @@ let vertex = `
             }
         }
 
-        vert_color = vec4(rgb, 1.0);
+        frag_color = vec4(rgb, 1.0);
     }
 `;
 
 let fragment = `
     precision mediump float;
 
-    varying vec4 vert_color;
+    varying vec4 frag_color;
 
     void main() {
-        gl_FragColor = vert_color;
+        gl_FragColor = frag_color;
     }
 `;
 
@@ -97,8 +98,8 @@ export function mat1_colored_gouraud(gl: WebGLRenderingContext): Material<Colore
             Shininess: gl.getUniformLocation(program, "shininess")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
-            VertexPosition: gl.getAttribLocation(program, "position")!,
-            VertexNormal: gl.getAttribLocation(program, "normal")!,
+            VertexPosition: gl.getAttribLocation(program, "vert_position")!,
+            VertexNormal: gl.getAttribLocation(program, "vert_normal")!,
         },
     };
 }

@@ -16,18 +16,19 @@ let vertex = `#version 300 es\n
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    in vec3 position;
-    in vec3 normal;
-    in vec4 offset;
-    out vec4 vert_color;
+    in vec3 vert_position;
+    in vec3 vert_normal;
+    in vec4 vert_offset;
+
+    out vec4 frag_color;
 
     void main() {
-        vec4 vert_pos = world * vec4(position + offset.xyz, 1.0);
-        vec3 vert_normal = normalize((vec4(normal, 0.0) * self).xyz);
-        gl_Position = pv * vert_pos;
+        vec4 world_position = world * vec4(vert_position + vert_offset.xyz, 1.0);
+        vec3 world_normal = normalize((vec4(vert_normal, 0.0) * self).xyz);
+        gl_Position = pv * world_position;
 
         // Ambient light.
-        vec3 color = palette[int(offset[3])];
+        vec3 color = palette[int(vert_offset[3])];
         vec3 rgb = color * 0.1;
 
         for (int i = 0; i < MAX_LIGHTS; i++) {
@@ -43,32 +44,34 @@ let vertex = `#version 300 es\n
                 // Directional light.
                 light_normal = light_positions[i].xyz;
             } else {
-                vec3 light_dir = light_positions[i].xyz - vert_pos.xyz;
+                vec3 light_dir = light_positions[i].xyz - world_position.xyz;
                 float light_dist = length(light_dir);
                 light_normal = light_dir / light_dist;
                 // Distance attenuation.
                 light_intensity /= (light_dist * light_dist);
             }
 
-            float diffuse_factor = dot(vert_normal, light_normal);
+            float diffuse_factor = dot(world_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
                 rgb += color * diffuse_factor * light_color * light_intensity;
             }
         }
 
-        vert_color = vec4(rgb, 1.0);
+        frag_color = vec4(rgb, 1.0);
     }
 `;
 
 let fragment = `#version 300 es\n
+
     precision mediump float;
 
-    in vec4 vert_color;
-    out vec4 frag_color;
+    in vec4 frag_color;
+
+    out vec4 out_color;
 
     void main() {
-        frag_color = vert_color;
+        out_color = frag_color;
     }
 `;
 
@@ -86,9 +89,9 @@ export function mat2_instanced(gl: WebGL2RenderingContext): Material<InstancedLa
             Palette: gl.getUniformLocation(program, "palette")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
-            VertexPosition: gl.getAttribLocation(program, "position")!,
-            VertexNormal: gl.getAttribLocation(program, "normal")!,
-            VertexOffset: gl.getAttribLocation(program, "offset")!,
+            VertexPosition: gl.getAttribLocation(program, "vert_position")!,
+            VertexNormal: gl.getAttribLocation(program, "vert_normal")!,
+            VertexOffset: gl.getAttribLocation(program, "vert_offset")!,
         },
     };
 }

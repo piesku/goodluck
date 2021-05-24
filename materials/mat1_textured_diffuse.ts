@@ -13,18 +13,19 @@ let vertex = `
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    attribute vec3 position;
-    attribute vec2 texcoord;
-    attribute vec3 normal;
-    varying vec2 vert_texcoord;
-    varying vec4 vert_color;
+    attribute vec3 vert_position;
+    attribute vec2 vert_texcoord;
+    attribute vec3 vert_normal;
+
+    varying vec2 frag_texcoord;
+    varying vec4 frag_color;
 
     void main() {
-        vec4 vert_pos = world * vec4(position, 1.0);
-        vec3 vert_normal = normalize((vec4(normal, 1.0) * self).xyz);
-        gl_Position = pv * vert_pos;
+        vec4 world_position = world * vec4(vert_position, 1.0);
+        vec3 world_normal = normalize((vec4(vert_normal, 1.0) * self).xyz);
+        gl_Position = pv * world_position;
 
-        vert_texcoord = texcoord;
+        frag_texcoord = vert_texcoord;
 
         // Ambient light.
         vec3 vert_rgb = color.rgb * 0.1;
@@ -42,21 +43,21 @@ let vertex = `
                 // Directional light.
                 light_normal = light_positions[i].xyz;
             } else {
-                vec3 light_dir = light_positions[i].xyz - vert_pos.xyz;
+                vec3 light_dir = light_positions[i].xyz - world_position.xyz;
                 float light_dist = length(light_dir);
                 light_normal = light_dir / light_dist;
                 // Distance attenuation.
                 light_intensity /= (light_dist * light_dist);
             }
 
-            float diffuse_factor = dot(vert_normal, light_normal);
+            float diffuse_factor = dot(world_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
                 vert_rgb += color.rgb * diffuse_factor * light_color * light_intensity;
             }
         }
 
-        vert_color = vec4(vert_rgb, 1.0);
+        frag_color = vec4(vert_rgb, 1.0);
     }
 `;
 
@@ -64,12 +65,13 @@ let fragment = `
     precision mediump float;
 
     uniform sampler2D sampler;
-    varying vec2 vert_texcoord;
-    varying vec4 vert_color;
+
+    varying vec2 frag_texcoord;
+    varying vec4 frag_color;
 
     void main() {
-        vec4 tex_color = texture2D(sampler, vert_texcoord);
-        gl_FragColor = vert_color * tex_color;
+        vec4 tex_color = texture2D(sampler, frag_texcoord);
+        gl_FragColor = frag_color * tex_color;
     }
 `;
 
@@ -86,9 +88,9 @@ export function mat1_textured_diffuse(gl: WebGLRenderingContext): Material<Textu
             Sampler: gl.getUniformLocation(program, "sampler")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
-            VertexPosition: gl.getAttribLocation(program, "position")!,
-            VertexTexCoord: gl.getAttribLocation(program, "texcoord")!,
-            VertexNormal: gl.getAttribLocation(program, "normal")!,
+            VertexPosition: gl.getAttribLocation(program, "vert_position")!,
+            VertexTexCoord: gl.getAttribLocation(program, "vert_texcoord")!,
+            VertexNormal: gl.getAttribLocation(program, "vert_normal")!,
         },
     };
 }
