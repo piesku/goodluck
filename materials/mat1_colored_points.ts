@@ -1,5 +1,5 @@
 import {link, Material} from "../common/material.js";
-import {GL_LINE_STRIP} from "../common/webgl.js";
+import {GL_POINTS} from "../common/webgl.js";
 import {ColoredUnlitLayout} from "./layout_colored_unlit.js";
 
 let vertex = `
@@ -10,6 +10,7 @@ let vertex = `
 
     void main() {
         gl_Position = pv * world * vec4(position, 1.0);
+        gl_PointSize = 8.0;
     }
 `;
 
@@ -22,10 +23,10 @@ let fragment = `
     }
 `;
 
-export function mat1_colored_unlit_line(gl: WebGLRenderingContext): Material<ColoredUnlitLayout> {
+export function mat1_colored_points(gl: WebGLRenderingContext): Material<ColoredUnlitLayout> {
     let program = link(gl, vertex, fragment);
     return {
-        Mode: GL_LINE_STRIP,
+        Mode: GL_POINTS,
         Program: program,
         Locations: {
             Pv: gl.getUniformLocation(program, "pv")!,

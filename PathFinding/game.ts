@@ -1,6 +1,6 @@
-import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
+import {GL_CULL_FACE, GL_DEPTH_TEST, GL_LINE_STRIP} from "../common/webgl.js";
 import {mat1_colored_diffuse_gouraud} from "../materials/mat1_colored_diffuse_gouraud.js";
-import {mat1_colored_unlit_line} from "../materials/mat1_colored_unlit_line.js";
+import {mat1_colored_unlit} from "../materials/mat1_colored_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_terrain} from "../meshes/terrain.js";
 import {Camera} from "./components/com_camera.js";
@@ -45,7 +45,7 @@ export class Game {
     CanvasBillboard = document.querySelector("canvas#billboard")! as HTMLCanvasElement;
     Context2D = this.CanvasBillboard.getContext("2d")!;
 
-    MaterialColoredUnlitLine = mat1_colored_unlit_line(this.Gl);
+    MaterialColoredUnlitLine = mat1_colored_unlit(this.Gl, GL_LINE_STRIP);
     MaterialColoredDiffuseGouraud = mat1_colored_diffuse_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
     MeshTerrain = mesh_terrain(this.Gl);
