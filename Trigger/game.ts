@@ -6,7 +6,7 @@ import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./loop.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
-import {sys_control_move} from "./systems/sys_control_move.js";
+import {sys_control_always} from "./systems/sys_control_always.js";
 import {sys_debug} from "./systems/sys_debug.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -55,7 +55,7 @@ export class Game {
     FrameUpdate(delta: number) {
         let now = performance.now();
 
-        sys_control_move(this, delta);
+        sys_control_always(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
 

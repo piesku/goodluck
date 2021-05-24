@@ -1,6 +1,6 @@
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {children} from "../components/com_children.js";
-import {control_move} from "../components/com_control_move.js";
+import {control_always} from "../components/com_control_always.js";
 import {light_directional, light_point} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {
@@ -27,7 +27,7 @@ export function scene_stage(game: Game) {
     let light_range = 4;
     instantiate(game, [
         transform([0, 0, 5]),
-        control_move(null, [0, 0, 1, 0]),
+        control_always(null, [0, 0, 1, 0]),
         move(0, 0.5),
         children(
             [transform([1 * light_spread, 0, 0]), light_point([1, 1, 1], light_range)],

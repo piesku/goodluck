@@ -2,7 +2,7 @@ import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {blueprint_hand} from "../blueprints/blu_hand.js";
 import {children} from "../components/com_children.js";
 import {collide} from "../components/com_collide.js";
-import {control_move} from "../components/com_control_move.js";
+import {control_always} from "../components/com_control_always.js";
 import {control_spawn} from "../components/com_control_spawn.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
@@ -49,7 +49,7 @@ export function scene_stage(game: Game) {
     // Rotating hand.
     instantiate(game, [
         transform([0, 1, -3]),
-        control_move(null, [0, 1, 0, 0]),
+        control_always(null, [0, 1, 0, 0]),
         move(0, 2),
         children([...blueprint_hand(game), transform([0, 0, -3])]),
     ]);
