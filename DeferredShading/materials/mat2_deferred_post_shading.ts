@@ -47,7 +47,7 @@ let fragment = `#version 300 es\n
         vec3 view_normal = normalize(view_dir);
 
         // Ambient light.
-        vec3 rgb = current_diffuse.rgb * 0.1;
+        vec3 light_acc = current_diffuse.rgb * 0.1;
 
         for (int i = 0; i < MAX_LIGHTS; i++) {
             int light_kind = int(light_positions[i].w);
@@ -75,7 +75,7 @@ let fragment = `#version 300 es\n
             float diffuse_factor = dot(current_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
-                rgb += current_diffuse.rgb * diffuse_factor * light_rgb * light_intensity;
+                light_acc += current_diffuse.rgb * diffuse_factor * light_rgb * light_intensity;
 
                 if (current_specular.a > 0.0) {
                     // For non-zero shininess, apply the Blinn-Phong reflection model.
@@ -84,12 +84,12 @@ let fragment = `#version 300 es\n
                     float specular_factor = pow(specular_angle, current_specular.a);
 
                     // Specular color.
-                    rgb += current_specular.rgb * specular_factor * light_rgb * light_intensity;
+                    light_acc += current_specular.rgb * specular_factor * light_rgb * light_intensity;
                 }
             }
         }
 
-        out_color = vec4(rgb, 1.0);
+        out_color = vec4(light_acc, 1.0);
     }
 `;
 

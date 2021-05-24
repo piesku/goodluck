@@ -28,7 +28,7 @@ let vertex = `
         frag_texcoord = vert_texcoord;
 
         // Ambient light.
-        vec3 vert_rgb = color.rgb * 0.1;
+        vec3 light_acc = color.rgb * 0.1;
 
         for (int i = 0; i < MAX_LIGHTS; i++) {
             if (light_positions[i].w == 0.0) {
@@ -53,11 +53,11 @@ let vertex = `
             float diffuse_factor = dot(world_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
-                vert_rgb += color.rgb * diffuse_factor * light_color * light_intensity;
+                light_acc += color.rgb * diffuse_factor * light_color * light_intensity;
             }
         }
 
-        frag_color = vec4(vert_rgb, 1.0);
+        frag_color = vec4(light_acc, 1.0);
     }
 `;
 

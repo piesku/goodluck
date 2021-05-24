@@ -29,7 +29,7 @@ let vertex = `#version 300 es\n
 
         // Ambient light.
         vec3 color = palette[int(vert_offset[3])];
-        vec3 rgb = color * 0.1;
+        vec3 light_acc = color * 0.1;
 
         for (int i = 0; i < MAX_LIGHTS; i++) {
             if (light_positions[i].w == 0.0) {
@@ -54,11 +54,11 @@ let vertex = `#version 300 es\n
             float diffuse_factor = dot(world_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
-                rgb += color * diffuse_factor * light_color * light_intensity;
+                light_acc += color * diffuse_factor * light_color * light_intensity;
             }
         }
 
-        frag_color = vec4(rgb, 1.0);
+        frag_color = vec4(light_acc, 1.0);
     }
 `;
 

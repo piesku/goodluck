@@ -31,7 +31,7 @@ let vertex = `#version 300 es\n
         vec3 view_normal = normalize(view_dir);
 
         // Ambient light.
-        vec3 rgb = color_diffuse.rgb * 0.1;
+        vec3 light_acc = color_diffuse.rgb * 0.1;
 
         for (int i = 0; i < MAX_LIGHTS; i++) {
             if (light_positions[i].w == 0.0) {
@@ -56,7 +56,7 @@ let vertex = `#version 300 es\n
             float diffuse_factor = dot(world_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
-                rgb += color_diffuse.rgb * diffuse_factor * light_color * light_intensity;
+                light_acc += color_diffuse.rgb * diffuse_factor * light_color * light_intensity;
 
                 if (shininess > 0.0) {
                     // Blinn-Phong reflection model.
@@ -65,12 +65,12 @@ let vertex = `#version 300 es\n
                     float specular_factor = pow(specular_angle, shininess);
 
                     // Specular color.
-                    rgb += color_specular.rgb * specular_factor * light_color * light_intensity;
+                    light_acc += color_specular.rgb * specular_factor * light_color * light_intensity;
                 }
             }
         }
 
-        frag_color = vec4(rgb, 1.0);
+        frag_color = vec4(light_acc, 1.0);
     }
 `;
 
