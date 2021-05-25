@@ -1,6 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {TexturedDiffuseLayout} from "./layout_textured_diffuse.js";
+import {TexturedShadedLayout} from "./layout_textured_shaded.js";
 
 let vertex = `
     // See Game.LightPositions and Game.LightDetails.
@@ -75,7 +75,7 @@ let fragment = `
     }
 `;
 
-export function mat1_textured_diffuse(gl: WebGLRenderingContext): Material<TexturedDiffuseLayout> {
+export function mat1_textured_gouraud(gl: WebGLRenderingContext): Material<TexturedShadedLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

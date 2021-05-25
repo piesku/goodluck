@@ -6,7 +6,7 @@ import {move} from "../components/com_move.js";
 import {
     render_colored_shaded,
     render_colored_unlit,
-    render_textured_diffuse,
+    render_textured_shaded,
     render_textured_unlit,
 } from "../components/com_render1.js";
 import {transform} from "../components/com_transform.js";
@@ -109,8 +109,8 @@ export function scene_stage(game: Game) {
         ),
 
         // Textured Gouraud shading
-        render_textured_diffuse(
-            game.MaterialTexturedDiffuse,
+        render_textured_shaded(
+            game.MaterialTexturedGouraud,
             game.MeshIcosphereSmooth,
             game.Textures["checker1.webp"]
         ),

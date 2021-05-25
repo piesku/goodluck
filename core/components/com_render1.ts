@@ -9,7 +9,7 @@ import {
 } from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {ColoredUnlitLayout} from "../../materials/layout_colored_unlit.js";
-import {TexturedDiffuseLayout} from "../../materials/layout_textured_diffuse.js";
+import {TexturedShadedLayout} from "../../materials/layout_textured_shaded.js";
 import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
 import {Entity, Game} from "../game.js";
 import {Has, World} from "../world.js";
@@ -18,14 +18,14 @@ export type Render =
     | RenderColoredUnlit
     | RenderColoredShaded
     | RenderTexturedUnlit
-    | RenderTexturedDiffuse
+    | RenderTexturedShaded
     | RenderVertices;
 
 export const enum RenderKind {
     ColoredUnlit,
     ColoredShaded,
     TexturedUnlit,
-    TexturedDiffuse,
+    TexturedShaded,
     Vertices,
 }
 
@@ -215,9 +215,9 @@ export function render_textured_unlit(
     };
 }
 
-export interface RenderTexturedDiffuse {
-    readonly Kind: RenderKind.TexturedDiffuse;
-    readonly Material: Material<TexturedDiffuseLayout>;
+export interface RenderTexturedShaded {
+    readonly Kind: RenderKind.TexturedShaded;
+    readonly Material: Material<TexturedShadedLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
     readonly Vao: WebGLVertexArrayObject;
@@ -225,16 +225,16 @@ export interface RenderTexturedDiffuse {
     Color: Vec4;
 }
 
-let textured_diffuse_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+let textured_shaded_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
-export function render_textured_diffuse(
-    material: Material<TexturedDiffuseLayout>,
+export function render_textured_shaded(
+    material: Material<TexturedShadedLayout>,
     mesh: Mesh,
     texture: WebGLTexture,
     color: Vec4 = [1, 1, 1, 1]
 ) {
     return (game: Game1, entity: Entity) => {
-        if (!textured_diffuse_vaos.has(mesh)) {
+        if (!textured_shaded_vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.ExtVao.createVertexArrayOES()!;
             game.ExtVao.bindVertexArrayOES(vao);
@@ -268,16 +268,16 @@ export function render_textured_diffuse(
             game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
             game.ExtVao.bindVertexArrayOES(null);
-            textured_diffuse_vaos.set(mesh, vao);
+            textured_shaded_vaos.set(mesh, vao);
         }
 
         game.World.Signature[entity] |= Has.Render;
         game.World.Render[entity] = {
-            Kind: RenderKind.TexturedDiffuse,
+            Kind: RenderKind.TexturedShaded,
             Material: material,
             Mesh: mesh,
             FrontFace: GL_CW,
-            Vao: textured_diffuse_vaos.get(mesh)!,
+            Vao: textured_shaded_vaos.get(mesh)!,
             Texture: texture,
             Color: color,
         };

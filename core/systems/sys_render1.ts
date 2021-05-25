@@ -11,7 +11,7 @@ import {
 } from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {ColoredUnlitLayout} from "../../materials/layout_colored_unlit.js";
-import {TexturedDiffuseLayout} from "../../materials/layout_textured_diffuse.js";
+import {TexturedShadedLayout} from "../../materials/layout_textured_shaded.js";
 import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
 import {CameraDisplay, CameraEye, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
 import {
@@ -19,7 +19,7 @@ import {
     RenderColoredShaded,
     RenderColoredUnlit,
     RenderKind,
-    RenderTexturedDiffuse,
+    RenderTexturedShaded,
     RenderTexturedUnlit,
     RenderVertices,
 } from "../components/com_render1.js";
@@ -88,8 +88,8 @@ function render(game: Game1, eye: CameraEye, current_target?: WebGLTexture) {
                     case RenderKind.TexturedUnlit:
                         use_textured_unlit(game, render.Material, eye);
                         break;
-                    case RenderKind.TexturedDiffuse:
-                        use_textured_diffuse(game, render.Material, eye);
+                    case RenderKind.TexturedShaded:
+                        use_textured_shaded(game, render.Material, eye);
                         break;
                     case RenderKind.Vertices:
                         use_vertices(game, render.Material, eye);
@@ -116,11 +116,11 @@ function render(game: Game1, eye: CameraEye, current_target?: WebGLTexture) {
                         draw_textured_unlit(game, transform, render);
                     }
                     break;
-                case RenderKind.TexturedDiffuse:
+                case RenderKind.TexturedShaded:
                     // Prevent feedback loop between the active render target
                     // and the texture being rendered.
                     if (render.Texture !== current_target) {
-                        draw_textured_diffuse(game, transform, render);
+                        draw_textured_shaded(game, transform, render);
                     }
                     break;
                 case RenderKind.Vertices:
@@ -182,9 +182,9 @@ function draw_textured_unlit(game: Game1, transform: Transform, render: RenderTe
     game.ExtVao.bindVertexArrayOES(null);
 }
 
-function use_textured_diffuse(
+function use_textured_shaded(
     game: Game1,
-    material: Material<TexturedDiffuseLayout>,
+    material: Material<TexturedShadedLayout>,
     eye: CameraEye
 ) {
     game.Gl.useProgram(material.Program);
@@ -193,7 +193,7 @@ function use_textured_diffuse(
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
-function draw_textured_diffuse(game: Game1, transform: Transform, render: RenderTexturedDiffuse) {
+function draw_textured_shaded(game: Game1, transform: Transform, render: RenderTexturedShaded) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
 
