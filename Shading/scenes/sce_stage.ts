@@ -55,13 +55,7 @@ export function scene_stage(game: Game) {
         ),
 
         // Colored Gouraud shading
-        render_colored_shaded(
-            game.MaterialColoredGouraud,
-            game.MeshIcosphereSmooth,
-            [1, 1, 0, 1],
-            0,
-            [1, 1, 0, 1]
-        ),
+        render_colored_shaded(game.MaterialColoredGouraud, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
         render_colored_shaded(
             game.MaterialColoredGouraud,
             game.MeshIcosphereSmooth,
@@ -85,7 +79,7 @@ export function scene_stage(game: Game) {
         ),
 
         // Colored Phong shading
-        render_colored_shaded(game.MaterialColoredPhong, game.MeshIcosphereSmooth, [1, 1, 0, 1], 0),
+        render_colored_shaded(game.MaterialColoredPhong, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
         render_colored_shaded(
             game.MaterialColoredPhong,
             game.MeshIcosphereSmooth,
@@ -113,6 +107,24 @@ export function scene_stage(game: Game) {
             game.MaterialTexturedGouraud,
             game.MeshIcosphereSmooth,
             game.Textures["checker1.webp"]
+        ),
+        render_textured_shaded(
+            game.MaterialTexturedGouraud,
+            game.MeshIcosphereSmooth,
+            game.Textures["checker1.webp"],
+            16
+        ),
+        render_textured_shaded(
+            game.MaterialTexturedGouraud,
+            game.MeshIcosphereSmooth,
+            game.Textures["checker1.webp"],
+            128
+        ),
+        render_textured_shaded(
+            game.MaterialTexturedGouraud,
+            game.MeshIcosphereSmooth,
+            game.Textures["checker1.webp"],
+            512
         ),
     ];
 

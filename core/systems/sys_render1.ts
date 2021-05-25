@@ -189,6 +189,7 @@ function use_textured_shaded(
 ) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
+    game.Gl.uniform3fv(material.Locations.Eye, eye.Position);
     game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
@@ -196,12 +197,13 @@ function use_textured_shaded(
 function draw_textured_shaded(game: Game1, transform: Transform, render: RenderTexturedShaded) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
+    game.Gl.uniform4fv(render.Material.Locations.ColorDiffuse, render.ColorDiffuse);
+    game.Gl.uniform4fv(render.Material.Locations.ColorSpecular, render.ColorSpecular);
+    game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
 
     game.Gl.activeTexture(GL_TEXTURE0);
     game.Gl.bindTexture(GL_TEXTURE_2D, render.Texture);
     game.Gl.uniform1i(render.Material.Locations.Sampler, 0);
-
-    game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
 
     game.ExtVao.bindVertexArrayOES(render.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);

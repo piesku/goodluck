@@ -222,7 +222,9 @@ export interface RenderTexturedShaded {
     readonly FrontFace: GLenum;
     readonly Vao: WebGLVertexArrayObject;
     Texture: WebGLTexture;
-    Color: Vec4;
+    ColorDiffuse: Vec4;
+    ColorSpecular: Vec4;
+    Shininess: number;
 }
 
 let textured_shaded_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
@@ -231,7 +233,10 @@ export function render_textured_shaded(
     material: Material<TexturedShadedLayout>,
     mesh: Mesh,
     texture: WebGLTexture,
-    color: Vec4 = [1, 1, 1, 1]
+    shininess: number = 0,
+    color_diffuse: Vec4 = [1, 1, 1, 1],
+    color_specular: Vec4 = [1, 1, 1, 1],
+    front_face: GLenum = GL_CW
 ) {
     return (game: Game1, entity: Entity) => {
         if (!textured_shaded_vaos.has(mesh)) {
@@ -276,10 +281,12 @@ export function render_textured_shaded(
             Kind: RenderKind.TexturedShaded,
             Material: material,
             Mesh: mesh,
-            FrontFace: GL_CW,
+            FrontFace: front_face,
             Vao: textured_shaded_vaos.get(mesh)!,
             Texture: texture,
-            Color: color,
+            ColorDiffuse: color_diffuse,
+            ColorSpecular: color_specular,
+            Shininess: shininess,
         };
     };
 }
