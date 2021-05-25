@@ -1,5 +1,5 @@
 import {link, Material} from "../common/material.js";
-import {GL_TRIANGLES} from "../common/webgl.js";
+import {GL_LINE_LOOP, GL_LINE_STRIP, GL_TRIANGLES} from "../common/webgl.js";
 import {ColoredUnlitLayout} from "./layout_colored_unlit.js";
 
 let vertex = `
@@ -37,4 +37,12 @@ export function mat1_colored_unlit(
             VertexPosition: gl.getAttribLocation(program, "vert_position")!,
         },
     };
+}
+
+export function mat1_colored_wireframe(gl: WebGLRenderingContext) {
+    return mat1_colored_unlit(gl, GL_LINE_LOOP);
+}
+
+export function mat1_colored_line(gl: WebGLRenderingContext) {
+    return mat1_colored_unlit(gl, GL_LINE_STRIP);
 }

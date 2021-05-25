@@ -1,8 +1,8 @@
-import {GL_CULL_FACE, GL_DEPTH_TEST, GL_LINE_LOOP} from "../common/webgl.js";
+import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_colored_gouraud} from "../materials/mat1_colored_gouraud.js";
 import {mat1_colored_phong} from "../materials/mat1_colored_phong.js";
 import {mat1_colored_points} from "../materials/mat1_colored_points.js";
-import {mat1_colored_unlit} from "../materials/mat1_colored_unlit.js";
+import {mat1_colored_unlit, mat1_colored_wireframe} from "../materials/mat1_colored_unlit.js";
 import {mat1_textured_gouraud} from "../materials/mat1_textured_gouraud.js";
 import {mat1_textured_phong} from "../materials/mat1_textured_phong.js";
 import {mat1_textured_unlit} from "../materials/mat1_textured_unlit.js";
@@ -33,7 +33,7 @@ export class Game {
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
     MaterialColoredPoints = mat1_colored_points(this.Gl);
-    MaterialColoredWireframe = mat1_colored_unlit(this.Gl, GL_LINE_LOOP);
+    MaterialColoredWireframe = mat1_colored_wireframe(this.Gl);
     MaterialColoredUnlit = mat1_colored_unlit(this.Gl);
     MaterialColoredGouraud = mat1_colored_gouraud(this.Gl);
     MaterialColoredPhong = mat1_colored_phong(this.Gl);

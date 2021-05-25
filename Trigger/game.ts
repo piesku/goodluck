@@ -1,6 +1,6 @@
-import {GL_CULL_FACE, GL_DEPTH_TEST, GL_LINE_LOOP} from "../common/webgl.js";
+import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_colored_gouraud} from "../materials/mat1_colored_gouraud.js";
-import {mat1_colored_unlit} from "../materials/mat1_colored_unlit.js";
+import {mat1_colored_wireframe} from "../materials/mat1_colored_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./loop.js";
@@ -30,7 +30,7 @@ export class Game {
     Gl = this.Canvas.getContext("webgl")!;
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
-    MaterialColoredWireframe = mat1_colored_unlit(this.Gl, GL_LINE_LOOP);
+    MaterialColoredWireframe = mat1_colored_wireframe(this.Gl);
     MaterialColoredGouraud = mat1_colored_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
 
