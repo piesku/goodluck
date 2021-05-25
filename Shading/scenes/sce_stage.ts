@@ -126,6 +126,31 @@ export function scene_stage(game: Game) {
             game.Textures["checker1.webp"],
             512
         ),
+
+        // Textured Phong shading
+        render_textured_shaded(
+            game.MaterialTexturedPhong,
+            game.MeshIcosphereSmooth,
+            game.Textures["checker1.webp"]
+        ),
+        render_textured_shaded(
+            game.MaterialTexturedPhong,
+            game.MeshIcosphereSmooth,
+            game.Textures["checker1.webp"],
+            16
+        ),
+        render_textured_shaded(
+            game.MaterialTexturedPhong,
+            game.MeshIcosphereSmooth,
+            game.Textures["checker1.webp"],
+            128
+        ),
+        render_textured_shaded(
+            game.MaterialTexturedPhong,
+            game.MeshIcosphereSmooth,
+            game.Textures["checker1.webp"],
+            512
+        ),
     ];
 
     let rows = 4;
