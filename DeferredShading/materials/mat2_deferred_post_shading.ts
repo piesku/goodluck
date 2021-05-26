@@ -3,14 +3,14 @@ import {GL_TRIANGLES} from "../../common/webgl.js";
 import {DeferredPostprocessLayout} from "./layout_deferred_postprocess.js";
 
 let vertex = `#version 300 es\n
-    in vec3 vert_position;
-    in vec2 vert_texcoord;
+    in vec3 attr_position;
+    in vec2 attr_texcoord;
 
-    out vec2 frag_texcoord;
+    out vec2 vert_texcoord;
 
     void main() {
-        gl_Position = vec4(vert_position, 1.0);
-        frag_texcoord = vert_texcoord;
+        gl_Position = vec4(attr_position, 1.0);
+        vert_texcoord = attr_texcoord;
     }
 `;
 
@@ -28,20 +28,20 @@ let fragment = `#version 300 es\n
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    in vec2 frag_texcoord;
+    in vec2 vert_texcoord;
 
-    out vec4 out_color;
+    out vec4 frag_color;
 
     void main() {
-        vec3 current_normal = texture(normal_map, frag_texcoord).xyz;
+        vec3 current_normal = texture(normal_map, vert_texcoord).xyz;
         if (current_normal == vec3(0.0, 0.0, 0.0)) {
             // "Black" normals identify fragments with no renderable objects; clear color them.
             discard;
         }
 
-        vec4 current_diffuse = texture(diffuse_map, frag_texcoord);
-        vec4 current_specular = texture(specular_map, frag_texcoord);
-        vec4 current_position = texture(position_map, frag_texcoord);
+        vec4 current_diffuse = texture(diffuse_map, vert_texcoord);
+        vec4 current_specular = texture(specular_map, vert_texcoord);
+        vec4 current_position = texture(position_map, vert_texcoord);
 
         vec3 view_dir = eye - current_position.xyz;
         vec3 view_normal = normalize(view_dir);
@@ -89,7 +89,7 @@ let fragment = `#version 300 es\n
             }
         }
 
-        out_color = vec4(light_acc, 1.0);
+        frag_color = vec4(light_acc, 1.0);
     }
 `;
 
@@ -109,8 +109,8 @@ export function mat2_deferred_post_shading(
             DepthMap: gl.getUniformLocation(program, "depth_map")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
-            VertexPosition: gl.getAttribLocation(program, "vert_position")!,
-            VertexTexcoord: gl.getAttribLocation(program, "vert_texcoord")!,
+            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
+            VertexTexcoord: gl.getAttribLocation(program, "attr_texcoord")!,
         },
     };
 }

@@ -17,14 +17,14 @@ let vertex = `#version 300 es\n
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    in vec3 vert_position;
-    in vec3 vert_normal;
+    in vec3 attr_position;
+    in vec3 attr_normal;
 
-    flat out vec4 frag_color;
+    flat out vec4 vert_color;
 
     void main() {
-        vec4 world_position = world * vec4(vert_position, 1.0);
-        vec3 world_normal = normalize((vec4(vert_normal, 1.0) * self).xyz);
+        vec4 world_position = world * vec4(attr_position, 1.0);
+        vec3 world_normal = normalize((vec4(attr_normal, 1.0) * self).xyz);
         gl_Position = pv * world_position;
 
         vec3 view_dir = eye - world_position.xyz;
@@ -70,7 +70,7 @@ let vertex = `#version 300 es\n
             }
         }
 
-        frag_color = vec4(light_acc, 1.0);
+        vert_color = vec4(light_acc, 1.0);
     }
 `;
 
@@ -78,12 +78,12 @@ let fragment = `#version 300 es\n
 
     precision mediump float;
 
-    flat in vec4 frag_color;
+    flat in vec4 vert_color;
 
-    out vec4 out_color;
+    out vec4 frag_color;
 
     void main() {
-        out_color = frag_color;
+        frag_color = vert_color;
     }
 `;
 
@@ -102,8 +102,8 @@ export function mat2_colored_flat(gl: WebGL2RenderingContext): Material<ColoredS
             Shininess: gl.getUniformLocation(program, "shininess")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
-            VertexPosition: gl.getAttribLocation(program, "vert_position")!,
-            VertexNormal: gl.getAttribLocation(program, "vert_normal")!,
+            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
+            VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
         },
     };
 }

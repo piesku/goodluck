@@ -7,16 +7,16 @@ let vertex = `
     uniform mat4 world;
     uniform mat4 self;
 
-    attribute vec3 vert_position;
-    attribute vec3 vert_normal;
+    attribute vec3 attr_position;
+    attribute vec3 attr_normal;
 
-    varying vec4 frag_position;
-    varying vec3 frag_normal;
+    varying vec4 vert_position;
+    varying vec3 vert_normal;
 
     void main() {
-        frag_position = world * vec4(vert_position, 1.0);
-        frag_normal = (vec4(vert_normal, 1.0) * self).xyz;
-        gl_Position = pv * frag_position;
+        vert_position = world * vec4(attr_position, 1.0);
+        vert_normal = (vec4(attr_normal, 1.0) * self).xyz;
+        gl_Position = pv * vert_position;
     }
 `;
 
@@ -33,13 +33,13 @@ let fragment = `
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    varying vec4 frag_position;
-    varying vec3 frag_normal;
+    varying vec4 vert_position;
+    varying vec3 vert_normal;
 
     void main() {
-        vec3 world_normal = normalize(frag_normal);
+        vec3 world_normal = normalize(vert_normal);
 
-        vec3 view_dir = eye - frag_position.xyz;
+        vec3 view_dir = eye - vert_position.xyz;
         vec3 view_normal = normalize(view_dir);
 
         // Ambient light.
@@ -58,7 +58,7 @@ let fragment = `
                 // Directional light.
                 light_normal = light_positions[i].xyz;
             } else {
-                vec3 light_dir = light_positions[i].xyz - frag_position.xyz;
+                vec3 light_dir = light_positions[i].xyz - vert_position.xyz;
                 float light_dist = length(light_dir);
                 light_normal = light_dir / light_dist;
                 // Distance attenuation.
@@ -106,8 +106,8 @@ export function mat1_colored_phong(gl: WebGLRenderingContext): Material<ColoredS
             Shininess: gl.getUniformLocation(program, "shininess")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
-            VertexPosition: gl.getAttribLocation(program, "vert_position")!,
-            VertexNormal: gl.getAttribLocation(program, "vert_normal")!,
+            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
+            VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
         },
     };
 }

@@ -16,16 +16,16 @@ let vertex = `
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    attribute vec3 vert_position;
-    attribute vec2 vert_texcoord;
-    attribute vec3 vert_normal;
+    attribute vec3 attr_position;
+    attribute vec2 attr_texcoord;
+    attribute vec3 attr_normal;
 
-    varying vec2 frag_texcoord;
-    varying vec4 frag_color;
+    varying vec2 vert_texcoord;
+    varying vec4 vert_color;
 
     void main() {
-        vec4 world_position = world * vec4(vert_position, 1.0);
-        vec3 world_normal = normalize((vec4(vert_normal, 1.0) * self).xyz);
+        vec4 world_position = world * vec4(attr_position, 1.0);
+        vec3 world_normal = normalize((vec4(attr_normal, 1.0) * self).xyz);
         gl_Position = pv * world_position;
 
         vec3 view_dir = eye - world_position.xyz;
@@ -71,8 +71,8 @@ let vertex = `
             }
         }
 
-        frag_color = vec4(light_acc, 1.0);
-        frag_texcoord = vert_texcoord;
+        vert_color = vec4(light_acc, 1.0);
+        vert_texcoord = attr_texcoord;
     }
 `;
 
@@ -81,12 +81,12 @@ let fragment = `
 
     uniform sampler2D sampler;
 
-    varying vec2 frag_texcoord;
-    varying vec4 frag_color;
+    varying vec2 vert_texcoord;
+    varying vec4 vert_color;
 
     void main() {
-        vec4 tex_color = texture2D(sampler, frag_texcoord);
-        gl_FragColor = frag_color * tex_color;
+        vec4 tex_color = texture2D(sampler, vert_texcoord);
+        gl_FragColor = vert_color * tex_color;
     }
 `;
 
@@ -106,9 +106,9 @@ export function mat1_textured_gouraud(gl: WebGLRenderingContext): Material<Textu
             Sampler: gl.getUniformLocation(program, "sampler")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
-            VertexPosition: gl.getAttribLocation(program, "vert_position")!,
-            VertexTexCoord: gl.getAttribLocation(program, "vert_texcoord")!,
-            VertexNormal: gl.getAttribLocation(program, "vert_normal")!,
+            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
+            VertexTexCoord: gl.getAttribLocation(program, "attr_texcoord")!,
+            VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
         },
     };
 }

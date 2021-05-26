@@ -8,16 +8,16 @@ let vertex = `#version 300 es\n
     uniform mat4 world;
     uniform mat4 self;
 
-    in vec3 vert_position;
-    in vec3 vert_normal;
+    in vec3 attr_position;
+    in vec3 attr_normal;
 
-    out vec4 frag_position;
-    out vec4 frag_normal;
+    out vec4 vert_position;
+    out vec4 vert_normal;
 
     void main() {
-        frag_position = world * vec4(vert_position, 1.0);
-        frag_normal = vec4(vert_normal, 1.0) * self;
-        gl_Position = pv * frag_position;
+        vert_position = world * vec4(attr_position, 1.0);
+        vert_normal = vec4(attr_normal, 1.0) * self;
+        gl_Position = pv * vert_position;
     }
 `;
 
@@ -29,19 +29,19 @@ let fragment = `#version 300 es\n
     uniform vec3 color_specular;
     uniform float shininess;
 
-    in vec4 frag_position;
-    in vec4 frag_normal;
+    in vec4 vert_position;
+    in vec4 vert_normal;
 
-    layout(location = 0) out vec4 out_diffuse;
-    layout(location = 1) out vec4 out_specular;
-    layout(location = 2) out vec4 out_position;
-    layout(location = 3) out vec3 out_normal;
+    layout(location = 0) out vec4 frag_diffuse;
+    layout(location = 1) out vec4 frag_specular;
+    layout(location = 2) out vec4 frag_position;
+    layout(location = 3) out vec3 frag_normal;
 
     void main() {
-        out_diffuse = color_diffuse;
-        out_specular = vec4(color_specular, shininess);
-        out_position = frag_position;
-        out_normal = normalize(frag_normal.xyz);
+        frag_diffuse = color_diffuse;
+        frag_specular = vec4(color_specular, shininess);
+        frag_position = vert_position;
+        frag_normal = normalize(vert_normal.xyz);
     }
 `;
 
@@ -57,8 +57,8 @@ export function mat2_deferred_colored(gl: WebGLRenderingContext): Material<Defer
             ColorDiffuse: gl.getUniformLocation(program, "color_diffuse")!,
             ColorSpecular: gl.getUniformLocation(program, "color_specular")!,
             Shininess: gl.getUniformLocation(program, "shininess")!,
-            VertexPosition: gl.getAttribLocation(program, "vert_position")!,
-            VertexNormal: gl.getAttribLocation(program, "vert_normal")!,
+            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
+            VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
         },
     };
 }

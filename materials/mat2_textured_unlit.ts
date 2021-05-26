@@ -6,15 +6,15 @@ let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
 
-    in vec3 vert_position;
-    in vec2 vert_texcoord;
-    out vec2 frag_texcoord;
+    in vec3 attr_position;
+    in vec2 attr_texcoord;
+    out vec2 vert_texcoord;
 
     void main() {
-        vec4 vert_pos = world * vec4(vert_position, 1.0);
-        gl_Position = pv * vert_pos;
+        vec4 attr_pos = world * vec4(attr_position, 1.0);
+        gl_Position = pv * attr_pos;
 
-        frag_texcoord = vert_texcoord;
+        vert_texcoord = attr_texcoord;
     }
 `;
 
@@ -24,11 +24,11 @@ let fragment = `#version 300 es\n
     uniform sampler2D sampler;
     uniform vec4 color;
 
-    in vec2 frag_texcoord;
-    out vec4 out_color;
+    in vec2 vert_texcoord;
+    out vec4 frag_color;
 
     void main() {
-        out_color = color * texture(sampler, frag_texcoord);
+        frag_color = color * texture(sampler, vert_texcoord);
     }
 `;
 
@@ -42,8 +42,8 @@ export function mat2_textured_unlit(gl: WebGL2RenderingContext): Material<Textur
             World: gl.getUniformLocation(program, "world")!,
             Sampler: gl.getUniformLocation(program, "sampler")!,
             Color: gl.getUniformLocation(program, "color")!,
-            VertexPosition: gl.getAttribLocation(program, "vert_position")!,
-            VertexTexCoord: gl.getAttribLocation(program, "vert_texcoord")!,
+            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
+            VertexTexCoord: gl.getAttribLocation(program, "attr_texcoord")!,
         },
     };
 }

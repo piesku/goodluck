@@ -7,20 +7,20 @@ let vertex = `
     uniform mat4 world;
     uniform mat4 self;
 
-    attribute vec3 vert_position;
-    attribute vec2 vert_texcoord;
-    attribute vec3 vert_normal;
+    attribute vec3 attr_position;
+    attribute vec2 attr_texcoord;
+    attribute vec3 attr_normal;
 
-    varying vec4 frag_position;
-    varying vec2 frag_texcoord;
-    varying vec3 frag_normal;
+    varying vec4 vert_position;
+    varying vec2 vert_texcoord;
+    varying vec3 vert_normal;
 
     void main() {
-        frag_position = world * vec4(vert_position, 1.0);
-        gl_Position = pv * frag_position;
+        vert_position = world * vec4(attr_position, 1.0);
+        gl_Position = pv * vert_position;
 
-        frag_texcoord = vert_texcoord;
-        frag_normal = (vec4(vert_normal, 1.0) * self).xyz;
+        vert_texcoord = attr_texcoord;
+        vert_normal = (vec4(attr_normal, 1.0) * self).xyz;
     }
 `;
 
@@ -38,14 +38,14 @@ let fragment = `
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    varying vec4 frag_position;
-    varying vec2 frag_texcoord;
-    varying vec3 frag_normal;
+    varying vec4 vert_position;
+    varying vec2 vert_texcoord;
+    varying vec3 vert_normal;
 
     void main() {
-        vec3 world_normal = normalize(frag_normal);
+        vec3 world_normal = normalize(vert_normal);
 
-        vec3 view_dir = eye - frag_position.xyz;
+        vec3 view_dir = eye - vert_position.xyz;
         vec3 view_normal = normalize(view_dir);
 
         // Ambient light.
@@ -64,7 +64,7 @@ let fragment = `
                 // Directional light.
                 light_normal = light_positions[i].xyz;
             } else {
-                vec3 light_dir = light_positions[i].xyz - frag_position.xyz;
+                vec3 light_dir = light_positions[i].xyz - vert_position.xyz;
                 float light_dist = length(light_dir);
                 light_normal = light_dir / light_dist;
                 // Distance attenuation.
@@ -88,7 +88,7 @@ let fragment = `
             }
         }
 
-        vec4 tex_color = texture2D(sampler, frag_texcoord);
+        vec4 tex_color = texture2D(sampler, vert_texcoord);
         gl_FragColor = vec4(light_acc, 1.0) * tex_color;
     }
 `;
@@ -109,9 +109,9 @@ export function mat1_textured_phong(gl: WebGLRenderingContext): Material<Texture
             Sampler: gl.getUniformLocation(program, "sampler")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
-            VertexPosition: gl.getAttribLocation(program, "vert_position")!,
-            VertexTexCoord: gl.getAttribLocation(program, "vert_texcoord")!,
-            VertexNormal: gl.getAttribLocation(program, "vert_normal")!,
+            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
+            VertexTexCoord: gl.getAttribLocation(program, "attr_texcoord")!,
+            VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
         },
     };
 }
