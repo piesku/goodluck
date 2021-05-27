@@ -1,14 +1,17 @@
 import {Material, Mesh} from "../../common/material.js";
-import {Vec4} from "../../common/math.js";
+import {Vec3, Vec4} from "../../common/math.js";
+import {normalize, subtract} from "../../common/vec3.js";
 import {
     GL_ARRAY_BUFFER,
     GL_CW,
     GL_DYNAMIC_DRAW,
     GL_ELEMENT_ARRAY_BUFFER,
     GL_FLOAT,
+    GL_STATIC_DRAW,
 } from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {ColoredUnlitLayout} from "../../materials/layout_colored_unlit.js";
+import {MappedLayout} from "../../materials/layout_mapped.js";
 import {TexturedShadedLayout} from "../../materials/layout_textured_shaded.js";
 import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
 import {Entity, Game} from "../game.js";
@@ -19,6 +22,7 @@ export type Render =
     | RenderColoredShaded
     | RenderTexturedUnlit
     | RenderTexturedShaded
+    | RenderMapped
     | RenderVertices;
 
 export const enum RenderKind {
@@ -26,6 +30,7 @@ export const enum RenderKind {
     ColoredShaded,
     TexturedUnlit,
     TexturedShaded,
+    Mapped,
     Vertices,
 }
 
@@ -314,6 +319,155 @@ export function render_vertices(material: Material<ColoredUnlitLayout>, max: num
             VertexBuffer: vertex_buf,
             IndexCount: 0,
             Color: color,
+        };
+    };
+}
+
+export interface RenderMapped {
+    readonly Kind: RenderKind.Mapped;
+    readonly Material: Material<MappedLayout>;
+    readonly Mesh: Mesh;
+    readonly FrontFace: GLenum;
+    readonly Vao: WebGLVertexArrayObject;
+    DiffuseMap: WebGLTexture;
+    DiffuseColor: Vec4;
+    NormalMap: WebGLTexture;
+    RoughnessMap: WebGLTexture;
+}
+
+let mapped_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+
+export function render_mapped(
+    material: Material<MappedLayout>,
+    mesh: Mesh,
+    diffuse_map: WebGLTexture,
+    normal_map: WebGLTexture,
+    roughness_map: WebGLTexture,
+    diffuse_color: Vec4 = [1, 1, 1, 1]
+) {
+    return (game: Game1, entity: Entity) => {
+        if (!mapped_vaos.has(mesh)) {
+            // We only need to create the VAO once.
+            let vao = game.ExtVao.createVertexArrayOES()!;
+            game.ExtVao.bindVertexArrayOES(vao);
+
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
+            game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
+            game.Gl.vertexAttribPointer(
+                material.Locations.VertexPosition,
+                3,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
+
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.NormalBuffer);
+            game.Gl.enableVertexAttribArray(material.Locations.VertexNormal);
+            game.Gl.vertexAttribPointer(material.Locations.VertexNormal, 3, GL_FLOAT, false, 0, 0);
+
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.TexCoordBuffer);
+            game.Gl.enableVertexAttribArray(material.Locations.VertexTexCoord);
+            game.Gl.vertexAttribPointer(
+                material.Locations.VertexTexCoord,
+                2,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
+
+            game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
+
+            let tangent_arr = new Float32Array(mesh.NormalArray.length);
+            let bitangent_arr = new Float32Array(mesh.NormalArray.length);
+
+            for (let i = 0; i < mesh.IndexCount; i += 3) {
+                let v0 = mesh.IndexArray[i + 0];
+                let v1 = mesh.IndexArray[i + 1];
+                let v2 = mesh.IndexArray[i + 2];
+
+                let p0: Vec3 = [
+                    mesh.VertexArray[v0 * 3 + 0],
+                    mesh.VertexArray[v0 * 3 + 1],
+                    mesh.VertexArray[v0 * 3 + 2],
+                ];
+                let p1: Vec3 = [
+                    mesh.VertexArray[v1 * 3 + 0],
+                    mesh.VertexArray[v1 * 3 + 1],
+                    mesh.VertexArray[v1 * 3 + 2],
+                ];
+                let p2: Vec3 = [
+                    mesh.VertexArray[v2 * 3 + 0],
+                    mesh.VertexArray[v2 * 3 + 1],
+                    mesh.VertexArray[v2 * 3 + 2],
+                ];
+
+                let edge1 = subtract([0, 0, 0], p1, p0);
+                let edge2 = subtract([0, 0, 0], p2, p0);
+
+                let delta_u1 = mesh.TexCoordArray[v1 * 2 + 0] - mesh.TexCoordArray[v0 * 2 + 0];
+                let delta_v1 = mesh.TexCoordArray[v1 * 2 + 1] - mesh.TexCoordArray[v0 * 2 + 1];
+                let delta_u2 = mesh.TexCoordArray[v2 * 2 + 0] - mesh.TexCoordArray[v0 * 2 + 0];
+                let delta_v2 = mesh.TexCoordArray[v2 * 2 + 1] - mesh.TexCoordArray[v0 * 2 + 1];
+
+                let r = 1 / (delta_u1 * delta_v2 - delta_u2 * delta_v1);
+                let tangent: Vec3 = [
+                    r * (delta_v2 * edge1[0] - delta_v1 * edge2[0]),
+                    r * (delta_v2 * edge1[1] - delta_v1 * edge2[1]),
+                    r * (delta_v2 * edge1[2] - delta_v1 * edge2[2]),
+                ];
+                let bitangent: Vec3 = [
+                    r * (-delta_u2 * edge1[0] + delta_u1 * edge2[0]),
+                    r * (-delta_u2 * edge1[1] + delta_u1 * edge2[1]),
+                    r * (-delta_u2 * edge1[2] + delta_u1 * edge2[2]),
+                ];
+
+                normalize(tangent, tangent);
+                tangent_arr.set(tangent, v0 * 2);
+                tangent_arr.set(tangent, v1 * 2);
+                tangent_arr.set(tangent, v2 * 2);
+
+                normalize(bitangent, bitangent);
+                bitangent_arr.set(bitangent, v0 * 2);
+                bitangent_arr.set(bitangent, v1 * 2);
+                bitangent_arr.set(bitangent, v2 * 2);
+            }
+
+            let tangent_buf = game.Gl.createBuffer()!;
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, tangent_buf);
+            game.Gl.bufferData(GL_ARRAY_BUFFER, tangent_arr, GL_STATIC_DRAW);
+            game.Gl.enableVertexAttribArray(material.Locations.VertexTangent);
+            game.Gl.vertexAttribPointer(material.Locations.VertexTangent, 3, GL_FLOAT, false, 0, 0);
+
+            let bitangent_buf = game.Gl.createBuffer()!;
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, bitangent_buf);
+            game.Gl.bufferData(GL_ARRAY_BUFFER, bitangent_arr, GL_STATIC_DRAW);
+            game.Gl.enableVertexAttribArray(material.Locations.VertexBitangent);
+            game.Gl.vertexAttribPointer(
+                material.Locations.VertexBitangent,
+                3,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
+
+            game.ExtVao.bindVertexArrayOES(null);
+            mapped_vaos.set(mesh, vao);
+        }
+
+        game.World.Signature[entity] |= Has.Render;
+        game.World.Render[entity] = {
+            Kind: RenderKind.Mapped,
+            Material: material,
+            Mesh: mesh,
+            FrontFace: GL_CW,
+            Vao: mapped_vaos.get(mesh)!,
+            DiffuseMap: diffuse_map,
+            DiffuseColor: diffuse_color,
+            NormalMap: normal_map,
+            RoughnessMap: roughness_map,
         };
     };
 }

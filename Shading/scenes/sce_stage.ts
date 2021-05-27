@@ -6,6 +6,7 @@ import {move} from "../components/com_move.js";
 import {
     render_colored_shaded,
     render_colored_unlit,
+    render_mapped,
     render_textured_shaded,
     render_textured_unlit,
 } from "../components/com_render1.js";
@@ -44,15 +45,11 @@ export function scene_stage(game: Game) {
     ]);
 
     let shadings = [
-        // Unlit column
+        // Unlit shading
         render_colored_unlit(game.MaterialColoredPoints, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
         render_colored_unlit(game.MaterialColoredWireframe, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
         render_colored_unlit(game.MaterialColoredUnlit, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
-        render_textured_unlit(
-            game.MaterialTexturedUnlit,
-            game.MeshIcosphereSmooth,
-            game.Textures["checker1.webp"]
-        ),
+        undefined,
 
         // Colored Gouraud shading
         render_colored_shaded(game.MaterialColoredGouraud, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
@@ -102,59 +99,70 @@ export function scene_stage(game: Game) {
             [1, 1, 0, 1]
         ),
 
-        // Textured Gouraud shading
+        // Textured unlit shading
+        render_textured_unlit(
+            game.MaterialTexturedUnlit,
+            game.MeshCube,
+            game.Textures["Bricks059_1K_Color.jpg"]
+        ),
+        render_textured_unlit(
+            game.MaterialTexturedUnlit,
+            game.MeshCube,
+            game.Textures["Sponge001_1K_Color.jpg"]
+        ),
+        undefined,
+        undefined,
+
+        // Textured Gouraud shading (diffuse only)
         render_textured_shaded(
             game.MaterialTexturedGouraud,
-            game.MeshIcosphereSmooth,
-            game.Textures["checker1.webp"]
+            game.MeshCube,
+            game.Textures["Bricks059_1K_Color.jpg"]
         ),
         render_textured_shaded(
             game.MaterialTexturedGouraud,
-            game.MeshIcosphereSmooth,
-            game.Textures["checker1.webp"],
-            16
+            game.MeshCube,
+            game.Textures["Sponge001_1K_Color.jpg"]
         ),
+        undefined,
+        undefined,
+
+        // Textured Phong shading (high specular)
         render_textured_shaded(
-            game.MaterialTexturedGouraud,
-            game.MeshIcosphereSmooth,
-            game.Textures["checker1.webp"],
-            128
-        ),
-        render_textured_shaded(
-            game.MaterialTexturedGouraud,
-            game.MeshIcosphereSmooth,
-            game.Textures["checker1.webp"],
+            game.MaterialTexturedPhong,
+            game.MeshCube,
+            game.Textures["Bricks059_1K_Color.jpg"],
             512
+        ),
+        render_textured_shaded(
+            game.MaterialTexturedPhong,
+            game.MeshCube,
+            game.Textures["Sponge001_1K_Color.jpg"],
+            512
+        ),
+        undefined,
+        undefined,
+
+        // Mapped (diffuse, normal, roughness) shading
+        render_mapped(
+            game.MaterialMapped,
+            game.MeshCube,
+            game.Textures["Bricks059_1K_Color.jpg"],
+            game.Textures["Bricks059_1K_Normal.jpg"],
+            game.Textures["Bricks059_1K_Roughness.jpg"]
         ),
 
-        // Textured Phong shading
-        render_textured_shaded(
-            game.MaterialTexturedPhong,
-            game.MeshIcosphereSmooth,
-            game.Textures["checker1.webp"]
-        ),
-        render_textured_shaded(
-            game.MaterialTexturedPhong,
-            game.MeshIcosphereSmooth,
-            game.Textures["checker1.webp"],
-            16
-        ),
-        render_textured_shaded(
-            game.MaterialTexturedPhong,
-            game.MeshIcosphereSmooth,
-            game.Textures["checker1.webp"],
-            128
-        ),
-        render_textured_shaded(
-            game.MaterialTexturedPhong,
-            game.MeshIcosphereSmooth,
-            game.Textures["checker1.webp"],
-            512
+        render_mapped(
+            game.MaterialMapped,
+            game.MeshCube,
+            game.Textures["Sponge001_1K_Color.jpg"],
+            game.Textures["Sponge001_1K_Normal.jpg"],
+            game.Textures["Sponge001_1K_Roughness.jpg"]
         ),
     ];
 
     let rows = 4;
-    let cols = 5;
+    let cols = 7;
     let pad = 0.25;
 
     let offset_x = (cols + pad * (cols - 1)) / 2;
@@ -166,7 +174,12 @@ export function scene_stage(game: Game) {
             let render = shadings.shift();
             if (render) {
                 let x = col * (1 + pad) + 0.5;
-                instantiate(game, [transform([x - offset_x, y - offset_y, 0]), render]);
+                instantiate(game, [
+                    transform([x - offset_x, y - offset_y, 0]),
+                    control_always(null, [0, 1, 0, 0]),
+                    move(0, 0.1),
+                    render,
+                ]);
             }
         }
     }
