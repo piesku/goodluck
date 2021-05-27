@@ -9,8 +9,6 @@ let game = new Game();
 window.game = game;
 
 Promise.all([
-    load_texture(game, "checker1.png"),
-
     load_texture(game, "Bricks059_1K_Color.jpg"),
     load_texture(game, "Bricks059_1K_Normal.jpg"),
     load_texture(game, "Bricks059_1K_Roughness.jpg"),
