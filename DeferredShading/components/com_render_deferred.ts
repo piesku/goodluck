@@ -17,8 +17,8 @@ export interface RenderColored {
     Mesh: Mesh;
     FrontFace: GLenum;
     Vao: WebGLVertexArrayObject;
-    ColorDiffuse: Vec4;
-    ColorSpecular: Vec3;
+    DiffuseColor: Vec4;
+    SpecularColor: Vec3;
     Shininess: number;
 }
 
@@ -66,8 +66,8 @@ export function render_colored(
             Mesh: mesh,
             FrontFace: front_face,
             Vao: colored_vaos.get(mesh)!,
-            ColorDiffuse: color_diffuse,
-            ColorSpecular: color_specular,
+            DiffuseColor: color_diffuse,
+            SpecularColor: color_specular,
             Shininess: shininess,
         };
     };

@@ -4,8 +4,8 @@ export interface ColoredShadedLayout {
     World: WebGLUniformLocation;
     Self: WebGLUniformLocation;
     Eye: WebGLUniformLocation;
-    ColorDiffuse: WebGLUniformLocation;
-    ColorSpecular: WebGLUniformLocation;
+    DiffuseColor: WebGLUniformLocation;
+    SpecularColor: WebGLUniformLocation;
     Shininess: WebGLUniformLocation;
     LightPositions: WebGLUniformLocation;
     LightDetails: WebGLUniformLocation;

@@ -25,8 +25,8 @@ let fragment = `#version 300 es\n
 
     precision mediump float;
 
-    uniform vec4 color_diffuse;
-    uniform vec3 color_specular;
+    uniform vec4 diffuse_color;
+    uniform vec3 specular_color;
     uniform float shininess;
 
     in vec4 vert_position;
@@ -38,8 +38,8 @@ let fragment = `#version 300 es\n
     layout(location = 3) out vec3 frag_normal;
 
     void main() {
-        frag_diffuse = color_diffuse;
-        frag_specular = vec4(color_specular, shininess);
+        frag_diffuse = diffuse_color;
+        frag_specular = vec4(specular_color, shininess);
         frag_position = vert_position;
         frag_normal = normalize(vert_normal.xyz);
     }
@@ -54,8 +54,8 @@ export function mat2_deferred_colored(gl: WebGLRenderingContext): Material<Defer
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
             Self: gl.getUniformLocation(program, "self")!,
-            ColorDiffuse: gl.getUniformLocation(program, "color_diffuse")!,
-            ColorSpecular: gl.getUniformLocation(program, "color_specular")!,
+            DiffuseColor: gl.getUniformLocation(program, "diffuse_color")!,
+            SpecularColor: gl.getUniformLocation(program, "specular_color")!,
             Shininess: gl.getUniformLocation(program, "shininess")!,
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
             VertexNormal: gl.getAttribLocation(program, "attr_normal")!,

@@ -26,8 +26,8 @@ export interface RenderColoredShaded {
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
     readonly Vao: WebGLVertexArrayObject;
-    ColorDiffuse: Vec4;
-    ColorSpecular: Vec4;
+    DiffuseColor: Vec4;
+    SpecularColor: Vec4;
     Shininess: number;
 }
 
@@ -36,9 +36,9 @@ let colored_shaded_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 export function render_colored_shaded(
     material: Material<ColoredShadedLayout>,
     mesh: Mesh,
-    color_diffuse: Vec4,
+    diffuse_color: Vec4,
     shininess: number = 0,
-    color_specular: Vec4 = [1, 1, 1, 1],
+    specular_color: Vec4 = [1, 1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
     return (game: Game2, entity: Entity) => {
@@ -75,8 +75,8 @@ export function render_colored_shaded(
             Mesh: mesh,
             FrontFace: front_face,
             Vao: colored_shaded_vaos.get(mesh)!,
-            ColorDiffuse: color_diffuse,
-            ColorSpecular: color_specular,
+            DiffuseColor: diffuse_color,
+            SpecularColor: specular_color,
             Shininess: shininess,
         };
     };

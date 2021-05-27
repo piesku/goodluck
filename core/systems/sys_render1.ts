@@ -155,8 +155,8 @@ function use_colored_shaded(game: Game1, material: Material<ColoredShadedLayout>
 function draw_colored_shaded(game: Game1, transform: Transform, render: RenderColoredShaded) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
-    game.Gl.uniform4fv(render.Material.Locations.ColorDiffuse, render.ColorDiffuse);
-    game.Gl.uniform4fv(render.Material.Locations.ColorSpecular, render.ColorSpecular);
+    game.Gl.uniform4fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
+    game.Gl.uniform4fv(render.Material.Locations.SpecularColor, render.SpecularColor);
     game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
     game.ExtVao.bindVertexArrayOES(render.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
@@ -197,8 +197,8 @@ function use_textured_shaded(
 function draw_textured_shaded(game: Game1, transform: Transform, render: RenderTexturedShaded) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
-    game.Gl.uniform4fv(render.Material.Locations.ColorDiffuse, render.ColorDiffuse);
-    game.Gl.uniform4fv(render.Material.Locations.ColorSpecular, render.ColorSpecular);
+    game.Gl.uniform4fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
+    game.Gl.uniform4fv(render.Material.Locations.SpecularColor, render.SpecularColor);
     game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
 
     game.Gl.activeTexture(GL_TEXTURE0);
