@@ -32,7 +32,4 @@ Promise.all([
 async function load_texture(game: Game, name: string) {
     let image = await fetch_image("../textures/" + name + ".webp");
     game.Textures[name] = create_texture_from(game.Gl, image);
-
-    // Report loading progress.
-    game.Ui.innerHTML += `Loading <code>${name}</code>... ✓<br>`;
 }
