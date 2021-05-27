@@ -26,10 +26,6 @@ Promise.all([
     load_texture(game, "Concrete018_1K_Color.jpg"),
     load_texture(game, "Concrete018_1K_Normal.jpg"),
     load_texture(game, "Concrete018_1K_Roughness.jpg"),
-
-    load_texture(game, "Rock005_1K_Color.jpg"),
-    load_texture(game, "Rock005_1K_Normal.jpg"),
-    load_texture(game, "Rock005_1K_Roughness.jpg"),
 ]).then(() => {
     scene_stage(game);
     loop_start(game);
