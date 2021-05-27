@@ -89,8 +89,8 @@ let fragment = `
 
                 // Blinn-Phong reflection model.
                 float roughness = texture2D(roughness_map, vert_texcoord).x;
-                if (roughness > 0.0) {
-                    float shininess = 2.0 / pow(roughness, 4.0) - 2.0;
+                if (roughness < 1.0) {
+                    float shininess = 1.0 / pow(roughness, 3.0) - 1.0;
                     vec3 h = normalize(light_normal + view_normal);
                     float specular_angle = max(dot(h, world_normal), 0.0);
                     float specular_factor = pow(specular_angle, shininess);
