@@ -27,8 +27,8 @@ let fragment = `
     const int MAX_LIGHTS = 8;
 
     uniform vec3 eye;
-    uniform vec4 color_diffuse;
-    uniform vec4 color_specular;
+    uniform vec4 diffuse_color;
+    uniform vec4 specular_color;
     uniform float shininess;
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
@@ -43,7 +43,7 @@ let fragment = `
         vec3 view_normal = normalize(view_dir);
 
         // Ambient light.
-        vec3 light_acc = color_diffuse.rgb * 0.1;
+        vec3 light_acc = diffuse_color.rgb * 0.1;
 
         for (int i = 0; i < MAX_LIGHTS; i++) {
             if (light_positions[i].w == 0.0) {
@@ -68,7 +68,7 @@ let fragment = `
             float diffuse_factor = dot(world_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
-                light_acc += color_diffuse.rgb * diffuse_factor * light_color * light_intensity;
+                light_acc += diffuse_color.rgb * diffuse_factor * light_color * light_intensity;
 
                 if (shininess > 0.0) {
                     // Phong reflection model.
@@ -82,7 +82,7 @@ let fragment = `
                     float specular_factor = pow(specular_angle, shininess);
 
                     // Specular color.
-                    light_acc += color_specular.rgb * specular_factor * light_color * light_intensity;
+                    light_acc += specular_color.rgb * specular_factor * light_color * light_intensity;
                 }
             }
         }
@@ -101,8 +101,8 @@ export function mat1_colored_phong(gl: WebGLRenderingContext): Material<ColoredS
             World: gl.getUniformLocation(program, "world")!,
             Self: gl.getUniformLocation(program, "self")!,
             Eye: gl.getUniformLocation(program, "eye")!,
-            ColorDiffuse: gl.getUniformLocation(program, "color_diffuse")!,
-            ColorSpecular: gl.getUniformLocation(program, "color_specular")!,
+            DiffuseColor: gl.getUniformLocation(program, "diffuse_color")!,
+            SpecularColor: gl.getUniformLocation(program, "specular_color")!,
             Shininess: gl.getUniformLocation(program, "shininess")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,

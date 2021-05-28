@@ -22,7 +22,9 @@ export function mesh_plane(gl: WebGLRenderingContext): Mesh {
         VertexBuffer: vertex_buf,
         VertexArray: vertex_arr,
         NormalBuffer: normal_buf,
+        NormalArray: normal_arr,
         TexCoordBuffer: texcoord_buf,
+        TexCoordArray: texcoord_arr,
         IndexBuffer: index_buf,
         IndexArray: index_arr,
         IndexCount: index_arr.length,
@@ -31,54 +33,30 @@ export function mesh_plane(gl: WebGLRenderingContext): Mesh {
 
 // prettier-ignore
 let vertex_arr = Float32Array.from([
-    0.5,
-    0,
-    0.5,
-    -0.5,
-    0,
-    -0.5,
-    -0.5,
-    0,
-    0.5,
-    0.5,
-    0,
-    -0.5,
+    0.5, 0, 0.5,
+    -0.5, 0, -0.5,
+    -0.5, 0, 0.5,
+    0.5, 0, -0.5
 ]);
 
 // prettier-ignore
 let normal_arr = Float32Array.from([
-    0,
-    1,
-    0,
-    0,
-    1,
-    0,
-    0,
-    1,
-    0,
-    0,
-    1,
-    0,
+    0, 1, 0,
+    0, 1, 0,
+    0, 1, 0,
+    0, 1, 0
 ]);
 
 // prettier-ignore
 let texcoord_arr = Float32Array.from([
-    1,
-    0,
-    0,
-    1,
-    0,
-    0,
-    1,
-    1,
+    1, 0,
+    0, 1,
+    0, 0,
+    1, 1
 ]);
 
 // prettier-ignore
 let index_arr = Uint16Array.from([
-    1,
-    3,
-    0,
-    2,
-    1,
-    0,
+    1, 3, 0,
+    2, 1, 0
 ]);
