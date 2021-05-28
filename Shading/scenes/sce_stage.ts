@@ -4,9 +4,10 @@ import {control_always} from "../components/com_control_always.js";
 import {light_directional, light_point} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {
-    render_colored_diffuse,
-    render_colored_specular,
+    render_colored_shaded,
     render_colored_unlit,
+    render_textured_shaded,
+    render_textured_unlit,
 } from "../components/com_render1.js";
 import {transform} from "../components/com_transform.js";
 import {instantiate} from "../entity.js";
@@ -18,7 +19,7 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
 
     // Camera.
-    instantiate(game, [...blueprint_camera(game), transform([0, 0, 4], [0, 1, 0, 0])]);
+    instantiate(game, [...blueprint_camera(game), transform([0, 0, 6], [0, 1, 0, 0])]);
 
     // Directional light.
     instantiate(game, [transform([1, 1, 0]), light_directional([1, 1, 1], 0.5)]);
@@ -43,69 +44,125 @@ export function scene_stage(game: Game) {
     ]);
 
     let shadings = [
-        render_colored_unlit(
-            game.MaterialColoredUnlitPoints,
+        // Unlit column
+        render_colored_unlit(game.MaterialColoredPoints, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
+        render_colored_unlit(game.MaterialColoredWireframe, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
+        render_colored_unlit(game.MaterialColoredUnlit, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
+        render_textured_unlit(
+            game.MaterialTexturedUnlit,
             game.MeshIcosphereSmooth,
+            game.Textures["checker1.webp"]
+        ),
+
+        // Colored Gouraud shading
+        render_colored_shaded(game.MaterialColoredGouraud, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
+        render_colored_shaded(
+            game.MaterialColoredGouraud,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            16,
             [1, 1, 0, 1]
         ),
-        render_colored_unlit(
-            game.MaterialColoredUnlitWireframe,
+        render_colored_shaded(
+            game.MaterialColoredGouraud,
             game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            128,
             [1, 1, 0, 1]
         ),
-        render_colored_unlit(
-            game.MaterialColoredUnlitTriangles,
+        render_colored_shaded(
+            game.MaterialColoredGouraud,
             game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            512,
             [1, 1, 0, 1]
         ),
 
-        render_colored_diffuse(
-            game.MaterialColoredDiffuseGouraud,
-            game.MeshIcosphereSmooth,
-            [1, 1, 0, 1]
-        ),
-        render_colored_diffuse(
-            game.MaterialColoredDiffusePhong,
-            game.MeshIcosphereSmooth,
-            [1, 1, 0, 1]
-        ),
-        render_colored_specular(
-            game.MaterialColoredSpecularGouraud,
+        // Colored Phong shading
+        render_colored_shaded(game.MaterialColoredPhong, game.MeshIcosphereSmooth, [1, 1, 0, 1]),
+        render_colored_shaded(
+            game.MaterialColoredPhong,
             game.MeshIcosphereSmooth,
             [1, 1, 0, 1],
-            100
+            16,
+            [1, 1, 0, 1]
+        ),
+        render_colored_shaded(
+            game.MaterialColoredPhong,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            128,
+            [1, 1, 0, 1]
+        ),
+        render_colored_shaded(
+            game.MaterialColoredPhong,
+            game.MeshIcosphereSmooth,
+            [1, 1, 0, 1],
+            512,
+            [1, 1, 0, 1]
         ),
 
-        render_colored_specular(
-            game.MaterialColoredSpecularPhong,
+        // Textured Gouraud shading
+        render_textured_shaded(
+            game.MaterialTexturedGouraud,
             game.MeshIcosphereSmooth,
-            [1, 1, 0, 1],
-            10
+            game.Textures["checker1.webp"]
         ),
-        render_colored_specular(
-            game.MaterialColoredSpecularPhong,
+        render_textured_shaded(
+            game.MaterialTexturedGouraud,
             game.MeshIcosphereSmooth,
-            [1, 1, 0, 1],
-            100
+            game.Textures["checker1.webp"],
+            16
         ),
-        render_colored_specular(
-            game.MaterialColoredSpecularPhong,
+        render_textured_shaded(
+            game.MaterialTexturedGouraud,
             game.MeshIcosphereSmooth,
-            [1, 1, 0, 1],
-            1000
+            game.Textures["checker1.webp"],
+            128
+        ),
+        render_textured_shaded(
+            game.MaterialTexturedGouraud,
+            game.MeshIcosphereSmooth,
+            game.Textures["checker1.webp"],
+            512
+        ),
+
+        // Textured Phong shading
+        render_textured_shaded(
+            game.MaterialTexturedPhong,
+            game.MeshIcosphereSmooth,
+            game.Textures["checker1.webp"]
+        ),
+        render_textured_shaded(
+            game.MaterialTexturedPhong,
+            game.MeshIcosphereSmooth,
+            game.Textures["checker1.webp"],
+            16
+        ),
+        render_textured_shaded(
+            game.MaterialTexturedPhong,
+            game.MeshIcosphereSmooth,
+            game.Textures["checker1.webp"],
+            128
+        ),
+        render_textured_shaded(
+            game.MaterialTexturedPhong,
+            game.MeshIcosphereSmooth,
+            game.Textures["checker1.webp"],
+            512
         ),
     ];
 
-    let rows = 3;
-    let cols = 3;
+    let rows = 4;
+    let cols = 5;
     let pad = 0.25;
 
     let offset_x = (cols + pad * (cols - 1)) / 2;
     let offset_y = (rows + pad * (rows - 1)) / 2;
 
-    for (let row = rows - 1; row >= 0; row--) {
-        let y = row * (1 + pad) + 0.5;
-        for (let col = 0; col < cols; col++) {
+    for (let col = 0; col < cols; col++) {
+        for (let row = rows - 1; row >= 0; row--) {
+            let y = row * (1 + pad) + 0.5;
             let render = shadings.shift();
             if (render) {
                 let x = col * (1 + pad) + 0.5;

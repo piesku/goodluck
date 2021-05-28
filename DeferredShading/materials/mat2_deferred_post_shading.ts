@@ -3,13 +3,14 @@ import {GL_TRIANGLES} from "../../common/webgl.js";
 import {DeferredPostprocessLayout} from "./layout_deferred_postprocess.js";
 
 let vertex = `#version 300 es\n
-    in vec3 position;
-    in vec2 texcoord;
+    in vec3 attr_position;
+    in vec2 attr_texcoord;
+
     out vec2 vert_texcoord;
 
     void main() {
-        gl_Position = vec4(position, 1.0);
-        vert_texcoord = texcoord;
+        gl_Position = vec4(attr_position, 1.0);
+        vert_texcoord = attr_texcoord;
     }
 `;
 
@@ -28,6 +29,7 @@ let fragment = `#version 300 es\n
     uniform vec4 light_details[MAX_LIGHTS];
 
     in vec2 vert_texcoord;
+
     out vec4 frag_color;
 
     void main() {
@@ -45,7 +47,7 @@ let fragment = `#version 300 es\n
         vec3 view_normal = normalize(view_dir);
 
         // Ambient light.
-        vec3 rgb = current_diffuse.rgb * 0.1;
+        vec3 light_acc = current_diffuse.rgb * 0.1;
 
         for (int i = 0; i < MAX_LIGHTS; i++) {
             int light_kind = int(light_positions[i].w);
@@ -73,7 +75,7 @@ let fragment = `#version 300 es\n
             float diffuse_factor = dot(current_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
-                rgb += current_diffuse.rgb * diffuse_factor * light_rgb * light_intensity;
+                light_acc += current_diffuse.rgb * diffuse_factor * light_rgb * light_intensity;
 
                 if (current_specular.a > 0.0) {
                     // For non-zero shininess, apply the Blinn-Phong reflection model.
@@ -82,12 +84,12 @@ let fragment = `#version 300 es\n
                     float specular_factor = pow(specular_angle, current_specular.a);
 
                     // Specular color.
-                    rgb += current_specular.rgb * specular_factor * light_rgb * light_intensity;
+                    light_acc += current_specular.rgb * specular_factor * light_rgb * light_intensity;
                 }
             }
         }
 
-        frag_color = vec4(rgb, 1.0);
+        frag_color = vec4(light_acc, 1.0);
     }
 `;
 
@@ -107,8 +109,8 @@ export function mat2_deferred_post_shading(
             DepthMap: gl.getUniformLocation(program, "depth_map")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
-            VertexPosition: gl.getAttribLocation(program, "position")!,
-            VertexTexcoord: gl.getAttribLocation(program, "texcoord")!,
+            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
+            VertexTexcoord: gl.getAttribLocation(program, "attr_texcoord")!,
         },
     };
 }

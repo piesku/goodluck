@@ -1,15 +1,15 @@
 import {link, Material} from "../common/material.js";
-import {GL_LINE_STRIP} from "../common/webgl.js";
+import {GL_LINE_LOOP, GL_LINE_STRIP, GL_TRIANGLES} from "../common/webgl.js";
 import {ColoredUnlitLayout} from "./layout_colored_unlit.js";
 
 let vertex = `
     uniform mat4 pv;
     uniform mat4 world;
 
-    attribute vec3 position;
+    attribute vec3 attr_position;
 
     void main() {
-        gl_Position = pv * world * vec4(position, 1.0);
+        gl_Position = pv * world * vec4(attr_position, 1.0);
     }
 `;
 
@@ -22,16 +22,27 @@ let fragment = `
     }
 `;
 
-export function mat1_colored_unlit_line(gl: WebGLRenderingContext): Material<ColoredUnlitLayout> {
+export function mat1_colored_unlit(
+    gl: WebGLRenderingContext,
+    mode: GLenum = GL_TRIANGLES
+): Material<ColoredUnlitLayout> {
     let program = link(gl, vertex, fragment);
     return {
-        Mode: GL_LINE_STRIP,
+        Mode: mode,
         Program: program,
         Locations: {
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
             Color: gl.getUniformLocation(program, "color")!,
-            VertexPosition: gl.getAttribLocation(program, "position")!,
+            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
         },
     };
+}
+
+export function mat1_colored_wireframe(gl: WebGLRenderingContext) {
+    return mat1_colored_unlit(gl, GL_LINE_LOOP);
+}
+
+export function mat1_colored_line(gl: WebGLRenderingContext) {
+    return mat1_colored_unlit(gl, GL_LINE_STRIP);
 }

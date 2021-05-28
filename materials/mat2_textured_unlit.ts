@@ -6,15 +6,15 @@ let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
 
-    in vec3 position;
-    in vec2 texcoord;
+    in vec3 attr_position;
+    in vec2 attr_texcoord;
     out vec2 vert_texcoord;
 
     void main() {
-        vec4 vert_pos = world * vec4(position, 1.0);
-        gl_Position = pv * vert_pos;
+        vec4 attr_pos = world * vec4(attr_position, 1.0);
+        gl_Position = pv * attr_pos;
 
-        vert_texcoord = texcoord;
+        vert_texcoord = attr_texcoord;
     }
 `;
 
@@ -42,8 +42,8 @@ export function mat2_textured_unlit(gl: WebGL2RenderingContext): Material<Textur
             World: gl.getUniformLocation(program, "world")!,
             Sampler: gl.getUniformLocation(program, "sampler")!,
             Color: gl.getUniformLocation(program, "color")!,
-            VertexPosition: gl.getAttribLocation(program, "position")!,
-            VertexTexCoord: gl.getAttribLocation(program, "texcoord")!,
+            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
+            VertexTexCoord: gl.getAttribLocation(program, "attr_texcoord")!,
         },
     };
 }

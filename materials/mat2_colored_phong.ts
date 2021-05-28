@@ -1,6 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {ColoredSpecularLayout} from "./layout_colored_specular.js";
+import {ColoredShadedLayout} from "./layout_colored_shaded.js";
 
 let vertex = `#version 300 es\n
 
@@ -8,15 +8,16 @@ let vertex = `#version 300 es\n
     uniform mat4 world;
     uniform mat4 self;
 
-    in vec3 position;
-    in vec3 normal;
-    out vec4 vert_pos;
+    in vec3 attr_position;
+    in vec3 attr_normal;
+
+    out vec4 vert_position;
     out vec3 vert_normal;
 
     void main() {
-        vert_pos = world * vec4(position, 1.0);
-        vert_normal = (vec4(normal, 1.0) * self).xyz;
-        gl_Position = pv * vert_pos;
+        vert_position = world * vec4(attr_position, 1.0);
+        vert_normal = (vec4(attr_normal, 1.0) * self).xyz;
+        gl_Position = pv * vert_position;
     }
 `;
 
@@ -34,18 +35,19 @@ let fragment = `#version 300 es\n
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    in vec4 vert_pos;
+    in vec4 vert_position;
     in vec3 vert_normal;
+
     out vec4 frag_color;
 
     void main() {
-        vec3 frag_normal = normalize(vert_normal);
+        vec3 world_normal = normalize(vert_normal);
 
-        vec3 view_dir = eye - vert_pos.xyz;
+        vec3 view_dir = eye - vert_position.xyz;
         vec3 view_normal = normalize(view_dir);
 
         // Ambient light.
-        vec3 rgb = color_diffuse.rgb * 0.1;
+        vec3 light_acc = color_diffuse.rgb * 0.1;
 
         for (int i = 0; i < MAX_LIGHTS; i++) {
             if (light_positions[i].w == 0.0) {
@@ -60,40 +62,40 @@ let fragment = `#version 300 es\n
                 // Directional light.
                 light_normal = light_positions[i].xyz;
             } else {
-                vec3 light_dir = light_positions[i].xyz - vert_pos.xyz;
+                vec3 light_dir = light_positions[i].xyz - vert_position.xyz;
                 float light_dist = length(light_dir);
                 light_normal = light_dir / light_dist;
                 // Distance attenuation.
                 light_intensity /= (light_dist * light_dist);
             }
 
-            float diffuse_factor = dot(frag_normal, light_normal);
+            float diffuse_factor = dot(world_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
-                rgb += color_diffuse.rgb * diffuse_factor * light_color * light_intensity;
+                light_acc += color_diffuse.rgb * diffuse_factor * light_color * light_intensity;
 
-                // Phong reflection model.
-                // vec3 r = reflect(-light_normal, frag_normal);
-                // float specular_angle = max(dot(r, view_normal), 0.0);
-                // float specular_factor = pow(specular_angle, shininess);
+                if (shininess > 0.0) {
+                    // Phong reflection model.
+                    // vec3 r = reflect(-light_normal, world_normal);
+                    // float specular_angle = max(dot(r, view_normal), 0.0);
+                    // float specular_factor = pow(specular_angle, shininess);
 
-                // Blinn-Phong reflection model.
-                vec3 h = normalize(light_normal + view_normal);
-                float specular_angle = max(dot(h, frag_normal), 0.0);
-                float specular_factor = pow(specular_angle, shininess);
+                    // Blinn-Phong reflection model.
+                    vec3 h = normalize(light_normal + view_normal);
+                    float specular_angle = max(dot(h, world_normal), 0.0);
+                    float specular_factor = pow(specular_angle, shininess);
 
-                // Specular color.
-                rgb += color_specular.rgb * specular_factor * light_color * light_intensity;
+                    // Specular color.
+                    light_acc += color_specular.rgb * specular_factor * light_color * light_intensity;
+                }
             }
         }
 
-        frag_color = vec4(rgb, 1.0);
+        frag_color = vec4(light_acc, 1.0);
     }
 `;
 
-export function mat2_colored_specular_phong(
-    gl: WebGL2RenderingContext
-): Material<ColoredSpecularLayout> {
+export function mat2_colored_phong(gl: WebGL2RenderingContext): Material<ColoredShadedLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
@@ -108,8 +110,8 @@ export function mat2_colored_specular_phong(
             Shininess: gl.getUniformLocation(program, "shininess")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
-            VertexPosition: gl.getAttribLocation(program, "position")!,
-            VertexNormal: gl.getAttribLocation(program, "normal")!,
+            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
+            VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
         },
     };
 }

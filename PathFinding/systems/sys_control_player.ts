@@ -17,7 +17,7 @@ export function sys_control_player(game: Game, delta: number) {
     if (!line) {
         line = instantiate(game, [
             transform([0, 1, 0]),
-            render_vertices(game.MaterialColoredUnlitLine, 512, [1, 1, 0, 1]),
+            render_vertices(game.MaterialColoredLine, 512, [1, 1, 0, 1]),
             disable(Has.Render),
         ]);
     }

@@ -1,21 +1,26 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {ColoredSpecularLayout} from "./layout_colored_specular.js";
+import {TexturedShadedLayout} from "./layout_textured_shaded.js";
 
 let vertex = `
     uniform mat4 pv;
     uniform mat4 world;
     uniform mat4 self;
 
-    attribute vec3 position;
-    attribute vec3 normal;
-    varying vec4 vert_pos;
+    attribute vec3 attr_position;
+    attribute vec2 attr_texcoord;
+    attribute vec3 attr_normal;
+
+    varying vec4 vert_position;
+    varying vec2 vert_texcoord;
     varying vec3 vert_normal;
 
     void main() {
-        vert_pos = world * vec4(position, 1.0);
-        vert_normal = (vec4(normal, 1.0) * self).xyz;
-        gl_Position = pv * vert_pos;
+        vert_position = world * vec4(attr_position, 1.0);
+        gl_Position = pv * vert_position;
+
+        vert_texcoord = attr_texcoord;
+        vert_normal = (vec4(attr_normal, 1.0) * self).xyz;
     }
 `;
 
@@ -29,20 +34,22 @@ let fragment = `
     uniform vec4 color_diffuse;
     uniform vec4 color_specular;
     uniform float shininess;
+    uniform sampler2D sampler;
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    varying vec4 vert_pos;
+    varying vec4 vert_position;
+    varying vec2 vert_texcoord;
     varying vec3 vert_normal;
 
     void main() {
-        vec3 frag_normal = normalize(vert_normal);
+        vec3 world_normal = normalize(vert_normal);
 
-        vec3 view_dir = eye - vert_pos.xyz;
+        vec3 view_dir = eye - vert_position.xyz;
         vec3 view_normal = normalize(view_dir);
 
         // Ambient light.
-        vec3 rgb = color_diffuse.rgb * 0.1;
+        vec3 light_acc = color_diffuse.rgb * 0.1;
 
         for (int i = 0; i < MAX_LIGHTS; i++) {
             if (light_positions[i].w == 0.0) {
@@ -57,40 +64,36 @@ let fragment = `
                 // Directional light.
                 light_normal = light_positions[i].xyz;
             } else {
-                vec3 light_dir = light_positions[i].xyz - vert_pos.xyz;
+                vec3 light_dir = light_positions[i].xyz - vert_position.xyz;
                 float light_dist = length(light_dir);
                 light_normal = light_dir / light_dist;
                 // Distance attenuation.
                 light_intensity /= (light_dist * light_dist);
             }
 
-            float diffuse_factor = dot(frag_normal, light_normal);
+            float diffuse_factor = dot(world_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
-                rgb += color_diffuse.rgb * diffuse_factor * light_color * light_intensity;
-
-                // Phong reflection model.
-                // vec3 r = reflect(-light_normal, frag_normal);
-                // float specular_angle = max(dot(r, view_normal), 0.0);
-                // float specular_factor = pow(specular_angle, shininess);
+                light_acc += color_diffuse.rgb * diffuse_factor * light_color * light_intensity;
 
                 // Blinn-Phong reflection model.
-                vec3 h = normalize(light_normal + view_normal);
-                float specular_angle = max(dot(h, frag_normal), 0.0);
-                float specular_factor = pow(specular_angle, shininess);
+                if (shininess > 0.0) {
+                    vec3 h = normalize(light_normal + view_normal);
+                    float specular_angle = max(dot(h, world_normal), 0.0);
+                    float specular_factor = pow(specular_angle, shininess);
 
-                // Specular color.
-                rgb += color_specular.rgb * specular_factor * light_color * light_intensity;
+                    // Specular color.
+                    light_acc += color_specular.rgb * specular_factor * light_color * light_intensity;
+                }
             }
         }
 
-        gl_FragColor = vec4(rgb, 1.0);
+        vec4 tex_color = texture2D(sampler, vert_texcoord);
+        gl_FragColor = vec4(light_acc, 1.0) * tex_color;
     }
 `;
 
-export function mat1_colored_specular_phong(
-    gl: WebGLRenderingContext
-): Material<ColoredSpecularLayout> {
+export function mat1_textured_phong(gl: WebGLRenderingContext): Material<TexturedShadedLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
@@ -103,10 +106,12 @@ export function mat1_colored_specular_phong(
             ColorDiffuse: gl.getUniformLocation(program, "color_diffuse")!,
             ColorSpecular: gl.getUniformLocation(program, "color_specular")!,
             Shininess: gl.getUniformLocation(program, "shininess")!,
+            Sampler: gl.getUniformLocation(program, "sampler")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
-            VertexPosition: gl.getAttribLocation(program, "position")!,
-            VertexNormal: gl.getAttribLocation(program, "normal")!,
+            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
+            VertexTexCoord: gl.getAttribLocation(program, "attr_texcoord")!,
+            VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
         },
     };
 }

@@ -6,7 +6,7 @@ import {control_always} from "../components/com_control_always.js";
 import {control_spawn} from "../components/com_control_spawn.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
-import {render_colored_diffuse} from "../components/com_render1.js";
+import {render_colored_shaded} from "../components/com_render1.js";
 import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
 import {shake} from "../components/com_shake.js";
 import {transform} from "../components/com_transform.js";
@@ -27,7 +27,7 @@ export function scene_stage(game: Game) {
     // Ground.
     instantiate(game, [
         transform(undefined, undefined, [10, 1, 10]),
-        render_colored_diffuse(game.MaterialUnlitDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1]),
+        render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [1, 1, 0.3, 1]),
         collide(false, Layer.Terrain, Layer.None),
         rigid_body(RigidKind.Static),
     ]);
@@ -35,7 +35,7 @@ export function scene_stage(game: Game) {
     // Static wall.
     instantiate(game, [
         transform([4, 1, 0], undefined, [1, 1, 10]),
-        render_colored_diffuse(game.MaterialUnlitDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1]),
+        render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [1, 1, 0.3, 1]),
         collide(false, Layer.Terrain, Layer.None),
         rigid_body(RigidKind.Static),
     ]);

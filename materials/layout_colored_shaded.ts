@@ -1,9 +1,12 @@
-export interface ColoredDiffuseLayout {
+export interface ColoredShadedLayout {
     // Uniforms
     Pv: WebGLUniformLocation;
     World: WebGLUniformLocation;
     Self: WebGLUniformLocation;
-    Color: WebGLUniformLocation;
+    Eye: WebGLUniformLocation;
+    ColorDiffuse: WebGLUniformLocation;
+    ColorSpecular: WebGLUniformLocation;
+    Shininess: WebGLUniformLocation;
     LightPositions: WebGLUniformLocation;
     LightDetails: WebGLUniformLocation;
     // Attributes

@@ -10,18 +10,18 @@ let vertex = `
     uniform vec4 details;
 
     // [x, y, z, w: age]
-    attribute vec4 origin_age;
-    attribute vec3 direction;
+    attribute vec4 attr_origin_age;
+    attribute vec3 attr_direction;
 
     varying vec4 vert_color;
 
     void main() {
         // Move the particle along the direction axis.
-        vec3 velocity = direction * details.y;
-        gl_Position = pv * vec4(origin_age.xyz + velocity * origin_age.w, 1.0);
+        vec3 velocity = attr_direction * details.y;
+        gl_Position = pv * vec4(attr_origin_age.xyz + velocity * attr_origin_age.w, 1.0);
 
         // Interpolate color and size.
-        float t = origin_age.w / details.x;
+        float t = attr_origin_age.w / details.x;
         gl_PointSize = mix(details.z, details.w, t);
         vert_color = mix(color_start, color_end, t);
     }
@@ -49,8 +49,8 @@ export function mat1_particles_colored(
             ColorStart: gl.getUniformLocation(program, "color_start")!,
             ColorEnd: gl.getUniformLocation(program, "color_end")!,
             Details: gl.getUniformLocation(program, "details")!,
-            OriginAge: gl.getAttribLocation(program, "origin_age")!,
-            Direction: gl.getAttribLocation(program, "direction")!,
+            OriginAge: gl.getAttribLocation(program, "attr_origin_age")!,
+            Direction: gl.getAttribLocation(program, "attr_direction")!,
         },
     };
 }
