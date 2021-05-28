@@ -37,7 +37,7 @@ export function scene_stage(game: Game) {
             game.MaterialColoredPhong,
             game.Meshes["monkey_smooth"],
             [1, 1, 0.3, 1],
-            64
+            512
         ),
     ]);
 }
