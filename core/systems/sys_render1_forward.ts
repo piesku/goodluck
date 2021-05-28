@@ -42,7 +42,7 @@ interface Game1 extends Game {
     };
 }
 
-export function sys_render(game: Game1, delta: number) {
+export function sys_render_forward(game: Game1, delta: number) {
     for (let camera of game.Cameras) {
         switch (camera.Kind) {
             case CameraKind.Display:

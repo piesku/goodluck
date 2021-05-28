@@ -15,7 +15,7 @@ import {sys_move} from "./systems/sys_move.js";
 import {sys_physics_integrate} from "./systems/sys_physics_integrate.js";
 import {sys_physics_kinematic} from "./systems/sys_physics_kinematic.js";
 import {sys_physics_resolve} from "./systems/sys_physics_resolve.js";
-import {sys_render} from "./systems/sys_render1.js";
+import {sys_render_forward} from "./systems/sys_render1_forward.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
@@ -114,7 +114,7 @@ export class Game {
 
         sys_camera(this, delta);
         sys_light(this, delta);
-        sys_render(this, delta);
+        sys_render_forward(this, delta);
         sys_framerate(this, delta, performance.now() - now);
     }
 }

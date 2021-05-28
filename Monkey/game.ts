@@ -7,7 +7,7 @@ import {loop_start, loop_stop} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
-import {sys_render} from "./systems/sys_render1.js";
+import {sys_render_forward} from "./systems/sys_render1_forward.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
@@ -53,7 +53,7 @@ export class Game {
         sys_transform(this, delta);
         sys_camera(this, delta);
         sys_light(this, delta);
-        sys_render(this, delta);
+        sys_render_forward(this, delta);
         sys_framerate(this, delta, performance.now() - now);
     }
 }
