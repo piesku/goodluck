@@ -8,8 +8,8 @@ import {children} from "../components/com_children.js";
 import {control} from "../components/com_control.js";
 import {light_directional} from "../components/com_light.js";
 import {transform} from "../components/com_transform.js";
-import {instantiate} from "../entity.js";
 import {Game} from "../game.js";
+import {instantiate} from "../impl.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {

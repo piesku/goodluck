@@ -3,7 +3,7 @@ import {mat2_colored_gouraud} from "../materials/mat2_colored_gouraud.js";
 import {mat2_colored_phong} from "../materials/mat2_colored_phong.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./loop.js";
+import {loop_start, loop_stop} from "./impl.js";
 import {mat2_colored_flat} from "./materials/mat2_colored_flat.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always} from "./systems/sys_control_always.js";

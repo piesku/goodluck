@@ -6,8 +6,8 @@ import {animate, AnimationFlag} from "../components/com_animate.js";
 import {children} from "../components/com_children.js";
 import {render_colored_shaded} from "../components/com_render1.js";
 import {transform} from "../components/com_transform.js";
-import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
+import {Blueprint} from "../impl.js";
 
 let shirt_colors: Array<Vec4> = [
     [1, 0, 0, 1],

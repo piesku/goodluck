@@ -10,8 +10,8 @@ import {render_colored_shaded} from "../components/com_render1.js";
 import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
 import {shake} from "../components/com_shake.js";
 import {transform} from "../components/com_transform.js";
-import {instantiate} from "../entity.js";
 import {Game, Layer} from "../game.js";
+import {instantiate} from "../impl.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {

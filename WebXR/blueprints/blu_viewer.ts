@@ -4,8 +4,8 @@ import {children} from "../components/com_children.js";
 import {ControlXrKind, control_xr} from "../components/com_control_xr.js";
 import {render_colored_shaded} from "../components/com_render2.js";
 import {transform} from "../components/com_transform.js";
-import {Blueprint} from "../entity.js";
 import {Game} from "../game.js";
+import {Blueprint} from "../impl.js";
 
 export function blueprint_viewer(game: Game): Blueprint {
     return [

@@ -4,7 +4,7 @@ import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {mesh_quad} from "../meshes/quad.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./loop.js";
+import {loop_start, loop_stop} from "./impl.js";
 import {mat2_deferred_colored} from "./materials/mat2_deferred_colored.js";
 import {mat2_deferred_post_shading} from "./materials/mat2_deferred_post_shading.js";
 import {sys_camera} from "./systems/sys_camera.js";

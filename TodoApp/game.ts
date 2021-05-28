@@ -1,4 +1,4 @@
-import {loop_start, loop_stop} from "./loop.js";
+import {loop_start, loop_stop} from "./impl.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_ui} from "./systems/sys_ui.js";
 

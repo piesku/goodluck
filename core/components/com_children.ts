@@ -1,5 +1,5 @@
-import {Blueprint, instantiate} from "../entity.js";
 import {Entity, Game} from "../game.js";
+import {Blueprint, instantiate} from "../impl.js";
 import {Has, World} from "../world.js";
 
 export interface Children {

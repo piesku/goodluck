@@ -4,7 +4,7 @@ import {mat1_colored_line} from "../materials/mat1_colored_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_terrain} from "../meshes/terrain.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./loop.js";
+import {loop_start, loop_stop} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_player} from "./systems/sys_control_player.js";

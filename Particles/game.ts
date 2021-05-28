@@ -1,6 +1,6 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {Camera} from "./components/com_camera.js";
-import {loop_start, loop_stop} from "./loop.js";
+import {loop_start, loop_stop} from "./impl.js";
 import {mat1_particles_colored} from "./materials/mat1_particles_colored.js";
 import {mat1_particles_textured} from "./materials/mat1_particles_textured.js";
 import {sys_camera} from "./systems/sys_camera.js";

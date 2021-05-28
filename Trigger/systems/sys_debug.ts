@@ -2,8 +2,8 @@ import {scale} from "../../common/vec3.js";
 import {Collide} from "../components/com_collide.js";
 import {RenderKind, render_colored_unlit} from "../components/com_render1.js";
 import {transform, Transform} from "../components/com_transform.js";
-import {destroy_entity, instantiate} from "../entity.js";
 import {Entity, Game} from "../game.js";
+import {destroy_entity, instantiate} from "../impl.js";
 import {Has} from "../world.js";
 
 interface Wireframe {
