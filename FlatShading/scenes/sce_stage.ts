@@ -14,7 +14,7 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
 
     // Camera.
-    instantiate(game, [...blueprint_camera(game), transform([0, 0, 4], [0, 1, 0, 0])]);
+    instantiate(game, [...blueprint_camera(game), transform([0, 0, 2], [0, 1, 0, 0])]);
 
     // Directional light.
     instantiate(game, [transform([1, 1, 0]), light_directional([1, 1, 1], 0.5)]);
@@ -39,11 +39,6 @@ export function scene_stage(game: Game) {
     ]);
 
     let shadings = [
-        // Diffuse shading
-        render_colored_shaded(game.MaterialColoredFlat, game.MeshIcosphereFlat, [1, 1, 0, 1], 0),
-        render_colored_shaded(game.MaterialColoredGouraud, game.MeshIcosphereFlat, [1, 1, 0, 1], 0),
-        render_colored_shaded(game.MaterialColoredPhong, game.MeshIcosphereFlat, [1, 1, 0, 1], 0),
-
         // Specular shading
         render_colored_shaded(game.MaterialColoredFlat, game.MeshIcosphereFlat, [1, 1, 0, 1], 256),
         render_colored_shaded(
@@ -52,11 +47,10 @@ export function scene_stage(game: Game) {
             [1, 1, 0, 1],
             256
         ),
-        render_colored_shaded(game.MaterialColoredPhong, game.MeshIcosphereFlat, [1, 1, 0, 1], 256),
     ];
 
-    let rows = 2;
-    let cols = 3;
+    let rows = 1;
+    let cols = 2;
     let pad = 0.25;
 
     let offset_x = (cols + pad * (cols - 1)) / 2;
