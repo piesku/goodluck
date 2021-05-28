@@ -9,7 +9,7 @@ import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;
 
-export function sys_render(game: Game, delta: number) {
+export function sys_render_forward(game: Game, delta: number) {
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (game.ViewportResized) {
         game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
