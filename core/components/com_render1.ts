@@ -42,6 +42,12 @@ interface Game1 extends Game {
     };
 }
 
+const colored_unlit_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+const colored_shaded_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+const textured_unlit_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+const textured_shaded_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+const mapped_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+
 export interface RenderColoredUnlit {
     readonly Kind: RenderKind.ColoredUnlit;
     readonly Material: Material<ColoredUnlitLayout>;
@@ -50,8 +56,6 @@ export interface RenderColoredUnlit {
     readonly Vao: WebGLVertexArrayObject;
     Color: Vec4;
 }
-
-let colored_unlit_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_colored_unlit(
     material: Material<ColoredUnlitLayout>,
@@ -103,8 +107,6 @@ export interface RenderColoredShaded {
     SpecularColor: Vec4;
     Shininess: number;
 }
-
-let colored_shaded_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_colored_shaded(
     material: Material<ColoredShadedLayout>,
@@ -164,8 +166,6 @@ export interface RenderTexturedUnlit {
     Texture: WebGLTexture;
     Color: Vec4;
 }
-
-let textured_unlit_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_textured_unlit(
     material: Material<TexturedUnlitLayout>,
@@ -231,8 +231,6 @@ export interface RenderTexturedShaded {
     SpecularColor: Vec4;
     Shininess: number;
 }
-
-let textured_shaded_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_textured_shaded(
     material: Material<TexturedShadedLayout>,
@@ -334,8 +332,6 @@ export interface RenderMapped {
     NormalMap: WebGLTexture;
     RoughnessMap: WebGLTexture;
 }
-
-let mapped_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_mapped(
     material: Material<MappedLayout>,

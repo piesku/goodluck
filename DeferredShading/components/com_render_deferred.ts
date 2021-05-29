@@ -11,6 +11,8 @@ export const enum RenderKind {
     DeferredColored,
 }
 
+const colored_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+
 export interface RenderColored {
     Kind: RenderKind.DeferredColored;
     Material: Material<DeferredColoredLayout>;
@@ -21,8 +23,6 @@ export interface RenderColored {
     SpecularColor: Vec3;
     Shininess: number;
 }
-
-let colored_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_colored(
     material: Material<DeferredColoredLayout>,
