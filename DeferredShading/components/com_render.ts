@@ -2,20 +2,20 @@ import {Material, Mesh} from "../../common/material.js";
 import {Vec3, Vec4} from "../../common/math.js";
 import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
 import {Entity, Game} from "../game.js";
-import {DeferredColoredLayout} from "../materials/layout_deferred_colored.js";
+import {ColoredDeferredLayout} from "../materials/layout_colored_deferred.js";
 import {Has} from "../world.js";
 
-export type Render = RenderColored;
+export type Render = RenderColoredDeferred;
 
 export const enum RenderKind {
-    DeferredColored,
+    ColoredDeferred,
 }
 
-const colored_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+const colored_deferred_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
-export interface RenderColored {
-    Kind: RenderKind.DeferredColored;
-    Material: Material<DeferredColoredLayout>;
+export interface RenderColoredDeferred {
+    Kind: RenderKind.ColoredDeferred;
+    Material: Material<ColoredDeferredLayout>;
     Mesh: Mesh;
     FrontFace: GLenum;
     Vao: WebGLVertexArrayObject;
@@ -24,16 +24,16 @@ export interface RenderColored {
     Shininess: number;
 }
 
-export function render_colored(
-    material: Material<DeferredColoredLayout>,
+export function render_colored_deferred(
+    material: Material<ColoredDeferredLayout>,
     mesh: Mesh,
-    color_diffuse: Vec4,
-    color_specular: Vec3,
+    diffuse_color: Vec4,
     shininess: number,
+    specular_color: Vec3 = [1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
     return (game: Game, entity: Entity) => {
-        if (!colored_vaos.has(mesh)) {
+        if (!colored_deferred_vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.Gl.createVertexArray()!;
             game.Gl.bindVertexArray(vao);
@@ -56,18 +56,18 @@ export function render_colored(
             game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
             game.Gl.bindVertexArray(null);
-            colored_vaos.set(mesh, vao);
+            colored_deferred_vaos.set(mesh, vao);
         }
 
         game.World.Signature[entity] |= Has.Render;
         game.World.Render[entity] = {
-            Kind: RenderKind.DeferredColored,
+            Kind: RenderKind.ColoredDeferred,
             Material: material,
             Mesh: mesh,
             FrontFace: front_face,
-            Vao: colored_vaos.get(mesh)!,
-            DiffuseColor: color_diffuse,
-            SpecularColor: color_specular,
+            Vao: colored_deferred_vaos.get(mesh)!,
+            DiffuseColor: diffuse_color,
+            SpecularColor: specular_color,
             Shininess: shininess,
         };
     };

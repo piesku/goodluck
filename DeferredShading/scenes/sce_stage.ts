@@ -2,7 +2,7 @@ import {blueprint_camera_main} from "../blueprints/blu_camera_main.js";
 import {control_always} from "../components/com_control_always.js";
 import {light_directional, light_point} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
-import {render_colored} from "../components/com_render_deferred.js";
+import {render_colored_deferred} from "../components/com_render.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {instantiate} from "../impl.js";
@@ -28,27 +28,27 @@ export function scene_stage(game: Game) {
         transform([-0.7, 0.7, 0], undefined, [1, 1, 1]),
         control_always(null, [0, 1, 0, 0]),
         move(0, 0.5),
-        render_colored(game.MaterialColored, game.MeshSphereFlat, [1, 1, 1, 1], [1, 1, 1], 100),
+        render_colored_deferred(game.MaterialColored, game.MeshSphereFlat, [1, 1, 1, 1], 64),
     ]);
 
     instantiate(game, [
         transform([0.7, 0.7, 0], undefined, [1, 1, 1]),
         control_always(null, [0, 1, 0, 0]),
         move(0, 0.5),
-        render_colored(game.MaterialColored, game.MeshSphereFlat, [1, 1, 1, 1], [1, 1, 1], 1000),
+        render_colored_deferred(game.MaterialColored, game.MeshSphereFlat, [1, 1, 1, 1], 512),
     ]);
 
     instantiate(game, [
         transform([-0.7, -0.7, 0], undefined, [1, 1, 1]),
         control_always(null, [0, 1, 0, 0]),
         move(0, 0.5),
-        render_colored(game.MaterialColored, game.MeshSphereSmooth, [1, 1, 1, 1], [1, 1, 1], 100),
+        render_colored_deferred(game.MaterialColored, game.MeshSphereSmooth, [1, 1, 1, 1], 64),
     ]);
 
     instantiate(game, [
         transform([0.7, -0.7, 0], undefined, [1, 1, 1]),
         control_always(null, [0, 1, 0, 0]),
         move(0, 0.5),
-        render_colored(game.MaterialColored, game.MeshSphereSmooth, [1, 1, 1, 1], [1, 1, 1], 1000),
+        render_colored_deferred(game.MaterialColored, game.MeshSphereSmooth, [1, 1, 1, 1], 512),
     ]);
 }

@@ -3,7 +3,7 @@ import {Children} from "./components/com_children.js";
 import {ControlAlways} from "./components/com_control_always.js";
 import {Light} from "./components/com_light.js";
 import {Move} from "./components/com_move.js";
-import {Render} from "./components/com_render_deferred.js";
+import {Render} from "./components/com_render.js";
 import {Transform} from "./components/com_transform.js";
 import {Entity} from "./game.js";
 
