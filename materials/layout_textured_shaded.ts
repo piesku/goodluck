@@ -3,13 +3,16 @@ export interface TexturedShadedLayout {
     Pv: WebGLUniformLocation;
     World: WebGLUniformLocation;
     Self: WebGLUniformLocation;
-    Eye: WebGLUniformLocation;
+
     DiffuseColor: WebGLUniformLocation;
     SpecularColor: WebGLUniformLocation;
     Shininess: WebGLUniformLocation;
     Sampler: WebGLUniformLocation;
+
+    Eye: WebGLUniformLocation;
     LightPositions: WebGLUniformLocation;
     LightDetails: WebGLUniformLocation;
+
     // Attributes
     VertexPosition: GLint;
     VertexTexCoord: GLint;
