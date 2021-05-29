@@ -14,7 +14,7 @@ import {
 } from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {ColoredUnlitLayout} from "../../materials/layout_colored_unlit.js";
-import {MappedLayout} from "../../materials/layout_mapped.js";
+import {MappedShadedLayout} from "../../materials/layout_mapped_shaded.js";
 import {TexturedShadedLayout} from "../../materials/layout_textured_shaded.js";
 import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
 import {CameraDisplay, CameraEye, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
@@ -23,7 +23,7 @@ import {
     RenderColoredShaded,
     RenderColoredUnlit,
     RenderKind,
-    RenderMapped,
+    RenderMappedShaded,
     RenderTexturedShaded,
     RenderTexturedUnlit,
     RenderVertices,
@@ -99,7 +99,7 @@ function render(game: Game1, eye: CameraEye, current_target?: WebGLTexture) {
                     case RenderKind.Vertices:
                         use_vertices(game, render.Material, eye);
                         break;
-                    case RenderKind.Mapped:
+                    case RenderKind.MappedShaded:
                         use_mapped(game, render.Material, eye);
                         break;
                 }
@@ -134,7 +134,7 @@ function render(game: Game1, eye: CameraEye, current_target?: WebGLTexture) {
                 case RenderKind.Vertices:
                     draw_vertices(game, transform, render);
                     break;
-                case RenderKind.Mapped:
+                case RenderKind.MappedShaded:
                     draw_mapped(game, transform, render);
                     break;
             }
@@ -235,7 +235,7 @@ function draw_vertices(game: Game1, transform: Transform, render: RenderVertices
     game.Gl.drawArrays(render.Material.Mode, 0, render.IndexCount);
 }
 
-function use_mapped(game: Game1, material: Material<MappedLayout>, eye: CameraEye) {
+function use_mapped(game: Game1, material: Material<MappedShadedLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform3fv(material.Locations.Eye, eye.Position);
@@ -243,7 +243,7 @@ function use_mapped(game: Game1, material: Material<MappedLayout>, eye: CameraEy
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
-function draw_mapped(game: Game1, transform: Transform, render: RenderMapped) {
+function draw_mapped(game: Game1, transform: Transform, render: RenderMappedShaded) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
 

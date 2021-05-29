@@ -1,4 +1,4 @@
-export interface MappedLayout {
+export interface MappedShadedLayout {
     // Uniforms
     Pv: WebGLUniformLocation;
     World: WebGLUniformLocation;

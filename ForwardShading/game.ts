@@ -3,7 +3,7 @@ import {mat1_colored_gouraud} from "../materials/mat1_colored_gouraud.js";
 import {mat1_colored_phong} from "../materials/mat1_colored_phong.js";
 import {mat1_colored_points} from "../materials/mat1_colored_points.js";
 import {mat1_colored_unlit, mat1_colored_wireframe} from "../materials/mat1_colored_unlit.js";
-import {mat1_mapped} from "../materials/mat1_mapped.js";
+import {mat1_mapped_shaded} from "../materials/mat1_mapped_shaded.js";
 import {mat1_textured_gouraud} from "../materials/mat1_textured_gouraud.js";
 import {mat1_textured_phong} from "../materials/mat1_textured_phong.js";
 import {mat1_textured_unlit} from "../materials/mat1_textured_unlit.js";
@@ -42,7 +42,7 @@ export class Game {
     MaterialTexturedUnlit = mat1_textured_unlit(this.Gl);
     MaterialTexturedGouraud = mat1_textured_gouraud(this.Gl);
     MaterialTexturedPhong = mat1_textured_phong(this.Gl);
-    MaterialMapped = mat1_mapped(this.Gl);
+    MaterialMapped = mat1_mapped_shaded(this.Gl);
 
     MeshCube = mesh_cube(this.Gl);
     MeshIcosphereSmooth = mesh_icosphere_smooth(this.Gl);
