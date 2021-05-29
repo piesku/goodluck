@@ -214,7 +214,7 @@ function draw_textured_shaded(game: Game1, transform: Transform, render: RenderT
 
     game.Gl.activeTexture(GL_TEXTURE0);
     game.Gl.bindTexture(GL_TEXTURE_2D, render.Texture);
-    game.Gl.uniform1i(render.Material.Locations.Sampler, 0);
+    game.Gl.uniform1i(render.Material.Locations.DiffuseMap, 0);
 
     game.ExtVao.bindVertexArrayOES(render.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);

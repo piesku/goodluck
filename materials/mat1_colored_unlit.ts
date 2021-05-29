@@ -33,7 +33,9 @@ export function mat1_colored_unlit(
         Locations: {
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
+
             Color: gl.getUniformLocation(program, "color")!,
+
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
         },
     };

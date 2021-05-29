@@ -40,8 +40,10 @@ export function mat2_textured_unlit(gl: WebGL2RenderingContext): Material<Textur
         Locations: {
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
+
             Sampler: gl.getUniformLocation(program, "sampler")!,
             Color: gl.getUniformLocation(program, "color")!,
+
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
             VertexTexCoord: gl.getAttribLocation(program, "attr_texcoord")!,
         },

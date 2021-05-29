@@ -79,13 +79,13 @@ let vertex = `
 let fragment = `
     precision mediump float;
 
-    uniform sampler2D sampler;
+    uniform sampler2D diffuse_map;
 
     varying vec2 vert_texcoord;
     varying vec4 vert_color;
 
     void main() {
-        vec4 tex_color = texture2D(sampler, vert_texcoord);
+        vec4 tex_color = texture2D(diffuse_map, vert_texcoord);
         gl_FragColor = vert_color * tex_color;
     }
 `;
@@ -99,13 +99,16 @@ export function mat1_textured_gouraud(gl: WebGLRenderingContext): Material<Textu
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
             Self: gl.getUniformLocation(program, "self")!,
-            Eye: gl.getUniformLocation(program, "eye")!,
+
+            DiffuseMap: gl.getUniformLocation(program, "diffuse_map")!,
             DiffuseColor: gl.getUniformLocation(program, "diffuse_color")!,
             SpecularColor: gl.getUniformLocation(program, "specular_color")!,
             Shininess: gl.getUniformLocation(program, "shininess")!,
-            Sampler: gl.getUniformLocation(program, "sampler")!,
+
+            Eye: gl.getUniformLocation(program, "eye")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
+
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
             VertexTexCoord: gl.getAttribLocation(program, "attr_texcoord")!,
             VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
