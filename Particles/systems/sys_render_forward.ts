@@ -136,7 +136,7 @@ function draw_particles_textured(
 
     game.Gl.activeTexture(GL_TEXTURE0);
     game.Gl.bindTexture(GL_TEXTURE_2D, render.Texture);
-    game.Gl.uniform1i(render.Material.Locations.Sampler, 0);
+    game.Gl.uniform1i(render.Material.Locations.TextureMap, 0);
 
     game.Gl.uniform4f(
         render.Material.Locations.Details,

@@ -2,7 +2,7 @@ export interface ParticlesTexturedLayout {
     // Uniforms
     Pv: WebGLUniformLocation;
 
-    Sampler: WebGLUniformLocation;
+    TextureMap: WebGLUniformLocation;
     ColorStart: WebGLUniformLocation;
     ColorEnd: WebGLUniformLocation;
     Details: WebGLUniformLocation;

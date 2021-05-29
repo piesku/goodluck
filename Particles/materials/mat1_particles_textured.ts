@@ -35,7 +35,7 @@ let vertex = `
 let fragment = `
     precision mediump float;
 
-    uniform sampler2D sampler;
+    uniform sampler2D texture_map;
 
     varying vec4 vert_color;
     varying float vert_rand;
@@ -43,7 +43,7 @@ let fragment = `
     void main() {
         // Add -1, 0, or 1 to each component of the point coord vector.
         vec2 uv = gl_PointCoord + floor(vec2(cos(vert_rand) + 0.5, sin(vert_rand) + 0.5));
-        gl_FragColor = vert_color * texture2D(sampler, uv / 2.0);
+        gl_FragColor = vert_color * texture2D(texture_map, uv / 2.0);
     }
 `;
 
@@ -56,10 +56,12 @@ export function mat1_particles_textured(
         Program: program,
         Locations: {
             Pv: gl.getUniformLocation(program, "pv")!,
-            Sampler: gl.getUniformLocation(program, "sampler")!,
+
+            TextureMap: gl.getUniformLocation(program, "texture_map")!,
             ColorStart: gl.getUniformLocation(program, "color_start")!,
             ColorEnd: gl.getUniformLocation(program, "color_end")!,
             Details: gl.getUniformLocation(program, "details")!,
+
             OriginAge: gl.getAttribLocation(program, "attr_origin_age")!,
             DirectionSeed: gl.getAttribLocation(program, "attr_direction_seed")!,
         },
