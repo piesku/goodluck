@@ -45,7 +45,7 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat2_deferred_colored(gl: WebGLRenderingContext): Material<ColoredDeferredLayout> {
+export function mat2_colored_deferred(gl: WebGLRenderingContext): Material<ColoredDeferredLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
