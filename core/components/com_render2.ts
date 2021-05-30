@@ -20,6 +20,9 @@ interface Game2 extends Game {
     };
 }
 
+const colored_shaded_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+const textured_unlit_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
+
 export interface RenderColoredShaded {
     readonly Kind: RenderKind.ColoredShaded;
     readonly Material: Material<ColoredShadedLayout>;
@@ -30,8 +33,6 @@ export interface RenderColoredShaded {
     SpecularColor: Vec4;
     Shininess: number;
 }
-
-let colored_shaded_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_colored_shaded(
     material: Material<ColoredShadedLayout>,
@@ -91,8 +92,6 @@ export interface RenderTexturedUnlit {
     Texture: WebGLTexture;
     Color: Vec4;
 }
-
-let textured_unlit_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export function render_textured_unlit(
     material: Material<TexturedUnlitLayout>,

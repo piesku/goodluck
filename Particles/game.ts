@@ -6,7 +6,7 @@ import {mat1_particles_textured} from "./materials/mat1_particles_textured.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_particles} from "./systems/sys_particles.js";
-import {sys_render} from "./systems/sys_render.js";
+import {sys_render_forward} from "./systems/sys_render_forward.js";
 import {sys_shake} from "./systems/sys_shake.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
@@ -49,7 +49,7 @@ export class Game {
         sys_shake(this, delta);
         sys_transform(this, delta);
         sys_camera(this, delta);
-        sys_render(this, delta);
+        sys_render_forward(this, delta);
         sys_framerate(this, delta, performance.now() - now);
     }
 }

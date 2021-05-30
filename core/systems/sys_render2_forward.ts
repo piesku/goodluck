@@ -29,7 +29,7 @@ interface Game2 extends Game {
     };
 }
 
-export function sys_render(game: Game2, delta: number) {
+export function sys_render_forward(game: Game2, delta: number) {
     for (let camera of game.Cameras) {
         switch (camera.Kind) {
             case CameraKind.Display:
@@ -130,7 +130,7 @@ function draw_textured_unlit(game: Game2, transform: Transform, render: RenderTe
 
     game.Gl.activeTexture(GL_TEXTURE0);
     game.Gl.bindTexture(GL_TEXTURE_2D, render.Texture);
-    game.Gl.uniform1i(render.Material.Locations.Sampler, 0);
+    game.Gl.uniform1i(render.Material.Locations.TextureMap, 0);
 
     game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
 

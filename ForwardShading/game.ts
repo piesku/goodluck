@@ -3,7 +3,7 @@ import {mat1_colored_gouraud} from "../materials/mat1_colored_gouraud.js";
 import {mat1_colored_phong} from "../materials/mat1_colored_phong.js";
 import {mat1_colored_points} from "../materials/mat1_colored_points.js";
 import {mat1_colored_unlit, mat1_colored_wireframe} from "../materials/mat1_colored_unlit.js";
-import {mat1_mapped} from "../materials/mat1_mapped.js";
+import {mat1_mapped_shaded} from "../materials/mat1_mapped_shaded.js";
 import {mat1_textured_gouraud} from "../materials/mat1_textured_gouraud.js";
 import {mat1_textured_phong} from "../materials/mat1_textured_phong.js";
 import {mat1_textured_unlit} from "../materials/mat1_textured_unlit.js";
@@ -16,7 +16,7 @@ import {sys_control_always} from "./systems/sys_control_always.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
-import {sys_render} from "./systems/sys_render1.js";
+import {sys_render_forward} from "./systems/sys_render1_forward.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
@@ -42,7 +42,7 @@ export class Game {
     MaterialTexturedUnlit = mat1_textured_unlit(this.Gl);
     MaterialTexturedGouraud = mat1_textured_gouraud(this.Gl);
     MaterialTexturedPhong = mat1_textured_phong(this.Gl);
-    MaterialMapped = mat1_mapped(this.Gl);
+    MaterialMapped = mat1_mapped_shaded(this.Gl);
 
     MeshCube = mesh_cube(this.Gl);
     MeshIcosphereSmooth = mesh_icosphere_smooth(this.Gl);
@@ -74,7 +74,7 @@ export class Game {
         sys_transform(this, delta);
         sys_camera(this, delta);
         sys_light(this, delta);
-        sys_render(this, delta);
+        sys_render_forward(this, delta);
         sys_framerate(this, delta, performance.now() - now);
     }
 }

@@ -1,6 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {MappedLayout} from "./layout_mapped.js";
+import {MappedShadedLayout} from "./layout_mapped_shaded.js";
 
 let vertex = `
     uniform mat4 pv;
@@ -105,7 +105,7 @@ let fragment = `
     }
 `;
 
-export function mat1_mapped(gl: WebGLRenderingContext): Material<MappedLayout> {
+export function mat1_mapped_shaded(gl: WebGLRenderingContext): Material<MappedShadedLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

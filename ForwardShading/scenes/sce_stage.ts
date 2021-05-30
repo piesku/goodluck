@@ -6,7 +6,7 @@ import {move} from "../components/com_move.js";
 import {
     render_colored_shaded,
     render_colored_unlit,
-    render_mapped,
+    render_mapped_shaded,
     render_textured_shaded,
     render_textured_unlit,
 } from "../components/com_render1.js";
@@ -170,28 +170,28 @@ export function scene_stage(game: Game) {
         ),
 
         // Mapped (diffuse, normal, roughness) shading
-        render_mapped(
+        render_mapped_shaded(
             game.MaterialMapped,
             game.MeshCube,
             game.Textures["Bricks059_1K_Color.jpg"],
             game.Textures["Bricks059_1K_Normal.jpg"],
             game.Textures["Bricks059_1K_Roughness.jpg"]
         ),
-        render_mapped(
+        render_mapped_shaded(
             game.MaterialMapped,
             game.MeshCube,
             game.Textures["Sponge001_1K_Color.jpg"],
             game.Textures["Sponge001_1K_Normal.jpg"],
             game.Textures["Sponge001_1K_Roughness.jpg"]
         ),
-        render_mapped(
+        render_mapped_shaded(
             game.MaterialMapped,
             game.MeshCube,
             game.Textures["Wood063_1K_Color.jpg"],
             game.Textures["Wood063_1K_Normal.jpg"],
             game.Textures["Wood063_1K_Roughness.jpg"]
         ),
-        render_mapped(
+        render_mapped_shaded(
             game.MaterialMapped,
             game.MeshCube,
             game.Textures["Concrete018_1K_Color.jpg"],

@@ -24,7 +24,7 @@ export function sys_render_postprocess(game: Game, delta: number) {
     game.Gl.frontFace(GL_CW);
 
     let camera = game.Cameras[0];
-    let material = game.MaterialPostprocessOutline;
+    let material = game.MaterialShading;
     let mesh = game.MeshQuad;
     let target = game.Targets.Gbuffer;
 

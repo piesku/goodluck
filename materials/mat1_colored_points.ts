@@ -31,7 +31,9 @@ export function mat1_colored_points(gl: WebGLRenderingContext): Material<Colored
         Locations: {
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
+
             Color: gl.getUniformLocation(program, "color")!,
+
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
         },
     };

@@ -31,12 +31,12 @@ export function render_instanced(mesh: Mesh, offsets: Model, palette: Array<numb
     return (game: Game, entity: Entity) => {
         let material = game.MaterialInstanced;
 
-        // We can't cache the VAO per mesh, like we do in com_render_shaded in
-        // other examples, because the offsets vary between the instances of the
-        // component.
-        // Hint: If offset models are guaranteed to only ever be rendered using
-        // the same mesh as atoms (e.g. a model of a horse is always rendered
-        // using cube voxels), it might be beneficial to cache VAOs per model.
+        // We can't cache the VAO per mesh, like we do in com_render in other
+        // examples, because the offsets vary between the instances of the
+        // component. Hint: If offset models are guaranteed to only ever be
+        // rendered using the same mesh as atoms (e.g. a model of a horse is
+        // always rendered using cube voxels), it might be beneficial to cache
+        // VAOs per model.
         let vao = game.Gl.createVertexArray()!;
         game.Gl.bindVertexArray(vao);
 

@@ -7,10 +7,10 @@ import {
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
 import {CameraEye, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
-import {RenderColored, RenderKind} from "../components/com_render_deferred.js";
+import {RenderColoredDeferred, RenderKind} from "../components/com_render.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {DeferredColoredLayout} from "../materials/layout_deferred_colored.js";
+import {ColoredDeferredLayout} from "../materials/layout_colored_deferred.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;
@@ -55,8 +55,8 @@ function render(game: Game, eye: CameraEye) {
             if (render.Material !== current_material) {
                 current_material = render.Material;
                 switch (render.Kind) {
-                    case RenderKind.DeferredColored:
-                        use_colored_unlit(game, render.Material, eye);
+                    case RenderKind.ColoredDeferred:
+                        use_colored_deferred(game, render.Material, eye);
                         break;
                 }
             }
@@ -67,20 +67,24 @@ function render(game: Game, eye: CameraEye) {
             }
 
             switch (render.Kind) {
-                case RenderKind.DeferredColored:
-                    draw_colored_unlit(game, transform, render);
+                case RenderKind.ColoredDeferred:
+                    draw_colored_deferred(game, transform, render);
                     break;
             }
         }
     }
 }
 
-function use_colored_unlit(game: Game, material: Material<DeferredColoredLayout>, eye: CameraEye) {
+function use_colored_deferred(
+    game: Game,
+    material: Material<ColoredDeferredLayout>,
+    eye: CameraEye
+) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
 }
 
-function draw_colored_unlit(game: Game, transform: Transform, render: RenderColored) {
+function draw_colored_deferred(game: Game, transform: Transform, render: RenderColoredDeferred) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
     game.Gl.uniform4fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
