@@ -36,6 +36,10 @@ export function scene_stage(game: Game) {
     // Minimap Plane.
     instantiate(game, [
         transform([1, 0, 0], [0.707, 0, 0, 0.707]),
-        render_textured_unlit(game.MaterialTexturedUnlit, game.MeshPlane, game.Textures.Minimap),
+        render_textured_unlit(
+            game.MaterialTexturedUnlit,
+            game.MeshPlane,
+            game.Targets.Minimap.RenderTexture
+        ),
     ]);
 }

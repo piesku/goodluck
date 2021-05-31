@@ -65,11 +65,11 @@ function render_display(game: Game1, camera: CameraDisplay) {
 }
 
 function render_framebuffer(game: Game1, camera: CameraFramebuffer) {
-    game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target);
-    game.Gl.viewport(0, 0, camera.ViewportWidth, camera.ViewportHeight);
+    game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target.Framebuffer);
+    game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
     game.Gl.clearColor(...camera.ClearColor);
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    render(game, camera, camera.RenderTexture);
+    render(game, camera, camera.Target.RenderTexture);
 }
 
 function render(game: Game1, eye: CameraEye, current_target?: WebGLTexture) {

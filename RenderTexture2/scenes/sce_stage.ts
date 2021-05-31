@@ -39,7 +39,7 @@ export function scene_stage(game: Game) {
         render_textured_unlit(
             game.MaterialTexturedUnlit,
             game.MeshPlane,
-            game.Textures.MinimapRgba
+            game.Targets.Minimap.RenderTexture
         ),
     ]);
 }

@@ -1,4 +1,4 @@
-import {create_render_target, RenderTarget} from "../common/framebuffer.js";
+import {create_deferred_target, DeferredTarget} from "../common/framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
@@ -36,7 +36,7 @@ export class Game {
     MeshQuad = mesh_quad(this.Gl);
 
     Targets: {
-        Gbuffer: RenderTarget;
+        Gbuffer: DeferredTarget;
     };
     Textures: Record<string, WebGLTexture> = {};
 
@@ -54,7 +54,7 @@ export class Game {
         this.Gl.getExtension("EXT_color_buffer_float");
         this.Targets = {
             // Create the main framebuffer for deferred rendering.
-            Gbuffer: create_render_target(this.Gl, this.ViewportWidth, this.ViewportHeight),
+            Gbuffer: create_deferred_target(this.Gl, this.ViewportWidth, this.ViewportHeight),
         };
 
         this.Gl.enable(GL_DEPTH_TEST);

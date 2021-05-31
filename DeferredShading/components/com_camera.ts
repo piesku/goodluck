@@ -1,4 +1,4 @@
-import {RenderTarget} from "../../common/framebuffer.js";
+import {DeferredTarget} from "../../common/framebuffer.js";
 import {create} from "../../common/mat4.js";
 import {Mat4, Vec3, Vec4} from "../../common/math.js";
 import {Entity, Game} from "../game.js";
@@ -17,7 +17,7 @@ export interface CameraEye {
 
 export interface CameraFramebuffer extends CameraEye {
     Kind: CameraKind.Framebuffer;
-    Target: RenderTarget;
+    Target: DeferredTarget;
     FovY: number;
     Near: number;
     Far: number;
@@ -26,7 +26,7 @@ export interface CameraFramebuffer extends CameraEye {
     ClearColor: Vec4;
 }
 export function camera_framebuffer_perspective(
-    target: RenderTarget,
+    target: DeferredTarget,
     fovy: number,
     near: number,
     far: number,

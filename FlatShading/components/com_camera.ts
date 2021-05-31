@@ -1,3 +1,4 @@
+import {Forward2Target} from "../../common/framebuffer.js";
 import {create} from "../../common/mat4.js";
 import {Mat4, Vec3, Vec4} from "../../common/math.js";
 import {Entity, Game} from "../game.js";
@@ -50,11 +51,7 @@ export function camera_display_perspective(
 
 export interface CameraFramebuffer extends CameraEye {
     Kind: CameraKind.Framebuffer;
-    Target: WebGLFramebuffer;
-    RenderTexture: WebGLTexture;
-    DepthBuffer: WebGLRenderbuffer;
-    ViewportWidth: number;
-    ViewportHeight: number;
+    Target: Forward2Target;
     FovY: number;
     Near: number;
     Far: number;
