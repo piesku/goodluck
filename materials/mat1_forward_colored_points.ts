@@ -23,7 +23,9 @@ let fragment = `
     }
 `;
 
-export function mat1_colored_points(gl: WebGLRenderingContext): Material<ColoredUnlitLayout> {
+export function mat1_forward_colored_points(
+    gl: WebGLRenderingContext
+): Material<ColoredUnlitLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_POINTS,

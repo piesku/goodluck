@@ -86,7 +86,9 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat2_colored_gouraud(gl: WebGL2RenderingContext): Material<ColoredShadedLayout> {
+export function mat2_forward_colored_gouraud(
+    gl: WebGL2RenderingContext
+): Material<ColoredShadedLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

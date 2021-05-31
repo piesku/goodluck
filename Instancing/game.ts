@@ -2,7 +2,7 @@ import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./impl.js";
-import {mat2_instanced} from "./materials/mat2_instanced.js";
+import {mat2_forward_instanced} from "./materials/mat2_forward_instanced.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -23,7 +23,7 @@ export class Game {
     Canvas = document.querySelector("canvas")!;
     Gl = this.Canvas.getContext("webgl2")!;
 
-    MaterialInstanced = mat2_instanced(this.Gl);
+    MaterialInstanced = mat2_forward_instanced(this.Gl);
     MeshCube = mesh_cube(this.Gl);
 
     // The rendering pipeline supports 8 lights.

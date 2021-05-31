@@ -1,5 +1,5 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
-import {mat1_colored_gouraud} from "../materials/mat1_colored_gouraud.js";
+import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./impl.js";
@@ -32,7 +32,7 @@ export class Game {
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
     Audio = new (window["AudioContext"] || window.webkitAudioContext)();
 
-    MaterialColoredGouraud = mat1_colored_gouraud(this.Gl);
+    MaterialColoredGouraud = mat1_forward_colored_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
 
     // The rendering pipeline supports 8 lights.

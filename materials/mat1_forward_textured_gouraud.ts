@@ -1,9 +1,8 @@
-import {link, Material} from "../../common/material.js";
-import {GL_TRIANGLES} from "../../common/webgl.js";
-import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
+import {link, Material} from "../common/material.js";
+import {GL_TRIANGLES} from "../common/webgl.js";
+import {TexturedShadedLayout} from "./layout_textured_shaded.js";
 
-let vertex = `#version 300 es\n
-
+let vertex = `
     // See Game.LightPositions and Game.LightDetails.
     const int MAX_LIGHTS = 8;
 
@@ -17,10 +16,12 @@ let vertex = `#version 300 es\n
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    in vec3 attr_position;
-    in vec3 attr_normal;
+    attribute vec3 attr_position;
+    attribute vec2 attr_texcoord;
+    attribute vec3 attr_normal;
 
-    flat out vec4 vert_color;
+    varying vec2 vert_texcoord;
+    varying vec4 vert_color;
 
     void main() {
         vec4 world_position = world * vec4(attr_position, 1.0);
@@ -71,23 +72,27 @@ let vertex = `#version 300 es\n
         }
 
         vert_color = vec4(light_acc, 1.0);
+        vert_texcoord = attr_texcoord;
     }
 `;
 
-let fragment = `#version 300 es\n
-
+let fragment = `
     precision mediump float;
 
-    flat in vec4 vert_color;
+    uniform sampler2D diffuse_map;
 
-    out vec4 frag_color;
+    varying vec2 vert_texcoord;
+    varying vec4 vert_color;
 
     void main() {
-        frag_color = vert_color;
+        vec4 tex_color = texture2D(diffuse_map, vert_texcoord);
+        gl_FragColor = vert_color * tex_color;
     }
 `;
 
-export function mat2_colored_flat(gl: WebGL2RenderingContext): Material<ColoredShadedLayout> {
+export function mat1_forward_textured_gouraud(
+    gl: WebGLRenderingContext
+): Material<TexturedShadedLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
@@ -96,13 +101,18 @@ export function mat2_colored_flat(gl: WebGL2RenderingContext): Material<ColoredS
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
             Self: gl.getUniformLocation(program, "self")!,
-            Eye: gl.getUniformLocation(program, "eye")!,
+
+            DiffuseMap: gl.getUniformLocation(program, "diffuse_map")!,
             DiffuseColor: gl.getUniformLocation(program, "diffuse_color")!,
             SpecularColor: gl.getUniformLocation(program, "specular_color")!,
             Shininess: gl.getUniformLocation(program, "shininess")!,
+
+            Eye: gl.getUniformLocation(program, "eye")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
+
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
+            VertexTexCoord: gl.getAttribLocation(program, "attr_texcoord")!,
             VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
         },
     };

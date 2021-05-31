@@ -91,7 +91,9 @@ let fragment = `
     }
 `;
 
-export function mat1_colored_phong(gl: WebGLRenderingContext): Material<ColoredShadedLayout> {
+export function mat1_forward_colored_phong(
+    gl: WebGLRenderingContext
+): Material<ColoredShadedLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

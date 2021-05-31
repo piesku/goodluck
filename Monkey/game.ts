@@ -1,7 +1,7 @@
 import {Mesh} from "../common/material.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
-import {mat1_colored_gouraud} from "../materials/mat1_colored_gouraud.js";
-import {mat1_colored_phong} from "../materials/mat1_colored_phong.js";
+import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
+import {mat1_forward_colored_phong} from "../materials/mat1_forward_colored_phong.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -25,8 +25,8 @@ export class Game {
     Gl = this.Canvas.getContext("webgl")!;
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
-    MaterialColoredGouraud = mat1_colored_gouraud(this.Gl);
-    MaterialColoredPhong = mat1_colored_phong(this.Gl);
+    MaterialColoredGouraud = mat1_forward_colored_gouraud(this.Gl);
+    MaterialColoredPhong = mat1_forward_colored_phong(this.Gl);
 
     Meshes: Record<string, Mesh> = {};
 

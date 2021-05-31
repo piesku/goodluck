@@ -22,7 +22,7 @@ let fragment = `
     }
 `;
 
-export function mat1_colored_unlit(
+export function mat1_forward_colored_unlit(
     gl: WebGLRenderingContext,
     mode: GLenum = GL_TRIANGLES
 ): Material<ColoredUnlitLayout> {
@@ -41,10 +41,10 @@ export function mat1_colored_unlit(
     };
 }
 
-export function mat1_colored_wireframe(gl: WebGLRenderingContext) {
-    return mat1_colored_unlit(gl, GL_LINE_LOOP);
+export function mat1_forward_colored_wireframe(gl: WebGLRenderingContext) {
+    return mat1_forward_colored_unlit(gl, GL_LINE_LOOP);
 }
 
-export function mat1_colored_line(gl: WebGLRenderingContext) {
-    return mat1_colored_unlit(gl, GL_LINE_STRIP);
+export function mat1_forward_colored_line(gl: WebGLRenderingContext) {
+    return mat1_forward_colored_unlit(gl, GL_LINE_STRIP);
 }
