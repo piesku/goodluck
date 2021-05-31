@@ -1,4 +1,4 @@
-import {create_forward2_target, Forward2Target} from "../common/framebuffer.js";
+import {create_forward2_target} from "../common/framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat2_forward_textured_unlit} from "../materials/mat2_forward_textured_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
@@ -30,7 +30,7 @@ export class Game {
     MeshPlane = mesh_plane(this.Gl);
 
     Textures: Record<string, WebGLTexture> = {};
-    Targets: Record<string, Forward2Target> = {
+    Targets = {
         Minimap: create_forward2_target(this.Gl, 256, 256),
     };
 

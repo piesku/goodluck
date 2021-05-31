@@ -1,5 +1,4 @@
 import {
-    resize_render_buffer,
     resize_texture_depth,
     resize_texture_depth24,
     resize_texture_rgba,
@@ -14,7 +13,6 @@ import {
     GL_DEPTH_ATTACHMENT,
     GL_FRAMEBUFFER,
     GL_FRAMEBUFFER_COMPLETE,
-    GL_RENDERBUFFER,
     GL_TEXTURE_2D,
 } from "./webgl.js";
 
@@ -23,7 +21,7 @@ export interface Forward1Target {
     Width: number;
     Height: number;
     RenderTexture: WebGLTexture;
-    DepthBuffer: WebGLRenderbuffer;
+    DepthTexture: WebGLTexture;
 }
 
 export function create_forward1_target(gl: WebGLRenderingContext, width: number, height: number) {
@@ -32,7 +30,7 @@ export function create_forward1_target(gl: WebGLRenderingContext, width: number,
         Width: width,
         Height: height,
         RenderTexture: resize_texture_rgba(gl, gl.createTexture()!, width, height),
-        DepthBuffer: resize_render_buffer(gl, gl.createRenderbuffer()!, width, height),
+        DepthTexture: resize_texture_depth(gl, gl.createTexture()!, width, height),
     };
 
     gl.bindFramebuffer(GL_FRAMEBUFFER, target.Framebuffer);
@@ -43,11 +41,12 @@ export function create_forward1_target(gl: WebGLRenderingContext, width: number,
         target.RenderTexture,
         0
     );
-    gl.framebufferRenderbuffer(
+    gl.framebufferTexture2D(
         GL_FRAMEBUFFER,
         GL_DEPTH_ATTACHMENT,
-        GL_RENDERBUFFER,
-        target.DepthBuffer
+        GL_TEXTURE_2D,
+        target.DepthTexture,
+        0
     );
 
     let status = gl.checkFramebufferStatus(GL_FRAMEBUFFER);
