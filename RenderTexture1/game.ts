@@ -31,8 +31,8 @@ export class Game {
     MeshPlane = mesh_plane(this.Gl);
 
     Textures: Record<string, WebGLTexture> = {};
-    Targets: Record<string, Forward1Target> = {
-        Minimap: create_forward1_target(this.Gl, 256, 256),
+    Targets: {
+        Minimap: Forward1Target;
     };
 
     // The rendering pipeline supports 8 lights.
@@ -44,6 +44,11 @@ export class Game {
         document.addEventListener("visibilitychange", () =>
             document.hidden ? loop_stop() : loop_start(this)
         );
+
+        this.Gl.getExtension("WEBGL_depth_texture");
+        this.Targets = {
+            Minimap: create_forward1_target(this.Gl, 256, 256),
+        };
 
         this.Gl.enable(GL_DEPTH_TEST);
         this.Gl.enable(GL_CULL_FACE);
