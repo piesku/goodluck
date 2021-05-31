@@ -2,6 +2,7 @@ import {Material, Mesh} from "../../common/material.js";
 import {Vec4} from "../../common/math.js";
 import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
+import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
 import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
 import {Entity, Game} from "../game.js";
 import {Has, World} from "../world.js";
@@ -25,7 +26,7 @@ const textured_unlit_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap()
 
 export interface RenderColoredShaded {
     readonly Kind: RenderKind.ColoredShaded;
-    readonly Material: Material<ColoredShadedLayout>;
+    readonly Material: Material<ColoredShadedLayout & ForwardShadingLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
     readonly Vao: WebGLVertexArrayObject;
@@ -35,7 +36,7 @@ export interface RenderColoredShaded {
 }
 
 export function render_colored_shaded(
-    material: Material<ColoredShadedLayout>,
+    material: Material<ColoredShadedLayout & ForwardShadingLayout>,
     mesh: Mesh,
     diffuse_color: Vec4,
     shininess: number = 0,

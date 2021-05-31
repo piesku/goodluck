@@ -1,9 +1,9 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
-import {mat2_colored_gouraud} from "../materials/mat2_colored_gouraud.js";
+import {mat2_forward_colored_gouraud} from "../materials/mat2_forward_colored_gouraud.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./impl.js";
-import {mat2_colored_flat} from "./materials/mat2_colored_flat.js";
+import {mat2_forward_colored_flat} from "./materials/mat2_forward_colored_flat.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -26,8 +26,8 @@ export class Game {
     Canvas = document.querySelector("canvas")!;
     Gl = this.Canvas.getContext("webgl2")!;
 
-    MaterialColoredFlat = mat2_colored_flat(this.Gl);
-    MaterialColoredGouraud = mat2_colored_gouraud(this.Gl);
+    MaterialColoredFlat = mat2_forward_colored_flat(this.Gl);
+    MaterialColoredGouraud = mat2_forward_colored_gouraud(this.Gl);
 
     MeshIcosphereFlat = mesh_icosphere_flat(this.Gl);
 

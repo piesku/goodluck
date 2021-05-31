@@ -7,7 +7,7 @@ import {
     GL_STATIC_DRAW,
 } from "../../common/webgl.js";
 import {Entity, Game} from "../game.js";
-import {InstancedLayout} from "../materials/layout_instanced.js";
+import {ForwardInstancedLayout} from "../materials/layout_forward_instanced.js";
 import {Model} from "../model.js";
 import {Has} from "../world.js";
 
@@ -19,7 +19,7 @@ export const enum RenderKind {
 
 export interface RenderInstanced {
     readonly Kind: RenderKind.Instanced;
-    readonly Material: Material<InstancedLayout>;
+    readonly Material: Material<ForwardInstancedLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
     readonly Vao: WebGLVertexArrayObject;

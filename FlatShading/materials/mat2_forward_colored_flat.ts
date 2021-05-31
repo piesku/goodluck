@@ -1,8 +1,10 @@
-import {link, Material} from "../common/material.js";
-import {GL_TRIANGLES} from "../common/webgl.js";
-import {TexturedShadedLayout} from "./layout_textured_shaded.js";
+import {link, Material} from "../../common/material.js";
+import {GL_TRIANGLES} from "../../common/webgl.js";
+import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
+import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
 
-let vertex = `
+let vertex = `#version 300 es\n
+
     // See Game.LightPositions and Game.LightDetails.
     const int MAX_LIGHTS = 8;
 
@@ -16,12 +18,10 @@ let vertex = `
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    attribute vec3 attr_position;
-    attribute vec2 attr_texcoord;
-    attribute vec3 attr_normal;
+    in vec3 attr_position;
+    in vec3 attr_normal;
 
-    varying vec2 vert_texcoord;
-    varying vec4 vert_color;
+    flat out vec4 vert_color;
 
     void main() {
         vec4 world_position = world * vec4(attr_position, 1.0);
@@ -72,25 +72,25 @@ let vertex = `
         }
 
         vert_color = vec4(light_acc, 1.0);
-        vert_texcoord = attr_texcoord;
     }
 `;
 
-let fragment = `
+let fragment = `#version 300 es\n
+
     precision mediump float;
 
-    uniform sampler2D diffuse_map;
+    flat in vec4 vert_color;
 
-    varying vec2 vert_texcoord;
-    varying vec4 vert_color;
+    out vec4 frag_color;
 
     void main() {
-        vec4 tex_color = texture2D(diffuse_map, vert_texcoord);
-        gl_FragColor = vert_color * tex_color;
+        frag_color = vert_color;
     }
 `;
 
-export function mat1_textured_gouraud(gl: WebGLRenderingContext): Material<TexturedShadedLayout> {
+export function mat2_forward_colored_flat(
+    gl: WebGL2RenderingContext
+): Material<ColoredShadedLayout & ForwardShadingLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
@@ -100,7 +100,6 @@ export function mat1_textured_gouraud(gl: WebGLRenderingContext): Material<Textu
             World: gl.getUniformLocation(program, "world")!,
             Self: gl.getUniformLocation(program, "self")!,
 
-            DiffuseMap: gl.getUniformLocation(program, "diffuse_map")!,
             DiffuseColor: gl.getUniformLocation(program, "diffuse_color")!,
             SpecularColor: gl.getUniformLocation(program, "specular_color")!,
             Shininess: gl.getUniformLocation(program, "shininess")!,
@@ -110,7 +109,6 @@ export function mat1_textured_gouraud(gl: WebGLRenderingContext): Material<Textu
             LightDetails: gl.getUniformLocation(program, "light_details")!,
 
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
-            VertexTexCoord: gl.getAttribLocation(program, "attr_texcoord")!,
             VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
         },
     };

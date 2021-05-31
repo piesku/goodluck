@@ -1,8 +1,8 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./impl.js";
-import {mat1_particles_colored} from "./materials/mat1_particles_colored.js";
-import {mat1_particles_textured} from "./materials/mat1_particles_textured.js";
+import {mat1_forward_particles_colored} from "./materials/mat1_forward_particles_colored.js";
+import {mat1_forward_particles_textured} from "./materials/mat1_forward_particles_textured.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_particles} from "./systems/sys_particles.js";
@@ -24,8 +24,8 @@ export class Game {
     Canvas = document.querySelector("canvas")!;
     Gl = this.Canvas.getContext("webgl")!;
 
-    MaterialParticlesColored = mat1_particles_colored(this.Gl);
-    MaterialParticlesTextured = mat1_particles_textured(this.Gl);
+    MaterialParticlesColored = mat1_forward_particles_colored(this.Gl);
+    MaterialParticlesTextured = mat1_forward_particles_textured(this.Gl);
     Textures: Record<string, WebGLTexture> = {};
 
     Cameras: Array<Camera> = [];

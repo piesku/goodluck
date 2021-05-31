@@ -1,9 +1,9 @@
-import {link, Material} from "../../common/material.js";
-import {GL_TRIANGLES} from "../../common/webgl.js";
-import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
+import {link, Material} from "../common/material.js";
+import {GL_TRIANGLES} from "../common/webgl.js";
+import {ColoredShadedLayout} from "./layout_colored_shaded.js";
+import {ForwardShadingLayout} from "./layout_forward_shading.js";
 
-let vertex = `#version 300 es\n
-
+let vertex = `
     // See Game.LightPositions and Game.LightDetails.
     const int MAX_LIGHTS = 8;
 
@@ -17,10 +17,10 @@ let vertex = `#version 300 es\n
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    in vec3 attr_position;
-    in vec3 attr_normal;
+    attribute vec3 attr_position;
+    attribute vec3 attr_normal;
 
-    flat out vec4 vert_color;
+    varying vec4 vert_color;
 
     void main() {
         vec4 world_position = world * vec4(attr_position, 1.0);
@@ -74,20 +74,19 @@ let vertex = `#version 300 es\n
     }
 `;
 
-let fragment = `#version 300 es\n
-
+let fragment = `
     precision mediump float;
 
-    flat in vec4 vert_color;
-
-    out vec4 frag_color;
+    varying vec4 vert_color;
 
     void main() {
-        frag_color = vert_color;
+        gl_FragColor = vert_color;
     }
 `;
 
-export function mat2_colored_flat(gl: WebGL2RenderingContext): Material<ColoredShadedLayout> {
+export function mat1_forward_colored_gouraud(
+    gl: WebGLRenderingContext
+): Material<ColoredShadedLayout & ForwardShadingLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
@@ -96,12 +95,15 @@ export function mat2_colored_flat(gl: WebGL2RenderingContext): Material<ColoredS
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
             Self: gl.getUniformLocation(program, "self")!,
-            Eye: gl.getUniformLocation(program, "eye")!,
+
             DiffuseColor: gl.getUniformLocation(program, "diffuse_color")!,
             SpecularColor: gl.getUniformLocation(program, "specular_color")!,
             Shininess: gl.getUniformLocation(program, "shininess")!,
+
+            Eye: gl.getUniformLocation(program, "eye")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
+
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
             VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
         },

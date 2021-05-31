@@ -1,17 +1,19 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
 import {ColoredShadedLayout} from "./layout_colored_shaded.js";
+import {ForwardShadingLayout} from "./layout_forward_shading.js";
 
-let vertex = `
+let vertex = `#version 300 es\n
+
     uniform mat4 pv;
     uniform mat4 world;
     uniform mat4 self;
 
-    attribute vec3 attr_position;
-    attribute vec3 attr_normal;
+    in vec3 attr_position;
+    in vec3 attr_normal;
 
-    varying vec4 vert_position;
-    varying vec3 vert_normal;
+    out vec4 vert_position;
+    out vec3 vert_normal;
 
     void main() {
         vert_position = world * vec4(attr_position, 1.0);
@@ -20,7 +22,8 @@ let vertex = `
     }
 `;
 
-let fragment = `
+let fragment = `#version 300 es\n
+
     precision mediump float;
 
     // See Game.LightPositions and Game.LightDetails.
@@ -33,8 +36,10 @@ let fragment = `
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    varying vec4 vert_position;
-    varying vec3 vert_normal;
+    in vec4 vert_position;
+    in vec3 vert_normal;
+
+    out vec4 frag_color;
 
     void main() {
         vec3 world_normal = normalize(vert_normal);
@@ -87,11 +92,13 @@ let fragment = `
             }
         }
 
-        gl_FragColor = vec4(light_acc, 1.0);
+        frag_color = vec4(light_acc, 1.0);
     }
 `;
 
-export function mat1_colored_phong(gl: WebGLRenderingContext): Material<ColoredShadedLayout> {
+export function mat2_forward_colored_phong(
+    gl: WebGL2RenderingContext
+): Material<ColoredShadedLayout & ForwardShadingLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

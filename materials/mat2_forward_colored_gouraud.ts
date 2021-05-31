@@ -1,8 +1,10 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
 import {ColoredShadedLayout} from "./layout_colored_shaded.js";
+import {ForwardShadingLayout} from "./layout_forward_shading.js";
 
-let vertex = `
+let vertex = `#version 300 es\n
+
     // See Game.LightPositions and Game.LightDetails.
     const int MAX_LIGHTS = 8;
 
@@ -16,17 +18,16 @@ let vertex = `
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    attribute vec3 attr_position;
-    attribute vec3 attr_normal;
-
-    varying vec4 vert_color;
+    in vec3 attr_position;
+    in vec3 attr_normal;
+    out vec4 vert_color;
 
     void main() {
-        vec4 world_position = world * vec4(attr_position, 1.0);
-        vec3 world_normal = normalize((vec4(attr_normal, 1.0) * self).xyz);
-        gl_Position = pv * world_position;
+        vec4 attr_pos = world * vec4(attr_position, 1.0);
+        vec3 attr_normal = normalize((vec4(attr_normal, 1.0) * self).xyz);
+        gl_Position = pv * attr_pos;
 
-        vec3 view_dir = eye - world_position.xyz;
+        vec3 view_dir = eye - attr_pos.xyz;
         vec3 view_normal = normalize(view_dir);
 
         // Ambient light.
@@ -45,14 +46,14 @@ let vertex = `
                 // Directional light.
                 light_normal = light_positions[i].xyz;
             } else {
-                vec3 light_dir = light_positions[i].xyz - world_position.xyz;
+                vec3 light_dir = light_positions[i].xyz - attr_pos.xyz;
                 float light_dist = length(light_dir);
                 light_normal = light_dir / light_dist;
                 // Distance attenuation.
                 light_intensity /= (light_dist * light_dist);
             }
 
-            float diffuse_factor = dot(world_normal, light_normal);
+            float diffuse_factor = dot(attr_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
                 light_acc += diffuse_color.rgb * diffuse_factor * light_color * light_intensity;
@@ -60,7 +61,7 @@ let vertex = `
                 if (shininess > 0.0) {
                     // Blinn-Phong reflection model.
                     vec3 h = normalize(light_normal + view_normal);
-                    float specular_angle = max(dot(h, world_normal), 0.0);
+                    float specular_angle = max(dot(h, attr_normal), 0.0);
                     float specular_factor = pow(specular_angle, shininess);
 
                     // Specular color.
@@ -73,17 +74,22 @@ let vertex = `
     }
 `;
 
-let fragment = `
+let fragment = `#version 300 es\n
+
     precision mediump float;
 
-    varying vec4 vert_color;
+    in vec4 vert_color;
+
+    out vec4 frag_color;
 
     void main() {
-        gl_FragColor = vert_color;
+        frag_color = vert_color;
     }
 `;
 
-export function mat1_colored_gouraud(gl: WebGLRenderingContext): Material<ColoredShadedLayout> {
+export function mat2_forward_colored_gouraud(
+    gl: WebGL2RenderingContext
+): Material<ColoredShadedLayout & ForwardShadingLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

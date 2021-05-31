@@ -8,10 +8,6 @@ export interface ColoredShadedLayout {
     SpecularColor: WebGLUniformLocation;
     Shininess: WebGLUniformLocation;
 
-    Eye: WebGLUniformLocation;
-    LightPositions: WebGLUniformLocation;
-    LightDetails: WebGLUniformLocation;
-
     // Attributes
     VertexPosition: GLint;
     VertexNormal: GLint;

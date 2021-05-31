@@ -5,8 +5,8 @@ import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {mesh_quad} from "../meshes/quad.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./impl.js";
-import {mat2_colored_deferred} from "./materials/mat2_colored_deferred.js";
-import {mat2_shading_deferred} from "./materials/mat2_shading_deferred.js";
+import {mat2_deferred_colored} from "./materials/mat2_deferred_colored.js";
+import {mat2_deferred_shading} from "./materials/mat2_deferred_shading.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -29,8 +29,8 @@ export class Game {
     Canvas = document.querySelector("canvas")!;
     Gl = this.Canvas.getContext("webgl2")!;
 
-    MaterialColored = mat2_colored_deferred(this.Gl);
-    MaterialShading = mat2_shading_deferred(this.Gl);
+    MaterialColored = mat2_deferred_colored(this.Gl);
+    MaterialShading = mat2_deferred_shading(this.Gl);
     MeshSphereSmooth = mesh_icosphere_smooth(this.Gl);
     MeshSphereFlat = mesh_icosphere_flat(this.Gl);
     MeshQuad = mesh_quad(this.Gl);
