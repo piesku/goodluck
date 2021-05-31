@@ -10,7 +10,7 @@ import {CameraEye, CameraFramebuffer, CameraKind} from "../components/com_camera
 import {RenderColoredDeferred, RenderKind} from "../components/com_render.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {ColoredDeferredLayout} from "../materials/layout_colored_deferred.js";
+import {ColoredDeferredLayout} from "../materials/layout_deferred_colored_shaded.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;

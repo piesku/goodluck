@@ -2,7 +2,7 @@ import {Material, Mesh} from "../../common/material.js";
 import {Vec3, Vec4} from "../../common/math.js";
 import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
 import {Entity, Game} from "../game.js";
-import {ColoredDeferredLayout} from "../materials/layout_colored_deferred.js";
+import {ColoredDeferredLayout} from "../materials/layout_deferred_colored_shaded.js";
 import {Has} from "../world.js";
 
 export type Render = RenderColoredDeferred;

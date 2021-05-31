@@ -1,6 +1,6 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
-import {PostprocessDeferredLayout} from "./layout_postprocess_deferred.js";
+import {PostprocessDeferredLayout} from "./layout_deferred_postprocess.js";
 
 let vertex = `#version 300 es\n
     in vec3 attr_position;
@@ -93,7 +93,7 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat2_shading_deferred(
+export function mat2_deferred_shading(
     gl: WebGLRenderingContext
 ): Material<PostprocessDeferredLayout> {
     let program = link(gl, vertex, fragment);
