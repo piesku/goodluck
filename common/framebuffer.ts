@@ -1,8 +1,10 @@
 import {
+    resize_render_buffer,
     resize_texture_depth,
     resize_texture_depth24,
     resize_texture_rgba,
     resize_texture_rgba32f,
+    resize_texture_rgba8,
 } from "./texture.js";
 import {
     GL_COLOR_ATTACHMENT0,
@@ -12,10 +14,92 @@ import {
     GL_DEPTH_ATTACHMENT,
     GL_FRAMEBUFFER,
     GL_FRAMEBUFFER_COMPLETE,
+    GL_RENDERBUFFER,
     GL_TEXTURE_2D,
 } from "./webgl.js";
 
-export interface RenderTarget {
+export interface Forward1Target {
+    Framebuffer: WebGLFramebuffer;
+    Width: number;
+    Height: number;
+    RenderTexture: WebGLTexture;
+    DepthBuffer: WebGLRenderbuffer;
+}
+
+export function create_forward1_target(gl: WebGLRenderingContext, width: number, height: number) {
+    let target: Forward1Target = {
+        Framebuffer: gl.createFramebuffer()!,
+        Width: width,
+        Height: height,
+        RenderTexture: resize_texture_rgba(gl, gl.createTexture()!, width, height),
+        DepthBuffer: resize_render_buffer(gl, gl.createRenderbuffer()!, width, height),
+    };
+
+    gl.bindFramebuffer(GL_FRAMEBUFFER, target.Framebuffer);
+    gl.framebufferTexture2D(
+        GL_FRAMEBUFFER,
+        GL_COLOR_ATTACHMENT0,
+        GL_TEXTURE_2D,
+        target.RenderTexture,
+        0
+    );
+    gl.framebufferRenderbuffer(
+        GL_FRAMEBUFFER,
+        GL_DEPTH_ATTACHMENT,
+        GL_RENDERBUFFER,
+        target.DepthBuffer
+    );
+
+    let status = gl.checkFramebufferStatus(GL_FRAMEBUFFER);
+    if (status != GL_FRAMEBUFFER_COMPLETE) {
+        throw new Error(`Failed to set up the framebuffer (${status}).`);
+    }
+
+    return target;
+}
+
+export interface Forward2Target {
+    Framebuffer: WebGLFramebuffer;
+    Width: number;
+    Height: number;
+    RenderTexture: WebGLTexture;
+    DepthTexture: WebGLTexture;
+}
+
+export function create_forward2_target(gl: WebGL2RenderingContext, width: number, height: number) {
+    let target: Forward2Target = {
+        Framebuffer: gl.createFramebuffer()!,
+        Width: width,
+        Height: height,
+        RenderTexture: resize_texture_rgba8(gl, gl.createTexture()!, width, height),
+        DepthTexture: resize_texture_depth24(gl, gl.createTexture()!, width, height),
+    };
+
+    gl.bindFramebuffer(GL_FRAMEBUFFER, target.Framebuffer);
+    gl.framebufferTexture2D(
+        GL_FRAMEBUFFER,
+        GL_COLOR_ATTACHMENT0,
+        GL_TEXTURE_2D,
+        target.RenderTexture,
+        0
+    );
+    gl.framebufferTexture2D(
+        GL_FRAMEBUFFER,
+        GL_DEPTH_ATTACHMENT,
+        GL_TEXTURE_2D,
+        target.DepthTexture,
+        0
+    );
+
+    let status = gl.checkFramebufferStatus(GL_FRAMEBUFFER);
+    if (status != GL_FRAMEBUFFER_COMPLETE) {
+        throw new Error(`Failed to set up the framebuffer (${status}).`);
+    }
+
+    return target;
+}
+
+export interface DeferredTarget {
     Framebuffer: WebGLFramebuffer;
     Width: number;
     Height: number;
@@ -26,8 +110,8 @@ export interface RenderTarget {
     DepthTexture: WebGLTexture;
 }
 
-export function create_render_target(gl: WebGL2RenderingContext, width: number, height: number) {
-    let target: RenderTarget = {
+export function create_deferred_target(gl: WebGL2RenderingContext, width: number, height: number) {
+    let target: DeferredTarget = {
         Framebuffer: gl.createFramebuffer()!,
         Width: width,
         Height: height,
@@ -90,9 +174,9 @@ export function create_render_target(gl: WebGL2RenderingContext, width: number, 
     return target;
 }
 
-export function resize_render_target(
+export function resize_deferred_target(
     gl: WebGL2RenderingContext,
-    target: RenderTarget,
+    target: DeferredTarget,
     width: number,
     height: number
 ) {

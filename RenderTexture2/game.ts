@@ -1,4 +1,4 @@
-import {resize_texture_depth24, resize_texture_rgba8} from "../common/texture.js";
+import {create_forward2_target, Forward2Target} from "../common/framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat2_forward_textured_unlit} from "../materials/mat2_forward_textured_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
@@ -29,9 +29,9 @@ export class Game {
     MeshCube = mesh_cube(this.Gl);
     MeshPlane = mesh_plane(this.Gl);
 
-    Textures: Record<string, WebGLTexture> = {
-        MinimapRgba: resize_texture_rgba8(this.Gl, this.Gl.createTexture()!, 256, 256),
-        MinimapDepth: resize_texture_depth24(this.Gl, this.Gl.createTexture()!, 256, 256),
+    Textures: Record<string, WebGLTexture> = {};
+    Targets: Record<string, Forward2Target> = {
+        Minimap: create_forward2_target(this.Gl, 256, 256),
     };
 
     // The rendering pipeline supports 8 lights.

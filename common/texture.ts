@@ -120,8 +120,12 @@ export function resize_texture_rgba32f(
     return texture;
 }
 
-export function create_render_buffer(gl: WebGLRenderingContext, width: number, height: number) {
-    let buffer = gl.createRenderbuffer()!;
+export function resize_render_buffer(
+    gl: WebGLRenderingContext,
+    buffer: WebGLRenderbuffer,
+    width: number,
+    height: number
+) {
     gl.bindRenderbuffer(gl.RENDERBUFFER, buffer);
     gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, width, height);
     return buffer;

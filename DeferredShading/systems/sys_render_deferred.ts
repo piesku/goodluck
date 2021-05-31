@@ -1,4 +1,4 @@
-import {resize_render_target} from "../../common/framebuffer.js";
+import {resize_deferred_target} from "../../common/framebuffer.js";
 import {Material} from "../../common/material.js";
 import {
     GL_COLOR_BUFFER_BIT,
@@ -17,7 +17,7 @@ const QUERY = Has.Transform | Has.Render;
 
 export function sys_render_deferred(game: Game, delta: number) {
     if (game.ViewportResized) {
-        resize_render_target(
+        resize_deferred_target(
             game.Gl,
             game.Targets.Gbuffer,
             game.ViewportWidth,
