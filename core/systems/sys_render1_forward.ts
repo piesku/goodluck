@@ -14,6 +14,7 @@ import {
 } from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {ColoredUnlitLayout} from "../../materials/layout_colored_unlit.js";
+import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
 import {MappedShadedLayout} from "../../materials/layout_mapped_shaded.js";
 import {TexturedShadedLayout} from "../../materials/layout_textured_shaded.js";
 import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
@@ -155,7 +156,11 @@ function draw_colored_unlit(game: Game1, transform: Transform, render: RenderCol
     game.ExtVao.bindVertexArrayOES(null);
 }
 
-function use_colored_shaded(game: Game1, material: Material<ColoredShadedLayout>, eye: CameraEye) {
+function use_colored_shaded(
+    game: Game1,
+    material: Material<ColoredShadedLayout & ForwardShadingLayout>,
+    eye: CameraEye
+) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform3fv(material.Locations.Eye, eye.Position);
@@ -195,7 +200,7 @@ function draw_textured_unlit(game: Game1, transform: Transform, render: RenderTe
 
 function use_textured_shaded(
     game: Game1,
-    material: Material<TexturedShadedLayout>,
+    material: Material<TexturedShadedLayout & ForwardShadingLayout>,
     eye: CameraEye
 ) {
     game.Gl.useProgram(material.Program);
@@ -235,7 +240,11 @@ function draw_vertices(game: Game1, transform: Transform, render: RenderVertices
     game.Gl.drawArrays(render.Material.Mode, 0, render.IndexCount);
 }
 
-function use_mapped(game: Game1, material: Material<MappedShadedLayout>, eye: CameraEye) {
+function use_mapped(
+    game: Game1,
+    material: Material<MappedShadedLayout & ForwardShadingLayout>,
+    eye: CameraEye
+) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform3fv(material.Locations.Eye, eye.Position);

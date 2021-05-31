@@ -6,6 +6,7 @@ import {
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
+import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
 import {CameraEye, CameraKind, CameraPerspective, CameraXr} from "../components/com_camera.js";
 import {RenderColoredShaded, RenderKind} from "../components/com_render2.js";
 import {Transform} from "../components/com_transform.js";
@@ -78,7 +79,11 @@ function render(game: Game, eye: CameraEye) {
     }
 }
 
-function use_colored_shaded(game: Game, material: Material<ColoredShadedLayout>, eye: CameraEye) {
+function use_colored_shaded(
+    game: Game,
+    material: Material<ColoredShadedLayout & ForwardShadingLayout>,
+    eye: CameraEye
+) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform3fv(material.Locations.Eye, eye.Position);

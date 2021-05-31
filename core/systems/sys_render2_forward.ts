@@ -8,6 +8,7 @@ import {
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
+import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
 import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
 import {CameraDisplay, CameraEye, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
 import {
@@ -101,7 +102,11 @@ function render(game: Game2, eye: CameraEye, current_target?: WebGLTexture) {
     }
 }
 
-function use_colored_shaded(game: Game2, material: Material<ColoredShadedLayout>, eye: CameraEye) {
+function use_colored_shaded(
+    game: Game2,
+    material: Material<ColoredShadedLayout & ForwardShadingLayout>,
+    eye: CameraEye
+) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform3fv(material.Locations.Eye, eye.Position);

@@ -1,8 +1,8 @@
 import {Material, Mesh} from "../../common/material.js";
 import {Vec3, Vec4} from "../../common/math.js";
 import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
+import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {Entity, Game} from "../game.js";
-import {ColoredDeferredLayout} from "../materials/layout_deferred_colored_shaded.js";
 import {Has} from "../world.js";
 
 export type Render = RenderColoredDeferred;
@@ -15,7 +15,7 @@ const colored_deferred_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap
 
 export interface RenderColoredDeferred {
     Kind: RenderKind.ColoredDeferred;
-    Material: Material<ColoredDeferredLayout>;
+    Material: Material<ColoredShadedLayout>;
     Mesh: Mesh;
     FrontFace: GLenum;
     Vao: WebGLVertexArrayObject;
@@ -25,7 +25,7 @@ export interface RenderColoredDeferred {
 }
 
 export function render_colored_deferred(
-    material: Material<ColoredDeferredLayout>,
+    material: Material<ColoredShadedLayout>,
     mesh: Mesh,
     diffuse_color: Vec4,
     shininess: number,

@@ -1,5 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
+import {ForwardShadingLayout} from "./layout_forward_shading.js";
 import {MappedShadedLayout} from "./layout_mapped_shaded.js";
 
 let vertex = `
@@ -107,7 +108,7 @@ let fragment = `
 
 export function mat1_forward_mapped_shaded(
     gl: WebGLRenderingContext
-): Material<MappedShadedLayout> {
+): Material<MappedShadedLayout & ForwardShadingLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

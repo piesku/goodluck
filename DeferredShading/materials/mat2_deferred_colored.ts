@@ -1,6 +1,6 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
-import {ColoredDeferredLayout} from "./layout_deferred_colored_shaded.js";
+import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 
 let vertex = `#version 300 es\n
 
@@ -45,7 +45,7 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat2_deferred_colored(gl: WebGLRenderingContext): Material<ColoredDeferredLayout> {
+export function mat2_deferred_colored(gl: WebGLRenderingContext): Material<ColoredShadedLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

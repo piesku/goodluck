@@ -11,6 +11,7 @@ import {
 } from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {ColoredUnlitLayout} from "../../materials/layout_colored_unlit.js";
+import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
 import {MappedShadedLayout} from "../../materials/layout_mapped_shaded.js";
 import {TexturedShadedLayout} from "../../materials/layout_textured_shaded.js";
 import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
@@ -99,7 +100,7 @@ export function render_colored_unlit(
 
 export interface RenderColoredShaded {
     readonly Kind: RenderKind.ColoredShaded;
-    readonly Material: Material<ColoredShadedLayout>;
+    readonly Material: Material<ColoredShadedLayout & ForwardShadingLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
     readonly Vao: WebGLVertexArrayObject;
@@ -109,7 +110,7 @@ export interface RenderColoredShaded {
 }
 
 export function render_colored_shaded(
-    material: Material<ColoredShadedLayout>,
+    material: Material<ColoredShadedLayout & ForwardShadingLayout>,
     mesh: Mesh,
     diffuse_color: Vec4,
     shininess: number = 0,
@@ -222,7 +223,7 @@ export function render_textured_unlit(
 
 export interface RenderTexturedShaded {
     readonly Kind: RenderKind.TexturedShaded;
-    readonly Material: Material<TexturedShadedLayout>;
+    readonly Material: Material<TexturedShadedLayout & ForwardShadingLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
     readonly Vao: WebGLVertexArrayObject;
@@ -233,7 +234,7 @@ export interface RenderTexturedShaded {
 }
 
 export function render_textured_shaded(
-    material: Material<TexturedShadedLayout>,
+    material: Material<TexturedShadedLayout & ForwardShadingLayout>,
     mesh: Mesh,
     texture: WebGLTexture,
     shininess: number = 0,
@@ -323,7 +324,7 @@ export function render_vertices(material: Material<ColoredUnlitLayout>, max: num
 
 export interface RenderMappedShaded {
     readonly Kind: RenderKind.MappedShaded;
-    readonly Material: Material<MappedShadedLayout>;
+    readonly Material: Material<MappedShadedLayout & ForwardShadingLayout>;
     readonly Mesh: Mesh;
     readonly FrontFace: GLenum;
     readonly Vao: WebGLVertexArrayObject;
@@ -334,7 +335,7 @@ export interface RenderMappedShaded {
 }
 
 export function render_mapped_shaded(
-    material: Material<MappedShadedLayout>,
+    material: Material<MappedShadedLayout & ForwardShadingLayout>,
     mesh: Mesh,
     diffuse_map: WebGLTexture,
     normal_map: WebGLTexture,

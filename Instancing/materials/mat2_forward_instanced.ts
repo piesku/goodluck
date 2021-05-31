@@ -1,6 +1,6 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
-import {InstancedLayout} from "./layout_instanced.js";
+import {ForwardInstancedLayout} from "./layout_forward_instanced.js";
 
 let vertex = `#version 300 es\n
 
@@ -77,7 +77,9 @@ let fragment = `#version 300 es\n
 
 // Instanced drawing can also be used in WebGL1 via an extension:
 // https://developer.mozilla.org/en-US/docs/Web/API/ANGLE_instanced_arrays
-export function mat2_forward_instanced(gl: WebGL2RenderingContext): Material<InstancedLayout> {
+export function mat2_forward_instanced(
+    gl: WebGL2RenderingContext
+): Material<ForwardInstancedLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

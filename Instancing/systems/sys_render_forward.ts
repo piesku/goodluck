@@ -4,7 +4,7 @@ import {CameraDisplay, CameraEye, CameraKind} from "../components/com_camera.js"
 import {RenderInstanced, RenderKind} from "../components/com_render.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {InstancedLayout} from "../materials/layout_instanced.js";
+import {ForwardInstancedLayout} from "../materials/layout_forward_instanced.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;
@@ -57,7 +57,7 @@ function render_display(game: Game, camera: CameraDisplay) {
     }
 }
 
-function use_instanced(game: Game, material: Material<InstancedLayout>, eye: CameraEye) {
+function use_instanced(game: Game, material: Material<ForwardInstancedLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
     game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);

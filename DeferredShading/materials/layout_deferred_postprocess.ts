@@ -6,10 +6,6 @@ export interface PostprocessDeferredLayout {
     NormalMap: WebGLUniformLocation;
     DepthMap: WebGLUniformLocation;
 
-    Eye: WebGLUniformLocation;
-    LightPositions: WebGLUniformLocation;
-    LightDetails: WebGLUniformLocation;
-
     // Attributes
     VertexPosition: GLint;
     VertexTexcoord: GLint;

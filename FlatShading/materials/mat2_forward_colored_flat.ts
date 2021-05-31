@@ -1,6 +1,7 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
+import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
 
 let vertex = `#version 300 es\n
 
@@ -89,7 +90,7 @@ let fragment = `#version 300 es\n
 
 export function mat2_forward_colored_flat(
     gl: WebGL2RenderingContext
-): Material<ColoredShadedLayout> {
+): Material<ColoredShadedLayout & ForwardShadingLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

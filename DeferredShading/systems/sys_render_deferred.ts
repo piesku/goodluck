@@ -6,11 +6,11 @@ import {
     GL_FRAMEBUFFER,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
+import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {CameraEye, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
 import {RenderColoredDeferred, RenderKind} from "../components/com_render.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {ColoredDeferredLayout} from "../materials/layout_deferred_colored_shaded.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;
@@ -75,11 +75,7 @@ function render(game: Game, eye: CameraEye) {
     }
 }
 
-function use_colored_deferred(
-    game: Game,
-    material: Material<ColoredDeferredLayout>,
-    eye: CameraEye
-) {
+function use_colored_deferred(game: Game, material: Material<ColoredShadedLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
 }
