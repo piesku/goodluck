@@ -127,6 +127,31 @@ export function create_render_buffer(gl: WebGLRenderingContext, width: number, h
     return buffer;
 }
 
+export function resize_texture_depth(
+    gl: WebGLRenderingContext,
+    texture: WebGLTexture,
+    width: number,
+    height: number
+) {
+    gl.bindTexture(GL_TEXTURE_2D, texture);
+    gl.texImage2D(
+        GL_TEXTURE_2D,
+        0,
+        GL_DEPTH_COMPONENT,
+        width,
+        height,
+        0,
+        GL_DEPTH_COMPONENT,
+        GL_DATA_UNSIGNED_INT,
+        null
+    );
+
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    return texture;
+}
+
 // Depth textures are a WebGL2 feature. They can also be used in WebGL1 via an extension:
 // https://developer.mozilla.org/en-US/docs/Web/API/WEBGL_draw_buffers
 export function resize_texture_depth24(
