@@ -13,7 +13,7 @@ export interface ProjectionPerspective {
     Near: number;
     Far: number;
     Projection: Mat4;
-    Unprojection: Mat4;
+    Inverse: Mat4;
 }
 
 export interface ProjectionOrtho {
@@ -22,5 +22,5 @@ export interface ProjectionOrtho {
     Near: number;
     Far: number;
     Projection: Mat4;
-    Unprojection: Mat4;
+    Inverse: Mat4;
 }

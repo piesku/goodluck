@@ -55,7 +55,7 @@ function resize_perspective(projection: ProjectionPerspective, aspect: number) {
             projection.Near,
             projection.Far
         );
-        invert(projection.Unprojection, projection.Projection);
+        invert(projection.Inverse, projection.Projection);
     } else {
         // Portrait orientation.
         perspective(
@@ -65,7 +65,7 @@ function resize_perspective(projection: ProjectionPerspective, aspect: number) {
             projection.Near,
             projection.Far
         );
-        invert(projection.Unprojection, projection.Projection);
+        invert(projection.Inverse, projection.Projection);
     }
 }
 
@@ -79,5 +79,5 @@ function resize_ortho(projection: ProjectionOrtho) {
         projection.Near,
         projection.Far
     );
-    invert(projection.Unprojection, projection.Projection);
+    invert(projection.Inverse, projection.Projection);
 }
