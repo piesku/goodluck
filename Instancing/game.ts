@@ -20,7 +20,8 @@ export class Game {
     ViewportResized = false;
 
     Ui = document.querySelector("main")!;
-    Canvas = document.querySelector("canvas")!;
+    Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
+    Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
     Gl = this.Canvas.getContext("webgl2")!;
 
     MaterialInstanced = mat2_forward_instanced(this.Gl);

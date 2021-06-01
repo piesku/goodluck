@@ -21,7 +21,8 @@ export class Game {
     ViewportResized = false;
 
     Ui = document.querySelector("main")!;
-    Canvas = document.querySelector("canvas")!;
+    Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
+    Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
     Gl = this.Canvas.getContext("webgl")!;
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 

@@ -7,8 +7,8 @@ const QUERY = Has.Transform | Has.Camera;
 
 export function sys_camera(game: Game, delta: number) {
     if (game.ViewportWidth != window.innerWidth || game.ViewportHeight != window.innerHeight) {
-        game.ViewportWidth = game.Canvas.width = window.innerWidth;
-        game.ViewportHeight = game.Canvas.height = window.innerHeight;
+        game.ViewportWidth = game.Canvas.width = game.Billboard.width = window.innerWidth;
+        game.ViewportHeight = game.Canvas.height = game.Billboard.height = window.innerHeight;
         game.ViewportResized = true;
     }
 

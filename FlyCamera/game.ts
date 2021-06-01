@@ -30,12 +30,12 @@ export class Game {
     InputDelta: Record<string, number> = {};
 
     Ui = document.querySelector("main")!;
-    CanvasScene = document.querySelector("canvas#scene")! as HTMLCanvasElement;
-    Gl = this.CanvasScene.getContext("webgl")!;
+    Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
+    Gl = this.Canvas.getContext("webgl")!;
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
-    CanvasBillboard = document.querySelector("canvas#billboard")! as HTMLCanvasElement;
-    Context2D = this.CanvasBillboard.getContext("2d")!;
+    Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
+    Context2D = this.Billboard.getContext("2d")!;
 
     MaterialColoredGouraud = mat1_forward_colored_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
