@@ -6,12 +6,6 @@ import {Has} from "../world.js";
 const QUERY = Has.Transform | Has.Camera;
 
 export function sys_camera(game: Game, delta: number) {
-    if (game.ViewportWidth != window.innerWidth || game.ViewportHeight != window.innerHeight) {
-        game.ViewportWidth = game.Canvas.width = window.innerWidth;
-        game.ViewportHeight = game.Canvas.height = window.innerHeight;
-        game.ViewportResized = true;
-    }
-
     game.Camera = undefined;
     for (let i = 0; i < game.World.Signature.length; i++) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
