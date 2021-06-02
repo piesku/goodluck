@@ -16,7 +16,8 @@ import {Has} from "../world.js";
 const QUERY = Has.Transform | Has.Render;
 
 export function sys_render_forward(game: Game, delta: number) {
-    let camera = game.Camera!;
+    let camera_entity = game.Camera!;
+    let camera = game.World.Camera[camera_entity];
     if (camera.Kind === CameraKind.Xr) {
         render_vr(game, camera);
     } else {

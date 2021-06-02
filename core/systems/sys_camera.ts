@@ -34,7 +34,7 @@ export function sys_camera(game: Game, delta: number) {
             multiply(camera.Pv, projection.Projection, camera.View);
             get_translation(camera.Position, transform.World);
 
-            game.Cameras.push(camera);
+            game.Cameras.push(i);
         }
     }
 }

@@ -3,7 +3,6 @@ import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_go
 import {mat1_forward_colored_line} from "../materials/mat1_forward_colored_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_terrain} from "../meshes/terrain.js";
-import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
@@ -54,7 +53,7 @@ export class Game {
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
-    Cameras: Array<Camera> = [];
+    Cameras: Array<Entity> = [];
 
     Pick?: Picked;
 

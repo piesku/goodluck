@@ -11,7 +11,8 @@ import {Has} from "../world.js";
 const QUERY = Has.Transform | Has.Render;
 
 export function sys_render_depth(game: Game, delta: number) {
-    for (let camera of game.Cameras) {
+    for (let camera_entity of game.Cameras) {
+        let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
             case CameraKind.Depth:
                 render_depth(game, camera);

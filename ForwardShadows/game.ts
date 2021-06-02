@@ -1,7 +1,6 @@
 import {create_depth_target, DepthTarget} from "../common/framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
-import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./impl.js";
 import {mat1_depth} from "./materials/mat1_depth.js";
 import {mat1_forward_colored_shadows} from "./materials/mat1_forward_colored_shadows.js";
@@ -39,7 +38,7 @@ export class Game {
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
-    Cameras: Array<Camera> = [];
+    Cameras: Array<Entity> = [];
 
     Targets: {
         Sun: DepthTarget;

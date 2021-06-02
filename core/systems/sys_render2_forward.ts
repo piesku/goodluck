@@ -31,7 +31,8 @@ interface Game2 extends Game {
 }
 
 export function sys_render_forward(game: Game2, delta: number) {
-    for (let camera of game.Cameras) {
+    for (let camera_entity of game.Cameras) {
+        let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
             case CameraKind.Display:
                 render_display(game, camera);
