@@ -5,7 +5,6 @@ import {
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
 import {CameraDepth, CameraKind} from "../components/com_camera.js";
-import {RenderKind} from "../components/com_render1.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -43,8 +42,6 @@ function render_depth(game: Game, camera: CameraDepth) {
             }
 
             switch (render.Kind) {
-                case RenderKind.Vertices:
-                    continue;
                 default: {
                     game.Gl.uniformMatrix4fv(
                         game.MaterialDepth.Locations.World,

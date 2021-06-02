@@ -1,10 +1,10 @@
 import {create_depth_target, DepthTarget} from "../common/framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
-import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./impl.js";
 import {mat1_depth} from "./materials/mat1_depth.js";
+import {mat1_forward_colored_shadows} from "./materials/mat1_forward_colored_shadows.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -31,7 +31,7 @@ export class Game {
     Gl = this.Canvas.getContext("webgl")!;
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
-    MaterialColoredGouraud = mat1_forward_colored_gouraud(this.Gl);
+    MaterialColoredShadows = mat1_forward_colored_shadows(this.Gl);
     MaterialDepth = mat1_depth(this.Gl);
 
     MeshCube = mesh_cube(this.Gl);

@@ -1,4 +1,4 @@
-export interface DepthLayout {
+export interface DepthMappingLayout {
     // Uniforms
     Pv: WebGLUniformLocation;
     World: WebGLUniformLocation;

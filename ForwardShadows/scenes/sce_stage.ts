@@ -5,7 +5,7 @@ import {children} from "../components/com_children.js";
 import {control_always} from "../components/com_control_always.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
-import {render_colored_shaded} from "../components/com_render1.js";
+import {render_colored_shadows} from "../components/com_render1.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {instantiate} from "../impl.js";
@@ -33,12 +33,12 @@ export function scene_stage(game: Game) {
     // Ground.
     instantiate(game, [
         transform(undefined, undefined, [10, 1, 10]),
-        render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [1, 1, 0, 1]),
+        render_colored_shadows(game.MaterialColoredShadows, game.MeshCube, [1, 1, 0, 1]),
     ]);
 
     // Cube.
     instantiate(game, [
         transform([0, 1, 0]),
-        render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [1, 1, 0, 1]),
+        render_colored_shadows(game.MaterialColoredShadows, game.MeshCube, [1, 1, 0, 1]),
     ]);
 }

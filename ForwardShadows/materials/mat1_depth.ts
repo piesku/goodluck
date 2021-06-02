@@ -1,6 +1,6 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
-import {DepthLayout} from "./layout_depth.js";
+import {DepthMappingLayout} from "./layout_depth_mapping.js";
 
 let vertex = `
     uniform mat4 pv;
@@ -23,7 +23,7 @@ let fragment = `
     }
 `;
 
-export function mat1_depth(gl: WebGLRenderingContext): Material<DepthLayout> {
+export function mat1_depth(gl: WebGLRenderingContext): Material<DepthMappingLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
