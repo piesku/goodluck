@@ -23,7 +23,7 @@ let fragment = `
     }
 `;
 
-export function mat1_depth(gl: WebGLRenderingContext): Material<DepthMappingLayout> {
+export function mat1_forward_depth(gl: WebGLRenderingContext): Material<DepthMappingLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
