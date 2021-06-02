@@ -13,6 +13,7 @@ import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_render_forward} from "./systems/sys_render1_forward.js";
+import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {sys_ui} from "./systems/sys_ui.js";
 import {World} from "./world.js";
@@ -22,20 +23,20 @@ export type Entity = number;
 export class Game {
     World = new World();
 
-    ViewportWidth = 0;
-    ViewportHeight = 0;
-    ViewportResized = false;
+    ViewportWidth = window.innerWidth;
+    ViewportHeight = window.innerHeight;
+    ViewportResized = true;
 
     InputState: Record<string, number> = {};
     InputDelta: Record<string, number> = {};
 
     Ui = document.querySelector("main")!;
-    CanvasScene = document.querySelector("canvas#scene")! as HTMLCanvasElement;
-    Gl = this.CanvasScene.getContext("webgl")!;
+    Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
+    Gl = this.Canvas.getContext("webgl")!;
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
-    CanvasBillboard = document.querySelector("canvas#billboard")! as HTMLCanvasElement;
-    Context2D = this.CanvasBillboard.getContext("2d")!;
+    Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
+    Context2D = this.Billboard.getContext("2d")!;
 
     MaterialColoredGouraud = mat1_forward_colored_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
@@ -135,6 +136,7 @@ export class Game {
         sys_control_touch(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
+        sys_resize(this, delta);
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render_forward(this, delta);
