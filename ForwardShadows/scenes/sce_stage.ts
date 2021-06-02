@@ -26,7 +26,7 @@ export function scene_stage(game: Game) {
         children([
             transform([0, 0, 10]),
             light_directional([1, 1, 1], 0.9),
-            camera_depth_ortho(game.Targets.Sun, 100, 1, 100),
+            camera_depth_ortho(game.Targets.Sun, 10, 1, 100),
         ]),
     ]);
 
