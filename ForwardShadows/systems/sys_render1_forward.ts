@@ -93,7 +93,8 @@ function use_colored_shadows(
     game.Gl.bindTexture(GL_TEXTURE_2D, game.Targets.Sun.DepthTexture);
     game.Gl.uniform1i(material.Locations.ShadowMap, 0);
 
-    let light_entity = 3;
+    // TODO How to parameterize this?
+    let light_entity = game.Cameras[1];
     let light_camera = game.World.Camera[light_entity];
     game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, light_camera.Pv);
 }
