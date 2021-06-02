@@ -64,10 +64,10 @@ export interface CameraFramebuffer extends CameraEye {
 }
 
 export function camera_framebuffer_perspective(
+    target: Forward1Target,
     fovy: number,
     near: number,
     far: number,
-    target: Forward1Target,
     clear_color: Vec4
 ) {
     return (game: Game1, entity: Entity) => {
@@ -99,11 +99,11 @@ export interface CameraDepth extends CameraEye {
 }
 
 export function camera_depth_ortho(
+    target: DepthTarget,
     radius: number,
     near: number,
     far: number,
-    target: DepthTarget,
-    clear_color: Vec4
+    clear_color: Vec4 = [0, 0, 0, 1]
 ) {
     return (game: Game1, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;
