@@ -1,11 +1,12 @@
 import {create} from "../../common/mat4.js";
 import {Mat4, Vec3} from "../../common/math.js";
+import {Projection, ProjectionKind} from "../../common/projection.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
-export type Camera = CameraPerspective | CameraXr;
+export type Camera = CameraDisplay | CameraXr;
 export const enum CameraKind {
-    Perspective,
+    Display,
     Xr,
 }
 
@@ -15,24 +16,25 @@ export interface CameraEye {
     Position: Vec3;
 }
 
-export interface CameraPerspective extends CameraEye {
-    Kind: CameraKind.Perspective;
-    FovY: number;
-    Near: number;
-    Far: number;
-    Projection: Mat4;
+export interface CameraDisplay extends CameraEye {
+    Kind: CameraKind.Display;
+    Projection: Projection;
 }
 
-export function camera_persp(fovy: number, near: number, far: number) {
+export function camera_display_perspective(fovy: number, near: number, far: number) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;
         game.World.Camera[entity] = {
-            Kind: CameraKind.Perspective,
-            FovY: fovy,
-            Near: near,
-            Far: far,
+            Kind: CameraKind.Display,
+            Projection: {
+                Kind: ProjectionKind.Perspective,
+                FovY: fovy,
+                Near: near,
+                Far: far,
+                Projection: create(),
+                Inverse: create(),
+            },
             View: create(),
-            Projection: create(),
             Pv: create(),
             Position: [0, 0, 0],
         };

@@ -1,5 +1,5 @@
-import {copy, get_translation, invert, multiply, ortho, perspective} from "../../common/mat4.js";
-import {ProjectionKind, ProjectionOrtho, ProjectionPerspective} from "../../common/projection.js";
+import {copy, get_translation, multiply} from "../../common/mat4.js";
+import {ProjectionKind, resize_ortho, resize_perspective} from "../../common/projection.js";
 import {CameraKind} from "../components/com_camera.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -37,41 +37,4 @@ export function sys_camera(game: Game, delta: number) {
             game.Cameras.push(camera);
         }
     }
-}
-
-function resize_perspective(projection: ProjectionPerspective, aspect: number) {
-    if (aspect > 1) {
-        // Landscape orientation.
-        perspective(
-            projection.Projection,
-            projection.FovY,
-            aspect,
-            projection.Near,
-            projection.Far
-        );
-        invert(projection.Inverse, projection.Projection);
-    } else {
-        // Portrait orientation.
-        perspective(
-            projection.Projection,
-            projection.FovY / aspect,
-            aspect,
-            projection.Near,
-            projection.Far
-        );
-        invert(projection.Inverse, projection.Projection);
-    }
-}
-
-function resize_ortho(projection: ProjectionOrtho) {
-    ortho(
-        projection.Projection,
-        projection.Radius,
-        projection.Radius,
-        -projection.Radius,
-        -projection.Radius,
-        projection.Near,
-        projection.Far
-    );
-    invert(projection.Inverse, projection.Projection);
 }

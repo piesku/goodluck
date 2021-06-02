@@ -16,6 +16,7 @@ export const enum CameraKind {
     Framebuffer,
 }
 
+// The subset of camera data passed into shaders.
 export interface CameraEye {
     View: Mat4;
     Pv: Mat4;
