@@ -1,11 +1,4 @@
-import {
-    frame_reset,
-    frame_setup,
-    input_init,
-    input_pointer_lock,
-    loop_start,
-    loop_stop,
-} from "./impl.js";
+import {frame_reset, frame_setup, input_init, input_pointer_lock, loop_init} from "./impl.js";
 import {sys_draw2d} from "./systems/sys_draw2d.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_transform2d} from "./systems/sys_transform2d.js";
@@ -29,10 +22,7 @@ export class Game {
     Context2D: CanvasRenderingContext2D;
 
     constructor() {
-        document.addEventListener("visibilitychange", () =>
-            document.hidden ? loop_stop() : loop_start(this)
-        );
-
+        loop_init(this);
         input_init(this);
         input_pointer_lock(this);
 

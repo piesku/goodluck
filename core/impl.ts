@@ -42,6 +42,12 @@ export function instantiate(game: Game, blueprint: Blueprint) {
     return entity;
 }
 
+export function loop_init(game: Game) {
+    document.addEventListener("visibilitychange", () =>
+        document.hidden ? loop_stop() : loop_start(game)
+    );
+}
+
 let raf = 0;
 
 export function loop_start(game: Game) {

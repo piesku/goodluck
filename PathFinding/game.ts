@@ -3,7 +3,7 @@ import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_go
 import {mat1_forward_colored_line} from "../materials/mat1_forward_colored_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_terrain} from "../meshes/terrain.js";
-import {frame_reset, frame_setup, input_init, loop_start, loop_stop} from "./impl.js";
+import {frame_reset, frame_setup, input_init, loop_init} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
@@ -54,10 +54,7 @@ export class Game {
     Pick?: Picked;
 
     constructor() {
-        document.addEventListener("visibilitychange", () =>
-            document.hidden ? loop_stop() : loop_start(this)
-        );
-
+        loop_init(this);
         input_init(this);
 
         this.Gl.enable(GL_DEPTH_TEST);

@@ -1,5 +1,5 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
-import {frame_reset, frame_setup, loop_start, loop_stop} from "./impl.js";
+import {frame_reset, frame_setup, loop_init} from "./impl.js";
 import {mat1_forward_particles_colored} from "./materials/mat1_forward_particles_colored.js";
 import {mat1_forward_particles_textured} from "./materials/mat1_forward_particles_textured.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -37,9 +37,7 @@ export class Game {
     Cameras: Array<Entity> = [];
 
     constructor() {
-        document.addEventListener("visibilitychange", () =>
-            document.hidden ? loop_stop() : loop_start(this)
-        );
+        loop_init(this);
 
         this.Gl.enable(GL_DEPTH_TEST);
         this.Gl.enable(GL_CULL_FACE);

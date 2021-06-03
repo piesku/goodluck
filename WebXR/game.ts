@@ -2,8 +2,7 @@ import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat2_forward_colored_gouraud} from "../materials/mat2_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_hand} from "../meshes/hand.js";
-import {frame_reset, frame_setup} from "./impl.js";
-import {loop_start, loop_stop} from "./impl_ext.js";
+import {frame_reset, frame_setup, loop_init} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_oculus} from "./systems/sys_control_oculus.js";
 import {sys_control_pose} from "./systems/sys_control_pose.js";
@@ -52,9 +51,7 @@ export class Game {
     LightDetails = new Float32Array(4 * 8);
 
     constructor() {
-        document.addEventListener("visibilitychange", () =>
-            document.hidden ? loop_stop(this) : loop_start(this)
-        );
+        loop_init(this);
 
         this.Gl.enable(GL_DEPTH_TEST);
         this.Gl.enable(GL_CULL_FACE);

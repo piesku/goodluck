@@ -1,7 +1,7 @@
 import {create_depth_target, DepthTarget} from "../common/framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
-import {frame_reset, frame_setup, loop_start, loop_stop} from "./impl.js";
+import {frame_reset, frame_setup, loop_init} from "./impl.js";
 import {mat1_forward_colored_shadows} from "./materials/mat1_forward_colored_shadows.js";
 import {mat1_forward_depth} from "./materials/mat1_forward_depth.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -50,9 +50,7 @@ export class Game {
     };
 
     constructor() {
-        document.addEventListener("visibilitychange", () =>
-            document.hidden ? loop_stop() : loop_start(this)
-        );
+        loop_init(this);
 
         this.Gl.getExtension("WEBGL_depth_texture");
         this.Targets = {

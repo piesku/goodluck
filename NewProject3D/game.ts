@@ -1,14 +1,7 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
-import {
-    frame_reset,
-    frame_setup,
-    input_init,
-    input_pointer_lock,
-    loop_start,
-    loop_stop,
-} from "./impl.js";
+import {frame_reset, frame_setup, input_init, input_pointer_lock, loop_init} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -46,10 +39,7 @@ export class Game {
     Cameras: Array<Entity> = [];
 
     constructor() {
-        document.addEventListener("visibilitychange", () =>
-            document.hidden ? loop_stop() : loop_start(this)
-        );
-
+        loop_init(this);
         input_init(this);
         input_pointer_lock(this);
 

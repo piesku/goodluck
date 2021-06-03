@@ -1,7 +1,7 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
-import {frame_reset, frame_setup, input_init, loop_start, loop_stop} from "./impl.js";
+import {frame_reset, frame_setup, input_init, loop_init} from "./impl.js";
 import {sys_animate} from "./systems/sys_animate.js";
 import {sys_audio_listener} from "./systems/sys_audio_listener.js";
 import {sys_audio_source} from "./systems/sys_audio_source.js";
@@ -44,10 +44,7 @@ export class Game {
     Cameras: Array<Entity> = [];
 
     constructor() {
-        document.addEventListener("visibilitychange", () =>
-            document.hidden ? loop_stop() : loop_start(this)
-        );
-
+        loop_init(this);
         input_init(this);
 
         this.Gl.enable(GL_DEPTH_TEST);

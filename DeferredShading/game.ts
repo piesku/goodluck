@@ -3,7 +3,7 @@ import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {mesh_quad} from "../meshes/quad.js";
-import {frame_reset, frame_setup, loop_start, loop_stop} from "./impl.js";
+import {frame_reset, frame_setup, loop_init} from "./impl.js";
 import {mat2_deferred_colored} from "./materials/mat2_deferred_colored.js";
 import {mat2_deferred_shading} from "./materials/mat2_deferred_shading.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -53,9 +53,7 @@ export class Game {
     Cameras: Array<Entity> = [];
 
     constructor() {
-        document.addEventListener("visibilitychange", () =>
-            document.hidden ? loop_stop() : loop_start(this)
-        );
+        loop_init(this);
 
         // Required for floating point g-buffer textures.
         this.Gl.getExtension("EXT_color_buffer_float");
