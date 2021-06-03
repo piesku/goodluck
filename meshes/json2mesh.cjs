@@ -16,7 +16,7 @@ let scene = JSON.parse(json);
 let {vertices, normals, faces, texturecoords = [[]]} = scene.meshes[0];
 
 console.log(`\
-import {Mesh} from "../common/material.js";
+import {Mesh} from "../common/mesh.js";
 import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW} from "../common/webgl.js";
 
 export function mesh_${process.argv[2]}(gl: WebGLRenderingContext): Mesh {

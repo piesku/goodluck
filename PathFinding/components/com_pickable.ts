@@ -1,5 +1,5 @@
-import {Mesh} from "../../common/material.js";
 import {Vec4} from "../../common/math.js";
+import {Mesh} from "../../common/mesh.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 

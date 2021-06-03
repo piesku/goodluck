@@ -1,5 +1,5 @@
-import {Mesh} from "../common/material.js";
 import {Vec3} from "../common/math.js";
+import {Mesh} from "../common/mesh.js";
 import {cross, distance_squared, dot, normalize, subtract} from "../common/vec3.js";
 
 export interface NavMesh {

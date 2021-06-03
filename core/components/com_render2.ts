@@ -1,5 +1,6 @@
-import {Material, Mesh} from "../../common/material.js";
+import {Material} from "../../common/material.js";
 import {Vec4} from "../../common/math.js";
+import {Mesh} from "../../common/mesh.js";
 import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";

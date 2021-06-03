@@ -1,4 +1,5 @@
-import {Material, Mesh} from "../../common/material.js";
+import {Material} from "../../common/material.js";
+import {Mesh} from "../../common/mesh.js";
 import {
     GL_ARRAY_BUFFER,
     GL_CW,
