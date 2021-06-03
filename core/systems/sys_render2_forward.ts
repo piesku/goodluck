@@ -10,7 +10,7 @@ import {
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
 import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
-import {CameraDisplay, CameraEye, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
+import {CameraEye, CameraForward, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
 import {
     Render,
     RenderColoredShaded,
@@ -34,8 +34,8 @@ export function sys_render_forward(game: Game2, delta: number) {
     for (let camera_entity of game.Cameras) {
         let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
-            case CameraKind.Display:
-                render_display(game, camera);
+            case CameraKind.Forward:
+                render_forward(game, camera);
                 break;
             case CameraKind.Framebuffer:
                 render_framebuffer(game, camera);
@@ -44,7 +44,7 @@ export function sys_render_forward(game: Game2, delta: number) {
     }
 }
 
-function render_display(game: Game2, camera: CameraDisplay) {
+function render_forward(game: Game2, camera: CameraForward) {
     game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
     game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
     game.Gl.clearColor(...camera.ClearColor);

@@ -1,6 +1,6 @@
 import {copy, create, get_translation, invert, multiply} from "../../common/mat4.js";
 import {ProjectionKind, resize_perspective} from "../../common/projection.js";
-import {CameraDisplay, CameraKind, CameraXr, XrEye} from "../components/com_camera.js";
+import {CameraForward, CameraKind, CameraXr, XrEye} from "../components/com_camera.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -19,8 +19,8 @@ export function sys_camera(game: Game, delta: number) {
                 return;
             }
 
-            if (camera.Kind === CameraKind.Display && !game.XrFrame) {
-                update_display(game, i, camera);
+            if (camera.Kind === CameraKind.Forward && !game.XrFrame) {
+                update_forward(game, i, camera);
 
                 // Support only one camera per scene.
                 return;
@@ -29,7 +29,7 @@ export function sys_camera(game: Game, delta: number) {
     }
 }
 
-function update_display(game: Game, entity: Entity, camera: CameraDisplay) {
+function update_forward(game: Game, entity: Entity, camera: CameraForward) {
     game.Camera = entity;
 
     if (game.ViewportResized) {

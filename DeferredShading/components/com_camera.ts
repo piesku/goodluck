@@ -5,10 +5,10 @@ import {Projection, ProjectionKind} from "../../common/projection.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
-export type Camera = CameraDisplay | CameraDeferred | CameraFramebuffer | CameraDepth;
+export type Camera = CameraForward | CameraDeferred | CameraFramebuffer | CameraDepth;
 
 export const enum CameraKind {
-    Display,
+    Forward,
     Deferred,
     Framebuffer,
     Depth,
@@ -21,8 +21,8 @@ export interface CameraEye {
     Position: Vec3;
 }
 
-export interface CameraDisplay extends CameraEye {
-    Kind: CameraKind.Display;
+export interface CameraForward extends CameraEye {
+    Kind: CameraKind.Forward;
     Projection: Projection;
     ClearColor: Vec4;
 }

@@ -32,7 +32,7 @@ However, we do distinguish between _generations_ of Goodluck. The core API chang
         Children: [
             {
                 Rotation: [0, 1, 0, 0],
-                Using: [camera_display_perspective(1, 0.1, 1000)],
+                Using: [camera_forward_perspective(1, 0.1, 1000)],
             },
         ],
     });
@@ -42,7 +42,7 @@ However, we do distinguish between _generations_ of Goodluck. The core API chang
         transform([0, 1, 5], [0, 1, 0, 0]),
         children([
             transform(undefined, [0, 1, 0, 0]),
-            camera_display_perspective(1, 0.1, 1000)
+            camera_forward_perspective(1, 0.1, 1000)
         ]),
     ]);
     ```

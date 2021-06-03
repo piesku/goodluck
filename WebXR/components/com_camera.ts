@@ -4,9 +4,9 @@ import {Projection, ProjectionKind} from "../../common/projection.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
-export type Camera = CameraDisplay | CameraXr;
+export type Camera = CameraForward | CameraXr;
 export const enum CameraKind {
-    Display,
+    Forward,
     Xr,
 }
 
@@ -16,16 +16,16 @@ export interface CameraEye {
     Position: Vec3;
 }
 
-export interface CameraDisplay extends CameraEye {
-    Kind: CameraKind.Display;
+export interface CameraForward extends CameraEye {
+    Kind: CameraKind.Forward;
     Projection: Projection;
 }
 
-export function camera_display_perspective(fovy: number, near: number, far: number) {
+export function camera_forward_perspective(fovy: number, near: number, far: number) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;
         game.World.Camera[entity] = {
-            Kind: CameraKind.Display,
+            Kind: CameraKind.Forward,
             Projection: {
                 Kind: ProjectionKind.Perspective,
                 FovY: fovy,

@@ -9,10 +9,10 @@ interface Game1 extends Game {
     Gl: WebGLRenderingContext;
 }
 
-export type Camera = CameraDisplay | CameraDeferred | CameraFramebuffer | CameraDepth;
+export type Camera = CameraForward | CameraDeferred | CameraFramebuffer | CameraDepth;
 
 export const enum CameraKind {
-    Display,
+    Forward,
     Deferred,
     Framebuffer,
     Depth,
@@ -25,13 +25,13 @@ export interface CameraEye {
     Position: Vec3;
 }
 
-export interface CameraDisplay extends CameraEye {
-    Kind: CameraKind.Display;
+export interface CameraForward extends CameraEye {
+    Kind: CameraKind.Forward;
     Projection: Projection;
     ClearColor: Vec4;
 }
 
-export function camera_display_perspective(
+export function camera_forward_perspective(
     fovy: number,
     near: number,
     far: number,
@@ -40,7 +40,7 @@ export function camera_display_perspective(
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;
         game.World.Camera[entity] = {
-            Kind: CameraKind.Display,
+            Kind: CameraKind.Forward,
             Projection: {
                 Kind: ProjectionKind.Perspective,
                 FovY: fovy,
