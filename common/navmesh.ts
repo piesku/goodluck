@@ -34,11 +34,14 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
         Centroids: [],
     };
 
+    let face: Vec3 = [0, 0, 0];
+    let norm: Vec3 = [0, 0, 0];
+
     // Prepare data for graph building.
     for (let f = 0; f < face_count; f++) {
-        let face = face_vertices(mesh, f);
+        face_vertices(face, mesh, f);
 
-        let norm = face_normal(mesh, face);
+        face_normal(norm, mesh, face);
         if (Math.acos(dot(norm, UP)) > max_slope) {
             // Skip this face, it's not horizontal enough.
             continue;
@@ -47,7 +50,7 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
         // Initialize an empty adjacency list for the face.
         navmesh.Graph[f] = [];
         // Compute the centroid of the face from its vertices.
-        navmesh.Centroids[f] = face_centroid(mesh, face);
+        navmesh.Centroids[f] = face_centroid([0, 0, 0], mesh, face);
 
         // Record the face as containing each of its vertices. This is used to
         // find the neighbors of a face given its vertices.
@@ -61,17 +64,17 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
     }
 
     // Build the graph.
-    for (let face = 0; face < face_count; face++) {
-        if (navmesh.Graph[face] === undefined) {
+    for (let f = 0; f < face_count; f++) {
+        if (navmesh.Graph[f] === undefined) {
             // It's a skipped face, too sloped.
             continue;
         }
 
-        let [v1, v2, v3] = face_vertices(mesh, face);
+        face_vertices(face, mesh, f);
         let edges = [
-            [v1, v2],
-            [v2, v3],
-            [v3, v1],
+            [face[0], face[1]],
+            [face[1], face[2]],
+            [face[2], face[0]],
         ];
 
         for (let [a, b] of edges) {
@@ -79,12 +82,12 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
             // other faces containing the first vertex of the edge also contains
             // the second one. If so, the faces are adjacent.
             for (let other of faces_containing_vertex[a]) {
-                let [o1, o2, o3] = face_vertices(mesh, other);
-                if (other !== face && (o1 === b || o2 === b || o3 === b)) {
+                face_vertices(face, mesh, other);
+                if (other !== f && (face[0] === b || face[1] === b || face[2] === b)) {
                     // Add `other` to the `face`'s adjacency list.
-                    navmesh.Graph[face].push([
+                    navmesh.Graph[f].push([
                         other,
-                        distance_squared(navmesh.Centroids[face], navmesh.Centroids[other]),
+                        distance_squared(navmesh.Centroids[f], navmesh.Centroids[other]),
                     ]);
                     break;
                 }

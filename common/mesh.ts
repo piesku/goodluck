@@ -15,37 +15,38 @@ export interface Mesh {
 }
 
 /** Face vertex indices by face index. */
-export function face_vertices(mesh: Mesh, index: number): Vec3 {
-    return [
-        mesh.IndexArray[index * 3 + 0],
-        mesh.IndexArray[index * 3 + 1],
-        mesh.IndexArray[index * 3 + 2],
-    ];
+export function face_vertices(out: Vec3, mesh: Mesh, index: number): Vec3 {
+    out[0] = mesh.IndexArray[index * 3 + 0];
+    out[1] = mesh.IndexArray[index * 3 + 1];
+    out[2] = mesh.IndexArray[index * 3 + 2];
+    return out;
 }
 
 /** Centroid of the face given by a Vec3 of vertex indices. */
-export function face_centroid(mesh: Mesh, face: Vec3): Vec3 {
-    return [
+export function face_centroid(out: Vec3, mesh: Mesh, face: Vec3): Vec3 {
+    out[0] =
         (mesh.VertexArray[face[0] * 3 + 0] +
             mesh.VertexArray[face[1] * 3 + 0] +
             mesh.VertexArray[face[2] * 3 + 0]) /
-            3,
+        3;
+    out[1] =
         (mesh.VertexArray[face[0] * 3 + 1] +
             mesh.VertexArray[face[1] * 3 + 1] +
             mesh.VertexArray[face[2] * 3 + 1]) /
-            3,
+        3;
+    out[2] =
         (mesh.VertexArray[face[0] * 3 + 2] +
             mesh.VertexArray[face[1] * 3 + 2] +
             mesh.VertexArray[face[2] * 3 + 2]) /
-            3,
-    ];
+        3;
+    return out;
 }
 
 const edge1: Vec3 = [0, 0, 0];
 const edge2: Vec3 = [0, 0, 0];
 
 /** Cross product of two face edges: bc×ab. */
-export function face_cross(mesh: Mesh, face: Vec3): Vec3 {
+export function face_cross(out: Vec3, mesh: Mesh, face: Vec3): Vec3 {
     subtract(
         edge1,
         [
@@ -74,33 +75,38 @@ export function face_cross(mesh: Mesh, face: Vec3): Vec3 {
         ]
     );
 
-    return cross([0, 0, 0], edge2, edge1);
+    return cross(out, edge2, edge1);
 }
 
 /** Normal of the face given by a Vec3 of vertex indices. */
-export function face_normal(mesh: Mesh, face: Vec3): Vec3 {
-    let product = face_cross(mesh, face);
-    return normalize(product, product);
+export function face_normal(out: Vec3, mesh: Mesh, face: Vec3): Vec3 {
+    face_cross(out, mesh, face);
+    return normalize(out, out);
 }
+
+const temp: Vec3 = [0, 0, 0];
 
 /** Area of the face given by a Vec3 of vertex indices. */
 export function face_area(mesh: Mesh, face: Vec3): number {
-    let product = face_cross(mesh, face);
-    return length(product) / 2;
+    face_cross(temp, mesh, face);
+    return length(temp) / 2;
 }
 
 export function random_point_facing_up(mesh: Mesh, min_area = 3): Vec3 | null {
     let up_face_indices: Array<number> = [];
 
     let face_count = mesh.IndexCount / 3;
+    let face: Vec3 = [0, 0, 0];
+    let norm: Vec3 = [0, 0, 0];
+
     for (let f = 0; f < face_count; f++) {
-        let face = face_vertices(mesh, f);
+        face_vertices(face, mesh, f);
         let area = face_area(mesh, face);
 
         if (area > min_area) {
             // This computes the cross product again; optimize?
-            let n = face_normal(mesh, face);
-            if (n[1] === 1) {
+            face_normal(norm, mesh, face);
+            if (norm[1] === 1) {
                 let times = area - min_area + 1;
                 for (let i = 0; i < times; i++) {
                     up_face_indices.push(f);
@@ -115,22 +121,22 @@ export function random_point_facing_up(mesh: Mesh, min_area = 3): Vec3 | null {
     }
 
     let f = element(up_face_indices);
-    let [v0, v1, v2] = face_vertices(mesh, f);
+    face_vertices(face, mesh, f);
 
     let p0: Vec3 = [
-        mesh.VertexArray[v0 * 3 + 0],
-        mesh.VertexArray[v0 * 3 + 1],
-        mesh.VertexArray[v0 * 3 + 2],
+        mesh.VertexArray[face[0] * 3 + 0],
+        mesh.VertexArray[face[0] * 3 + 1],
+        mesh.VertexArray[face[0] * 3 + 2],
     ];
     let p1: Vec3 = [
-        mesh.VertexArray[v1 * 3 + 0],
-        mesh.VertexArray[v1 * 3 + 1],
-        mesh.VertexArray[v1 * 3 + 2],
+        mesh.VertexArray[face[1] * 3 + 0],
+        mesh.VertexArray[face[1] * 3 + 1],
+        mesh.VertexArray[face[1] * 3 + 2],
     ];
     let p2: Vec3 = [
-        mesh.VertexArray[v2 * 3 + 0],
-        mesh.VertexArray[v2 * 3 + 1],
-        mesh.VertexArray[v2 * 3 + 2],
+        mesh.VertexArray[face[2] * 3 + 0],
+        mesh.VertexArray[face[2] * 3 + 1],
+        mesh.VertexArray[face[2] * 3 + 2],
     ];
 
     // Random barycentric coords.
