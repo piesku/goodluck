@@ -1,3 +1,4 @@
+import {blueprint_box} from "../blueprints/blu_box.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {blueprint_hand} from "../blueprints/blu_hand.js";
 import {children} from "../components/com_children.js";
@@ -43,7 +44,7 @@ export function scene_stage(game: Game) {
     // Box spawner.
     instantiate(game, [
         transform([0, 5, 0]),
-        children([transform(), shake(Infinity), control_spawn(2)]),
+        children([transform(), shake(Infinity), control_spawn(blueprint_box, 2)]),
     ]);
 
     // Rotating hand.
