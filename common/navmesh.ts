@@ -1,6 +1,6 @@
 import {Vec3} from "./math.js";
-import {Mesh} from "./mesh.js";
-import {cross, distance_squared, dot, normalize, subtract} from "./vec3.js";
+import {face_centroid, face_normal, Mesh} from "./mesh.js";
+import {distance_squared, dot} from "./vec3.js";
 
 export interface NavMesh {
     Graph: Array<Array<[number, number]>>;
@@ -40,7 +40,7 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
         let v2 = mesh.IndexArray[face * 3 + 1];
         let v3 = mesh.IndexArray[face * 3 + 2];
 
-        let norm = normal(mesh.VertexArray, v1, v2, v3);
+        let norm = face_normal(mesh.VertexArray, v1, v2, v3);
         if (Math.acos(dot(norm, UP)) > max_slope) {
             // Skip this face, it's not horizontal enough.
             continue;
@@ -49,7 +49,7 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
         // Initialize an empty adjacency list for the face.
         navmesh.Graph[face] = [];
         // Compute the centroid of the face from its vertices.
-        navmesh.Centroids[face] = centroid(mesh.VertexArray, v1, v2, v3);
+        navmesh.Centroids[face] = face_centroid(mesh.VertexArray, v1, v2, v3);
 
         // Record the face as containing each of its vertices. This is used to
         // find the neighbors of a face given its vertices.
@@ -100,32 +100,4 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
     }
 
     return navmesh;
-}
-
-function centroid(vertices: Float32Array, a: number, b: number, c: number): Vec3 {
-    return [
-        (vertices[a * 3 + 0] + vertices[b * 3 + 0] + vertices[c * 3 + 0]) / 3,
-        (vertices[a * 3 + 1] + vertices[b * 3 + 1] + vertices[c * 3 + 1]) / 3,
-        (vertices[a * 3 + 2] + vertices[b * 3 + 2] + vertices[c * 3 + 2]) / 3,
-    ];
-}
-
-let edge1: Vec3 = [0, 0, 0];
-let edge2: Vec3 = [0, 0, 0];
-
-function normal(vertices: Float32Array, a: number, b: number, c: number): Vec3 {
-    subtract(
-        edge1,
-        [vertices[b * 3 + 0], vertices[b * 3 + 1], vertices[b * 3 + 2]],
-        [vertices[a * 3 + 0], vertices[a * 3 + 1], vertices[a * 3 + 2]]
-    );
-
-    subtract(
-        edge2,
-        [vertices[c * 3 + 0], vertices[c * 3 + 1], vertices[c * 3 + 2]],
-        [vertices[b * 3 + 0], vertices[b * 3 + 1], vertices[b * 3 + 2]]
-    );
-
-    let product = cross([0, 0, 0], edge2, edge1);
-    return normalize(product, product);
 }
