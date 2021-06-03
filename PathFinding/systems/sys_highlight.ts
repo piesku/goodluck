@@ -1,5 +1,6 @@
 import {Vec4} from "../../common/math.js";
 import {copy, scale} from "../../common/vec4.js";
+import {DrawKind} from "../components/com_draw.js";
 import {PickableAABB, PickableKind} from "../components/com_pickable.js";
 import {RenderKind} from "../components/com_render1.js";
 import {Entity, Game} from "../game.js";
@@ -26,6 +27,10 @@ function update_aabb(game: Game, entity: Entity, pickable: PickableAABB) {
     let children = game.World.Children[entity];
 
     let box_entity = children.Children[0];
+    let box_draw = game.World.Draw[box_entity];
+    if (box_draw.Kind !== DrawKind.Selection) {
+        throw new Error("(sys_highlight) DrawKind not supported.");
+    }
 
     let mesh_entity = children.Children[1];
     let mesh_render = game.World.Render[mesh_entity];
@@ -54,6 +59,7 @@ function update_aabb(game: Game, entity: Entity, pickable: PickableAABB) {
 
     if (selectable.Selected) {
         game.World.Signature[box_entity] |= Has.Draw;
+        box_draw.Size = 30 / game.CameraZoom;
     } else {
         game.World.Signature[box_entity] &= ~Has.Draw;
     }

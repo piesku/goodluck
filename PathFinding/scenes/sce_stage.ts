@@ -86,7 +86,7 @@ export function scene_stage(game: Game) {
         nav_agent(nav, 89),
         move(15, 10),
         children(
-            [transform(), draw_selection("#ff0"), disable(Has.Draw)],
+            [transform([0, 1, 0]), draw_selection("#ff0"), disable(Has.Draw)],
             [
                 transform([0, 1, 0], undefined, [2, 2, 2]),
                 render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [0, 1, 0, 1]),
