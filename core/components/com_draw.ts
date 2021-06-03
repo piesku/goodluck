@@ -50,6 +50,7 @@ export function draw_rect(Width: number, Height: number, Color: string) {
 export interface DrawSelection {
     Kind: DrawKind.Selection;
     Color: string;
+    Size: number;
 }
 
 export function draw_selection(color: string) {
@@ -58,6 +59,8 @@ export function draw_selection(color: string) {
         game.World.Draw[entity] = {
             Kind: DrawKind.Selection,
             Color: color,
+            // Set in sys_highlight.
+            Size: 0,
         };
     };
 }

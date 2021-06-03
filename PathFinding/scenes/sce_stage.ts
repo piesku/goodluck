@@ -1,4 +1,3 @@
-import {from_euler} from "../../common/quat.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {children} from "../components/com_children.js";
 import {collide} from "../components/com_collide.js";
@@ -8,7 +7,7 @@ import {draw_selection, draw_text} from "../components/com_draw.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {nav_agent} from "../components/com_nav_agent.js";
-import {pickable} from "../components/com_pickable.js";
+import {pickable_aabb, pickable_mesh} from "../components/com_pickable.js";
 import {render_colored_shaded, render_colored_unlit} from "../components/com_render1.js";
 import {selectable} from "../components/com_selectable.js";
 import {transform} from "../components/com_transform.js";
@@ -23,10 +22,7 @@ export function scene_stage(game: Game) {
     game.Gl.clearColor(0.9, 0.9, 0.9, 1);
 
     // Camera.
-    instantiate(game, [
-        ...blueprint_camera(game),
-        transform([0, 75, 55], from_euler([0, 0, 0, 0], 60, 180, 0)),
-    ]);
+    instantiate(game, [...blueprint_camera(game), transform([0, 0, 15], [0, 1, 0, 0])]);
 
     // Directional light.
     instantiate(game, [transform([-1, 1, 1]), light_directional([1, 1, 1], 1.2)]);
@@ -36,7 +32,7 @@ export function scene_stage(game: Game) {
     instantiate(game, [
         transform(),
         render_colored_shaded(game.MaterialColoredGouraud, game.MeshTerrain, [0.3, 0.3, 0.8, 1]),
-        pickable(game.MeshTerrain),
+        pickable_mesh(game.MeshTerrain),
         collide(false, Layer.None, Layer.None, [100, 1, 100]),
         children([
             transform([0, 0.1, 0]),
@@ -60,10 +56,10 @@ export function scene_stage(game: Game) {
 
     // Cube 1.
     instantiate(game, [
-        transform([26, 1, 39]),
+        transform([26, 0, 39]),
         control_player(),
         disable(Has.ControlPlayer),
-        pickable(),
+        pickable_aabb([1, 0, 0, 1]),
         selectable(),
         collide(true, Layer.None, Layer.None, [2, 2, 2]),
         // The origin node must match the entity's translation.
@@ -72,7 +68,7 @@ export function scene_stage(game: Game) {
         children(
             [transform(), draw_selection("#ff0"), disable(Has.Draw)],
             [
-                transform(undefined, undefined, [2, 2, 2]),
+                transform([0, 1, 0], undefined, [2, 2, 2]),
                 render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [1, 0, 0, 1]),
             ]
         ),
@@ -80,19 +76,19 @@ export function scene_stage(game: Game) {
 
     // Cube 2.
     instantiate(game, [
-        transform([-18, 1, -23]),
+        transform([-18, 0, -23]),
         control_player(),
         disable(Has.ControlPlayer),
-        pickable(),
+        pickable_aabb([0, 1, 0, 1]),
         selectable(),
         collide(true, Layer.None, Layer.None, [2, 2, 2]),
         // The origin node must match the entity's translation.
         nav_agent(nav, 89),
         move(15, 10),
         children(
-            [transform(), draw_selection("#ff0"), disable(Has.Draw)],
+            [transform([0, 1, 0]), draw_selection("#ff0"), disable(Has.Draw)],
             [
-                transform(undefined, undefined, [2, 2, 2]),
+                transform([0, 1, 0], undefined, [2, 2, 2]),
                 render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [0, 1, 0, 1]),
             ]
         ),

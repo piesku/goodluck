@@ -4,7 +4,7 @@ import {disable} from "../components/com_disable.js";
 import {RenderVertices, render_vertices} from "../components/com_render1.js";
 import {transform} from "../components/com_transform.js";
 import {Entity, Game} from "../game.js";
-import {instantiate} from "../impl.js";
+import {input_clicked, instantiate} from "../impl.js";
 import {path_find} from "../pathfind.js";
 import {Has} from "../world.js";
 import {Picked} from "./sys_pick.js";
@@ -22,10 +22,10 @@ export function sys_control_player(game: Game, delta: number) {
         ]);
     }
 
-    if (game.Pick) {
+    if (game.Picked) {
         for (let i = 0; i < game.World.Signature.length; i++) {
             if ((game.World.Signature[i] & QUERY) == QUERY) {
-                update(game, i, game.Pick);
+                update(game, i, game.Picked);
             }
         }
     }
@@ -39,7 +39,7 @@ function update(game: Game, entity: Entity, pick: Picked) {
     if (node !== undefined && agent.NavMesh.Graph[node]) {
         // The cursor is over a pickable mesh and over a navigable triangle?
         goal = node;
-        if (game.InputDelta["Mouse2"] === 1) {
+        if (input_clicked(game, 0, 0)) {
             agent.Goal = {Node: goal, Position: pick.Point};
         }
     }
