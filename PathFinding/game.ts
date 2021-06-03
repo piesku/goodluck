@@ -3,7 +3,7 @@ import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_go
 import {mat1_forward_colored_line} from "../materials/mat1_forward_colored_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_terrain} from "../meshes/terrain.js";
-import {loop_start, loop_stop} from "./impl.js";
+import {frame_reset, frame_setup, input_init, loop_init} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
@@ -28,14 +28,10 @@ export class Game {
     ViewportHeight = window.innerHeight;
     ViewportResized = true;
 
-    InputState: Record<string, number> = {
-        MouseX: 0,
-        MouseY: 0,
-    };
-    InputDelta: Record<string, number> = {
-        MouseX: 0,
-        MouseY: 0,
-    };
+    InputState: Record<string, number> = {};
+    InputDelta: Record<string, number> = {};
+    InputDistance: Record<string, number> = {};
+    InputTouches: Record<string, number> = {};
 
     Ui = document.querySelector("main")!;
     Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
@@ -58,39 +54,17 @@ export class Game {
     Pick?: Picked;
 
     constructor() {
-        document.addEventListener("visibilitychange", () =>
-            document.hidden ? loop_stop() : loop_start(this)
-        );
-
-        this.Ui.addEventListener("contextmenu", (evt) => evt.preventDefault());
-        this.Ui.addEventListener("mousedown", (evt) => {
-            this.InputState[`Mouse${evt.button}`] = 1;
-            this.InputDelta[`Mouse${evt.button}`] = 1;
-        });
-        this.Ui.addEventListener("mouseup", (evt) => {
-            this.InputState[`Mouse${evt.button}`] = 0;
-            this.InputDelta[`Mouse${evt.button}`] = -1;
-        });
-        this.Ui.addEventListener("mousemove", (evt) => {
-            this.InputState.MouseX = evt.offsetX;
-            this.InputState.MouseY = evt.offsetY;
-            this.InputDelta.MouseX = evt.movementX;
-            this.InputDelta.MouseY = evt.movementY;
-        });
+        loop_init(this);
+        input_init(this);
 
         this.Gl.enable(GL_DEPTH_TEST);
         this.Gl.enable(GL_CULL_FACE);
     }
 
-    FrameReset() {
-        this.ViewportResized = false;
-        for (let name in this.InputDelta) {
-            this.InputDelta[name] = 0;
-        }
-    }
-
     FrameUpdate(delta: number) {
+        frame_setup(this);
         let now = performance.now();
+
         sys_control_player(this, delta);
         sys_nav(this, delta);
         sys_move(this, delta);
@@ -103,7 +77,9 @@ export class Game {
         sys_light(this, delta);
         sys_render_forward(this, delta);
         sys_draw(this, delta);
+
         sys_framerate(this, delta, performance.now() - now);
+        frame_reset(this);
     }
 }
 

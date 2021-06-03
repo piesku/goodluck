@@ -1,7 +1,7 @@
 import {create_depth_target, DepthTarget} from "../common/framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
-import {loop_start, loop_stop} from "./impl.js";
+import {frame_reset, frame_setup, loop_init} from "./impl.js";
 import {mat1_forward_colored_shadows} from "./materials/mat1_forward_colored_shadows.js";
 import {mat1_forward_depth} from "./materials/mat1_forward_depth.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -24,6 +24,11 @@ export class Game {
     ViewportHeight = window.innerHeight;
     ViewportResized = true;
 
+    InputState: Record<string, number> = {};
+    InputDelta: Record<string, number> = {};
+    InputDistance: Record<string, number> = {};
+    InputTouches: Record<string, number> = {};
+
     Ui = document.querySelector("main")!;
     Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
     Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
@@ -45,9 +50,7 @@ export class Game {
     };
 
     constructor() {
-        document.addEventListener("visibilitychange", () =>
-            document.hidden ? loop_stop() : loop_start(this)
-        );
+        loop_init(this);
 
         this.Gl.getExtension("WEBGL_depth_texture");
         this.Targets = {
@@ -58,12 +61,10 @@ export class Game {
         this.Gl.enable(GL_CULL_FACE);
     }
 
-    FrameReset() {
-        this.ViewportResized = false;
-    }
-
     FrameUpdate(delta: number) {
+        frame_setup(this);
         let now = performance.now();
+
         sys_control_always(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
@@ -72,6 +73,8 @@ export class Game {
         sys_light(this, delta);
         sys_render_depth(this, delta);
         sys_render_forward(this, delta);
+
         sys_framerate(this, delta, performance.now() - now);
+        frame_reset(this);
     }
 }

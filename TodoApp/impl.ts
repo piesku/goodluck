@@ -1,5 +1,11 @@
 import {Game} from "./game.js";
 
+export function loop_init(game: Game) {
+    document.addEventListener("visibilitychange", () =>
+        document.hidden ? loop_stop() : loop_start(game)
+    );
+}
+
 let raf = 0;
 
 export function loop_start(game: Game) {
@@ -8,7 +14,6 @@ export function loop_start(game: Game) {
     let tick = (now: number) => {
         let delta = (now - last) / 1000;
         game.FrameUpdate(delta);
-        game.FrameReset();
         last = now;
         raf = requestAnimationFrame(tick);
     };
