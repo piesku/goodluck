@@ -72,7 +72,7 @@ export class Game {
         this.Targets = {
             // Create the main framebuffer for deferred rendering.
             Gbuffer: create_deferred_target(this.Gl, this.ViewportWidth, this.ViewportHeight),
-            Sun: create_depth2_target(this.Gl, 2048, 2048),
+            Sun: create_depth2_target(this.Gl, 1024, 1024),
         };
 
         this.Gl.enable(GL_DEPTH_TEST);

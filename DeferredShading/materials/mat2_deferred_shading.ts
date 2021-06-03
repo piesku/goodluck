@@ -18,6 +18,7 @@ let vertex = `#version 300 es\n
 
 let fragment = `#version 300 es\n
     precision mediump float;
+    precision lowp sampler2DShadow;
 
     const int MAX_LIGHTS = 8;
 
@@ -30,30 +31,22 @@ let fragment = `#version 300 es\n
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
     uniform mat4 shadow_space;
-    uniform sampler2D shadow_map;
+    uniform sampler2DShadow shadow_map;
 
     in vec2 vert_texcoord;
 
     out vec4 frag_color;
 
-    float shadow_factor(vec4 world_pos) {
+    float shadow_factor(vec4 world_pos, float max) {
         vec4 shadow_space_pos = shadow_space * world_pos;
         vec3 shadow_space_ndc = shadow_space_pos.xyz / shadow_space_pos.w;
         // Transform the [-1, 1] NDC to [0, 1] to match the shadow texture data.
         shadow_space_ndc = shadow_space_ndc * 0.5 + 0.5;
 
-        float shadow_bias = 0.001;
-        float shadow_acc = 0.0;
-        float texel_size = 1.0 / 2048.0;
+        // Add shadow bias to avoid shadow acne.
+        shadow_space_ndc.z -= 0.001;
 
-        // Sample 9 surrounding texels to anti-alias the shadow a bit.
-        for (int u = -1; u <= 1; u++) {
-            for (int v = -1; v <= 1; v++) {
-                float shadow_map_depth = texture(shadow_map, shadow_space_ndc.xy + vec2(u, v) * texel_size).x;
-                shadow_acc += shadow_space_ndc.z - shadow_bias > shadow_map_depth ? 0.5 : 0.0;
-            }
-        }
-        return shadow_acc / 9.0;
+        return texture(shadow_map, shadow_space_ndc) * (1.0 - max) + max;
     }
 
     void main() {
@@ -113,7 +106,7 @@ let fragment = `#version 300 es\n
             }
         }
 
-        vec3 shaded_rgb = light_acc * (1.0 - shadow_factor(current_position));
+        vec3 shaded_rgb = light_acc * shadow_factor(current_position, 0.5);
         frag_color = vec4(shaded_rgb, 1.0);
     }
 `;
