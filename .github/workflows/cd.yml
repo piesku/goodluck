@@ -1,7 +1,10 @@
-name: CI
-on: pull_request
+name: CD
+on:
+    push:
+        branches:
+            - master
 jobs:
-    build:
+    build-and-deploy:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout 🛎️
@@ -15,4 +18,9 @@ jobs:
             - name: Lint 🧽
               run: npm run lint
             - name: Build 🛠️
-              run: npm run compile
+              run: make -C play
+            - name: Deploy 🚀
+              uses: JamesIves/github-pages-deploy-action@4.1.1
+              with:
+                  branch: gh-pages
+                  folder: play
