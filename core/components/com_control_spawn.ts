@@ -1,0 +1,30 @@
+import {Entity, Game} from "../game.js";
+import {Blueprint} from "../impl.js";
+import {Has} from "../world.js";
+
+interface Creator {
+    (game: Game): Blueprint;
+}
+
+export interface ControlSpawn {
+    Creator: Creator;
+    Frequency: number;
+    SinceLast: number;
+}
+
+/**
+ * Spawn blueprints at random intervals with the average interval of `frequency`.
+ *
+ * @param creator The function returning the blueprint to spawn.
+ * @param frequency The average frequency of spawning.
+ */
+export function control_spawn(creator: Creator, frequency: number) {
+    return (game: Game, entity: Entity) => {
+        game.World.Signature[entity] |= Has.ControlSpawn;
+        game.World.ControlSpawn[entity] = {
+            Creator: creator,
+            Frequency: frequency,
+            SinceLast: frequency,
+        };
+    };
+}
