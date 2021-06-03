@@ -6,7 +6,7 @@ import {
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
-import {CameraEye, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
+import {CameraDeferred, CameraEye, CameraKind} from "../components/com_camera.js";
 import {RenderColoredDeferred, RenderKind} from "../components/com_render.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
@@ -18,14 +18,14 @@ export function sys_render_deferred(game: Game, delta: number) {
     for (let camera_entity of game.Cameras) {
         let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
-            case CameraKind.Framebuffer:
-                render_framebuffer(game, camera);
+            case CameraKind.Deferred:
+                render_deferred(game, camera);
                 break;
         }
     }
 }
 
-function render_framebuffer(game: Game, camera: CameraFramebuffer) {
+function render_deferred(game: Game, camera: CameraDeferred) {
     game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target.Framebuffer);
     game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
     game.Gl.clearColor(...camera.ClearColor);
