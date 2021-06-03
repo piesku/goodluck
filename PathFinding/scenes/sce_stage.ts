@@ -56,7 +56,7 @@ export function scene_stage(game: Game) {
 
     // Cube 1.
     instantiate(game, [
-        transform([26, 1, 39]),
+        transform([26, 0, 39]),
         control_player(),
         disable(Has.ControlPlayer),
         pickable_aabb([1, 0, 0, 1]),
@@ -68,7 +68,7 @@ export function scene_stage(game: Game) {
         children(
             [transform(), draw_selection("#ff0"), disable(Has.Draw)],
             [
-                transform(undefined, undefined, [2, 2, 2]),
+                transform([0, 1, 0], undefined, [2, 2, 2]),
                 render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [1, 0, 0, 1]),
             ]
         ),
@@ -76,7 +76,7 @@ export function scene_stage(game: Game) {
 
     // Cube 2.
     instantiate(game, [
-        transform([-18, 1, -23]),
+        transform([-18, 0, -23]),
         control_player(),
         disable(Has.ControlPlayer),
         pickable_aabb([0, 1, 0, 1]),
@@ -88,7 +88,7 @@ export function scene_stage(game: Game) {
         children(
             [transform(), draw_selection("#ff0"), disable(Has.Draw)],
             [
-                transform(undefined, undefined, [2, 2, 2]),
+                transform([0, 1, 0], undefined, [2, 2, 2]),
                 render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [0, 1, 0, 1]),
             ]
         ),
