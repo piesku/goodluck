@@ -4,9 +4,9 @@ import {Has} from "../world.js";
 
 export interface Move {
     /** Movement speed, in units per second. */
-    readonly MoveSpeed: number;
+    MoveSpeed: number;
     /** Rotation speed, in radians per second. */
-    readonly RotationSpeed: number;
+    RotationSpeed: number;
     /** Movement directions in self space, normalized. */
     Directions: Array<Vec3>;
     /** Rotations applied in the local space (pre-multiplied). */
