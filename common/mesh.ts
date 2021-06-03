@@ -95,13 +95,13 @@ export function random_point_facing_up(mesh: Mesh, min_area = 3): Vec3 | null {
     let face_count = mesh.IndexCount / 3;
     for (let f = 0; f < face_count; f++) {
         let face = face_vertices(mesh, f);
-        let n = face_cross(mesh, face);
-        let face_area = length(n) * 0.5;
+        let area = face_area(mesh, face);
 
-        if (face_area > min_area) {
-            normalize(n, n);
+        if (area > min_area) {
+            // This computes the cross product again; optimize?
+            let n = face_normal(mesh, face);
             if (n[1] === 1) {
-                let times = face_area - min_area + 1;
+                let times = area - min_area + 1;
                 for (let i = 0; i < times; i++) {
                     up_face_indices.push(f);
                 }
