@@ -3,7 +3,6 @@ import {camera_display_perspective} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {control_camera} from "../components/com_control_camera.js";
 import {move} from "../components/com_move.js";
-import {pick} from "../components/com_pick.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Blueprint} from "../impl.js";
@@ -21,7 +20,6 @@ export function blueprint_camera(game: Game): Blueprint {
                 control_camera(0, 100, 0, 0),
                 move(200, 0),
                 camera_display_perspective(1, 1, 1000),
-                pick(),
             ]),
         ]),
     ];
