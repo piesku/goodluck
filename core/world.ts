@@ -13,6 +13,7 @@ import {Named} from "./components/com_named.js";
 import {RigidBody} from "./components/com_rigid_body.js";
 import {Shake} from "./components/com_shake.js";
 import {Task} from "./components/com_task.js";
+import {Toggle} from "./components/com_toggle.js";
 import {Transform} from "./components/com_transform.js";
 import {Transform2D} from "./components/com_transform2d.js";
 import {Trigger} from "./components/com_trigger.js";
@@ -36,6 +37,7 @@ const enum Component {
     RigidBody,
     Shake,
     Task,
+    Toggle,
     Transform,
     Transform2D,
     Trigger,
@@ -59,6 +61,7 @@ export const enum Has {
     RigidBody = 1 << Component.RigidBody,
     Shake = 1 << Component.Shake,
     Task = 1 << Component.Task,
+    Toggle = 1 << Component.Toggle,
     Transform = 1 << Component.Transform,
     Transform2D = 1 << Component.Transform2D,
     Trigger = 1 << Component.Trigger,
@@ -85,6 +88,7 @@ export interface World {
     RigidBody: Array<RigidBody>;
     Shake: Array<Shake>;
     Task: Array<Task>;
+    Toggle: Array<Toggle>;
     Transform: Array<Transform>;
     Transform2D: Array<Transform2D>;
     Trigger: Array<Trigger>;
