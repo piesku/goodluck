@@ -14,6 +14,15 @@ export interface Mesh {
     IndexCount: number;
 }
 
+/** Face vertex indices by face index. */
+export function face_vertices(mesh: Mesh, index: number): Vec3 {
+    return [
+        mesh.IndexArray[index * 3 + 0],
+        mesh.IndexArray[index * 3 + 1],
+        mesh.IndexArray[index * 3 + 2],
+    ];
+}
+
 /** Centroid of the face given by vertex indices a, b, and c. */
 export function face_centroid(vertices: Float32Array, a: number, b: number, c: number): Vec3 {
     return [
@@ -60,10 +69,7 @@ export function random_point_facing_up(mesh: Mesh, min_area = 3): Vec3 | null {
 
     let face_count = mesh.IndexCount / 3;
     for (let f = 0; f < face_count; f++) {
-        let v0 = mesh.IndexArray[f * 3 + 0];
-        let v1 = mesh.IndexArray[f * 3 + 1];
-        let v2 = mesh.IndexArray[f * 3 + 2];
-
+        let [v0, v1, v2] = face_vertices(mesh, f);
         let n = face_cross(mesh.VertexArray, v0, v1, v2);
         let face_area = length(n) * 0.5;
 
@@ -84,9 +90,7 @@ export function random_point_facing_up(mesh: Mesh, min_area = 3): Vec3 | null {
     }
 
     let f = element(up_face_indices);
-    let v0 = mesh.IndexArray[f * 3 + 0];
-    let v1 = mesh.IndexArray[f * 3 + 1];
-    let v2 = mesh.IndexArray[f * 3 + 2];
+    let [v0, v1, v2] = face_vertices(mesh, f);
 
     let p0: Vec3 = [
         mesh.VertexArray[v0 * 3 + 0],

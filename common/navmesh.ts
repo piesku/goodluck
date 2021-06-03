@@ -1,5 +1,5 @@
 import {Vec3} from "./math.js";
-import {face_centroid, face_normal, Mesh} from "./mesh.js";
+import {face_centroid, face_normal, face_vertices, Mesh} from "./mesh.js";
 import {distance_squared, dot} from "./vec3.js";
 
 export interface NavMesh {
@@ -36,9 +36,7 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
 
     // Prepare data for graph building.
     for (let face = 0; face < face_count; face++) {
-        let v1 = mesh.IndexArray[face * 3 + 0];
-        let v2 = mesh.IndexArray[face * 3 + 1];
-        let v3 = mesh.IndexArray[face * 3 + 2];
+        let [v1, v2, v3] = face_vertices(mesh, face);
 
         let norm = face_normal(mesh.VertexArray, v1, v2, v3);
         if (Math.acos(dot(norm, UP)) > max_slope) {
@@ -69,10 +67,7 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
             continue;
         }
 
-        let v1 = mesh.IndexArray[face * 3 + 0];
-        let v2 = mesh.IndexArray[face * 3 + 1];
-        let v3 = mesh.IndexArray[face * 3 + 2];
-
+        let [v1, v2, v3] = face_vertices(mesh, face);
         let edges = [
             [v1, v2],
             [v2, v3],
@@ -84,9 +79,7 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
             // other faces containing the first vertex of the edge also contains
             // the second one. If so, the faces are adjacent.
             for (let other of faces_containing_vertex[a]) {
-                let o1 = mesh.IndexArray[other * 3 + 0];
-                let o2 = mesh.IndexArray[other * 3 + 1];
-                let o3 = mesh.IndexArray[other * 3 + 2];
+                let [o1, o2, o3] = face_vertices(mesh, other);
                 if (other !== face && (o1 === b || o2 === b || o3 === b)) {
                     // Add `other` to the `face`'s adjacency list.
                     navmesh.Graph[face].push([
