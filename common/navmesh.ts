@@ -38,7 +38,7 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
     for (let face = 0; face < face_count; face++) {
         let [v1, v2, v3] = face_vertices(mesh, face);
 
-        let norm = face_normal(mesh.VertexArray, v1, v2, v3);
+        let norm = face_normal(mesh, v1, v2, v3);
         if (Math.acos(dot(norm, UP)) > max_slope) {
             // Skip this face, it's not horizontal enough.
             continue;
@@ -47,7 +47,7 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
         // Initialize an empty adjacency list for the face.
         navmesh.Graph[face] = [];
         // Compute the centroid of the face from its vertices.
-        navmesh.Centroids[face] = face_centroid(mesh.VertexArray, v1, v2, v3);
+        navmesh.Centroids[face] = face_centroid(mesh, v1, v2, v3);
 
         // Record the face as containing each of its vertices. This is used to
         // find the neighbors of a face given its vertices.
