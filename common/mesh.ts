@@ -1,5 +1,5 @@
 import {Vec3} from "./math.js";
-import {cross, normalize, subtract} from "./vec3.js";
+import {cross, length, normalize, subtract} from "./vec3.js";
 
 export interface Mesh {
     VertexBuffer: WebGLBuffer;
@@ -13,6 +13,7 @@ export interface Mesh {
     IndexCount: number;
 }
 
+/** Centroid of the face given by vertex indices a, b, and c. */
 export function face_centroid(vertices: Float32Array, a: number, b: number, c: number): Vec3 {
     return [
         (vertices[a * 3 + 0] + vertices[b * 3 + 0] + vertices[c * 3 + 0]) / 3,
@@ -24,7 +25,8 @@ export function face_centroid(vertices: Float32Array, a: number, b: number, c: n
 const edge1: Vec3 = [0, 0, 0];
 const edge2: Vec3 = [0, 0, 0];
 
-export function face_normal(vertices: Float32Array, a: number, b: number, c: number): Vec3 {
+/** Cross product of two face edges: bc×ab. */
+export function face_cross(vertices: Float32Array, a: number, b: number, c: number): Vec3 {
     subtract(
         edge1,
         [vertices[b * 3 + 0], vertices[b * 3 + 1], vertices[b * 3 + 2]],
@@ -37,6 +39,17 @@ export function face_normal(vertices: Float32Array, a: number, b: number, c: num
         [vertices[b * 3 + 0], vertices[b * 3 + 1], vertices[b * 3 + 2]]
     );
 
-    let product = cross([0, 0, 0], edge2, edge1);
+    return cross([0, 0, 0], edge2, edge1);
+}
+
+/** Normal of the face given by vertex indices a, b, and c. */
+export function face_normal(vertices: Float32Array, a: number, b: number, c: number): Vec3 {
+    let product = face_cross(vertices, a, b, c);
     return normalize(product, product);
+}
+
+/** Area of the face given by vertex indices a, b, and c. */
+export function face_area(vertices: Float32Array, a: number, b: number, c: number): number {
+    let product = face_cross(vertices, a, b, c);
+    return length(product) / 2;
 }
