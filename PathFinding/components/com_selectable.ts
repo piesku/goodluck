@@ -2,16 +2,20 @@ import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
 export interface Selectable {
-    Highlighted: boolean;
-    Selected: boolean;
+    Selected: SelectedState;
+}
+
+export const enum SelectedState {
+    None,
+    ThisFrame,
+    Currently,
 }
 
 export function selectable() {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Selectable;
         game.World.Selectable[entity] = {
-            Highlighted: false,
-            Selected: false,
+            Selected: SelectedState.None,
         };
     };
 }

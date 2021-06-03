@@ -9,6 +9,7 @@ import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
 import {sys_draw} from "./systems/sys_draw.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
+import {sys_highlight} from "./systems/sys_highlight.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_nav} from "./systems/sys_nav.js";
@@ -51,7 +52,8 @@ export class Game {
     LightDetails = new Float32Array(4 * 8);
     Cameras: Array<Entity> = [];
 
-    Pick?: Picked;
+    Picked?: Picked;
+    Selected?: Entity;
 
     constructor() {
         loop_init(this);
@@ -65,15 +67,21 @@ export class Game {
         frame_setup(this);
         let now = performance.now();
 
+        // Camera picking and player input.
+        sys_pick(this, delta);
         sys_control_player(this, delta);
+        sys_select(this, delta);
+        sys_highlight(this, delta);
+
+        // Game logic.
         sys_nav(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
         sys_collide(this, delta);
+
+        // Rendering.
         sys_resize(this, delta);
         sys_camera(this, delta);
-        sys_pick(this, delta);
-        sys_select(this, delta);
         sys_light(this, delta);
         sys_render_forward(this, delta);
         sys_draw(this, delta);

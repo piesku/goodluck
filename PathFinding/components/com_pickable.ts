@@ -1,16 +1,41 @@
 import {Mesh} from "../../common/material.js";
+import {Vec4} from "../../common/math.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
-export interface Pickable {
-    Mesh?: Mesh;
+export type Pickable = PickableMesh | PickableAABB;
+
+export const enum PickableKind {
+    Mesh,
+    AABB,
 }
 
-export function pickable(mesh?: Mesh) {
+export interface PickableMesh {
+    Kind: PickableKind.Mesh;
+    Mesh: Mesh;
+}
+
+export function pickable_mesh(mesh: Mesh) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Pickable;
         game.World.Pickable[entity] = {
+            Kind: PickableKind.Mesh,
             Mesh: mesh,
+        };
+    };
+}
+
+export interface PickableAABB {
+    Kind: PickableKind.AABB;
+    Color: Vec4;
+}
+
+export function pickable_aabb(color: Vec4) {
+    return (game: Game, entity: Entity) => {
+        game.World.Signature[entity] |= Has.Pickable;
+        game.World.Pickable[entity] = {
+            Kind: PickableKind.AABB,
+            Color: color,
         };
     };
 }
