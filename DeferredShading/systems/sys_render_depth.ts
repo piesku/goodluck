@@ -43,14 +43,14 @@ function render_depth(game: Game, camera: CameraDepth) {
             }
 
             game.Gl.uniformMatrix4fv(game.MaterialDepth.Locations.World, false, transform.World);
-            game.ExtVao.bindVertexArrayOES(render.Vao);
+            game.Gl.bindVertexArray(render.Vao);
             game.Gl.drawElements(
                 game.MaterialDepth.Mode,
                 render.Mesh.IndexCount,
                 GL_UNSIGNED_SHORT,
                 0
             );
-            game.ExtVao.bindVertexArrayOES(null);
+            game.Gl.bindVertexArray(null);
         }
     }
 }

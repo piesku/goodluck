@@ -199,13 +199,46 @@ export interface DepthTarget {
     ColorTexture: WebGLTexture;
 }
 
-export function create_depth_target(gl: WebGLRenderingContext, width: number, height: number) {
+export function create_depth1_target(gl: WebGLRenderingContext, width: number, height: number) {
     let target: DepthTarget = {
         Framebuffer: gl.createFramebuffer()!,
         Width: width,
         Height: height,
         ColorTexture: resize_texture_rgba(gl, gl.createTexture()!, width, height),
         DepthTexture: resize_texture_depth(gl, gl.createTexture()!, width, height),
+    };
+
+    gl.bindFramebuffer(GL_FRAMEBUFFER, target.Framebuffer);
+    gl.framebufferTexture2D(
+        GL_FRAMEBUFFER,
+        GL_DEPTH_ATTACHMENT,
+        GL_TEXTURE_2D,
+        target.DepthTexture,
+        0
+    );
+    gl.framebufferTexture2D(
+        GL_FRAMEBUFFER,
+        GL_COLOR_ATTACHMENT0,
+        GL_TEXTURE_2D,
+        target.ColorTexture,
+        0
+    );
+
+    let status = gl.checkFramebufferStatus(GL_FRAMEBUFFER);
+    if (status != GL_FRAMEBUFFER_COMPLETE) {
+        throw new Error(`Failed to set up the framebuffer (${status}).`);
+    }
+
+    return target;
+}
+
+export function create_depth2_target(gl: WebGL2RenderingContext, width: number, height: number) {
+    let target: DepthTarget = {
+        Framebuffer: gl.createFramebuffer()!,
+        Width: width,
+        Height: height,
+        ColorTexture: resize_texture_rgba8(gl, gl.createTexture()!, width, height),
+        DepthTexture: resize_texture_depth24(gl, gl.createTexture()!, width, height),
     };
 
     gl.bindFramebuffer(GL_FRAMEBUFFER, target.Framebuffer);

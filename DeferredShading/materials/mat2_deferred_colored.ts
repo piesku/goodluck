@@ -22,7 +22,6 @@ let vertex = `#version 300 es\n
 `;
 
 let fragment = `#version 300 es\n
-
     precision mediump float;
 
     uniform vec4 diffuse_color;
@@ -54,9 +53,11 @@ export function mat2_deferred_colored(gl: WebGLRenderingContext): Material<Color
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
             Self: gl.getUniformLocation(program, "self")!,
+
             DiffuseColor: gl.getUniformLocation(program, "diffuse_color")!,
             SpecularColor: gl.getUniformLocation(program, "specular_color")!,
             Shininess: gl.getUniformLocation(program, "shininess")!,
+
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
             VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
         },

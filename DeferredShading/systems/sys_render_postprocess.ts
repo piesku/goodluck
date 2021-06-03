@@ -11,6 +11,7 @@ import {
     GL_TEXTURE2,
     GL_TEXTURE3,
     GL_TEXTURE4,
+    GL_TEXTURE5,
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
@@ -53,6 +54,15 @@ export function sys_render_postprocess(game: Game, delta: number) {
     game.Gl.activeTexture(GL_TEXTURE4);
     game.Gl.bindTexture(GL_TEXTURE_2D, target.DepthTexture);
     game.Gl.uniform1i(material.Locations.DepthMap, 4);
+
+    game.Gl.activeTexture(GL_TEXTURE5);
+    game.Gl.bindTexture(GL_TEXTURE_2D, game.Targets.Sun.DepthTexture);
+    game.Gl.uniform1i(material.Locations.ShadowMap, 5);
+
+    // TODO How to parameterize this?
+    let light_entity = game.Cameras[1];
+    let light_camera = game.World.Camera[light_entity];
+    game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, light_camera.Pv);
 
     game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
     game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);

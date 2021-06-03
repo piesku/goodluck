@@ -1,9 +1,7 @@
 import {from_euler} from "../../common/quat.js";
 import {blueprint_camera_main} from "../blueprints/blu_camera_main.js";
 import {blueprint_sun} from "../blueprints/blu_sun.js";
-import {control_always} from "../components/com_control_always.js";
 import {light_point} from "../components/com_light.js";
-import {move} from "../components/com_move.js";
 import {render_colored_deferred} from "../components/com_render.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
@@ -37,15 +35,11 @@ export function scene_stage(game: Game) {
 
     instantiate(game, [
         transform([-1, 1, 0], undefined, [1, 1, 1]),
-        control_always(null, [0, 1, 0, 0]),
-        move(0, 0.5),
         render_colored_deferred(game.MaterialColored, game.MeshSphereSmooth, [1, 1, 1, 1], 64),
     ]);
 
     instantiate(game, [
         transform([1, 1, 0], undefined, [1, 1, 1]),
-        control_always(null, [0, 1, 0, 0]),
-        move(0, 0.5),
         render_colored_deferred(game.MaterialColored, game.MeshSphereSmooth, [1, 1, 1, 1], 512),
     ]);
 }
