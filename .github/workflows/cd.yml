@@ -1,8 +1,9 @@
 name: CD
 on:
     push:
+        # Add master after bootstrapping src/
         branches:
-            - master
+            - "!**"
 jobs:
     build-and-deploy:
         runs-on: ubuntu-latest
