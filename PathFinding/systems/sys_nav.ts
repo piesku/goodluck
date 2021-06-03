@@ -1,8 +1,8 @@
 import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
+import {path_find} from "../../common/pathfind.js";
 import {distance_squared, normalize, transform_point} from "../../common/vec3.js";
 import {Entity, Game} from "../game.js";
-import {path_find} from "../pathfind.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.NavAgent | Has.Move;

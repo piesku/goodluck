@@ -1,6 +1,6 @@
-import {EPSILON} from "../common/math.js";
-import {distance_squared} from "../common/vec3.js";
+import {EPSILON} from "./math.js";
 import {NavMesh} from "./navmesh.js";
+import {distance_squared} from "./vec3.js";
 
 type VectorField = Array<number>;
 

@@ -1,11 +1,11 @@
 import {get_translation} from "../../common/mat4.js";
+import {path_find} from "../../common/pathfind.js";
 import {GL_ARRAY_BUFFER} from "../../common/webgl.js";
 import {disable} from "../components/com_disable.js";
 import {RenderVertices, render_vertices} from "../components/com_render1.js";
 import {transform} from "../components/com_transform.js";
 import {Entity, Game} from "../game.js";
 import {input_clicked, instantiate} from "../impl.js";
-import {path_find} from "../pathfind.js";
 import {Has} from "../world.js";
 import {Picked} from "./sys_pick.js";
 

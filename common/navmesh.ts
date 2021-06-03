@@ -1,6 +1,6 @@
-import {Vec3} from "../common/math.js";
-import {Mesh} from "../common/mesh.js";
-import {cross, distance_squared, dot, normalize, subtract} from "../common/vec3.js";
+import {Vec3} from "./math.js";
+import {Mesh} from "./mesh.js";
+import {cross, distance_squared, dot, normalize, subtract} from "./vec3.js";
 
 export interface NavMesh {
     Graph: Array<Array<[number, number]>>;
