@@ -59,9 +59,9 @@ export class Game {
     };
     Textures: Record<string, WebGLTexture> = {};
 
-    // The rendering pipeline supports 8 lights.
-    LightPositions = new Float32Array(4 * 8);
-    LightDetails = new Float32Array(4 * 8);
+    // The rendering pipeline supports 64 lights.
+    LightPositions = new Float32Array(4 * 64);
+    LightDetails = new Float32Array(4 * 64);
     Cameras: Array<Entity> = [];
 
     constructor() {

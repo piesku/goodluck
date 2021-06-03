@@ -20,7 +20,7 @@ let fragment = `#version 300 es\n
     precision mediump float;
     precision lowp sampler2DShadow;
 
-    const int MAX_LIGHTS = 8;
+    const int MAX_LIGHTS = 64;
 
     uniform vec3 eye;
     uniform sampler2D diffuse_map;
