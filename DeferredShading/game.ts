@@ -1,5 +1,6 @@
 import {create_deferred_target, DeferredTarget} from "../common/framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
+import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {mesh_quad} from "../meshes/quad.js";
@@ -38,8 +39,10 @@ export class Game {
 
     MaterialColored = mat2_deferred_colored(this.Gl);
     MaterialShading = mat2_deferred_shading(this.Gl);
+
     MeshSphereSmooth = mesh_icosphere_smooth(this.Gl);
     MeshSphereFlat = mesh_icosphere_flat(this.Gl);
+    MeshCube = mesh_cube(this.Gl);
     MeshQuad = mesh_quad(this.Gl);
 
     Targets: {
