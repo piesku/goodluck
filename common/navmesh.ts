@@ -1,6 +1,6 @@
-import {Mesh} from "../common/material.js";
-import {Vec3} from "../common/math.js";
-import {cross, distance_squared, dot, normalize, subtract} from "../common/vec3.js";
+import {Vec3} from "./math.js";
+import {face_centroid, face_normal, face_vertices, Mesh} from "./mesh.js";
+import {distance_squared, dot} from "./vec3.js";
 
 export interface NavMesh {
     Graph: Array<Array<[number, number]>>;
@@ -34,49 +34,47 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
         Centroids: [],
     };
 
-    // Prepare data for graph building.
-    for (let face = 0; face < face_count; face++) {
-        let v1 = mesh.IndexArray[face * 3 + 0];
-        let v2 = mesh.IndexArray[face * 3 + 1];
-        let v3 = mesh.IndexArray[face * 3 + 2];
+    let face: Vec3 = [0, 0, 0];
+    let norm: Vec3 = [0, 0, 0];
 
-        let norm = normal(mesh.VertexArray, v1, v2, v3);
+    // Prepare data for graph building.
+    for (let f = 0; f < face_count; f++) {
+        face_vertices(face, mesh, f);
+
+        face_normal(norm, mesh, face);
         if (Math.acos(dot(norm, UP)) > max_slope) {
             // Skip this face, it's not horizontal enough.
             continue;
         }
 
         // Initialize an empty adjacency list for the face.
-        navmesh.Graph[face] = [];
+        navmesh.Graph[f] = [];
         // Compute the centroid of the face from its vertices.
-        navmesh.Centroids[face] = centroid(mesh.VertexArray, v1, v2, v3);
+        navmesh.Centroids[f] = face_centroid([0, 0, 0], mesh, face);
 
         // Record the face as containing each of its vertices. This is used to
         // find the neighbors of a face given its vertices.
-        for (let vert of [v1, v2, v3]) {
+        for (let vert of face) {
             if (faces_containing_vertex[vert]) {
-                faces_containing_vertex[vert].push(face);
+                faces_containing_vertex[vert].push(f);
             } else {
-                faces_containing_vertex[vert] = [face];
+                faces_containing_vertex[vert] = [f];
             }
         }
     }
 
     // Build the graph.
-    for (let face = 0; face < face_count; face++) {
-        if (navmesh.Graph[face] === undefined) {
+    for (let f = 0; f < face_count; f++) {
+        if (navmesh.Graph[f] === undefined) {
             // It's a skipped face, too sloped.
             continue;
         }
 
-        let v1 = mesh.IndexArray[face * 3 + 0];
-        let v2 = mesh.IndexArray[face * 3 + 1];
-        let v3 = mesh.IndexArray[face * 3 + 2];
-
+        face_vertices(face, mesh, f);
         let edges = [
-            [v1, v2],
-            [v2, v3],
-            [v3, v1],
+            [face[0], face[1]],
+            [face[1], face[2]],
+            [face[2], face[0]],
         ];
 
         for (let [a, b] of edges) {
@@ -84,14 +82,12 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
             // other faces containing the first vertex of the edge also contains
             // the second one. If so, the faces are adjacent.
             for (let other of faces_containing_vertex[a]) {
-                let o1 = mesh.IndexArray[other * 3 + 0];
-                let o2 = mesh.IndexArray[other * 3 + 1];
-                let o3 = mesh.IndexArray[other * 3 + 2];
-                if (other !== face && (o1 === b || o2 === b || o3 === b)) {
+                face_vertices(face, mesh, other);
+                if (other !== f && (face[0] === b || face[1] === b || face[2] === b)) {
                     // Add `other` to the `face`'s adjacency list.
-                    navmesh.Graph[face].push([
+                    navmesh.Graph[f].push([
                         other,
-                        distance_squared(navmesh.Centroids[face], navmesh.Centroids[other]),
+                        distance_squared(navmesh.Centroids[f], navmesh.Centroids[other]),
                     ]);
                     break;
                 }
@@ -100,32 +96,4 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
     }
 
     return navmesh;
-}
-
-function centroid(vertices: Float32Array, a: number, b: number, c: number): Vec3 {
-    return [
-        (vertices[a * 3 + 0] + vertices[b * 3 + 0] + vertices[c * 3 + 0]) / 3,
-        (vertices[a * 3 + 1] + vertices[b * 3 + 1] + vertices[c * 3 + 1]) / 3,
-        (vertices[a * 3 + 2] + vertices[b * 3 + 2] + vertices[c * 3 + 2]) / 3,
-    ];
-}
-
-let edge1: Vec3 = [0, 0, 0];
-let edge2: Vec3 = [0, 0, 0];
-
-function normal(vertices: Float32Array, a: number, b: number, c: number): Vec3 {
-    subtract(
-        edge1,
-        [vertices[b * 3 + 0], vertices[b * 3 + 1], vertices[b * 3 + 2]],
-        [vertices[a * 3 + 0], vertices[a * 3 + 1], vertices[a * 3 + 2]]
-    );
-
-    subtract(
-        edge2,
-        [vertices[c * 3 + 0], vertices[c * 3 + 1], vertices[c * 3 + 2]],
-        [vertices[b * 3 + 0], vertices[b * 3 + 1], vertices[b * 3 + 2]]
-    );
-
-    let product = cross([0, 0, 0], edge2, edge1);
-    return normalize(product, product);
 }

@@ -1,5 +1,6 @@
-import {Material, Mesh} from "../../common/material.js";
+import {Material} from "../../common/material.js";
 import {Vec3, Vec4} from "../../common/math.js";
+import {Mesh} from "../../common/mesh.js";
 import {normalize, subtract} from "../../common/vec3.js";
 import {
     GL_ARRAY_BUFFER,

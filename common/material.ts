@@ -1,17 +1,5 @@
 import {GL_COMPILE_STATUS, GL_FRAGMENT_SHADER, GL_LINK_STATUS, GL_VERTEX_SHADER} from "./webgl.js";
 
-export interface Mesh {
-    VertexBuffer: WebGLBuffer;
-    VertexArray: Float32Array;
-    NormalBuffer: WebGLBuffer;
-    NormalArray: Float32Array;
-    TexCoordBuffer: WebGLBuffer;
-    TexCoordArray: Float32Array;
-    IndexBuffer: WebGLBuffer;
-    IndexArray: Uint16Array;
-    IndexCount: number;
-}
-
 export interface Material<L> {
     Mode: GLenum;
     Program: WebGLProgram;

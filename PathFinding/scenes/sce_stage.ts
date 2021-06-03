@@ -1,3 +1,4 @@
+import {nav_bake} from "../../common/navmesh.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {children} from "../components/com_children.js";
 import {collide} from "../components/com_collide.js";
@@ -13,7 +14,6 @@ import {selectable} from "../components/com_selectable.js";
 import {transform} from "../components/com_transform.js";
 import {Game, Layer} from "../game.js";
 import {instantiate} from "../impl.js";
-import {nav_bake} from "../navmesh.js";
 import {Has, World} from "../world.js";
 
 export function scene_stage(game: Game) {

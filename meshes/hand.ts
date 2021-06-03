@@ -1,4 +1,4 @@
-import {Mesh} from "../common/material.js";
+import {Mesh} from "../common/mesh.js";
 import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW} from "../common/webgl.js";
 
 export function mesh_hand(gl: WebGLRenderingContext): Mesh {

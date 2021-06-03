@@ -1,6 +1,6 @@
 import {AABB} from "./aabb.js";
-import {Mesh} from "./material.js";
 import {Vec3} from "./math.js";
+import {Mesh} from "./mesh";
 import {add, cross, dot, scale, subtract} from "./vec3.js";
 
 export interface RaycastHit {

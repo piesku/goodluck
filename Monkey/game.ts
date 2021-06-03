@@ -1,4 +1,4 @@
-import {Mesh} from "../common/material.js";
+import {Mesh} from "../common/mesh.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
 import {mat1_forward_colored_phong} from "../materials/mat1_forward_colored_phong.js";
