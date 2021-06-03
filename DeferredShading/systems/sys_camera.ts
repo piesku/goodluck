@@ -13,7 +13,7 @@ export function sys_camera(game: Game, delta: number) {
 
             if (camera.Kind === CameraKind.Framebuffer) {
                 update_framebuffer(game, i, camera);
-                game.Cameras.push(camera);
+                game.Cameras.push(i);
             }
         }
     }

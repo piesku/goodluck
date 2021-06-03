@@ -2,7 +2,6 @@ import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat2_forward_colored_gouraud} from "../materials/mat2_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_hand} from "../meshes/hand.js";
-import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./impl_ext.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_oculus} from "./systems/sys_control_oculus.js";
@@ -41,7 +40,7 @@ export class Game {
     MeshCube = mesh_cube(this.Gl);
     MeshHand = mesh_hand(this.Gl);
 
-    Camera?: Camera;
+    Camera?: Entity;
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);

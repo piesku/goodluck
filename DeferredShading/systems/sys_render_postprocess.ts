@@ -23,7 +23,8 @@ export function sys_render_postprocess(game: Game, delta: number) {
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     game.Gl.frontFace(GL_CW);
 
-    let camera = game.Cameras[0];
+    let camera_entity = game.Cameras[0];
+    let camera = game.World.Camera[camera_entity];
     let material = game.MaterialShading;
     let mesh = game.MeshQuad;
     let target = game.Targets.Gbuffer;

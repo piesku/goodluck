@@ -1,5 +1,4 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
-import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./impl.js";
 import {mat1_forward_particles_colored} from "./materials/mat1_forward_particles_colored.js";
 import {mat1_forward_particles_textured} from "./materials/mat1_forward_particles_textured.js";
@@ -30,7 +29,7 @@ export class Game {
     MaterialParticlesTextured = mat1_forward_particles_textured(this.Gl);
     Textures: Record<string, WebGLTexture> = {};
 
-    Cameras: Array<Camera> = [];
+    Cameras: Array<Entity> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>

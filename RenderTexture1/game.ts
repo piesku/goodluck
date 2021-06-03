@@ -3,7 +3,6 @@ import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_forward_textured_unlit} from "../materials/mat1_forward_textured_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_plane} from "../meshes/plane.js";
-import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
@@ -40,7 +39,7 @@ export class Game {
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
-    Cameras: Array<Camera> = [];
+    Cameras: Array<Entity> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>

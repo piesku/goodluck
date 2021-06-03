@@ -1,7 +1,6 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat2_forward_colored_gouraud} from "../materials/mat2_forward_colored_gouraud.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
-import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./impl.js";
 import {mat2_forward_colored_flat} from "./materials/mat2_forward_colored_flat.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -36,7 +35,7 @@ export class Game {
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
-    Cameras: Array<Camera> = [];
+    Cameras: Array<Entity> = [];
 
     constructor() {
         document.addEventListener("visibilitychange", () =>

@@ -1,4 +1,4 @@
-import {Forward1Target} from "../../common/framebuffer.js";
+import {DepthTarget, Forward1Target} from "../../common/framebuffer.js";
 import {create} from "../../common/mat4.js";
 import {Mat4, Vec3, Vec4} from "../../common/math.js";
 import {Projection, ProjectionKind} from "../../common/projection.js";
@@ -9,11 +9,12 @@ interface Game1 extends Game {
     Gl: WebGLRenderingContext;
 }
 
-export type Camera = CameraDisplay | CameraFramebuffer;
+export type Camera = CameraDisplay | CameraFramebuffer | CameraDepth;
 
 export const enum CameraKind {
     Display,
     Framebuffer,
+    Depth,
 }
 
 // The subset of camera data passed into shaders.
@@ -63,10 +64,10 @@ export interface CameraFramebuffer extends CameraEye {
 }
 
 export function camera_framebuffer_perspective(
+    target: Forward1Target,
     fovy: number,
     near: number,
     far: number,
-    target: Forward1Target,
     clear_color: Vec4
 ) {
     return (game: Game1, entity: Entity) => {
@@ -77,6 +78,41 @@ export function camera_framebuffer_perspective(
             Projection: {
                 Kind: ProjectionKind.Perspective,
                 FovY: fovy,
+                Near: near,
+                Far: far,
+                Projection: create(),
+                Inverse: create(),
+            },
+            View: create(),
+            Pv: create(),
+            Position: [0, 0, 0],
+            ClearColor: clear_color,
+        };
+    };
+}
+
+export interface CameraDepth extends CameraEye {
+    Kind: CameraKind.Depth;
+    Target: DepthTarget;
+    Projection: Projection;
+    ClearColor: Vec4;
+}
+
+export function camera_depth_ortho(
+    target: DepthTarget,
+    radius: number,
+    near: number,
+    far: number,
+    clear_color: Vec4 = [0, 0, 0, 1]
+) {
+    return (game: Game1, entity: Entity) => {
+        game.World.Signature[entity] |= Has.Camera;
+        game.World.Camera[entity] = {
+            Kind: CameraKind.Depth,
+            Target: target,
+            Projection: {
+                Kind: ProjectionKind.Ortho,
+                Radius: radius,
                 Near: near,
                 Far: far,
                 Projection: create(),

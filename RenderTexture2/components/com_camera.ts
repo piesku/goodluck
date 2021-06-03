@@ -57,10 +57,10 @@ export interface CameraFramebuffer extends CameraEye {
 }
 
 export function camera_framebuffer_perspective(
+    target: Forward2Target,
     fovy: number,
     near: number,
     far: number,
-    target: Forward2Target,
     clear_color: Vec4
 ) {
     return (game: Game, entity: Entity) => {

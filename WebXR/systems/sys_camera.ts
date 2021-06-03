@@ -30,7 +30,7 @@ export function sys_camera(game: Game, delta: number) {
 }
 
 function update_display(game: Game, entity: Entity, camera: CameraDisplay) {
-    game.Camera = camera;
+    game.Camera = entity;
 
     if (game.ViewportResized) {
         switch (camera.Projection.Kind) {
@@ -49,7 +49,7 @@ function update_display(game: Game, entity: Entity, camera: CameraDisplay) {
 }
 
 function update_xr(game: Game, entity: Entity, camera: CameraXr) {
-    game.Camera = camera;
+    game.Camera = entity;
 
     let transform = game.World.Transform[entity];
     let pose = game.XrFrame!.getViewerPose(game.XrSpace);

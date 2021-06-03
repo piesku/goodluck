@@ -23,6 +23,9 @@ import {Has} from "../world.js";
 const QUERY = Has.Transform | Has.Render;
 
 export function sys_render_forward(game: Game, delta: number) {
+    let camera_entity = game.Cameras[0];
+    let camera = game.World.Camera[camera_entity];
+
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (game.ViewportResized) {
         game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
@@ -39,10 +42,10 @@ export function sys_render_forward(game: Game, delta: number) {
                 current_material = render.Material;
                 switch (render.Kind) {
                     case RenderKind.ParticlesColored:
-                        use_particles_colored(game, render.Material, game.Cameras[0]);
+                        use_particles_colored(game, render.Material, camera);
                         break;
                     case RenderKind.ParticlesTextured:
-                        use_particles_textured(game, render.Material, game.Cameras[0]);
+                        use_particles_textured(game, render.Material, camera);
                         break;
                 }
             }
