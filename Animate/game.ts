@@ -1,7 +1,7 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
-import {loop_start, loop_stop} from "./impl.js";
+import {frame_reset, frame_setup, input_init, loop_start, loop_stop} from "./impl.js";
 import {sys_animate} from "./systems/sys_animate.js";
 import {sys_audio_listener} from "./systems/sys_audio_listener.js";
 import {sys_audio_source} from "./systems/sys_audio_source.js";
@@ -25,6 +25,8 @@ export class Game {
 
     InputState: Record<string, number> = {};
     InputDelta: Record<string, number> = {};
+    InputDistance: Record<string, number> = {};
+    InputTouches: Record<string, number> = {};
 
     Ui = document.querySelector("main")!;
     Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
@@ -46,31 +48,16 @@ export class Game {
             document.hidden ? loop_stop() : loop_start(this)
         );
 
-        window.addEventListener("keydown", (evt) => {
-            if (!evt.repeat) {
-                this.InputState[evt.code] = 1;
-                this.InputDelta[evt.code] = 1;
-            }
-        });
-        window.addEventListener("keyup", (evt) => {
-            this.InputState[evt.code] = 0;
-            this.InputDelta[evt.code] = -1;
-        });
+        input_init(this);
 
         this.Gl.enable(GL_DEPTH_TEST);
         this.Gl.enable(GL_CULL_FACE);
     }
 
-    FrameReset() {
-        // Reset event flags for the next frame.
-        this.ViewportResized = false;
-        for (let name in this.InputDelta) {
-            this.InputDelta[name] = 0;
-        }
-    }
-
     FrameUpdate(delta: number) {
+        frame_setup(this);
         let now = performance.now();
+
         sys_control(this, delta);
         sys_animate(this, delta);
         sys_transform(this, delta);
@@ -80,6 +67,8 @@ export class Game {
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render_forward(this, delta);
+
         sys_framerate(this, delta, performance.now() - now);
+        frame_reset(this);
     }
 }

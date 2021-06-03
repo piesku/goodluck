@@ -14,8 +14,6 @@ export class Game {
         );
     }
 
-    FrameReset() {}
-
     FrameUpdate(delta: number) {
         let now = performance.now();
         sys_ui(this, delta);

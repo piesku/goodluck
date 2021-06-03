@@ -3,7 +3,7 @@ import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {mesh_quad} from "../meshes/quad.js";
-import {loop_start, loop_stop} from "./impl.js";
+import {frame_reset, frame_setup, loop_start, loop_stop} from "./impl.js";
 import {mat2_deferred_colored} from "./materials/mat2_deferred_colored.js";
 import {mat2_deferred_shading} from "./materials/mat2_deferred_shading.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -26,7 +26,14 @@ export class Game {
     ViewportHeight = window.innerHeight;
     ViewportResized = true;
 
-    Canvas = document.querySelector("canvas")!;
+    InputState: Record<string, number> = {};
+    InputDelta: Record<string, number> = {};
+    InputDistance: Record<string, number> = {};
+    InputTouches: Record<string, number> = {};
+
+    Ui = document.querySelector("main")!;
+    Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
+    Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
     Gl = this.Canvas.getContext("webgl2")!;
 
     MaterialColored = mat2_deferred_colored(this.Gl);
@@ -61,12 +68,10 @@ export class Game {
         this.Gl.enable(GL_CULL_FACE);
     }
 
-    FrameReset() {
-        this.ViewportResized = false;
-    }
-
     FrameUpdate(delta: number) {
+        frame_setup(this);
         let now = performance.now();
+
         sys_control_always(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
@@ -75,6 +80,8 @@ export class Game {
         sys_light(this, delta);
         sys_render_deferred(this, delta);
         sys_render_postprocess(this, delta);
+
         sys_framerate(this, delta, performance.now() - now);
+        frame_reset(this);
     }
 }

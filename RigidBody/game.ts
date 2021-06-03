@@ -2,7 +2,7 @@ import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_hand} from "../meshes/hand.js";
-import {loop_start, loop_stop} from "./impl.js";
+import {frame_reset, frame_setup, loop_start, loop_stop} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
@@ -29,6 +29,11 @@ export class Game {
     ViewportHeight = window.innerHeight;
     ViewportResized = true;
 
+    InputState: Record<string, number> = {};
+    InputDelta: Record<string, number> = {};
+    InputDistance: Record<string, number> = {};
+    InputTouches: Record<string, number> = {};
+
     Ui = document.querySelector("main")!;
     Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
     Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
@@ -53,12 +58,10 @@ export class Game {
         this.Gl.enable(GL_CULL_FACE);
     }
 
-    FrameReset() {
-        this.ViewportResized = false;
-    }
-
     FrameUpdate(delta: number) {
+        frame_setup(this);
         let now = performance.now();
+
         // Destroy entities past their age.
         sys_lifespan(this, delta);
 
@@ -83,7 +86,9 @@ export class Game {
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render_forward(this, delta);
+
         sys_framerate(this, delta, performance.now() - now);
+        frame_reset(this);
     }
 }
 

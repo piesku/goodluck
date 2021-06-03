@@ -18,7 +18,6 @@ export function loop_start(game: Game) {
         }
 
         game.FrameUpdate(delta);
-        game.FrameReset();
     }
 
     if (game.XrSession) {

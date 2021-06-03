@@ -3,7 +3,7 @@ import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_forward_textured_unlit} from "../materials/mat1_forward_textured_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_plane} from "../meshes/plane.js";
-import {loop_start, loop_stop} from "./impl.js";
+import {frame_reset, frame_setup, loop_start, loop_stop} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -22,6 +22,12 @@ export class Game {
     ViewportHeight = window.innerHeight;
     ViewportResized = true;
 
+    InputState: Record<string, number> = {};
+    InputDelta: Record<string, number> = {};
+    InputDistance: Record<string, number> = {};
+    InputTouches: Record<string, number> = {};
+
+    Ui = document.querySelector("main")!;
     Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
     Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
     Gl = this.Canvas.getContext("webgl")!;
@@ -55,18 +61,18 @@ export class Game {
         this.Gl.enable(GL_CULL_FACE);
     }
 
-    FrameReset() {
-        this.ViewportResized = false;
-    }
-
     FrameUpdate(delta: number) {
+        frame_setup(this);
         let now = performance.now();
+
         sys_control_always(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
         sys_resize(this, delta);
         sys_camera(this, delta);
         sys_render_forward(this, delta);
+
         sys_framerate(this, delta, performance.now() - now);
+        frame_reset(this);
     }
 }

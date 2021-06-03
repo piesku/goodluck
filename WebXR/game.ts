@@ -2,6 +2,7 @@ import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat2_forward_colored_gouraud} from "../materials/mat2_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_hand} from "../meshes/hand.js";
+import {frame_reset, frame_setup} from "./impl.js";
 import {loop_start, loop_stop} from "./impl_ext.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_oculus} from "./systems/sys_control_oculus.js";
@@ -23,6 +24,11 @@ export class Game {
     ViewportWidth = window.innerWidth;
     ViewportHeight = window.innerHeight;
     ViewportResized = true;
+
+    InputState: Record<string, number> = {};
+    InputDelta: Record<string, number> = {};
+    InputDistance: Record<string, number> = {};
+    InputTouches: Record<string, number> = {};
 
     Ui = document.querySelector("main")!;
     Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
@@ -58,12 +64,10 @@ export class Game {
         }
     }
 
-    FrameReset() {
-        this.ViewportResized = false;
-    }
-
     FrameUpdate(delta: number) {
+        frame_setup(this);
         let now = performance.now();
+
         sys_control_oculus(this, delta);
         sys_control_pose(this, delta);
         sys_transform(this, delta);
@@ -72,6 +76,8 @@ export class Game {
         sys_light(this, delta);
         sys_render_forward(this, delta);
         sys_ui(this, delta);
+
         sys_framerate(this, delta, performance.now() - now);
+        frame_reset(this);
     }
 }
