@@ -6,7 +6,7 @@ if [ ! -d "$EXAMPLE" ]; then
     echo "Bootstrap a new project from an example."
     echo "    $0 DIRECTORY"
     echo "Example:"
-    echo "    $0 FlyCamera"
+    echo "    $0 FirstPerson"
     exit 1
 fi
 

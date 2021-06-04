@@ -33,7 +33,7 @@ In order to play with the examples included in the repo, run the development ser
 
 ### Creating a New Project
 
-When you're ready to start a new project, bootstrap it using one of the examples. I recommend `NewProject3D` for a minimal base, `FlyCamera` for the FPS controls, and `ThirdPerson` for the TPP view.
+When you're ready to start a new project, bootstrap it using one of the examples. I recommend `NewProject3D` for a minimal base, `FirstPerson` for the FPS controls, and `ThirdPerson` for the TPP view.
 
 1. Choose one of the examples as your starting point.
 2. `./bootstrap.sh EXAMPLE_NAME`
