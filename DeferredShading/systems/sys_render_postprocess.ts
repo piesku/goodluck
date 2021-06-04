@@ -16,6 +16,8 @@ import {
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
 import {Game} from "../game.js";
+import {first_entity} from "../impl.js";
+import {Has} from "../world.js";
 
 export function sys_render_postprocess(game: Game, delta: number) {
     game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
@@ -59,10 +61,12 @@ export function sys_render_postprocess(game: Game, delta: number) {
     game.Gl.bindTexture(GL_TEXTURE_2D, game.Targets.Sun.DepthTexture);
     game.Gl.uniform1i(material.Locations.ShadowMap, 5);
 
-    // TODO How to parameterize this?
-    let light_entity = game.Cameras[1];
-    let light_camera = game.World.Camera[light_entity];
-    game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, light_camera.Pv);
+    // Only one shadow source is supported.
+    let light_entity = first_entity(game.World, Has.Camera | Has.Light);
+    if (light_entity) {
+        let light_camera = game.World.Camera[light_entity];
+        game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, light_camera.Pv);
+    }
 
     game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
     game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);

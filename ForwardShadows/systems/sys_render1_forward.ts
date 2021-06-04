@@ -13,6 +13,7 @@ import {CameraEye, CameraForward, CameraKind} from "../components/com_camera.js"
 import {Render, RenderColoredShadows, RenderKind} from "../components/com_render1.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
+import {first_entity} from "../impl.js";
 import {ShadowMappingLayout} from "../materials/layout_shadow_mapping.js";
 import {Has, World} from "../world.js";
 
@@ -93,10 +94,12 @@ function use_colored_shadows(
     game.Gl.bindTexture(GL_TEXTURE_2D, game.Targets.Sun.DepthTexture);
     game.Gl.uniform1i(material.Locations.ShadowMap, 0);
 
-    // TODO How to parameterize this?
-    let light_entity = game.Cameras[1];
-    let light_camera = game.World.Camera[light_entity];
-    game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, light_camera.Pv);
+    // Only one shadow source is supported.
+    let light_entity = first_entity(game.World, Has.Camera | Has.Light);
+    if (light_entity) {
+        let light_camera = game.World.Camera[light_entity];
+        game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, light_camera.Pv);
+    }
 }
 
 function draw_colored_shadows(game: Game1, transform: Transform, render: RenderColoredShadows) {
