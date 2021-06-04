@@ -37,7 +37,9 @@ let fragment = `#version 300 es\n
 
     out vec4 frag_color;
 
-    float shadow_factor(vec4 world_pos, float max) {
+    // How much shadow to apply at world_pos, expressed as [min, 1]:
+    // min = completely in shadow, 1 = completely not in shadow
+    float shadow_factor(vec4 world_pos, float min) {
         vec4 shadow_space_pos = shadow_space * world_pos;
         vec3 shadow_space_ndc = shadow_space_pos.xyz / shadow_space_pos.w;
         // Transform the [-1, 1] NDC to [0, 1] to match the shadow texture data.
@@ -46,7 +48,7 @@ let fragment = `#version 300 es\n
         // Add shadow bias to avoid shadow acne.
         shadow_space_ndc.z -= 0.001;
 
-        return texture(shadow_map, shadow_space_ndc) * (1.0 - max) + max;
+        return texture(shadow_map, shadow_space_ndc) * (1.0 - min) + min;
     }
 
     void main() {
