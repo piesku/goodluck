@@ -1,4 +1,4 @@
-import {DepthTarget, Forward1Target} from "../../common/framebuffer.js";
+import {DeferredTarget, DepthTarget, Forward1Target} from "../../common/framebuffer.js";
 import {create} from "../../common/mat4.js";
 import {Mat4, Vec3, Vec4} from "../../common/math.js";
 import {Projection, ProjectionKind} from "../../common/projection.js";
@@ -9,10 +9,11 @@ interface Game1 extends Game {
     Gl: WebGLRenderingContext;
 }
 
-export type Camera = CameraDisplay | CameraFramebuffer | CameraDepth;
+export type Camera = CameraForward | CameraDeferred | CameraFramebuffer | CameraDepth;
 
 export const enum CameraKind {
-    Display,
+    Forward,
+    Deferred,
     Framebuffer,
     Depth,
 }
@@ -24,13 +25,13 @@ export interface CameraEye {
     Position: Vec3;
 }
 
-export interface CameraDisplay extends CameraEye {
-    Kind: CameraKind.Display;
+export interface CameraForward extends CameraEye {
+    Kind: CameraKind.Forward;
     Projection: Projection;
     ClearColor: Vec4;
 }
 
-export function camera_display_perspective(
+export function camera_forward_perspective(
     fovy: number,
     near: number,
     far: number,
@@ -39,7 +40,42 @@ export function camera_display_perspective(
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;
         game.World.Camera[entity] = {
-            Kind: CameraKind.Display,
+            Kind: CameraKind.Forward,
+            Projection: {
+                Kind: ProjectionKind.Perspective,
+                FovY: fovy,
+                Near: near,
+                Far: far,
+                Projection: create(),
+                Inverse: create(),
+            },
+            View: create(),
+            Pv: create(),
+            Position: [0, 0, 0],
+            ClearColor: clear_color,
+        };
+    };
+}
+
+export interface CameraDeferred extends CameraEye {
+    Kind: CameraKind.Deferred;
+    Target: DeferredTarget;
+    Projection: Projection;
+    ClearColor: Vec4;
+}
+
+export function camera_deferred_perspective(
+    target: DeferredTarget,
+    fovy: number,
+    near: number,
+    far: number,
+    clear_color: Vec4
+) {
+    return (game: Game, entity: Entity) => {
+        game.World.Signature[entity] |= Has.Camera;
+        game.World.Camera[entity] = {
+            Kind: CameraKind.Deferred,
+            Target: target,
             Projection: {
                 Kind: ProjectionKind.Perspective,
                 FovY: fovy,

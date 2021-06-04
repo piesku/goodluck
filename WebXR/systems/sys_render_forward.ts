@@ -7,7 +7,7 @@ import {
 } from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
-import {CameraDisplay, CameraEye, CameraKind, CameraXr} from "../components/com_camera.js";
+import {CameraEye, CameraForward, CameraKind, CameraXr} from "../components/com_camera.js";
 import {RenderColoredShaded, RenderKind} from "../components/com_render2.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
@@ -25,7 +25,7 @@ export function sys_render_forward(game: Game, delta: number) {
     }
 }
 
-function render_screen(game: Game, camera: CameraDisplay) {
+function render_screen(game: Game, camera: CameraForward) {
     game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (game.ViewportResized) {

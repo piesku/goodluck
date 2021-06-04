@@ -1,4 +1,4 @@
-import {create_depth_target, DepthTarget} from "../common/framebuffer.js";
+import {create_depth1_target, DepthTarget} from "../common/framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {frame_reset, frame_setup, loop_init} from "./impl.js";
@@ -54,7 +54,7 @@ export class Game {
 
         this.Gl.getExtension("WEBGL_depth_texture");
         this.Targets = {
-            Sun: create_depth_target(this.Gl, 2048, 2048),
+            Sun: create_depth1_target(this.Gl, 2048, 2048),
         };
 
         this.Gl.enable(GL_DEPTH_TEST);

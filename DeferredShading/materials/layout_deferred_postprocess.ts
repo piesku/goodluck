@@ -1,4 +1,4 @@
-export interface PostprocessDeferredLayout {
+export interface DeferredPostprocessLayout {
     // Uniforms
     DiffuseMap: WebGLUniformLocation;
     SpecularMap: WebGLUniformLocation;

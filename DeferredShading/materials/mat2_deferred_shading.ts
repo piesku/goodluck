@@ -1,7 +1,8 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
+import {ShadowMappingLayout} from "../../ForwardShadows/materials/layout_shadow_mapping.js";
 import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
-import {PostprocessDeferredLayout} from "./layout_deferred_postprocess.js";
+import {DeferredPostprocessLayout} from "./layout_deferred_postprocess.js";
 
 let vertex = `#version 300 es\n
     in vec3 attr_position;
@@ -17,8 +18,9 @@ let vertex = `#version 300 es\n
 
 let fragment = `#version 300 es\n
     precision mediump float;
+    precision lowp sampler2DShadow;
 
-    const int MAX_LIGHTS = 8;
+    const int MAX_LIGHTS = 64;
 
     uniform vec3 eye;
     uniform sampler2D diffuse_map;
@@ -28,10 +30,26 @@ let fragment = `#version 300 es\n
     uniform sampler2D depth_map;
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
+    uniform mat4 shadow_space;
+    uniform sampler2DShadow shadow_map;
 
     in vec2 vert_texcoord;
 
     out vec4 frag_color;
+
+    // How much shadow to apply at world_pos, expressed as [min, 1]:
+    // min = completely in shadow, 1 = completely not in shadow
+    float shadow_factor(vec4 world_pos, float min) {
+        vec4 shadow_space_pos = shadow_space * world_pos;
+        vec3 shadow_space_ndc = shadow_space_pos.xyz / shadow_space_pos.w;
+        // Transform the [-1, 1] NDC to [0, 1] to match the shadow texture data.
+        shadow_space_ndc = shadow_space_ndc * 0.5 + 0.5;
+
+        // Add shadow bias to avoid shadow acne.
+        shadow_space_ndc.z -= 0.001;
+
+        return texture(shadow_map, shadow_space_ndc) * (1.0 - min) + min;
+    }
 
     void main() {
         vec3 current_normal = texture(normal_map, vert_texcoord).xyz;
@@ -90,26 +108,32 @@ let fragment = `#version 300 es\n
             }
         }
 
-        frag_color = vec4(light_acc, 1.0);
+        vec3 shaded_rgb = light_acc * shadow_factor(current_position, 0.5);
+        frag_color = vec4(shaded_rgb, 1.0);
     }
 `;
 
 export function mat2_deferred_shading(
     gl: WebGLRenderingContext
-): Material<PostprocessDeferredLayout & ForwardShadingLayout> {
+): Material<DeferredPostprocessLayout & ForwardShadingLayout & ShadowMappingLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
         Program: program,
         Locations: {
-            Eye: gl.getUniformLocation(program, "eye")!,
             DiffuseMap: gl.getUniformLocation(program, "diffuse_map")!,
             SpecularMap: gl.getUniformLocation(program, "specular_map")!,
             PositionMap: gl.getUniformLocation(program, "position_map")!,
             NormalMap: gl.getUniformLocation(program, "normal_map")!,
             DepthMap: gl.getUniformLocation(program, "depth_map")!,
+
+            Eye: gl.getUniformLocation(program, "eye")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
+
+            ShadowSpace: gl.getUniformLocation(program, "shadow_space")!,
+            ShadowMap: gl.getUniformLocation(program, "shadow_map")!,
+
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
             VertexTexcoord: gl.getAttribLocation(program, "attr_texcoord")!,
         },

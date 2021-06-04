@@ -9,10 +9,11 @@ import {
 } from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
-import {CameraDisplay, CameraEye, CameraKind} from "../components/com_camera.js";
+import {CameraEye, CameraForward, CameraKind} from "../components/com_camera.js";
 import {Render, RenderColoredShadows, RenderKind} from "../components/com_render1.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
+import {first_entity} from "../impl.js";
 import {ShadowMappingLayout} from "../materials/layout_shadow_mapping.js";
 import {Has, World} from "../world.js";
 
@@ -30,14 +31,14 @@ export function sys_render_forward(game: Game1, delta: number) {
     for (let camera_entity of game.Cameras) {
         let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
-            case CameraKind.Display:
-                render_display(game, camera);
+            case CameraKind.Forward:
+                render_forward(game, camera);
                 break;
         }
     }
 }
 
-function render_display(game: Game1, camera: CameraDisplay) {
+function render_forward(game: Game1, camera: CameraForward) {
     game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
     game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
     game.Gl.clearColor(...camera.ClearColor);
@@ -93,10 +94,12 @@ function use_colored_shadows(
     game.Gl.bindTexture(GL_TEXTURE_2D, game.Targets.Sun.DepthTexture);
     game.Gl.uniform1i(material.Locations.ShadowMap, 0);
 
-    // TODO How to parameterize this?
-    let light_entity = game.Cameras[1];
-    let light_camera = game.World.Camera[light_entity];
-    game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, light_camera.Pv);
+    // Only one shadow source is supported.
+    let light_entity = first_entity(game.World, Has.Camera | Has.Light);
+    if (light_entity) {
+        let light_camera = game.World.Camera[light_entity];
+        game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, light_camera.Pv);
+    }
 }
 
 function draw_colored_shadows(game: Game1, transform: Transform, render: RenderColoredShadows) {

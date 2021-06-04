@@ -29,7 +29,7 @@ export function render_colored_deferred(
     material: Material<ColoredShadedLayout>,
     mesh: Mesh,
     diffuse_color: Vec4,
-    shininess: number,
+    shininess: number = 0,
     specular_color: Vec3 = [1, 1, 1],
     front_face: GLenum = GL_CW
 ) {

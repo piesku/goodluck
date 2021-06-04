@@ -1,6 +1,6 @@
 import {Material} from "../../common/material.js";
 import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
-import {CameraDisplay, CameraEye, CameraKind} from "../components/com_camera.js";
+import {CameraEye, CameraForward, CameraKind} from "../components/com_camera.js";
 import {RenderInstanced, RenderKind} from "../components/com_render.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
@@ -18,14 +18,14 @@ export function sys_render_forward(game: Game, delta: number) {
     for (let camera_entity of game.Cameras) {
         let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
-            case CameraKind.Display:
-                render_display(game, camera);
+            case CameraKind.Forward:
+                render_forward(game, camera);
                 break;
         }
     }
 }
 
-function render_display(game: Game, camera: CameraDisplay) {
+function render_forward(game: Game, camera: CameraForward) {
     // Keep track of the current material to minimize switching.
     let current_material = null;
     let current_front_face = null;

@@ -31,6 +31,14 @@ export function destroy_entity(world: World, entity: Entity) {
     world.Graveyard.push(entity);
 }
 
+export function first_entity(world: World, query: number) {
+    for (let i = 0; i < world.Signature.length; i++) {
+        if ((world.Signature[i] & query) === query) {
+            return i;
+        }
+    }
+}
+
 type Mixin = (game: Game, entity: Entity) => void;
 export type Blueprint = Array<Mixin>;
 

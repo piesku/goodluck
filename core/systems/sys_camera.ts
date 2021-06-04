@@ -18,7 +18,7 @@ export function sys_camera(game: Game, delta: number) {
                 switch (projection.Kind) {
                     case ProjectionKind.Perspective: {
                         let aspect =
-                            camera.Kind === CameraKind.Display
+                            camera.Kind === CameraKind.Forward
                                 ? game.ViewportWidth / game.ViewportHeight
                                 : camera.Target.Width / camera.Target.Height;
                         resize_perspective(projection, aspect);
