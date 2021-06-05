@@ -1,8 +1,7 @@
+import {Mesh} from "../common/mesh.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
 import {mat1_forward_colored_line} from "../materials/mat1_forward_colored_unlit.js";
-import {mesh_cube} from "../meshes/cube.js";
-import {mesh_terrain} from "../meshes/terrain.js";
 import {frame_reset, frame_setup, input_init, loop_init} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
@@ -48,8 +47,8 @@ export class Game {
 
     MaterialColoredLine = mat1_forward_colored_line(this.Gl);
     MaterialColoredGouraud = mat1_forward_colored_gouraud(this.Gl);
-    MeshCube = mesh_cube(this.Gl);
-    MeshTerrain = mesh_terrain(this.Gl);
+
+    Meshes: Record<string, Mesh> = {};
 
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
