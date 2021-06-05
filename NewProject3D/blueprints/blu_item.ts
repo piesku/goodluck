@@ -26,25 +26,19 @@ export function blueprint_item(game: Game): Blueprint {
         audio_source(true),
         lifespan(5),
         disable(Has.Lifespan),
-        children(
-            [
-                transform(undefined, undefined, [0.5, 0.7, 0.1]),
-                control_always(null, [0, 1, 0, 0]),
-                move(0, 0.2),
-                shake(0.05),
-                toggle(Has.Shake, 1, true),
-                disable(Has.Shake | Has.Toggle),
-                children([
-                    transform([0, 1, 0]),
-                    render_colored_shaded(
-                        game.MaterialColoredGouraud,
-                        game.MeshCube,
-                        [1, 1, 0.3, 1]
-                    ),
-                ]),
-            ],
-            [transform([0, 1, 0]), light_point([1, 1, 1], 3)]
-        ),
+        children([
+            transform(undefined, undefined, [0.5, 0.7, 0.1]),
+            control_always(null, [0, 1, 0, 0]),
+            move(0, 0.2),
+            shake(0.05),
+            toggle(Has.Shake, 1, true),
+            disable(Has.Shake | Has.Toggle),
+            children([
+                transform([0, 1, 0]),
+                render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [5, 3, 0, 1]),
+                children([transform([0, 2, 0]), light_point([1, 0.5, 0], 4)]),
+            ]),
+        ]),
         task_timeout(10, (entity) => {
             game.World.Signature[entity] |= Has.Lifespan;
             let children = game.World.Children[entity];

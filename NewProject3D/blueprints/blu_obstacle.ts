@@ -12,7 +12,7 @@ export function blueprint_obstacle(game: Game): Blueprint {
         rigid_body(RigidKind.Dynamic, 0.3),
         children([
             transform(),
-            render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [1, 1, 0.3, 1]),
+            render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [0.5, 0.5, 0.5, 1]),
         ]),
     ];
 }

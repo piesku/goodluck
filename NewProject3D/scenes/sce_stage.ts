@@ -57,7 +57,11 @@ export function scene_stage(game: Game) {
 
     for (let i = 0; i < 100; i++) {
         instantiate(game, [
-            transform([float(-10, 10), 1, float(-10, 10)], undefined, [1, 1, 1]),
+            transform([float(-10, 10), 1, float(-10, 10)], undefined, [
+                float(0.5, 1.5),
+                float(0.5, 1.5),
+                float(0.5, 1.5),
+            ]),
             ...blueprint_obstacle(game),
         ]);
     }
