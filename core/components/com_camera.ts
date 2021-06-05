@@ -1,13 +1,9 @@
-import {DeferredTarget, DepthTarget, Forward1Target} from "../../common/framebuffer.js";
+import {DeferredTarget, DepthTarget, ForwardTarget} from "../../common/framebuffer.js";
 import {create} from "../../common/mat4.js";
 import {Mat4, Vec3, Vec4} from "../../common/math.js";
 import {Projection, ProjectionKind} from "../../common/projection.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
-
-interface Game1 extends Game {
-    Gl: WebGLRenderingContext;
-}
 
 export type Camera = CameraForward | CameraDeferred | CameraFramebuffer | CameraDepth;
 
@@ -16,13 +12,6 @@ export const enum CameraKind {
     Deferred,
     Framebuffer,
     Depth,
-}
-
-// The subset of camera data passed into shaders.
-export interface CameraEye {
-    View: Mat4;
-    Pv: Mat4;
-    Position: Vec3;
 }
 
 export interface CameraForward extends CameraEye {
@@ -41,6 +30,41 @@ export function camera_forward_perspective(
         game.World.Signature[entity] |= Has.Camera;
         game.World.Camera[entity] = {
             Kind: CameraKind.Forward,
+            Projection: {
+                Kind: ProjectionKind.Perspective,
+                FovY: fovy,
+                Near: near,
+                Far: far,
+                Projection: create(),
+                Inverse: create(),
+            },
+            View: create(),
+            Pv: create(),
+            Position: [0, 0, 0],
+            ClearColor: clear_color,
+        };
+    };
+}
+
+export interface CameraFramebuffer extends CameraEye {
+    Kind: CameraKind.Framebuffer;
+    Target: ForwardTarget;
+    Projection: Projection;
+    ClearColor: Vec4;
+}
+
+export function camera_framebuffer_perspective(
+    target: ForwardTarget,
+    fovy: number,
+    near: number,
+    far: number,
+    clear_color: Vec4
+) {
+    return (game: Game, entity: Entity) => {
+        game.World.Signature[entity] |= Has.Camera;
+        game.World.Camera[entity] = {
+            Kind: CameraKind.Framebuffer,
+            Target: target,
             Projection: {
                 Kind: ProjectionKind.Perspective,
                 FovY: fovy,
@@ -92,41 +116,6 @@ export function camera_deferred_perspective(
     };
 }
 
-export interface CameraFramebuffer extends CameraEye {
-    Kind: CameraKind.Framebuffer;
-    Target: Forward1Target;
-    Projection: Projection;
-    ClearColor: Vec4;
-}
-
-export function camera_framebuffer_perspective(
-    target: Forward1Target,
-    fovy: number,
-    near: number,
-    far: number,
-    clear_color: Vec4
-) {
-    return (game: Game1, entity: Entity) => {
-        game.World.Signature[entity] |= Has.Camera;
-        game.World.Camera[entity] = {
-            Kind: CameraKind.Framebuffer,
-            Target: target,
-            Projection: {
-                Kind: ProjectionKind.Perspective,
-                FovY: fovy,
-                Near: near,
-                Far: far,
-                Projection: create(),
-                Inverse: create(),
-            },
-            View: create(),
-            Pv: create(),
-            Position: [0, 0, 0],
-            ClearColor: clear_color,
-        };
-    };
-}
-
 export interface CameraDepth extends CameraEye {
     Kind: CameraKind.Depth;
     Target: DepthTarget;
@@ -141,7 +130,7 @@ export function camera_depth_ortho(
     far: number,
     clear_color: Vec4 = [0, 0, 0, 1]
 ) {
-    return (game: Game1, entity: Entity) => {
+    return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;
         game.World.Camera[entity] = {
             Kind: CameraKind.Depth,
@@ -160,4 +149,11 @@ export function camera_depth_ortho(
             ClearColor: clear_color,
         };
     };
+}
+
+// The subset of camera data passed into shaders.
+export interface CameraEye {
+    View: Mat4;
+    Pv: Mat4;
+    Position: Vec3;
 }

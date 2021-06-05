@@ -10,12 +10,6 @@ export const enum CameraKind {
     Xr,
 }
 
-export interface CameraEye {
-    View: Mat4;
-    Pv: Mat4;
-    Position: Vec3;
-}
-
 export interface CameraForward extends CameraEye {
     Kind: CameraKind.Forward;
     Projection: Projection;
@@ -58,4 +52,11 @@ export function camera_xr() {
             Eyes: [],
         };
     };
+}
+
+// The subset of camera data passed into shaders.
+export interface CameraEye {
+    View: Mat4;
+    Pv: Mat4;
+    Position: Vec3;
 }

@@ -16,7 +16,7 @@ import {
     GL_TEXTURE_2D,
 } from "./webgl.js";
 
-export interface Forward1Target {
+export interface ForwardTarget {
     Framebuffer: WebGLFramebuffer;
     Width: number;
     Height: number;
@@ -25,7 +25,7 @@ export interface Forward1Target {
 }
 
 export function create_forward1_target(gl: WebGLRenderingContext, width: number, height: number) {
-    let target: Forward1Target = {
+    let target: ForwardTarget = {
         Framebuffer: gl.createFramebuffer()!,
         Width: width,
         Height: height,
@@ -57,16 +57,8 @@ export function create_forward1_target(gl: WebGLRenderingContext, width: number,
     return target;
 }
 
-export interface Forward2Target {
-    Framebuffer: WebGLFramebuffer;
-    Width: number;
-    Height: number;
-    RenderTexture: WebGLTexture;
-    DepthTexture: WebGLTexture;
-}
-
 export function create_forward2_target(gl: WebGL2RenderingContext, width: number, height: number) {
-    let target: Forward2Target = {
+    let target: ForwardTarget = {
         Framebuffer: gl.createFramebuffer()!,
         Width: width,
         Height: height,

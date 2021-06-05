@@ -1,4 +1,4 @@
-import {create_forward1_target, Forward1Target} from "../common/framebuffer.js";
+import {create_forward1_target, ForwardTarget} from "../common/framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_forward_textured_unlit} from "../materials/mat1_forward_textured_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
@@ -39,7 +39,7 @@ export class Game {
 
     Textures: Record<string, WebGLTexture> = {};
     Targets: {
-        Minimap: Forward1Target;
+        Minimap: ForwardTarget;
     };
 
     // The rendering pipeline supports 8 lights.
