@@ -33,13 +33,11 @@ In order to play with the examples included in the repo, run the development ser
 
 ### Creating a New Project
 
-When you're ready to start a new project, bootstrap it using one of the examples. I recommend `Minimal3D` for a minimal base, `FirstPerson` for the FPS controls, and `ThirdPerson` for the TPP view.
+When you're ready to start a new project, bootstrap it using one of the examples. I recommend `NewProject3D` which comes with most of Goodluck's components and systems. Once bootstrapped, the repo is completely yours to hack and customize, and you can remove everything you don't need.
 
 1. Choose one of the examples as your starting point.
 2. `./bootstrap.sh EXAMPLE_NAME`
 3. The example's code is now in `src/`.
-
-Once bootstrapped, the repo is completely yours to hack and customize!
 
 You will also find [Goodluck on Glitch](https://glitch.com/~goodluck) where you can [remix it into your own project](https://glitch.com/edit/#!/remix/goodluck)!
 
