@@ -2,8 +2,11 @@ import {Action} from "../actions.js";
 import {audio_source} from "../components/com_audio_source.js";
 import {children} from "../components/com_children.js";
 import {collide} from "../components/com_collide.js";
+import {control_always} from "../components/com_control_always.js";
 import {disable} from "../components/com_disable.js";
 import {lifespan} from "../components/com_lifespan.js";
+import {light_point} from "../components/com_light.js";
+import {move} from "../components/com_move.js";
 import {render_colored_shaded} from "../components/com_render1.js";
 import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
 import {shake} from "../components/com_shake.js";
@@ -23,18 +26,30 @@ export function blueprint_item(game: Game): Blueprint {
         audio_source(true),
         lifespan(5),
         disable(Has.Lifespan),
-        children([
-            transform(),
-            render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [1, 1, 0.3, 1]),
-            shake(0.05),
-            toggle(Has.Shake, 1, true),
-            disable(Has.Shake | Has.Toggle),
-        ]),
+        children(
+            [
+                transform(undefined, undefined, [0.5, 0.7, 0.1]),
+                control_always(null, [0, 1, 0, 0]),
+                move(0, 0.2),
+                shake(0.05),
+                toggle(Has.Shake, 1, true),
+                disable(Has.Shake | Has.Toggle),
+                children([
+                    transform([0, 1, 0]),
+                    render_colored_shaded(
+                        game.MaterialColoredGouraud,
+                        game.MeshCube,
+                        [1, 1, 0.3, 1]
+                    ),
+                ]),
+            ],
+            [transform([0, 1, 0]), light_point([1, 1, 1], 3)]
+        ),
         task_timeout(10, (entity) => {
             game.World.Signature[entity] |= Has.Lifespan;
             let children = game.World.Children[entity];
-            let mesh_entity = children.Children[0];
-            game.World.Signature[mesh_entity] |= Has.Shake | Has.Toggle;
+            let shaker_entity = children.Children[0];
+            game.World.Signature[shaker_entity] |= Has.Shake | Has.Toggle;
         }),
     ];
 }

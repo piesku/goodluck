@@ -1,6 +1,8 @@
+import {float} from "../../common/random.js";
 import {blueprint_camera_follow} from "../blueprints/blu_camera_follow.js";
 import {blueprint_ground} from "../blueprints/blu_ground.js";
 import {blueprint_item} from "../blueprints/blu_item.js";
+import {blueprint_obstacle} from "../blueprints/blu_obstacle.js";
 import {blueprint_player} from "../blueprints/blu_player.js";
 import {children} from "../components/com_children.js";
 import {control_always} from "../components/com_control_always.js";
@@ -52,4 +54,11 @@ export function scene_stage(game: Game) {
             children([transform(), shake(10), control_spawn(blueprint_item, 3)]),
         ]),
     ]);
+
+    for (let i = 0; i < 100; i++) {
+        instantiate(game, [
+            transform([float(-10, 10), 1, float(-10, 10)], undefined, [1, 1, 1]),
+            ...blueprint_obstacle(game),
+        ]);
+    }
 }
