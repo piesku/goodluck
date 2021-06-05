@@ -24,7 +24,7 @@ export function blueprint_player(game: Game): Blueprint {
             // Body.
             [
                 transform(),
-                render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [1, 0.3, 0.2, 1]),
+                render_colored_shaded(game.MaterialColoredShaded, game.MeshCube, [1, 0.3, 0.2, 1]),
             ],
             // Camera rig anchor.
             [transform(), named("camera anchor"), move(0, 3), control_player(false, 0, 0.2)],

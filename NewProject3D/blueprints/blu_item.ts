@@ -35,8 +35,8 @@ export function blueprint_item(game: Game): Blueprint {
             disable(Has.Shake | Has.Toggle),
             children([
                 transform([0, 1, 0]),
-                render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [5, 3, 0, 1]),
-                children([transform([0, 2, 0]), light_point([1, 0.5, 0], 4)]),
+                render_colored_shaded(game.MaterialColoredShaded, game.MeshCube, [5, 3, 0, 1]),
+                children([transform([0, 2, 0]), light_point([1, 0.5, 0], 3)]),
             ]),
         ]),
         task_timeout(10, (entity) => {

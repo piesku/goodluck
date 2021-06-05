@@ -1,5 +1,5 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
-import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
+import {mat1_forward_colored_phong} from "../materials/mat1_forward_colored_phong.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {frame_reset, frame_setup, input_init, input_pointer_lock, loop_init} from "./impl.js";
 import {sys_animate} from "./systems/sys_animate.js";
@@ -54,7 +54,7 @@ export class Game {
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
     Audio = new (window["AudioContext"] || window.webkitAudioContext)();
 
-    MaterialColoredGouraud = mat1_forward_colored_gouraud(this.Gl);
+    MaterialColoredShaded = mat1_forward_colored_phong(this.Gl);
 
     MeshCube = mesh_cube(this.Gl);
 
