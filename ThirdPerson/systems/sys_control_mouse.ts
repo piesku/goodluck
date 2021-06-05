@@ -15,8 +15,8 @@ export function sys_control_mouse(game: Game, delta: number) {
     }
 }
 
-let rotation: Quat = [0, 0, 0, 0];
-let axis: Vec3 = [0, 0, 0];
+const rotation: Quat = [0, 0, 0, 0];
+const axis: Vec3 = [0, 0, 0];
 
 function update(game: Game, entity: Entity) {
     let control = game.World.ControlPlayer[entity];

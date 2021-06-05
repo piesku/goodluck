@@ -8,6 +8,8 @@ const AXIS_Y: Vec3 = [0, 1, 0];
 const AXIS_X: Vec3 = [1, 0, 0];
 const DEAD_ZONE = 0.1;
 
+const axis: Vec3 = [0, 0, 0];
+
 export function sys_control_xbox(game: Game, delta: number) {
     for (let pad of navigator.getGamepads()) {
         if (pad) {
@@ -24,8 +26,6 @@ export function sys_control_xbox(game: Game, delta: number) {
         }
     }
 }
-
-let axis: Vec3 = [0, 0, 0];
 
 function update(game: Game, entity: Entity) {
     let control = game.World.ControlPlayer[entity];

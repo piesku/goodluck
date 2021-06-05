@@ -64,8 +64,10 @@ export class Game {
         sys_control_mouse(this, delta);
         sys_control_xbox(this, delta);
         sys_control_touch(this, delta);
+
         sys_move(this, delta);
         sys_transform(this, delta);
+
         sys_resize(this, delta);
         sys_camera(this, delta);
         sys_light(this, delta);

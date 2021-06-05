@@ -13,7 +13,7 @@ export function sys_control_keyboard(game: Game, delta: number) {
     }
 }
 
-let axis: Vec3 = [0, 0, 0];
+const axis: Vec3 = [0, 0, 0];
 
 function update(game: Game, entity: Entity) {
     let control = game.World.ControlPlayer[entity];

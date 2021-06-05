@@ -15,20 +15,20 @@ export function sys_control_mouse(game: Game, delta: number) {
     }
 }
 
-let rotation: Quat = [0, 0, 0, 0];
+const rotation: Quat = [0, 0, 0, 0];
 
 function update(game: Game, entity: Entity) {
     let control = game.World.ControlPlayer[entity];
 
     if (control.Yaw && game.InputDelta.MouseX) {
         // Scale the mouse input by the sensitivity.
-        let amount = game.InputDelta.MouseX * control.Yaw;
+        let amount = game.InputDelta.MouseX * control.Yaw * DEG_TO_RAD;
         // Treat the pixels traveled by the mouse in this frame as literal Euler
         // angles. This happens to work well and gives the mouse control an
         // instant and precise feel. Note that the rotation won't be passed to
         // sys_move; instead it's applied here and ignores Move.RotationSpeed on
         // purpose.
-        from_axis(rotation, AXIS_Y, -amount * DEG_TO_RAD);
+        from_axis(rotation, AXIS_Y, -amount);
 
         let transform = game.World.Transform[entity];
         // Yaw is pre-multiplied, i.e. applied relative to the entity's local
@@ -38,8 +38,8 @@ function update(game: Game, entity: Entity) {
     }
 
     if (control.Pitch && game.InputDelta.MouseY) {
-        let amount = game.InputDelta.MouseY * control.Pitch;
-        from_axis(rotation, AXIS_X, amount * DEG_TO_RAD);
+        let amount = game.InputDelta.MouseY * control.Pitch * DEG_TO_RAD;
+        from_axis(rotation, AXIS_X, amount);
 
         let transform = game.World.Transform[entity];
         // Pitch is post-multiplied, i.e. applied relative to the entity's self

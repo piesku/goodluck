@@ -6,6 +6,7 @@ import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_keyboard} from "./systems/sys_control_keyboard.js";
 import {sys_control_mouse} from "./systems/sys_control_mouse.js";
+import {sys_control_touch} from "./systems/sys_control_touch.js";
 import {sys_control_xbox} from "./systems/sys_control_xbox.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -17,6 +18,7 @@ import {sys_physics_resolve} from "./systems/sys_physics_resolve.js";
 import {sys_render_forward} from "./systems/sys_render1_forward.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
+import {sys_ui} from "./systems/sys_ui.js";
 import {World} from "./world.js";
 
 export type Entity = number;
@@ -64,6 +66,7 @@ export class Game {
         sys_control_keyboard(this, delta);
         sys_control_mouse(this, delta);
         sys_control_xbox(this, delta);
+        sys_control_touch(this, delta);
 
         // Game logic.
         sys_move(this, delta);
@@ -78,10 +81,12 @@ export class Game {
         sys_physics_resolve(this, delta);
         sys_transform(this, delta);
 
+        // Rendering.
         sys_resize(this, delta);
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render_forward(this, delta);
+        sys_ui(this, delta);
 
         sys_framerate(this, delta, performance.now() - now);
         frame_reset(this);

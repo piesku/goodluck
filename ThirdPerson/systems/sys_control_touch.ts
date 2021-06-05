@@ -1,6 +1,6 @@
 import {DEG_TO_RAD, Quat, Vec2, Vec3} from "../../common/math.js";
 import {clamp} from "../../common/number.js";
-import {from_axis, multiply} from "../../common/quat.js";
+import {from_axis, get_axis, multiply} from "../../common/quat.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -13,6 +13,7 @@ const TOUCH_SENSITIVITY = 10;
 // The position of the joystick center, given by the initial Touch0's x and y.
 const joystick: Vec2 = [0, 0];
 const rotation: Quat = [0, 0, 0, 0];
+const axis: Vec3 = [0, 0, 0];
 
 export function sys_control_touch(game: Game, delta: number) {
     if (game.InputDelta["Touch0"] === 1) {
@@ -59,9 +60,15 @@ function update(game: Game, entity: Entity) {
 
     if (control.Pitch && game.InputDelta["Touch1Y"]) {
         let amount = game.InputDelta["Touch1Y"] * control.Pitch * TOUCH_SENSITIVITY * DEG_TO_RAD;
-        // See sys_control_mouse.
-        from_axis(rotation, AXIS_X, amount);
-        multiply(transform.Rotation, transform.Rotation, rotation);
-        transform.Dirty = true;
+
+        let current_pitch = get_axis(axis, transform.Rotation);
+        let new_pitch = current_pitch * axis[0] + amount;
+        if (-0.2 < new_pitch && new_pitch < Math.PI / 2.2) {
+            from_axis(rotation, AXIS_X, amount);
+
+            // See sys_control_mouse.
+            multiply(transform.Rotation, transform.Rotation, rotation);
+            transform.Dirty = true;
+        }
     }
 }
