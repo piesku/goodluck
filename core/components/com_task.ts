@@ -8,8 +8,8 @@ export const enum TaskKind {
     Timeout,
 }
 
-type Predicate = () => boolean;
-type Callback = () => void;
+type Predicate = (entity: Entity) => boolean;
+type Callback = (entity: Entity) => void;
 
 export interface TaskUntil {
     Kind: TaskKind.Until;

@@ -13,7 +13,7 @@ export function blueprint_flame_colored(game: Game): Blueprint {
             transform(undefined, from_euler([0, 0, 0, 0], -90, 0, 0)),
             emit_particles(1, 0.05, 5),
             render_particles_colored([1, 1, 0, 1], 20, [1, 0, 0, 1], 5),
-            shake(Infinity),
+            shake(1),
         ]),
     ];
 }

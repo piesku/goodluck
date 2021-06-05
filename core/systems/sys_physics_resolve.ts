@@ -59,8 +59,12 @@ function update(game: Game, entity: Entity) {
                         break;
                 }
 
-                // Collisions aren't 100% elastic.
-                scale(rigid_body.VelocityResolved, rigid_body.VelocityResolved, 0.8);
+                // When Bounciness = 1, collisions are 100% elastic.
+                scale(
+                    rigid_body.VelocityResolved,
+                    rigid_body.VelocityResolved,
+                    rigid_body.Bounciness
+                );
 
                 if (collision.Hit[1] > 0 && rigid_body.VelocityResolved[1] < 1) {
                     // Collision from the bottom stops the downward movement.

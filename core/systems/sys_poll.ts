@@ -19,7 +19,7 @@ export function sys_poll(game: Game, delta: number) {
             let task = game.World.Task[i];
             switch (task.Kind) {
                 case TaskKind.Until: {
-                    if (task.Predicate()) {
+                    if (task.Predicate(i)) {
                         tasks_to_complete.push(i);
                     }
                     break;
@@ -36,12 +36,16 @@ export function sys_poll(game: Game, delta: number) {
     }
 
     for (let entity of tasks_to_complete) {
-        let task = game.World.Task[entity];
-
         game.World.Signature[entity] &= ~Has.Task;
+
+        let task = game.World.Task[entity];
         if (task.OnDone) {
-            task.OnDone();
+            task.OnDone(entity);
         }
+
+        // Explicitly delete the component data for this task to avoid memory
+        // leaks from closures.
+        delete game.World.Task[entity];
     }
 }
 

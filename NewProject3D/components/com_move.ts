@@ -1,0 +1,1 @@
+../../core/components/com_move.ts

@@ -44,7 +44,7 @@ export function scene_stage(game: Game) {
     // Box spawner.
     instantiate(game, [
         transform([0, 5, 0]),
-        children([transform(), shake(Infinity), control_spawn(blueprint_box, 2)]),
+        children([transform(), shake(0.5), control_spawn(blueprint_box, 2)]),
     ]);
 
     // Rotating hand.

@@ -15,7 +15,11 @@ export function sys_trigger(game: Game, delta: number) {
 function update(game: Game, entity: Entity) {
     let collide = game.World.Collide[entity];
     let trigger = game.World.Trigger[entity];
+
     for (let collision of collide.Collisions) {
-        dispatch(game, trigger.Action, [entity, collision.Other]);
+        let other_collide = game.World.Collide[collision.Other];
+        if (trigger.Mask & other_collide.Layers) {
+            dispatch(game, trigger.Action, [entity, collision.Other]);
+        }
     }
 }

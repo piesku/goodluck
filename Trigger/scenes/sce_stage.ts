@@ -34,6 +34,6 @@ export function scene_stage(game: Game) {
     instantiate(game, [
         transform([4, 0, 0]),
         collide(false, Layer.None, Layer.Default),
-        trigger(Action.Alert),
+        trigger(Layer.Default, Action.Alert),
     ]);
 }
