@@ -24,6 +24,7 @@ export interface ForwardTarget {
     DepthTexture: WebGLTexture;
 }
 
+/** Requires WEBGL_depth_texture. */
 export function create_forward1_target(gl: WebGLRenderingContext, width: number, height: number) {
     let target: ForwardTarget = {
         Framebuffer: gl.createFramebuffer()!,
@@ -101,6 +102,7 @@ export interface DeferredTarget {
     DepthTexture: WebGLTexture;
 }
 
+/** Requires WEBGL_color_buffer_float. */
 export function create_deferred_target(gl: WebGL2RenderingContext, width: number, height: number) {
     let target: DeferredTarget = {
         Framebuffer: gl.createFramebuffer()!,
@@ -165,6 +167,7 @@ export function create_deferred_target(gl: WebGL2RenderingContext, width: number
     return target;
 }
 
+/** Requires WEBGL_color_buffer_float. */
 export function resize_deferred_target(
     gl: WebGL2RenderingContext,
     target: DeferredTarget,
@@ -191,6 +194,7 @@ export interface DepthTarget {
     ColorTexture: WebGLTexture;
 }
 
+/** Requires WEBGL_depth_texture. */
 export function create_depth1_target(gl: WebGLRenderingContext, width: number, height: number) {
     let target: DepthTarget = {
         Framebuffer: gl.createFramebuffer()!,
