@@ -1,9 +1,9 @@
 import {create_depth1_target, DepthTarget} from "../common/framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
+import {mat1_forward_colored_shadows} from "../materials/mat1_forward_colored_shadows.js";
+import {mat1_forward_depth} from "../materials/mat1_forward_depth.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {frame_reset, frame_setup, loop_init} from "./impl.js";
-import {mat1_forward_colored_shadows} from "./materials/mat1_forward_colored_shadows.js";
-import {mat1_forward_depth} from "./materials/mat1_forward_depth.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
