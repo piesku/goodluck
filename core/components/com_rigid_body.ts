@@ -12,17 +12,19 @@ export const enum RigidKind {
 
 export interface RigidBody {
     Kind: RigidKind;
+    Bounciness: number;
     Acceleration: Vec3;
     VelocityIntegrated: Vec3;
     VelocityResolved: Vec3;
     LastPosition: Vec3;
 }
 
-export function rigid_body(kind: RigidKind) {
+export function rigid_body(kind: RigidKind, bounciness = 0.5) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.RigidBody;
         game.World.RigidBody[entity] = {
             Kind: kind,
+            Bounciness: bounciness,
             Acceleration: [0, 0, 0],
             VelocityIntegrated: [0, 0, 0],
             VelocityResolved: [0, 0, 0],
