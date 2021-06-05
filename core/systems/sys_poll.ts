@@ -19,7 +19,7 @@ export function sys_poll(game: Game, delta: number) {
             let task = game.World.Task[i];
             switch (task.Kind) {
                 case TaskKind.Until: {
-                    if (task.Predicate()) {
+                    if (task.Predicate(i)) {
                         tasks_to_complete.push(i);
                     }
                     break;
@@ -40,7 +40,7 @@ export function sys_poll(game: Game, delta: number) {
 
         game.World.Signature[entity] &= ~Has.Task;
         if (task.OnDone) {
-            task.OnDone();
+            task.OnDone(entity);
         }
     }
 }
