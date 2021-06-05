@@ -1,3 +1,4 @@
+import {scale} from "../../common/vec3.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -19,6 +20,7 @@ function update(game: Game, entity: Entity, delta: number) {
 
         let transform = game.World.Transform[entity];
         transform.Translation = [Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5];
+        scale(transform.Translation, transform.Translation, shake.Magnitude * 2);
         transform.Dirty = true;
 
         if (shake.Duration <= 0) {
