@@ -9,12 +9,12 @@ import {
 } from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
+import {ShadowMappingLayout} from "../../materials/layout_shadow_mapping.js";
 import {CameraEye, CameraForward, CameraKind} from "../components/com_camera.js";
 import {Render, RenderColoredShadows, RenderKind} from "../components/com_render1.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {first_entity} from "../impl.js";
-import {ShadowMappingLayout} from "../materials/layout_shadow_mapping.js";
 import {Has, World} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;

@@ -1,3 +1,6 @@
+import {DeferredTarget, DepthTarget} from "../../common/framebuffer.js";
+import {Material} from "../../common/material.js";
+import {Mesh} from "../../common/mesh.js";
 import {
     GL_ARRAY_BUFFER,
     GL_COLOR_BUFFER_BIT,
@@ -15,11 +18,30 @@ import {
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
+import {DeferredPostprocessLayout} from "../../materials/layout_deferred_postprocess.js";
+import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
+import {ShadowMappingLayout} from "../../materials/layout_shadow_mapping.js";
+import {Render} from "../components/com_render2.js";
 import {Game} from "../game.js";
 import {first_entity} from "../impl.js";
-import {Has} from "../world.js";
+import {Has, World} from "../world.js";
 
-export function sys_render_postprocess(game: Game, delta: number) {
+interface Game2 extends Game {
+    Gl: WebGL2RenderingContext;
+    World: World & {
+        Render: Array<Render>;
+    };
+    Targets: {
+        Gbuffer: DeferredTarget;
+        Sun: DepthTarget;
+    };
+    MaterialShading: Material<
+        DeferredPostprocessLayout & ForwardShadingLayout & ShadowMappingLayout
+    >;
+    MeshQuad: Mesh;
+}
+
+export function sys_render_postprocess(game: Game2, delta: number) {
     game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
     game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
     game.Gl.clearColor(0.9, 0.9, 0.9, 1);

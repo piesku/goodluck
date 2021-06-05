@@ -1,6 +1,6 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
-import {DepthMappingLayout} from "./layout_depth_mapping.js";
+import {DepthMappingLayout} from "../../materials/layout_depth_mapping.js";
 
 let vertex = `
     uniform mat4 pv;

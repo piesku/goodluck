@@ -1,6 +1,6 @@
-import {link, Material} from "../../common/material.js";
-import {GL_TRIANGLES} from "../../common/webgl.js";
-import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
+import {link, Material} from "../common/material.js";
+import {GL_TRIANGLES} from "../common/webgl.js";
+import {ColoredShadedLayout} from "../materials/layout_colored_shaded.js";
 
 let vertex = `#version 300 es\n
 

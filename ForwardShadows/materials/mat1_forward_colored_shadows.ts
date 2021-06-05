@@ -2,7 +2,7 @@ import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
-import {ShadowMappingLayout} from "./layout_shadow_mapping.js";
+import {ShadowMappingLayout} from "../../materials/layout_shadow_mapping.js";
 
 let vertex = `
     uniform mat4 pv;

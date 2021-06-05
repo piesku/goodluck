@@ -4,8 +4,8 @@ import {Mesh} from "../../common/mesh.js";
 import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
+import {ShadowMappingLayout} from "../../materials/layout_shadow_mapping.js";
 import {Entity, Game} from "../game.js";
-import {ShadowMappingLayout} from "../materials/layout_shadow_mapping.js";
 import {Has, World} from "../world.js";
 
 export type Render = RenderColoredShadows;

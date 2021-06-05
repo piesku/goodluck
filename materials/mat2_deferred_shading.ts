@@ -1,8 +1,8 @@
-import {link, Material} from "../../common/material.js";
-import {GL_TRIANGLES} from "../../common/webgl.js";
-import {ShadowMappingLayout} from "../../ForwardShadows/materials/layout_shadow_mapping.js";
-import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
+import {link, Material} from "../common/material.js";
+import {GL_TRIANGLES} from "../common/webgl.js";
+import {ForwardShadingLayout} from "../materials/layout_forward_shading.js";
 import {DeferredPostprocessLayout} from "./layout_deferred_postprocess.js";
+import {ShadowMappingLayout} from "./layout_shadow_mapping.js";
 
 let vertex = `#version 300 es\n
     in vec3 attr_position;

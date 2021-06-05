@@ -5,21 +5,21 @@ import {
     DepthTarget,
 } from "../common/framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
+import {mat2_deferred_colored} from "../materials/mat2_deferred_colored.js";
+import {mat2_deferred_shading} from "../materials/mat2_deferred_shading.js";
+import {mat2_forward_depth} from "../materials/mat2_forward_depth.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {mesh_quad} from "../meshes/quad.js";
 import {frame_reset, frame_setup, loop_init} from "./impl.js";
-import {mat2_deferred_colored} from "./materials/mat2_deferred_colored.js";
-import {mat2_deferred_shading} from "./materials/mat2_deferred_shading.js";
-import {mat2_forward_depth} from "./materials/mat2_forward_depth.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
-import {sys_render_deferred} from "./systems/sys_render_deferred.js";
-import {sys_render_depth} from "./systems/sys_render_depth.js";
-import {sys_render_postprocess} from "./systems/sys_render_postprocess.js";
+import {sys_render_deferred} from "./systems/sys_render2_deferred.js";
+import {sys_render_depth} from "./systems/sys_render2_depth.js";
+import {sys_render_postprocess} from "./systems/sys_render2_postprocess.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
