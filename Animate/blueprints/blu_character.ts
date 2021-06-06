@@ -4,7 +4,7 @@ import {from_euler} from "../../common/quat.js";
 import {element} from "../../common/random.js";
 import {animate, AnimationFlag} from "../components/com_animate.js";
 import {children} from "../components/com_children.js";
-import {render_colored_shaded} from "../components/com_render1.js";
+import {render_colored_shaded} from "../components/com_render_ext.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Blueprint} from "../impl.js";
