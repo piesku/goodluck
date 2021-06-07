@@ -15,7 +15,7 @@ export function blueprint_character_rigged(game: Game): Blueprint {
         children(
             // spine
             [
-                transform(),
+                transform([0, 0.63, 0]),
                 bone(1),
                 animate({
                     idle: {
@@ -46,18 +46,18 @@ export function blueprint_character_rigged(game: Game): Blueprint {
                         Keyframes: [
                             {
                                 Timestamp: 0.0,
-                                Translation: [0, 0, 0],
+                                Translation: [0, 0.63, 0],
                                 Rotation: [0, 0, 0, 1],
                             },
                             {
                                 Timestamp: 0.2,
-                                Translation: [0, 2, 0],
+                                Translation: [0, 1.13, 0],
                                 Rotation: from_euler([0, 0, 0, 1], -15, 0, 0),
                                 Ease: ease_in_out_quart,
                             },
                             {
                                 Timestamp: 0.4,
-                                Translation: [0, 0, 0],
+                                Translation: [0, 0.63, 0],
                                 Rotation: from_euler([0, 0, 0, 1], 0, 0, 0),
                                 Ease: ease_out_quart,
                             },
@@ -68,7 +68,7 @@ export function blueprint_character_rigged(game: Game): Blueprint {
             ],
             // left shoulder
             [
-                transform([1.5, 0, 0]),
+                transform([0.3, 1.2, 0], from_euler([0, 0, 0, 1], 0, 0, 90)),
                 bone(2),
                 animate({
                     idle: {
@@ -99,18 +99,18 @@ export function blueprint_character_rigged(game: Game): Blueprint {
                         Keyframes: [
                             {
                                 Timestamp: 0.0,
-                                Translation: [1.5, 0, 0],
+                                Translation: [0.3, 1.2, 0],
                                 Rotation: [0, 0, 0, 1],
                             },
                             {
                                 Timestamp: 0.2,
-                                Translation: [1.5, 2, 0],
+                                Translation: [0.3, 1.7, 0],
                                 Rotation: from_euler([0, 0, 0, 1], 0, 0, 135),
                                 Ease: ease_in_out_quart,
                             },
                             {
                                 Timestamp: 0.4,
-                                Translation: [1.5, 0, 0],
+                                Translation: [0.3, 1.2, 0],
                                 Rotation: [0, 0, 0, 1],
                                 Ease: ease_out_quart,
                             },
@@ -121,7 +121,7 @@ export function blueprint_character_rigged(game: Game): Blueprint {
             ],
             // right shoulder
             [
-                transform([-1.5, 0, 0]),
+                transform([-0.3, 1.2, 0], from_euler([0, 0, 0, 1], 0, 0, -90)),
                 bone(3),
                 animate({
                     idle: {
@@ -152,18 +152,18 @@ export function blueprint_character_rigged(game: Game): Blueprint {
                         Keyframes: [
                             {
                                 Timestamp: 0.0,
-                                Translation: [-1.5, 0, 0],
+                                Translation: [-0.3, 1.2, 0],
                                 Rotation: [0, 0, 0, 1],
                             },
                             {
                                 Timestamp: 0.2,
-                                Translation: [-1.5, 2, 0],
+                                Translation: [-0.3, 1.7, 0],
                                 Rotation: from_euler([0, 0, 0, 1], 0, 0, -135),
                                 Ease: ease_in_out_quart,
                             },
                             {
                                 Timestamp: 0.4,
-                                Translation: [-1.5, 0, 0],
+                                Translation: [-0.3, 1.2, 0],
                                 Rotation: [0, 0, 0, 1],
                                 Ease: ease_out_quart,
                             },
@@ -174,7 +174,7 @@ export function blueprint_character_rigged(game: Game): Blueprint {
             ],
             // left hip
             [
-                transform([0.5, -2, 0]),
+                transform([0.15, 0.63, 0]),
                 bone(4),
                 animate({
                     idle: {
@@ -205,18 +205,18 @@ export function blueprint_character_rigged(game: Game): Blueprint {
                         Keyframes: [
                             {
                                 Timestamp: 0.0,
-                                Translation: [0.5, -2, 0],
+                                Translation: [0.15, 0.63, 0],
                                 Rotation: [0, 0, 0, 1],
                             },
                             {
                                 Timestamp: 0.2,
-                                Translation: [0.5, 0, 0],
+                                Translation: [0.15, 1.13, 0],
                                 Rotation: from_euler([0, 0, 0, 1], 0, 0, 45),
                                 Ease: ease_in_out_quart,
                             },
                             {
                                 Timestamp: 0.4,
-                                Translation: [0.5, -2, 0],
+                                Translation: [0.15, 0.63, 0],
                                 Rotation: [0, 0, 0, 1],
                                 Ease: ease_out_quart,
                             },
@@ -227,7 +227,7 @@ export function blueprint_character_rigged(game: Game): Blueprint {
             ],
             // right hip
             [
-                transform([-0.5, -2, 0]),
+                transform([-0.15, 0.63, 0]),
                 bone(5),
                 animate({
                     idle: {
@@ -258,18 +258,18 @@ export function blueprint_character_rigged(game: Game): Blueprint {
                         Keyframes: [
                             {
                                 Timestamp: 0.0,
-                                Translation: [-0.5, -2, 0],
+                                Translation: [-0.15, 0.63, 0],
                                 Rotation: [0, 0, 0, 1],
                             },
                             {
                                 Timestamp: 0.2,
-                                Translation: [-0.5, 0, 0],
+                                Translation: [-0.15, 1.13, 0],
                                 Rotation: from_euler([0, 0, 0, 1], 0, 0, -45),
                                 Ease: ease_in_out_quart,
                             },
                             {
                                 Timestamp: 0.4,
-                                Translation: [-0.5, -2, 0],
+                                Translation: [-0.15, 0.63, 0],
                                 Rotation: [0, 0, 0, 1],
                                 Ease: ease_out_quart,
                             },
