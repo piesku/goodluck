@@ -1,6 +1,7 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
 import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
+import {mesh_ludek} from "../meshes/ludek.js";
 import {mesh_quad} from "../meshes/quad.js";
 import {frame_reset, frame_setup, input_init, loop_init} from "./impl.js";
 import {mat1_forward_colored_gouraud_skinned} from "./materials/mat1_forward_colored_gouraud_skinned.js";
@@ -41,6 +42,7 @@ export class Game {
     MaterialColoredGouraud = mat1_forward_colored_gouraud(this.Gl);
     MaterialColoredSkinned = mat1_forward_colored_gouraud_skinned(this.Gl);
     MeshCube = mesh_cube(this.Gl);
+    MeshLudek = mesh_ludek(this.Gl);
     MeshQuad = mesh_quad(this.Gl);
 
     // The rendering pipeline supports 8 lights.

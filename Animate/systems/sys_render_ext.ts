@@ -123,7 +123,7 @@ function use_colored_skinned(
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
-const bones = new Float32Array(16 * 2);
+const bones = new Float32Array(16 * 6);
 function draw_colored_skinned(
     game: Game1,
     entity: Entity,

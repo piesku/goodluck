@@ -17,16 +17,20 @@ let vertex = `
     uniform float shininess;
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
-    uniform mat4 bones[2];
+    uniform mat4 bones[6];
 
     attribute vec3 attr_position;
     attribute vec3 attr_normal;
-    attribute float attr_weights;
+    attribute vec4 attr_weights;
 
     varying vec4 vert_color;
 
+    mat4 world_rigged(vec4 weights) {
+        return weights[1] * bones[int(weights[0])] + weights[3] * bones[int(weights[2])];
+    }
+
     void main() {
-        vec4 world_position = bones[int(attr_weights)] * vec4(attr_position, 1.0);
+        vec4 world_position = world_rigged(attr_weights) * vec4(attr_position, 1.0);
         vec3 world_normal = normalize((vec4(attr_normal, 1.0) * self).xyz);
         gl_Position = pv * world_position;
 

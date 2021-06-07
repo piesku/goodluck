@@ -1,6 +1,7 @@
 import {set_seed} from "../../common/random.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
-import {blueprint_character} from "../blueprints/blu_character.js";
+import {blueprint_character_rigged} from "../blueprints/blu_character_rigged.js";
+import {blueprint_character_voxel} from "../blueprints/blu_character_voxel.js";
 import {animate, AnimationFlag} from "../components/com_animate.js";
 import {audio_listener} from "../components/com_audio_listener.js";
 import {audio_source} from "../components/com_audio_source.js";
@@ -53,11 +54,19 @@ export function scene_stage(game: Game) {
                 Flags: AnimationFlag.Loop,
             },
         }),
-        children([
-            ...blueprint_character(game),
-            transform([-7, 0, 0]),
-            control(),
-            audio_source(true),
-        ]),
+        children(
+            [
+                ...blueprint_character_voxel(game),
+                transform([-7, 0, 0]),
+                control(),
+                audio_source(true),
+            ],
+            [
+                ...blueprint_character_rigged(game),
+                transform([7, -5, 0], [0, 1, 0, 0], [4, 4, 4]),
+                control(),
+                audio_source(true),
+            ]
+        ),
     ]);
 }
