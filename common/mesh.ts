@@ -9,6 +9,8 @@ export interface Mesh {
     NormalArray: Float32Array;
     TexCoordBuffer: WebGLBuffer;
     TexCoordArray: Float32Array;
+    WeightsBuffer: WebGLBuffer;
+    WeightsArray: Float32Array;
     IndexBuffer: WebGLBuffer;
     IndexArray: Uint16Array;
     IndexCount: number;

@@ -1,7 +1,7 @@
 import {Mesh} from "../common/mesh.js";
 import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW} from "../common/webgl.js";
 
-export function mesh_plane(gl: WebGLRenderingContext): Mesh {
+export function mesh_ludek(gl: WebGLRenderingContext): Mesh {
     let vertex_buf = gl.createBuffer()!;
     gl.bindBuffer(GL_ARRAY_BUFFER, vertex_buf);
     gl.bufferData(GL_ARRAY_BUFFER, vertex_arr, GL_STATIC_DRAW);
@@ -39,36 +39,95 @@ export function mesh_plane(gl: WebGLRenderingContext): Mesh {
 
 // prettier-ignore
 let vertex_arr = Float32Array.from([
-    0.5, 0, 0.5,
-    -0.5, 0, -0.5,
-    -0.5, 0, 0.5,
-    0.5, 0, -0.5
+    -0.3, 1.2, -0.15,
+    0.45, 1.47, 0,
+    0.3, 1.2, -0.15,
+    0.27, 0.63, 0,
+    0, 0.63, 0.15,
+    0.15, 0, 0,
+    0.3, 1.2, 0.15,
+    1.05, 1.35, 0,
+    -1.05, 1.35, 0,
+    -0.45, 1.47, 0,
+    -0.3, 1.2, 0.15,
+    0, 0.63, -0.15,
+    -0.15, 0, 0,
+    -0.27, 0.63, 0,
+    0, 2.25, -0.15,
+    0, 2.25, 0.45
 ]);
 
 // prettier-ignore
 let normal_arr = Float32Array.from([
-    0, 1, 0,
-    0, 1, 0,
-    0, 1, 0,
-    0, 1, 0
+    -0.424, -0.0402, -0.9048,
+    0.3556, 0.9341, -0.0314,
+    0.424, -0.0402, -0.9048,
+    0.9544, -0.2985, 0,
+    0, -0.2684, 0.9633,
+    0.0912, -0.9958, 0,
+    0.424, -0.0402, 0.9048,
+    0.9979, 0.0645, 0,
+    -0.9979, 0.0645, 0,
+    -0.3556, 0.9341, -0.0314,
+    -0.424, -0.0402, 0.9048,
+    0, -0.2684, -0.9633,
+    -0.0912, -0.9958, 0,
+    -0.9544, -0.2985, 0,
+    0, 0.767, -0.6416,
+    0, 0.6255, 0.7802
 ]);
 
 // prettier-ignore
-let texcoord_arr = Float32Array.from([
-    1, 0,
-    0, 1,
-    0, 0,
-    1, 1
-]);
+let texcoord_arr = Float32Array.from([]);
 
 // prettier-ignore
 let weights_arr = Float32Array.from([
-    // Weights must be assigned manually for now b/c OBJ doesn't support them.
-    // WARNING: Remaking the mesh file will overwrite your weights here.
+    3, 1, 0, 0,
+    1, 0.75, 2, 0.25,
+    2, 1, 0, 0,
+    4, 1, 0, 0,
+    4, 0.5, 5, 0.5,
+    4, 1, 0, 0,
+    2, 1, 0, 0,
+    2, 1, 0, 0,
+    3, 1, 0, 0,
+    1, 0.75, 3, 0.25,
+    3, 1, 0, 0,
+    4, 0.5, 5, 0.5,
+    5, 1, 0, 0,
+    5, 1, 0, 0,
+    1, 1, 0, 0,
+    1, 1, 0, 0,
 ]);
 
 // prettier-ignore
 let index_arr = Uint16Array.from([
-    1, 3, 0,
+    15, 9, 14,
+    1, 15, 14,
+    9, 15, 1,
+    1, 14, 9,
+    2, 7, 1,
+    9, 1, 6,
+    6, 7, 2,
+    7, 6, 1,
+    6, 2, 3,
+    6, 3, 4,
+    5, 4, 3,
+    11, 3, 2,
+    4, 5, 11,
+    4, 11, 12,
+    11, 5, 3,
+    12, 13, 4,
+    13, 12, 11,
+    10, 6, 4,
+    10, 4, 13,
+    6, 10, 9,
+    8, 9, 10,
+    0, 11, 2,
+    0, 13, 11,
+    1, 9, 0,
+    10, 0, 8,
+    0, 10, 13,
+    9, 8, 0,
     2, 1, 0
 ]);

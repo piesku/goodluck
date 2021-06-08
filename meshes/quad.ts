@@ -14,6 +14,10 @@ export function mesh_quad(gl: WebGLRenderingContext): Mesh {
     gl.bindBuffer(GL_ARRAY_BUFFER, texcoord_buf);
     gl.bufferData(GL_ARRAY_BUFFER, texcoord_arr, GL_STATIC_DRAW);
 
+    let weights_buf = gl.createBuffer()!;
+    gl.bindBuffer(GL_ARRAY_BUFFER, weights_buf);
+    gl.bufferData(GL_ARRAY_BUFFER, weights_arr, GL_STATIC_DRAW);
+
     let index_buf = gl.createBuffer()!;
     gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buf);
     gl.bufferData(GL_ELEMENT_ARRAY_BUFFER, index_arr, GL_STATIC_DRAW);
@@ -25,6 +29,8 @@ export function mesh_quad(gl: WebGLRenderingContext): Mesh {
         NormalArray: normal_arr,
         TexCoordBuffer: texcoord_buf,
         TexCoordArray: texcoord_arr,
+        WeightsBuffer: weights_buf,
+        WeightsArray: weights_arr,
         IndexBuffer: index_buf,
         IndexArray: index_arr,
         IndexCount: index_arr.length,
@@ -53,6 +59,12 @@ let texcoord_arr = Float32Array.from([
     1, 0,
     1, 1,
     0, 1
+]);
+
+// prettier-ignore
+let weights_arr = Float32Array.from([
+    // Weights must be assigned manually for now b/c OBJ doesn't support them.
+    // WARNING: Remaking the mesh file will overwrite your weights here.
 ]);
 
 // prettier-ignore
