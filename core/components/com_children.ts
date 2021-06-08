@@ -29,7 +29,7 @@ export function children(...blueprints: Array<Blueprint>) {
  * @param mask Component mask to look for.
  */
 export function* query_all(world: World, parent: Entity, mask: Has): IterableIterator<Entity> {
-    if (world.Signature[parent] & mask) {
+    if ((world.Signature[parent] & mask) === mask) {
         yield parent;
     }
     if (world.Signature[parent] & Has.Children) {
