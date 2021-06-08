@@ -14,6 +14,10 @@ export function mesh_ludek(gl: WebGLRenderingContext): Mesh {
     gl.bindBuffer(GL_ARRAY_BUFFER, texcoord_buf);
     gl.bufferData(GL_ARRAY_BUFFER, texcoord_arr, GL_STATIC_DRAW);
 
+    let weights_buf = gl.createBuffer()!;
+    gl.bindBuffer(GL_ARRAY_BUFFER, weights_buf);
+    gl.bufferData(GL_ARRAY_BUFFER, weights_arr, GL_STATIC_DRAW);
+
     let index_buf = gl.createBuffer()!;
     gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buf);
     gl.bufferData(GL_ELEMENT_ARRAY_BUFFER, index_arr, GL_STATIC_DRAW);
@@ -25,6 +29,8 @@ export function mesh_ludek(gl: WebGLRenderingContext): Mesh {
         NormalArray: normal_arr,
         TexCoordBuffer: texcoord_buf,
         TexCoordArray: texcoord_arr,
+        WeightsBuffer: weights_buf,
+        WeightsArray: weights_arr,
         IndexBuffer: index_buf,
         IndexArray: index_arr,
         IndexCount: index_arr.length,
@@ -33,21 +39,20 @@ export function mesh_ludek(gl: WebGLRenderingContext): Mesh {
 
 // prettier-ignore
 let vertex_arr = Float32Array.from([
-    -0.3, 1.2, -0.15, // Arm pit R
-    0.45, 1.47, 0, // Shoulder L
-    0.3, 1.2, -0.15, // Arm pit L
-    0.27, 0.63, 0, // Hip L
-    0, 0.63, 0.15, // Groin
-    0.15, 0, 0, // Foot L
-    0.3, 1.2, 0.15, // Arm pit L
-    1.05, 1.35, 0, // Hand L
-    -1.05, 1.35, 0, // Hand R
-    -0.45, 1.47, 0, // Shoulder R
-    -0.3, 1.2, 0.15, // Arm pit R
-    0, 0.63, -0.15, // Groin
-    -0.15, 0, 0, // Foot R
-    -0.27, 0.63, 0, // Hip R
-    // Head
+    -0.3, 1.2, -0.15,
+    0.45, 1.47, 0,
+    0.3, 1.2, -0.15,
+    0.27, 0.63, 0,
+    0, 0.63, 0.15,
+    0.15, 0, 0,
+    0.3, 1.2, 0.15,
+    1.05, 1.35, 0,
+    -1.05, 1.35, 0,
+    -0.45, 1.47, 0,
+    -0.3, 1.2, 0.15,
+    0, 0.63, -0.15,
+    -0.15, 0, 0,
+    -0.27, 0.63, 0,
     0, 2.25, -0.15,
     0, 2.25, 0.45
 ]);
@@ -74,6 +79,26 @@ let normal_arr = Float32Array.from([
 
 // prettier-ignore
 let texcoord_arr = Float32Array.from([]);
+
+// prettier-ignore
+let weights_arr = Float32Array.from([
+    3, 1, 0, 0,
+    1, 0.75, 2, 0.25,
+    2, 1, 0, 0,
+    4, 1, 0, 0,
+    4, 0.5, 5, 0.5,
+    4, 1, 0, 0,
+    2, 1, 0, 0,
+    2, 1, 0, 0,
+    3, 1, 0, 0,
+    1, 0.75, 3, 0.25,
+    3, 1, 0, 0,
+    4, 0.5, 5, 0.5,
+    5, 1, 0, 0,
+    5, 1, 0, 0,
+    1, 1, 0, 0,
+    1, 1, 0, 0,
+]);
 
 // prettier-ignore
 let index_arr = Uint16Array.from([

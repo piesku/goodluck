@@ -1,13 +1,7 @@
 import {Material} from "../../common/material.js";
 import {Vec4} from "../../common/math.js";
 import {Mesh} from "../../common/mesh.js";
-import {
-    GL_ARRAY_BUFFER,
-    GL_CW,
-    GL_ELEMENT_ARRAY_BUFFER,
-    GL_FLOAT,
-    GL_STATIC_DRAW,
-} from "../../common/webgl.js";
+import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
 import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
 import {Entity, Game} from "../game.js";
@@ -113,15 +107,6 @@ export function render_colored_skinned(
 ) {
     return (game: Game1, entity: Entity) => {
         if (!colored_skinned_vaos.has(mesh)) {
-            let weights_arr = Float32Array.from([
-                3, 1, 0, 0, 1, 0.75, 2, 0.25, 2, 1, 0, 0, 4, 1, 0, 0, 4, 0.5, 5, 0.5, 4, 1, 0, 0, 2,
-                1, 0, 0, 2, 1, 0, 0, 3, 1, 0, 0, 1, 0.75, 3, 0.25, 3, 1, 0, 0, 4, 0.5, 5, 0.5, 5, 1,
-                0, 0, 5, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0,
-            ]);
-            let weights_buf = game.Gl.createBuffer()!;
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, weights_buf);
-            game.Gl.bufferData(GL_ARRAY_BUFFER, weights_arr, GL_STATIC_DRAW);
-
             // We only need to create the VAO once.
             let vao = game.ExtVao.createVertexArrayOES()!;
             game.ExtVao.bindVertexArrayOES(vao);
@@ -141,7 +126,7 @@ export function render_colored_skinned(
             game.Gl.enableVertexAttribArray(material.Locations.VertexNormal);
             game.Gl.vertexAttribPointer(material.Locations.VertexNormal, 3, GL_FLOAT, false, 0, 0);
 
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, weights_buf);
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.WeightsBuffer);
             game.Gl.enableVertexAttribArray(material.Locations.VertexWeights);
             game.Gl.vertexAttribPointer(material.Locations.VertexWeights, 4, GL_FLOAT, false, 0, 0);
 
