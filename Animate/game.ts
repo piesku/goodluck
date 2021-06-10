@@ -1,4 +1,4 @@
-import {Game3D} from "../common/game.js";
+import {Blueprint as GenericBlueprint, Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
 import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
@@ -48,4 +48,8 @@ export class Game extends Game3D {
         sys_light(this, delta);
         sys_render_forward(this, delta);
     }
+}
+
+export module Game {
+    export type Blueprint = GenericBlueprint<Game>;
 }

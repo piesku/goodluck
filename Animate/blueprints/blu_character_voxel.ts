@@ -1,5 +1,4 @@
 import {ease_in_out_quart, ease_out_quart} from "../../common/easing.js";
-import {Blueprint} from "../../common/game.js";
 import {Vec4} from "../../common/math.js";
 import {from_euler} from "../../common/quat.js";
 import {element} from "../../common/random.js";
@@ -32,7 +31,7 @@ let pants_colors: Array<Vec4> = [
     [0.33, 0.33, 0.33, 1],
 ];
 
-export function blueprint_character_voxel(game: Game): Blueprint<Game> {
+export function blueprint_character_voxel(game: Game): Game.Blueprint {
     let skin_color = element(skin_colors);
     let hair_color = element(hair_colors);
     let shirt_color = element(shirt_colors);

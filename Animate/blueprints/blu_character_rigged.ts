@@ -1,5 +1,4 @@
 import {ease_in_out_quart, ease_out_quart} from "../../common/easing.js";
-import {Blueprint} from "../../common/game.js";
 import {from_euler} from "../../common/quat.js";
 import {animate, AnimationFlag} from "../components/com_animate.js";
 import {bone} from "../components/com_bone.js";
@@ -8,7 +7,7 @@ import {render_colored_skinned} from "../components/com_render_ext.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 
-export function blueprint_character_rigged(game: Game): Blueprint<Game> {
+export function blueprint_character_rigged(game: Game): Game.Blueprint {
     return [
         render_colored_skinned(game.MaterialColoredSkinned, game.MeshLudek, [1, 0.3, 0, 1]),
         bone(0),
