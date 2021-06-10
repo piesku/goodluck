@@ -195,10 +195,13 @@ export class GameImpl {
     }
 }
 
-export type Mixin = (game: GameImpl, entity: Entity) => void;
-export type Blueprint = Array<Mixin>;
+export type Mixin<G extends GameImpl> = (game: G, entity: Entity) => void;
+export type Blueprint<G extends GameImpl> = Array<Mixin<G>>;
 
-export function instantiate(game: GameImpl & {World: WorldImpl}, blueprint: Blueprint) {
+export function instantiate<G extends GameImpl & {World: WorldImpl}>(
+    game: G,
+    blueprint: Blueprint<G>
+) {
     let entity = game.World.CreateEntity();
     for (let mixin of blueprint) {
         mixin(game, entity);
