@@ -5,9 +5,11 @@ const update_span = document.getElementById("update");
 const delta_span = document.getElementById("delta");
 const fps_span = document.getElementById("fps");
 
-export class GameImpl {
+export abstract class GameImpl {
     Raf = 0;
     Now = 0;
+
+    abstract World: WorldImpl;
 
     ViewportWidth = window.innerWidth;
     ViewportHeight = window.innerHeight;
@@ -210,7 +212,7 @@ export class GameImpl {
     }
 }
 
-export class Game3D extends GameImpl {
+export abstract class Game3D extends GameImpl {
     Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
     Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
     Gl = this.Canvas.getContext("webgl")!;
@@ -228,10 +230,7 @@ export class Game3D extends GameImpl {
 export type Mixin<G extends GameImpl> = (game: G, entity: Entity) => void;
 export type Blueprint<G extends GameImpl> = Array<Mixin<G>>;
 
-export function instantiate<G extends GameImpl & {World: WorldImpl}>(
-    game: G,
-    blueprint: Blueprint<G>
-) {
+export function instantiate<G extends GameImpl>(game: G, blueprint: Blueprint<G>) {
     let entity = game.World.CreateEntity();
     for (let mixin of blueprint) {
         mixin(game, entity);
