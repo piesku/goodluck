@@ -1,3 +1,4 @@
+import {GL_CULL_FACE, GL_DEPTH_TEST} from "./webgl.js";
 import {Entity, WorldImpl} from "./world.js";
 
 const update_span = document.getElementById("update");
@@ -206,6 +207,21 @@ export class GameImpl {
         if (fps_span) {
             fps_span.textContent = (1 / delta).toFixed();
         }
+    }
+}
+
+export class Game3D extends GameImpl {
+    Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
+    Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
+    Gl = this.Canvas.getContext("webgl")!;
+    ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
+    Audio = new (window["AudioContext"] || window.webkitAudioContext)();
+
+    constructor() {
+        super();
+
+        this.Gl.enable(GL_DEPTH_TEST);
+        this.Gl.enable(GL_CULL_FACE);
     }
 }
 

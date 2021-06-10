@@ -1,5 +1,4 @@
-import {GameImpl} from "../common/game.js";
-import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
+import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
 import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
@@ -18,14 +17,8 @@ import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 export {Entity} from "../common/world.js";
 
-export class Game extends GameImpl {
+export class Game extends Game3D {
     World = new World();
-
-    Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
-    Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
-    Gl = this.Canvas.getContext("webgl")!;
-    ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
-    Audio = new (window["AudioContext"] || window.webkitAudioContext)();
 
     MaterialColoredGouraud = mat1_forward_colored_gouraud(this.Gl);
     MaterialColoredSkinned = mat1_forward_colored_gouraud_skinned(this.Gl);
@@ -36,13 +29,6 @@ export class Game extends GameImpl {
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
     Cameras: Array<Entity> = [];
-
-    constructor() {
-        super();
-
-        this.Gl.enable(GL_DEPTH_TEST);
-        this.Gl.enable(GL_CULL_FACE);
-    }
 
     FrameUpdate(delta: number) {
         // Player input.
