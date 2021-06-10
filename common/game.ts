@@ -1,6 +1,10 @@
 import {Vec2} from "./math.js";
 import {Entity, WorldImpl} from "./world.js";
 
+const update_span = document.getElementById("update");
+const delta_span = document.getElementById("delta");
+const fps_span = document.getElementById("fps");
+
 export class GameImpl {
     Raf = 0;
     Now = 0;
@@ -125,9 +129,9 @@ export class GameImpl {
 
         let tick = (now: number) => {
             let delta = (now - last) / 1000;
-            this.FrameSetup();
+            this.FrameSetup(delta);
             this.FrameUpdate(delta);
-            this.FrameReset();
+            this.FrameReset(delta);
             last = now;
             this.Raf = requestAnimationFrame(tick);
         };
@@ -140,7 +144,7 @@ export class GameImpl {
         cancelAnimationFrame(this.Raf);
     }
 
-    FrameSetup() {
+    FrameSetup(delta: number) {
         this.Now = performance.now();
 
         let mouse_distance =
@@ -169,7 +173,7 @@ export class GameImpl {
 
     FrameUpdate(delta: number) {}
 
-    FrameReset() {
+    FrameReset(delta: number) {
         this.ViewportResized = false;
 
         if (this.InputDelta["Mouse0"] === -1) {
@@ -191,6 +195,17 @@ export class GameImpl {
 
         for (let name in this.InputDelta) {
             this.InputDelta[name] = 0;
+        }
+
+        let update = performance.now() - this.Now;
+        if (update_span) {
+            update_span.textContent = update.toFixed(1);
+        }
+        if (delta_span) {
+            delta_span.textContent = (delta * 1000).toFixed(1);
+        }
+        if (fps_span) {
+            fps_span.textContent = (1 / delta).toFixed();
         }
     }
 }

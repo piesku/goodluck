@@ -10,7 +10,6 @@ import {sys_audio_listener} from "./systems/sys_audio_listener.js";
 import {sys_audio_source} from "./systems/sys_audio_source.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control} from "./systems/sys_control.js";
-import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_render_forward} from "./systems/sys_render_ext.js";
 import {sys_resize} from "./systems/sys_resize.js";
@@ -62,7 +61,5 @@ export class Game extends GameImpl {
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render_forward(this, delta);
-
-        sys_framerate(this, delta, performance.now() - this.Now);
     }
 }
