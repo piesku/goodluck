@@ -7,7 +7,7 @@ import {render_colored_skinned} from "../components/com_render_ext.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 
-export function blueprint_character_rigged(game: Game): Game.Blueprint {
+export function blueprint_character_rigged(game: Game) {
     return [
         render_colored_skinned(game.MaterialColoredSkinned, game.MeshLudek, [1, 0.3, 0, 1]),
         bone(0),

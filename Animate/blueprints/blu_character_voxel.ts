@@ -31,7 +31,7 @@ let pants_colors: Array<Vec4> = [
     [0.33, 0.33, 0.33, 1],
 ];
 
-export function blueprint_character_voxel(game: Game): Game.Blueprint {
+export function blueprint_character_voxel(game: Game) {
     let skin_color = element(skin_colors);
     let hair_color = element(hair_colors);
     let shirt_color = element(shirt_colors);
