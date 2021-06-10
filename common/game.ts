@@ -4,6 +4,7 @@ import {Entity, WorldImpl} from "./world.js";
 const update_span = document.getElementById("update");
 const delta_span = document.getElementById("delta");
 const fps_span = document.getElementById("fps");
+const step = 1 / 60;
 
 export abstract class GameImpl {
     Raf = 0;
@@ -127,13 +128,22 @@ export abstract class GameImpl {
     }
 
     Resume() {
+        let accumulator = 0;
         let last = performance.now();
 
         let tick = (now: number) => {
             let delta = (now - last) / 1000;
             this.FrameSetup(delta);
+
+            accumulator += delta;
+            while (accumulator >= step) {
+                accumulator -= step;
+                // TODO Adjust InputDelta and InputDistance.
+                this.FixedUpdate(step);
+            }
             this.FrameUpdate(delta);
             this.FrameReset(delta);
+
             last = now;
             this.Raf = requestAnimationFrame(tick);
         };
@@ -173,6 +183,7 @@ export abstract class GameImpl {
         }
     }
 
+    FixedUpdate(step: number) {}
     FrameUpdate(delta: number) {}
 
     FrameReset(delta: number) {
