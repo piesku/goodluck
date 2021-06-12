@@ -1,20 +1,14 @@
-import {loop_init} from "./impl.js";
-import {sys_framerate} from "./systems/sys_framerate.js";
+import {GameImpl} from "../common/game.js";
+import {WorldImpl} from "../common/world.js";
 import {sys_ui} from "./systems/sys_ui.js";
 
-export class Game {
-    Ui = document.querySelector("main")!;
+export class Game extends GameImpl {
+    World = new WorldImpl();
 
     Todos: Array<string> = [];
     Completed: Array<string> = [];
 
-    constructor() {
-        loop_init(this);
-    }
-
-    FrameUpdate(delta: number) {
-        let now = performance.now();
+    override FrameUpdate(delta: number) {
         sys_ui(this, delta);
-        sys_framerate(this, delta, performance.now() - now);
     }
 }
