@@ -46,7 +46,7 @@ export class Game extends GameWebGL2 {
         }
     }
 
-    override Resume() {
+    override Start() {
         let last = performance.now();
 
         let tick = (now: number, frame?: XRFrame) => {
@@ -73,7 +73,7 @@ export class Game extends GameWebGL2 {
         }
     }
 
-    override Pause() {
+    override Stop() {
         if (this.XrSession) {
             this.XrSession.cancelAnimationFrame(this.Raf);
         } else {

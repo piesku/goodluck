@@ -11,16 +11,16 @@ export async function xr_enter(game: Game) {
     });
     game.XrSpace = await session.requestReferenceSpace("local");
 
-    game.Pause();
+    game.Stop();
     game.XrSession = session;
-    game.Resume();
+    game.Start();
 
     game.XrSession.addEventListener("end", () => {
-        game.Pause();
+        game.Stop();
         game.XrSession = undefined;
         game.XrSpace = undefined;
         game.XrFrame = undefined;
         game.ViewportResized = true;
-        game.Resume();
+        game.Start();
     });
 }

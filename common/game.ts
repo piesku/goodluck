@@ -45,7 +45,7 @@ export abstract class GameImpl {
 
     constructor() {
         document.addEventListener("visibilitychange", () =>
-            document.hidden ? this.Pause() : this.Resume()
+            document.hidden ? this.Stop() : this.Start()
         );
 
         this.Ui.addEventListener("contextmenu", (evt) => evt.preventDefault());
@@ -134,7 +134,7 @@ export abstract class GameImpl {
         });
     }
 
-    Resume() {
+    Start() {
         let accumulator = 0;
         let last = performance.now();
 
@@ -155,11 +155,11 @@ export abstract class GameImpl {
             this.Raf = requestAnimationFrame(tick);
         };
 
-        this.Pause();
+        this.Stop();
         tick(last);
     }
 
-    Pause() {
+    Stop() {
         cancelAnimationFrame(this.Raf);
     }
 
