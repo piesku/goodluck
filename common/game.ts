@@ -232,26 +232,25 @@ export abstract class GameImpl {
 }
 
 export abstract class Game2D extends GameImpl {
-    Canvas = document.querySelector("canvas")!;
-    Context2D = this.Canvas.getContext("2d")!;
+    Canvas2D = document.querySelector("canvas")!;
+    Context2D = this.Canvas2D.getContext("2d")!;
     Audio = new (window["AudioContext"] || window.webkitAudioContext)();
 
     constructor() {
         super();
 
-        this.Canvas = document.querySelector("canvas")!;
-        this.Canvas.width = this.ViewportWidth;
-        this.Canvas.height = this.ViewportHeight;
-        this.Context2D = this.Canvas.getContext("2d")!;
+        this.Canvas2D.width = this.ViewportWidth;
+        this.Canvas2D.height = this.ViewportHeight;
+        this.Context2D = this.Canvas2D.getContext("2d")!;
     }
 }
 
 export abstract class GameWebGL1 extends GameImpl {
-    Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
-    Context2D = this.Billboard.getContext("2d")!;
+    Canvas2D = document.querySelector("#billboard")! as HTMLCanvasElement;
+    Context2D = this.Canvas2D.getContext("2d")!;
 
-    Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
-    Gl = this.Canvas.getContext("webgl")!;
+    Canvas3D = document.querySelector("#scene")! as HTMLCanvasElement;
+    Gl = this.Canvas3D.getContext("webgl")!;
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
     Audio = new (window["AudioContext"] || window.webkitAudioContext)();
@@ -265,11 +264,11 @@ export abstract class GameWebGL1 extends GameImpl {
 }
 
 export abstract class GameWebGL2 extends GameImpl {
-    Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
-    Context2D = this.Billboard.getContext("2d")!;
+    Canvas2D = document.querySelector("#billboard")! as HTMLCanvasElement;
+    Context2D = this.Canvas2D.getContext("2d")!;
 
-    Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
-    Gl = this.Canvas.getContext("webgl2")!;
+    Canvas3D = document.querySelector("#scene")! as HTMLCanvasElement;
+    Gl = this.Canvas3D.getContext("webgl2")!;
 
     Audio = new (window["AudioContext"] || window.webkitAudioContext)();
 

@@ -18,7 +18,7 @@ export type Entity = number;
 export class Game extends GameWebGL2 {
     World = new World();
 
-    override Gl = this.Canvas.getContext("webgl2", {
+    override Gl = this.Canvas3D.getContext("webgl2", {
         xrCompatible: true,
     })! as WebGL2RenderingContext;
 

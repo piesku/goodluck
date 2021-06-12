@@ -7,9 +7,9 @@ export interface Game extends GameImpl {
     World: World;
 
     Audio: AudioContext;
-    Billboard: HTMLCanvasElement;
-    Canvas: HTMLCanvasElement;
+    Canvas2D: HTMLCanvasElement;
     Context2D: CanvasRenderingContext2D;
+    Canvas3D: HTMLCanvasElement;
 
     // The rendering pipeline supports 8 lights.
     LightPositions: Float32Array;
