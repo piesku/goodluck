@@ -39,6 +39,11 @@ export function* query_all(world: World, parent: Entity, mask: Has): IterableIte
     }
 }
 
+/**
+ * Delete the entity with all its descendants.
+ * @param world World object which stores the component data.
+ * @param entity The root entity to start removing at.
+ */
 export function destroy_all(world: World, entity: Entity) {
     if (world.Signature[entity] & Has.Children) {
         for (let child of world.Children[entity].Children) {
