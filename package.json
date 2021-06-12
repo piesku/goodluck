@@ -29,10 +29,10 @@
         "npm-run-all": "4.1.5",
         "posthtml-cli": "^0.9.2",
         "posthtml-inline-assets": "^3.1.0",
-        "prettier": "2.3.0",
+        "prettier": "2.3.1",
         "rollup": "2.47.0",
         "terser": "5.7.0",
-        "typescript": "4.2.4"
+        "typescript": "4.3.2"
     },
     "engines": {
         "node": "12.x"
