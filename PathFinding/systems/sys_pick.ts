@@ -1,3 +1,4 @@
+import {input_pointer_position} from "../../common/input.js";
 import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {ray_intersect_aabb, ray_intersect_mesh} from "../../common/raycast.js";
@@ -5,7 +6,6 @@ import {normalize, subtract, transform_direction, transform_point} from "../../c
 import {Collide} from "../components/com_collide.js";
 import {PickableKind} from "../components/com_pickable.js";
 import {Entity, Game} from "../game.js";
-import {input_pointer_position} from "../impl.js";
 import {Has} from "../world.js";
 
 const PICKABLES_QUERY = Has.Transform | Has.Collide | Has.Pickable;

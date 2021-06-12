@@ -1,5 +1,4 @@
 import {Game} from "./game.js";
-import {loop_start} from "./impl.js";
 import {scene_stage} from "./scenes/sce_stage.js";
 
 let game = new Game();
@@ -9,7 +8,7 @@ window.game = game;
 
 Promise.all([load_mesh("cube"), load_mesh("terrain")]).then(() => {
     scene_stage(game);
-    loop_start(game);
+    game.Start();
 });
 
 async function load_mesh(name: string) {

@@ -1,3 +1,4 @@
+import {instantiate} from "../../common/game.js";
 import {nav_bake} from "../../common/navmesh.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {children} from "../components/com_children.js";
@@ -13,7 +14,6 @@ import {render_colored_shaded, render_colored_unlit} from "../components/com_ren
 import {selectable} from "../components/com_selectable.js";
 import {transform} from "../components/com_transform.js";
 import {Game, Layer} from "../game.js";
-import {instantiate} from "../impl.js";
 import {Has, World} from "../world.js";
 
 export function scene_stage(game: Game) {
