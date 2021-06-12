@@ -54,18 +54,14 @@
         const DEBUG = true;
     </script>
     <script type="module">
-        import {loop_start, loop_stop} from "./impl.js";
         import "./index.js";
 
-        let running = true;
         window.toggle = function toggle(button) {
-            if (running) {
-                running = false;
-                loop_stop();
+            if (game.Running) {
+                game.Stop();
                 button.textContent = "resume";
             } else {
-                running = true;
-                loop_start(game);
+                game.Start();
                 button.textContent = "pause";
             }
         };
