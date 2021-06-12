@@ -58,12 +58,10 @@
 
         let running = true;
         window.toggle = function toggle(button) {
-            if (running) {
-                running = false;
+            if (game.Running) {
                 game.Stop();
                 button.textContent = "resume";
             } else {
-                running = true;
                 game.Start();
                 button.textContent = "pause";
             }

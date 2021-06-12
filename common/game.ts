@@ -7,7 +7,7 @@ const fps_span = document.getElementById("fps");
 const step = 1 / 60;
 
 export abstract class GameImpl {
-    Raf = 0;
+    Running = 0;
     Now = 0;
 
     abstract World: WorldImpl;
@@ -152,7 +152,7 @@ export abstract class GameImpl {
             this.FrameReset(delta);
 
             last = now;
-            this.Raf = requestAnimationFrame(tick);
+            this.Running = requestAnimationFrame(tick);
         };
 
         this.Stop();
@@ -160,7 +160,8 @@ export abstract class GameImpl {
     }
 
     Stop() {
-        cancelAnimationFrame(this.Raf);
+        cancelAnimationFrame(this.Running);
+        this.Running = 0;
     }
 
     FrameSetup(delta: number) {

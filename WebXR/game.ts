@@ -55,10 +55,10 @@ export class Game extends GameWebGL2 {
 
             if (frame) {
                 this.XrFrame = frame;
-                this.Raf = this.XrFrame.session.requestAnimationFrame(tick);
+                this.Running = this.XrFrame.session.requestAnimationFrame(tick);
             } else {
                 this.XrFrame = undefined;
-                this.Raf = requestAnimationFrame(tick);
+                this.Running = requestAnimationFrame(tick);
             }
 
             this.FrameSetup(delta);
@@ -67,18 +67,19 @@ export class Game extends GameWebGL2 {
         };
 
         if (this.XrSession) {
-            this.Raf = this.XrSession.requestAnimationFrame(tick);
+            this.Running = this.XrSession.requestAnimationFrame(tick);
         } else {
-            this.Raf = requestAnimationFrame(tick);
+            this.Running = requestAnimationFrame(tick);
         }
     }
 
     override Stop() {
         if (this.XrSession) {
-            this.XrSession.cancelAnimationFrame(this.Raf);
+            this.XrSession.cancelAnimationFrame(this.Running);
         } else {
-            cancelAnimationFrame(this.Raf);
+            cancelAnimationFrame(this.Running);
         }
+        this.Running = 0;
     }
 
     override FrameUpdate(delta: number) {
