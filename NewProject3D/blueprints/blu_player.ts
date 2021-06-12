@@ -10,9 +10,8 @@ import {render_colored_shaded} from "../components/com_render1.js";
 import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
 import {transform} from "../components/com_transform.js";
 import {Game, Layer} from "../game.js";
-import {Blueprint} from "../impl.js";
 
-export function blueprint_player(game: Game): Blueprint {
+export function blueprint_player(game: Game) {
     return [
         control_player(true, 0.2, 0),
         move(10, 3),

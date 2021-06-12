@@ -4,9 +4,8 @@ import {render_colored_shaded} from "../components/com_render1.js";
 import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
 import {transform} from "../components/com_transform.js";
 import {Game, Layer} from "../game.js";
-import {Blueprint} from "../impl.js";
 
-export function blueprint_hand(game: Game): Blueprint {
+export function blueprint_hand(game: Game) {
     return [
         collide(true, Layer.Physics, Layer.Physics, [0.5, 0.5, 0.5]),
         rigid_body(RigidKind.Kinematic),

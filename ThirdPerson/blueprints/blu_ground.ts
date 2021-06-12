@@ -5,9 +5,8 @@ import {render_colored_shaded} from "../components/com_render1.js";
 import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
 import {transform} from "../components/com_transform.js";
 import {Game, Layer} from "../game.js";
-import {Blueprint} from "../impl.js";
 
-export function blueprint_ground(game: Game): Blueprint {
+export function blueprint_ground(game: Game) {
     return [
         collide(false, Layer.Terrain, Layer.None),
         rigid_body(RigidKind.Static),

@@ -5,9 +5,8 @@ import {control_camera} from "../components/com_control_camera.js";
 import {move} from "../components/com_move.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {Blueprint} from "../impl.js";
 
-export function blueprint_camera(game: Game): Blueprint {
+export function blueprint_camera(game: Game) {
     return [
         control_camera(100, 0, 1, 0),
         move(100, 0.2),

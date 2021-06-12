@@ -15,10 +15,9 @@ import {toggle} from "../components/com_toggle.js";
 import {transform} from "../components/com_transform.js";
 import {trigger} from "../components/com_trigger.js";
 import {Game, Layer} from "../game.js";
-import {Blueprint} from "../impl.js";
 import {Has} from "../world.js";
 
-export function blueprint_item(game: Game): Blueprint {
+export function blueprint_item(game: Game) {
     return [
         collide(true, Layer.Collectable, Layer.Terrain | Layer.Player),
         trigger(Layer.Player, Action.CollectItem),
