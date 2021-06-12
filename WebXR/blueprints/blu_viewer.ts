@@ -5,9 +5,8 @@ import {ControlXrKind, control_xr} from "../components/com_control_xr.js";
 import {render_colored_shaded} from "../components/com_render2.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {Blueprint} from "../impl.js";
 
-export function blueprint_viewer(game: Game): Blueprint {
+export function blueprint_viewer(game: Game) {
     return [
         children(
             [

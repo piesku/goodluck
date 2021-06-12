@@ -1,9 +1,9 @@
+import {instantiate} from "../../common/game.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {blueprint_flame_colored} from "../blueprints/blu_flame_colored.js";
 import {blueprint_flame_textured} from "../blueprints/blu_flame_textured.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {instantiate} from "../impl.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {

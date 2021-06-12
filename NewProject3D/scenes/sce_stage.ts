@@ -1,3 +1,4 @@
+import {instantiate} from "../../common/game.js";
 import {float} from "../../common/random.js";
 import {blueprint_camera_follow} from "../blueprints/blu_camera_follow.js";
 import {blueprint_ground} from "../blueprints/blu_ground.js";
@@ -12,7 +13,6 @@ import {move} from "../components/com_move.js";
 import {shake} from "../components/com_shake.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {instantiate} from "../impl.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {

@@ -1,9 +1,9 @@
+import {instantiate} from "../../common/game.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light_directional, light_point} from "../components/com_light.js";
 import {render_instanced} from "../components/com_render.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {instantiate} from "../impl.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {

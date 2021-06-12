@@ -1,6 +1,5 @@
 import {create_texture_from, fetch_image} from "../common/texture.js";
 import {Game} from "./game.js";
-import {loop_start} from "./impl.js";
 import {scene_stage} from "./scenes/sce_stage.js";
 
 let game = new Game();
@@ -26,7 +25,7 @@ Promise.all([
     load_texture(game, "Concrete018_1K_Roughness.jpg"),
 ]).then(() => {
     scene_stage(game);
-    loop_start(game);
+    game.Start();
 });
 
 async function load_texture(game: Game, name: string) {

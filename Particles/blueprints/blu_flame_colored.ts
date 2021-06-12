@@ -5,9 +5,8 @@ import {render_particles_colored} from "../components/com_render.js";
 import {shake} from "../components/com_shake.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {Blueprint} from "../impl.js";
 
-export function blueprint_flame_colored(game: Game): Blueprint {
+export function blueprint_flame_colored(game: Game) {
     return [
         children([
             transform(undefined, from_euler([0, 0, 0, 0], -90, 0, 0)),

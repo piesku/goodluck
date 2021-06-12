@@ -1,14 +1,12 @@
-import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
+import {GameWebGL1} from "../common/game.js";
 import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
-import {frame_reset, frame_setup, input_init, input_pointer_lock, loop_init} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_keyboard} from "./systems/sys_control_keyboard.js";
 import {sys_control_mouse} from "./systems/sys_control_mouse.js";
 import {sys_control_touch} from "./systems/sys_control_touch.js";
 import {sys_control_xbox} from "./systems/sys_control_xbox.js";
 import {sys_draw} from "./systems/sys_draw.js";
-import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_render_forward} from "./systems/sys_render1_forward.js";
@@ -19,25 +17,8 @@ import {World} from "./world.js";
 
 export type Entity = number;
 
-export class Game {
+export class Game extends GameWebGL1 {
     World = new World();
-
-    ViewportWidth = window.innerWidth;
-    ViewportHeight = window.innerHeight;
-    ViewportResized = true;
-
-    InputState: Record<string, number> = {};
-    InputDelta: Record<string, number> = {};
-    InputDistance: Record<string, number> = {};
-    InputTouches: Record<string, number> = {};
-
-    Ui = document.querySelector("main")!;
-    Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
-    Gl = this.Canvas.getContext("webgl")!;
-    ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
-
-    Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
-    Context2D = this.Billboard.getContext("2d")!;
 
     MaterialColoredGouraud = mat1_forward_colored_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
@@ -47,19 +28,7 @@ export class Game {
     LightDetails = new Float32Array(4 * 8);
     Cameras: Array<Entity> = [];
 
-    constructor() {
-        loop_init(this);
-        input_init(this);
-        input_pointer_lock(this);
-
-        this.Gl.enable(GL_DEPTH_TEST);
-        this.Gl.enable(GL_CULL_FACE);
-    }
-
-    FrameUpdate(delta: number) {
-        frame_setup(this);
-        let now = performance.now();
-
+    override FrameUpdate(delta: number) {
         sys_control_keyboard(this, delta);
         sys_control_mouse(this, delta);
         sys_control_xbox(this, delta);
@@ -74,8 +43,5 @@ export class Game {
         sys_render_forward(this, delta);
         sys_draw(this, delta);
         sys_ui(this, delta);
-
-        sys_framerate(this, delta, performance.now() - now);
-        frame_reset(this);
     }
 }

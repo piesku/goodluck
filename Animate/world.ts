@@ -1,3 +1,4 @@
+import {WorldImpl} from "../common/world.js";
 import {Animate} from "./components/com_animate.js";
 import {AudioSource} from "./components/com_audio_source.js";
 import {Bone} from "./components/com_bone.js";
@@ -6,7 +7,6 @@ import {Children} from "./components/com_children.js";
 import {Light} from "./components/com_light.js";
 import {Render} from "./components/com_render_ext.js";
 import {Transform} from "./components/com_transform.js";
-import {Entity} from "./game.js";
 
 const enum Component {
     Animate,
@@ -34,11 +34,7 @@ export const enum Has {
     Transform = 1 << Component.Transform,
 }
 
-export class World {
-    Signature: Array<number> = [];
-    Graveyard: Array<Entity> = [];
-
-    // Component data
+export class World extends WorldImpl {
     Animate: Array<Animate> = [];
     AudioSource: Array<AudioSource> = [];
     Bone: Array<Bone> = [];

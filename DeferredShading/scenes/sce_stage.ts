@@ -1,3 +1,4 @@
+import {instantiate} from "../../common/game.js";
 import {from_euler} from "../../common/quat.js";
 import {element, float} from "../../common/random.js";
 import {blueprint_camera_main} from "../blueprints/blu_camera_main.js";
@@ -6,7 +7,6 @@ import {light_point} from "../components/com_light.js";
 import {render_colored_deferred} from "../components/com_render2.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {instantiate} from "../impl.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {

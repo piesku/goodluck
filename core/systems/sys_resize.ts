@@ -6,7 +6,7 @@ export function sys_resize(game: Game, delta: number) {
     }
 
     if (game.ViewportResized) {
-        game.ViewportWidth = game.Canvas.width = game.Billboard.width = window.innerWidth;
-        game.ViewportHeight = game.Canvas.height = game.Billboard.height = window.innerHeight;
+        game.ViewportWidth = game.Canvas3D.width = game.Canvas2D.width = window.innerWidth;
+        game.ViewportHeight = game.Canvas3D.height = game.Canvas2D.height = window.innerHeight;
     }
 }

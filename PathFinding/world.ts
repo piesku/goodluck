@@ -1,3 +1,4 @@
+import {WorldImpl} from "../common/world.js";
 import {Camera} from "./components/com_camera.js";
 import {Children} from "./components/com_children.js";
 import {Collide} from "./components/com_collide.js";
@@ -10,7 +11,6 @@ import {Pickable} from "./components/com_pickable.js";
 import {Render} from "./components/com_render1.js";
 import {Selectable} from "./components/com_selectable.js";
 import {Transform} from "./components/com_transform.js";
-import {Entity} from "./game.js";
 
 const enum Component {
     Camera,
@@ -44,11 +44,7 @@ export const enum Has {
     Transform = 1 << Component.Transform,
 }
 
-export class World {
-    Signature: Array<number> = [];
-    Graveyard: Array<Entity> = [];
-
-    // Component data
+export class World extends WorldImpl {
     Camera: Array<Camera> = [];
     Children: Array<Children> = [];
     Collide: Array<Collide> = [];

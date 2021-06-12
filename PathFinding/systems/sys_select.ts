@@ -1,6 +1,6 @@
+import {input_clicked} from "../../common/input.js";
 import {SelectedState} from "../components/com_selectable.js";
 import {Entity, Game} from "../game.js";
-import {input_clicked} from "../impl.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Selectable | Has.Children;
