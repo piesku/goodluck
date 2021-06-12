@@ -4,6 +4,12 @@ Goodluck doesn't have version numbers; each commit is the latest release of the 
 
 However, we do distinguish between _generations_ of Goodluck. The core API changes between generations and there's a significant chance that systems written for one generation will not compatible with other generations. Adapting a system to a newer generation is usually easy, though.
 
+## Generation 7 (since June 2021)
+
+`Game` and `World` now inherit from `GameImpl` and `WorldImpl` respectively, defined in `common/`. Input handling and the game loop are now handled by the base classes, which allows the child classes to be lean and to contain mostly any extra data needed by the example. `Mixin`, `Blueprint`, and `instantiate` are now generic over the type of `Game` passed into them.
+
+Once you bootstrap a new project, feel free to merge the super class with `Game` in `src/game.ts` to save a few bytes.
+
 ## Generation 6 (since March 2021)
 
 - Blueprints are no longer objects of the `{Translation, Rotation, Scale, Using, Children}` shape. Instead, they are now regular arrays of mixings. The transform component must be added explicitly to the blueprint.
