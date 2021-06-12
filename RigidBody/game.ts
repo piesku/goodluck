@@ -32,6 +32,16 @@ export class Game extends GameWebGL1 {
     LightDetails = new Float32Array(4 * 8);
     Cameras: Array<Entity> = [];
 
+    override FixedUpdate(delta: number) {
+        // Collisions and physics.
+        sys_physics_integrate(this, delta);
+        sys_transform(this, delta);
+        sys_physics_kinematic(this, delta);
+        sys_collide(this, delta);
+        sys_physics_resolve(this, delta);
+        sys_transform(this, delta);
+    }
+
     override FrameUpdate(delta: number) {
         // Destroy entities past their age.
         sys_lifespan(this, delta);
@@ -45,14 +55,7 @@ export class Game extends GameWebGL1 {
         sys_shake(this, delta);
         sys_transform(this, delta);
 
-        // Collisions and physics.
-        sys_physics_integrate(this, delta);
-        sys_transform(this, delta);
-        sys_physics_kinematic(this, delta);
-        sys_collide(this, delta);
-        sys_physics_resolve(this, delta);
-        sys_transform(this, delta);
-
+        // Rendering.
         sys_resize(this, delta);
         sys_camera(this, delta);
         sys_light(this, delta);

@@ -44,6 +44,17 @@ export class Game extends GameWebGL1 {
     LightDetails = new Float32Array(4 * 8);
     Cameras: Array<Entity> = [];
 
+    override FixedUpdate(delta: number) {
+        // Collisions and physics.
+        sys_physics_integrate(this, delta);
+        sys_transform(this, delta);
+        sys_physics_kinematic(this, delta);
+        sys_collide(this, delta);
+        sys_physics_resolve(this, delta);
+        sys_transform(this, delta);
+        sys_trigger(this, delta);
+    }
+
     override FrameUpdate(delta: number) {
         // Event loop.
         sys_poll(this, delta);
@@ -66,15 +77,6 @@ export class Game extends GameWebGL1 {
         sys_shake(this, delta);
         sys_toggle(this, delta);
         sys_transform(this, delta);
-
-        // Collisions and physics.
-        sys_physics_integrate(this, delta);
-        sys_transform(this, delta);
-        sys_physics_kinematic(this, delta);
-        sys_collide(this, delta);
-        sys_physics_resolve(this, delta);
-        sys_transform(this, delta);
-        sys_trigger(this, delta);
 
         // Rendering.
         sys_audio_listener(this, delta);
