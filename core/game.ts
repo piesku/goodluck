@@ -1,15 +1,13 @@
-import {GameImpl} from "../common/game.js";
+import {Game3D} from "../common/game.js";
 import {World} from "./world.js";
 
 export type Entity = number;
 
-export interface Game extends GameImpl {
+// A synthetic interface to make all core/components and core/systems compile.
+// The examples symlink core files into their directories and thus make them
+// import their own Game class.
+export interface Game extends Game3D {
     World: World;
-
-    Audio: AudioContext;
-    Canvas2D: HTMLCanvasElement;
-    Context2D: CanvasRenderingContext2D;
-    Canvas3D: HTMLCanvasElement;
 
     // The rendering pipeline supports 8 lights.
     LightPositions: Float32Array;

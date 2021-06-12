@@ -245,15 +245,18 @@ export abstract class Game2D extends GameImpl {
     }
 }
 
-export abstract class GameWebGL1 extends GameImpl {
+export abstract class Game3D extends GameImpl {
     Canvas2D = document.querySelector("#billboard")! as HTMLCanvasElement;
     Context2D = this.Canvas2D.getContext("2d")!;
 
     Canvas3D = document.querySelector("#scene")! as HTMLCanvasElement;
-    Gl = this.Canvas3D.getContext("webgl")!;
-    ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
     Audio = new (window["AudioContext"] || window.webkitAudioContext)();
+}
+
+export abstract class GameWebGL1 extends Game3D {
+    Gl = this.Canvas3D.getContext("webgl")!;
+    ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
     constructor() {
         super();
@@ -263,14 +266,8 @@ export abstract class GameWebGL1 extends GameImpl {
     }
 }
 
-export abstract class GameWebGL2 extends GameImpl {
-    Canvas2D = document.querySelector("#billboard")! as HTMLCanvasElement;
-    Context2D = this.Canvas2D.getContext("2d")!;
-
-    Canvas3D = document.querySelector("#scene")! as HTMLCanvasElement;
+export abstract class GameWebGL2 extends Game3D {
     Gl = this.Canvas3D.getContext("webgl2")!;
-
-    Audio = new (window["AudioContext"] || window.webkitAudioContext)();
 
     constructor() {
         super();
