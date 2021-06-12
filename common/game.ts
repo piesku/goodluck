@@ -16,14 +16,19 @@ export abstract class GameImpl {
     ViewportHeight = window.innerHeight;
     ViewportResized = true;
 
+    // State of input during this frame.
+    // 1 = down, 0 = up, or any number for analog inputs.
     InputState: Record<string, number> = {
         MouseX: 0,
         MouseY: 0,
     };
+    // Changes of InputState that happened right before this frame.
+    // 1 = pressed, -1 = released, 0 = no change.
     InputDelta: Record<string, number> = {
         MouseX: 0,
         MouseY: 0,
     };
+    // Pixels traveled while mouse/touch was down.
     InputDistance: Record<string, number> = {
         Mouse: 0,
         Mouse0: 0,
@@ -32,6 +37,8 @@ export abstract class GameImpl {
         Touch0: 0,
         Touch1: 0,
     };
+    // Map of touch ids to touch indices. In particular, Firefox assigns high
+    // ints as ids. Chrome usually starts at 0, so id === index.
     InputTouches: Record<string, number> = {};
 
     Ui = document.querySelector("main")!;
