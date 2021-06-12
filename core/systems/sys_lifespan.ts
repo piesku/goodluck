@@ -1,5 +1,5 @@
+import {destroy_all} from "../components/com_children.js";
 import {Entity, Game} from "../game.js";
-import {destroy_entity} from "../impl.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Lifespan;
@@ -16,6 +16,6 @@ function update(game: Game, entity: Entity, delta: number) {
     let lifespan = game.World.Lifespan[entity];
     lifespan.Remaining -= delta;
     if (lifespan.Remaining < 0) {
-        setTimeout(() => destroy_entity(game.World, entity));
+        destroy_all(game.World, entity);
     }
 }

@@ -1,9 +1,9 @@
+import {Blueprint} from "../../common/game.js";
 import {Entity, Game} from "../game.js";
-import {Blueprint} from "../impl.js";
 import {Has} from "../world.js";
 
 interface Creator {
-    (game: Game): Blueprint;
+    (game: Game): Blueprint<Game>;
 }
 
 export interface ControlSpawn {

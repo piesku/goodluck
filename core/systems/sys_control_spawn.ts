@@ -1,8 +1,8 @@
+import {instantiate} from "../../common/game.js";
 import {get_rotation, get_translation} from "../../common/mat4.js";
 import {Quat, Vec3} from "../../common/math.js";
 import {transform} from "../components/com_transform.js";
 import {Entity, Game} from "../game.js";
-import {instantiate} from "../impl.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.ControlSpawn;
