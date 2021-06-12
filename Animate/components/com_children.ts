@@ -1,12 +1,12 @@
-import {Blueprint, instantiate} from "../../common/game.js";
 import {Entity, Game} from "../game.js";
+import {Blueprint, instantiate} from "../impl.js";
 import {Has, World} from "../world.js";
 
 export interface Children {
     Children: Array<Entity>;
 }
 
-export function children(...blueprints: Array<Blueprint<Game>>) {
+export function children(...blueprints: Array<Blueprint>) {
     return (game: Game, entity: Entity) => {
         let child_entities = [];
         for (let blueprint of blueprints) {
