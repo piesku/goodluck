@@ -1,3 +1,4 @@
+import {WorldImpl} from "../common/world.js";
 import {Animate} from "./components/com_animate.js";
 import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
@@ -18,7 +19,6 @@ import {Toggle} from "./components/com_toggle.js";
 import {Transform} from "./components/com_transform.js";
 import {Transform2D} from "./components/com_transform2d.js";
 import {Trigger} from "./components/com_trigger.js";
-import {Entity} from "./game.js";
 
 const enum Component {
     Animate,
@@ -70,11 +70,7 @@ export const enum Has {
     Trigger = 1 << Component.Trigger,
 }
 
-export interface World {
-    Signature: Array<number>;
-    Graveyard: Array<Entity>;
-
-    // Component data
+export interface World extends WorldImpl {
     Animate: Array<Animate>;
     AudioSource: Array<AudioSource>;
     Camera: Array<Camera>;
