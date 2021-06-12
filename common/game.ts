@@ -1,5 +1,5 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "./webgl.js";
-import {WorldImpl} from "./world.js";
+import {Entity, WorldImpl} from "./world.js";
 
 const update_span = document.getElementById("update");
 const delta_span = document.getElementById("delta");
@@ -243,4 +243,15 @@ export abstract class Game3D extends GameImpl {
         this.Gl.enable(GL_DEPTH_TEST);
         this.Gl.enable(GL_CULL_FACE);
     }
+}
+
+type Mixin<G extends GameImpl> = (game: G, entity: Entity) => void;
+export type Blueprint<G extends GameImpl> = Array<Mixin<G>>;
+
+export function instantiate<G extends GameImpl>(game: G, blueprint: Blueprint<G>) {
+    let entity = game.World.CreateEntity();
+    for (let mixin of blueprint) {
+        mixin(game, entity);
+    }
+    return entity;
 }

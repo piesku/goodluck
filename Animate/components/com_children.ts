@@ -1,12 +1,12 @@
+import {Blueprint, instantiate} from "../../common/game.js";
 import {Entity, Game} from "../game.js";
-import {Blueprint, instantiate} from "../impl.js";
 import {Has, World} from "../world.js";
 
 export interface Children {
     Children: Array<Entity>;
 }
 
-export function children(...blueprints: Array<Blueprint>) {
+export function children(...blueprints: Array<Blueprint<Game>>) {
     return (game: Game, entity: Entity) => {
         let child_entities = [];
         for (let blueprint of blueprints) {
@@ -37,4 +37,14 @@ export function* query_all(world: World, parent: Entity, mask: Has): IterableIte
             yield* query_all(world, child, mask);
         }
     }
+}
+
+export function destroy_all(world: World, entity: Entity) {
+    if (world.Signature[entity] & Has.Children) {
+        for (let child of world.Children[entity].Children) {
+            destroy_all(world, child);
+        }
+    }
+
+    world.DestroyEntity(entity);
 }
