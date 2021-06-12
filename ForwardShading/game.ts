@@ -1,4 +1,4 @@
-import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
+import {GameWebGL1} from "../common/game.js";
 import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
 import {mat1_forward_colored_phong} from "../materials/mat1_forward_colored_phong.js";
 import {mat1_forward_colored_points} from "../materials/mat1_forward_colored_points.js";
@@ -12,10 +12,8 @@ import {mat1_forward_textured_phong} from "../materials/mat1_forward_textured_ph
 import {mat1_forward_textured_unlit} from "../materials/mat1_forward_textured_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
-import {frame_reset, frame_setup, loop_init} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
-import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_render_forward} from "./systems/sys_render1_forward.js";
@@ -25,23 +23,8 @@ import {World} from "./world.js";
 
 export type Entity = number;
 
-export class Game {
+export class Game extends GameWebGL1 {
     World = new World();
-
-    ViewportWidth = window.innerWidth;
-    ViewportHeight = window.innerHeight;
-    ViewportResized = true;
-
-    InputState: Record<string, number> = {};
-    InputDelta: Record<string, number> = {};
-    InputDistance: Record<string, number> = {};
-    InputTouches: Record<string, number> = {};
-
-    Ui = document.querySelector("main")!;
-    Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
-    Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
-    Gl = this.Canvas.getContext("webgl")!;
-    ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
     MaterialColoredPoints = mat1_forward_colored_points(this.Gl);
     MaterialColoredWireframe = mat1_forward_colored_wireframe(this.Gl);
@@ -63,21 +46,7 @@ export class Game {
     LightDetails = new Float32Array(4 * 8);
     Cameras: Array<Entity> = [];
 
-    constructor() {
-        loop_init(this);
-
-        this.Gl.enable(GL_DEPTH_TEST);
-        this.Gl.enable(GL_CULL_FACE);
-    }
-
-    FrameReset() {
-        this.ViewportResized = false;
-    }
-
-    FrameUpdate(delta: number) {
-        frame_setup(this);
-        let now = performance.now();
-
+    override FrameUpdate(delta: number) {
         sys_control_always(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
@@ -85,8 +54,5 @@ export class Game {
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render_forward(this, delta);
-
-        sys_framerate(this, delta, performance.now() - now);
-        frame_reset(this);
     }
 }

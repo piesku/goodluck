@@ -1,3 +1,4 @@
+import {instantiate} from "../../common/game.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {children} from "../components/com_children.js";
 import {control_always} from "../components/com_control_always.js";
@@ -12,7 +13,6 @@ import {
 } from "../components/com_render1.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {instantiate} from "../impl.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {
