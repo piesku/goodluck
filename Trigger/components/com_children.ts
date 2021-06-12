@@ -1,1 +1,1 @@
-../../core/components/com_children.ts
+../../Animate/components/com_children.ts
