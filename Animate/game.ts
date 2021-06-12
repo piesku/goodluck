@@ -30,7 +30,7 @@ export class Game extends Game3D {
     LightDetails = new Float32Array(4 * 8);
     Cameras: Array<Entity> = [];
 
-    FrameUpdate(delta: number) {
+    override FrameUpdate(delta: number) {
         // Player input.
         sys_control(this, delta);
 
