@@ -1,12 +1,10 @@
-import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
+import {GameWebGL2} from "../common/game.js";
 import {mat2_forward_colored_gouraud} from "../materials/mat2_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_hand} from "../meshes/hand.js";
-import {frame_reset, frame_setup, loop_init} from "./impl.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_oculus} from "./systems/sys_control_oculus.js";
 import {sys_control_pose} from "./systems/sys_control_pose.js";
-import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_render_forward} from "./systems/sys_render_forward.js";
 import {sys_resize} from "./systems/sys_resize.js";
@@ -17,22 +15,12 @@ import {xr_init} from "./xr.js";
 
 export type Entity = number;
 
-export class Game {
+export class Game extends GameWebGL2 {
     World = new World();
 
-    ViewportWidth = window.innerWidth;
-    ViewportHeight = window.innerHeight;
-    ViewportResized = true;
-
-    InputState: Record<string, number> = {};
-    InputDelta: Record<string, number> = {};
-    InputDistance: Record<string, number> = {};
-    InputTouches: Record<string, number> = {};
-
-    Ui = document.querySelector("main")!;
-    Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
-    Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
-    Gl = this.Canvas.getContext("webgl2", {xrCompatible: true})! as WebGL2RenderingContext;
+    override Gl = this.Canvas.getContext("webgl2", {
+        xrCompatible: true,
+    })! as WebGL2RenderingContext;
 
     XrSupported = false;
     XrSession?: XRSession;
@@ -51,20 +39,49 @@ export class Game {
     LightDetails = new Float32Array(4 * 8);
 
     constructor() {
-        loop_init(this);
-
-        this.Gl.enable(GL_DEPTH_TEST);
-        this.Gl.enable(GL_CULL_FACE);
+        super();
 
         if (navigator.xr) {
             xr_init(this);
         }
     }
 
-    FrameUpdate(delta: number) {
-        frame_setup(this);
-        let now = performance.now();
+    override Resume() {
+        let last = performance.now();
 
+        let tick = (now: number, frame?: XRFrame) => {
+            let delta = (now - last) / 1000;
+            last = now;
+
+            if (frame) {
+                this.XrFrame = frame;
+                this.Raf = this.XrFrame.session.requestAnimationFrame(tick);
+            } else {
+                this.XrFrame = undefined;
+                this.Raf = requestAnimationFrame(tick);
+            }
+
+            this.FrameSetup(delta);
+            this.FrameUpdate(delta);
+            this.FrameReset(delta);
+        };
+
+        if (this.XrSession) {
+            this.Raf = this.XrSession.requestAnimationFrame(tick);
+        } else {
+            this.Raf = requestAnimationFrame(tick);
+        }
+    }
+
+    override Pause() {
+        if (this.XrSession) {
+            this.XrSession.cancelAnimationFrame(this.Raf);
+        } else {
+            cancelAnimationFrame(this.Raf);
+        }
+    }
+
+    override FrameUpdate(delta: number) {
         sys_control_oculus(this, delta);
         sys_control_pose(this, delta);
         sys_transform(this, delta);
@@ -73,8 +90,5 @@ export class Game {
         sys_light(this, delta);
         sys_render_forward(this, delta);
         sys_ui(this, delta);
-
-        sys_framerate(this, delta, performance.now() - now);
-        frame_reset(this);
     }
 }
