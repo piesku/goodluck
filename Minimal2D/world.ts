@@ -1,7 +1,7 @@
+import {WorldImpl} from "../common/world.js";
 import {Children} from "./components/com_children.js";
 import {Draw} from "./components/com_draw.js";
 import {Transform2D} from "./components/com_transform2d.js";
-import {Entity} from "./game.js";
 
 const enum Component {
     Children,
@@ -15,11 +15,7 @@ export const enum Has {
     Transform2D = 1 << Component.Transform2D,
 }
 
-export class World {
-    Signature: Array<number> = [];
-    Graveyard: Array<Entity> = [];
-
-    // Component data
+export class World extends WorldImpl {
     Children: Array<Children> = [];
     Draw: Array<Draw> = [];
     Transform2D: Array<Transform2D> = [];

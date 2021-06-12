@@ -230,6 +230,21 @@ export abstract class GameImpl {
     }
 }
 
+export abstract class Game2D extends GameImpl {
+    Canvas = document.querySelector("canvas")!;
+    Context2D = this.Canvas.getContext("2d")!;
+    Audio = new (window["AudioContext"] || window.webkitAudioContext)();
+
+    constructor() {
+        super();
+
+        this.Canvas = document.querySelector("canvas")!;
+        this.Canvas.width = this.ViewportWidth;
+        this.Canvas.height = this.ViewportHeight;
+        this.Context2D = this.Canvas.getContext("2d")!;
+    }
+}
+
 export abstract class GameWebGL1 extends GameImpl {
     Billboard = document.querySelector("#billboard")! as HTMLCanvasElement;
     Canvas = document.querySelector("#scene")! as HTMLCanvasElement;
