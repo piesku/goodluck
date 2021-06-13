@@ -29,8 +29,8 @@ export function scene_stage(game: Game) {
     // Light 1.
     instantiate(game, [transform([2, 3, 5]), light_directional([1, 1, 1], 1)]);
 
-    // Light 2.
-    instantiate(game, [transform([-5, -5, -5]), light_directional([1, 1, 1], 1)]);
+    // Bottom light.
+    instantiate(game, [transform([0, -5, 0]), light_directional([1, 1, 1], 0.7)]);
 
     // Character.
     instantiate(game, [

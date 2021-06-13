@@ -9,7 +9,12 @@ import {Game} from "../game.js";
 
 export function blueprint_character_rigged(game: Game) {
     return [
-        render_colored_skinned(game.MaterialColoredSkinned, game.MeshLudek, [1, 0.3, 0, 1]),
+        render_colored_skinned(
+            game.MaterialColoredPhongSkinned,
+            game.MeshLudek,
+            [1, 0.3, 0, 1],
+            128
+        ),
         bone(0),
         children(
             // spine

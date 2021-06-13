@@ -4,6 +4,7 @@ import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_go
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_ludek} from "../meshes/ludek.js";
 import {mat1_forward_colored_gouraud_skinned} from "./materials/mat1_forward_colored_gouraud_skinned.js";
+import {mat1_forward_colored_phong_skinned} from "./materials/mat1_forward_colored_phong_skinned.js";
 import {sys_animate} from "./systems/sys_animate.js";
 import {sys_audio_listener} from "./systems/sys_audio_listener.js";
 import {sys_audio_source} from "./systems/sys_audio_source.js";
@@ -21,7 +22,8 @@ export class Game extends GameWebGL1 {
     World = new World();
 
     MaterialColoredGouraud = mat1_forward_colored_gouraud(this.Gl);
-    MaterialColoredSkinned = mat1_forward_colored_gouraud_skinned(this.Gl);
+    MaterialColoredGouraudSkinned = mat1_forward_colored_gouraud_skinned(this.Gl);
+    MaterialColoredPhongSkinned = mat1_forward_colored_phong_skinned(this.Gl);
     MeshCube = mesh_cube(this.Gl);
     MeshLudek = mesh_ludek(this.Gl);
 
