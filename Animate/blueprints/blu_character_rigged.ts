@@ -31,11 +31,7 @@ export function blueprint_character_rigged(game: Game) {
                 idle: {
                     Keyframes: [
                         {
-                            Timestamp: 0,
-                            Translation: [0, 0.63, 0],
-                        },
-                        {
-                            Timestamp: 1,
+                            Timestamp: Infinity,
                             Translation: [0, 0.63, 0],
                         },
                     ],
