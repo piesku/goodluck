@@ -9,13 +9,13 @@ export interface Bone {
     InverseBindPose: Mat4;
 }
 
-export function bone(index: number) {
+export function bone(index: number, inverse_bind_pose?: Mat4) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Bone;
         game.World.Bone[entity] = {
             Index: index,
-            Dirty: true,
-            InverseBindPose: create(),
+            Dirty: inverse_bind_pose === undefined,
+            InverseBindPose: inverse_bind_pose || create(),
         };
     };
 }

@@ -13,7 +13,6 @@ import {sys_control} from "./systems/sys_control.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_render_forward} from "./systems/sys_render_ext.js";
 import {sys_resize} from "./systems/sys_resize.js";
-import {sys_rig} from "./systems/sys_rig.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 export {Entity} from "../common/world.js";
@@ -37,8 +36,6 @@ export class Game extends GameWebGL1 {
         sys_control(this, delta);
 
         // Game logic.
-        sys_transform(this, delta);
-        sys_rig(this, delta);
         sys_animate(this, delta);
         sys_transform(this, delta);
 

@@ -22,7 +22,7 @@ export function scene_stage(game: Game) {
     // Camera.
     instantiate(game, [
         ...blueprint_camera(game),
-        transform([0, 1, 15], [0, 1, 0, 0]),
+        transform([0, 0, 15], [0, 1, 0, 0]),
         audio_listener(),
     ]);
 
@@ -32,9 +32,9 @@ export function scene_stage(game: Game) {
     // Bottom light.
     instantiate(game, [transform([0, -5, 0]), light_directional([1, 1, 1], 0.7)]);
 
-    // Character.
+    // Character carousel.
     instantiate(game, [
-        transform([0, 1, 0]),
+        transform(),
         animate({
             idle: {
                 Keyframes: [
@@ -63,7 +63,7 @@ export function scene_stage(game: Game) {
             ],
             [
                 ...blueprint_character_rigged(game),
-                transform([7, -5, 0], [0, 1, 0, 0], [4, 4, 4]),
+                transform([7, -4, 0], [0, 1, 0, 0], [3, 3, 3]),
                 control(),
                 audio_source(true),
             ]
