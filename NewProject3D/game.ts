@@ -44,6 +44,9 @@ export class Game extends GameWebGL1 {
     LightDetails = new Float32Array(4 * 8);
     Cameras: Array<Entity> = [];
 
+    ItemsCollected = 0;
+    ItemsMissed = 0;
+
     override FixedUpdate(delta: number) {
         // Collisions and physics.
         sys_physics_integrate(this, delta);

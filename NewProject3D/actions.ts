@@ -1,9 +1,10 @@
+import {destroy_all} from "./components/com_children.js";
 import {Entity, Game} from "./game.js";
-import {Has} from "./world.js";
 
 export const enum Action {
     ToggleFullscreen,
     CollectItem,
+    ExpireItem,
 }
 
 export function dispatch(game: Game, action: Action, payload: unknown) {
@@ -18,8 +19,12 @@ export function dispatch(game: Game, action: Action, payload: unknown) {
         }
         case Action.CollectItem: {
             let [item_entity] = payload as [Entity, Entity];
-            game.World.Signature[item_entity] |= Has.Lifespan;
-            game.World.Lifespan[item_entity].Remaining = 0;
+            destroy_all(game.World, item_entity);
+            game.ItemsCollected++;
+            break;
+        }
+        case Action.ExpireItem: {
+            game.ItemsMissed++;
             break;
         }
     }

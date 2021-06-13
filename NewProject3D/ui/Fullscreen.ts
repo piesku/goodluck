@@ -16,11 +16,11 @@ export function Fullscreen() {
             <button
                 onclick="$(${Action.ToggleFullscreen})"
                 style="
-                padding: 1vmin;
-                background: #000;
-                color: #fff;
-                border: none;
-            "
+                    padding: 1vmin;
+                    background: #000;
+                    color: #fff;
+                    border: none;
+                "
             >
                 ${document.fullscreenElement ? "Exit Fullscreen" : "Enter Fullscreen"}
             </button>

@@ -23,7 +23,7 @@ export function blueprint_item(game: Game) {
         trigger(Layer.Player, Action.CollectItem),
         rigid_body(RigidKind.Dynamic, 0.3),
         audio_source(true),
-        lifespan(5),
+        lifespan(5, Action.ExpireItem),
         disable(Has.Lifespan),
         children([
             transform(undefined, undefined, [0.5, 0.7, 0.1]),
