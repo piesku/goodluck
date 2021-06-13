@@ -26,7 +26,7 @@ export function blueprint_character_rigged(game: Game) {
         ),
         children([
             transform([0, 0.63, 0]),
-            bone(BoneIndex.Root),
+            bone(BoneIndex.Root, [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -0.63, 0, 1]),
             animate({
                 idle: {
                     Keyframes: [
@@ -63,7 +63,7 @@ export function blueprint_character_rigged(game: Game) {
             children(
                 [
                     transform([0, 0.72, 0]),
-                    bone(BoneIndex.Spine),
+                    bone(BoneIndex.Spine, [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -1.35, 0, 1]),
                     animate({
                         idle: {
                             Keyframes: [
@@ -112,7 +112,7 @@ export function blueprint_character_rigged(game: Game) {
                 ],
                 [
                     transform([0.3, 0.57, 0], from_euler([0, 0, 0, 1], 0, 0, 90)),
-                    bone(BoneIndex.ArmL),
+                    bone(BoneIndex.ArmL, [0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, -1.2, 0.3, 0, 1]),
                     animate({
                         idle: {
                             Keyframes: [
@@ -161,7 +161,7 @@ export function blueprint_character_rigged(game: Game) {
                 ],
                 [
                     transform([-0.3, 0.57, 0], from_euler([0, 0, 0, 1], 0, 0, -90)),
-                    bone(BoneIndex.ArmR),
+                    bone(BoneIndex.ArmR, [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 1.2, 0.3, 0, 1]),
                     animate({
                         idle: {
                             Keyframes: [
@@ -210,7 +210,7 @@ export function blueprint_character_rigged(game: Game) {
                 ],
                 [
                     transform([0.15, 0, 0]),
-                    bone(BoneIndex.HipL),
+                    bone(BoneIndex.HipL, [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -0.15, -0.63, 0, 1]),
                     animate({
                         idle: {
                             Keyframes: [
@@ -259,7 +259,7 @@ export function blueprint_character_rigged(game: Game) {
                 ],
                 [
                     transform([-0.15, 0, 0]),
-                    bone(BoneIndex.HipR),
+                    bone(BoneIndex.HipR, [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0.15, -0.63, 0, 1]),
                     animate({
                         idle: {
                             Keyframes: [
