@@ -16,18 +16,22 @@ function update(game: Game, entity: Entity) {
     let bone = game.World.Bone[entity];
     let transform = game.World.Transform[entity];
 
-    if (bone.Dirty) {
-        bone.Dirty = false;
+    if (DEBUG && transform.Parent === undefined) {
+        throw new Error("(sys_rig) Bones must not be top-level entities.");
+    }
 
-        if (transform.Parent === undefined) {
-            return;
-        }
+    if (bone.Dirty && transform.Parent) {
+        bone.Dirty = false;
 
         if (game.World.Signature[transform.Parent] & Has.Bone) {
             let parent_bone = game.World.Bone[transform.Parent];
             let parent_transform = game.World.Transform[transform.Parent];
             multiply(bone.InverseBindPose, parent_transform.World, parent_bone.InverseBindPose);
             multiply(bone.InverseBindPose, transform.Self, bone.InverseBindPose);
+        } else {
+            // `bone` is the root bone parented at the mesh.
+            let parent_transform = game.World.Transform[transform.Parent];
+            multiply(bone.InverseBindPose, transform.Self, parent_transform.World);
         }
     }
 }
