@@ -1,6 +1,8 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "./webgl.js";
 import {Entity, WorldImpl} from "./world.js";
 
+export {Entity};
+
 const update_span = document.getElementById("update");
 const delta_span = document.getElementById("delta");
 const fps_span = document.getElementById("fps");

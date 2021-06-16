@@ -1,12 +1,20 @@
+import {Entity, GameImpl} from "../../common/game.js";
 import {slerp} from "../../common/quat.js";
 import {lerp} from "../../common/vec3.js";
-import {AnimationFlag, AnimationKeyframe} from "../components/com_animate.js";
-import {Entity, Game} from "../game.js";
+import {Animate, AnimationFlag, AnimationKeyframe} from "../components/com_animate.js";
+import {Transform} from "../components/com_transform.js";
 import {Has} from "../world.js";
+
+export type GameAnimate = GameImpl & {
+    World: {
+        Animate: Array<Animate>;
+        Transform: Array<Transform>;
+    };
+};
 
 const QUERY = Has.Transform | Has.Animate;
 
-export function sys_animate(game: Game, delta: number) {
+export function sys_animate(game: GameAnimate, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
             update(game, i, delta);
@@ -14,7 +22,7 @@ export function sys_animate(game: Game, delta: number) {
     }
 }
 
-function update(game: Game, entity: Entity, delta: number) {
+function update(game: GameAnimate, entity: Entity, delta: number) {
     let transform = game.World.Transform[entity];
     let animate = game.World.Animate[entity];
 
