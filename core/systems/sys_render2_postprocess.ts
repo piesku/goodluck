@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_render2_postprocess
+ */
+
 import {DeferredTarget, DepthTarget} from "../../common/framebuffer.js";
 import {Material} from "../../common/material.js";
 import {Mesh} from "../../common/mesh.js";

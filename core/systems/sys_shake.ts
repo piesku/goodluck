@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_shake
+ */
+
 import {scale} from "../../common/vec3.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";

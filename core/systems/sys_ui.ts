@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_ui
+ */
+
 import {Game} from "../game.js";
 import {App} from "../ui/App.js";
 

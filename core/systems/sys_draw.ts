@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_draw
+ */
+
 import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {transform_point} from "../../common/vec3.js";

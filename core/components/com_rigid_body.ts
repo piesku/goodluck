@@ -1,3 +1,7 @@
+/**
+ * @module components/com_rigid_body
+ */
+
 import {Vec3} from "../../common/math.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";

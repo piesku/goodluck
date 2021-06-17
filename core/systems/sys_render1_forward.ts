@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_render1_forward
+ */
+
 import {Material} from "../../common/material.js";
 import {
     GL_ARRAY_BUFFER,

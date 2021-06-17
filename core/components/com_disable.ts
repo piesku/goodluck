@@ -1,3 +1,7 @@
+/**
+ * @module components/com_disable
+ */
+
 import {Entity, Game} from "../game";
 
 export function disable(mask: number) {

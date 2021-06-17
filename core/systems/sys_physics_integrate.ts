@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_physics_integrate
+ */
+
 import {Vec3} from "../../common/math.js";
 import {add, copy, scale, set} from "../../common/vec3.js";
 import {RigidKind} from "../components/com_rigid_body.js";

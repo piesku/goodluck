@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_light
+ */
+
 import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {normalize} from "../../common/vec3.js";

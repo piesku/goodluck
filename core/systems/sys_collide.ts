@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_collide
+ */
+
 import {compute_aabb, intersect_aabb, penetrate_aabb} from "../../common/aabb.js";
 import {negate} from "../../common/vec3.js";
 import {Collide} from "../components/com_collide.js";

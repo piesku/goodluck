@@ -1,3 +1,7 @@
+/**
+ * @module components/com_callback
+ */
+
 import {Entity, Game} from "../game";
 
 type Callback = (game: Game, entity: Entity) => void;

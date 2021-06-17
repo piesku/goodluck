@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_camera
+ */
+
 import {copy, get_translation, multiply} from "../../common/mat4.js";
 import {ProjectionKind, resize_ortho, resize_perspective} from "../../common/projection.js";
 import {CameraKind} from "../components/com_camera.js";

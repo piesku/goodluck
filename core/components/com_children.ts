@@ -1,3 +1,7 @@
+/**
+ * @module components/com_children
+ */
+
 import {Blueprint, instantiate} from "../../common/game.js";
 import {Entity, Game} from "../game.js";
 import {Has, World} from "../world.js";

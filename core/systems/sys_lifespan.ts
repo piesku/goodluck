@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_lifespan
+ */
+
 import {dispatch} from "../actions.js";
 import {destroy_all} from "../components/com_children.js";
 import {Entity, Game} from "../game.js";

@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_resize
+ */
+
 import {Game} from "../game.js";
 
 export function sys_resize(game: Game, delta: number) {

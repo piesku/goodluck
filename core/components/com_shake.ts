@@ -1,3 +1,7 @@
+/**
+ * @module components/com_shake
+ */
+
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 

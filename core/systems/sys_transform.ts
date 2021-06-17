@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_transform
+ */
+
 import {from_rotation_translation_scale, invert, multiply} from "../../common/mat4.js";
 import {Transform} from "../components/com_transform.js";
 import {Entity, Game} from "../game.js";

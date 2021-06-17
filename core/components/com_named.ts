@@ -1,3 +1,7 @@
+/**
+ * @module components/com_named
+ */
+
 import {Entity, Game} from "../game.js";
 import {Has, World} from "../world.js";
 

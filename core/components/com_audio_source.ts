@@ -1,3 +1,7 @@
+/**
+ * @module components/com_audio_source
+ */
+
 import {AudioClip} from "../../common/audio.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";

@@ -1,3 +1,7 @@
+/**
+ * @module components/com_move
+ */
+
 import {Quat, Vec3} from "../../common/math.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";

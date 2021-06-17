@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_physics_kinematic
+ */
+
 import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {copy, scale, subtract} from "../../common/vec3.js";

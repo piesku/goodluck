@@ -1,3 +1,7 @@
+/**
+ * @module components/com_transform
+ */
+
 import {create} from "../../common/mat4.js";
 import {Mat4, Quat, Vec3} from "../../common/math.js";
 import {Entity, Game} from "../game.js";

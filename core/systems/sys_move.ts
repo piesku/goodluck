@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_move
+ */
+
 import {Quat, Vec3} from "../../common/math.js";
 import {multiply, slerp} from "../../common/quat.js";
 import {add, length, normalize, scale, transform_direction} from "../../common/vec3.js";

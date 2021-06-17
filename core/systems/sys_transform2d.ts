@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_transform2d
+ */
+
 import {from_translation, invert, multiply, rotate, scale} from "../../common/mat2d.js";
 import {Transform2D} from "../components/com_transform2d.js";
 import {Entity, Game} from "../game.js";

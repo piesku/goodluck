@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_control_spawn
+ */
+
 import {instantiate} from "../../common/game.js";
 import {get_rotation, get_translation} from "../../common/mat4.js";
 import {Quat, Vec3} from "../../common/math.js";

@@ -1,3 +1,7 @@
+/**
+ * @module components/com_trigger
+ */
+
 import {Action} from "../actions.js";
 import {Entity, Game, Layer} from "../game.js";
 import {Has} from "../world.js";

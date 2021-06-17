@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_animate
+ */
+
 import {slerp} from "../../common/quat.js";
 import {lerp} from "../../common/vec3.js";
 import {AnimationFlag, AnimationKeyframe} from "../components/com_animate.js";

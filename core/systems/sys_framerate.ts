@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_framerate
+ */
+
 import {Game} from "../game.js";
 
 let update_span = document.getElementById("update");

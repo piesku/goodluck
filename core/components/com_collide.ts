@@ -1,3 +1,7 @@
+/**
+ * @module components/com_collide
+ */
+
 import {AABB} from "../../common/aabb.js";
 import {Vec3} from "../../common/math.js";
 import {Entity, Game, Layer} from "../game.js";

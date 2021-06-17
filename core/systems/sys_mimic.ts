@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_mimic
+ */
+
 import {get_rotation, get_translation} from "../../common/mat4.js";
 import {slerp} from "../../common/quat.js";
 import {lerp} from "../../common/vec3.js";

@@ -1,3 +1,7 @@
+/**
+ * @module components/com_render2
+ */
+
 import {Material} from "../../common/material.js";
 import {Vec3, Vec4} from "../../common/math.js";
 import {Mesh} from "../../common/mesh.js";

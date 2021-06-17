@@ -1,3 +1,7 @@
+/**
+ * @module components/com_control_spawn
+ */
+
 import {Blueprint} from "../../common/game.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";

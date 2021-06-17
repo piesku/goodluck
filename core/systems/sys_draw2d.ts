@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_draw2d
+ */
+
 import {DrawKind, DrawRect} from "../components/com_draw.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

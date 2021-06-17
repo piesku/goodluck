@@ -1,3 +1,7 @@
+/**
+ * @module components/com_camera
+ */
+
 import {DeferredTarget, DepthTarget, ForwardTarget} from "../../common/framebuffer.js";
 import {create} from "../../common/mat4.js";
 import {Mat4, Vec3, Vec4} from "../../common/math.js";

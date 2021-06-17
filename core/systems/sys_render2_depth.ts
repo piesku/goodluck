@@ -1,3 +1,7 @@
+/**
+ * @module systems/sys_render2_depth
+ */
+
 import {Material} from "../../common/material.js";
 import {
     GL_COLOR_BUFFER_BIT,
