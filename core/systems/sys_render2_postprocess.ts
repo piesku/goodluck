@@ -19,9 +19,11 @@ import {
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
 import {first_entity} from "../../common/world.js";
-import {DeferredPostprocessLayout} from "../../materials/layout_deferred_postprocess.js";
-import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
-import {ShadowMappingLayout} from "../../materials/layout_shadow_mapping.js";
+import {
+    DeferredPostprocessLayout,
+    ForwardShadingLayout,
+    ShadowMappingLayout,
+} from "../../materials/layout.js";
 import {Render} from "../components/com_render2.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";

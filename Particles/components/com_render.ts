@@ -2,8 +2,7 @@ import {Material} from "../../common/material.js";
 import {Vec2, Vec4} from "../../common/math.js";
 import {GL_ARRAY_BUFFER, GL_CW, GL_DYNAMIC_DRAW} from "../../common/webgl.js";
 import {Entity, Game} from "../game.js";
-import {ParticlesColoredLayout} from "../materials/layout_particles_colored.js";
-import {ParticlesTexturedLayout} from "../materials/layout_particles_textured.js";
+import {ParticlesColoredLayout, ParticlesTexturedLayout} from "../materials/layout_particles.js";
 import {Has} from "../world.js";
 
 export type Render = RenderParticlesColored | RenderParticlesTextured;

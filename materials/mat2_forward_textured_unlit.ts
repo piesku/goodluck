@@ -1,6 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {TexturedUnlitLayout} from "./layout_textured_unlit.js";
+import {TexturedUnlitLayout} from "./layout.js";
 
 let vertex = `#version 300 es\n
     uniform mat4 pv;

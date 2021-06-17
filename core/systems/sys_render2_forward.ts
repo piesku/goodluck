@@ -7,9 +7,11 @@ import {
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
-import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
-import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
+import {
+    ColoredShadedLayout,
+    ForwardShadingLayout,
+    TexturedUnlitLayout,
+} from "../../materials/layout.js";
 import {CameraEye, CameraForward, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
 import {
     Render,

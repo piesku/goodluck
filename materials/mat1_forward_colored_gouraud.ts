@@ -1,7 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {ColoredShadedLayout} from "./layout_colored_shaded.js";
-import {ForwardShadingLayout} from "./layout_forward_shading.js";
+import {ColoredShadedLayout, ForwardShadingLayout} from "./layout.js";
 
 let vertex = `
     // See Game.LightPositions and Game.LightDetails.

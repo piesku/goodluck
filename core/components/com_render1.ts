@@ -10,13 +10,15 @@ import {
     GL_FLOAT,
     GL_STATIC_DRAW,
 } from "../../common/webgl.js";
-import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
-import {ColoredUnlitLayout} from "../../materials/layout_colored_unlit.js";
-import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
-import {MappedShadedLayout} from "../../materials/layout_mapped_shaded.js";
-import {ShadowMappingLayout} from "../../materials/layout_shadow_mapping.js";
-import {TexturedShadedLayout} from "../../materials/layout_textured_shaded.js";
-import {TexturedUnlitLayout} from "../../materials/layout_textured_unlit.js";
+import {
+    ColoredShadedLayout,
+    ColoredUnlitLayout,
+    ForwardShadingLayout,
+    MappedShadedLayout,
+    ShadowMappingLayout,
+    TexturedShadedLayout,
+    TexturedUnlitLayout,
+} from "../../materials/layout.js";
 import {Entity, Game} from "../game.js";
 import {Has, World} from "../world.js";
 

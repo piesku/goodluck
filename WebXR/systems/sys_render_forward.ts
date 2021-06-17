@@ -5,8 +5,7 @@ import {
     GL_FRAMEBUFFER,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {ColoredShadedLayout} from "../../materials/layout_colored_shaded.js";
-import {ForwardShadingLayout} from "../../materials/layout_forward_shading.js";
+import {ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.js";
 import {CameraEye, CameraForward, CameraKind, CameraXr} from "../components/com_camera.js";
 import {RenderColoredShaded, RenderKind} from "../components/com_render2.js";
 import {Transform} from "../components/com_transform.js";

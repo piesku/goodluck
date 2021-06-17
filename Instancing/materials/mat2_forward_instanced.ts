@@ -1,6 +1,6 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
-import {ForwardInstancedLayout} from "./layout_forward_instanced.js";
+import {ForwardInstancedLayout} from "./layout_instancing.js";
 
 let vertex = `#version 300 es\n
 

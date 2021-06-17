@@ -1,6 +1,6 @@
 import {link, Material} from "../../common/material.js";
 import {GL_POINTS} from "../../common/webgl.js";
-import {ParticlesColoredLayout} from "./layout_particles_colored.js";
+import {ParticlesColoredLayout} from "./layout_particles.js";
 
 let vertex = `
     uniform mat4 pv;

@@ -1,6 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_LINE_LOOP, GL_LINE_STRIP, GL_TRIANGLES} from "../common/webgl.js";
-import {ColoredUnlitLayout} from "./layout_colored_unlit.js";
+import {ColoredUnlitLayout} from "./layout.js";
 
 let vertex = `
     uniform mat4 pv;

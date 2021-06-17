@@ -8,7 +8,7 @@ import {
     GL_STATIC_DRAW,
 } from "../../common/webgl.js";
 import {Entity, Game} from "../game.js";
-import {ForwardInstancedLayout} from "../materials/layout_forward_instanced.js";
+import {ForwardInstancedLayout} from "../materials/layout_instancing.js";
 import {Model} from "../model.js";
 import {Has} from "../world.js";
 

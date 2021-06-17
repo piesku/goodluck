@@ -4,7 +4,7 @@ import {CameraEye, CameraForward, CameraKind} from "../components/com_camera.js"
 import {RenderInstanced, RenderKind} from "../components/com_render.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {ForwardInstancedLayout} from "../materials/layout_forward_instanced.js";
+import {ForwardInstancedLayout} from "../materials/layout_instancing.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;

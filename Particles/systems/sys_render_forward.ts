@@ -16,8 +16,7 @@ import {
     RenderParticlesTextured,
 } from "../components/com_render.js";
 import {Game} from "../game.js";
-import {ParticlesColoredLayout} from "../materials/layout_particles_colored.js";
-import {ParticlesTexturedLayout} from "../materials/layout_particles_textured.js";
+import {ParticlesColoredLayout, ParticlesTexturedLayout} from "../materials/layout_particles.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;

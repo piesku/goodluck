@@ -1,7 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {ForwardShadingLayout} from "./layout_forward_shading.js";
-import {MappedShadedLayout} from "./layout_mapped_shaded.js";
+import {ForwardShadingLayout, MappedShadedLayout} from "./layout.js";
 
 let vertex = `
     uniform mat4 pv;

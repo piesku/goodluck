@@ -5,7 +5,7 @@ import {
     GL_FRAMEBUFFER,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {DepthMappingLayout} from "../../materials/layout_depth_mapping.js";
+import {DepthMappingLayout} from "../../materials/layout.js";
 import {CameraDepth, CameraKind} from "../components/com_camera.js";
 import {Render} from "../components/com_render2.js";
 import {Game} from "../game.js";
