@@ -2,8 +2,9 @@ import {Material} from "../../common/material.js";
 import {Vec4} from "../../common/math.js";
 import {Mesh} from "../../common/mesh.js";
 import {GL_ARRAY_BUFFER, GL_CW, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT} from "../../common/webgl.js";
+import {Entity} from "../../common/world.js";
 import {ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.js";
-import {Entity, Game} from "../game.js";
+import {Game} from "../game.js";
 import {SkinningLayout} from "../materials/layout_skinning.js";
 import {Has, World} from "../world.js";
 

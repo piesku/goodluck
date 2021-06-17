@@ -2,9 +2,10 @@
  * @module systems/sys_lifespan
  */
 
+import {Entity} from "../../common/world.js";
 import {dispatch} from "../actions.js";
 import {destroy_all} from "../components/com_children.js";
-import {Entity, Game} from "../game.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Lifespan;

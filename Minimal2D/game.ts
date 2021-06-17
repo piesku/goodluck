@@ -3,8 +3,6 @@ import {sys_draw2d} from "./systems/sys_draw2d.js";
 import {sys_transform2d} from "./systems/sys_transform2d.js";
 import {World} from "./world.js";
 
-export type Entity = number;
-
 export class Game extends Game2D {
     World = new World();
 

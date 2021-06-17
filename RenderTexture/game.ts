@@ -1,5 +1,6 @@
 import {create_forward1_target, ForwardTarget} from "../common/framebuffer.js";
 import {GameWebGL1} from "../common/game.js";
+import {Entity} from "../common/world.js";
 import {mat1_forward_textured_unlit} from "../materials/mat1_forward_textured_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_plane} from "../meshes/plane.js";
@@ -10,8 +11,6 @@ import {sys_render_forward} from "./systems/sys_render1_forward.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
-
-export type Entity = number;
 
 export class Game extends GameWebGL1 {
     World = new World();

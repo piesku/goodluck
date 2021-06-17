@@ -1,4 +1,5 @@
 import {GameWebGL1} from "../common/game.js";
+import {Entity} from "../common/world.js";
 import {mat1_forward_colored_phong} from "../materials/mat1_forward_colored_phong.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {sys_animate} from "./systems/sys_animate.js";
@@ -29,8 +30,6 @@ import {sys_transform} from "./systems/sys_transform.js";
 import {sys_trigger} from "./systems/sys_trigger.js";
 import {sys_ui} from "./systems/sys_ui.js";
 import {World} from "./world.js";
-
-export type Entity = number;
 
 export class Game extends GameWebGL1 {
     World = new World();

@@ -2,7 +2,8 @@
  * @module components/com_audio_listener
  */
 
-import {Entity, Game} from "../game.js";
+import {Entity} from "../../common/world.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 export function audio_listener() {

@@ -1,5 +1,6 @@
+import {Entity} from "../../common/world.js";
 import {ControlXrKind} from "../components/com_control_xr.js";
-import {Entity, Game} from "../game.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.ControlXr;

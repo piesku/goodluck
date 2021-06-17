@@ -2,8 +2,9 @@
  * @module systems/sys_trigger
  */
 
+import {Entity} from "../../common/world.js";
 import {dispatch} from "../actions.js";
-import {Entity, Game} from "../game.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Collide | Has.Trigger;

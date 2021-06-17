@@ -5,7 +5,8 @@
 import {Quat, Vec3} from "../../common/math.js";
 import {multiply, slerp} from "../../common/quat.js";
 import {add, length, normalize, scale, transform_direction} from "../../common/vec3.js";
-import {Entity, Game} from "../game.js";
+import {Entity} from "../../common/world.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Move;

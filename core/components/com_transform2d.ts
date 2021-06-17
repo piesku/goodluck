@@ -4,7 +4,8 @@
 
 import {create} from "../../common/mat2d.js";
 import {Mat2D, Rad, Vec2} from "../../common/math.js";
-import {Entity, Game} from "../game.js";
+import {Entity} from "../../common/world.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 export interface Transform2D {

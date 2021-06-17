@@ -1,7 +1,8 @@
 import {DEG_TO_RAD, Quat, Vec2, Vec3} from "../../common/math.js";
 import {clamp} from "../../common/number.js";
 import {from_axis, get_axis, multiply} from "../../common/quat.js";
-import {Entity, Game} from "../game.js";
+import {Entity} from "../../common/world.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Move | Has.ControlPlayer;

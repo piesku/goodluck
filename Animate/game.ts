@@ -15,7 +15,6 @@ import {sys_render_forward} from "./systems/sys_render_ext.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
-export {Entity} from "../common/world.js";
 
 export class Game extends GameWebGL1 {
     World = new World();

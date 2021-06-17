@@ -2,7 +2,8 @@
  * @module systems/sys_toggle
  */
 
-import {Entity, Game} from "../game.js";
+import {Entity} from "../../common/world.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Toggle;

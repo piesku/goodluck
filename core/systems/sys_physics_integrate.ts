@@ -4,8 +4,9 @@
 
 import {Vec3} from "../../common/math.js";
 import {add, copy, scale, set} from "../../common/vec3.js";
+import {Entity} from "../../common/world.js";
 import {RigidKind} from "../components/com_rigid_body.js";
-import {Entity, Game} from "../game.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.RigidBody;

@@ -1,6 +1,7 @@
 import {Vec4} from "../../common/math.js";
 import {Mesh} from "../../common/mesh.js";
-import {Entity, Game} from "../game.js";
+import {Entity} from "../../common/world.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 export type Pickable = PickableMesh | PickableAABB;

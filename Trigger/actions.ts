@@ -1,4 +1,5 @@
-import {Entity, Game} from "./game.js";
+import {Entity} from "../common/world.js";
+import {Game} from "./game.js";
 
 export const enum Action {
     Alert,

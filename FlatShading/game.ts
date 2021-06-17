@@ -1,4 +1,5 @@
 import {GameWebGL2} from "../common/game.js";
+import {Entity} from "../common/world.js";
 import {mat2_forward_colored_gouraud} from "../materials/mat2_forward_colored_gouraud.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
 import {mat2_forward_colored_flat} from "./materials/mat2_forward_colored_flat.js";
@@ -10,8 +11,6 @@ import {sys_render_forward} from "./systems/sys_render2_forward.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
-
-export type Entity = number;
 
 export class Game extends GameWebGL2 {
     World = new World();

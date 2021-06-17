@@ -1,7 +1,8 @@
 import {copy, create, get_translation, invert, multiply} from "../../common/mat4.js";
 import {ProjectionKind, resize_perspective} from "../../common/projection.js";
+import {Entity} from "../../common/world.js";
 import {CameraForward, CameraKind, CameraXr, XrEye} from "../components/com_camera.js";
-import {Entity, Game} from "../game.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Camera;

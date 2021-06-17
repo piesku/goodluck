@@ -2,8 +2,9 @@
  * @module components/com_lifespan
  */
 
+import {Entity} from "../../common/world.js";
 import {Action} from "../actions.js";
-import {Entity, Game} from "../game.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 export interface Lifespan {

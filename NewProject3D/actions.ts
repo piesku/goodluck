@@ -1,5 +1,6 @@
+import {Entity} from "../common/world.js";
 import {destroy_all} from "./components/com_children.js";
-import {Entity, Game} from "./game.js";
+import {Game} from "./game.js";
 
 export const enum Action {
     ToggleFullscreen,

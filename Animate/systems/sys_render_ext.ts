@@ -6,6 +6,7 @@ import {
     GL_FRAMEBUFFER,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
+import {Entity} from "../../common/world.js";
 import {ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.js";
 import {CameraEye, CameraForward, CameraKind} from "../components/com_camera.js";
 import {query_all} from "../components/com_children.js";
@@ -16,7 +17,7 @@ import {
     RenderKind,
 } from "../components/com_render_ext.js";
 import {Transform} from "../components/com_transform.js";
-import {Entity, Game} from "../game.js";
+import {Game} from "../game.js";
 import {Has, World} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;

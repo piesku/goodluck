@@ -1,7 +1,8 @@
 import {create} from "../../common/mat4.js";
 import {Mat4, Vec3} from "../../common/math.js";
 import {Projection, ProjectionKind} from "../../common/projection.js";
-import {Entity, Game} from "../game.js";
+import {Entity} from "../../common/world.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 export type Camera = CameraForward | CameraXr;

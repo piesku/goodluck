@@ -2,8 +2,9 @@
  * @module components/com_trigger
  */
 
+import {Entity} from "../../common/world.js";
 import {Action} from "../actions.js";
-import {Entity, Game, Layer} from "../game.js";
+import {Game, Layer} from "../game.js";
 import {Has} from "../world.js";
 
 export interface Trigger {

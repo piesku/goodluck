@@ -5,6 +5,7 @@ import {
     DepthTarget,
 } from "../common/framebuffer.js";
 import {GameWebGL2} from "../common/game.js";
+import {Entity} from "../common/world.js";
 import {mat2_deferred_colored} from "../materials/mat2_deferred_colored.js";
 import {mat2_deferred_shading} from "../materials/mat2_deferred_shading.js";
 import {mat2_forward_depth} from "../materials/mat2_forward_depth.js";
@@ -21,8 +22,6 @@ import {sys_render_postprocess} from "./systems/sys_render2_postprocess.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
-
-export type Entity = number;
 
 export class Game extends GameWebGL2 {
     World = new World();

@@ -2,7 +2,8 @@
  * @module components/com_callback
  */
 
-import {Entity, Game} from "../game";
+import {Entity} from "../../common/world.js";
+import {Game} from "../game.js";
 
 type Callback = (game: Game, entity: Entity) => void;
 

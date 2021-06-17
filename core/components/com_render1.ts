@@ -14,6 +14,7 @@ import {
     GL_FLOAT,
     GL_STATIC_DRAW,
 } from "../../common/webgl.js";
+import {Entity} from "../../common/world.js";
 import {
     ColoredShadedLayout,
     ColoredUnlitLayout,
@@ -23,7 +24,7 @@ import {
     TexturedShadedLayout,
     TexturedUnlitLayout,
 } from "../../materials/layout.js";
-import {Entity, Game} from "../game.js";
+import {Game} from "../game.js";
 import {Has, World} from "../world.js";
 
 export type Render =

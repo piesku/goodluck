@@ -14,8 +14,6 @@ import {sys_transform} from "./systems/sys_transform.js";
 import {sys_trigger} from "./systems/sys_trigger.js";
 import {World} from "./world.js";
 
-export type Entity = number;
-
 export class Game extends GameWebGL1 {
     World = new World();
 

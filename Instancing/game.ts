@@ -1,4 +1,5 @@
 import {GameWebGL2} from "../common/game.js";
+import {Entity} from "../common/world.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mat2_forward_instanced} from "./materials/mat2_forward_instanced.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -7,8 +8,6 @@ import {sys_render_forward} from "./systems/sys_render_forward.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
-
-export type Entity = number;
 
 export class Game extends GameWebGL2 {
     World = new World();

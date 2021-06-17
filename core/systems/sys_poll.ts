@@ -2,8 +2,9 @@
  * @module systems/sys_poll
  */
 
+import {Entity} from "../../common/world.js";
 import {TaskKind} from "../components/com_task.js";
-import {Entity, Game} from "../game.js";
+import {Game} from "../game.js";
 import {Has, World} from "../world.js";
 
 const QUERY = Has.Task;

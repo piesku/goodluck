@@ -1,7 +1,6 @@
 import {Game3D} from "../common/game.js";
+import {Entity} from "../common/world.js";
 import {World} from "./world.js";
-
-export type Entity = number;
 
 // A synthetic interface to make all core/components and core/systems compile.
 // The examples symlink core files into their directories and thus make them

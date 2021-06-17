@@ -1,5 +1,6 @@
 import {create_depth1_target, DepthTarget} from "../common/framebuffer.js";
 import {GameWebGL1} from "../common/game.js";
+import {Entity} from "../common/world.js";
 import {mat1_forward_colored_shadows} from "../materials/mat1_forward_colored_shadows.js";
 import {mat1_forward_depth} from "../materials/mat1_forward_depth.js";
 import {mesh_cube} from "../meshes/cube.js";
@@ -12,8 +13,6 @@ import {sys_render_forward} from "./systems/sys_render1_forward.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
-
-export type Entity = number;
 
 export class Game extends GameWebGL1 {
     World = new World();
