@@ -10,7 +10,7 @@ import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.AudioSource;
+const QUERY = Has.AudioSource | Has.Transform;
 
 export function sys_audio_source(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {

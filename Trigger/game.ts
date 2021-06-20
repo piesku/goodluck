@@ -1,4 +1,5 @@
 import {GameWebGL1} from "../common/game.js";
+import {Entity} from "../common/world.js";
 import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
 import {mat1_forward_colored_wireframe} from "../materials/mat1_forward_colored_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
