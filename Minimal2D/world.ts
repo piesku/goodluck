@@ -10,6 +10,7 @@ const enum Component {
 }
 
 export const enum Has {
+    None = 0,
     Children = 1 << Component.Children,
     Draw = 1 << Component.Draw,
     Transform2D = 1 << Component.Transform2D,

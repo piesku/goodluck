@@ -18,6 +18,7 @@ const enum Component {
 }
 
 export const enum Has {
+    None = 0,
     Camera = 1 << Component.Camera,
     Children = 1 << Component.Children,
     ControlAlways = 1 << Component.ControlAlways,

@@ -47,6 +47,7 @@ const enum Component {
 }
 
 export const enum Has {
+    None = 0,
     Animate = 1 << Component.Animate,
     AudioListener = 1 << Component.AudioListener,
     AudioSource = 1 << Component.AudioSource,

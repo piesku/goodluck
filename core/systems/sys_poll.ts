@@ -42,6 +42,9 @@ export function sys_poll(game: Game, delta: number) {
 
     for (let entity of tasks_to_complete) {
         game.World.Signature[entity] &= ~Has.Task;
+        if (game.World.Signature[entity] === Has.None) {
+            game.World.DestroyEntity(entity);
+        }
 
         let task = game.World.Task[entity];
         if (task.OnDone) {
