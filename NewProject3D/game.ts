@@ -10,7 +10,6 @@ import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
 import {sys_control_keyboard} from "./systems/sys_control_keyboard.js";
 import {sys_control_mouse} from "./systems/sys_control_mouse.js";
-import {sys_control_spawn} from "./systems/sys_control_spawn.js";
 import {sys_control_touch} from "./systems/sys_control_touch.js";
 import {sys_control_xbox} from "./systems/sys_control_xbox.js";
 import {sys_draw} from "./systems/sys_draw.js";
@@ -25,6 +24,7 @@ import {sys_poll} from "./systems/sys_poll.js";
 import {sys_render_forward} from "./systems/sys_render1_forward.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_shake} from "./systems/sys_shake.js";
+import {sys_spawn} from "./systems/sys_spawn.js";
 import {sys_toggle} from "./systems/sys_toggle.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {sys_trigger} from "./systems/sys_trigger.js";
@@ -69,7 +69,6 @@ export class Game extends GameWebGL1 {
 
         // AI.
         sys_control_always(this, delta);
-        sys_control_spawn(this, delta);
 
         // Game logic.
         sys_animate(this, delta);
@@ -78,6 +77,7 @@ export class Game extends GameWebGL1 {
         sys_lifespan(this, delta);
         sys_shake(this, delta);
         sys_toggle(this, delta);
+        sys_spawn(this, delta);
         sys_transform(this, delta);
 
         // Rendering.

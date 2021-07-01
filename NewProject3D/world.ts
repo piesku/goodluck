@@ -6,7 +6,6 @@ import {Children} from "./components/com_children.js";
 import {Collide} from "./components/com_collide.js";
 import {ControlAlways} from "./components/com_control_always.js";
 import {ControlPlayer} from "./components/com_control_player.js";
-import {ControlSpawn} from "./components/com_control_spawn.js";
 import {Draw} from "./components/com_draw.js";
 import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
@@ -16,6 +15,7 @@ import {Named} from "./components/com_named.js";
 import {Render} from "./components/com_render1.js";
 import {RigidBody} from "./components/com_rigid_body.js";
 import {Shake} from "./components/com_shake.js";
+import {Spawn} from "./components/com_spawn.js";
 import {Task} from "./components/com_task.js";
 import {Toggle} from "./components/com_toggle.js";
 import {Transform} from "./components/com_transform.js";
@@ -30,7 +30,6 @@ const enum Component {
     Collide,
     ControlAlways,
     ControlPlayer,
-    ControlSpawn,
     Draw,
     Lifespan,
     Light,
@@ -40,6 +39,7 @@ const enum Component {
     Render,
     RigidBody,
     Shake,
+    Spawn,
     Task,
     Toggle,
     Transform,
@@ -56,7 +56,6 @@ export const enum Has {
     Collide = 1 << Component.Collide,
     ControlAlways = 1 << Component.ControlAlways,
     ControlPlayer = 1 << Component.ControlPlayer,
-    ControlSpawn = 1 << Component.ControlSpawn,
     Draw = 1 << Component.Draw,
     Lifespan = 1 << Component.Lifespan,
     Light = 1 << Component.Light,
@@ -66,6 +65,7 @@ export const enum Has {
     Render = 1 << Component.Render,
     RigidBody = 1 << Component.RigidBody,
     Shake = 1 << Component.Shake,
+    Spawn = 1 << Component.Spawn,
     Task = 1 << Component.Task,
     Toggle = 1 << Component.Toggle,
     Transform = 1 << Component.Transform,
@@ -80,7 +80,6 @@ export class World extends WorldImpl {
     Collide: Array<Collide> = [];
     ControlAlways: Array<ControlAlways> = [];
     ControlPlayer: Array<ControlPlayer> = [];
-    ControlSpawn: Array<ControlSpawn> = [];
     Draw: Array<Draw> = [];
     Lifespan: Array<Lifespan> = [];
     Light: Array<Light> = [];
@@ -90,6 +89,7 @@ export class World extends WorldImpl {
     Render: Array<Render> = [];
     RigidBody: Array<RigidBody> = [];
     Shake: Array<Shake> = [];
+    Spawn: Array<Spawn> = [];
     Task: Array<Task> = [];
     Toggle: Array<Toggle> = [];
     Transform: Array<Transform> = [];

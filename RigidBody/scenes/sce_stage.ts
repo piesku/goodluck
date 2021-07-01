@@ -5,12 +5,12 @@ import {blueprint_hand} from "../blueprints/blu_hand.js";
 import {children} from "../components/com_children.js";
 import {collide} from "../components/com_collide.js";
 import {control_always} from "../components/com_control_always.js";
-import {control_spawn} from "../components/com_control_spawn.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {render_colored_shaded} from "../components/com_render1.js";
 import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
 import {shake} from "../components/com_shake.js";
+import {spawn} from "../components/com_spawn.js";
 import {transform} from "../components/com_transform.js";
 import {Game, Layer} from "../game.js";
 import {World} from "../world.js";
@@ -44,7 +44,7 @@ export function scene_stage(game: Game) {
     // Box spawner.
     instantiate(game, [
         transform([0, 5, 0]),
-        children([transform(), shake(0.5), control_spawn(blueprint_box, 2)]),
+        children([transform(), shake(0.5), spawn(blueprint_box, 2)]),
     ]);
 
     // Rotating hand.

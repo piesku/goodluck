@@ -7,10 +7,10 @@ import {blueprint_obstacle} from "../blueprints/blu_obstacle.js";
 import {blueprint_player} from "../blueprints/blu_player.js";
 import {children} from "../components/com_children.js";
 import {control_always} from "../components/com_control_always.js";
-import {control_spawn} from "../components/com_control_spawn.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {shake} from "../components/com_shake.js";
+import {spawn} from "../components/com_spawn.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
@@ -51,7 +51,7 @@ export function scene_stage(game: Game) {
         move(0, 1),
         children([
             transform([0, 0, 10]),
-            children([transform(), shake(10), control_spawn(blueprint_item, 3)]),
+            children([transform(), shake(10), spawn(blueprint_item, 3)]),
         ]),
     ]);
 

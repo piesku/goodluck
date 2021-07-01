@@ -6,7 +6,6 @@ import {mesh_hand} from "../meshes/hand.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
-import {sys_control_spawn} from "./systems/sys_control_spawn.js";
 import {sys_lifespan} from "./systems/sys_lifespan.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
@@ -16,6 +15,7 @@ import {sys_physics_resolve} from "./systems/sys_physics_resolve.js";
 import {sys_render_forward} from "./systems/sys_render1_forward.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_shake} from "./systems/sys_shake.js";
+import {sys_spawn} from "./systems/sys_spawn.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
@@ -47,11 +47,11 @@ export class Game extends GameWebGL1 {
 
         // Input and AI.
         sys_control_always(this, delta);
-        sys_control_spawn(this, delta);
 
         // Game logic.
         sys_move(this, delta);
         sys_shake(this, delta);
+        sys_spawn(this, delta);
         sys_transform(this, delta);
 
         // Rendering.
