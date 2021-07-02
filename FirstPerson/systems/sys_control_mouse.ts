@@ -1,5 +1,6 @@
 import {DEG_TO_RAD, Quat, Vec3} from "../../common/math.js";
-import {from_axis, multiply} from "../../common/quat.js";
+import {clamp} from "../../common/number.js";
+import {from_axis, get_pitch, multiply} from "../../common/quat.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -20,6 +21,7 @@ const rotation: Quat = [0, 0, 0, 0];
 
 function update(game: Game, entity: Entity) {
     let control = game.World.ControlPlayer[entity];
+    let transform = game.World.Transform[entity];
 
     if (control.Yaw && game.InputDelta.MouseX) {
         // Scale the mouse input by the sensitivity.
@@ -31,7 +33,6 @@ function update(game: Game, entity: Entity) {
         // purpose.
         from_axis(rotation, AXIS_Y, -amount);
 
-        let transform = game.World.Transform[entity];
         // Yaw is pre-multiplied, i.e. applied relative to the entity's local
         // space; the Y axis is not affected by its current orientation.
         multiply(transform.Rotation, rotation, transform.Rotation);
@@ -39,10 +40,12 @@ function update(game: Game, entity: Entity) {
     }
 
     if (control.Pitch && game.InputDelta.MouseY) {
-        let amount = game.InputDelta.MouseY * control.Pitch * DEG_TO_RAD;
-        from_axis(rotation, AXIS_X, amount);
+        let current_pitch = get_pitch(transform.Rotation);
+        let min_amount = control.PitchRange[0] - current_pitch;
+        let max_amount = control.PitchRange[1] - current_pitch;
 
-        let transform = game.World.Transform[entity];
+        let amount = clamp(min_amount, max_amount, game.InputDelta.MouseY * control.Pitch);
+        from_axis(rotation, AXIS_X, amount * DEG_TO_RAD);
         // Pitch is post-multiplied, i.e. applied relative to the entity's self
         // space; the X axis is always aligned with its left and right sides.
         multiply(transform.Rotation, transform.Rotation, rotation);

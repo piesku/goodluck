@@ -1,5 +1,5 @@
 import {Vec3} from "../../common/math.js";
-import {from_axis, get_axis} from "../../common/quat.js";
+import {from_axis, get_pitch} from "../../common/quat.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -8,8 +8,6 @@ const QUERY = Has.Move | Has.ControlPlayer;
 const AXIS_Y: Vec3 = [0, 1, 0];
 const AXIS_X: Vec3 = [1, 0, 0];
 const DEAD_ZONE = 0.1;
-
-const axis: Vec3 = [0, 0, 0];
 
 export function sys_control_xbox(game: Game, delta: number) {
     for (let pad of navigator.getGamepads()) {
@@ -54,15 +52,13 @@ function update(game: Game, entity: Entity) {
     if (control.Pitch && Math.abs(game.InputDelta["pad0_axis_4"]) > DEAD_ZONE) {
         let transform = game.World.Transform[entity];
         let move = game.World.Move[entity];
+
         let amount = game.InputDelta["pad0_axis_4"] * Math.PI;
-        // The angle returned by get_axis_angle is always positive. The
-        // direction of the rotation is indicated by the axis: [1, 0, 0] for
-        // looking down and [-1, 0, 0] for looking up. The x component of the
-        // axis may not be exactly 1 or -1, but it's close enough that we can
-        // just multiply by it as if it was Math.sign.
-        let current_pitch = get_axis(axis, transform.Rotation);
-        current_pitch *= axis[0];
-        if ((amount < 0 && current_pitch > -0.2) || (amount > 0 && current_pitch < Math.PI / 2.2)) {
+        let current_pitch = get_pitch(transform.Rotation);
+        if (
+            (amount < 0 && current_pitch > control.PitchRange[0]) ||
+            (amount > 0 && current_pitch < control.PitchRange[1])
+        ) {
             // Pitch applied relative to the entity's self space; the X axis is
             // always aligned with its left and right sides.
             move.SelfRotations.push(from_axis([0, 0, 0, 0], AXIS_X, amount));

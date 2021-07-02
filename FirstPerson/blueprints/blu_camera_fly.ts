@@ -7,7 +7,7 @@ import {Game} from "../game.js";
 
 export function blueprint_camera_fly(game: Game) {
     return [
-        control_player(true, 0.1, 0.1),
+        control_player(true, 0.1, 0.1, [-89, 89]),
         move(10, 2),
         children([transform(undefined, [0, 1, 0, 0]), camera_forward_perspective(1, 0.1, 1000)]),
     ];

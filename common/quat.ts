@@ -1,4 +1,5 @@
-import {DEG_TO_RAD, EPSILON, Quat, Vec3} from "./math.js";
+import {DEG_TO_RAD, EPSILON, Quat, RAD_TO_DEG, Vec3} from "./math.js";
+import {clamp} from "./number.js";
 import {cross, dot, length, normalize as normalize_vec3} from "./vec3.js";
 
 export function set(out: Quat, x: number, y: number, z: number, w: number) {
@@ -78,6 +79,53 @@ export function from_euler(out: Quat, x: number, y: number, z: number) {
     out[2] = cx * cy * sz - sx * sy * cz;
     out[3] = cx * cy * cz + sx * sy * sz;
     return out;
+}
+
+/**
+ * Convert a quaternion into three Euler angles, in YXZ order, expressed in arc degrees.
+ * @param euler Vector of Euler angles to write into.
+ * @param quat Quaternion to decompose.
+ */
+export function to_euler(euler: Vec3, quat: Quat) {
+    let x = quat[0];
+    let y = quat[1];
+    let z = quat[2];
+    let w = quat[3];
+
+    let m11 = 1 - 2 * (y * y + z * z);
+    let m21 = 2 * (x * y + w * z);
+    let m31 = 2 * (x * z - w * y);
+
+    let m22 = 1 - 2 * (x * x + z * z);
+
+    let m13 = 2 * (x * z + w * y);
+    let m23 = 2 * (y * z - w * x);
+    let m33 = 1 - 2 * (x * x + y * y);
+
+    euler[0] = Math.asin(-clamp(-1, 1, m23)) * RAD_TO_DEG;
+    if (Math.abs(m23) + EPSILON < 1) {
+        euler[1] = Math.atan2(m13, m33) * RAD_TO_DEG;
+        euler[2] = Math.atan2(m21, m22) * RAD_TO_DEG;
+    } else {
+        euler[1] = Math.atan2(-m31, m11) * RAD_TO_DEG;
+        euler[2] = 0;
+    }
+
+    return euler;
+}
+
+/**
+ * Get the pitch (rotation around the X axis) of a quaternion, in arc degrees.
+ * @param quat Quaternion to decompose.
+ */
+export function get_pitch(quat: Quat) {
+    let x = quat[0];
+    let y = quat[1];
+    let z = quat[2];
+    let w = quat[3];
+
+    let m23 = 2 * (y * z - w * x);
+    return Math.asin(-clamp(-1, 1, m23)) * RAD_TO_DEG;
 }
 
 /**

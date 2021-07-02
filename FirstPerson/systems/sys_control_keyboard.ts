@@ -1,3 +1,4 @@
+import {get_pitch} from "../../common/quat.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -52,12 +53,15 @@ function update(game: Game, entity: Entity) {
     if (control.Pitch) {
         // Pitch is applied relative to the entity's self space; the X axis is
         // always aligned with its left and right sides.
+        let transform = game.World.Transform[entity];
         let move = game.World.Move[entity];
-        if (game.InputState["ArrowUp"]) {
+
+        let current_pitch = get_pitch(transform.Rotation);
+        if (game.InputState["ArrowUp"] && current_pitch > control.PitchRange[0]) {
             // Look up.
             move.SelfRotations.push([-1, 0, 0, 0]);
         }
-        if (game.InputState["ArrowDown"]) {
+        if (game.InputState["ArrowDown"] && current_pitch < control.PitchRange[1]) {
             // Look down.
             move.SelfRotations.push([1, 0, 0, 0]);
         }

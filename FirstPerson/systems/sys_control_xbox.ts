@@ -1,5 +1,5 @@
 import {Vec3} from "../../common/math.js";
-import {from_axis} from "../../common/quat.js";
+import {from_axis, get_pitch} from "../../common/quat.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -50,10 +50,18 @@ function update(game: Game, entity: Entity) {
     }
 
     if (control.Pitch && Math.abs(game.InputDelta["pad0_axis_4"]) > DEAD_ZONE) {
+        let transform = game.World.Transform[entity];
         let move = game.World.Move[entity];
+
         let amount = game.InputDelta["pad0_axis_4"] * Math.PI;
-        // Pitch applied relative to the entity's self space; the X axis is
-        // always aligned with its left and right sides.
-        move.SelfRotations.push(from_axis([0, 0, 0, 0], AXIS_X, amount));
+        let current_pitch = get_pitch(transform.Rotation);
+        if (
+            (amount < 0 && current_pitch > control.PitchRange[0]) ||
+            (amount > 0 && current_pitch < control.PitchRange[1])
+        ) {
+            // Pitch applied relative to the entity's self space; the X axis is
+            // always aligned with its left and right sides.
+            move.SelfRotations.push(from_axis([0, 0, 0, 0], AXIS_X, amount));
+        }
     }
 }

@@ -1,6 +1,6 @@
 import {DEG_TO_RAD, Quat, Vec2, Vec3} from "../../common/math.js";
 import {clamp} from "../../common/number.js";
-import {from_axis, get_axis, multiply} from "../../common/quat.js";
+import {from_axis, get_pitch, multiply} from "../../common/quat.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -14,7 +14,6 @@ const TOUCH_SENSITIVITY = 10;
 // The position of the joystick center, given by the initial Touch0's x and y.
 const joystick: Vec2 = [0, 0];
 const rotation: Quat = [0, 0, 0, 0];
-const axis: Vec3 = [0, 0, 0];
 
 export function sys_control_touch(game: Game, delta: number) {
     if (game.InputDelta["Touch0"] === 1) {
@@ -60,20 +59,19 @@ function update(game: Game, entity: Entity) {
     }
 
     if (control.Pitch && game.InputDelta["Touch1Y"]) {
-        let amount = game.InputDelta["Touch1Y"] * control.Pitch * TOUCH_SENSITIVITY * DEG_TO_RAD;
-        // The angle returned by get_axis_angle is always positive. The
-        // direction of the rotation is indicated by the axis: [1, 0, 0] for
-        // looking down and [-1, 0, 0] for looking up. The x component of the
-        // axis may not be exactly 1 or -1, but it's close enough that we can
-        // just multiply by it as if it was Math.sign.
-        let current_pitch = get_axis(axis, transform.Rotation);
-        current_pitch *= axis[0];
-        if ((amount < 0 && current_pitch > -0.2) || (amount > 0 && current_pitch < Math.PI / 2.2)) {
-            from_axis(rotation, AXIS_X, amount);
-            // Pitch is post-multiplied, i.e. applied relative to the entity's self
-            // space; the X axis is always aligned with its left and right sides.
-            multiply(transform.Rotation, transform.Rotation, rotation);
-            transform.Dirty = true;
-        }
+        let current_pitch = get_pitch(transform.Rotation);
+        let min_amount = control.PitchRange[0] - current_pitch;
+        let max_amount = control.PitchRange[1] - current_pitch;
+
+        let amount = clamp(
+            min_amount,
+            max_amount,
+            game.InputDelta["Touch1Y"] * control.Pitch * TOUCH_SENSITIVITY
+        );
+        from_axis(rotation, AXIS_X, amount * DEG_TO_RAD);
+        // Pitch is post-multiplied, i.e. applied relative to the entity's self
+        // space; the X axis is always aligned with its left and right sides.
+        multiply(transform.Rotation, transform.Rotation, rotation);
+        transform.Dirty = true;
     }
 }
