@@ -15,7 +15,7 @@ const TOUCH_SENSITIVITY = 10;
 const joystick: Vec2 = [0, 0];
 const rotation: Quat = [0, 0, 0, 0];
 
-export function sys_control_touch(game: Game, delta: number) {
+export function sys_control_touch_move(game: Game, delta: number) {
     if (game.InputDelta["Touch0"] === 1) {
         // The center of the invisible joystick is given by the position of the
         // first touch of the first finger on the screen's surface.

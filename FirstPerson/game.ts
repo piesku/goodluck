@@ -4,8 +4,8 @@ import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_go
 import {mesh_cube} from "../meshes/cube.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_keyboard} from "./systems/sys_control_keyboard.js";
-import {sys_control_mouse} from "./systems/sys_control_mouse.js";
-import {sys_control_touch} from "./systems/sys_control_touch.js";
+import {sys_control_mouse_move} from "./systems/sys_control_mouse_move.js";
+import {sys_control_touch_move} from "./systems/sys_control_touch_move.js";
 import {sys_control_xbox} from "./systems/sys_control_xbox.js";
 import {sys_draw} from "./systems/sys_draw.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -29,9 +29,9 @@ export class Game extends GameWebGL1 {
 
     override FrameUpdate(delta: number) {
         sys_control_keyboard(this, delta);
-        sys_control_mouse(this, delta);
+        sys_control_mouse_move(this, delta);
+        sys_control_touch_move(this, delta);
         sys_control_xbox(this, delta);
-        sys_control_touch(this, delta);
 
         sys_move(this, delta);
         sys_transform(this, delta);

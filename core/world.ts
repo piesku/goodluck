@@ -5,6 +5,7 @@ import {Camera} from "./components/com_camera.js";
 import {Children} from "./components/com_children.js";
 import {Collide} from "./components/com_collide.js";
 import {ControlAlways} from "./components/com_control_always.js";
+import {ControlPlayer} from "./components/com_control_player.js";
 import {Draw} from "./components/com_draw.js";
 import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
@@ -28,6 +29,7 @@ const enum Component {
     Children,
     Collide,
     ControlAlways,
+    ControlPlayer,
     Draw,
     Lifespan,
     Light,
@@ -54,6 +56,7 @@ export const enum Has {
     Children = 1 << Component.Children,
     Collide = 1 << Component.Collide,
     ControlAlways = 1 << Component.ControlAlways,
+    ControlPlayer = 1 << Component.ControlPlayer,
     Draw = 1 << Component.Draw,
     Lifespan = 1 << Component.Lifespan,
     Light = 1 << Component.Light,
@@ -78,6 +81,7 @@ export interface World extends WorldImpl {
     Children: Array<Children>;
     Collide: Array<Collide>;
     ControlAlways: Array<ControlAlways>;
+    ControlPlayer: Array<ControlPlayer>;
     Draw: Array<Draw>;
     Lifespan: Array<Lifespan>;
     Light: Array<Light>;

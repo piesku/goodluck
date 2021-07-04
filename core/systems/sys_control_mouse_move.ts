@@ -9,7 +9,7 @@ const QUERY = Has.Transform | Has.Move | Has.ControlPlayer;
 const AXIS_X: Vec3 = [1, 0, 0];
 const AXIS_Y: Vec3 = [0, 1, 0];
 
-export function sys_control_mouse(game: Game, delta: number) {
+export function sys_control_mouse_move(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
             update(game, i);
