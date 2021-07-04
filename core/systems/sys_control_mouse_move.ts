@@ -41,8 +41,8 @@ function update(game: Game, entity: Entity) {
 
     if (control.Pitch && game.InputDelta.MouseY) {
         let current_pitch = get_pitch(transform.Rotation);
-        let min_amount = control.PitchRange[0] - current_pitch;
-        let max_amount = control.PitchRange[1] - current_pitch;
+        let min_amount = control.MinPitch - current_pitch;
+        let max_amount = control.MaxPitch - current_pitch;
 
         let amount = clamp(min_amount, max_amount, game.InputDelta.MouseY * control.Pitch);
         from_axis(rotation, AXIS_X, amount * DEG_TO_RAD);

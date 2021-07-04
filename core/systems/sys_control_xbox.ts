@@ -56,8 +56,8 @@ function update(game: Game, entity: Entity) {
         let amount = game.InputDelta["pad0_axis_4"] * Math.PI;
         let current_pitch = get_pitch(transform.Rotation);
         if (
-            (amount < 0 && current_pitch > control.PitchRange[0]) ||
-            (amount > 0 && current_pitch < control.PitchRange[1])
+            (amount < 0 && current_pitch > control.MinPitch) ||
+            (amount > 0 && current_pitch < control.MaxPitch)
         ) {
             // Pitch applied relative to the entity's self space; the X axis is
             // always aligned with its left and right sides.
