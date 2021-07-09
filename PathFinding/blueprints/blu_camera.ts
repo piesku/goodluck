@@ -14,7 +14,7 @@ export function blueprint_camera(game: Game) {
         move(100, 0.2),
         children([
             transform(undefined, from_euler([0, 0, 0, 0], -30, 0, 0)),
-            control_player(false, 0, 1),
+            control_player(false, 0, 1, -85, 0),
             control_dolly(0),
             move(0, 0.2),
             children([
