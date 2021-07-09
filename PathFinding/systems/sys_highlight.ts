@@ -60,7 +60,7 @@ function update_aabb(game: Game, entity: Entity, pickable: PickableAABB) {
 
     if (selectable.Selected) {
         game.World.Signature[box_entity] |= Has.Draw;
-        box_draw.Size = 30 / game.CameraZoom;
+        box_draw.Size = 30 / game.CameraDolly;
     } else {
         game.World.Signature[box_entity] &= ~Has.Draw;
     }

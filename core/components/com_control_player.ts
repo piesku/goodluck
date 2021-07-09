@@ -18,7 +18,8 @@ export interface ControlPlayer {
  * by the mouse is equal to 1° of rotation; that's too sensitive usually.
  * @param pitch - Sensitivity of the pitch control. 1 means that 1 pixel traveled
  * by the mouse is equal to 1° of rotation; that's too sensitive usually.
- * @param pitch_range - Min and max allowed pitch, in arc degrees.
+ * @param min_pitch - Min pitch allowed, in arc degrees.
+ * @param max_pitch - Max pitch allowed, in arc degrees.
  */
 export function control_player(
     move: boolean,

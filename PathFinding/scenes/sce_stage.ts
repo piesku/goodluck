@@ -65,7 +65,7 @@ export function scene_stage(game: Game) {
     // Cube 1.
     instantiate(game, [
         transform([26, 0, 39]),
-        control_player(),
+        control_player(false, 0, 0),
         disable(Has.ControlPlayer),
         pickable_aabb([1, 0, 0, 1]),
         selectable(),
@@ -89,7 +89,7 @@ export function scene_stage(game: Game) {
     // Cube 2.
     instantiate(game, [
         transform([-18, 0, -23]),
-        control_player(),
+        control_player(false, 0, 0),
         disable(Has.ControlPlayer),
         pickable_aabb([0, 1, 0, 1]),
         selectable(),

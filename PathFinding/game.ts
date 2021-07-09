@@ -5,11 +5,11 @@ import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_go
 import {mat1_forward_colored_line} from "../materials/mat1_forward_colored_unlit.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
-import {sys_control_camera} from "./systems/sys_control_camera.js";
+import {sys_control_dolly} from "./systems/sys_control_dolly.js";
 import {sys_control_keyboard} from "./systems/sys_control_keyboard.js";
-import {sys_control_mouse} from "./systems/sys_control_mouse.js";
+import {sys_control_mouse_drag} from "./systems/sys_control_mouse_drag.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
-import {sys_control_touch} from "./systems/sys_control_touch.js";
+import {sys_control_touch_drag} from "./systems/sys_control_touch_drag.js";
 import {sys_draw} from "./systems/sys_draw.js";
 import {sys_highlight} from "./systems/sys_highlight.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -35,16 +35,16 @@ export class Game extends GameWebGL1 {
     LightDetails = new Float32Array(4 * 8);
     Cameras: Array<Entity> = [];
 
-    CameraZoom = 1;
+    CameraDolly = 1;
     Picked?: Picked;
     Selected?: Entity;
 
     override FrameUpdate(delta: number) {
-        // Camera picking.
-        sys_control_camera(this, delta);
+        // Camera controls and picking.
         sys_control_keyboard(this, delta);
-        sys_control_mouse(this, delta);
-        sys_control_touch(this, delta);
+        sys_control_mouse_drag(this, delta);
+        sys_control_touch_drag(this, delta);
+        sys_control_dolly(this, delta);
         sys_pick(this, delta);
 
         // Player order.

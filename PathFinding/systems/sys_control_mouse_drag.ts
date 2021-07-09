@@ -4,11 +4,10 @@ import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.Move | Has.ControlCamera | Has.Transform;
+const QUERY = Has.Move | Has.ControlPlayer | Has.Transform;
 const MOUSE_SENSITIVITY = 0.1;
-const ZOOM_FACTOR = 1.1;
 
-export function sys_control_mouse(game: Game, delta: number) {
+export function sys_control_mouse_drag(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
             update(game, i);
@@ -21,11 +20,10 @@ const axis_y: Vec3 = [0, 1, 0];
 const rotation: Quat = [0, 0, 0, 0];
 
 function update(game: Game, entity: Entity) {
-    let control = game.World.ControlCamera[entity];
+    let control = game.World.ControlPlayer[entity];
     let move = game.World.Move[entity];
 
     if (control.Move && game.InputDistance["Mouse0"] > 10) {
-        move.MoveSpeed = control.Move * game.CameraZoom ** ZOOM_FACTOR;
         if (game.InputDelta["MouseX"]) {
             let amount = game.InputDelta["MouseX"] * MOUSE_SENSITIVITY;
             move.Directions.push([amount, 0, 0]);
@@ -35,11 +33,6 @@ function update(game: Game, entity: Entity) {
             let amount = game.InputDelta["MouseY"] * MOUSE_SENSITIVITY;
             move.Directions.push([0, 0, amount]);
         }
-    }
-
-    if (control.Zoom && game.InputDelta["WheelY"]) {
-        move.MoveSpeed = (control.Zoom * game.CameraZoom) ** ZOOM_FACTOR;
-        move.Directions.push([0, 0, game.InputDelta["WheelY"]]);
     }
 
     if (control.Yaw && game.InputDistance["Mouse2"] > 10 && game.InputDelta["MouseX"]) {
