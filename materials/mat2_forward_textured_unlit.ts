@@ -3,6 +3,7 @@ import {GL_TRIANGLES} from "../common/webgl.js";
 import {TexturedUnlitLayout} from "./layout.js";
 
 let vertex = `#version 300 es\n
+
     uniform mat4 pv;
     uniform mat4 world;
 
