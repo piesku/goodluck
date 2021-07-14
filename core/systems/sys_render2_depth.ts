@@ -11,7 +11,7 @@ import {
 } from "../../common/webgl.js";
 import {DepthMappingLayout} from "../../materials/layout.js";
 import {CameraDepth, CameraKind} from "../components/com_camera.js";
-import {Render} from "../components/com_render2.js";
+import {Render, RenderKind} from "../components/com_render2.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";
 
@@ -58,14 +58,21 @@ function render_depth(game: Game2, camera: CameraDepth) {
             }
 
             game.Gl.uniformMatrix4fv(game.MaterialDepth.Locations.World, false, transform.World);
-            game.Gl.bindVertexArray(render.Vao);
-            game.Gl.drawElements(
-                game.MaterialDepth.Mode,
-                render.Mesh.IndexCount,
-                GL_UNSIGNED_SHORT,
-                0
-            );
-            game.Gl.bindVertexArray(null);
+
+            switch (render.Kind) {
+                case RenderKind.Vertices:
+                    // Skip rendering, RenderVertices doesn't cast shadow for now.
+                    break;
+                default:
+                    game.Gl.bindVertexArray(render.Vao);
+                    game.Gl.drawElements(
+                        game.MaterialDepth.Mode,
+                        render.Mesh.IndexCount,
+                        GL_UNSIGNED_SHORT,
+                        0
+                    );
+                    game.Gl.bindVertexArray(null);
+            }
         }
     }
 }
