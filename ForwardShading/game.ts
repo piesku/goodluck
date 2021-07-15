@@ -1,16 +1,16 @@
 import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
-import {mat2_forward_colored_gouraud} from "../materials/mat2_forward_colored_gouraud.js";
-import {mat2_forward_colored_phong} from "../materials/mat2_forward_colored_phong.js";
-import {mat2_forward_colored_points} from "../materials/mat2_forward_colored_points.js";
+import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
+import {mat_forward_colored_phong} from "../materials/mat_forward_colored_phong.js";
+import {mat_forward_colored_points} from "../materials/mat_forward_colored_points.js";
 import {
-    mat2_forward_colored_unlit,
-    mat2_forward_colored_wireframe,
-} from "../materials/mat2_forward_colored_unlit.js";
-import {mat2_forward_mapped_shaded} from "../materials/mat2_forward_mapped_shaded.js";
-import {mat2_forward_textured_gouraud} from "../materials/mat2_forward_textured_gouraud.js";
-import {mat2_forward_textured_phong} from "../materials/mat2_forward_textured_phong.js";
-import {mat2_forward_textured_unlit} from "../materials/mat2_forward_textured_unlit.js";
+    mat_forward_colored_unlit,
+    mat_forward_colored_wireframe,
+} from "../materials/mat_forward_colored_unlit.js";
+import {mat_forward_mapped_shaded} from "../materials/mat_forward_mapped_shaded.js";
+import {mat_forward_textured_gouraud} from "../materials/mat_forward_textured_gouraud.js";
+import {mat_forward_textured_phong} from "../materials/mat_forward_textured_phong.js";
+import {mat_forward_textured_unlit} from "../materials/mat_forward_textured_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -25,15 +25,15 @@ import {World} from "./world.js";
 export class Game extends Game3D {
     World = new World();
 
-    MaterialColoredPoints = mat2_forward_colored_points(this.Gl);
-    MaterialColoredWireframe = mat2_forward_colored_wireframe(this.Gl);
-    MaterialColoredUnlit = mat2_forward_colored_unlit(this.Gl);
-    MaterialColoredGouraud = mat2_forward_colored_gouraud(this.Gl);
-    MaterialColoredPhong = mat2_forward_colored_phong(this.Gl);
-    MaterialTexturedUnlit = mat2_forward_textured_unlit(this.Gl);
-    MaterialTexturedGouraud = mat2_forward_textured_gouraud(this.Gl);
-    MaterialTexturedPhong = mat2_forward_textured_phong(this.Gl);
-    MaterialMapped = mat2_forward_mapped_shaded(this.Gl);
+    MaterialColoredPoints = mat_forward_colored_points(this.Gl);
+    MaterialColoredWireframe = mat_forward_colored_wireframe(this.Gl);
+    MaterialColoredUnlit = mat_forward_colored_unlit(this.Gl);
+    MaterialColoredGouraud = mat_forward_colored_gouraud(this.Gl);
+    MaterialColoredPhong = mat_forward_colored_phong(this.Gl);
+    MaterialTexturedUnlit = mat_forward_textured_unlit(this.Gl);
+    MaterialTexturedGouraud = mat_forward_textured_gouraud(this.Gl);
+    MaterialTexturedPhong = mat_forward_textured_phong(this.Gl);
+    MaterialMapped = mat_forward_mapped_shaded(this.Gl);
 
     MeshCube = mesh_cube(this.Gl);
     MeshIcosphereSmooth = mesh_icosphere_smooth(this.Gl);

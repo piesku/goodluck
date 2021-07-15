@@ -1,10 +1,10 @@
 import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
-import {mat2_forward_colored_gouraud} from "../materials/mat2_forward_colored_gouraud.js";
+import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_ludek} from "../meshes/ludek.js";
-import {mat2_forward_colored_gouraud_skinned} from "./materials/mat2_forward_colored_gouraud_skinned.js";
-import {mat2_forward_colored_phong_skinned} from "./materials/mat2_forward_colored_phong_skinned.js";
+import {mat_forward_colored_gouraud_skinned} from "./materials/mat_forward_colored_gouraud_skinned.js";
+import {mat_forward_colored_phong_skinned} from "./materials/mat_forward_colored_phong_skinned.js";
 import {sys_animate} from "./systems/sys_animate.js";
 import {sys_audio_listener} from "./systems/sys_audio_listener.js";
 import {sys_audio_source} from "./systems/sys_audio_source.js";
@@ -19,9 +19,9 @@ import {World} from "./world.js";
 export class Game extends Game3D {
     World = new World();
 
-    MaterialColoredGouraud = mat2_forward_colored_gouraud(this.Gl);
-    MaterialColoredGouraudSkinned = mat2_forward_colored_gouraud_skinned(this.Gl);
-    MaterialColoredPhongSkinned = mat2_forward_colored_phong_skinned(this.Gl);
+    MaterialColoredGouraud = mat_forward_colored_gouraud(this.Gl);
+    MaterialColoredGouraudSkinned = mat_forward_colored_gouraud_skinned(this.Gl);
+    MaterialColoredPhongSkinned = mat_forward_colored_phong_skinned(this.Gl);
     MeshCube = mesh_cube(this.Gl);
     MeshLudek = mesh_ludek(this.Gl);
 

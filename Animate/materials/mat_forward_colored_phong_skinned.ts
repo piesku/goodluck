@@ -101,7 +101,7 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat2_forward_colored_phong_skinned(
+export function mat_forward_colored_phong_skinned(
     gl: WebGL2RenderingContext
 ): Material<ColoredShadedLayout & ForwardShadingLayout & SkinningLayout> {
     let program = link(gl, vertex, fragment);

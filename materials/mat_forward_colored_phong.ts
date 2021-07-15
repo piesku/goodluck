@@ -1,28 +1,23 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {ForwardShadingLayout, MappedShadedLayout} from "./layout.js";
+import {ColoredShadedLayout, ForwardShadingLayout} from "./layout.js";
 
 let vertex = `#version 300 es\n
+
     uniform mat4 pv;
     uniform mat4 world;
+    uniform mat4 self;
 
     in vec3 attr_position;
-    in vec2 attr_texcoord;
     in vec3 attr_normal;
-    in vec3 attr_tangent;
-    in vec3 attr_bitangent;
 
     out vec4 vert_position;
-    out vec2 vert_texcoord;
     out vec3 vert_normal;
-    out mat3 vert_tbn;
 
     void main() {
         vert_position = world * vec4(attr_position, 1.0);
+        vert_normal = (vec4(attr_normal, 1.0) * self).xyz;
         gl_Position = pv * vert_position;
-
-        vert_texcoord = attr_texcoord;
-        vert_tbn = mat3(attr_tangent, attr_bitangent, attr_normal);
     }
 `;
 
@@ -32,37 +27,26 @@ let fragment = `#version 300 es\n
     // See Game.LightPositions and Game.LightDetails.
     const int MAX_LIGHTS = 8;
 
-    uniform mat4 self;
-
-    uniform vec4 diffuse_color;
-    uniform sampler2D diffuse_map;
-    uniform sampler2D normal_map;
-    uniform sampler2D roughness_map;
-
     uniform vec3 eye;
+    uniform vec4 diffuse_color;
+    uniform vec4 specular_color;
+    uniform float shininess;
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
     in vec4 vert_position;
-    in vec2 vert_texcoord;
     in vec3 vert_normal;
-    in mat3 vert_tbn;
 
     out vec4 frag_color;
 
     void main() {
-        vec3 tex_normal = texture(normal_map, vert_texcoord).rgb;
-        vec3 frag_normal = vert_tbn * normalize(tex_normal * 2.0 - 1.0);
-        vec3 world_normal = (vec4(frag_normal, 1.0) * self).xyz;
+        vec3 world_normal = normalize(vert_normal);
 
         vec3 view_dir = eye - vert_position.xyz;
         vec3 view_normal = normalize(view_dir);
 
-        vec4 tex_color = texture(diffuse_map, vert_texcoord);
-        vec3 unlit_rgb = tex_color.rgb * diffuse_color.rgb;
-
         // Ambient light.
-        vec3 light_acc = unlit_rgb * 0.1;
+        vec3 light_acc = diffuse_color.rgb * 0.1;
 
         for (int i = 0; i < MAX_LIGHTS; i++) {
             if (light_positions[i].w == 0.0) {
@@ -87,18 +71,21 @@ let fragment = `#version 300 es\n
             float diffuse_factor = dot(world_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
-                light_acc += unlit_rgb * diffuse_factor * light_color * light_intensity;
+                light_acc += diffuse_color.rgb * diffuse_factor * light_color * light_intensity;
 
-                // Blinn-Phong reflection model.
-                float roughness = texture(roughness_map, vert_texcoord).x;
-                if (roughness < 1.0) {
-                    float shininess = 1.0 / pow(roughness, 3.0) - 1.0;
+                if (shininess > 0.0) {
+                    // Phong reflection model.
+                    // vec3 r = reflect(-light_normal, world_normal);
+                    // float specular_angle = max(dot(r, view_normal), 0.0);
+                    // float specular_factor = pow(specular_angle, shininess);
+
+                    // Blinn-Phong reflection model.
                     vec3 h = normalize(light_normal + view_normal);
                     float specular_angle = max(dot(h, world_normal), 0.0);
                     float specular_factor = pow(specular_angle, shininess);
 
                     // Specular color.
-                    light_acc += unlit_rgb * specular_factor * light_color * light_intensity;
+                    light_acc += specular_color.rgb * specular_factor * light_color * light_intensity;
                 }
             }
         }
@@ -107,9 +94,9 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat2_forward_mapped_shaded(
+export function mat_forward_colored_phong(
     gl: WebGL2RenderingContext
-): Material<MappedShadedLayout & ForwardShadingLayout> {
+): Material<ColoredShadedLayout & ForwardShadingLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
@@ -120,19 +107,15 @@ export function mat2_forward_mapped_shaded(
             Self: gl.getUniformLocation(program, "self")!,
 
             DiffuseColor: gl.getUniformLocation(program, "diffuse_color")!,
-            DiffuseMap: gl.getUniformLocation(program, "diffuse_map")!,
-            NormalMap: gl.getUniformLocation(program, "normal_map")!,
-            RoughnessMap: gl.getUniformLocation(program, "roughness_map")!,
+            SpecularColor: gl.getUniformLocation(program, "specular_color")!,
+            Shininess: gl.getUniformLocation(program, "shininess")!,
 
             Eye: gl.getUniformLocation(program, "eye")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
 
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
-            VertexTexCoord: gl.getAttribLocation(program, "attr_texcoord")!,
             VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
-            VertexTangent: gl.getAttribLocation(program, "attr_tangent")!,
-            VertexBitangent: gl.getAttribLocation(program, "attr_bitangent")!,
         },
     };
 }

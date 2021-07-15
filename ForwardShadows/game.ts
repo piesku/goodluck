@@ -1,8 +1,8 @@
 import {create_depth_target} from "../common/framebuffer.js";
 import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
-import {mat2_forward_colored_shadows} from "../materials/mat2_forward_colored_shadows.js";
-import {mat2_forward_depth} from "../materials/mat2_forward_depth.js";
+import {mat_forward_colored_shadows} from "../materials/mat_forward_colored_shadows.js";
+import {mat_forward_depth} from "../materials/mat_forward_depth.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
@@ -17,8 +17,8 @@ import {World} from "./world.js";
 export class Game extends Game3D {
     World = new World();
 
-    MaterialColoredShadows = mat2_forward_colored_shadows(this.Gl);
-    MaterialDepth = mat2_forward_depth(this.Gl);
+    MaterialColoredShadows = mat_forward_colored_shadows(this.Gl);
+    MaterialDepth = mat_forward_depth(this.Gl);
 
     MeshCube = mesh_cube(this.Gl);
 

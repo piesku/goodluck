@@ -112,7 +112,7 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat2_forward_colored_shadows(
+export function mat_forward_colored_shadows(
     gl: WebGL2RenderingContext
 ): Material<ColoredShadedLayout & ForwardShadingLayout & ShadowMappingLayout> {
     let program = link(gl, vertex, fragment);

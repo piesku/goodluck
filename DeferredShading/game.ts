@@ -6,9 +6,9 @@ import {
 } from "../common/framebuffer.js";
 import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
-import {mat2_deferred_colored} from "../materials/mat2_deferred_colored.js";
-import {mat2_deferred_shading} from "../materials/mat2_deferred_shading.js";
-import {mat2_forward_depth} from "../materials/mat2_forward_depth.js";
+import {mat_deferred_colored} from "../materials/mat_deferred_colored.js";
+import {mat_deferred_shading} from "../materials/mat_deferred_shading.js";
+import {mat_forward_depth} from "../materials/mat_forward_depth.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {mesh_quad} from "../meshes/quad.js";
@@ -26,9 +26,9 @@ import {World} from "./world.js";
 export class Game extends Game3D {
     World = new World();
 
-    MaterialColored = mat2_deferred_colored(this.Gl);
-    MaterialShading = mat2_deferred_shading(this.Gl);
-    MaterialDepth = mat2_forward_depth(this.Gl);
+    MaterialColored = mat_deferred_colored(this.Gl);
+    MaterialShading = mat_deferred_shading(this.Gl);
+    MaterialDepth = mat_forward_depth(this.Gl);
 
     MeshSphereSmooth = mesh_icosphere_smooth(this.Gl);
     MeshCube = mesh_cube(this.Gl);

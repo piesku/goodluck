@@ -1,7 +1,6 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
 import {ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.js";
-import {SkinningLayout} from "./layout_skinning.js";
 
 let vertex = `#version 300 es\n
 
@@ -17,22 +16,15 @@ let vertex = `#version 300 es\n
     uniform float shininess;
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
-    uniform mat4 bones[6];
 
     in vec3 attr_position;
     in vec3 attr_normal;
-    in vec4 attr_weights;
 
-    out vec4 vert_color;
-
-    mat4 world_weighted(vec4 weights) {
-        return weights[1] * bones[int(weights[0])] + weights[3] * bones[int(weights[2])];
-    }
+    flat out vec4 vert_color;
 
     void main() {
-        mat4 bone_world = world_weighted(attr_weights);
-        vec4 world_position = bone_world * vec4(attr_position, 1.0);
-        vec3 world_normal = normalize(mat3(bone_world) * attr_normal);
+        vec4 world_position = world * vec4(attr_position, 1.0);
+        vec3 world_normal = normalize((vec4(attr_normal, 1.0) * self).xyz);
         gl_Position = pv * world_position;
 
         vec3 view_dir = eye - world_position.xyz;
@@ -85,7 +77,7 @@ let vertex = `#version 300 es\n
 let fragment = `#version 300 es\n
     precision mediump float;
 
-    in vec4 vert_color;
+    flat in vec4 vert_color;
 
     out vec4 frag_color;
 
@@ -94,9 +86,9 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat2_forward_colored_gouraud_skinned(
+export function mat_forward_colored_flat(
     gl: WebGL2RenderingContext
-): Material<ColoredShadedLayout & ForwardShadingLayout & SkinningLayout> {
+): Material<ColoredShadedLayout & ForwardShadingLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
@@ -116,9 +108,6 @@ export function mat2_forward_colored_gouraud_skinned(
 
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
             VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
-
-            Bones: gl.getUniformLocation(program, "bones")!,
-            VertexWeights: gl.getAttribLocation(program, "attr_weights")!,
         },
     };
 }

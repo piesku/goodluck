@@ -95,7 +95,7 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat2_forward_textured_phong(
+export function mat_forward_textured_phong(
     gl: WebGL2RenderingContext
 ): Material<TexturedShadedLayout & ForwardShadingLayout> {
     let program = link(gl, vertex, fragment);

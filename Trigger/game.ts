@@ -1,7 +1,7 @@
 import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
-import {mat2_forward_colored_gouraud} from "../materials/mat2_forward_colored_gouraud.js";
-import {mat2_forward_colored_wireframe} from "../materials/mat2_forward_colored_unlit.js";
+import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
+import {mat_forward_colored_wireframe} from "../materials/mat_forward_colored_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
@@ -18,8 +18,8 @@ import {World} from "./world.js";
 export class Game extends Game3D {
     World = new World();
 
-    MaterialColoredWireframe = mat2_forward_colored_wireframe(this.Gl);
-    MaterialColoredGouraud = mat2_forward_colored_gouraud(this.Gl);
+    MaterialColoredWireframe = mat_forward_colored_wireframe(this.Gl);
+    MaterialColoredGouraud = mat_forward_colored_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
 
     // The rendering pipeline supports 8 lights.

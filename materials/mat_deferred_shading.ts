@@ -111,7 +111,7 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat2_deferred_shading(
+export function mat_deferred_shading(
     gl: WebGL2RenderingContext
 ): Material<DeferredPostprocessLayout & ForwardShadingLayout & ShadowMappingLayout> {
     let program = link(gl, vertex, fragment);

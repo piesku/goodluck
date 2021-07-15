@@ -1,8 +1,8 @@
 import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
-import {mat2_forward_colored_gouraud} from "../materials/mat2_forward_colored_gouraud.js";
+import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
 import {mesh_icosphere_flat} from "../meshes/icosphere_flat.js";
-import {mat2_forward_colored_flat} from "./materials/mat2_forward_colored_flat.js";
+import {mat_forward_colored_flat} from "./materials/mat_forward_colored_flat.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -15,8 +15,8 @@ import {World} from "./world.js";
 export class Game extends Game3D {
     World = new World();
 
-    MaterialColoredFlat = mat2_forward_colored_flat(this.Gl);
-    MaterialColoredGouraud = mat2_forward_colored_gouraud(this.Gl);
+    MaterialColoredFlat = mat_forward_colored_flat(this.Gl);
+    MaterialColoredGouraud = mat_forward_colored_gouraud(this.Gl);
 
     MeshIcosphereFlat = mesh_icosphere_flat(this.Gl);
 

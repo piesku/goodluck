@@ -1,6 +1,6 @@
 import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
-import {mat2_forward_colored_phong} from "../materials/mat2_forward_colored_phong.js";
+import {mat_forward_colored_phong} from "../materials/mat_forward_colored_phong.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {sys_animate} from "./systems/sys_animate.js";
 import {sys_audio_listener} from "./systems/sys_audio_listener.js";
@@ -34,7 +34,7 @@ import {World} from "./world.js";
 export class Game extends Game3D {
     World = new World();
 
-    MaterialColoredShaded = mat2_forward_colored_phong(this.Gl);
+    MaterialColoredShaded = mat_forward_colored_phong(this.Gl);
 
     MeshCube = mesh_cube(this.Gl);
 

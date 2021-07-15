@@ -1,8 +1,8 @@
 import {Game3D} from "../common/game.js";
 import {Mesh} from "../common/mesh.js";
 import {Entity} from "../common/world.js";
-import {mat2_forward_colored_gouraud} from "../materials/mat2_forward_colored_gouraud.js";
-import {mat2_forward_colored_line} from "../materials/mat2_forward_colored_unlit.js";
+import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
+import {mat_forward_colored_line} from "../materials/mat_forward_colored_unlit.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_dolly} from "./systems/sys_control_dolly.js";
@@ -25,8 +25,8 @@ import {World} from "./world.js";
 export class Game extends Game3D {
     World = new World();
 
-    MaterialColoredLine = mat2_forward_colored_line(this.Gl);
-    MaterialColoredGouraud = mat2_forward_colored_gouraud(this.Gl);
+    MaterialColoredLine = mat_forward_colored_line(this.Gl);
+    MaterialColoredGouraud = mat_forward_colored_gouraud(this.Gl);
 
     Meshes: Record<string, Mesh> = {};
 

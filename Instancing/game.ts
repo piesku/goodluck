@@ -1,7 +1,7 @@
 import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
 import {mesh_cube} from "../meshes/cube.js";
-import {mat2_forward_instanced} from "./materials/mat2_forward_instanced.js";
+import {mat_forward_instanced} from "./materials/mat_forward_instanced.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_render_forward} from "./systems/sys_render_forward.js";
@@ -12,7 +12,7 @@ import {World} from "./world.js";
 export class Game extends Game3D {
     World = new World();
 
-    MaterialInstanced = mat2_forward_instanced(this.Gl);
+    MaterialInstanced = mat_forward_instanced(this.Gl);
     MeshCube = mesh_cube(this.Gl);
 
     // The rendering pipeline supports 8 lights.

@@ -1,8 +1,9 @@
 import {link, Material} from "../common/material.js";
-import {GL_LINE_LOOP, GL_LINE_STRIP, GL_TRIANGLES} from "../common/webgl.js";
+import {GL_POINTS} from "../common/webgl.js";
 import {ColoredUnlitLayout} from "./layout.js";
 
 let vertex = `#version 300 es\n
+
     uniform mat4 pv;
     uniform mat4 world;
 
@@ -10,6 +11,7 @@ let vertex = `#version 300 es\n
 
     void main() {
         gl_Position = pv * world * vec4(attr_position, 1.0);
+        gl_PointSize = 8.0;
     }
 `;
 
@@ -25,13 +27,12 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat2_forward_colored_unlit(
-    gl: WebGL2RenderingContext,
-    mode: GLenum = GL_TRIANGLES
+export function mat_forward_colored_points(
+    gl: WebGL2RenderingContext
 ): Material<ColoredUnlitLayout> {
     let program = link(gl, vertex, fragment);
     return {
-        Mode: mode,
+        Mode: GL_POINTS,
         Program: program,
         Locations: {
             Pv: gl.getUniformLocation(program, "pv")!,
@@ -42,12 +43,4 @@ export function mat2_forward_colored_unlit(
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
         },
     };
-}
-
-export function mat2_forward_colored_wireframe(gl: WebGL2RenderingContext) {
-    return mat2_forward_colored_unlit(gl, GL_LINE_LOOP);
-}
-
-export function mat2_forward_colored_line(gl: WebGL2RenderingContext) {
-    return mat2_forward_colored_unlit(gl, GL_LINE_STRIP);
 }
