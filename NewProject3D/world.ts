@@ -12,7 +12,7 @@ import {Light} from "./components/com_light.js";
 import {Mimic} from "./components/com_mimic.js";
 import {Move} from "./components/com_move.js";
 import {Named} from "./components/com_named.js";
-import {Render} from "./components/com_render1.js";
+import {Render} from "./components/com_render.js";
 import {RigidBody} from "./components/com_rigid_body.js";
 import {Shake} from "./components/com_shake.js";
 import {Spawn} from "./components/com_spawn.js";

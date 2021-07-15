@@ -7,7 +7,7 @@ import {disable} from "../components/com_disable.js";
 import {lifespan} from "../components/com_lifespan.js";
 import {light_point} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
-import {render_colored_shaded} from "../components/com_render1.js";
+import {render_colored_shaded} from "../components/com_render.js";
 import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
 import {shake} from "../components/com_shake.js";
 import {task_timeout} from "../components/com_task.js";
