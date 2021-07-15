@@ -6,7 +6,7 @@ import {ControlAlways} from "./components/com_control_always.js";
 import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
 import {Move} from "./components/com_move.js";
-import {Render} from "./components/com_render1.js";
+import {Render} from "./components/com_render.js";
 import {RigidBody} from "./components/com_rigid_body.js";
 import {Shake} from "./components/com_shake.js";
 import {Spawn} from "./components/com_spawn.js";

@@ -7,7 +7,7 @@ import {collide} from "../components/com_collide.js";
 import {control_always} from "../components/com_control_always.js";
 import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
-import {render_colored_shaded} from "../components/com_render1.js";
+import {render_colored_shaded} from "../components/com_render.js";
 import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
 import {shake} from "../components/com_shake.js";
 import {spawn} from "../components/com_spawn.js";
