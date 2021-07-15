@@ -1,1 +1,0 @@
-../../core/components/com_render2.ts

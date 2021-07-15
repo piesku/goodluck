@@ -4,7 +4,7 @@ import {children} from "../components/com_children.js";
 import {control_always} from "../components/com_control_always.js";
 import {light_directional, light_point} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
-import {render_colored_shaded} from "../components/com_render2.js";
+import {render_colored_shaded} from "../components/com_render.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";

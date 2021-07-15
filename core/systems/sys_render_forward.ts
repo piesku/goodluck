@@ -34,7 +34,7 @@ import {
     RenderTexturedShaded,
     RenderTexturedUnlit,
     RenderVertices,
-} from "../components/com_render2.js";
+} from "../components/com_render.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";

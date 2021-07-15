@@ -11,7 +11,7 @@ import {
 } from "../../common/webgl.js";
 import {DepthMappingLayout} from "../../materials/layout.js";
 import {CameraDepth, CameraKind} from "../components/com_camera.js";
-import {Render, RenderKind} from "../components/com_render2.js";
+import {Render, RenderKind} from "../components/com_render.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";
 

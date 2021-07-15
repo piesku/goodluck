@@ -28,7 +28,7 @@ import {
     ForwardShadingLayout,
     ShadowMappingLayout,
 } from "../../materials/layout.js";
-import {Render} from "../components/com_render2.js";
+import {Render} from "../components/com_render.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";
 

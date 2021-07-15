@@ -11,7 +11,7 @@ import {
 } from "../../common/webgl.js";
 import {ColoredShadedLayout} from "../../materials/layout.js";
 import {CameraDeferred, CameraEye, CameraKind} from "../components/com_camera.js";
-import {Render, RenderColoredDeferred, RenderKind} from "../components/com_render2.js";
+import {Render, RenderColoredDeferred, RenderKind} from "../components/com_render.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";

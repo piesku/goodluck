@@ -2,7 +2,7 @@ import {instantiate} from "../../common/game.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {blueprint_viewer} from "../blueprints/blu_viewer.js";
 import {light_directional} from "../components/com_light.js";
-import {render_colored_shaded} from "../components/com_render2.js";
+import {render_colored_shaded} from "../components/com_render.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";

@@ -17,7 +17,7 @@ import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
-import {sys_render_forward} from "./systems/sys_render2_forward.js";
+import {sys_render_forward} from "./systems/sys_render_forward.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
