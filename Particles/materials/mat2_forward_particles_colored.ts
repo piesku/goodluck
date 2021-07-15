@@ -40,7 +40,7 @@ let fragment = `#version 300 es\n
 `;
 
 export function mat2_forward_particles_colored(
-    gl: WebGLRenderingContext
+    gl: WebGL2RenderingContext
 ): Material<ParticlesColoredLayout> {
     let program = link(gl, vertex, fragment);
     return {

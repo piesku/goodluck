@@ -26,7 +26,7 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat2_forward_depth(gl: WebGLRenderingContext): Material<DepthMappingLayout> {
+export function mat2_forward_depth(gl: WebGL2RenderingContext): Material<DepthMappingLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,

@@ -50,7 +50,7 @@ let fragment = `#version 300 es\n
 `;
 
 export function mat2_forward_particles_textured(
-    gl: WebGLRenderingContext
+    gl: WebGL2RenderingContext
 ): Material<ParticlesTexturedLayout> {
     let program = link(gl, vertex, fragment);
     return {
