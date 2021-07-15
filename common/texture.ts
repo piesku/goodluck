@@ -35,50 +35,17 @@ export function create_texture_from(gl: WebGLRenderingContext, image: HTMLImageE
     gl.bindTexture(GL_TEXTURE_2D, texture);
     gl.texImage2D(GL_TEXTURE_2D, 0, GL_RGBA, GL_RGBA, GL_PIXEL_UNSIGNED_BYTE, image);
 
-    // WebGL1 can only mipmap images which are a power of 2 in both dimensions.
-    // When targeting WebGL2 only, this if guard can be removed.
-    if (is_power_of_2(image.width) && is_power_of_2(image.height)) {
-        gl.generateMipmap(GL_TEXTURE_2D);
-        // GL_NEAREST_MIPMAP_LINEAR is the default. Consider switching to
-        // GL_LINEAR_MIPMAP_LINEAR for the best quality.
-        gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
-        // GL_LINEAR is the default; make it explicit.
-        gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    } else {
-        // GL_LINEAR is the default; make it explicit.
-        gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    }
+    gl.generateMipmap(GL_TEXTURE_2D);
+
+    // GL_NEAREST_MIPMAP_LINEAR is the default. Consider switching to
+    // GL_LINEAR_MIPMAP_LINEAR for the best quality.
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+    // GL_LINEAR is the default; make it explicit.
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     // GL_REPEAT is the default; make it explicit.
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-    return texture;
-}
-
-export function resize_texture_rgba(
-    gl: WebGLRenderingContext,
-    texture: WebGLTexture,
-    width: number,
-    height: number
-) {
-    gl.bindTexture(GL_TEXTURE_2D, texture);
-    // In WebGL1, the internal format must be the same as the data format (GL_RGBA).
-    gl.texImage2D(
-        GL_TEXTURE_2D,
-        0,
-        GL_RGBA,
-        width,
-        height,
-        0,
-        GL_RGBA,
-        GL_DATA_UNSIGNED_BYTE,
-        null
-    );
-
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     return texture;
 }
@@ -124,45 +91,6 @@ export function resize_texture_rgba32f(
     return texture;
 }
 
-export function resize_render_buffer(
-    gl: WebGLRenderingContext,
-    buffer: WebGLRenderbuffer,
-    width: number,
-    height: number
-) {
-    gl.bindRenderbuffer(gl.RENDERBUFFER, buffer);
-    gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, width, height);
-    return buffer;
-}
-
-/** Requires WEBGL_depth_texture. */
-export function resize_texture_depth(
-    gl: WebGLRenderingContext,
-    texture: WebGLTexture,
-    width: number,
-    height: number
-) {
-    gl.bindTexture(GL_TEXTURE_2D, texture);
-    gl.texImage2D(
-        GL_TEXTURE_2D,
-        0,
-        GL_DEPTH_COMPONENT,
-        width,
-        height,
-        0,
-        GL_DEPTH_COMPONENT,
-        GL_DATA_UNSIGNED_INT,
-        null
-    );
-
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-    return texture;
-}
-
 export function resize_texture_depth24(
     gl: WebGL2RenderingContext,
     texture: WebGLTexture,
@@ -189,8 +117,4 @@ export function resize_texture_depth24(
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
     return texture;
-}
-
-function is_power_of_2(value: number) {
-    return (value & (value - 1)) == 0;
 }
