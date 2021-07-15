@@ -1,4 +1,4 @@
-import {create_forward2_target} from "../common/framebuffer.js";
+import {create_forward_target} from "../common/framebuffer.js";
 import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
 import {mat2_forward_textured_unlit} from "../materials/mat2_forward_textured_unlit.js";
@@ -21,7 +21,7 @@ export class Game extends Game3D {
 
     Textures: Record<string, WebGLTexture> = {};
     Targets = {
-        Minimap: create_forward2_target(this.Gl, 256, 256),
+        Minimap: create_forward_target(this.Gl, 256, 256),
     };
 
     // The rendering pipeline supports 8 lights.

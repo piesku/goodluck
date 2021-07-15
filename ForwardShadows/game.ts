@@ -1,4 +1,4 @@
-import {create_depth2_target} from "../common/framebuffer.js";
+import {create_depth_target} from "../common/framebuffer.js";
 import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
 import {mat2_forward_colored_shadows} from "../materials/mat2_forward_colored_shadows.js";
@@ -28,7 +28,7 @@ export class Game extends Game3D {
     Cameras: Array<Entity> = [];
 
     Targets = {
-        Sun: create_depth2_target(this.Gl, 2048, 2048),
+        Sun: create_depth_target(this.Gl, 2048, 2048),
     };
 
     override FrameUpdate(delta: number) {

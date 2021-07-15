@@ -1,6 +1,6 @@
 import {
     create_deferred_target,
-    create_depth2_target,
+    create_depth_target,
     DeferredTarget,
     DepthTarget,
 } from "../common/framebuffer.js";
@@ -53,7 +53,7 @@ export class Game extends Game3D {
         this.Targets = {
             // Create the main framebuffer for deferred rendering.
             Gbuffer: create_deferred_target(this.Gl, this.ViewportWidth, this.ViewportHeight),
-            Sun: create_depth2_target(this.Gl, 1024, 1024),
+            Sun: create_depth_target(this.Gl, 1024, 1024),
         };
     }
 
