@@ -3,7 +3,8 @@ import {GL_TRIANGLES} from "../../common/webgl.js";
 import {ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.js";
 import {SkinningLayout} from "./layout_skinning.js";
 
-let vertex = `
+let vertex = `#version 300 es\n
+
     // See Game.LightPositions and Game.LightDetails.
     const int MAX_LIGHTS = 8;
 
@@ -18,11 +19,11 @@ let vertex = `
     uniform vec4 light_details[MAX_LIGHTS];
     uniform mat4 bones[6];
 
-    attribute vec3 attr_position;
-    attribute vec3 attr_normal;
-    attribute vec4 attr_weights;
+    in vec3 attr_position;
+    in vec3 attr_normal;
+    in vec4 attr_weights;
 
-    varying vec4 vert_color;
+    out vec4 vert_color;
 
     mat4 world_weighted(vec4 weights) {
         return weights[1] * bones[int(weights[0])] + weights[3] * bones[int(weights[2])];
@@ -81,17 +82,19 @@ let vertex = `
     }
 `;
 
-let fragment = `
+let fragment = `#version 300 es\n
     precision mediump float;
 
-    varying vec4 vert_color;
+    in vec4 vert_color;
+
+    out vec4 frag_color;
 
     void main() {
-        gl_FragColor = vert_color;
+        frag_color = vert_color;
     }
 `;
 
-export function mat1_forward_colored_gouraud_skinned(
+export function mat2_forward_colored_gouraud_skinned(
     gl: WebGLRenderingContext
 ): Material<ColoredShadedLayout & ForwardShadingLayout & SkinningLayout> {
     let program = link(gl, vertex, fragment);
