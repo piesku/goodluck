@@ -5,7 +5,7 @@ import {
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
 import {CameraDepth, CameraKind} from "../components/com_camera.js";
-import {RenderKind} from "../components/com_render1.js";
+import {RenderKind} from "../components/com_render.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -52,14 +52,14 @@ function render_depth(game: Game, camera: CameraDepth) {
                         false,
                         transform.World
                     );
-                    game.ExtVao.bindVertexArrayOES(render.Vao);
+                    game.Gl.bindVertexArray(render.Vao);
                     game.Gl.drawElements(
                         game.MaterialDepth.Mode,
                         render.Mesh.IndexCount,
                         GL_UNSIGNED_SHORT,
                         0
                     );
-                    game.ExtVao.bindVertexArrayOES(null);
+                    game.Gl.bindVertexArray(null);
             }
         }
     }
