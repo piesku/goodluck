@@ -1,5 +1,5 @@
 /**
- * @module systems/sys_render2_postprocess
+ * @module systems/sys_render_postprocess
  */
 
 import {

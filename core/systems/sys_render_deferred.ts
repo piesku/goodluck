@@ -1,5 +1,5 @@
 /**
- * @module systems/sys_render2_deferred
+ * @module systems/sys_render_deferred
  */
 
 import {Material} from "../../common/material.js";

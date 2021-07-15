@@ -1,5 +1,5 @@
 /**
- * @module systems/sys_render2_forward
+ * @module systems/sys_render_forward
  */
 
 import {Material} from "../../common/material.js";

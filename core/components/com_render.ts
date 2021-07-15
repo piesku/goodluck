@@ -1,5 +1,5 @@
 /**
- * @module components/com_render2
+ * @module components/com_render
  */
 
 import {Material} from "../../common/material.js";

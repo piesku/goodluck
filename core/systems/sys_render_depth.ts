@@ -1,5 +1,5 @@
 /**
- * @module systems/sys_render2_depth
+ * @module systems/sys_render_depth
  */
 
 import {
