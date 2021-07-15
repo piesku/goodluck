@@ -25,7 +25,7 @@ import {
     TexturedUnlitLayout,
 } from "../../materials/layout.js";
 import {Game} from "../game.js";
-import {Has, World} from "../world.js";
+import {Has} from "../world.js";
 
 export type Render =
     | RenderColoredUnlit
@@ -46,13 +46,6 @@ export const enum RenderKind {
     TexturedShaded,
     MappedShaded,
     Vertices,
-}
-
-interface Game2 extends Game {
-    Gl: WebGL2RenderingContext;
-    World: World & {
-        Render: Array<Render>;
-    };
 }
 
 const colored_unlit_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
@@ -77,7 +70,7 @@ export function render_colored_unlit(
     mesh: Mesh,
     color: Vec4
 ) {
-    return (game: Game2, entity: Entity) => {
+    return (game: Game, entity: Entity) => {
         if (!colored_unlit_vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.Gl.createVertexArray()!;
@@ -131,7 +124,7 @@ export function render_colored_shaded(
     specular_color: Vec4 = [1, 1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
-    return (game: Game2, entity: Entity) => {
+    return (game: Game, entity: Entity) => {
         if (!colored_shaded_vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.Gl.createVertexArray()!;
@@ -191,7 +184,7 @@ export function render_colored_shadows(
     specular_color: Vec4 = [1, 1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
-    return (game: Game2, entity: Entity) => {
+    return (game: Game, entity: Entity) => {
         if (!colored_shadows_vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.Gl.createVertexArray()!;
@@ -251,7 +244,7 @@ export function render_colored_deferred(
     specular_color: Vec3 = [1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
-    return (game: Game2, entity: Entity) => {
+    return (game: Game, entity: Entity) => {
         if (!colored_deferred_vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.Gl.createVertexArray()!;
@@ -308,7 +301,7 @@ export function render_textured_unlit(
     texture: WebGLTexture,
     color: Vec4 = [1, 1, 1, 1]
 ) {
-    return (game: Game2, entity: Entity) => {
+    return (game: Game, entity: Entity) => {
         if (!textured_unlit_vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.Gl.createVertexArray()!;
@@ -376,7 +369,7 @@ export function render_textured_shaded(
     specular_color: Vec4 = [1, 1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
-    return (game: Game2, entity: Entity) => {
+    return (game: Game, entity: Entity) => {
         if (!textured_shaded_vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.Gl.createVertexArray()!;
@@ -449,7 +442,7 @@ export function render_mapped_shaded(
     roughness_map: WebGLTexture,
     diffuse_color: Vec4 = [1, 1, 1, 1]
 ) {
-    return (game: Game2, entity: Entity) => {
+    return (game: Game, entity: Entity) => {
         if (!mapped_vaos.has(mesh)) {
             // We only need to create the VAO once.
             let vao = game.Gl.createVertexArray()!;
@@ -586,7 +579,7 @@ export interface RenderVertices {
 }
 
 export function render_vertices(material: Material<ColoredUnlitLayout>, max: number, color: Vec4) {
-    return (game: Game2, entity: Entity) => {
+    return (game: Game, entity: Entity) => {
         let vertex_buf = game.Gl.createBuffer()!;
         game.Gl.bindBuffer(GL_ARRAY_BUFFER, vertex_buf);
         game.Gl.bufferData(GL_ARRAY_BUFFER, max * Float32Array.BYTES_PER_ELEMENT, GL_DYNAMIC_DRAW);

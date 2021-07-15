@@ -26,7 +26,6 @@ import {
 } from "../../materials/layout.js";
 import {CameraEye, CameraForward, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
 import {
-    Render,
     RenderColoredShaded,
     RenderColoredUnlit,
     RenderKind,
@@ -37,18 +36,11 @@ import {
 } from "../components/com_render.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {Has, World} from "../world.js";
+import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;
 
-interface Game2 extends Game {
-    Gl: WebGL2RenderingContext;
-    World: World & {
-        Render: Array<Render>;
-    };
-}
-
-export function sys_render_forward(game: Game2, delta: number) {
+export function sys_render_forward(game: Game, delta: number) {
     for (let camera_entity of game.Cameras) {
         let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
@@ -62,7 +54,7 @@ export function sys_render_forward(game: Game2, delta: number) {
     }
 }
 
-function render_forward(game: Game2, camera: CameraForward) {
+function render_forward(game: Game, camera: CameraForward) {
     game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
     game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
     game.Gl.clearColor(...camera.ClearColor);
@@ -70,7 +62,7 @@ function render_forward(game: Game2, camera: CameraForward) {
     render(game, camera);
 }
 
-function render_framebuffer(game: Game2, camera: CameraFramebuffer) {
+function render_framebuffer(game: Game, camera: CameraFramebuffer) {
     game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target.Framebuffer);
     game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
     game.Gl.clearColor(...camera.ClearColor);
@@ -78,7 +70,7 @@ function render_framebuffer(game: Game2, camera: CameraFramebuffer) {
     render(game, camera, camera.Target.RenderTexture);
 }
 
-function render(game: Game2, eye: CameraEye, current_target?: WebGLTexture) {
+function render(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
     // Keep track of the current material to minimize switching.
     let current_material = null;
     let current_front_face = null;
@@ -149,12 +141,12 @@ function render(game: Game2, eye: CameraEye, current_target?: WebGLTexture) {
     }
 }
 
-function use_colored_unlit(game: Game2, material: Material<ColoredUnlitLayout>, eye: CameraEye) {
+function use_colored_unlit(game: Game, material: Material<ColoredUnlitLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
 }
 
-function draw_colored_unlit(game: Game2, transform: Transform, render: RenderColoredUnlit) {
+function draw_colored_unlit(game: Game, transform: Transform, render: RenderColoredUnlit) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
     game.Gl.bindVertexArray(render.Vao);
@@ -163,7 +155,7 @@ function draw_colored_unlit(game: Game2, transform: Transform, render: RenderCol
 }
 
 function use_colored_shaded(
-    game: Game2,
+    game: Game,
     material: Material<ColoredShadedLayout & ForwardShadingLayout>,
     eye: CameraEye
 ) {
@@ -174,7 +166,7 @@ function use_colored_shaded(
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
-function draw_colored_shaded(game: Game2, transform: Transform, render: RenderColoredShaded) {
+function draw_colored_shaded(game: Game, transform: Transform, render: RenderColoredShaded) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
     game.Gl.uniform4fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
@@ -185,12 +177,12 @@ function draw_colored_shaded(game: Game2, transform: Transform, render: RenderCo
     game.Gl.bindVertexArray(null);
 }
 
-function use_textured_unlit(game: Game2, material: Material<TexturedUnlitLayout>, eye: CameraEye) {
+function use_textured_unlit(game: Game, material: Material<TexturedUnlitLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
 }
 
-function draw_textured_unlit(game: Game2, transform: Transform, render: RenderTexturedUnlit) {
+function draw_textured_unlit(game: Game, transform: Transform, render: RenderTexturedUnlit) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
 
     game.Gl.activeTexture(GL_TEXTURE0);
@@ -205,7 +197,7 @@ function draw_textured_unlit(game: Game2, transform: Transform, render: RenderTe
 }
 
 function use_textured_shaded(
-    game: Game2,
+    game: Game,
     material: Material<TexturedShadedLayout & ForwardShadingLayout>,
     eye: CameraEye
 ) {
@@ -216,7 +208,7 @@ function use_textured_shaded(
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
-function draw_textured_shaded(game: Game2, transform: Transform, render: RenderTexturedShaded) {
+function draw_textured_shaded(game: Game, transform: Transform, render: RenderTexturedShaded) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
     game.Gl.uniform4fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
@@ -232,12 +224,12 @@ function draw_textured_shaded(game: Game2, transform: Transform, render: RenderT
     game.Gl.bindVertexArray(null);
 }
 
-function use_vertices(game: Game2, material: Material<ColoredUnlitLayout>, eye: CameraEye) {
+function use_vertices(game: Game, material: Material<ColoredUnlitLayout>, eye: CameraEye) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
 }
 
-function draw_vertices(game: Game2, transform: Transform, render: RenderVertices) {
+function draw_vertices(game: Game, transform: Transform, render: RenderVertices) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
     game.Gl.bindBuffer(GL_ARRAY_BUFFER, render.VertexBuffer);
@@ -247,7 +239,7 @@ function draw_vertices(game: Game2, transform: Transform, render: RenderVertices
 }
 
 function use_mapped(
-    game: Game2,
+    game: Game,
     material: Material<MappedShadedLayout & ForwardShadingLayout>,
     eye: CameraEye
 ) {
@@ -258,7 +250,7 @@ function use_mapped(
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
-function draw_mapped(game: Game2, transform: Transform, render: RenderMappedShaded) {
+function draw_mapped(game: Game, transform: Transform, render: RenderMappedShaded) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
 

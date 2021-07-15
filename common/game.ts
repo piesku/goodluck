@@ -250,24 +250,9 @@ export abstract class Game3D extends GameImpl {
     Context2D = this.Canvas2D.getContext("2d")!;
 
     Canvas3D = document.querySelector("#scene")! as HTMLCanvasElement;
+    Gl = this.Canvas3D.getContext("webgl2")!;
 
     Audio = new (window["AudioContext"] || window.webkitAudioContext)();
-}
-
-export abstract class GameWebGL1 extends Game3D {
-    Gl = this.Canvas3D.getContext("webgl")!;
-    ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
-
-    constructor() {
-        super();
-
-        this.Gl.enable(GL_DEPTH_TEST);
-        this.Gl.enable(GL_CULL_FACE);
-    }
-}
-
-export abstract class GameWebGL2 extends Game3D {
-    Gl = this.Canvas3D.getContext("webgl2")!;
 
     constructor() {
         super();

@@ -1,4 +1,4 @@
-import {GameWebGL2} from "../common/game.js";
+import {Game3D} from "../common/game.js";
 import {Mesh} from "../common/mesh.js";
 import {Entity} from "../common/world.js";
 import {mat2_forward_colored_gouraud} from "../materials/mat2_forward_colored_gouraud.js";
@@ -22,7 +22,7 @@ import {sys_select} from "./systems/sys_select.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
-export class Game extends GameWebGL2 {
+export class Game extends Game3D {
     World = new World();
 
     MaterialColoredLine = mat2_forward_colored_line(this.Gl);

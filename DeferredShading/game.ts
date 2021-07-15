@@ -4,7 +4,7 @@ import {
     DeferredTarget,
     DepthTarget,
 } from "../common/framebuffer.js";
-import {GameWebGL2} from "../common/game.js";
+import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
 import {mat2_deferred_colored} from "../materials/mat2_deferred_colored.js";
 import {mat2_deferred_shading} from "../materials/mat2_deferred_shading.js";
@@ -23,7 +23,7 @@ import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
-export class Game extends GameWebGL2 {
+export class Game extends Game3D {
     World = new World();
 
     MaterialColored = mat2_deferred_colored(this.Gl);

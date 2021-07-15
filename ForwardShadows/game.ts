@@ -1,5 +1,5 @@
 import {create_depth2_target} from "../common/framebuffer.js";
-import {GameWebGL2} from "../common/game.js";
+import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
 import {mat2_forward_colored_shadows} from "../materials/mat2_forward_colored_shadows.js";
 import {mat2_forward_depth} from "../materials/mat2_forward_depth.js";
@@ -14,7 +14,7 @@ import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
-export class Game extends GameWebGL2 {
+export class Game extends Game3D {
     World = new World();
 
     MaterialColoredShadows = mat2_forward_colored_shadows(this.Gl);

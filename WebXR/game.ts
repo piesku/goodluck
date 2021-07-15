@@ -1,4 +1,4 @@
-import {GameWebGL2} from "../common/game.js";
+import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
 import {mat2_forward_colored_gouraud} from "../materials/mat2_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
@@ -14,7 +14,7 @@ import {sys_ui} from "./systems/sys_ui.js";
 import {World} from "./world.js";
 import {xr_init} from "./xr.js";
 
-export class Game extends GameWebGL2 {
+export class Game extends Game3D {
     World = new World();
 
     override Gl = this.Canvas3D.getContext("webgl2", {
