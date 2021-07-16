@@ -234,7 +234,7 @@ export abstract class GameImpl {
 export abstract class Game2D extends GameImpl {
     Canvas2D = document.querySelector("canvas")!;
     Context2D = this.Canvas2D.getContext("2d")!;
-    Audio = new (window["AudioContext"] || window.webkitAudioContext)();
+    Audio = new AudioContext();
 
     constructor() {
         super();
@@ -252,7 +252,7 @@ export abstract class Game3D extends GameImpl {
     Canvas3D = document.querySelector("#scene")! as HTMLCanvasElement;
     Gl = this.Canvas3D.getContext("webgl2")!;
 
-    Audio = new (window["AudioContext"] || window.webkitAudioContext)();
+    Audio = new AudioContext();
 
     constructor() {
         super();
