@@ -2,7 +2,7 @@ import {instantiate} from "../../common/game.js";
 import {scale} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
 import {Collide} from "../components/com_collide.js";
-import {RenderKind, render_colored_unlit} from "../components/com_render1.js";
+import {RenderKind, render_colored_unlit} from "../components/com_render.js";
 import {transform, Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

@@ -6,21 +6,13 @@ import {Entity} from "../../common/world.js";
 import {ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.js";
 import {Game} from "../game.js";
 import {SkinningLayout} from "../materials/layout_skinning.js";
-import {Has, World} from "../world.js";
+import {Has} from "../world.js";
 
 export type Render = RenderColoredShaded | RenderColoredSkinned;
 
 export const enum RenderKind {
     ColoredShaded,
     ColoredSkinned,
-}
-
-interface Game1 extends Game {
-    Gl: WebGLRenderingContext;
-    ExtVao: OES_vertex_array_object;
-    World: World & {
-        Render: Array<Render>;
-    };
 }
 
 const colored_shaded_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
@@ -45,11 +37,11 @@ export function render_colored_shaded(
     specular_color: Vec4 = [1, 1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
-    return (game: Game1, entity: Entity) => {
+    return (game: Game, entity: Entity) => {
         if (!colored_shaded_vaos.has(mesh)) {
             // We only need to create the VAO once.
-            let vao = game.ExtVao.createVertexArrayOES()!;
-            game.ExtVao.bindVertexArrayOES(vao);
+            let vao = game.Gl.createVertexArray()!;
+            game.Gl.bindVertexArray(vao);
 
             game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
             game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
@@ -68,7 +60,7 @@ export function render_colored_shaded(
 
             game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
-            game.ExtVao.bindVertexArrayOES(null);
+            game.Gl.bindVertexArray(null);
             colored_shaded_vaos.set(mesh, vao);
         }
 
@@ -105,11 +97,11 @@ export function render_colored_skinned(
     specular_color: Vec4 = [1, 1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
-    return (game: Game1, entity: Entity) => {
+    return (game: Game, entity: Entity) => {
         if (!colored_skinned_vaos.has(mesh)) {
             // We only need to create the VAO once.
-            let vao = game.ExtVao.createVertexArrayOES()!;
-            game.ExtVao.bindVertexArrayOES(vao);
+            let vao = game.Gl.createVertexArray()!;
+            game.Gl.bindVertexArray(vao);
 
             game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
             game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
@@ -132,7 +124,7 @@ export function render_colored_skinned(
 
             game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
 
-            game.ExtVao.bindVertexArrayOES(null);
+            game.Gl.bindVertexArray(null);
             colored_skinned_vaos.set(mesh, vao);
         }
 

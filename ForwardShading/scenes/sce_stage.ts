@@ -10,7 +10,7 @@ import {
     render_mapped_shaded,
     render_textured_shaded,
     render_textured_unlit,
-} from "../components/com_render1.js";
+} from "../components/com_render.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";

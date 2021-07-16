@@ -7,7 +7,7 @@ import {
 } from "../../common/webgl.js";
 import {ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.js";
 import {CameraEye, CameraForward, CameraKind, CameraXr} from "../components/com_camera.js";
-import {RenderColoredShaded, RenderKind} from "../components/com_render2.js";
+import {RenderColoredShaded, RenderKind} from "../components/com_render.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

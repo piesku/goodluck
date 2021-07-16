@@ -1,8 +1,8 @@
-import {GameWebGL1} from "../common/game.js";
+import {Game3D} from "../common/game.js";
 import {Mesh} from "../common/mesh.js";
 import {Entity} from "../common/world.js";
-import {mat1_forward_colored_gouraud} from "../materials/mat1_forward_colored_gouraud.js";
-import {mat1_forward_colored_line} from "../materials/mat1_forward_colored_unlit.js";
+import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
+import {mat_forward_colored_line} from "../materials/mat_forward_colored_unlit.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_dolly} from "./systems/sys_control_dolly.js";
@@ -16,17 +16,17 @@ import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_nav} from "./systems/sys_nav.js";
 import {Picked, sys_pick} from "./systems/sys_pick.js";
-import {sys_render_forward} from "./systems/sys_render1_forward.js";
+import {sys_render_forward} from "./systems/sys_render_forward.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_select} from "./systems/sys_select.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
-export class Game extends GameWebGL1 {
+export class Game extends Game3D {
     World = new World();
 
-    MaterialColoredLine = mat1_forward_colored_line(this.Gl);
-    MaterialColoredGouraud = mat1_forward_colored_gouraud(this.Gl);
+    MaterialColoredLine = mat_forward_colored_line(this.Gl);
+    MaterialColoredGouraud = mat_forward_colored_gouraud(this.Gl);
 
     Meshes: Record<string, Mesh> = {};
 

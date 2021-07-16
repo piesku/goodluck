@@ -4,7 +4,7 @@ import {element, float} from "../../common/random.js";
 import {blueprint_camera_main} from "../blueprints/blu_camera_main.js";
 import {blueprint_sun} from "../blueprints/blu_sun.js";
 import {light_point} from "../components/com_light.js";
-import {render_colored_deferred} from "../components/com_render2.js";
+import {render_colored_deferred} from "../components/com_render.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";

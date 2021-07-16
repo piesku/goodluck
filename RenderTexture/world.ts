@@ -3,7 +3,7 @@ import {Camera} from "./components/com_camera.js";
 import {Children} from "./components/com_children.js";
 import {ControlAlways} from "./components/com_control_always.js";
 import {Move} from "./components/com_move.js";
-import {Render} from "./components/com_render1.js";
+import {Render} from "./components/com_render.js";
 import {Transform} from "./components/com_transform.js";
 
 const enum Component {

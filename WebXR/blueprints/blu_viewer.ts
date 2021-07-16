@@ -2,7 +2,7 @@ import {GL_CCW, GL_CW} from "../../common/webgl.js";
 import {camera_xr} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {ControlXrKind, control_xr} from "../components/com_control_xr.js";
-import {render_colored_shaded} from "../components/com_render2.js";
+import {render_colored_shaded} from "../components/com_render.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 

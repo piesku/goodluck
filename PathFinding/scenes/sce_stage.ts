@@ -10,7 +10,7 @@ import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {nav_agent} from "../components/com_nav_agent.js";
 import {pickable_aabb, pickable_mesh} from "../components/com_pickable.js";
-import {render_colored_shaded, render_colored_unlit} from "../components/com_render1.js";
+import {render_colored_shaded, render_colored_unlit} from "../components/com_render.js";
 import {selectable} from "../components/com_selectable.js";
 import {transform} from "../components/com_transform.js";
 import {Game, Layer} from "../game.js";

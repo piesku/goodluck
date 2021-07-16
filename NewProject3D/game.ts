@@ -1,6 +1,6 @@
-import {GameWebGL1} from "../common/game.js";
+import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
-import {mat1_forward_colored_phong} from "../materials/mat1_forward_colored_phong.js";
+import {mat_forward_colored_phong} from "../materials/mat_forward_colored_phong.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {sys_animate} from "./systems/sys_animate.js";
 import {sys_audio_listener} from "./systems/sys_audio_listener.js";
@@ -21,7 +21,7 @@ import {sys_physics_integrate} from "./systems/sys_physics_integrate.js";
 import {sys_physics_kinematic} from "./systems/sys_physics_kinematic.js";
 import {sys_physics_resolve} from "./systems/sys_physics_resolve.js";
 import {sys_poll} from "./systems/sys_poll.js";
-import {sys_render_forward} from "./systems/sys_render1_forward.js";
+import {sys_render_forward} from "./systems/sys_render_forward.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_shake} from "./systems/sys_shake.js";
 import {sys_spawn} from "./systems/sys_spawn.js";
@@ -31,10 +31,10 @@ import {sys_trigger} from "./systems/sys_trigger.js";
 import {sys_ui} from "./systems/sys_ui.js";
 import {World} from "./world.js";
 
-export class Game extends GameWebGL1 {
+export class Game extends Game3D {
     World = new World();
 
-    MaterialColoredShaded = mat1_forward_colored_phong(this.Gl);
+    MaterialColoredShaded = mat_forward_colored_phong(this.Gl);
 
     MeshCube = mesh_cube(this.Gl);
 

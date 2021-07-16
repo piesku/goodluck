@@ -5,7 +5,7 @@ import {path_find} from "../../common/pathfind.js";
 import {GL_ARRAY_BUFFER} from "../../common/webgl.js";
 import {Entity} from "../../common/world.js";
 import {disable} from "../components/com_disable.js";
-import {RenderVertices, render_vertices} from "../components/com_render1.js";
+import {RenderVertices, render_vertices} from "../components/com_render.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

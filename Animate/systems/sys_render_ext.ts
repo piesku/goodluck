@@ -11,26 +11,17 @@ import {ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.
 import {CameraEye, CameraForward, CameraKind} from "../components/com_camera.js";
 import {query_all} from "../components/com_children.js";
 import {
-    Render,
     RenderColoredShaded,
     RenderColoredSkinned,
     RenderKind,
 } from "../components/com_render_ext.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
-import {Has, World} from "../world.js";
+import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;
 
-interface Game1 extends Game {
-    Gl: WebGLRenderingContext;
-    ExtVao: OES_vertex_array_object;
-    World: World & {
-        Render: Array<Render>;
-    };
-}
-
-export function sys_render_forward(game: Game1, delta: number) {
+export function sys_render_forward(game: Game, delta: number) {
     for (let camera_entity of game.Cameras) {
         let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
@@ -41,7 +32,7 @@ export function sys_render_forward(game: Game1, delta: number) {
     }
 }
 
-function render_forward(game: Game1, camera: CameraForward) {
+function render_forward(game: Game, camera: CameraForward) {
     game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
     game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
     game.Gl.clearColor(...camera.ClearColor);
@@ -49,7 +40,7 @@ function render_forward(game: Game1, camera: CameraForward) {
     render(game, camera);
 }
 
-function render(game: Game1, eye: CameraEye) {
+function render(game: Game, eye: CameraEye) {
     // Keep track of the current material to minimize switching.
     let current_material = null;
     let current_front_face = null;
@@ -89,7 +80,7 @@ function render(game: Game1, eye: CameraEye) {
 }
 
 function use_colored_shaded(
-    game: Game1,
+    game: Game,
     material: Material<ColoredShadedLayout & ForwardShadingLayout>,
     eye: CameraEye
 ) {
@@ -100,19 +91,19 @@ function use_colored_shaded(
     game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 }
 
-function draw_colored_shaded(game: Game1, transform: Transform, render: RenderColoredShaded) {
+function draw_colored_shaded(game: Game, transform: Transform, render: RenderColoredShaded) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
     game.Gl.uniform4fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
     game.Gl.uniform4fv(render.Material.Locations.SpecularColor, render.SpecularColor);
     game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
-    game.ExtVao.bindVertexArrayOES(render.Vao);
+    game.Gl.bindVertexArray(render.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
-    game.ExtVao.bindVertexArrayOES(null);
+    game.Gl.bindVertexArray(null);
 }
 
 function use_colored_skinned(
-    game: Game1,
+    game: Game,
     material: Material<ColoredShadedLayout & ForwardShadingLayout>,
     eye: CameraEye
 ) {
@@ -125,7 +116,7 @@ function use_colored_skinned(
 
 const bones = new Float32Array(16 * 6);
 function draw_colored_skinned(
-    game: Game1,
+    game: Game,
     entity: Entity,
     transform: Transform,
     render: RenderColoredSkinned
@@ -144,7 +135,7 @@ function draw_colored_skinned(
     }
     game.Gl.uniformMatrix4fv(render.Material.Locations.Bones, false, bones);
 
-    game.ExtVao.bindVertexArrayOES(render.Vao);
+    game.Gl.bindVertexArray(render.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
-    game.ExtVao.bindVertexArrayOES(null);
+    game.Gl.bindVertexArray(null);
 }

@@ -1,6 +1,6 @@
-import {GameWebGL2} from "../common/game.js";
+import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
-import {mat2_forward_colored_gouraud} from "../materials/mat2_forward_colored_gouraud.js";
+import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_hand} from "../meshes/hand.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -14,7 +14,7 @@ import {sys_ui} from "./systems/sys_ui.js";
 import {World} from "./world.js";
 import {xr_init} from "./xr.js";
 
-export class Game extends GameWebGL2 {
+export class Game extends Game3D {
     World = new World();
 
     override Gl = this.Canvas3D.getContext("webgl2", {
@@ -28,7 +28,7 @@ export class Game extends GameWebGL2 {
     XrFrame?: XRFrame;
     XrInputs: Record<string, XRInputSource> = {};
 
-    MaterialColoredGouraud = mat2_forward_colored_gouraud(this.Gl);
+    MaterialColoredGouraud = mat_forward_colored_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
     MeshHand = mesh_hand(this.Gl);
 
