@@ -41,14 +41,15 @@ export function sys_poll(game: Game, delta: number) {
     }
 
     for (let entity of tasks_to_complete) {
-        game.World.Signature[entity] &= ~Has.Task;
-        if (game.World.Signature[entity] === Has.None) {
-            game.World.DestroyEntity(entity);
-        }
-
         let task = game.World.Task[entity];
         if (task.OnDone) {
             task.OnDone(entity);
+        }
+
+        game.World.Signature[entity] &= ~Has.Task;
+        if (game.World.Signature[entity] === Has.None) {
+            // Task was the last component on the entity.
+            game.World.DestroyEntity(entity);
         }
 
         // Explicitly delete the component data for this task to avoid memory
