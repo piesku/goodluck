@@ -9,7 +9,7 @@ import {
 import {Entity} from "../../common/world.js";
 import {ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.js";
 import {CameraEye, CameraForward, CameraKind} from "../components/com_camera.js";
-import {query_all} from "../components/com_children.js";
+import {query_down} from "../components/com_children.js";
 import {
     RenderColoredShaded,
     RenderColoredSkinned,
@@ -127,7 +127,7 @@ function draw_colored_skinned(
     game.Gl.uniform4fv(render.Material.Locations.SpecularColor, render.SpecularColor);
     game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
 
-    for (let bone_entity of query_all(game.World, entity, Has.Bone | Has.Transform)) {
+    for (let bone_entity of query_down(game.World, entity, Has.Bone | Has.Transform)) {
         let bone_transform = game.World.Transform[bone_entity];
         let bone = game.World.Bone[bone_entity];
         let bone_view = bones.subarray(bone.Index * 16);
