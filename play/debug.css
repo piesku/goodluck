@@ -1,0 +1,23 @@
+#debug {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-end;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    font-family: monospace;
+}
+#debug button {
+    cursor: pointer;
+    padding: 0;
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+}
+#debug div {
+    width: max-content;
+    background: #000;
+    color: #fff;
+}
