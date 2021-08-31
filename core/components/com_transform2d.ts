@@ -6,7 +6,7 @@ import {create} from "../../common/mat2d.js";
 import {Mat2D, Rad, Vec2} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
-import {Has} from "../world.js";
+import {Has, World} from "../world.js";
 
 export interface Transform2D {
     /** Absolute matrix relative to the world. */
@@ -35,4 +35,22 @@ export function transform2d(translation: Vec2 = [0, 0], rotation: Rad = 0, scale
             Dirty: true,
         };
     };
+}
+
+/**
+ * Yield ascendants matching a component mask. Start at the current entity.
+ *
+ * @param world World object which stores the component data.
+ * @param entity The first entity to test.
+ * @param mask Component mask to look for.
+ */
+export function* query_up(world: World, entity: Entity, mask: Has): IterableIterator<Entity> {
+    if ((world.Signature[entity] & mask) === mask) {
+        yield entity;
+    }
+
+    let parent = world.Transform2D[entity].Parent;
+    if (parent !== undefined) {
+        yield* query_up(world, parent, mask);
+    }
 }
