@@ -26,6 +26,17 @@ export function children(...blueprints: Array<Blueprint<Game>>) {
 }
 
 /**
+ * Add one more child blueprint to the entity. Must be used after children().
+ */
+export function child(blueprint: Blueprint<Game>) {
+    return (game: Game, entity: Entity) => {
+        let children = game.World.Children[entity];
+        let child = instantiate(game, blueprint);
+        children.Children.push(child);
+    };
+}
+
+/**
  * Yield entities matching a component mask. The query is tested against the
  * parent and all its descendants.
  *
