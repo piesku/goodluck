@@ -51,6 +51,19 @@ export function create_forward_target(gl: WebGL2RenderingContext, width: number,
     return target;
 }
 
+export function resize_forward_target(
+    gl: WebGL2RenderingContext,
+    target: ForwardTarget,
+    width: number,
+    height: number
+) {
+    target.Width = width;
+    target.Height = height;
+
+    resize_texture_rgba8(gl, target.RenderTexture, target.Width, target.Height);
+    resize_texture_depth24(gl, target.DepthTexture, target.Width, target.Height);
+}
+
 export interface DeferredTarget {
     Framebuffer: WebGLFramebuffer;
     Width: number;
