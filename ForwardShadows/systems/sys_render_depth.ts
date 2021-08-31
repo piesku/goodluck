@@ -1,11 +1,15 @@
 import {
+    GL_ARRAY_BUFFER,
     GL_COLOR_BUFFER_BIT,
     GL_DEPTH_BUFFER_BIT,
+    GL_ELEMENT_ARRAY_BUFFER,
+    GL_FLOAT,
     GL_FRAMEBUFFER,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
 import {CameraDepth, CameraKind} from "../components/com_camera.js";
-import {RenderKind} from "../components/com_render.js";
+import {Render, RenderKind, RenderVertices} from "../components/com_render.js";
+import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -45,22 +49,26 @@ function render_depth(game: Game, camera: CameraDepth) {
 
             switch (render.Kind) {
                 case RenderKind.Vertices:
+                    // Skip rendering, RenderVertices doesn't cast shadow for now.
                     continue;
                 default:
-                    game.Gl.uniformMatrix4fv(
-                        game.MaterialDepth.Locations.World,
-                        false,
-                        transform.World
-                    );
-                    game.Gl.bindVertexArray(render.Vao);
-                    game.Gl.drawElements(
-                        game.MaterialDepth.Mode,
-                        render.Mesh.IndexCount,
-                        GL_UNSIGNED_SHORT,
-                        0
-                    );
-                    game.Gl.bindVertexArray(null);
+                    draw_default(game, transform, render);
             }
         }
     }
+}
+
+function draw_default(game: Game, transform: Transform, render: Exclude<Render, RenderVertices>) {
+    let material = game.MaterialDepth;
+
+    // Pass uniforms at locations specific to MaterialDepth.
+    game.Gl.uniformMatrix4fv(material.Locations.World, false, transform.World);
+
+    // Pass attributes at locations specific to MaterialDepth.
+    game.Gl.bindBuffer(GL_ARRAY_BUFFER, render.Mesh.VertexBuffer);
+    game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
+    game.Gl.vertexAttribPointer(material.Locations.VertexPosition, 3, GL_FLOAT, false, 0, 0);
+    game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, render.Mesh.IndexBuffer);
+
+    game.Gl.drawElements(material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
 }
