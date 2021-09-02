@@ -1,6 +1,7 @@
 import {Game} from "./game.js";
 
 export async function xr_init(game: Game) {
+    await game.Gl.makeXRCompatible();
     game.XrSupported = await navigator.xr.isSessionSupported("immersive-vr");
 }
 

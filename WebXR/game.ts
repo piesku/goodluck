@@ -17,10 +17,6 @@ import {xr_init} from "./xr.js";
 export class Game extends Game3D {
     World = new World();
 
-    override Gl = this.Canvas3D.getContext("webgl2", {
-        xrCompatible: true,
-    })! as WebGL2RenderingContext;
-
     XrSupported = false;
     XrSession?: XRSession;
     XrSpace?: XRReferenceSpace;
