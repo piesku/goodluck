@@ -24,7 +24,7 @@ import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 export function sys_render_shading(game: Game, delta: number) {
-    game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
+    game.Gl.bindFramebuffer(GL_FRAMEBUFFER, game.Targets.Shaded.Framebuffer);
     game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
     game.Gl.clearColor(0.9, 0.9, 0.9, 1);
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

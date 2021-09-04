@@ -1,4 +1,4 @@
-import {DeferredTarget, DepthTarget} from "../common/framebuffer.js";
+import {DeferredTarget, DepthTarget, ForwardTarget} from "../common/framebuffer.js";
 import {Game3D} from "../common/game.js";
 import {Material} from "../common/material.js";
 import {Mesh} from "../common/mesh.js";
@@ -7,6 +7,7 @@ import {
     DeferredPostprocessLayout,
     DepthMappingLayout,
     ForwardShadingLayout,
+    PostprocessLayout,
     ShadowMappingLayout,
 } from "../materials/layout.js";
 import {World} from "./world.js";
@@ -17,14 +18,18 @@ import {World} from "./world.js";
 export interface Game extends Game3D {
     World: World;
 
-    MaterialDepth: Material<DepthMappingLayout>;
     Targets: {
         Gbuffer: DeferredTarget;
+        Shaded: ForwardTarget;
         Sun: DepthTarget;
     };
+
     MaterialShading: Material<
         DeferredPostprocessLayout & ForwardShadingLayout & ShadowMappingLayout
     >;
+    MaterialPostprocess: Material<PostprocessLayout>;
+    MaterialDepth: Material<DepthMappingLayout>;
+
     MeshQuad: Mesh;
 
     LightPositions: Float32Array;

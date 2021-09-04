@@ -107,3 +107,13 @@ export interface DeferredPostprocessLayout {
     VertexPosition: GLint;
     VertexTexcoord: GLint;
 }
+
+export interface PostprocessLayout {
+    // Uniforms
+    Sampler: WebGLUniformLocation;
+    ViewportSize: WebGLUniformLocation;
+
+    // Attributes
+    VertexPosition: GLint;
+    VertexTexcoord: GLint;
+}

@@ -1,14 +1,17 @@
 import {
     create_deferred_target,
     create_depth_target,
+    create_forward_target,
     DeferredTarget,
     DepthTarget,
+    ForwardTarget,
 } from "../common/framebuffer.js";
 import {Game3D} from "../common/game.js";
 import {Entity} from "../common/world.js";
 import {mat_deferred_colored} from "../materials/mat_deferred_colored.js";
 import {mat_deferred_shading} from "../materials/mat_deferred_shading.js";
 import {mat_forward_depth} from "../materials/mat_forward_depth.js";
+import {mat_postprocess_fxaa} from "../materials/mat_postprocess_fxaa.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {mesh_quad} from "../meshes/quad.js";
@@ -18,6 +21,7 @@ import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_render_deferred} from "./systems/sys_render_deferred.js";
 import {sys_render_depth} from "./systems/sys_render_depth.js";
+import {sys_render_postprocess} from "./systems/sys_render_postprocess.js";
 import {sys_render_shading} from "./systems/sys_render_shading.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
@@ -28,6 +32,7 @@ export class Game extends Game3D {
 
     MaterialColored = mat_deferred_colored(this.Gl);
     MaterialShading = mat_deferred_shading(this.Gl);
+    MaterialPostprocess = mat_postprocess_fxaa(this.Gl);
     MaterialDepth = mat_forward_depth(this.Gl);
 
     MeshSphereSmooth = mesh_icosphere_smooth(this.Gl);
@@ -36,6 +41,7 @@ export class Game extends Game3D {
 
     Targets: {
         Gbuffer: DeferredTarget;
+        Shaded: ForwardTarget;
         Sun: DepthTarget;
     };
     Textures: Record<string, WebGLTexture> = {};
@@ -53,6 +59,7 @@ export class Game extends Game3D {
         this.Targets = {
             // Create the main framebuffer for deferred rendering.
             Gbuffer: create_deferred_target(this.Gl, this.ViewportWidth, this.ViewportHeight),
+            Shaded: create_forward_target(this.Gl, this.ViewportWidth, this.ViewportHeight),
             Sun: create_depth_target(this.Gl, 1024, 1024),
         };
     }
@@ -67,5 +74,6 @@ export class Game extends Game3D {
         sys_render_depth(this, delta);
         sys_render_deferred(this, delta);
         sys_render_shading(this, delta);
+        sys_render_postprocess(this, delta);
     }
 }
