@@ -23,7 +23,7 @@ import {first_entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-export function sys_render_postprocess(game: Game, delta: number) {
+export function sys_render_shading(game: Game, delta: number) {
     game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
     game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
     game.Gl.clearColor(0.9, 0.9, 0.9, 1);

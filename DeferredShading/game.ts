@@ -18,7 +18,7 @@ import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_render_deferred} from "./systems/sys_render_deferred.js";
 import {sys_render_depth} from "./systems/sys_render_depth.js";
-import {sys_render_postprocess} from "./systems/sys_render_postprocess.js";
+import {sys_render_shading} from "./systems/sys_render_shading.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
@@ -66,6 +66,6 @@ export class Game extends Game3D {
         sys_light(this, delta);
         sys_render_depth(this, delta);
         sys_render_deferred(this, delta);
-        sys_render_postprocess(this, delta);
+        sys_render_shading(this, delta);
     }
 }
