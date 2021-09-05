@@ -37,7 +37,8 @@ function update_transform(world: World, entity: Entity, transform: Transform2D) 
 
     if (world.Signature[entity] & Has.Children) {
         let children = world.Children[entity];
-        for (let child of children.Children) {
+        for (let i = 0; i < children.Children.length; i++) {
+            let child = children.Children[i];
             if (world.Signature[child] & Has.Transform2D) {
                 let child_transform = world.Transform2D[child];
                 child_transform.Parent = entity;
