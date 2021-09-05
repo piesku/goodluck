@@ -10,6 +10,7 @@
         "strict": true,
         "inlineSourceMap": true,
         "noImplicitOverride": true,
+        "useUnknownInCatchVariables": true,
     },
     "exclude": [
         "node_modules"
