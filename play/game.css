@@ -11,6 +11,7 @@ main {
     overflow: hidden;
     word-break: break-word;
     user-select: none;
+    touch-action: none;
 }
 
 [onclick] {
