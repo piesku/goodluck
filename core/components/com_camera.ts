@@ -19,6 +19,13 @@ export const enum CameraKind {
     Depth,
 }
 
+// The subset of camera data passed into render methods.
+export interface CameraEye {
+    View: Mat4;
+    Pv: Mat4;
+    Position: Vec3;
+}
+
 export interface CameraForward extends CameraEye {
     Kind: CameraKind.Forward;
     Projection: Projection;
@@ -128,6 +135,34 @@ export interface CameraDepth extends CameraEye {
     ClearColor: Vec4;
 }
 
+export function camera_depth_perspective(
+    target: DepthTarget,
+    fovy: number,
+    near: number,
+    far: number,
+    clear_color: Vec4 = [0, 0, 0, 1]
+) {
+    return (game: Game, entity: Entity) => {
+        game.World.Signature[entity] |= Has.Camera;
+        game.World.Camera[entity] = {
+            Kind: CameraKind.Depth,
+            Target: target,
+            Projection: {
+                Kind: ProjectionKind.Perspective,
+                FovY: fovy,
+                Near: near,
+                Far: far,
+                Projection: create(),
+                Inverse: create(),
+            },
+            View: create(),
+            Pv: create(),
+            Position: [0, 0, 0],
+            ClearColor: clear_color,
+        };
+    };
+}
+
 export function camera_depth_ortho(
     target: DepthTarget,
     radius: number,
@@ -154,11 +189,4 @@ export function camera_depth_ortho(
             ClearColor: clear_color,
         };
     };
-}
-
-// The subset of camera data passed into shaders.
-export interface CameraEye {
-    View: Mat4;
-    Pv: Mat4;
-    Position: Vec3;
 }
