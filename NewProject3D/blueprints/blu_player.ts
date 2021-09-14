@@ -1,3 +1,6 @@
+import {ease_in_out_quad, ease_in_quad, ease_out_quad} from "../../common/easing.js";
+import {from_euler} from "../../common/quat.js";
+import {animate, AnimationFlag} from "../components/com_animate.js";
 import {audio_listener} from "../components/com_audio_listener.js";
 import {audio_source} from "../components/com_audio_source.js";
 import {children} from "../components/com_children.js";
@@ -24,6 +27,41 @@ export function blueprint_player(game: Game) {
             [
                 transform(),
                 render_colored_shaded(game.MaterialColoredShaded, game.MeshCube, [1, 0.3, 0.2, 1]),
+                animate({
+                    idle: {
+                        Keyframes: [
+                            {
+                                Timestamp: 0,
+                                Rotation: from_euler([0, 0, 0, 1], 0, -5, 0),
+                                Ease: ease_in_out_quad,
+                            },
+                            {
+                                Timestamp: 1,
+                                Rotation: from_euler([0, 0, 0, 1], 0, 5, 0),
+                                Ease: ease_in_out_quad,
+                            },
+                        ],
+                    },
+                    jump: {
+                        Keyframes: [
+                            {
+                                Timestamp: 0,
+                                Rotation: [0, 0, 0, 1],
+                            },
+                            {
+                                Timestamp: 0.5,
+                                Rotation: [1, 0, 0, 0],
+                                Ease: ease_in_quad,
+                            },
+                            {
+                                Timestamp: 1,
+                                Rotation: [0, 0, 0, -1],
+                                Ease: ease_out_quad,
+                            },
+                        ],
+                        Flags: AnimationFlag.None,
+                    },
+                }),
             ],
             // Camera rig anchor.
             [

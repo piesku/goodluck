@@ -28,6 +28,7 @@ function update(game: Game, entity: Entity) {
     let rigid_body = game.World.RigidBody[entity];
 
     if (rigid_body.Kind === RigidKind.Dynamic) {
+        rigid_body.IsAirborne = true;
         let has_collision = false;
 
         for (let i = 0; i < collide.Collisions.length; i++) {
@@ -74,6 +75,7 @@ function update(game: Game, entity: Entity) {
                 if (collision.Hit[1] > 0 && rigid_body.VelocityResolved[1] < 1) {
                     // Collision from the bottom stops the downward movement.
                     rigid_body.VelocityResolved[1] = 0;
+                    rigid_body.IsAirborne = false;
                 }
             }
         }

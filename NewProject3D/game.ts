@@ -8,6 +8,7 @@ import {sys_audio_source} from "./systems/sys_audio_source.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
+import {sys_control_jump} from "./systems/sys_control_jump.js";
 import {sys_control_keyboard} from "./systems/sys_control_keyboard.js";
 import {sys_control_mouse_move} from "./systems/sys_control_mouse_move.js";
 import {sys_control_touch_move} from "./systems/sys_control_touch_move.js";
@@ -66,6 +67,7 @@ export class Game extends Game3D {
         sys_control_mouse_move(this, delta);
         sys_control_touch_move(this, delta);
         sys_control_xbox(this, delta);
+        sys_control_jump(this, delta);
 
         // AI.
         sys_control_always(this, delta);
