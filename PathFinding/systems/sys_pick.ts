@@ -56,7 +56,7 @@ function update(game: Game, entity: Entity, pickables: Array<Collide>) {
     let hit = ray_intersect_aabb(pickables, origin, direction);
     if (hit) {
         let collider = hit.Collider as Collide;
-        let entity = collider.Entity;
+        let entity = collider.EntityId;
 
         let pickable = game.World.Pickable[entity];
         switch (pickable.Kind) {
