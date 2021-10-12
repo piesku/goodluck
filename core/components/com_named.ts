@@ -17,7 +17,7 @@ export function named(Name: string) {
     };
 }
 
-export function find_first(world: World, name: string, start_at: Entity = 0) {
+export function first_named(world: World, name: string, start_at: Entity = 0) {
     for (let i = start_at; i < world.Signature.length; i++) {
         if (world.Signature[i] & Has.Named && world.Named[i].Name === name) {
             return i;

@@ -30,7 +30,7 @@ export class WorldImpl {
 
 // Other methods are free functions for the sake of tree-shakability.
 
-export function first_entity(
+export function first_having(
     world: WorldImpl,
     query: number,
     start_at: Entity = 0

@@ -7,7 +7,7 @@ import {
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {first_entity} from "../../common/world.js";
+import {first_having} from "../../common/world.js";
 import {
     ColoredShadedLayout,
     ForwardShadingLayout,
@@ -89,7 +89,7 @@ function use_colored_shadows(
     game.Gl.uniform1i(material.Locations.ShadowMap, 0);
 
     // Only one shadow source is supported.
-    let light_entity = first_entity(game.World, Has.Camera | Has.Light);
+    let light_entity = first_having(game.World, Has.Camera | Has.Light);
     if (light_entity) {
         let light_camera = game.World.Camera[light_entity];
         game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, light_camera.Pv);
