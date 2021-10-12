@@ -30,7 +30,11 @@ export class WorldImpl {
 
 // Other methods are free functions for the sake of tree-shakability.
 
-export function first_entity(world: WorldImpl, query: number, start_at = 0): Entity | undefined {
+export function first_entity(
+    world: WorldImpl,
+    query: number,
+    start_at: Entity = 0
+): Entity | undefined {
     for (let i = start_at; i < world.Signature.length; i++) {
         if ((world.Signature[i] & query) === query) {
             return i;
