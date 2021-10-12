@@ -1,3 +1,5 @@
+import {element} from "./random.js";
+
 export type AudioClip = AudioBufferClip | AudioSynthClip;
 
 export const enum AudioClipKind {
@@ -237,6 +239,19 @@ export function play_synth_clip(
             if (track.Notes[i]) {
                 play_note(audio, panner, track.Instrument, track.Notes[i], i * interval);
             }
+        }
+    }
+}
+
+export function play_synth_random(
+    audio: AudioContext,
+    panner: PannerNode | undefined,
+    clip: AudioSynthClip
+) {
+    for (let track of clip.Tracks) {
+        let note = element(track.Notes);
+        if (note) {
+            play_note(audio, panner, track.Instrument, note, 0);
         }
     }
 }
