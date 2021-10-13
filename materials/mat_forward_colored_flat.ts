@@ -24,7 +24,7 @@ let vertex = `#version 300 es\n
 
     void main() {
         vec4 world_position = world * vec4(attr_position, 1.0);
-        vec3 world_normal = normalize((vec4(attr_normal, 1.0) * self).xyz);
+        vec3 world_normal = normalize((vec4(attr_normal, 0.0) * self).xyz);
         gl_Position = pv * world_position;
 
         vec3 view_dir = eye - world_position.xyz;

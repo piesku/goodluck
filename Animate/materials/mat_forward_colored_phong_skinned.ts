@@ -23,7 +23,7 @@ let vertex = `#version 300 es\n
     void main() {
         mat4 bone_world = world_weighted(attr_weights);
         vert_position = bone_world * vec4(attr_position, 1.0);
-        vert_normal = normalize(mat3(bone_world) * attr_normal);
+        vert_normal = normalize((bone_world * vec4(attr_normal, 0.0)).xyz);
         gl_Position = pv * vert_position;
     }
 `;

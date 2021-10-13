@@ -19,14 +19,15 @@ let vertex = `#version 300 es\n
 
     in vec3 attr_position;
     in vec3 attr_normal;
+
     out vec4 vert_color;
 
     void main() {
-        vec4 attr_pos = world * vec4(attr_position, 1.0);
-        vec3 attr_normal = normalize((vec4(attr_normal, 1.0) * self).xyz);
-        gl_Position = pv * attr_pos;
+        vec4 vert_position = world * vec4(attr_position, 1.0);
+        vec3 vert_normal = normalize((vec4(attr_normal, 0.0) * self).xyz);
+        gl_Position = pv * vert_position;
 
-        vec3 view_dir = eye - attr_pos.xyz;
+        vec3 view_dir = eye - vert_position.xyz;
         vec3 view_normal = normalize(view_dir);
 
         // Ambient light.
@@ -45,14 +46,14 @@ let vertex = `#version 300 es\n
                 // Directional light.
                 light_normal = light_positions[i].xyz;
             } else {
-                vec3 light_dir = light_positions[i].xyz - attr_pos.xyz;
+                vec3 light_dir = light_positions[i].xyz - vert_position.xyz;
                 float light_dist = length(light_dir);
                 light_normal = light_dir / light_dist;
                 // Distance attenuation.
                 light_intensity /= (light_dist * light_dist);
             }
 
-            float diffuse_factor = dot(attr_normal, light_normal);
+            float diffuse_factor = dot(vert_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
                 light_acc += diffuse_color.rgb * diffuse_factor * light_color * light_intensity;
@@ -60,7 +61,7 @@ let vertex = `#version 300 es\n
                 if (shininess > 0.0) {
                     // Blinn-Phong reflection model.
                     vec3 h = normalize(light_normal + view_normal);
-                    float specular_angle = max(dot(h, attr_normal), 0.0);
+                    float specular_angle = max(dot(h, vert_normal), 0.0);
                     float specular_factor = pow(specular_angle, shininess);
 
                     // Specular color.

@@ -20,7 +20,7 @@ let vertex = `#version 300 es\n
         gl_Position = pv * vert_position;
 
         vert_texcoord = attr_texcoord;
-        vert_normal = (vec4(attr_normal, 1.0) * self).xyz;
+        vert_normal = (vec4(attr_normal, 0.0) * self).xyz;
     }
 `;
 

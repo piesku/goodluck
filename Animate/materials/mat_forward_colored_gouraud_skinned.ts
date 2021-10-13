@@ -32,7 +32,7 @@ let vertex = `#version 300 es\n
     void main() {
         mat4 bone_world = world_weighted(attr_weights);
         vec4 world_position = bone_world * vec4(attr_position, 1.0);
-        vec3 world_normal = normalize(mat3(bone_world) * attr_normal);
+        vec3 world_normal = normalize((bone_world * vec4(attr_normal, 0.0)).xyz);
         gl_Position = pv * world_position;
 
         vec3 view_dir = eye - world_position.xyz;
