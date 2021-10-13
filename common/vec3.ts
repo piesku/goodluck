@@ -1,4 +1,3 @@
-import {get_translation} from "./mat4.js";
 import {Mat4, Vec3} from "./math.js";
 
 export function set(out: Vec3, x: number, y: number, z: number) {
@@ -78,12 +77,12 @@ export function cross(out: Vec3, a: Vec3, b: Vec3) {
     return out;
 }
 
-export function transform_point(out: Vec3, a: Vec3, m: Mat4) {
-    let x = a[0],
-        y = a[1],
-        z = a[2];
-    let w = m[3] * x + m[7] * y + m[11] * z + m[15];
-    w = w || 1.0;
+export function transform_position(out: Vec3, a: Vec3, m: Mat4) {
+    let x = a[0];
+    let y = a[1];
+    let z = a[2];
+    let w = m[3] * x + m[7] * y + m[11] * z + m[15] || 1;
+
     out[0] = (m[0] * x + m[4] * y + m[8] * z + m[12]) / w;
     out[1] = (m[1] * x + m[5] * y + m[9] * z + m[13]) / w;
     out[2] = (m[2] * x + m[6] * y + m[10] * z + m[14]) / w;
@@ -91,9 +90,14 @@ export function transform_point(out: Vec3, a: Vec3, m: Mat4) {
 }
 
 export function transform_direction(out: Vec3, a: Vec3, m: Mat4) {
-    let tip = transform_point([0, 0, 0], a, m);
-    let base = get_translation([0, 0, 0], m);
-    return subtract(out, tip, base);
+    let x = a[0];
+    let y = a[1];
+    let z = a[2];
+
+    out[0] = m[0] * x + m[4] * y + m[8] * z;
+    out[1] = m[1] * x + m[5] * y + m[9] * z;
+    out[2] = m[2] * x + m[6] * y + m[10] * z;
+    return out;
 }
 
 export function length(a: Vec3) {

@@ -2,7 +2,7 @@ import {input_pointer_position} from "../../common/input.js";
 import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {ray_intersect_aabb, ray_intersect_mesh} from "../../common/raycast.js";
-import {normalize, subtract, transform_direction, transform_point} from "../../common/vec3.js";
+import {normalize, subtract, transform_direction, transform_position} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
 import {Collide} from "../components/com_collide.js";
 import {PickableKind} from "../components/com_pickable.js";
@@ -45,8 +45,8 @@ function update(game: Game, entity: Entity, pickables: Array<Collide>) {
     // The target is the point on the far plane where the mouse click happens;
     // first transform it to the eye space, and then to the world space.
     let target: Vec3 = [x, y, -1];
-    transform_point(target, target, camera.Projection.Inverse);
-    transform_point(target, target, transform.World);
+    transform_position(target, target, camera.Projection.Inverse);
+    transform_position(target, target, transform.World);
 
     // The ray's direction.
     let direction: Vec3 = [0, 0, 0];
@@ -76,13 +76,13 @@ function update(game: Game, entity: Entity, pickables: Array<Collide>) {
                 let transform = game.World.Transform[entity];
                 // Transform the ray to the pickable's space, which is cheaper than
                 // transforming all vertices of the pickable to the world space.
-                transform_point(origin_self, origin, transform.Self);
+                transform_position(origin_self, origin, transform.Self);
                 transform_direction(direction_self, direction, transform.Self);
 
                 let hit = ray_intersect_mesh(pickable.Mesh, origin, direction);
                 if (hit) {
                     // Transform the intersection point back to the world space.
-                    transform_point(hit.Point, hit.Point, transform.World);
+                    transform_position(hit.Point, hit.Point, transform.World);
                     game.Picked = {
                         Entity: entity,
                         Collider: collider,

@@ -1,7 +1,7 @@
 import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {path_find} from "../../common/pathfind.js";
-import {distance_squared, normalize, transform_point} from "../../common/vec3.js";
+import {distance_squared, normalize, transform_position} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -61,7 +61,7 @@ function update(game: Game, entity: Entity) {
 
         // Transform the waypoint's position into the agent's self space which
         // is where sys_move runs.
-        transform_point(position, current_waypoint.Position, transform.Self);
+        transform_position(position, current_waypoint.Position, transform.Self);
         normalize(position, position);
 
         let move = game.World.Move[entity];

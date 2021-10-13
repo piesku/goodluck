@@ -4,7 +4,7 @@
 
 import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
-import {transform_point} from "../../common/vec3.js";
+import {transform_position} from "../../common/vec3.js";
 import {DrawKind, DrawSelection, DrawText} from "../components/com_draw.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -27,7 +27,7 @@ export function sys_draw(game: Game, delta: number) {
             // World position.
             get_translation(position, game.World.Transform[i].World);
             // NDC position.
-            transform_point(position, position, main_camera.Pv);
+            transform_position(position, position, main_camera.Pv);
 
             if (position[2] < -1 || position[2] > 1) {
                 // The entity is outside the frustum. Only consider the Z axis

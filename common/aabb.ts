@@ -1,6 +1,6 @@
 import {get_scaling, get_translation} from "./mat4.js";
 import {Mat4, Vec3} from "./math.js";
-import {add, scale, subtract, transform_point} from "./vec3.js";
+import {add, scale, subtract, transform_position} from "./vec3.js";
 
 export interface AABB {
     /** The size of the collider in self units. */
@@ -50,7 +50,7 @@ export function compute_aabb(world: Mat4, aabb: AABB) {
         world_vertex[1] = bb_vertex[1] * aabb.Size[1];
         world_vertex[2] = bb_vertex[2] * aabb.Size[2];
 
-        transform_point(world_vertex, world_vertex, world);
+        transform_position(world_vertex, world_vertex, world);
         if (world_vertex[0] < min_x) {
             min_x = world_vertex[0];
         }
