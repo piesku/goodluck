@@ -19,7 +19,7 @@ let vertex = `#version 300 es\n
     uniform vec4 light_details[MAX_LIGHTS];
     uniform mat4 bones[6];
 
-    in vec3 attr_position;
+    in vec4 attr_position;
     in vec3 attr_normal;
     in vec4 attr_weights;
 
@@ -31,7 +31,7 @@ let vertex = `#version 300 es\n
 
     void main() {
         mat4 bone_world = world_weighted(attr_weights);
-        vec4 world_position = bone_world * vec4(attr_position, 1.0);
+        vec4 world_position = bone_world * attr_position;
         vec3 world_normal = normalize((bone_world * vec4(attr_normal, 0.0)).xyz);
         gl_Position = pv * world_position;
 

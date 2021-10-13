@@ -17,13 +17,13 @@ let vertex = `#version 300 es\n
     uniform vec4 light_positions[MAX_LIGHTS];
     uniform vec4 light_details[MAX_LIGHTS];
 
-    in vec3 attr_position;
+    in vec4 attr_position;
     in vec3 attr_normal;
 
     out vec4 vert_color;
 
     void main() {
-        vec4 vert_position = world * vec4(attr_position, 1.0);
+        vec4 vert_position = world * attr_position;
         vec3 vert_normal = normalize((vec4(attr_normal, 0.0) * self).xyz);
         gl_Position = pv * vert_position;
 

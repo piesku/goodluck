@@ -6,10 +6,10 @@ let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
 
-    in vec3 attr_position;
+    in vec4 attr_position;
 
     void main() {
-        gl_Position = pv * world * vec4(attr_position, 1.0);
+        gl_Position = pv * world * attr_position;
     }
 `;
 

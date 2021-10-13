@@ -7,12 +7,12 @@ let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
 
-    in vec3 attr_position;
+    in vec4 attr_position;
     in vec2 attr_texcoord;
     out vec2 vert_texcoord;
 
     void main() {
-        vec4 attr_pos = world * vec4(attr_position, 1.0);
+        vec4 attr_pos = world * attr_position;
         gl_Position = pv * attr_pos;
 
         vert_texcoord = attr_texcoord;

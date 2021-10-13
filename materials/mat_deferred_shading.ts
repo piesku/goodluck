@@ -3,13 +3,13 @@ import {GL_TRIANGLES} from "../common/webgl.js";
 import {DeferredPostprocessLayout, ForwardShadingLayout, ShadowMappingLayout} from "./layout.js";
 
 let vertex = `#version 300 es\n
-    in vec3 attr_position;
+    in vec4 attr_position;
     in vec2 attr_texcoord;
 
     out vec2 vert_texcoord;
 
     void main() {
-        gl_Position = vec4(attr_position, 1.0);
+        gl_Position = attr_position;
         vert_texcoord = attr_texcoord;
     }
 `;

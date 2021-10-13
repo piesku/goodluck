@@ -9,7 +9,7 @@ let vertex = `#version 300 es\n
     uniform mat4 self;
     uniform mat4 bones[6];
 
-    in vec3 attr_position;
+    in vec4 attr_position;
     in vec3 attr_normal;
     in vec4 attr_weights;
 
@@ -22,7 +22,7 @@ let vertex = `#version 300 es\n
 
     void main() {
         mat4 bone_world = world_weighted(attr_weights);
-        vert_position = bone_world * vec4(attr_position, 1.0);
+        vert_position = bone_world * attr_position;
         vert_normal = normalize((bone_world * vec4(attr_normal, 0.0)).xyz);
         gl_Position = pv * vert_position;
     }

@@ -6,7 +6,7 @@ let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
 
-    in vec3 attr_position;
+    in vec4 attr_position;
     in vec2 attr_texcoord;
     in vec3 attr_normal;
     in vec3 attr_tangent;
@@ -18,7 +18,7 @@ let vertex = `#version 300 es\n
     out mat3 vert_tbn;
 
     void main() {
-        vert_position = world * vec4(attr_position, 1.0);
+        vert_position = world * attr_position;
         gl_Position = pv * vert_position;
 
         vert_texcoord = attr_texcoord;
