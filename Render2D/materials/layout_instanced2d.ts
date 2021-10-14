@@ -5,7 +5,6 @@ export interface Instanced2DLayout {
 
     // Vertex attributes
     VertexPosition: GLint;
-    VertexNormal: GLint;
     VertexTexcoord: GLint;
 
     // Instance attributes

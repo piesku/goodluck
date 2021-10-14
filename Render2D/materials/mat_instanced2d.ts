@@ -7,8 +7,7 @@ let vertex = `#version 300 es\n
 
     // Vertex attributes
     in vec4 attr_position;
-    in vec3 attr_normal;
-    in vec4 attr_texcoord;
+    in vec2 attr_texcoord;
 
     // Instance attributes
     in vec4 attr_column1;
@@ -18,6 +17,7 @@ let vertex = `#version 300 es\n
     in vec4 attr_color;
 
     out vec4 vert_color;
+    out vec2 vert_texcoord;
 
     void main() {
         mat4 world = mat4(
@@ -31,6 +31,7 @@ let vertex = `#version 300 es\n
         gl_Position = pv * world_position;
 
         vert_color = attr_color;
+        vert_texcoord = attr_texcoord;
     }
 `;
 
@@ -38,6 +39,7 @@ let fragment = `#version 300 es\n
     precision mediump float;
 
     in vec4 vert_color;
+    in vec2 vert_texcoord;
 
     out vec4 frag_color;
 
@@ -56,7 +58,6 @@ export function mat_instanced2d(gl: WebGL2RenderingContext): Material<Instanced2
             World: gl.getUniformLocation(program, "world")!,
 
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
-            VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
             VertexTexcoord: gl.getAttribLocation(program, "attr_texcoord")!,
 
             InstanceColumn1: gl.getAttribLocation(program, "attr_column1")!,

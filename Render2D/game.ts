@@ -51,9 +51,6 @@ export class Game extends Game3D {
             4 * 3
         );
 
-        // Normals are constant for all 4 vertices.
-        this.Gl.vertexAttrib3f(material.Locations.VertexNormal, 0, 0, 1);
-
         // Instance data: the world matrix (as 4 vec4s).
         this.Gl.bindBuffer(GL_ARRAY_BUFFER, this.InstanceBuffer);
         this.Gl.bufferData(
