@@ -9,7 +9,7 @@ export class WorldImpl {
             return this.Graveyard.pop()!;
         }
 
-        if (DEBUG && this.Signature.length > 10000) {
+        if (DEBUG && this.Signature.length > 1_000_000) {
             throw new Error("No more entities available.");
         }
 
