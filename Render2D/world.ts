@@ -7,6 +7,7 @@ import {Transform} from "./components/com_transform.js";
 const enum Component {
     Camera,
     Children,
+    Dirty,
     Render2D,
     Transform,
 }
@@ -15,6 +16,7 @@ export const enum Has {
     None = 0,
     Camera = 1 << Component.Camera,
     Children = 1 << Component.Children,
+    Dirty = 1 << Component.Dirty,
     Render2D = 1 << Component.Render2D,
     Transform = 1 << Component.Transform,
 }
