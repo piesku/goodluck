@@ -1,3 +1,4 @@
+import {hsva_to_vec4} from "../../common/color.js";
 import {instantiate} from "../../common/game.js";
 import {from_euler} from "../../common/quat.js";
 import {float} from "../../common/random.js";
@@ -18,10 +19,10 @@ export function scene_stage(game: Game) {
         instantiate(game, [
             transform(
                 [float() * 2 - 1, float() * 2 - 1, float() * 2 - 1],
-                from_euler([0, 0, 0, 1], 0, 0, float() * Math.PI),
-                [0.05, 0.05, 0.05]
+                from_euler([0, 0, 0, 1], 0, 0, float() * 360),
+                [0.05, 0.05, 1]
             ),
-            render2d([float(), float(), float(), 1]),
+            render2d(hsva_to_vec4(float(), 0.5, 1, 1)),
         ]);
     }
 }

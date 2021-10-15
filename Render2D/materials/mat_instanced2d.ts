@@ -38,13 +38,15 @@ let vertex = `#version 300 es\n
 let fragment = `#version 300 es\n
     precision mediump float;
 
+    uniform sampler2D sheet;
+
     in vec4 vert_color;
     in vec2 vert_texcoord;
 
     out vec4 frag_color;
 
     void main() {
-        frag_color = vert_color;
+        frag_color = vert_color * texture(sheet, vert_texcoord);
     }
 `;
 
@@ -56,6 +58,7 @@ export function mat_instanced2d(gl: WebGL2RenderingContext): Material<Instanced2
         Locations: {
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
+            SpriteSheet: gl.getUniformLocation(program, "sheet")!,
 
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
             VertexTexcoord: gl.getAttribLocation(program, "attr_texcoord")!,

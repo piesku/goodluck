@@ -15,6 +15,8 @@ export class Game extends Game3D {
 
     MaterialInstanced = mat_instanced2d(this.Gl);
 
+    Textures: Record<string, WebGLTexture> = {};
+
     InstanceCount = 100_000;
     InstanceData = new Float32Array(this.InstanceCount * 20);
     InstanceBuffer = this.Gl.createBuffer()!;

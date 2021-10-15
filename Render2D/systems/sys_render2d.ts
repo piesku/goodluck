@@ -3,6 +3,8 @@ import {
     GL_COLOR_BUFFER_BIT,
     GL_DEPTH_BUFFER_BIT,
     GL_STREAM_DRAW,
+    GL_TEXTURE0,
+    GL_TEXTURE_2D,
 } from "../../common/webgl.js";
 import {CameraForward, CameraKind} from "../components/com_camera.js";
 import {Game} from "../game.js";
@@ -11,6 +13,8 @@ import {Has} from "../world.js";
 const QUERY = Has.Transform | Has.Render2D;
 
 export function sys_render2d(game: Game, delta: number) {
+    collect_instance_data(game);
+
     game.Gl.clearColor(0.9, 0.9, 0.9, 1);
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (game.ViewportResized) {
@@ -33,7 +37,9 @@ function render_forward(game: Game, camera: CameraForward) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, camera.Pv);
 
-    collect_instance_data(game);
+    game.Gl.activeTexture(GL_TEXTURE0);
+    game.Gl.bindTexture(GL_TEXTURE_2D, game.Textures["checker1.png"]);
+    game.Gl.uniform1i(material.Locations.SpriteSheet, 0);
 
     game.Gl.bindVertexArray(game.Vao);
     game.Gl.bindBuffer(GL_ARRAY_BUFFER, game.InstanceBuffer);
