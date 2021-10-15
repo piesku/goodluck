@@ -19,17 +19,17 @@ export function sys_camera(game: Game, delta: number) {
             let projection = camera.Projection;
 
             if (game.ViewportResized) {
+                let aspect =
+                    camera.Kind === CameraKind.Forward
+                        ? game.ViewportWidth / game.ViewportHeight
+                        : camera.Target.Width / camera.Target.Height;
                 switch (projection.Kind) {
                     case ProjectionKind.Perspective: {
-                        let aspect =
-                            camera.Kind === CameraKind.Forward
-                                ? game.ViewportWidth / game.ViewportHeight
-                                : camera.Target.Width / camera.Target.Height;
                         resize_perspective(projection, aspect);
                         break;
                     }
                     case ProjectionKind.Ortho:
-                        resize_ortho(projection);
+                        resize_ortho(projection, aspect);
                         break;
                 }
             }

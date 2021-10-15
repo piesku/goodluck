@@ -13,7 +13,7 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
 
     // Camera.
-    instantiate(game, [...blueprint_camera(game), transform([0, 0, 3], [0, 1, 0, 0])]);
+    instantiate(game, [...blueprint_camera(game), transform([0, 0, 5], [0, 1, 0, 0])]);
 
     for (let i = 0; i < game.InstanceCount; i++) {
         instantiate(game, [

@@ -36,7 +36,6 @@ export function resize_perspective(projection: ProjectionPerspective, aspect: nu
             projection.Near,
             projection.Far
         );
-        invert(projection.Inverse, projection.Projection);
     } else {
         // Portrait orientation.
         perspective(
@@ -46,19 +45,33 @@ export function resize_perspective(projection: ProjectionPerspective, aspect: nu
             projection.Near,
             projection.Far
         );
-        invert(projection.Inverse, projection.Projection);
     }
+    invert(projection.Inverse, projection.Projection);
 }
 
-export function resize_ortho(projection: ProjectionOrtho) {
-    ortho(
-        projection.Projection,
-        projection.Radius,
-        projection.Radius,
-        -projection.Radius,
-        -projection.Radius,
-        projection.Near,
-        projection.Far
-    );
+export function resize_ortho(projection: ProjectionOrtho, aspect: number) {
+    if (aspect > 1) {
+        // Landscape orientation.
+        ortho(
+            projection.Projection,
+            projection.Radius / aspect,
+            projection.Radius,
+            -projection.Radius / aspect,
+            -projection.Radius,
+            projection.Near,
+            projection.Far
+        );
+    } else {
+        // Portrait orientation.
+        ortho(
+            projection.Projection,
+            projection.Radius,
+            projection.Radius * aspect,
+            -projection.Radius,
+            -projection.Radius * aspect,
+            projection.Near,
+            projection.Far
+        );
+    }
     invert(projection.Inverse, projection.Projection);
 }
