@@ -1,5 +1,5 @@
 import {Game3D} from "../common/game.js";
-import {GL_ARRAY_BUFFER, GL_FLOAT, GL_STATIC_DRAW, GL_STREAM_DRAW} from "../common/webgl.js";
+import {GL_ARRAY_BUFFER, GL_DYNAMIC_DRAW, GL_FLOAT, GL_STATIC_DRAW} from "../common/webgl.js";
 import {Entity} from "../common/world.js";
 import {mat_instanced2d} from "./materials/mat_instanced2d.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -56,7 +56,7 @@ export class Game extends Game3D {
         this.Gl.bufferData(
             GL_ARRAY_BUFFER,
             this.InstanceCount * BYTES_PER_INSTANCE,
-            GL_STREAM_DRAW
+            GL_DYNAMIC_DRAW
         );
 
         this.Gl.enableVertexAttribArray(material.Locations.InstanceColumn1);

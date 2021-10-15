@@ -1,4 +1,9 @@
-import {GL_ARRAY_BUFFER, GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT} from "../../common/webgl.js";
+import {
+    GL_ARRAY_BUFFER,
+    GL_COLOR_BUFFER_BIT,
+    GL_DEPTH_BUFFER_BIT,
+    GL_STREAM_DRAW,
+} from "../../common/webgl.js";
 import {CameraForward, CameraKind} from "../components/com_camera.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -28,22 +33,46 @@ function render_forward(game: Game, camera: CameraForward) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, camera.Pv);
 
+    collect_instance_data(game);
+
+    game.Gl.bindVertexArray(game.Vao);
+    game.Gl.bindBuffer(GL_ARRAY_BUFFER, game.InstanceBuffer);
+    // Creating a new buffer each frame seems to be ~25% faster than bufferSubData.
+    game.Gl.bufferData(GL_ARRAY_BUFFER, game.InstanceData, GL_STREAM_DRAW);
+
+    game.Gl.drawArraysInstanced(material.Mode, 0, 4, game.InstanceCount);
+    game.Gl.bindVertexArray(null);
+}
+
+function collect_instance_data(game: Game) {
     let offset = 0;
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
         if ((game.World.Signature[ent] & QUERY) === QUERY) {
             let transform = game.World.Transform[ent];
             let render = game.World.Render2D[ent];
 
-            game.InstanceData.set(transform.World, 20 * offset);
-            game.InstanceData.set(render.Color, 20 * offset + 16);
-            offset++;
+            // Float32Array.set() is 3-4x slower than the following.
+            game.InstanceData[offset++] = transform.World[0];
+            game.InstanceData[offset++] = transform.World[1];
+            game.InstanceData[offset++] = transform.World[2];
+            game.InstanceData[offset++] = transform.World[3];
+            game.InstanceData[offset++] = transform.World[4];
+            game.InstanceData[offset++] = transform.World[5];
+            game.InstanceData[offset++] = transform.World[6];
+            game.InstanceData[offset++] = transform.World[7];
+            game.InstanceData[offset++] = transform.World[8];
+            game.InstanceData[offset++] = transform.World[9];
+            game.InstanceData[offset++] = transform.World[10];
+            game.InstanceData[offset++] = transform.World[11];
+            game.InstanceData[offset++] = transform.World[12];
+            game.InstanceData[offset++] = transform.World[13];
+            game.InstanceData[offset++] = transform.World[14];
+            game.InstanceData[offset++] = transform.World[15];
+
+            game.InstanceData[offset++] = render.Color[0];
+            game.InstanceData[offset++] = render.Color[1];
+            game.InstanceData[offset++] = render.Color[2];
+            game.InstanceData[offset++] = render.Color[3];
         }
     }
-
-    game.Gl.bindVertexArray(game.Vao);
-    game.Gl.bindBuffer(GL_ARRAY_BUFFER, game.InstanceBuffer);
-    game.Gl.bufferSubData(GL_ARRAY_BUFFER, 0, game.InstanceData);
-
-    game.Gl.drawArraysInstanced(material.Mode, 0, 4, 2);
-    game.Gl.bindVertexArray(null);
 }
