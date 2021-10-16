@@ -11,14 +11,13 @@ import {World} from "./world.js";
 const BYTES_PER_INSTANCE = 4 * 20;
 
 export class Game extends Game3D {
-    World = new World();
+    World = new World(200_001);
 
     MaterialInstanced = mat_instanced2d(this.Gl);
 
     Textures: Record<string, WebGLTexture> = {};
 
-    InstanceCount = 100_000;
-    InstanceData = new Float32Array(this.InstanceCount * 20);
+    InstanceData = new Float32Array(this.World.Capacity * 20);
     InstanceBuffer = this.Gl.createBuffer()!;
     Vao = this.Gl.createVertexArray()!;
 
@@ -57,7 +56,7 @@ export class Game extends Game3D {
         this.Gl.bindBuffer(GL_ARRAY_BUFFER, this.InstanceBuffer);
         this.Gl.bufferData(
             GL_ARRAY_BUFFER,
-            this.InstanceCount * BYTES_PER_INSTANCE,
+            this.World.Capacity * BYTES_PER_INSTANCE,
             GL_STREAM_DRAW
         );
 

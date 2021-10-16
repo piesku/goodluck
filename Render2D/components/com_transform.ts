@@ -30,7 +30,7 @@ export function transform(
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Transform | Has.Dirty;
         game.World.Transform[entity] = {
-            World: create(),
+            World: game.InstanceData.subarray(entity * 20, entity * 20 + 16),
             Self: create(),
             Translation: translation,
             Rotation: rotation,

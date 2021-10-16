@@ -8,13 +8,8 @@ import {
 } from "../../common/webgl.js";
 import {CameraForward, CameraKind} from "../components/com_camera.js";
 import {Game} from "../game.js";
-import {Has} from "../world.js";
-
-const QUERY = Has.Transform | Has.Render2D;
 
 export function sys_render2d(game: Game, delta: number) {
-    collect_instance_data(game);
-
     game.Gl.clearColor(0.9, 0.9, 0.9, 1);
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (game.ViewportResized) {
@@ -46,39 +41,6 @@ function render_forward(game: Game, camera: CameraForward) {
     // Creating a new buffer each frame seems to be ~25% faster than bufferSubData.
     game.Gl.bufferData(GL_ARRAY_BUFFER, game.InstanceData, GL_STREAM_DRAW);
 
-    game.Gl.drawArraysInstanced(material.Mode, 0, 4, game.InstanceCount);
+    game.Gl.drawArraysInstanced(material.Mode, 0, 4, game.World.Signature.length);
     game.Gl.bindVertexArray(null);
-}
-
-function collect_instance_data(game: Game) {
-    let offset = 0;
-    for (let ent = 0; ent < game.World.Signature.length; ent++) {
-        if ((game.World.Signature[ent] & QUERY) === QUERY) {
-            let transform = game.World.Transform[ent];
-            let render = game.World.Render2D[ent];
-
-            // Float32Array.set() is 3-4x slower than the following.
-            game.InstanceData[offset++] = transform.World[0];
-            game.InstanceData[offset++] = transform.World[1];
-            game.InstanceData[offset++] = transform.World[2];
-            game.InstanceData[offset++] = transform.World[3];
-            game.InstanceData[offset++] = transform.World[4];
-            game.InstanceData[offset++] = transform.World[5];
-            game.InstanceData[offset++] = transform.World[6];
-            game.InstanceData[offset++] = transform.World[7];
-            game.InstanceData[offset++] = transform.World[8];
-            game.InstanceData[offset++] = transform.World[9];
-            game.InstanceData[offset++] = transform.World[10];
-            game.InstanceData[offset++] = transform.World[11];
-            game.InstanceData[offset++] = transform.World[12];
-            game.InstanceData[offset++] = transform.World[13];
-            game.InstanceData[offset++] = transform.World[14];
-            game.InstanceData[offset++] = transform.World[15];
-
-            game.InstanceData[offset++] = render.Color[0];
-            game.InstanceData[offset++] = render.Color[1];
-            game.InstanceData[offset++] = render.Color[2];
-            game.InstanceData[offset++] = render.Color[3];
-        }
-    }
 }

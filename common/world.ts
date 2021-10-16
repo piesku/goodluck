@@ -1,15 +1,20 @@
 export type Entity = number;
 
 export class WorldImpl {
+    Capacity: number;
     Signature: Array<number> = [];
     Graveyard: Array<Entity> = [];
+
+    constructor(capacity: number = 10_000) {
+        this.Capacity = capacity;
+    }
 
     CreateEntity() {
         if (this.Graveyard.length > 0) {
             return this.Graveyard.pop()!;
         }
 
-        if (DEBUG && this.Signature.length > 1_000_000) {
+        if (DEBUG && this.Signature.length > this.Capacity) {
             throw new Error("No more entities available.");
         }
 

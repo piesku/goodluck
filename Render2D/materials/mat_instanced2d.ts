@@ -29,6 +29,9 @@ let vertex = `#version 300 es\n
 
         vec4 world_position = world * attr_position;
         gl_Position = pv * world_position;
+        if (attr_color.a == 0.0) {
+            gl_Position.z = 1000.0;
+        }
 
         vert_color = attr_color;
         vert_texcoord = attr_texcoord;
