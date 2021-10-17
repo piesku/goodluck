@@ -71,7 +71,7 @@ let vertex = `#version 300 es\n
             }
         }
 
-        vert_color = vec4(light_acc, 1.0);
+        vert_color = vec4(light_acc, diffuse_color.a);
         vert_texcoord = attr_texcoord;
     }
 `;

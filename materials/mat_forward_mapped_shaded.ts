@@ -103,7 +103,7 @@ let fragment = `#version 300 es\n
             }
         }
 
-        frag_color = vec4(light_acc, 1.0);
+        frag_color = vec4(light_acc, diffuse_color.a);
     }
 `;
 

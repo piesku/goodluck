@@ -48,6 +48,11 @@ export const enum RenderKind {
     Vertices,
 }
 
+export const enum RenderPhase {
+    Opaque,
+    Transparent,
+}
+
 const colored_unlit_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 const colored_shaded_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 const colored_shadows_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
@@ -58,10 +63,11 @@ const mapped_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
 
 export interface RenderColoredUnlit {
     readonly Kind: RenderKind.ColoredUnlit;
-    readonly Material: Material<ColoredUnlitLayout>;
-    readonly Mesh: Mesh;
-    readonly FrontFace: GLenum;
-    readonly Vao: WebGLVertexArrayObject;
+    Material: Material<ColoredUnlitLayout>;
+    Mesh: Mesh;
+    Phase: RenderPhase;
+    FrontFace: GLenum;
+    Vao: WebGLVertexArrayObject;
     Color: Vec4;
 }
 
@@ -98,6 +104,7 @@ export function render_colored_unlit(
             Kind: RenderKind.ColoredUnlit,
             Material: material,
             Mesh: mesh,
+            Phase: color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
             FrontFace: GL_CW,
             Vao: colored_unlit_vaos.get(mesh)!,
             Color: color,
@@ -107,10 +114,11 @@ export function render_colored_unlit(
 
 export interface RenderColoredShaded {
     readonly Kind: RenderKind.ColoredShaded;
-    readonly Material: Material<ColoredShadedLayout & ForwardShadingLayout>;
-    readonly Mesh: Mesh;
-    readonly FrontFace: GLenum;
-    readonly Vao: WebGLVertexArrayObject;
+    Material: Material<ColoredShadedLayout & ForwardShadingLayout>;
+    Mesh: Mesh;
+    Phase: RenderPhase;
+    FrontFace: GLenum;
+    Vao: WebGLVertexArrayObject;
     DiffuseColor: Vec4;
     SpecularColor: Vec4;
     Shininess: number;
@@ -156,6 +164,7 @@ export function render_colored_shaded(
             Kind: RenderKind.ColoredShaded,
             Material: material,
             Mesh: mesh,
+            Phase: diffuse_color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
             FrontFace: front_face,
             Vao: colored_shaded_vaos.get(mesh)!,
             DiffuseColor: diffuse_color,
@@ -167,10 +176,11 @@ export function render_colored_shaded(
 
 export interface RenderColoredShadows {
     readonly Kind: RenderKind.ColoredShadows;
-    readonly Material: Material<ColoredShadedLayout & ForwardShadingLayout & ShadowMappingLayout>;
-    readonly Mesh: Mesh;
-    readonly FrontFace: GLenum;
-    readonly Vao: WebGLVertexArrayObject;
+    Material: Material<ColoredShadedLayout & ForwardShadingLayout & ShadowMappingLayout>;
+    Mesh: Mesh;
+    Phase: RenderPhase;
+    FrontFace: GLenum;
+    Vao: WebGLVertexArrayObject;
     DiffuseColor: Vec4;
     SpecularColor: Vec4;
     Shininess: number;
@@ -216,6 +226,7 @@ export function render_colored_shadows(
             Kind: RenderKind.ColoredShadows,
             Material: material,
             Mesh: mesh,
+            Phase: diffuse_color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
             FrontFace: front_face,
             Vao: colored_shadows_vaos.get(mesh)!,
             DiffuseColor: diffuse_color,
@@ -226,9 +237,10 @@ export function render_colored_shadows(
 }
 
 export interface RenderColoredDeferred {
-    Kind: RenderKind.ColoredDeferred;
+    readonly Kind: RenderKind.ColoredDeferred;
     Material: Material<ColoredShadedLayout>;
     Mesh: Mesh;
+    Phase: RenderPhase;
     FrontFace: GLenum;
     Vao: WebGLVertexArrayObject;
     DiffuseColor: Vec4;
@@ -276,6 +288,7 @@ export function render_colored_deferred(
             Kind: RenderKind.ColoredDeferred,
             Material: material,
             Mesh: mesh,
+            Phase: diffuse_color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
             FrontFace: front_face,
             Vao: colored_deferred_vaos.get(mesh)!,
             DiffuseColor: diffuse_color,
@@ -287,10 +300,11 @@ export function render_colored_deferred(
 
 export interface RenderTexturedUnlit {
     readonly Kind: RenderKind.TexturedUnlit;
-    readonly Material: Material<TexturedUnlitLayout>;
-    readonly Mesh: Mesh;
-    readonly FrontFace: GLenum;
-    readonly Vao: WebGLVertexArrayObject;
+    Material: Material<TexturedUnlitLayout>;
+    Mesh: Mesh;
+    Phase: RenderPhase;
+    FrontFace: GLenum;
+    Vao: WebGLVertexArrayObject;
     Texture: WebGLTexture;
     Color: Vec4;
 }
@@ -340,6 +354,7 @@ export function render_textured_unlit(
             Kind: RenderKind.TexturedUnlit,
             Material: material,
             Mesh: mesh,
+            Phase: color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
             FrontFace: GL_CW,
             Vao: textured_unlit_vaos.get(mesh)!,
             Texture: texture,
@@ -350,10 +365,11 @@ export function render_textured_unlit(
 
 export interface RenderTexturedShaded {
     readonly Kind: RenderKind.TexturedShaded;
-    readonly Material: Material<TexturedShadedLayout & ForwardShadingLayout>;
-    readonly Mesh: Mesh;
-    readonly FrontFace: GLenum;
-    readonly Vao: WebGLVertexArrayObject;
+    Material: Material<TexturedShadedLayout & ForwardShadingLayout>;
+    Mesh: Mesh;
+    Phase: RenderPhase;
+    FrontFace: GLenum;
+    Vao: WebGLVertexArrayObject;
     Texture: WebGLTexture;
     DiffuseColor: Vec4;
     SpecularColor: Vec4;
@@ -412,6 +428,7 @@ export function render_textured_shaded(
             Kind: RenderKind.TexturedShaded,
             Material: material,
             Mesh: mesh,
+            Phase: diffuse_color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
             FrontFace: front_face,
             Vao: textured_shaded_vaos.get(mesh)!,
             Texture: texture,
@@ -424,10 +441,11 @@ export function render_textured_shaded(
 
 export interface RenderMappedShaded {
     readonly Kind: RenderKind.MappedShaded;
-    readonly Material: Material<MappedShadedLayout & ForwardShadingLayout>;
-    readonly Mesh: Mesh;
-    readonly FrontFace: GLenum;
-    readonly Vao: WebGLVertexArrayObject;
+    Material: Material<MappedShadedLayout & ForwardShadingLayout>;
+    Mesh: Mesh;
+    Phase: RenderPhase;
+    FrontFace: GLenum;
+    Vao: WebGLVertexArrayObject;
     DiffuseMap: WebGLTexture;
     DiffuseColor: Vec4;
     NormalMap: WebGLTexture;
@@ -559,6 +577,7 @@ export function render_mapped_shaded(
             Kind: RenderKind.MappedShaded,
             Material: material,
             Mesh: mesh,
+            Phase: diffuse_color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
             FrontFace: GL_CW,
             Vao: mapped_vaos.get(mesh)!,
             DiffuseMap: diffuse_map,
@@ -570,8 +589,9 @@ export function render_mapped_shaded(
 }
 
 export interface RenderVertices {
-    Kind: RenderKind.Vertices;
+    readonly Kind: RenderKind.Vertices;
     Material: Material<ColoredUnlitLayout>;
+    Phase: RenderPhase;
     FrontFace: GLenum;
     VertexBuffer: WebGLBuffer;
     IndexCount: number;
@@ -588,6 +608,7 @@ export function render_vertices(material: Material<ColoredUnlitLayout>, max: num
         game.World.Render[entity] = {
             Kind: RenderKind.Vertices,
             Material: material,
+            Phase: color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
             FrontFace: GL_CW,
             VertexBuffer: vertex_buf,
             IndexCount: 0,

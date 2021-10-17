@@ -5,8 +5,10 @@
 import {Material} from "../../common/material.js";
 import {
     GL_ARRAY_BUFFER,
+    GL_BLEND,
     GL_COLOR_BUFFER_BIT,
     GL_DEPTH_BUFFER_BIT,
+    GL_DEPTH_TEST,
     GL_FLOAT,
     GL_FRAMEBUFFER,
     GL_TEXTURE0,
@@ -30,6 +32,7 @@ import {
     RenderColoredUnlit,
     RenderKind,
     RenderMappedShaded,
+    RenderPhase,
     RenderTexturedShaded,
     RenderTexturedUnlit,
     RenderVertices,
@@ -59,7 +62,19 @@ function render_forward(game: Game, camera: CameraForward) {
     game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
     game.Gl.clearColor(...camera.ClearColor);
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    render(game, camera);
+
+    // First render all opaque objects.
+    render(game, camera, RenderPhase.Opaque);
+
+    // Then render all transparent objects, assuming they're in front of the
+    // opaque ones, and already sorted from back to front. Neither of these is
+    // usually true; if you require more correct transparency, don't disable
+    // GL_DEPTH_TEST and sort the transparent objects yourself.
+    game.Gl.disable(GL_DEPTH_TEST);
+    game.Gl.enable(GL_BLEND);
+    render(game, camera, RenderPhase.Transparent);
+    game.Gl.disable(GL_BLEND);
+    game.Gl.enable(GL_DEPTH_TEST);
 }
 
 function render_framebuffer(game: Game, camera: CameraFramebuffer) {
@@ -67,10 +82,19 @@ function render_framebuffer(game: Game, camera: CameraFramebuffer) {
     game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
     game.Gl.clearColor(...camera.ClearColor);
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    render(game, camera, camera.Target.RenderTexture);
+
+    // First render all opaque objects.
+    render(game, camera, RenderPhase.Opaque);
+
+    // Then render all transparent objects (see above).
+    game.Gl.disable(GL_DEPTH_TEST);
+    game.Gl.enable(GL_BLEND);
+    render(game, camera, RenderPhase.Transparent);
+    game.Gl.disable(GL_BLEND);
+    game.Gl.enable(GL_DEPTH_TEST);
 }
 
-function render(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
+function render(game: Game, eye: CameraEye, phase: RenderPhase, current_target?: WebGLTexture) {
     // Keep track of the current material to minimize switching.
     let current_material = null;
     let current_front_face = null;
@@ -79,6 +103,10 @@ function render(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
             let transform = game.World.Transform[i];
             let render = game.World.Render[i];
+
+            if (render.Phase !== phase) {
+                continue;
+            }
 
             if (render.Material !== current_material) {
                 current_material = render.Material;

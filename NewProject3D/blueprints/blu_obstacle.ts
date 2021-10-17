@@ -11,7 +11,7 @@ export function blueprint_obstacle(game: Game) {
         rigid_body(RigidKind.Dynamic, 0.3),
         children([
             transform(),
-            render_colored_shaded(game.MaterialColoredShaded, game.MeshCube, [0.5, 0.5, 0.5, 1]),
+            render_colored_shaded(game.MaterialColoredShaded, game.MeshCube, [0.5, 0.5, 0.5, 0.3]),
         ]),
     ];
 }

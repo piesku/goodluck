@@ -108,7 +108,7 @@ let fragment = `#version 300 es\n
         }
 
         vec3 shaded_rgb = light_acc * shadow_factor(vert_position, 0.5);
-        frag_color= vec4(shaded_rgb, 1.0);
+        frag_color= vec4(shaded_rgb, diffuse_color.a);
     }
 `;
 

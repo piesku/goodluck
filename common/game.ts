@@ -1,4 +1,4 @@
-import {GL_CULL_FACE, GL_DEPTH_TEST} from "./webgl.js";
+import {GL_CULL_FACE, GL_DEPTH_TEST, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA} from "./webgl.js";
 import {Entity, WorldImpl} from "./world.js";
 
 const update_span = document.getElementById("update");
@@ -270,6 +270,8 @@ export abstract class Game3D extends GameImpl {
 
         this.Gl.enable(GL_DEPTH_TEST);
         this.Gl.enable(GL_CULL_FACE);
+
+        this.Gl.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 }
 

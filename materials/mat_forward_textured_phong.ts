@@ -91,7 +91,7 @@ let fragment = `#version 300 es\n
         }
 
         vec4 tex_color = texture(diffuse_map, vert_texcoord);
-        frag_color = vec4(light_acc, 1.0) * tex_color;
+        frag_color = vec4(light_acc, diffuse_color.a) * tex_color;
     }
 `;
 
