@@ -164,6 +164,6 @@ declare interface Navigator {
     xr: XR;
 }
 
-declare interface WebGLRenderingContext {
+declare interface WebGL2RenderingContext {
     makeXRCompatible(): Promise<void>;
 }

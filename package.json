@@ -23,7 +23,6 @@
         "test": "npm run clean && npm run lint && npm run compile"
     },
     "devDependencies": {
-        "@types/webgl2": "0.0.6",
         "htmlnano": "^1.0.0",
         "live-server": "1.2.1",
         "npm-run-all": "4.1.5",
