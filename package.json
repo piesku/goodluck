@@ -23,6 +23,7 @@
         "test": "npm run clean && npm run lint && npm run compile"
     },
     "devDependencies": {
+        "esbuild": "0.13",
         "htmlnano": "1.1",
         "live-server": "1.2",
         "npm-run-all": "4.1",
