@@ -3,6 +3,8 @@ import {GL_ARRAY_BUFFER, GL_FLOAT, GL_STATIC_DRAW, GL_STREAM_DRAW} from "../comm
 import {Entity} from "../common/world.js";
 import {mat_instanced2d} from "./materials/mat_instanced2d.js";
 import {sys_camera} from "./systems/sys_camera.js";
+import {sys_control_always2d} from "./systems/sys_control_always2d.js";
+import {sys_move2d} from "./systems/sys_move2d.js";
 import {sys_render2d} from "./systems/sys_render2d.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
@@ -11,7 +13,7 @@ import {World} from "./world.js";
 const BYTES_PER_INSTANCE = 4 * 20;
 
 export class Game extends Game3D {
-    World = new World(200_001);
+    World = new World(50_001);
 
     MaterialInstanced = mat_instanced2d(this.Gl);
 
@@ -119,6 +121,8 @@ export class Game extends Game3D {
     }
 
     override FrameUpdate(delta: number) {
+        sys_control_always2d(this, delta);
+        sys_move2d(this, delta);
         sys_transform(this, delta);
         sys_resize(this, delta);
         sys_camera(this, delta);
