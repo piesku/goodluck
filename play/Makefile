@@ -11,16 +11,15 @@ all: index.html ../$(EXAMPLE)/index.js
 
 game.esbuild.js: $(SOURCES)
 	@echo "Compiling and bundling..."
-	@npx esbuild ../$(EXAMPLE)/index.ts --bundle --define:DEBUG=true --analyze > $@
+	@npx esbuild ../$(EXAMPLE)/index.ts --bundle --define:DEBUG=false --analyze > $@
 
 game.sed.js: game.esbuild.js
 	@echo "Running replacements..."
 	@sed  -f sed.txt  $< > $@
 
 game.terser.js: game.sed.js
-	@echo "Minifying... 
+	@echo "Minifying..."
 	@npx --quiet terser $< \
-		--define DEBUG=false \
 		--timings \
 		--ecma 9 \
 		--mangle toplevel \
@@ -35,3 +34,7 @@ index.html: game.html game.terser.js
 # On Ubuntu, install p7zip-full. See https://www.7-zip.org/download.html.
 index.zip: index.html
 	@7z a -mx=9 -mfb=256 -mpass=15 $@ $<
+
+.PHONY: clean
+clean:
+	@rm -f *.js index.html index.zip
