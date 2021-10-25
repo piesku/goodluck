@@ -14,6 +14,7 @@ let vertex = `#version 300 es\n
     in vec4 attr_column2;
     in vec4 attr_column3;
     in vec4 attr_column4;
+    in vec4 attr_render; // [x: Has.Render, ...]
     in vec4 attr_color;
 
     out vec4 vert_color;
@@ -29,7 +30,7 @@ let vertex = `#version 300 es\n
 
         vec4 world_position = world * attr_position;
         gl_Position = pv * world_position;
-        if (attr_color.a == 0.0) {
+        if (attr_render.x == 0.0) {
             gl_Position.z = 1000.0;
         }
 
@@ -70,6 +71,7 @@ export function mat_instanced2d(gl: WebGL2RenderingContext): Material<Instanced2
             InstanceColumn2: gl.getAttribLocation(program, "attr_column2")!,
             InstanceColumn3: gl.getAttribLocation(program, "attr_column3")!,
             InstanceColumn4: gl.getAttribLocation(program, "attr_column4")!,
+            InstanceRender: gl.getAttribLocation(program, "attr_render")!,
             InstanceColor: gl.getAttribLocation(program, "attr_color")!,
         },
     };

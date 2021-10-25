@@ -8,12 +8,24 @@ import {
 } from "../../common/webgl.js";
 import {CameraForward, CameraKind} from "../components/com_camera.js";
 import {Game} from "../game.js";
+import {Has} from "../world.js";
 
 export function sys_render2d(game: Game, delta: number) {
     game.Gl.clearColor(0.9, 0.9, 0.9, 1);
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (game.ViewportResized) {
         game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
+    }
+
+    for (let i = 0; i < game.World.Signature.length; i++) {
+        let offset = i * 20 + 20;
+        if (game.World.Signature[i] & Has.Render2D) {
+            if (game.InstanceData[offset] == 0) {
+                game.InstanceData[offset] = 1;
+            }
+        } else if (game.InstanceData[offset] == 1) {
+            game.InstanceData[offset] = 0;
+        }
     }
 
     for (let camera_entity of game.Cameras) {

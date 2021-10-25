@@ -7,11 +7,11 @@ import {control_always2d} from "../components/com_control_always2d.js";
 import {move2d} from "../components/com_move2d.js";
 import {render2d} from "../components/com_render2d.js";
 import {transform} from "../components/com_transform.js";
-import {Game} from "../game.js";
+import {Game, WORLD_CAPACITY} from "../game.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {
-    game.World = new World(50_001);
+    game.World = new World(WORLD_CAPACITY);
     game.ViewportResized = true;
 
     // Camera.

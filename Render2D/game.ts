@@ -10,16 +10,18 @@ import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
-const BYTES_PER_INSTANCE = 4 * 20;
+export const WORLD_CAPACITY = 150_001;
+export const FLOATS_PER_INSTANCE = 24;
+export const BYTES_PER_INSTANCE = FLOATS_PER_INSTANCE * 4;
 
 export class Game extends Game3D {
-    World = new World(50_001);
+    World = new World(WORLD_CAPACITY);
 
     MaterialInstanced = mat_instanced2d(this.Gl);
 
     Textures: Record<string, WebGLTexture> = {};
 
-    InstanceData = new Float32Array(this.World.Capacity * 20);
+    InstanceData = new Float32Array(this.World.Capacity * FLOATS_PER_INSTANCE);
     InstanceBuffer = this.Gl.createBuffer()!;
     Vao = this.Gl.createVertexArray()!;
 
@@ -106,6 +108,17 @@ export class Game extends Game3D {
             4 * 12
         );
 
+        this.Gl.enableVertexAttribArray(material.Locations.InstanceRender);
+        this.Gl.vertexAttribDivisor(material.Locations.InstanceRender, 1);
+        this.Gl.vertexAttribPointer(
+            material.Locations.InstanceRender,
+            4,
+            GL_FLOAT,
+            false,
+            BYTES_PER_INSTANCE,
+            4 * 16
+        );
+
         this.Gl.enableVertexAttribArray(material.Locations.InstanceColor);
         this.Gl.vertexAttribDivisor(material.Locations.InstanceColor, 1);
         this.Gl.vertexAttribPointer(
@@ -114,15 +127,17 @@ export class Game extends Game3D {
             GL_FLOAT,
             false,
             BYTES_PER_INSTANCE,
-            4 * 16
+            4 * 20
         );
 
         this.Gl.bindVertexArray(null);
     }
 
     override FrameUpdate(delta: number) {
-        sys_control_always2d(this, delta);
-        sys_move2d(this, delta);
+        if (false) {
+            sys_control_always2d(this, delta);
+            sys_move2d(this, delta);
+        }
         sys_transform(this, delta);
         sys_resize(this, delta);
         sys_camera(this, delta);

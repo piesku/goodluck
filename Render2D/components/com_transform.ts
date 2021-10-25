@@ -5,7 +5,7 @@
 import {create} from "../../common/mat4.js";
 import {Mat4, Quat, Vec3} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
-import {Game} from "../game.js";
+import {FLOATS_PER_INSTANCE, Game} from "../game.js";
 import {Has, World} from "../world.js";
 
 export interface Transform {
@@ -30,7 +30,10 @@ export function transform(
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Transform | Has.Dirty;
         game.World.Transform[entity] = {
-            World: game.InstanceData.subarray(entity * 20, entity * 20 + 16),
+            World: game.InstanceData.subarray(
+                entity * FLOATS_PER_INSTANCE,
+                entity * FLOATS_PER_INSTANCE + 16
+            ),
             Self: create(),
             Translation: translation,
             Rotation: rotation,
