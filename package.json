@@ -13,13 +13,13 @@
     ],
     "license": "ISC",
     "scripts": {
-        "check": "tsc --noEmit",
         "clean": "rm */index.js */index.js.map",
         "lint": "prettier --check \"**/*.ts\"",
         "pretty": "prettier --write \"**/*.ts\"",
         "start": "esbuild */index.ts --define:DEBUG=true --target=es2020 --format=esm --bundle --sourcemap --outdir=. --outbase=. --color=false --servedir=. --serve=1234",
-        "test": "npm run clean && npm run lint && npm run check",
-        "watch": "tsc --noEmit --watch -p ."
+        "test": "npm run clean && npm run lint && npm run ts:check",
+        "ts:check": "tsc --noEmit",
+        "ts:watch": "tsc --noEmit --watch -p ."
     },
     "devDependencies": {
         "esbuild": "0.13",
