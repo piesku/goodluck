@@ -2,7 +2,6 @@
     "typescript.tsc.autoDetect": "off",
     "npm.autoDetect": "off",
     "files.exclude": {
-        "**/*.js": true,
         "**/*.js.map": true,
         "package-lock.json": true
     },
