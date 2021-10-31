@@ -65,10 +65,10 @@ export class Game extends Game3D {
             GL_STREAM_DRAW
         );
 
-        this.Gl.enableVertexAttribArray(material.Locations.InstanceColumn1);
-        this.Gl.vertexAttribDivisor(material.Locations.InstanceColumn1, 1);
+        this.Gl.enableVertexAttribArray(material.Locations.InstanceRotation);
+        this.Gl.vertexAttribDivisor(material.Locations.InstanceRotation, 1);
         this.Gl.vertexAttribPointer(
-            material.Locations.InstanceColumn1,
+            material.Locations.InstanceRotation,
             4,
             GL_FLOAT,
             false,
@@ -76,10 +76,10 @@ export class Game extends Game3D {
             0
         );
 
-        this.Gl.enableVertexAttribArray(material.Locations.InstanceColumn2);
-        this.Gl.vertexAttribDivisor(material.Locations.InstanceColumn2, 1);
+        this.Gl.enableVertexAttribArray(material.Locations.InstanceTranslation);
+        this.Gl.vertexAttribDivisor(material.Locations.InstanceTranslation, 1);
         this.Gl.vertexAttribPointer(
-            material.Locations.InstanceColumn2,
+            material.Locations.InstanceTranslation,
             4,
             GL_FLOAT,
             false,
@@ -87,10 +87,10 @@ export class Game extends Game3D {
             4 * 4
         );
 
-        this.Gl.enableVertexAttribArray(material.Locations.InstanceColumn3);
-        this.Gl.vertexAttribDivisor(material.Locations.InstanceColumn3, 1);
+        this.Gl.enableVertexAttribArray(material.Locations.InstanceColor);
+        this.Gl.vertexAttribDivisor(material.Locations.InstanceColor, 1);
         this.Gl.vertexAttribPointer(
-            material.Locations.InstanceColumn3,
+            material.Locations.InstanceColor,
             4,
             GL_FLOAT,
             false,

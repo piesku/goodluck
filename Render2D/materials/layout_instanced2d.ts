@@ -9,7 +9,7 @@ export interface Instanced2DLayout {
     VertexTexcoord: GLint;
 
     // Instance attributes
-    InstanceColumn1: GLint;
-    InstanceColumn2: GLint;
-    InstanceColumn3: GLint;
+    InstanceRotation: GLint;
+    InstanceTranslation: GLint;
+    InstanceColor: GLint;
 }
