@@ -12,7 +12,7 @@ export function link(gl: WebGLRenderingContext, vertex: string, fragment: string
     gl.attachShader(program, compile(gl, GL_FRAGMENT_SHADER, fragment));
     gl.linkProgram(program);
 
-    if (DEBUG && !gl.getProgramParameter(program, GL_LINK_STATUS)) {
+    if (!gl.getProgramParameter(program, GL_LINK_STATUS)) {
         throw new Error(gl.getProgramInfoLog(program)!);
     }
 
@@ -24,7 +24,7 @@ function compile(gl: WebGLRenderingContext, type: GLenum, source: string) {
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
 
-    if (DEBUG && !gl.getShaderParameter(shader, GL_COMPILE_STATUS)) {
+    if (!gl.getShaderParameter(shader, GL_COMPILE_STATUS)) {
         throw new Error(gl.getShaderInfoLog(shader)!);
     }
 

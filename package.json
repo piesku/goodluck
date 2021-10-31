@@ -13,17 +13,19 @@
     ],
     "license": "ISC",
     "scripts": {
-        "clean": "rm */index.js */index.js.map",
+        "clean": "find . -type d -name node_modules -prune -o -name '*.js' -exec rm {} +",
+        "compile": "tsc",
+        "compile:watch": "tsc --watch -p .",
         "lint": "prettier --check \"**/*.ts\"",
         "pretty": "prettier --write \"**/*.ts\"",
-        "start": "esbuild */index.ts --define:DEBUG=true --target=es2020 --format=esm --bundle --sourcemap --outdir=. --outbase=. --color=false --servedir=. --serve=1234",
-        "test": "npm run clean && npm run lint && npm run ts:check",
-        "ts:check": "tsc --noEmit",
-        "ts:watch": "tsc --noEmit --watch -p ."
+        "serve": "live-server --port=1234 --no-browser --quiet .",
+        "start": "npm-run-all --parallel compile:watch serve",
+        "test": "npm run clean && npm run lint && npm run compile"
     },
     "devDependencies": {
-        "esbuild": "0.13",
         "htmlnano": "1.1",
+        "live-server": "1.2",
+        "npm-run-all": "4.1",
         "posthtml-cli": "0.10",
         "posthtml-inline-assets": "3.1",
         "prettier": "2.4",

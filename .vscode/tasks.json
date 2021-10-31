@@ -6,14 +6,6 @@
         {
             "type": "npm",
             "script": "start",
-            "group": "build",
-            "runOptions": {
-                "runOn": "folderOpen"
-            }
-        },
-        {
-            "type": "npm",
-            "script": "ts:watch",
             "problemMatcher": [
                 "$tsc-watch"
             ],
@@ -21,6 +13,6 @@
             "runOptions": {
                 "runOn": "folderOpen"
             }
-        },
+        }
     ]
 }
