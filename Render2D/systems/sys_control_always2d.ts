@@ -6,7 +6,7 @@ import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.ControlAlways2D | Has.Transform | Has.Move2D;
+const QUERY = Has.ControlAlways2D | Has.Move2D;
 
 export function sys_control_always2d(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {

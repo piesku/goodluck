@@ -9,10 +9,10 @@ import {Has} from "../world.js";
 
 export interface ControlAlways2D {
     Direction: Vec2 | false;
-    Rotation: boolean;
+    Rotation: number;
 }
 
-export function control_always2d(direction: Vec2 | false, rotation: boolean) {
+export function control_always2d(direction: Vec2 | false, rotation: number) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.ControlAlways2D;
         game.World.ControlAlways2D[entity] = {

@@ -25,7 +25,7 @@ export function scene_stage(game: Game) {
             // Place entities on the Z axis from closest to the farthest away to avoid overdraw.
             order(-i / sprite_count),
             move2d(0, 1),
-            control_always2d(false, true),
+            control_always2d(false, 1),
         ]);
     }
 }

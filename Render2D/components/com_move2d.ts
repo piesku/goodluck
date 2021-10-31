@@ -14,8 +14,8 @@ export interface Move2D {
     RotationSpeed: number;
     /** Movement direction in self space. Z is ignored. */
     Direction: Vec3;
-    /** Rotation on Z. */
-    Rotation: boolean;
+    /** Rotation on Z; 1 = CCW, -1 = CW. */
+    Rotation: number;
 }
 
 /**
@@ -31,7 +31,7 @@ export function move2d(move_speed: number, rotation_speed: number) {
             MoveSpeed: move_speed,
             RotationSpeed: rotation_speed,
             Direction: [0, 0, 0],
-            Rotation: false,
+            Rotation: 0,
         };
     };
 }

@@ -2,15 +2,13 @@
  * @module systems/sys_move
  */
 
-import {Quat, Vec3} from "../../common/math.js";
-import {from_axis, multiply} from "../../common/quat.js";
-import {add, length, normalize, scale, transform_direction} from "../../common/vec3.js";
+import {Vec2} from "../../common/math.js";
+import {add, length, normalize, scale, transform_direction} from "../../common/vec2.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.Transform | Has.Move2D;
-const NO_ROTATION: Quat = [0, 0, 0, 1];
+const QUERY = Has.Transform2D | Has.Move2D;
 
 export function sys_move2d(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
@@ -20,12 +18,10 @@ export function sys_move2d(game: Game, delta: number) {
     }
 }
 
-const direction: Vec3 = [0, 0, 0];
-const axis_z: Vec3 = [0, 0, 1];
-const rotation: Quat = [0, 0, 0, 1];
+const direction: Vec2 = [0, 0];
 
 function update(game: Game, entity: Entity, delta: number) {
-    let transform = game.World.Transform[entity];
+    let transform = game.World.Transform2D[entity];
     let move = game.World.Move2D[entity];
 
     if (move.Direction[0] || move.Direction[1]) {
@@ -40,7 +36,7 @@ function update(game: Game, entity: Entity, delta: number) {
         // Transform the direction into the world or the parent space. This will
         // also scale the result by the scale encoded in the transform.
         if (transform.Parent !== undefined) {
-            let parent = game.World.Transform[transform.Parent];
+            let parent = game.World.Transform2D[transform.Parent];
             transform_direction(direction, direction, parent.Self);
         } else {
             transform_direction(direction, direction, transform.World);
@@ -54,17 +50,16 @@ function update(game: Game, entity: Entity, delta: number) {
         scale(direction, direction, amount * move.MoveSpeed * delta);
 
         add(transform.Translation, transform.Translation, direction);
+        game.World.Signature[entity] |= Has.Dirty;
 
         move.Direction[0] = 0;
         move.Direction[1] = 0;
-        game.World.Signature[entity] |= Has.Dirty;
     }
 
     if (move.Rotation) {
-        from_axis(rotation, axis_z, move.RotationSpeed * delta);
-        multiply(transform.Rotation, rotation, transform.Rotation);
-
-        move.Rotation = false;
+        transform.Rotation += move.Rotation * move.RotationSpeed * delta;
         game.World.Signature[entity] |= Has.Dirty;
+
+        move.Rotation = 0;
     }
 }

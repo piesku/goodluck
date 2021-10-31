@@ -102,7 +102,7 @@ export class Game extends Game3D {
     }
 
     override FrameUpdate(delta: number) {
-        if (false) {
+        if (true) {
             sys_control_always2d(this, delta);
             sys_move2d(this, delta);
         }
