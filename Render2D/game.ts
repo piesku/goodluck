@@ -8,10 +8,11 @@ import {sys_move2d} from "./systems/sys_move2d.js";
 import {sys_render2d} from "./systems/sys_render2d.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
+import {sys_transform2d} from "./systems/sys_transform2d.js";
 import {World} from "./world.js";
 
 export const WORLD_CAPACITY = 150_001;
-export const FLOATS_PER_INSTANCE = 24;
+export const FLOATS_PER_INSTANCE = 16;
 export const BYTES_PER_INSTANCE = FLOATS_PER_INSTANCE * 4;
 
 export class Game extends Game3D {
@@ -56,7 +57,7 @@ export class Game extends Game3D {
             4 * 3
         );
 
-        // Instance data: the world matrix (as 4 vec4s).
+        // Instance data.
         this.Gl.bindBuffer(GL_ARRAY_BUFFER, this.InstanceBuffer);
         this.Gl.bufferData(
             GL_ARRAY_BUFFER,
@@ -97,39 +98,6 @@ export class Game extends Game3D {
             4 * 8
         );
 
-        this.Gl.enableVertexAttribArray(material.Locations.InstanceColumn4);
-        this.Gl.vertexAttribDivisor(material.Locations.InstanceColumn4, 1);
-        this.Gl.vertexAttribPointer(
-            material.Locations.InstanceColumn4,
-            4,
-            GL_FLOAT,
-            false,
-            BYTES_PER_INSTANCE,
-            4 * 12
-        );
-
-        this.Gl.enableVertexAttribArray(material.Locations.InstanceRender);
-        this.Gl.vertexAttribDivisor(material.Locations.InstanceRender, 1);
-        this.Gl.vertexAttribPointer(
-            material.Locations.InstanceRender,
-            4,
-            GL_FLOAT,
-            false,
-            BYTES_PER_INSTANCE,
-            4 * 16
-        );
-
-        this.Gl.enableVertexAttribArray(material.Locations.InstanceColor);
-        this.Gl.vertexAttribDivisor(material.Locations.InstanceColor, 1);
-        this.Gl.vertexAttribPointer(
-            material.Locations.InstanceColor,
-            4,
-            GL_FLOAT,
-            false,
-            BYTES_PER_INSTANCE,
-            4 * 20
-        );
-
         this.Gl.bindVertexArray(null);
     }
 
@@ -138,6 +106,7 @@ export class Game extends Game3D {
             sys_control_always2d(this, delta);
             sys_move2d(this, delta);
         }
+        sys_transform2d(this, delta);
         sys_transform(this, delta);
         sys_resize(this, delta);
         sys_camera(this, delta);

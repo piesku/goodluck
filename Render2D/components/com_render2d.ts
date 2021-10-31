@@ -8,15 +8,20 @@ export interface Render2D {
     Color: Float32Array;
 }
 
-export function render2d(color: Vec4) {
+export function render2d(z: number, color: Vec4) {
     return (game: Game, entity: Entity) => {
         let instance_offset = entity * FLOATS_PER_INSTANCE;
-        game.InstanceData.set(color, instance_offset + 20);
+        game.InstanceData[instance_offset + 6] = z;
+        game.InstanceData[instance_offset + 7] = 1; // Has.Render2D
+        game.InstanceData[instance_offset + 8] = color[0];
+        game.InstanceData[instance_offset + 9] = color[1];
+        game.InstanceData[instance_offset + 10] = color[2];
+        game.InstanceData[instance_offset + 11] = color[3];
 
         game.World.Signature[entity] |= Has.Render2D;
         game.World.Render2D[entity] = {
-            Detail: game.InstanceData.subarray(instance_offset + 16, instance_offset + 20),
-            Color: game.InstanceData.subarray(instance_offset + 20, instance_offset + 24),
+            Detail: game.InstanceData.subarray(instance_offset + 6, instance_offset + 8),
+            Color: game.InstanceData.subarray(instance_offset + 8, instance_offset + 12),
         };
     };
 }

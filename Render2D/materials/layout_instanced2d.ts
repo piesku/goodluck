@@ -12,7 +12,4 @@ export interface Instanced2DLayout {
     InstanceColumn1: GLint;
     InstanceColumn2: GLint;
     InstanceColumn3: GLint;
-    InstanceColumn4: GLint;
-    InstanceRender: GLint;
-    InstanceColor: GLint;
 }

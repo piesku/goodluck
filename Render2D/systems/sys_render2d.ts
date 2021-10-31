@@ -7,7 +7,7 @@ import {
     GL_TEXTURE_2D,
 } from "../../common/webgl.js";
 import {CameraForward, CameraKind} from "../components/com_camera.js";
-import {Game} from "../game.js";
+import {FLOATS_PER_INSTANCE, Game} from "../game.js";
 import {Has} from "../world.js";
 
 export function sys_render2d(game: Game, delta: number) {
@@ -18,7 +18,7 @@ export function sys_render2d(game: Game, delta: number) {
     }
 
     for (let i = 0; i < game.World.Signature.length; i++) {
-        let offset = i * 20 + 20;
+        let offset = i * FLOATS_PER_INSTANCE + 7;
         if (game.World.Signature[i] & Has.Render2D) {
             if (game.InstanceData[offset] == 0) {
                 game.InstanceData[offset] = 1;

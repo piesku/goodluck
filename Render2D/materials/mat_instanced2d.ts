@@ -10,11 +10,8 @@ let vertex = `#version 300 es\n
     in vec2 attr_texcoord;
 
     // Instance attributes
-    in vec4 attr_column1;
-    in vec4 attr_column2;
-    in vec4 attr_column3;
-    in vec4 attr_column4;
-    in vec4 attr_render; // [x: Has.Render, ...]
+    in vec4 attr_column1; // [a, b, c, d]
+    in vec4 attr_column2; // [x, y, z, w: Has.Render]
     in vec4 attr_color;
 
     out vec4 vert_color;
@@ -22,15 +19,15 @@ let vertex = `#version 300 es\n
 
     void main() {
         mat4 world = mat4(
-            attr_column1,
-            attr_column2,
-            attr_column3,
-            attr_column4
+            attr_column1.xy, 0, 0,
+            attr_column1.zw, 0, 0,
+            0, 0, 1, 0,
+            attr_column2.xyz, 1
         );
 
         vec4 world_position = world * attr_position;
         gl_Position = pv * world_position;
-        if (attr_render.x == 0.0) {
+        if (attr_column2.w == 0.0) {
             gl_Position.z = 1000.0;
         }
 
@@ -69,10 +66,7 @@ export function mat_instanced2d(gl: WebGL2RenderingContext): Material<Instanced2
 
             InstanceColumn1: gl.getAttribLocation(program, "attr_column1")!,
             InstanceColumn2: gl.getAttribLocation(program, "attr_column2")!,
-            InstanceColumn3: gl.getAttribLocation(program, "attr_column3")!,
-            InstanceColumn4: gl.getAttribLocation(program, "attr_column4")!,
-            InstanceRender: gl.getAttribLocation(program, "attr_render")!,
-            InstanceColor: gl.getAttribLocation(program, "attr_color")!,
+            InstanceColumn3: gl.getAttribLocation(program, "attr_color")!,
         },
     };
 }

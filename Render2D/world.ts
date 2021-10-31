@@ -5,6 +5,7 @@ import {ControlAlways2D} from "./components/com_control_always2d.js";
 import {Move2D} from "./components/com_move2d.js";
 import {Render2D} from "./components/com_render2d.js";
 import {Transform} from "./components/com_transform.js";
+import {Transform2D} from "./components/com_transform2d.js";
 
 const enum Component {
     Camera,
@@ -14,6 +15,7 @@ const enum Component {
     Move2D,
     Render2D,
     Transform,
+    Transform2D,
 }
 
 export const enum Has {
@@ -25,6 +27,7 @@ export const enum Has {
     Move2D = 1 << Component.Move2D,
     Render2D = 1 << Component.Render2D,
     Transform = 1 << Component.Transform,
+    Transform2D = 1 << Component.Transform2D,
 }
 
 export class World extends WorldImpl {
@@ -34,4 +37,5 @@ export class World extends WorldImpl {
     Move2D: Array<Move2D> = [];
     Render2D: Array<Render2D> = [];
     Transform: Array<Transform> = [];
+    Transform2D: Array<Transform2D> = [];
 }
