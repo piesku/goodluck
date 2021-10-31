@@ -2,7 +2,7 @@
  * @module systems/sys_transform2d
  */
 
-import {from_translation, invert, multiply, rotate, scale} from "../../common/mat2d.js";
+import {compose, invert, multiply} from "../../common/mat2d.js";
 import {Entity} from "../../common/world.js";
 import {Transform2D} from "../components/com_transform2d.js";
 import {Game} from "../game.js";
@@ -22,9 +22,7 @@ export function sys_transform2d(game: Game, delta: number) {
 function update_transform(world: World, entity: Entity, transform: Transform2D) {
     world.Signature[entity] &= ~Has.Dirty;
 
-    from_translation(transform.World, transform.Translation);
-    rotate(transform.World, transform.World, transform.Rotation);
-    scale(transform.World, transform.World, transform.Scale);
+    compose(transform.World, transform.Translation, transform.Rotation, transform.Scale);
 
     if (transform.Parent !== undefined) {
         let parent_transform = world.Transform2D[transform.Parent];

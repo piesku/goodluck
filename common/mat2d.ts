@@ -99,6 +99,18 @@ export function from_translation(out: Mat2D, v: Vec2) {
     return out;
 }
 
+export function compose(out: Mat2D, v: Vec2, r: Rad, s: Vec2) {
+    let sin = Math.sin(r);
+    let cos = Math.cos(r);
+    out[0] = cos * s[0];
+    out[1] = sin * s[0];
+    out[2] = -sin * s[1];
+    out[3] = cos * s[1];
+    out[4] = v[0];
+    out[5] = v[1];
+    return out;
+}
+
 export function rotate(out: Mat2D, a: Mat2D, rad: Rad) {
     let a0 = a[0],
         a1 = a[1],

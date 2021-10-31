@@ -11,7 +11,7 @@ import {sys_transform} from "./systems/sys_transform.js";
 import {sys_transform2d} from "./systems/sys_transform2d.js";
 import {World} from "./world.js";
 
-export const WORLD_CAPACITY = 150_001;
+export const WORLD_CAPACITY = 100_001;
 export const FLOATS_PER_INSTANCE = 16;
 export const BYTES_PER_INSTANCE = FLOATS_PER_INSTANCE * 4;
 
