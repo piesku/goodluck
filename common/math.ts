@@ -3,6 +3,7 @@ export const DEG_TO_RAD = Math.PI / 180;
 export const RAD_TO_DEG = 180 / Math.PI;
 
 export type Rad = number;
+export type Deg = number;
 export type Quat = [x: number, y: number, z: number, w: number];
 export type Vec2 = [x: number, y: number];
 export type Vec3 = [x: number, y: number, z: number];

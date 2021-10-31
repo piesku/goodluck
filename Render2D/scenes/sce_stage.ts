@@ -23,18 +23,18 @@ export function scene_stage(game: Game) {
     for (let i = 0; i < dynamic_count; i++) {
         let s = float(0, 0.1);
         instantiate(game, [
-            transform2d([float() * 2 - 1, float() * 2 - 1], float() * Math.PI * 2, [s, s]),
+            transform2d([float() * 2 - 1, float() * 2 - 1], 0, [s, s]),
             render2d(hsva_to_vec4(float(), 0.5, 1, 1)),
             // Place entities from closest to the farthest away to avoid overdraw.
             order(1 - i / dynamic_count),
-            move2d(0, 1),
+            move2d(0, 30),
             control_always2d(false, 1),
         ]);
     }
 
     for (let i = 0; i < static_count; i++) {
         instantiate(game, [
-            transform2d([float() * 2 - 1, float() * 2 - 1], float() * Math.PI * 2, [0.05, 0.05]),
+            transform2d([float() * 2 - 1, float() * 2 - 1], 0, [0.05, 0.05]),
             render2d(hsva_to_vec4(float(), 0.5, 1, 1)),
             order(-i / static_count),
         ]);

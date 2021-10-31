@@ -3,6 +3,7 @@
  */
 
 import {compose, invert, multiply} from "../../common/mat2d.js";
+import {DEG_TO_RAD} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
 import {Transform2D} from "../components/com_transform2d.js";
 import {Game} from "../game.js";
@@ -22,7 +23,12 @@ export function sys_transform2d(game: Game, delta: number) {
 function update_transform(world: World, entity: Entity, transform: Transform2D) {
     world.Signature[entity] &= ~Has.Dirty;
 
-    compose(transform.World, transform.Translation, transform.Rotation, transform.Scale);
+    compose(
+        transform.World,
+        transform.Translation,
+        transform.Rotation * DEG_TO_RAD,
+        transform.Scale
+    );
 
     if (transform.Parent !== undefined) {
         let parent_transform = world.Transform2D[transform.Parent];
