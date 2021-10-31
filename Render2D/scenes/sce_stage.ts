@@ -15,7 +15,7 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
 
     // Camera.
-    instantiate(game, [transform([0, 0, 2]), camera_forward_ortho(2, 1, 100)]);
+    instantiate(game, [transform([0, 0, 2]), camera_forward_ortho(2, 1, 3)]);
 
     let dynamic_count = Math.floor(WORLD_CAPACITY / 2);
     let static_count = Math.floor(WORLD_CAPACITY / 2);
@@ -25,8 +25,8 @@ export function scene_stage(game: Game) {
         instantiate(game, [
             transform2d([float() * 2 - 1, float() * 2 - 1], float() * Math.PI * 2, [s, s]),
             render2d(hsva_to_vec4(float(), 0.5, 1, 1)),
-            // Place entities on the Z axis from closest to the farthest away to avoid overdraw.
-            order(-i / dynamic_count),
+            // Place entities from closest to the farthest away to avoid overdraw.
+            order(1 - i / dynamic_count),
             move2d(0, 1),
             control_always2d(false, 1),
         ]);
@@ -36,7 +36,7 @@ export function scene_stage(game: Game) {
         instantiate(game, [
             transform2d([float() * 2 - 1, float() * 2 - 1], float() * Math.PI * 2, [0.05, 0.05]),
             render2d(hsva_to_vec4(float(), 0.5, 1, 1)),
-            order(-i / static_count - 1),
+            order(-i / static_count),
         ]);
     }
 }
