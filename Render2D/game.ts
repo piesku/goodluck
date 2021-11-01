@@ -4,14 +4,16 @@ import {Entity} from "../common/world.js";
 import {mat_instanced2d} from "./materials/mat_instanced2d.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always2d} from "./systems/sys_control_always2d.js";
+import {sys_control_player} from "./systems/sys_control_player.js";
 import {sys_move2d} from "./systems/sys_move2d.js";
+import {sys_physics2d_integrate} from "./systems/sys_physics2d_integrate.js";
 import {sys_render2d} from "./systems/sys_render2d.js";
 import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {sys_transform2d} from "./systems/sys_transform2d.js";
 import {World} from "./world.js";
 
-export const WORLD_CAPACITY = 100_001;
+export const WORLD_CAPACITY = 50_001;
 export const FLOATS_PER_INSTANCE = 16;
 export const BYTES_PER_INSTANCE = FLOATS_PER_INSTANCE * 4;
 
@@ -103,8 +105,11 @@ export class Game extends Game3D {
 
     override FrameUpdate(delta: number) {
         if (true) {
+            sys_control_player(this, delta);
             sys_control_always2d(this, delta);
             sys_move2d(this, delta);
+
+            sys_physics2d_integrate(this, delta);
         }
         sys_transform2d(this, delta);
         sys_transform(this, delta);
@@ -116,8 +121,8 @@ export class Game extends Game3D {
 
 // prettier-ignore
 let vertex_arr = Float32Array.from([
-    -1, -1, 0,    0, 0,    // SW
-    1, -1, 0,     1, 0,    // SE
-    -1, 1, 0,     0, 1,    // NW
-    1, 1, 0,      1, 1     // NE
+    -0.5, -0.5, 0,    0, 0,    // SW
+    0.5, -0.5, 0,     1, 0,    // SE
+    -0.5, 0.5, 0,     0, 1,    // NW
+    0.5, 0.5, 0,      1, 1     // NE
 ]);

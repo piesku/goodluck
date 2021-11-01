@@ -1,6 +1,6 @@
 import {Mat2D, Vec2} from "./math";
 
-export function set(out: Vec2, x: number, y: number, z: number) {
+export function set(out: Vec2, x: number, y: number) {
     out[0] = x;
     out[1] = y;
     return out;
