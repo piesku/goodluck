@@ -4,7 +4,7 @@
 
 import {get_translation} from "../../common/mat2d.js";
 import {Vec2, Vec3} from "../../common/math.js";
-import {distance_squared, normalize, subtract} from "../../common/vec2.js";
+import {distance_squared, subtract} from "../../common/vec2.js";
 import {transform_position} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
@@ -53,13 +53,13 @@ function update(game: Game, entity: Entity, pointer_position: Vec2) {
     let entity_body = game.World.RigidBody2D[entity];
 
     get_translation(entity_world_position, entity_transform.World);
-    let distance = distance_squared(pointer_position, entity_world_position);
+    let distance = distance_squared(pointer_position, entity_world_position) / 10;
     if (distance < 1) {
         distance = 1;
     }
 
     subtract(entity_acceleration, pointer_position, entity_world_position);
-    normalize(entity_acceleration, entity_acceleration);
+    //normalize(entity_acceleration, entity_acceleration);
     entity_body.Acceleration[0] += entity_acceleration[0] / distance;
     entity_body.Acceleration[1] += entity_acceleration[1] / distance;
 }

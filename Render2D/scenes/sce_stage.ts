@@ -19,15 +19,15 @@ export function scene_stage(game: Game) {
     // Camera.
     instantiate(game, [transform([0, 0, 2]), camera_forward_ortho(5, 1, 3)]);
 
-    // let dynamic_count = Math.floor(WORLD_CAPACITY / 2);
-    // let static_count = Math.floor(WORLD_CAPACITY / 2);
+    let dynamic_count = Math.floor(WORLD_CAPACITY / 2);
+    let static_count = Math.floor(WORLD_CAPACITY / 2);
 
-    let dynamic_count = WORLD_CAPACITY - 1;
-    let static_count = 0;
+    // dynamic_count = WORLD_CAPACITY - 1;
+    // static_count = 0;
 
     for (let i = 0; i < dynamic_count; i++) {
         instantiate(game, [
-            transform2d([float() * 5 - 2.5, float() * 4 - 2], 0, [0.1, 0.1]),
+            transform2d([float(-20, 20), float(0, -20)], 0),
             render2d(hsva_to_vec4(float(), 0.5, 1, 1)),
             // Place entities from closest to the farthest away to avoid overdraw.
             order(1 - i / dynamic_count),
@@ -39,9 +39,9 @@ export function scene_stage(game: Game) {
     }
 
     for (let i = 0; i < static_count; i++) {
-        let s = float(0.01, 0.1);
+        let s = float(0.1, 1);
         instantiate(game, [
-            transform2d([float() * 5 - 2.5, float() * 2], 0, [s, s]),
+            transform2d([float(-20, 20), float(1, 20)], 0, [s, s]),
             render2d(hsva_to_vec4(float(), 0.5, 1, 1)),
             order(-i / static_count),
         ]);

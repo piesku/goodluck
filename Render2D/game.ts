@@ -2,7 +2,7 @@ import {Game3D} from "../common/game.js";
 import {GL_ARRAY_BUFFER, GL_FLOAT, GL_STATIC_DRAW, GL_STREAM_DRAW} from "../common/webgl.js";
 import {Entity} from "../common/world.js";
 import {mat_instanced2d} from "./materials/mat_instanced2d.js";
-import {sys_camera} from "./systems/sys_camera.js";
+import {sys_camera2d} from "./systems/sys_camera2d.js";
 import {sys_control_always2d} from "./systems/sys_control_always2d.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
 import {sys_move2d} from "./systems/sys_move2d.js";
@@ -114,7 +114,7 @@ export class Game extends Game3D {
         sys_transform2d(this, delta);
         sys_transform(this, delta);
         sys_resize(this, delta);
-        sys_camera(this, delta);
+        sys_camera2d(this, delta);
         sys_render2d(this, delta);
     }
 }

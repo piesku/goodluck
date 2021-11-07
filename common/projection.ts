@@ -75,3 +75,22 @@ export function resize_ortho(projection: ProjectionOrtho, aspect: number) {
     }
     invert(projection.Inverse, projection.Projection);
 }
+
+export function resize_ortho_keeping_unit_size(
+    projection: ProjectionOrtho,
+    aspect: number,
+    viewport_height: number,
+    unit_size_in_px: number
+) {
+    let radius_in_units = viewport_height / unit_size_in_px / 2;
+    ortho(
+        projection.Projection,
+        radius_in_units,
+        radius_in_units * aspect,
+        -radius_in_units,
+        -radius_in_units * aspect,
+        projection.Near,
+        projection.Far
+    );
+    invert(projection.Inverse, projection.Projection);
+}
