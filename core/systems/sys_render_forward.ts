@@ -167,18 +167,20 @@ function draw(game: Game, transform: Transform, render: Render, current_target?:
             draw_colored_shaded(game, transform, render);
             break;
         case RenderKind.TexturedUnlit:
-            // Prevent feedback loop between the active render target
-            // and the texture being rendered.
-            if (render.Texture !== current_target) {
-                draw_textured_unlit(game, transform, render);
+            if (render.Texture === current_target) {
+                // Prevent feedback loop between the active render target
+                // and the texture being rendered.
+                break;
             }
+            draw_textured_unlit(game, transform, render);
             break;
         case RenderKind.TexturedShaded:
-            // Prevent feedback loop between the active render target
-            // and the texture being rendered.
-            if (render.Texture !== current_target) {
-                draw_textured_shaded(game, transform, render);
+            if (render.Texture === current_target) {
+                // Prevent feedback loop between the active render target
+                // and the texture being rendered.
+                break;
             }
+            draw_textured_shaded(game, transform, render);
             break;
         case RenderKind.Vertices:
             draw_vertices(game, transform, render);
