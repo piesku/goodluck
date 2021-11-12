@@ -3,6 +3,7 @@
  */
 
 import {distance_squared_from_point} from "../../common/mat4.js";
+import {Material} from "../../common/material.js";
 import {
     GL_ARRAY_BUFFER,
     GL_BLEND,
@@ -48,9 +49,9 @@ export function sys_render_forward(game: Game, delta: number) {
 }
 
 function render_all(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
-    // Keep track of the current material to minimize switching.
-    let current_material = null;
-    let current_front_face = null;
+    // Keep track of the current state to minimize switching.
+    let current_material: Material<unknown> | null = null;
+    let current_front_face: GLenum | null = null;
 
     // Transparent objects to be sorted by distance to camera and rendered later.
     let transparent_entities: Array<Entity> = [];
