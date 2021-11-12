@@ -2,13 +2,13 @@
  * @module systems/sys_render_forward
  */
 
+import {distance_squared_from_point} from "../../common/mat4.js";
 import {Material} from "../../common/material.js";
 import {
     GL_ARRAY_BUFFER,
     GL_BLEND,
     GL_COLOR_BUFFER_BIT,
     GL_DEPTH_BUFFER_BIT,
-    GL_DEPTH_TEST,
     GL_FLOAT,
     GL_FRAMEBUFFER,
     GL_TEXTURE0,
@@ -18,6 +18,7 @@ import {
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
+import {Entity} from "../../common/world.js";
 import {
     ColoredShadedLayout,
     ColoredUnlitLayout,
@@ -63,18 +64,7 @@ function render_forward(game: Game, camera: CameraForward) {
     game.Gl.clearColor(...camera.ClearColor);
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // First render all opaque objects.
-    render_phase(game, camera, RenderPhase.Opaque);
-
-    // Then render all transparent objects, assuming they're in front of the
-    // opaque ones, and already sorted from back to front. Neither of these is
-    // usually true; if you require more correct transparency, don't disable
-    // GL_DEPTH_TEST and sort the transparent objects yourself.
-    game.Gl.disable(GL_DEPTH_TEST);
-    game.Gl.enable(GL_BLEND);
-    render_phase(game, camera, RenderPhase.Transparent);
-    game.Gl.disable(GL_BLEND);
-    game.Gl.enable(GL_DEPTH_TEST);
+    render_all(game, camera);
 }
 
 function render_framebuffer(game: Game, camera: CameraFramebuffer) {
@@ -83,33 +73,26 @@ function render_framebuffer(game: Game, camera: CameraFramebuffer) {
     game.Gl.clearColor(...camera.ClearColor);
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // First render all opaque objects.
-    render_phase(game, camera, RenderPhase.Opaque, camera.Target.RenderTexture);
-
-    // Then render all transparent objects (see above).
-    game.Gl.disable(GL_DEPTH_TEST);
-    game.Gl.enable(GL_BLEND);
-    render_phase(game, camera, RenderPhase.Transparent, camera.Target.RenderTexture);
-    game.Gl.disable(GL_BLEND);
-    game.Gl.enable(GL_DEPTH_TEST);
+    render_all(game, camera, camera.Target.RenderTexture);
 }
 
-function render_phase(
-    game: Game,
-    eye: CameraEye,
-    phase: RenderPhase,
-    current_target?: WebGLTexture
-) {
+function render_all(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
     // Keep track of the current material to minimize switching.
     let current_material = null;
     let current_front_face = null;
 
-    for (let i = 0; i < game.World.Signature.length; i++) {
-        if ((game.World.Signature[i] & QUERY) === QUERY) {
-            let transform = game.World.Transform[i];
-            let render = game.World.Render[i];
+    // Transparent objects to be sorted by distance to camera and rendered later.
+    let transparent_entities: Array<Entity> = [];
 
-            if (render.Phase !== phase) {
+    // First render opaque objects.
+    for (let ent = 0; ent < game.World.Signature.length; ent++) {
+        if ((game.World.Signature[ent] & QUERY) === QUERY) {
+            let transform = game.World.Transform[ent];
+            let render = game.World.Render[ent];
+
+            if (render.Phase === RenderPhase.Transparent) {
+                // Store transparent objects in a separate array to render them later.
+                transparent_entities.push(ent);
                 continue;
             }
 
@@ -172,6 +155,85 @@ function render_phase(
             }
         }
     }
+
+    // Sort transparent objects by distance to camera, from back to front, to
+    // enforce overdraw and blend them in the correct order.
+    transparent_entities.sort((a, b) => {
+        let transform_a = game.World.Transform[a];
+        let transform_b = game.World.Transform[b];
+        return (
+            distance_squared_from_point(transform_a.World, eye.Position) -
+            distance_squared_from_point(transform_b.World, eye.Position)
+        );
+    });
+
+    game.Gl.enable(GL_BLEND);
+
+    for (let i = 0; i < transparent_entities.length; i++) {
+        let ent = transparent_entities[i];
+        let transform = game.World.Transform[ent];
+        let render = game.World.Render[ent];
+
+        if (render.Material !== current_material) {
+            current_material = render.Material;
+            switch (render.Kind) {
+                case RenderKind.ColoredUnlit:
+                    use_colored_unlit(game, render.Material, eye);
+                    break;
+                case RenderKind.ColoredShaded:
+                    use_colored_shaded(game, render.Material, eye);
+                    break;
+                case RenderKind.TexturedUnlit:
+                    use_textured_unlit(game, render.Material, eye);
+                    break;
+                case RenderKind.TexturedShaded:
+                    use_textured_shaded(game, render.Material, eye);
+                    break;
+                case RenderKind.Vertices:
+                    use_vertices(game, render.Material, eye);
+                    break;
+                case RenderKind.MappedShaded:
+                    use_mapped(game, render.Material, eye);
+                    break;
+            }
+        }
+
+        if (render.FrontFace !== current_front_face) {
+            current_front_face = render.FrontFace;
+            game.Gl.frontFace(render.FrontFace);
+        }
+
+        switch (render.Kind) {
+            case RenderKind.ColoredUnlit:
+                draw_colored_unlit(game, transform, render);
+                break;
+            case RenderKind.ColoredShaded:
+                draw_colored_shaded(game, transform, render);
+                break;
+            case RenderKind.TexturedUnlit:
+                // Prevent feedback loop between the active render target
+                // and the texture being rendered.
+                if (render.Texture !== current_target) {
+                    draw_textured_unlit(game, transform, render);
+                }
+                break;
+            case RenderKind.TexturedShaded:
+                // Prevent feedback loop between the active render target
+                // and the texture being rendered.
+                if (render.Texture !== current_target) {
+                    draw_textured_shaded(game, transform, render);
+                }
+                break;
+            case RenderKind.Vertices:
+                draw_vertices(game, transform, render);
+                break;
+            case RenderKind.MappedShaded:
+                draw_mapped(game, transform, render);
+                break;
+        }
+    }
+
+    game.Gl.disable(GL_BLEND);
 }
 
 function use_colored_unlit(game: Game, material: Material<ColoredUnlitLayout>, eye: CameraEye) {
