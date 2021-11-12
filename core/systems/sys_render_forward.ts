@@ -64,7 +64,7 @@ function render_forward(game: Game, camera: CameraForward) {
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // First render all opaque objects.
-    render(game, camera, RenderPhase.Opaque);
+    render_phase(game, camera, RenderPhase.Opaque);
 
     // Then render all transparent objects, assuming they're in front of the
     // opaque ones, and already sorted from back to front. Neither of these is
@@ -72,7 +72,7 @@ function render_forward(game: Game, camera: CameraForward) {
     // GL_DEPTH_TEST and sort the transparent objects yourself.
     game.Gl.disable(GL_DEPTH_TEST);
     game.Gl.enable(GL_BLEND);
-    render(game, camera, RenderPhase.Transparent);
+    render_phase(game, camera, RenderPhase.Transparent);
     game.Gl.disable(GL_BLEND);
     game.Gl.enable(GL_DEPTH_TEST);
 }
@@ -84,17 +84,22 @@ function render_framebuffer(game: Game, camera: CameraFramebuffer) {
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // First render all opaque objects.
-    render(game, camera, RenderPhase.Opaque);
+    render_phase(game, camera, RenderPhase.Opaque, camera.Target.RenderTexture);
 
     // Then render all transparent objects (see above).
     game.Gl.disable(GL_DEPTH_TEST);
     game.Gl.enable(GL_BLEND);
-    render(game, camera, RenderPhase.Transparent);
+    render_phase(game, camera, RenderPhase.Transparent, camera.Target.RenderTexture);
     game.Gl.disable(GL_BLEND);
     game.Gl.enable(GL_DEPTH_TEST);
 }
 
-function render(game: Game, eye: CameraEye, phase: RenderPhase, current_target?: WebGLTexture) {
+function render_phase(
+    game: Game,
+    eye: CameraEye,
+    phase: RenderPhase,
+    current_target?: WebGLTexture
+) {
     // Keep track of the current material to minimize switching.
     let current_material = null;
     let current_front_face = null;
