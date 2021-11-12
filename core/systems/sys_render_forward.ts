@@ -87,8 +87,8 @@ function render_all(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
         let transform_a = game.World.Transform[a];
         let transform_b = game.World.Transform[b];
         return (
-            distance_squared_from_point(transform_a.World, eye.Position) -
-            distance_squared_from_point(transform_b.World, eye.Position)
+            distance_squared_from_point(transform_b.World, eye.Position) -
+            distance_squared_from_point(transform_a.World, eye.Position)
         );
     });
 
