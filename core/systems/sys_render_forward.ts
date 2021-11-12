@@ -78,7 +78,6 @@ function render_all(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
     // First render opaque objects.
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
         if ((game.World.Signature[ent] & QUERY) === QUERY) {
-            let transform = game.World.Transform[ent];
             let render = game.World.Render[ent];
 
             if (render.Phase === RenderPhase.Transparent) {
@@ -89,7 +88,7 @@ function render_all(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
 
             if (render.Material !== current_material) {
                 current_material = render.Material;
-                use(game, render, eye);
+                use_material(game, render, eye);
             }
 
             if (render.FrontFace !== current_front_face) {
@@ -97,7 +96,7 @@ function render_all(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
                 game.Gl.frontFace(render.FrontFace);
             }
 
-            draw(game, transform, render, current_target);
+            draw_entity(game, ent, current_target);
         }
     }
 
@@ -116,12 +115,11 @@ function render_all(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
 
     for (let i = 0; i < transparent_entities.length; i++) {
         let ent = transparent_entities[i];
-        let transform = game.World.Transform[ent];
         let render = game.World.Render[ent];
 
         if (render.Material !== current_material) {
             current_material = render.Material;
-            use(game, render, eye);
+            use_material(game, render, eye);
         }
 
         if (render.FrontFace !== current_front_face) {
@@ -129,13 +127,13 @@ function render_all(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
             game.Gl.frontFace(render.FrontFace);
         }
 
-        draw(game, transform, render, current_target);
+        draw_entity(game, ent, current_target);
     }
 
     game.Gl.disable(GL_BLEND);
 }
 
-function use(game: Game, render: Render, eye: CameraEye) {
+function use_material(game: Game, render: Render, eye: CameraEye) {
     switch (render.Kind) {
         case RenderKind.ColoredUnlit:
             use_colored_unlit(game, render.Material, eye);
@@ -158,7 +156,10 @@ function use(game: Game, render: Render, eye: CameraEye) {
     }
 }
 
-function draw(game: Game, transform: Transform, render: Render, current_target?: WebGLTexture) {
+function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) {
+    let transform = game.World.Transform[entity];
+    let render = game.World.Render[entity];
+
     switch (render.Kind) {
         case RenderKind.ColoredUnlit:
             draw_colored_unlit(game, transform, render);
