@@ -27,8 +27,9 @@ import {
     TexturedShadedLayout,
     TexturedUnlitLayout,
 } from "../../materials/layout.js";
-import {CameraEye, CameraForward, CameraFramebuffer, CameraKind} from "../components/com_camera.js";
+import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {
+    Render,
     RenderColoredShaded,
     RenderColoredUnlit,
     RenderKind,
@@ -49,31 +50,21 @@ export function sys_render_forward(game: Game, delta: number) {
         let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
             case CameraKind.Forward:
-                render_forward(game, camera);
+                game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
+                game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
+                game.Gl.clearColor(...camera.ClearColor);
+                game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                render_all(game, camera);
                 break;
             case CameraKind.Framebuffer:
-                render_framebuffer(game, camera);
+                game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target.Framebuffer);
+                game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
+                game.Gl.clearColor(...camera.ClearColor);
+                game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                render_all(game, camera, camera.Target.RenderTexture);
                 break;
         }
     }
-}
-
-function render_forward(game: Game, camera: CameraForward) {
-    game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
-    game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
-    game.Gl.clearColor(...camera.ClearColor);
-    game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    render_all(game, camera);
-}
-
-function render_framebuffer(game: Game, camera: CameraFramebuffer) {
-    game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target.Framebuffer);
-    game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
-    game.Gl.clearColor(...camera.ClearColor);
-    game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    render_all(game, camera, camera.Target.RenderTexture);
 }
 
 function render_all(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
@@ -98,26 +89,7 @@ function render_all(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
 
             if (render.Material !== current_material) {
                 current_material = render.Material;
-                switch (render.Kind) {
-                    case RenderKind.ColoredUnlit:
-                        use_colored_unlit(game, render.Material, eye);
-                        break;
-                    case RenderKind.ColoredShaded:
-                        use_colored_shaded(game, render.Material, eye);
-                        break;
-                    case RenderKind.TexturedUnlit:
-                        use_textured_unlit(game, render.Material, eye);
-                        break;
-                    case RenderKind.TexturedShaded:
-                        use_textured_shaded(game, render.Material, eye);
-                        break;
-                    case RenderKind.Vertices:
-                        use_vertices(game, render.Material, eye);
-                        break;
-                    case RenderKind.MappedShaded:
-                        use_mapped(game, render.Material, eye);
-                        break;
-                }
+                use(game, render, eye);
             }
 
             if (render.FrontFace !== current_front_face) {
@@ -125,34 +97,7 @@ function render_all(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
                 game.Gl.frontFace(render.FrontFace);
             }
 
-            switch (render.Kind) {
-                case RenderKind.ColoredUnlit:
-                    draw_colored_unlit(game, transform, render);
-                    break;
-                case RenderKind.ColoredShaded:
-                    draw_colored_shaded(game, transform, render);
-                    break;
-                case RenderKind.TexturedUnlit:
-                    // Prevent feedback loop between the active render target
-                    // and the texture being rendered.
-                    if (render.Texture !== current_target) {
-                        draw_textured_unlit(game, transform, render);
-                    }
-                    break;
-                case RenderKind.TexturedShaded:
-                    // Prevent feedback loop between the active render target
-                    // and the texture being rendered.
-                    if (render.Texture !== current_target) {
-                        draw_textured_shaded(game, transform, render);
-                    }
-                    break;
-                case RenderKind.Vertices:
-                    draw_vertices(game, transform, render);
-                    break;
-                case RenderKind.MappedShaded:
-                    draw_mapped(game, transform, render);
-                    break;
-            }
+            draw(game, transform, render, current_target);
         }
     }
 
@@ -176,26 +121,7 @@ function render_all(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
 
         if (render.Material !== current_material) {
             current_material = render.Material;
-            switch (render.Kind) {
-                case RenderKind.ColoredUnlit:
-                    use_colored_unlit(game, render.Material, eye);
-                    break;
-                case RenderKind.ColoredShaded:
-                    use_colored_shaded(game, render.Material, eye);
-                    break;
-                case RenderKind.TexturedUnlit:
-                    use_textured_unlit(game, render.Material, eye);
-                    break;
-                case RenderKind.TexturedShaded:
-                    use_textured_shaded(game, render.Material, eye);
-                    break;
-                case RenderKind.Vertices:
-                    use_vertices(game, render.Material, eye);
-                    break;
-                case RenderKind.MappedShaded:
-                    use_mapped(game, render.Material, eye);
-                    break;
-            }
+            use(game, render, eye);
         }
 
         if (render.FrontFace !== current_front_face) {
@@ -203,37 +129,64 @@ function render_all(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
             game.Gl.frontFace(render.FrontFace);
         }
 
-        switch (render.Kind) {
-            case RenderKind.ColoredUnlit:
-                draw_colored_unlit(game, transform, render);
-                break;
-            case RenderKind.ColoredShaded:
-                draw_colored_shaded(game, transform, render);
-                break;
-            case RenderKind.TexturedUnlit:
-                // Prevent feedback loop between the active render target
-                // and the texture being rendered.
-                if (render.Texture !== current_target) {
-                    draw_textured_unlit(game, transform, render);
-                }
-                break;
-            case RenderKind.TexturedShaded:
-                // Prevent feedback loop between the active render target
-                // and the texture being rendered.
-                if (render.Texture !== current_target) {
-                    draw_textured_shaded(game, transform, render);
-                }
-                break;
-            case RenderKind.Vertices:
-                draw_vertices(game, transform, render);
-                break;
-            case RenderKind.MappedShaded:
-                draw_mapped(game, transform, render);
-                break;
-        }
+        draw(game, transform, render, current_target);
     }
 
     game.Gl.disable(GL_BLEND);
+}
+
+function use(game: Game, render: Render, eye: CameraEye) {
+    switch (render.Kind) {
+        case RenderKind.ColoredUnlit:
+            use_colored_unlit(game, render.Material, eye);
+            break;
+        case RenderKind.ColoredShaded:
+            use_colored_shaded(game, render.Material, eye);
+            break;
+        case RenderKind.TexturedUnlit:
+            use_textured_unlit(game, render.Material, eye);
+            break;
+        case RenderKind.TexturedShaded:
+            use_textured_shaded(game, render.Material, eye);
+            break;
+        case RenderKind.Vertices:
+            use_vertices(game, render.Material, eye);
+            break;
+        case RenderKind.MappedShaded:
+            use_mapped(game, render.Material, eye);
+            break;
+    }
+}
+
+function draw(game: Game, transform: Transform, render: Render, current_target?: WebGLTexture) {
+    switch (render.Kind) {
+        case RenderKind.ColoredUnlit:
+            draw_colored_unlit(game, transform, render);
+            break;
+        case RenderKind.ColoredShaded:
+            draw_colored_shaded(game, transform, render);
+            break;
+        case RenderKind.TexturedUnlit:
+            // Prevent feedback loop between the active render target
+            // and the texture being rendered.
+            if (render.Texture !== current_target) {
+                draw_textured_unlit(game, transform, render);
+            }
+            break;
+        case RenderKind.TexturedShaded:
+            // Prevent feedback loop between the active render target
+            // and the texture being rendered.
+            if (render.Texture !== current_target) {
+                draw_textured_shaded(game, transform, render);
+            }
+            break;
+        case RenderKind.Vertices:
+            draw_vertices(game, transform, render);
+            break;
+        case RenderKind.MappedShaded:
+            draw_mapped(game, transform, render);
+            break;
+    }
 }
 
 function use_colored_unlit(game: Game, material: Material<ColoredUnlitLayout>, eye: CameraEye) {
