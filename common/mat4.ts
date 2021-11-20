@@ -420,3 +420,17 @@ export function target_to(out: Mat4, eye: Vec3, target: Vec3, up: Vec3) {
     out[15] = 1;
     return out;
 }
+
+export function distance_squared(a: Mat4, b: Mat4) {
+    let x = b[12] - a[12];
+    let y = b[13] - a[13];
+    let z = b[14] - a[14];
+    return x * x + y * y + z * z;
+}
+
+export function distance_squared_from_point(m: Mat4, v: Vec3) {
+    let x = m[12] - v[0];
+    let y = m[13] - v[1];
+    let z = m[14] - v[2];
+    return x * x + y * y + z * z;
+}

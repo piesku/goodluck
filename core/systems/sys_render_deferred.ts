@@ -2,17 +2,14 @@
  * @module systems/sys_render_deferred
  */
 
-import {Material} from "../../common/material.js";
 import {
     GL_COLOR_BUFFER_BIT,
     GL_DEPTH_BUFFER_BIT,
     GL_FRAMEBUFFER,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {ColoredShadedLayout} from "../../materials/layout.js";
 import {CameraDeferred, CameraEye, CameraKind} from "../components/com_camera.js";
-import {RenderColoredDeferred, RenderKind} from "../components/com_render.js";
-import {Transform} from "../components/com_transform.js";
+import {RenderKind} from "../components/com_render.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -51,7 +48,8 @@ function render(game: Game, eye: CameraEye) {
                 current_material = render.Material;
                 switch (render.Kind) {
                     case RenderKind.ColoredDeferred:
-                        use_colored_deferred(game, render.Material, eye);
+                        game.Gl.useProgram(render.Material.Program);
+                        game.Gl.uniformMatrix4fv(render.Material.Locations.Pv, false, eye.Pv);
                         break;
                 }
             }
@@ -63,26 +61,29 @@ function render(game: Game, eye: CameraEye) {
 
             switch (render.Kind) {
                 case RenderKind.ColoredDeferred:
-                    draw_colored_deferred(game, transform, render);
+                    game.Gl.uniformMatrix4fv(
+                        render.Material.Locations.World,
+                        false,
+                        transform.World
+                    );
+                    game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
+                    game.Gl.uniform4fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
+                    game.Gl.uniform3fv(
+                        render.Material.Locations.SpecularColor,
+                        render.SpecularColor
+                    );
+                    game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
+
+                    game.Gl.bindVertexArray(render.Vao);
+                    game.Gl.drawElements(
+                        render.Material.Mode,
+                        render.Mesh.IndexCount,
+                        GL_UNSIGNED_SHORT,
+                        0
+                    );
+                    game.Gl.bindVertexArray(null);
                     break;
             }
         }
     }
-}
-
-function use_colored_deferred(game: Game, material: Material<ColoredShadedLayout>, eye: CameraEye) {
-    game.Gl.useProgram(material.Program);
-    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
-}
-
-function draw_colored_deferred(game: Game, transform: Transform, render: RenderColoredDeferred) {
-    game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
-    game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
-    game.Gl.uniform4fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
-    game.Gl.uniform3fv(render.Material.Locations.SpecularColor, render.SpecularColor);
-    game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
-
-    game.Gl.bindVertexArray(render.Vao);
-    game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
-    game.Gl.bindVertexArray(null);
 }
