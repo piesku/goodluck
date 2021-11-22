@@ -26,7 +26,6 @@ export class Game extends Game3D {
 
     InstanceData = new Float32Array(this.World.Capacity * FLOATS_PER_INSTANCE);
     InstanceBuffer = this.Gl.createBuffer()!;
-    Vao = this.Gl.createVertexArray()!;
 
     Cameras: Array<Entity> = [];
 
@@ -34,7 +33,6 @@ export class Game extends Game3D {
         super();
 
         let material = this.MaterialInstanced;
-        this.Gl.bindVertexArray(this.Vao);
 
         // Vertex positions and texture coordinates.
         let vertex_buf = this.Gl.createBuffer()!;
@@ -99,18 +97,13 @@ export class Game extends Game3D {
             BYTES_PER_INSTANCE,
             4 * 8
         );
-
-        this.Gl.bindVertexArray(null);
     }
 
     override FrameUpdate(delta: number) {
-        if (true) {
-            sys_control_player(this, delta);
-            sys_control_always2d(this, delta);
-            sys_move2d(this, delta);
-
-            sys_physics2d_integrate(this, delta);
-        }
+        sys_control_player(this, delta);
+        sys_control_always2d(this, delta);
+        sys_move2d(this, delta);
+        sys_physics2d_integrate(this, delta);
         sys_transform2d(this, delta);
         sys_transform(this, delta);
         sys_resize(this, delta);

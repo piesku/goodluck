@@ -48,11 +48,9 @@ function render_forward(game: Game, camera: CameraForward) {
     game.Gl.bindTexture(GL_TEXTURE_2D, game.Textures["checker1.png"]);
     game.Gl.uniform1i(material.Locations.SpriteSheet, 0);
 
-    game.Gl.bindVertexArray(game.Vao);
     game.Gl.bindBuffer(GL_ARRAY_BUFFER, game.InstanceBuffer);
     // Creating a new buffer each frame seems to be ~25% faster than bufferSubData.
     game.Gl.bufferData(GL_ARRAY_BUFFER, game.InstanceData, GL_STREAM_DRAW);
 
     game.Gl.drawArraysInstanced(material.Mode, 0, 4, game.World.Signature.length);
-    game.Gl.bindVertexArray(null);
 }
