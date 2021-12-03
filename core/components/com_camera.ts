@@ -58,6 +58,32 @@ export function camera_forward_perspective(
     };
 }
 
+export function camera_forward_ortho(
+    radius: number,
+    near: number,
+    far: number,
+    clear_color: Vec4 = [0.9, 0.9, 0.9, 1]
+) {
+    return (game: Game, entity: Entity) => {
+        game.World.Signature[entity] |= Has.Camera;
+        game.World.Camera[entity] = {
+            Kind: CameraKind.Forward,
+            Projection: {
+                Kind: ProjectionKind.Ortho,
+                Radius: radius,
+                Near: near,
+                Far: far,
+                Projection: create(),
+                Inverse: create(),
+            },
+            View: create(),
+            Pv: create(),
+            Position: [0, 0, 0],
+            ClearColor: clear_color,
+        };
+    };
+}
+
 export interface CameraFramebuffer extends CameraEye {
     Kind: CameraKind.Framebuffer;
     Target: ForwardTarget;

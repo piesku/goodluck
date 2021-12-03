@@ -3,14 +3,13 @@
  */
 
 import {copy, get_translation, multiply} from "../../common/mat4.js";
-import {ProjectionKind, resize_ortho, resize_perspective} from "../../common/projection.js";
-import {CameraKind} from "../components/com_camera.js";
+import {ProjectionKind, resize_ortho_keeping_unit_size} from "../../common/projection.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Camera;
 
-export function sys_camera(game: Game, delta: number) {
+export function sys_camera2d(game: Game, delta: number) {
     game.Cameras = [];
     for (let i = 0; i < game.World.Signature.length; i++) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
@@ -19,17 +18,10 @@ export function sys_camera(game: Game, delta: number) {
             let projection = camera.Projection;
 
             if (game.ViewportResized) {
-                let aspect =
-                    camera.Kind === CameraKind.Forward
-                        ? game.ViewportWidth / game.ViewportHeight
-                        : camera.Target.Width / camera.Target.Height;
+                let aspect = game.ViewportWidth / game.ViewportHeight;
                 switch (projection.Kind) {
-                    case ProjectionKind.Perspective: {
-                        resize_perspective(projection, aspect);
-                        break;
-                    }
                     case ProjectionKind.Ortho:
-                        resize_ortho(projection, aspect);
+                        resize_ortho_keeping_unit_size(projection, aspect, game.ViewportHeight, 16);
                         break;
                 }
             }
