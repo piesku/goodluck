@@ -33,11 +33,11 @@ function update(game: Game, entity: Entity) {
         let move = game.World.Move[entity];
         if (Math.abs(game.InputDelta["pad0_axis_1"]) > DEAD_ZONE) {
             // Strafe movement.
-            move.Directions.push([-game.InputDelta["pad0_axis_1"], 0, 0]);
+            move.Direction[0] -= game.InputDelta["pad0_axis_1"];
         }
         if (Math.abs(game.InputDelta["pad0_axis_2"]) > DEAD_ZONE) {
             // Forward movement.
-            move.Directions.push([0, 0, -game.InputDelta["pad0_axis_2"]]);
+            move.Direction[2] -= game.InputDelta["pad0_axis_2"];
         }
     }
 

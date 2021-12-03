@@ -20,19 +20,19 @@ function update(game: Game, entity: Entity) {
         let move = game.World.Move[entity];
         if (game.InputState["KeyW"]) {
             // Move forward
-            move.Directions.push([0, 0, 1]);
+            move.Direction[2] += 1;
         }
         if (game.InputState["KeyA"]) {
             // Strafe left
-            move.Directions.push([1, 0, 0]);
+            move.Direction[0] += 1;
         }
         if (game.InputState["KeyS"]) {
             // Move backward
-            move.Directions.push([0, 0, -1]);
+            move.Direction[2] -= 1;
         }
         if (game.InputState["KeyD"]) {
             // Strafe right
-            move.Directions.push([-1, 0, 0]);
+            move.Direction[0] -= 1;
         }
     }
 

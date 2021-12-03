@@ -1,7 +1,7 @@
 import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {path_find} from "../../common/pathfind.js";
-import {distance_squared, normalize, transform_position} from "../../common/vec3.js";
+import {add, distance_squared, normalize, transform_position} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -65,7 +65,7 @@ function update(game: Game, entity: Entity) {
         normalize(position, position);
 
         let move = game.World.Move[entity];
-        move.Directions.push(position);
+        add(move.Direction, move.Direction, position);
 
         if (position[0] < 0) {
             // The target is on the right.

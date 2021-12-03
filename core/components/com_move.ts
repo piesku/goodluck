@@ -12,8 +12,8 @@ export interface Move {
     MoveSpeed: number;
     /** Rotation speed, in radians per second. */
     RotationSpeed: number;
-    /** Movement directions in self space, normalized. */
-    Directions: Array<Vec3>;
+    /** Movement in self space, normalized. */
+    Direction: Vec3;
     /** Rotations applied in the local space (pre-multiplied). */
     LocalRotations: Array<Quat>;
     /** Rotations applied in the self space (post-multiplied). */
@@ -32,7 +32,7 @@ export function move(move_speed: number, rotation_speed: number) {
         game.World.Move[entity] = {
             MoveSpeed: move_speed,
             RotationSpeed: rotation_speed,
-            Directions: [],
+            Direction: [0, 0, 0],
             LocalRotations: [],
             SelfRotations: [],
         };

@@ -26,12 +26,12 @@ function update(game: Game, entity: Entity) {
     if (control.Move && game.InputDistance["Mouse0"] > 10) {
         if (game.InputDelta["MouseX"]) {
             let amount = game.InputDelta["MouseX"] * MOUSE_SENSITIVITY;
-            move.Directions.push([amount, 0, 0]);
+            move.Direction[0] += amount;
         }
 
         if (game.InputDelta["MouseY"]) {
             let amount = game.InputDelta["MouseY"] * MOUSE_SENSITIVITY;
-            move.Directions.push([0, 0, amount]);
+            move.Direction[2] += amount;
         }
     }
 

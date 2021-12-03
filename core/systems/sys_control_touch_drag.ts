@@ -20,12 +20,12 @@ function update(game: Game, entity: Entity) {
     if (control.Move && game.InputDistance["Touch0"] > 10 && !game.InputState["Touch1"]) {
         if (game.InputDelta["Touch0X"]) {
             let amount = game.InputDelta["Touch0X"] * TOUCH_SENSITIVITY;
-            move.Directions.push([amount, 0, 0]);
+            move.Direction[0] += amount;
         }
 
         if (game.InputDelta["Touch0Y"]) {
             let amount = game.InputDelta["Touch0Y"] * TOUCH_SENSITIVITY;
-            move.Directions.push([0, 0, amount]);
+            move.Direction[2] += amount;
         }
     }
 }

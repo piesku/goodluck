@@ -28,7 +28,7 @@ function update_camera_dolly(game: Game, entity: Entity) {
     game.CameraDolly = transform.Translation[1] / INITIAL_CAMERA_Y;
 
     if (game.InputDelta["WheelY"]) {
-        move.Directions.push([0, 0, game.InputDelta["WheelY"]]);
+        move.Direction[2] += game.InputDelta["WheelY"];
     }
 
     if (game.InputState["Touch0"] && game.InputState["Touch1"]) {
@@ -46,7 +46,7 @@ function update_camera_dolly(game: Game, entity: Entity) {
                 game.InputState["Touch1Y"] -
                 game.InputDelta["Touch1Y"]
         );
-        move.Directions.push([0, 0, hypot_curr - hypot_last]);
+        move.Direction[2] += hypot_curr - hypot_last;
     }
 }
 

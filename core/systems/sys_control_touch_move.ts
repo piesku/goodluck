@@ -42,11 +42,11 @@ function update(game: Game, entity: Entity) {
 
         if (Math.abs(amount_x) > DEAD_ZONE) {
             // Strafe movement.
-            move.Directions.push([clamp(-1, 1, -amount_x), 0, 0]);
+            move.Direction[0] += clamp(-1, 1, -amount_x);
         }
         if (Math.abs(amount_y) > DEAD_ZONE) {
             // Forward movement.
-            move.Directions.push([0, 0, clamp(-1, 1, -amount_y)]);
+            move.Direction[2] += clamp(-1, 1, -amount_y);
         }
     }
 
