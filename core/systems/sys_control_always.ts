@@ -2,7 +2,7 @@
  * @module systems/sys_control_always
  */
 
-import {Quat} from "../../common/math.js";
+import {multiply} from "../../common/quat.js";
 import {add} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
@@ -27,6 +27,6 @@ function update(game: Game, entity: Entity) {
     }
 
     if (control.Rotation) {
-        move.LocalRotations.push(control.Rotation.slice() as Quat);
+        multiply(move.LocalRotation, move.LocalRotation, control.Rotation);
     }
 }

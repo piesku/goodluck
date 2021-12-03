@@ -3,8 +3,15 @@
  */
 
 import {Quat} from "../../common/math.js";
-import {multiply, slerp} from "../../common/quat.js";
-import {add, length, normalize, scale, set, transform_direction} from "../../common/vec3.js";
+import {multiply, set as quat_set, slerp} from "../../common/quat.js";
+import {
+    add,
+    length,
+    normalize,
+    scale,
+    set as vec3_set,
+    transform_direction,
+} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -43,34 +50,28 @@ function update(game: Game, entity: Entity, delta: number) {
         scale(move.Direction, move.Direction, amount * move.MoveSpeed * delta);
         add(transform.Translation, transform.Translation, move.Direction);
         transform.Dirty = true;
-        set(move.Direction, 0, 0, 0);
+        vec3_set(move.Direction, 0, 0, 0);
     }
 
     // Rotations applied relative to the local space (parent's or world).
-    if (move.LocalRotations.length) {
-        let rotation = move.LocalRotations.reduce(multiply_rotations);
+    if (move.LocalRotation.length) {
         let t = Math.min(1, (move.RotationSpeed / Math.PI) * delta);
-        slerp(rotation, NO_ROTATION, rotation, t);
+        slerp(move.LocalRotation, NO_ROTATION, move.LocalRotation, t);
 
         // Pre-multiply.
-        multiply(transform.Rotation, rotation, transform.Rotation);
+        multiply(transform.Rotation, move.LocalRotation, transform.Rotation);
         transform.Dirty = true;
-        move.LocalRotations = [];
+        quat_set(move.LocalRotation, 0, 0, 0, 1);
     }
 
     // Rotations applied relative to the self space.
-    if (move.SelfRotations.length) {
-        let rotation = move.SelfRotations.reduce(multiply_rotations);
+    if (move.SelfRotation.length) {
         let t = Math.min(1, (move.RotationSpeed / Math.PI) * delta);
-        slerp(rotation, NO_ROTATION, rotation, t);
+        slerp(move.SelfRotation, NO_ROTATION, move.SelfRotation, t);
 
         // Post-multiply.
-        multiply(transform.Rotation, transform.Rotation, rotation);
+        multiply(transform.Rotation, transform.Rotation, move.SelfRotation);
         transform.Dirty = true;
-        move.SelfRotations = [];
+        quat_set(move.SelfRotation, 0, 0, 0, 1);
     }
-}
-
-function multiply_rotations(acc: Quat, cur: Quat) {
-    return multiply(acc, acc, cur);
 }

@@ -1,6 +1,7 @@
 import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {path_find} from "../../common/pathfind.js";
+import {multiply} from "../../common/quat.js";
 import {add, distance_squared, normalize, transform_position} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
@@ -69,10 +70,10 @@ function update(game: Game, entity: Entity) {
 
         if (position[0] < 0) {
             // The target is on the right.
-            move.LocalRotations.push([0, -1, 0, 0]);
+            multiply(transform.Rotation, move.LocalRotation, [0, -1, 0, 0]);
         } else {
             // The target is on the left or directly behind.
-            move.LocalRotations.push([0, 1, 0, 0]);
+            multiply(transform.Rotation, move.LocalRotation, [0, 1, 0, 0]);
         }
     }
 }

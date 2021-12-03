@@ -14,10 +14,10 @@ export interface Move {
     RotationSpeed: number;
     /** Movement in self space, normalized. */
     Direction: Vec3;
-    /** Rotations applied in the local space (pre-multiplied). */
-    LocalRotations: Array<Quat>;
-    /** Rotations applied in the self space (post-multiplied). */
-    SelfRotations: Array<Quat>;
+    /** Rotation applied in the local space (pre-multiplied). */
+    LocalRotation: Quat;
+    /** Rotation applied in the self space (post-multiplied). */
+    SelfRotation: Quat;
 }
 
 /**
@@ -33,8 +33,8 @@ export function move(move_speed: number, rotation_speed: number) {
             MoveSpeed: move_speed,
             RotationSpeed: rotation_speed,
             Direction: [0, 0, 0],
-            LocalRotations: [],
-            SelfRotations: [],
+            LocalRotation: [0, 0, 0, 1],
+            SelfRotation: [0, 0, 0, 1],
         };
     };
 }

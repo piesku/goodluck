@@ -1,4 +1,4 @@
-import {get_pitch} from "../../common/quat.js";
+import {get_pitch, multiply} from "../../common/quat.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -42,11 +42,11 @@ function update(game: Game, entity: Entity) {
         let move = game.World.Move[entity];
         if (game.InputState["ArrowLeft"]) {
             // Look left.
-            move.LocalRotations.push([0, 1, 0, 0]);
+            multiply(move.LocalRotation, move.LocalRotation, [0, 1, 0, 0]);
         }
         if (game.InputState["ArrowRight"]) {
             // Look right.
-            move.LocalRotations.push([0, -1, 0, 0]);
+            multiply(move.LocalRotation, move.LocalRotation, [0, -1, 0, 0]);
         }
     }
 
@@ -59,11 +59,11 @@ function update(game: Game, entity: Entity) {
         let current_pitch = get_pitch(transform.Rotation);
         if (game.InputState["ArrowUp"] && current_pitch > control.MinPitch) {
             // Look up.
-            move.SelfRotations.push([-1, 0, 0, 0]);
+            multiply(move.SelfRotation, move.SelfRotation, [-1, 0, 0, 0]);
         }
         if (game.InputState["ArrowDown"] && current_pitch < control.MaxPitch) {
             // Look down.
-            move.SelfRotations.push([1, 0, 0, 0]);
+            multiply(move.SelfRotation, move.SelfRotation, [1, 0, 0, 0]);
         }
     }
 }
