@@ -31,7 +31,7 @@ function update(game: Game, entity: Entity, delta: number) {
     let transform = game.World.Transform[entity];
     let move = game.World.Move[entity];
 
-    if (move.Direction.length) {
+    if (move.Direction[0] !== 0 || move.Direction[1] !== 0 || move.Direction[2] !== 0) {
         // Directions are not normalized to allow them to express slower
         // movement from a gamepad input. They can also cancel each other out.
         // They may not, however, intensify one another; hence max amount is 1.
@@ -54,7 +54,7 @@ function update(game: Game, entity: Entity, delta: number) {
     }
 
     // Rotations applied relative to the local space (parent's or world).
-    if (move.LocalRotation.length) {
+    if (move.LocalRotation[3] < 1) {
         let t = Math.min(1, (move.RotationSpeed / Math.PI) * delta);
         slerp(move.LocalRotation, NO_ROTATION, move.LocalRotation, t);
 
@@ -65,7 +65,7 @@ function update(game: Game, entity: Entity, delta: number) {
     }
 
     // Rotations applied relative to the self space.
-    if (move.SelfRotation.length) {
+    if (move.SelfRotation[3] < 1) {
         let t = Math.min(1, (move.RotationSpeed / Math.PI) * delta);
         slerp(move.SelfRotation, NO_ROTATION, move.SelfRotation, t);
 
