@@ -13,26 +13,22 @@ export interface Children {
 
 export function children(...blueprints: Array<Blueprint<Game>>) {
     return (game: Game, entity: Entity) => {
-        let child_entities = [];
+        if (game.World.Signature[entity] & Has.Children) {
+            // When called on an entity which already has children, this mixin
+            // does not replace the children array. Thus, the mixin can be
+            // safely called multiple times on the same entity.
+        } else {
+            game.World.Signature[entity] |= Has.Children;
+            game.World.Children[entity] = {
+                Children: [],
+            };
+        }
+
+        let child_entities = game.World.Children[entity].Children;
         for (let blueprint of blueprints) {
             let child = instantiate(game, blueprint);
             child_entities.push(child);
         }
-        game.World.Signature[entity] |= Has.Children;
-        game.World.Children[entity] = {
-            Children: child_entities,
-        };
-    };
-}
-
-/**
- * Add one more child blueprint to the entity. Must be used after children().
- */
-export function child(blueprint: Blueprint<Game>) {
-    return (game: Game, entity: Entity) => {
-        let children = game.World.Children[entity];
-        let child = instantiate(game, blueprint);
-        children.Children.push(child);
     };
 }
 
