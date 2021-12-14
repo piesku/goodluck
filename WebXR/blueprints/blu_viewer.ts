@@ -19,6 +19,7 @@ export function blueprint_viewer(game: Game) {
                 transform(),
                 control_xr(ControlXrKind.Left),
                 children([
+                    // Hand mesh; must be Children[0].
                     transform(undefined, undefined, [-1, 1, 1]),
                     render_colored_shaded(
                         game.MaterialColoredGouraud,
@@ -35,6 +36,7 @@ export function blueprint_viewer(game: Game) {
                 transform(),
                 control_xr(ControlXrKind.Right),
                 children([
+                    // Hand mesh; must be Children[0].
                     transform(),
                     render_colored_shaded(
                         game.MaterialColoredGouraud,

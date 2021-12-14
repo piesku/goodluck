@@ -10,6 +10,7 @@ export const enum ControlXrKind {
 
 export interface ControlXr {
     Kind: ControlXrKind;
+    Squeezed: boolean;
 }
 
 export function control_xr(kind: ControlXrKind) {
@@ -17,6 +18,7 @@ export function control_xr(kind: ControlXrKind) {
         game.World.Signature[entity] |= Has.ControlXr;
         game.World.ControlXr[entity] = {
             Kind: kind,
+            Squeezed: false,
         };
     };
 }

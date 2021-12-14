@@ -4,8 +4,7 @@ import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gour
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_hand} from "../meshes/hand.js";
 import {sys_camera} from "./systems/sys_camera.js";
-import {sys_control_oculus} from "./systems/sys_control_oculus.js";
-import {sys_control_pose} from "./systems/sys_control_pose.js";
+import {sys_control_xr} from "./systems/sys_control_xr.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_render_forward} from "./systems/sys_render_forward.js";
 import {sys_resize} from "./systems/sys_resize.js";
@@ -77,9 +76,21 @@ export class Game extends Game3D {
         this.Running = 0;
     }
 
+    override FrameSetup(delta: number) {
+        super.FrameSetup(delta);
+
+        if (this.XrFrame) {
+            this.XrInputs = {};
+            for (let input of this.XrFrame.session.inputSources) {
+                if (input.gripSpace) {
+                    this.XrInputs[input.handedness] = input;
+                }
+            }
+        }
+    }
+
     override FrameUpdate(delta: number) {
-        sys_control_oculus(this, delta);
-        sys_control_pose(this, delta);
+        sys_control_xr(this, delta);
         sys_transform(this, delta);
         sys_resize(this, delta);
         sys_camera(this, delta);
