@@ -129,6 +129,21 @@ export function get_pitch(quat: Quat) {
 }
 
 /**
+ * Get the yaw (rotation around the Y axis) of a quaternion, in arc degrees.
+ * @param quat Quaternion to decompose.
+ */
+export function get_yaw(quat: Quat) {
+    let x = quat[0];
+    let y = quat[1];
+    let z = quat[2];
+    let w = quat[3];
+
+    let a = 2 * (w * y + x * z);
+    let b = 1 - 2 * (x * x + y * y);
+    return Math.atan2(a, b) * RAD_TO_DEG;
+}
+
+/**
  * Compute a quaternion from an axis and an angle of rotation around the axis.
  * @param out Quaternion to write to.
  * @param axis Axis of rotation.
