@@ -24,8 +24,8 @@ let a: Vec3 = [0, 0, 0];
 
 function update(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
-    let collide = game.World.Collide[entity];
     let rigid_body = game.World.RigidBody[entity];
+    let collide = game.World.Collide[rigid_body.ColliderId];
 
     if (rigid_body.Kind === RigidKind.Dynamic) {
         rigid_body.IsAirborne = true;
