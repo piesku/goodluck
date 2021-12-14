@@ -21,6 +21,8 @@ export interface Transform {
     Scale: Vec3;
     Parent?: Entity;
     Dirty: boolean;
+    /** Ignore parent's rotation and scale? */
+    Gyroscope: boolean;
 }
 
 export function transform(
@@ -37,6 +39,26 @@ export function transform(
             Rotation: rotation,
             Scale: scale,
             Dirty: true,
+            Gyroscope: false,
+        };
+    };
+}
+
+export function transform_gyroscope(
+    translation: Vec3 = [0, 0, 0],
+    rotation: Quat = [0, 0, 0, 1],
+    scale: Vec3 = [1, 1, 1]
+) {
+    return (game: Game, entity: Entity) => {
+        game.World.Signature[entity] |= Has.Transform;
+        game.World.Transform[entity] = {
+            World: create(),
+            Self: create(),
+            Translation: translation,
+            Rotation: rotation,
+            Scale: scale,
+            Dirty: true,
+            Gyroscope: true,
         };
     };
 }

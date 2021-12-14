@@ -20,6 +20,8 @@ export interface Transform2D {
     /** Local scale relative to the parent. */
     Scale: Vec2;
     Parent?: Entity;
+    /** Ignore parent's rotation and scale? */
+    Gyroscope: boolean;
 }
 
 export function transform2d(translation: Vec2 = [0, 0], rotation: Deg = 0, scale: Vec2 = [1, 1]) {
@@ -34,6 +36,28 @@ export function transform2d(translation: Vec2 = [0, 0], rotation: Deg = 0, scale
             Translation: translation,
             Rotation: rotation,
             Scale: scale,
+            Gyroscope: false,
+        };
+    };
+}
+
+export function transform2d_gyroscope(
+    translation: Vec2 = [0, 0],
+    rotation: Deg = 0,
+    scale: Vec2 = [1, 1]
+) {
+    return (game: Game, entity: Entity) => {
+        game.World.Signature[entity] |= Has.Transform2D | Has.Dirty;
+        game.World.Transform2D[entity] = {
+            World: game.InstanceData.subarray(
+                entity * FLOATS_PER_INSTANCE,
+                entity * FLOATS_PER_INSTANCE + 6
+            ),
+            Self: create(),
+            Translation: translation,
+            Rotation: rotation,
+            Scale: scale,
+            Gyroscope: true,
         };
     };
 }

@@ -2,7 +2,8 @@
  * @module systems/sys_transform2d
  */
 
-import {from_translation, invert, multiply, rotate, scale} from "../../common/mat2d.js";
+import {compose, get_translation, invert, multiply} from "../../common/mat2d.js";
+import {Vec2} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
 import {Transform2D} from "../components/com_transform2d.js";
 import {Game} from "../game.js";
@@ -21,16 +22,21 @@ export function sys_transform2d(game: Game, delta: number) {
     }
 }
 
+const world_position: Vec2 = [0, 0];
+
 function update_transform(world: World, entity: Entity, transform: Transform2D) {
     transform.Dirty = false;
 
-    from_translation(transform.World, transform.Translation);
-    rotate(transform.World, transform.World, transform.Rotation);
-    scale(transform.World, transform.World, transform.Scale);
+    compose(transform.World, transform.Translation, transform.Rotation, transform.Scale);
 
     if (transform.Parent !== undefined) {
         let parent_transform = world.Transform2D[transform.Parent];
         multiply(transform.World, parent_transform.World, transform.World);
+
+        if (transform.Gyroscope) {
+            get_translation(world_position, transform.World);
+            compose(transform.World, world_position, transform.Rotation, transform.Scale);
+        }
     }
 
     invert(transform.Self, transform.World);

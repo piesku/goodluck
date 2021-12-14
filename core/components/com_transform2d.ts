@@ -21,6 +21,8 @@ export interface Transform2D {
     Scale: Vec2;
     Parent?: Entity;
     Dirty: boolean;
+    /** Ignore parent's rotation and scale? */
+    Gyroscope: boolean;
 }
 
 export function transform2d(translation: Vec2 = [0, 0], rotation: Rad = 0, scale: Vec2 = [1, 1]) {
@@ -33,6 +35,26 @@ export function transform2d(translation: Vec2 = [0, 0], rotation: Rad = 0, scale
             Rotation: rotation,
             Scale: scale,
             Dirty: true,
+            Gyroscope: false,
+        };
+    };
+}
+
+export function transform2d_gyroscope(
+    translation: Vec2 = [0, 0],
+    rotation: Rad = 0,
+    scale: Vec2 = [1, 1]
+) {
+    return (game: Game, entity: Entity) => {
+        game.World.Signature[entity] |= Has.Transform2D;
+        game.World.Transform2D[entity] = {
+            World: create(),
+            Self: create(),
+            Translation: translation,
+            Rotation: rotation,
+            Scale: scale,
+            Dirty: true,
+            Gyroscope: true,
         };
     };
 }
