@@ -7,17 +7,6 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Standalone 720p",
-            "runtimeArgs": [
-                // This results in video recording being 1280x720 on Windows 10.
-                "--window-size=1296,728",
-                "--app=http://localhost:1234"
-            ],
-            "webRoot": "${workspaceFolder}"
-        },
-        {
-            "type": "chrome",
-            "request": "launch",
             "name": "Chrome",
             "url": "http://localhost:1234",
             "webRoot": "${workspaceFolder}"
