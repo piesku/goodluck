@@ -83,5 +83,7 @@ function update(game: Game, entity: Entity) {
         if (!has_collision) {
             copy(rigid_body.VelocityResolved, rigid_body.VelocityIntegrated);
         }
+    } else if (rigid_body.Kind === RigidKind.Kinematic) {
+        copy(rigid_body.VelocityResolved, rigid_body.VelocityIntegrated);
     }
 }

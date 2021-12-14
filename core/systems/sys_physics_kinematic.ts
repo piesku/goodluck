@@ -20,19 +20,21 @@ export function sys_physics_kinematic(game: Game, delta: number) {
     }
 }
 
+const current_position: Vec3 = [0, 0, 0];
+const movement_delta: Vec3 = [0, 0, 0];
+
 function update(game: Game, entity: Entity, delta: number) {
     let transform = game.World.Transform[entity];
     let rigid_body = game.World.RigidBody[entity];
 
+    get_translation(current_position, transform.World);
+
     if (rigid_body.Kind === RigidKind.Kinematic) {
-        let current_position: Vec3 = [0, 0, 0];
-        get_translation(current_position, transform.World);
-        let movement: Vec3 = [0, 0, 0];
-        subtract(movement, current_position, rigid_body.LastPosition);
+        subtract(movement_delta, current_position, rigid_body.LastPosition);
 
         // Compute velocity from this frame's movement.
-        scale(rigid_body.VelocityIntegrated, movement, 1 / delta);
-
-        copy(rigid_body.LastPosition, current_position);
+        scale(rigid_body.VelocityIntegrated, movement_delta, 1 / delta);
     }
+
+    copy(rigid_body.LastPosition, current_position);
 }
