@@ -19,9 +19,11 @@ export class Game extends Game3D {
     LightDetails = new Float32Array(4 * 8);
 
     override FrameUpdate(delta: number) {
-        sys_transform(this, delta);
         sys_resize(this, delta);
         sys_camera(this, delta);
+
+        sys_transform(this, delta);
+
         sys_light(this, delta);
         sys_render_forward(this, delta);
     }

@@ -38,7 +38,7 @@ export class Game extends Game3D {
     MeshCube = mesh_cube(this.Gl);
     MeshQuad = mesh_quad(this.Gl);
 
-    Targets: {
+    override Targets: {
         Gbuffer: DeferredTarget;
         Shaded: ForwardTarget;
         Sun: DepthTarget;
@@ -63,11 +63,14 @@ export class Game extends Game3D {
     }
 
     override FrameUpdate(delta: number) {
-        sys_control_always(this, delta);
-        sys_move(this, delta);
-        sys_transform(this, delta);
         sys_resize(this, delta);
         sys_camera(this, delta);
+
+        sys_control_always(this, delta);
+
+        sys_move(this, delta);
+        sys_transform(this, delta);
+
         sys_light(this, delta);
         sys_render_depth(this, delta);
         sys_render_deferred(this, delta);

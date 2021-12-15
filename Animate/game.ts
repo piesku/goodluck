@@ -29,6 +29,10 @@ export class Game extends Game3D {
     LightDetails = new Float32Array(4 * 8);
 
     override FrameUpdate(delta: number) {
+        // Camera.
+        sys_resize(this, delta);
+        sys_camera(this, delta);
+
         // Player input.
         sys_control(this, delta);
 
@@ -39,8 +43,6 @@ export class Game extends Game3D {
         // Rendering.
         sys_audio_listener(this, delta);
         sys_audio_source(this, delta);
-        sys_resize(this, delta);
-        sys_camera(this, delta);
         sys_light(this, delta);
         sys_render_forward(this, delta);
     }

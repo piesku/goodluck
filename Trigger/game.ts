@@ -1,4 +1,4 @@
-import {GameXR} from "../common/game.js";
+import {Game3D} from "../common/game.js";
 import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
 import {mat_forward_colored_wireframe} from "../materials/mat_forward_colored_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
@@ -14,7 +14,7 @@ import {sys_transform} from "./systems/sys_transform.js";
 import {sys_trigger} from "./systems/sys_trigger.js";
 import {World} from "./world.js";
 
-export class Game extends GameXR {
+export class Game extends Game3D {
     World = new World();
 
     MaterialColoredWireframe = mat_forward_colored_wireframe(this.Gl);
@@ -26,15 +26,16 @@ export class Game extends GameXR {
     LightDetails = new Float32Array(4 * 8);
 
     override FrameUpdate(delta: number) {
+        sys_resize(this, delta);
+        sys_camera(this, delta);
+
         sys_control_always(this, delta);
+
         sys_move(this, delta);
         sys_transform(this, delta);
-
         sys_collide(this, delta);
         sys_trigger(this, delta);
 
-        sys_resize(this, delta);
-        sys_camera(this, delta);
         sys_light(this, delta);
         sys_render_forward(this, delta);
         sys_debug(this, delta);

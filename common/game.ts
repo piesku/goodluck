@@ -1,3 +1,4 @@
+import {RenderTarget} from "./framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA} from "./webgl.js";
 import {Entity, WorldImpl} from "./world.js";
 
@@ -151,8 +152,11 @@ export abstract class GameImpl {
 
         let tick = (now: number) => {
             let delta = (now - last) / 1000;
-            this.FrameSetup(delta);
+            last = now;
 
+            this.Running = requestAnimationFrame(tick);
+
+            this.FrameSetup(delta);
             accumulator += delta;
             while (accumulator >= step) {
                 accumulator -= step;
@@ -161,9 +165,6 @@ export abstract class GameImpl {
             }
             this.FrameUpdate(delta);
             this.FrameReset(delta);
-
-            last = now;
-            this.Running = requestAnimationFrame(tick);
         };
 
         this.Stop();
@@ -263,8 +264,9 @@ export abstract class Game3D extends GameImpl {
     Canvas3D = document.querySelector("#scene")! as HTMLCanvasElement;
     Gl = this.Canvas3D.getContext("webgl2")!;
 
-    Cameras: Array<Entity> = [];
     Audio = new AudioContext();
+    Cameras: Array<Entity> = [];
+    Targets: Record<string, RenderTarget> = {};
 
     constructor() {
         super();
@@ -273,6 +275,11 @@ export abstract class Game3D extends GameImpl {
         this.Gl.enable(GL_CULL_FACE);
 
         this.Gl.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    }
+
+    override FrameSetup(delta: number) {
+        super.FrameSetup(delta);
+        this.Cameras = [];
     }
 }
 
@@ -303,8 +310,17 @@ export abstract class GameXR extends Game3D {
 
         let tick = (now: number, frame?: XRFrame) => {
             let delta = (now - last) / 1000;
-            this.FrameSetup(delta);
+            last = now;
 
+            if (frame) {
+                this.XrFrame = frame;
+                this.Running = this.XrFrame.session.requestAnimationFrame(tick);
+            } else {
+                this.XrFrame = undefined;
+                this.Running = requestAnimationFrame(tick);
+            }
+
+            this.FrameSetup(delta);
             accumulator += delta;
             while (accumulator >= step) {
                 accumulator -= step;
@@ -313,15 +329,6 @@ export abstract class GameXR extends Game3D {
             }
             this.FrameUpdate(delta);
             this.FrameReset(delta);
-
-            last = now;
-            if (frame) {
-                this.XrFrame = frame;
-                this.Running = this.XrFrame.session.requestAnimationFrame(tick);
-            } else {
-                this.XrFrame = undefined;
-                this.Running = requestAnimationFrame(tick);
-            }
         };
 
         if (this.XrSession) {

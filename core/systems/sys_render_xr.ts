@@ -26,23 +26,21 @@ import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Render;
 
-export function sys_render_forward(game: Game, delta: number) {
+export function sys_render_xr(game: Game, delta: number) {
     for (let camera_entity of game.Cameras) {
         let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
-            case CameraKind.Forward:
-                game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
-                game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
+            case CameraKind.Xr:
+                let layer = game.XrFrame!.session.renderState.baseLayer!;
+                game.Gl.bindFramebuffer(GL_FRAMEBUFFER, layer.framebuffer);
                 game.Gl.clearColor(...camera.ClearColor);
                 game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                render_all(game, camera);
-                break;
-            case CameraKind.Framebuffer:
-                game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target.Framebuffer);
-                game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
-                game.Gl.clearColor(...camera.ClearColor);
-                game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                render_all(game, camera, camera.Target.RenderTexture);
+
+                for (let eye of camera.Eyes) {
+                    let viewport = layer.getViewport(eye.Viewpoint);
+                    game.Gl.viewport(viewport.x, viewport.y, viewport.width, viewport.height);
+                    render_all(game, eye);
+                }
                 break;
         }
     }

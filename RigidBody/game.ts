@@ -1,4 +1,4 @@
-import {GameXR} from "../common/game.js";
+import {Game3D} from "../common/game.js";
 import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_hand} from "../meshes/hand.js";
@@ -18,7 +18,7 @@ import {sys_spawn} from "./systems/sys_spawn.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
-export class Game extends GameXR {
+export class Game extends Game3D {
     World = new World();
 
     MaterialColoredGouraud = mat_forward_colored_gouraud(this.Gl);
@@ -43,6 +43,10 @@ export class Game extends GameXR {
         // Destroy entities past their age.
         sys_lifespan(this, delta);
 
+        // Camera.
+        sys_resize(this, delta);
+        sys_camera(this, delta);
+
         // Input and AI.
         sys_control_always(this, delta);
 
@@ -53,8 +57,6 @@ export class Game extends GameXR {
         sys_transform(this, delta);
 
         // Rendering.
-        sys_resize(this, delta);
-        sys_camera(this, delta);
         sys_light(this, delta);
         sys_render_forward(this, delta);
     }

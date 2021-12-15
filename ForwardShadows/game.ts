@@ -25,7 +25,7 @@ export class Game extends Game3D {
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
 
-    Targets = {
+    override Targets = {
         Sun: create_depth_target(this.Gl, 2048, 2048),
     };
 

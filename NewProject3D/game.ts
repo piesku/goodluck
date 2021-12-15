@@ -1,4 +1,4 @@
-import {GameXR} from "../common/game.js";
+import {Game3D} from "../common/game.js";
 import {mat_forward_colored_phong} from "../materials/mat_forward_colored_phong.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {sys_animate} from "./systems/sys_animate.js";
@@ -31,7 +31,7 @@ import {sys_trigger} from "./systems/sys_trigger.js";
 import {sys_ui} from "./systems/sys_ui.js";
 import {World} from "./world.js";
 
-export class Game extends GameXR {
+export class Game extends Game3D {
     World = new World();
 
     MaterialColoredShaded = mat_forward_colored_phong(this.Gl);
@@ -60,6 +60,10 @@ export class Game extends GameXR {
         // Event loop.
         sys_poll(this, delta);
 
+        // Camera.
+        sys_resize(this, delta);
+        sys_camera(this, delta);
+
         // Player input.
         sys_control_keyboard(this, delta);
         sys_control_mouse_move(this, delta);
@@ -83,8 +87,6 @@ export class Game extends GameXR {
         // Rendering.
         sys_audio_listener(this, delta);
         sys_audio_source(this, delta);
-        sys_resize(this, delta);
-        sys_camera(this, delta);
         sys_light(this, delta);
         sys_render_forward(this, delta);
         sys_draw(this, delta);

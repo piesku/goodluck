@@ -1,4 +1,4 @@
-import {GameXR} from "../common/game.js";
+import {Game3D} from "../common/game.js";
 import {Mesh} from "../common/mesh.js";
 import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
 import {mat_forward_colored_phong} from "../materials/mat_forward_colored_phong.js";
@@ -9,7 +9,7 @@ import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
-export class Game extends GameXR {
+export class Game extends Game3D {
     World = new World();
 
     MaterialColoredGouraud = mat_forward_colored_gouraud(this.Gl);
@@ -22,9 +22,11 @@ export class Game extends GameXR {
     LightDetails = new Float32Array(4 * 8);
 
     override FrameUpdate(delta: number) {
-        sys_transform(this, delta);
         sys_resize(this, delta);
         sys_camera(this, delta);
+
+        sys_transform(this, delta);
+
         sys_light(this, delta);
         sys_render_forward(this, delta);
     }

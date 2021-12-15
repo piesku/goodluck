@@ -17,11 +17,13 @@ export class Game extends Game3D {
     Textures: Record<string, WebGLTexture> = {};
 
     override FrameUpdate(delta: number) {
+        sys_resize(this, delta);
+        sys_camera(this, delta);
+
         sys_particles(this, delta);
         sys_shake(this, delta);
         sys_transform(this, delta);
-        sys_resize(this, delta);
-        sys_camera(this, delta);
+
         sys_render_forward(this, delta);
     }
 }
