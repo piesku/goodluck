@@ -1,5 +1,6 @@
 import {Game3D} from "../common/game.js";
 import {mat_forward_colored_phong} from "../materials/mat_forward_colored_phong.js";
+import {mat_forward_colored_wireframe} from "../materials/mat_forward_colored_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {sys_animate} from "./systems/sys_animate.js";
 import {sys_audio_listener} from "./systems/sys_audio_listener.js";
@@ -12,6 +13,7 @@ import {sys_control_keyboard} from "./systems/sys_control_keyboard.js";
 import {sys_control_mouse_move} from "./systems/sys_control_mouse_move.js";
 import {sys_control_touch_move} from "./systems/sys_control_touch_move.js";
 import {sys_control_xbox} from "./systems/sys_control_xbox.js";
+import {sys_debug} from "./systems/sys_debug.js";
 import {sys_draw} from "./systems/sys_draw.js";
 import {sys_lifespan} from "./systems/sys_lifespan.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -34,6 +36,7 @@ import {World} from "./world.js";
 export class Game extends Game3D {
     World = new World();
 
+    MaterialWireframe = mat_forward_colored_wireframe(this.Gl);
     MaterialColoredShaded = mat_forward_colored_phong(this.Gl);
 
     MeshCube = mesh_cube(this.Gl);
@@ -83,6 +86,10 @@ export class Game extends Game3D {
         sys_toggle(this, delta);
         sys_spawn(this, delta);
         sys_transform(this, delta);
+
+        if (false) {
+            sys_debug(this, delta);
+        }
 
         // Rendering.
         sys_audio_listener(this, delta);

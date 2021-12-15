@@ -4,6 +4,7 @@ import {Material} from "../common/material.js";
 import {Mesh} from "../common/mesh.js";
 import {Entity} from "../common/world.js";
 import {
+    ColoredUnlitLayout,
     DeferredPostprocessLayout,
     DepthMappingLayout,
     ForwardShadingLayout,
@@ -24,6 +25,7 @@ export interface Game extends GameXR {
         Sun: DepthTarget;
     };
 
+    MaterialWireframe: Material<ColoredUnlitLayout>;
     MaterialShading: Material<
         DeferredPostprocessLayout & ForwardShadingLayout & ShadowMappingLayout
     >;
@@ -31,6 +33,7 @@ export interface Game extends GameXR {
     MaterialDepth: Material<DepthMappingLayout>;
 
     MeshQuad: Mesh;
+    MeshCube: Mesh;
 
     LightPositions: Float32Array;
     LightDetails: Float32Array;

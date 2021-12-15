@@ -1,10 +1,12 @@
 import {Game3D} from "../common/game.js";
 import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
+import {mat_forward_colored_wireframe} from "../materials/mat_forward_colored_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_hand} from "../meshes/hand.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
+import {sys_debug} from "./systems/sys_debug.js";
 import {sys_lifespan} from "./systems/sys_lifespan.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
@@ -21,6 +23,7 @@ import {World} from "./world.js";
 export class Game extends Game3D {
     World = new World();
 
+    MaterialWireframe = mat_forward_colored_wireframe(this.Gl);
     MaterialColoredGouraud = mat_forward_colored_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
     MeshHand = mesh_hand(this.Gl);
@@ -55,6 +58,10 @@ export class Game extends Game3D {
         sys_shake(this, delta);
         sys_spawn(this, delta);
         sys_transform(this, delta);
+
+        if (true) {
+            sys_debug(this, delta);
+        }
 
         // Rendering.
         sys_light(this, delta);

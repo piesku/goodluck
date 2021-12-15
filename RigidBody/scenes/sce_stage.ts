@@ -20,7 +20,7 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
 
     // Camera.
-    instantiate(game, [...blueprint_camera(game), transform([0, 2, 5], [0, 1, 0, 0])]);
+    instantiate(game, [...blueprint_camera(game), transform([0, 2, 6], [0, 1, 0, 0])]);
 
     // Light.
     instantiate(game, [transform([2, 3, 5]), light_directional([1, 1, 1], 1)]);
@@ -43,7 +43,7 @@ export function scene_stage(game: Game) {
 
     // Box spawner.
     instantiate(game, [
-        transform([0, 5, 0]),
+        transform([0, 6, 0]),
         children([transform(), shake(0.5), spawn(blueprint_box, 2)]),
     ]);
 
