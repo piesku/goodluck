@@ -48,7 +48,7 @@ export function sys_render_forward(game: Game, delta: number) {
     }
 }
 
-function render_all(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
+export function render_all(game: Game, eye: CameraEye, current_target?: WebGLTexture) {
     // Keep track of the current state to minimize switching.
     let current_material: Material<unknown> | null = null;
     let current_front_face: GLenum | null = null;
