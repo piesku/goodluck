@@ -1,6 +1,5 @@
 import {create_forward_target} from "../common/framebuffer.js";
 import {GameXR} from "../common/game.js";
-import {Entity} from "../common/world.js";
 import {mat_forward_textured_unlit} from "../materials/mat_forward_textured_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_plane} from "../meshes/plane.js";
@@ -27,7 +26,6 @@ export class Game extends GameXR {
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
-    Cameras: Array<Entity> = [];
 
     override FrameUpdate(delta: number) {
         sys_control_always(this, delta);

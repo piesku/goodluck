@@ -33,7 +33,6 @@ export class Game extends GameXR {
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
-    Cameras: Array<Entity> = [];
 
     CameraDolly = 1;
     Picked?: Picked;

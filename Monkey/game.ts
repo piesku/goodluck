@@ -1,6 +1,5 @@
 import {GameXR} from "../common/game.js";
 import {Mesh} from "../common/mesh.js";
-import {Entity} from "../common/world.js";
 import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
 import {mat_forward_colored_phong} from "../materials/mat_forward_colored_phong.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -21,7 +20,6 @@ export class Game extends GameXR {
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
-    Cameras: Array<Entity> = [];
 
     override FrameUpdate(delta: number) {
         sys_transform(this, delta);

@@ -7,7 +7,6 @@ import {
     ForwardTarget,
 } from "../common/framebuffer.js";
 import {Game3D} from "../common/game.js";
-import {Entity} from "../common/world.js";
 import {mat_deferred_colored} from "../materials/mat_deferred_colored.js";
 import {mat_deferred_shading} from "../materials/mat_deferred_shading.js";
 import {mat_forward_depth} from "../materials/mat_forward_depth.js";
@@ -49,7 +48,6 @@ export class Game extends Game3D {
     // The rendering pipeline supports 64 lights.
     LightPositions = new Float32Array(4 * 64);
     LightDetails = new Float32Array(4 * 64);
-    Cameras: Array<Entity> = [];
 
     constructor() {
         super();

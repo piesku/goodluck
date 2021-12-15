@@ -1,5 +1,4 @@
 import {Game3D} from "../common/game.js";
-import {Entity} from "../common/world.js";
 import {mat_forward_particles_colored} from "./materials/mat_forward_particles_colored.js";
 import {mat_forward_particles_textured} from "./materials/mat_forward_particles_textured.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -16,8 +15,6 @@ export class Game extends Game3D {
     MaterialParticlesColored = mat_forward_particles_colored(this.Gl);
     MaterialParticlesTextured = mat_forward_particles_textured(this.Gl);
     Textures: Record<string, WebGLTexture> = {};
-
-    Cameras: Array<Entity> = [];
 
     override FrameUpdate(delta: number) {
         sys_particles(this, delta);

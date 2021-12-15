@@ -1,6 +1,5 @@
 import {create_depth_target} from "../common/framebuffer.js";
 import {Game3D} from "../common/game.js";
-import {Entity} from "../common/world.js";
 import {mat_forward_colored_shadows} from "../materials/mat_forward_colored_shadows.js";
 import {mat_forward_depth} from "../materials/mat_forward_depth.js";
 import {mesh_cube} from "../meshes/cube.js";
@@ -25,7 +24,6 @@ export class Game extends Game3D {
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
-    Cameras: Array<Entity> = [];
 
     Targets = {
         Sun: create_depth_target(this.Gl, 2048, 2048),
