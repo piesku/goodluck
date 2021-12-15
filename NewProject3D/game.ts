@@ -1,4 +1,4 @@
-import {Game3D} from "../common/game.js";
+import {GameXR} from "../common/game.js";
 import {Entity} from "../common/world.js";
 import {mat_forward_colored_phong} from "../materials/mat_forward_colored_phong.js";
 import {mesh_cube} from "../meshes/cube.js";
@@ -32,7 +32,7 @@ import {sys_trigger} from "./systems/sys_trigger.js";
 import {sys_ui} from "./systems/sys_ui.js";
 import {World} from "./world.js";
 
-export class Game extends Game3D {
+export class Game extends GameXR {
     World = new World();
 
     MaterialColoredShaded = mat_forward_colored_phong(this.Gl);

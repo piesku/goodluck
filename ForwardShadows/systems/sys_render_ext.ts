@@ -92,6 +92,9 @@ function use_colored_shadows(
     let light_entity = first_having(game.World, Has.Camera | Has.Light);
     if (light_entity) {
         let light_camera = game.World.Camera[light_entity];
+        if (light_camera.Kind === CameraKind.Xr) {
+            throw new Error("XR cameras cannot be shadow sources.");
+        }
         game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, light_camera.Pv);
     }
 }

@@ -1,5 +1,5 @@
 import {create_forward_target} from "../common/framebuffer.js";
-import {Game3D} from "../common/game.js";
+import {GameXR} from "../common/game.js";
 import {Entity} from "../common/world.js";
 import {mat_forward_textured_unlit} from "../materials/mat_forward_textured_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
@@ -12,7 +12,7 @@ import {sys_resize} from "./systems/sys_resize.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {World} from "./world.js";
 
-export class Game extends Game3D {
+export class Game extends GameXR {
     World = new World();
 
     MaterialTexturedUnlit = mat_forward_textured_unlit(this.Gl);

@@ -4,6 +4,7 @@ import {Vec3} from "../../common/math.js";
 import {ray_intersect_aabb, ray_intersect_mesh} from "../../common/raycast.js";
 import {normalize, subtract, transform_direction, transform_position} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
+import {CameraKind} from "../components/com_camera.js";
 import {Collide} from "../components/com_collide.js";
 import {PickableKind} from "../components/com_pickable.js";
 import {Game} from "../game.js";
@@ -28,6 +29,9 @@ export function sys_pick(game: Game, delta: number) {
 function update(game: Game, entity: Entity, pickables: Array<Collide>) {
     let transform = game.World.Transform[entity];
     let camera = game.World.Camera[entity];
+    if (camera.Kind === CameraKind.Xr) {
+        throw new Error("XR not implemented");
+    }
 
     let pointer_position = input_pointer_position(game);
     if (pointer_position === null) {

@@ -44,6 +44,18 @@ export function sys_render_forward(game: Game, delta: number) {
                 game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                 render_all(game, camera, camera.Target.RenderTexture);
                 break;
+            case CameraKind.Xr:
+                let layer = game.XrFrame!.session.renderState.baseLayer!;
+                game.Gl.bindFramebuffer(GL_FRAMEBUFFER, layer.framebuffer);
+                game.Gl.clearColor(...camera.ClearColor);
+                game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+                for (let eye of camera.Eyes) {
+                    let viewport = layer.getViewport(eye.Viewpoint);
+                    game.Gl.viewport(viewport.x, viewport.y, viewport.width, viewport.height);
+                    render_all(game, eye);
+                }
+                break;
         }
     }
 }

@@ -7,7 +7,7 @@ import {
     GL_TEXTURE0,
     GL_TEXTURE_2D,
 } from "../../common/webgl.js";
-import {CameraEye} from "../components/com_camera.js";
+import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {EmitParticles} from "../components/com_emit_particles.js";
 import {
     DATA_PER_PARTICLE,
@@ -24,6 +24,9 @@ const QUERY = Has.Transform | Has.Render;
 export function sys_render_forward(game: Game, delta: number) {
     let camera_entity = game.Cameras[0];
     let camera = game.World.Camera[camera_entity];
+    if (camera.Kind === CameraKind.Xr) {
+        throw new Error("XR not implemented");
+    }
 
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (game.ViewportResized) {
