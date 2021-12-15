@@ -12,10 +12,6 @@ Promise.all([
     load_texture(game, "Bricks059_1K_Normal.jpg"),
     load_texture(game, "Bricks059_1K_Roughness.jpg"),
 
-    load_texture(game, "Sponge001_1K_Color.jpg"),
-    load_texture(game, "Sponge001_1K_Normal.jpg"),
-    load_texture(game, "Sponge001_1K_Roughness.jpg"),
-
     load_texture(game, "Wood063_1K_Color.jpg"),
     load_texture(game, "Wood063_1K_Normal.jpg"),
     load_texture(game, "Wood063_1K_Roughness.jpg"),

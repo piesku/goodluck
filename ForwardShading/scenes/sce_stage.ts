@@ -1,6 +1,7 @@
 import {instantiate} from "../../common/game.js";
 import {from_euler} from "../../common/quat.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
+import {blueprint_camera_minimap} from "../blueprints/blu_camera_minimap.js";
 import {blueprint_sun} from "../blueprints/blu_sun.js";
 import {children} from "../components/com_children.js";
 import {control_always} from "../components/com_control_always.js";
@@ -24,6 +25,9 @@ export function scene_stage(game: Game) {
 
     // Camera.
     instantiate(game, [...blueprint_camera(game), transform([0, 0, 7], [0, 1, 0, 0])]);
+
+    // Minimap Camera.
+    instantiate(game, [...blueprint_camera_minimap(game), transform([0, 0, 7], [0, 1, 0, 0])]);
 
     // Sun.
     instantiate(game, [
@@ -120,17 +124,17 @@ export function scene_stage(game: Game) {
         render_textured_unlit(
             game.MaterialTexturedUnlit,
             game.MeshCube,
-            game.Textures["Sponge001_1K_Color.jpg"]
-        ),
-        render_textured_unlit(
-            game.MaterialTexturedUnlit,
-            game.MeshCube,
             game.Textures["Wood063_1K_Color.jpg"]
         ),
         render_textured_unlit(
             game.MaterialTexturedUnlit,
             game.MeshCube,
             game.Textures["Concrete018_1K_Color.jpg"]
+        ),
+        render_textured_unlit(
+            game.MaterialTexturedUnlit,
+            game.MeshCube,
+            game.Targets.Minimap.RenderTexture
         ),
 
         // Textured Gouraud shading (diffuse only)
@@ -142,17 +146,17 @@ export function scene_stage(game: Game) {
         render_textured_shaded(
             game.MaterialTexturedGouraud,
             game.MeshCube,
-            game.Textures["Sponge001_1K_Color.jpg"]
-        ),
-        render_textured_shaded(
-            game.MaterialTexturedGouraud,
-            game.MeshCube,
             game.Textures["Wood063_1K_Color.jpg"]
         ),
         render_textured_shaded(
             game.MaterialTexturedGouraud,
             game.MeshCube,
             game.Textures["Concrete018_1K_Color.jpg"]
+        ),
+        render_textured_shaded(
+            game.MaterialTexturedGouraud,
+            game.MeshCube,
+            game.Targets.Minimap.RenderTexture
         ),
 
         // Textured Phong shading (high specular)
@@ -165,12 +169,6 @@ export function scene_stage(game: Game) {
         render_textured_shaded(
             game.MaterialTexturedPhong,
             game.MeshCube,
-            game.Textures["Sponge001_1K_Color.jpg"],
-            512
-        ),
-        render_textured_shaded(
-            game.MaterialTexturedPhong,
-            game.MeshCube,
             game.Textures["Wood063_1K_Color.jpg"],
             512
         ),
@@ -178,6 +176,12 @@ export function scene_stage(game: Game) {
             game.MaterialTexturedPhong,
             game.MeshCube,
             game.Textures["Concrete018_1K_Color.jpg"],
+            512
+        ),
+        render_textured_shaded(
+            game.MaterialTexturedPhong,
+            game.MeshCube,
+            game.Targets.Minimap.RenderTexture,
             512
         ),
 
@@ -192,13 +196,6 @@ export function scene_stage(game: Game) {
         render_mapped_shaded(
             game.MaterialMapped,
             game.MeshCube,
-            game.Textures["Sponge001_1K_Color.jpg"],
-            game.Textures["Sponge001_1K_Normal.jpg"],
-            game.Textures["Sponge001_1K_Roughness.jpg"]
-        ),
-        render_mapped_shaded(
-            game.MaterialMapped,
-            game.MeshCube,
             game.Textures["Wood063_1K_Color.jpg"],
             game.Textures["Wood063_1K_Normal.jpg"],
             game.Textures["Wood063_1K_Roughness.jpg"]
@@ -207,6 +204,13 @@ export function scene_stage(game: Game) {
             game.MaterialMapped,
             game.MeshCube,
             game.Textures["Concrete018_1K_Color.jpg"],
+            game.Textures["Concrete018_1K_Normal.jpg"],
+            game.Textures["Concrete018_1K_Roughness.jpg"]
+        ),
+        render_mapped_shaded(
+            game.MaterialMapped,
+            game.MeshCube,
+            game.Targets.Minimap.RenderTexture,
             game.Textures["Concrete018_1K_Normal.jpg"],
             game.Textures["Concrete018_1K_Roughness.jpg"]
         ),

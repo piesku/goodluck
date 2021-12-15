@@ -290,6 +290,11 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
             game.Gl.drawArrays(render.Material.Mode, 0, render.IndexCount);
             break;
         case RenderKind.MappedShaded:
+            if (render.DiffuseMap === current_target) {
+                // Prevent feedback loop between the active render target
+                // and the texture being rendered.
+                break;
+            }
             game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
             game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
 

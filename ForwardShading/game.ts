@@ -1,4 +1,4 @@
-import {create_depth_target} from "../common/framebuffer.js";
+import {create_depth_target, create_forward_target} from "../common/framebuffer.js";
 import {Game3D} from "../common/game.js";
 import {mat_forward_colored_flat} from "../materials/mat_forward_colored_flat.js";
 import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
@@ -51,6 +51,7 @@ export class Game extends Game3D {
     Textures: Record<string, WebGLTexture> = {};
     override Targets = {
         Sun: create_depth_target(this.Gl, 2048, 2048),
+        Minimap: create_forward_target(this.Gl, 256, 256),
     };
 
     // The rendering pipeline supports 8 lights.

@@ -7,7 +7,7 @@ export function blueprint_camera_minimap(game: Game) {
     return [
         children([
             transform(undefined, [0, 1, 0, 0]),
-            camera_framebuffer_perspective(game.Targets.Minimap, 1, 0.1, 1000, [1, 1, 1, 1]),
+            camera_framebuffer_perspective(game.Targets.Minimap, 1, 0.1, 1000, [0.5, 0.7, 0.9, 1]),
         ]),
     ];
 }
