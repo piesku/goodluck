@@ -297,12 +297,23 @@ export abstract class GameXR extends Game3D {
     }
 
     override Start() {
+        let accumulator = 0;
         let last = performance.now();
 
         let tick = (now: number, frame?: XRFrame) => {
             let delta = (now - last) / 1000;
-            last = now;
+            this.FrameSetup(delta);
 
+            accumulator += delta;
+            while (accumulator >= step) {
+                accumulator -= step;
+                // TODO Adjust InputDelta and InputDistance.
+                this.FixedUpdate(step);
+            }
+            this.FrameUpdate(delta);
+            this.FrameReset(delta);
+
+            last = now;
             if (frame) {
                 this.XrFrame = frame;
                 this.Running = this.XrFrame.session.requestAnimationFrame(tick);
@@ -310,10 +321,6 @@ export abstract class GameXR extends Game3D {
                 this.XrFrame = undefined;
                 this.Running = requestAnimationFrame(tick);
             }
-
-            this.FrameSetup(delta);
-            this.FrameUpdate(delta);
-            this.FrameReset(delta);
         };
 
         if (this.XrSession) {
