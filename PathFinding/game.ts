@@ -33,19 +33,22 @@ export class Game extends Game3D {
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
-    Cameras: Array<Entity> = [];
 
     CameraDolly = 1;
     Picked?: Picked;
     Selected?: Entity;
 
     override FrameUpdate(delta: number) {
-        // Camera controls and picking.
+        // Camera and picking.
+        sys_resize(this, delta);
+        sys_camera(this, delta);
+        sys_pick(this, delta);
+
+        // User input.
         sys_control_keyboard(this, delta);
         sys_control_mouse_drag(this, delta);
         sys_control_touch_drag(this, delta);
         sys_control_dolly(this, delta);
-        sys_pick(this, delta);
 
         // Player order.
         sys_control_player(this, delta);
@@ -59,8 +62,6 @@ export class Game extends Game3D {
         sys_collide(this, delta);
 
         // Rendering.
-        sys_resize(this, delta);
-        sys_camera(this, delta);
         sys_light(this, delta);
         sys_render_forward(this, delta);
         sys_draw(this, delta);

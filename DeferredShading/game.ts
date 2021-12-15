@@ -7,7 +7,6 @@ import {
     ForwardTarget,
 } from "../common/framebuffer.js";
 import {Game3D} from "../common/game.js";
-import {Entity} from "../common/world.js";
 import {mat_deferred_colored} from "../materials/mat_deferred_colored.js";
 import {mat_deferred_shading} from "../materials/mat_deferred_shading.js";
 import {mat_forward_depth} from "../materials/mat_forward_depth.js";
@@ -39,7 +38,7 @@ export class Game extends Game3D {
     MeshCube = mesh_cube(this.Gl);
     MeshQuad = mesh_quad(this.Gl);
 
-    Targets: {
+    override Targets: {
         Gbuffer: DeferredTarget;
         Shaded: ForwardTarget;
         Sun: DepthTarget;
@@ -49,7 +48,6 @@ export class Game extends Game3D {
     // The rendering pipeline supports 64 lights.
     LightPositions = new Float32Array(4 * 64);
     LightDetails = new Float32Array(4 * 64);
-    Cameras: Array<Entity> = [];
 
     constructor() {
         super();
@@ -65,11 +63,14 @@ export class Game extends Game3D {
     }
 
     override FrameUpdate(delta: number) {
-        sys_control_always(this, delta);
-        sys_move(this, delta);
-        sys_transform(this, delta);
         sys_resize(this, delta);
         sys_camera(this, delta);
+
+        sys_control_always(this, delta);
+
+        sys_move(this, delta);
+        sys_transform(this, delta);
+
         sys_light(this, delta);
         sys_render_depth(this, delta);
         sys_render_deferred(this, delta);

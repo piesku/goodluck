@@ -1,6 +1,5 @@
 import {Game3D} from "../common/game.js";
 import {GL_ARRAY_BUFFER, GL_FLOAT, GL_STATIC_DRAW, GL_STREAM_DRAW} from "../common/webgl.js";
-import {Entity} from "../common/world.js";
 import {mat_instanced2d} from "./materials/mat_instanced2d.js";
 import {sys_camera2d} from "./systems/sys_camera2d.js";
 import {sys_control_always2d} from "./systems/sys_control_always2d.js";
@@ -8,7 +7,7 @@ import {sys_control_player} from "./systems/sys_control_player.js";
 import {sys_move2d} from "./systems/sys_move2d.js";
 import {sys_physics2d_integrate} from "./systems/sys_physics2d_integrate.js";
 import {sys_render2d} from "./systems/sys_render2d.js";
-import {sys_resize} from "./systems/sys_resize.js";
+import {sys_resize2d} from "./systems/sys_resize2d.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {sys_transform2d} from "./systems/sys_transform2d.js";
 import {World} from "./world.js";
@@ -26,8 +25,6 @@ export class Game extends Game3D {
 
     InstanceData = new Float32Array(this.World.Capacity * FLOATS_PER_INSTANCE);
     InstanceBuffer = this.Gl.createBuffer()!;
-
-    Cameras: Array<Entity> = [];
 
     constructor() {
         super();
@@ -100,14 +97,17 @@ export class Game extends Game3D {
     }
 
     override FrameUpdate(delta: number) {
+        sys_resize2d(this, delta);
+        sys_camera2d(this, delta);
+
         sys_control_player(this, delta);
         sys_control_always2d(this, delta);
+
         sys_move2d(this, delta);
         sys_physics2d_integrate(this, delta);
         sys_transform2d(this, delta);
         sys_transform(this, delta);
-        sys_resize(this, delta);
-        sys_camera2d(this, delta);
+
         sys_render2d(this, delta);
     }
 }

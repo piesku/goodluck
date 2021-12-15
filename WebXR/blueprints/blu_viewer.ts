@@ -12,7 +12,7 @@ export function blueprint_viewer(game: Game) {
             [
                 // Headset.
                 transform(),
-                camera_xr(),
+                camera_xr([1, 1, 1, 1]),
             ],
             [
                 // Left hand.

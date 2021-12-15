@@ -2,8 +2,9 @@ import {instantiate} from "../../common/game.js";
 import {blueprint_camera_main} from "../blueprints/blu_camera_main.js";
 import {blueprint_camera_minimap} from "../blueprints/blu_camera_minimap.js";
 import {control_always} from "../components/com_control_always.js";
+import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
-import {render_textured_unlit} from "../components/com_render.js";
+import {render_textured_shaded, render_textured_unlit} from "../components/com_render.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
@@ -21,13 +22,16 @@ export function scene_stage(game: Game) {
         transform([0, 5, 0], /* 90x, 0y, 0z */ [0.707, 0, 0, 0.707]),
     ]);
 
+    // Light.
+    instantiate(game, [transform([2, 3, 5]), light_directional([1, 1, 1], 1)]);
+
     // Checker Box.
     instantiate(game, [
         transform([-0.5, 0, 0]),
         control_always(null, [0.1276794, 0.1448781, 0.2685358, 0.9437144]),
         move(0, 1),
-        render_textured_unlit(
-            game.MaterialTexturedUnlit,
+        render_textured_shaded(
+            game.MaterialTexturedGouraud,
             game.MeshCube,
             game.Textures["checker1.png"]
         ),

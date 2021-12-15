@@ -1,5 +1,4 @@
 import {Game3D} from "../common/game.js";
-import {Entity} from "../common/world.js";
 import {mat_forward_colored_phong} from "../materials/mat_forward_colored_phong.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {sys_animate} from "./systems/sys_animate.js";
@@ -42,7 +41,6 @@ export class Game extends Game3D {
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
-    Cameras: Array<Entity> = [];
 
     ItemsCollected = 0;
     ItemsMissed = 0;
@@ -61,6 +59,10 @@ export class Game extends Game3D {
     override FrameUpdate(delta: number) {
         // Event loop.
         sys_poll(this, delta);
+
+        // Camera.
+        sys_resize(this, delta);
+        sys_camera(this, delta);
 
         // Player input.
         sys_control_keyboard(this, delta);
@@ -85,8 +87,6 @@ export class Game extends Game3D {
         // Rendering.
         sys_audio_listener(this, delta);
         sys_audio_source(this, delta);
-        sys_resize(this, delta);
-        sys_camera(this, delta);
         sys_light(this, delta);
         sys_render_forward(this, delta);
         sys_draw(this, delta);

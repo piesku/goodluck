@@ -7,6 +7,7 @@ import {Vec2, Vec3} from "../../common/math.js";
 import {distance_squared, subtract} from "../../common/vec2.js";
 import {transform_position} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
+import {CameraKind} from "../components/com_camera.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -21,6 +22,10 @@ export function sys_control_player(game: Game, delta: number) {
     }
 
     let camera = game.World.Camera[camera_entity];
+    if (camera.Kind === CameraKind.Xr) {
+        throw new Error("XR not implemented");
+    }
+
     let camera_transform = game.World.Transform[camera_entity];
 
     if (game.InputState["Mouse0"]) {

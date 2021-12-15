@@ -20,6 +20,7 @@ import {
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
 import {first_having} from "../../common/world.js";
+import {CameraKind} from "../components/com_camera.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -32,6 +33,10 @@ export function sys_render_shading(game: Game, delta: number) {
 
     let camera_entity = game.Cameras[0];
     let camera = game.World.Camera[camera_entity];
+    if (camera.Kind === CameraKind.Xr) {
+        throw new Error("Deferred shading not implemented for XR cameras.");
+    }
+
     let material = game.MaterialShading;
     let mesh = game.MeshQuad;
     let target = game.Targets.Gbuffer;
@@ -69,6 +74,9 @@ export function sys_render_shading(game: Game, delta: number) {
     let light_entity = first_having(game.World, Has.Camera | Has.Light);
     if (light_entity) {
         let light_camera = game.World.Camera[light_entity];
+        if (light_camera.Kind === CameraKind.Xr) {
+            throw new Error("XR cameras cannot be shadow sources.");
+        }
         game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, light_camera.Pv);
     }
 

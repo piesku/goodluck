@@ -1,5 +1,4 @@
 import {Game} from "./game.js";
-import {xr_enter} from "./xr.js";
 
 export const enum Action {
     EnterVr,
@@ -10,7 +9,7 @@ export function dispatch(game: Game, action: Action, args: unknown) {
     switch (action) {
         case Action.EnterVr: {
             if (game.XrSupported) {
-                xr_enter(game);
+                game.EnterXR();
             }
             break;
         }

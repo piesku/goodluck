@@ -1,5 +1,4 @@
 import {Game3D} from "../common/game.js";
-import {Entity} from "../common/world.js";
 import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -25,9 +24,11 @@ export class Game extends Game3D {
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
-    Cameras: Array<Entity> = [];
 
     override FrameUpdate(delta: number) {
+        sys_resize(this, delta);
+        sys_camera(this, delta);
+
         sys_control_keyboard(this, delta);
         sys_control_mouse_move(this, delta);
         sys_control_touch_move(this, delta);
@@ -36,8 +37,6 @@ export class Game extends Game3D {
         sys_move(this, delta);
         sys_transform(this, delta);
 
-        sys_resize(this, delta);
-        sys_camera(this, delta);
         sys_light(this, delta);
         sys_render_forward(this, delta);
         sys_draw(this, delta);

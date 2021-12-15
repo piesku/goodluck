@@ -1,5 +1,4 @@
 import {Game3D} from "../common/game.js";
-import {Entity} from "../common/world.js";
 import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_hand} from "../meshes/hand.js";
@@ -29,7 +28,6 @@ export class Game extends Game3D {
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
-    Cameras: Array<Entity> = [];
 
     override FixedUpdate(delta: number) {
         // Collisions and physics.
@@ -45,6 +43,10 @@ export class Game extends Game3D {
         // Destroy entities past their age.
         sys_lifespan(this, delta);
 
+        // Camera.
+        sys_resize(this, delta);
+        sys_camera(this, delta);
+
         // Input and AI.
         sys_control_always(this, delta);
 
@@ -55,8 +57,6 @@ export class Game extends Game3D {
         sys_transform(this, delta);
 
         // Rendering.
-        sys_resize(this, delta);
-        sys_camera(this, delta);
         sys_light(this, delta);
         sys_render_forward(this, delta);
     }

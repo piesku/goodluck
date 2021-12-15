@@ -3,8 +3,11 @@
  */
 
 import {
+    GL_ARRAY_BUFFER,
     GL_COLOR_BUFFER_BIT,
     GL_DEPTH_BUFFER_BIT,
+    GL_ELEMENT_ARRAY_BUFFER,
+    GL_FLOAT,
     GL_FRAMEBUFFER,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
@@ -32,37 +35,45 @@ function render_depth(game: Game, camera: CameraDepth) {
     game.Gl.clearColor(...camera.ClearColor);
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    game.Gl.useProgram(game.MaterialDepth.Program);
-    game.Gl.uniformMatrix4fv(game.MaterialDepth.Locations.Pv, false, camera.Pv);
+    let material = game.MaterialDepth;
+    let current_front_face: GLint | null = null;
 
-    let current_front_face = null;
+    game.Gl.useProgram(material.Program);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, camera.Pv);
 
-    for (let i = 0; i < game.World.Signature.length; i++) {
-        if ((game.World.Signature[i] & QUERY) === QUERY) {
-            let transform = game.World.Transform[i];
-            let render = game.World.Render[i];
+    for (let ent = 0; ent < game.World.Signature.length; ent++) {
+        if ((game.World.Signature[ent] & QUERY) === QUERY) {
+            let transform = game.World.Transform[ent];
+            let render = game.World.Render[ent];
+
+            switch (render.Kind) {
+                case RenderKind.Vertices:
+                    // Skip rendering, RenderVertices doesn't cast shadow for now.
+                    continue;
+            }
 
             if (render.FrontFace !== current_front_face) {
                 current_front_face = render.FrontFace;
                 game.Gl.frontFace(render.FrontFace);
             }
 
-            game.Gl.uniformMatrix4fv(game.MaterialDepth.Locations.World, false, transform.World);
+            // Pass uniforms at locations specific to MaterialDepth.
+            game.Gl.uniformMatrix4fv(material.Locations.World, false, transform.World);
 
-            switch (render.Kind) {
-                case RenderKind.Vertices:
-                    // Skip rendering, RenderVertices doesn't cast shadow for now.
-                    break;
-                default:
-                    game.Gl.bindVertexArray(render.Vao);
-                    game.Gl.drawElements(
-                        game.MaterialDepth.Mode,
-                        render.Mesh.IndexCount,
-                        GL_UNSIGNED_SHORT,
-                        0
-                    );
-                    game.Gl.bindVertexArray(null);
-            }
+            // Pass attributes at locations specific to MaterialDepth.
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, render.Mesh.VertexBuffer);
+            game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
+            game.Gl.vertexAttribPointer(
+                material.Locations.VertexPosition,
+                3,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
+
+            game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, render.Mesh.IndexBuffer);
+            game.Gl.drawElements(material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
         }
     }
 }

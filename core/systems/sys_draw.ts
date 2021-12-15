@@ -5,6 +5,7 @@
 import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {transform_position} from "../../common/vec3.js";
+import {CameraKind} from "../components/com_camera.js";
 import {DrawKind, DrawSelection, DrawText} from "../components/com_draw.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -18,7 +19,7 @@ export function sys_draw(game: Game, delta: number) {
 
     let camera_entity = game.Cameras[0];
     let main_camera = game.World.Camera[camera_entity];
-    if (!main_camera) {
+    if (!main_camera || main_camera.Kind === CameraKind.Xr) {
         return;
     }
 

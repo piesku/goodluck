@@ -10,6 +10,8 @@ import {
     GL_TEXTURE_2D,
 } from "./webgl.js";
 
+export type RenderTarget = ForwardTarget | DeferredTarget | DepthTarget;
+
 export interface ForwardTarget {
     Framebuffer: WebGLFramebuffer;
     Width: number;

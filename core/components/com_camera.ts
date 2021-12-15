@@ -10,13 +10,14 @@ import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-export type Camera = CameraForward | CameraDeferred | CameraFramebuffer | CameraDepth;
+export type Camera = CameraForward | CameraDeferred | CameraFramebuffer | CameraDepth | CameraXr;
 
 export const enum CameraKind {
     Forward,
     Deferred,
     Framebuffer,
     Depth,
+    Xr,
 }
 
 // The subset of camera data passed into render methods.
@@ -212,6 +213,27 @@ export function camera_depth_ortho(
             View: create(),
             Pv: create(),
             Position: [0, 0, 0],
+            ClearColor: clear_color,
+        };
+    };
+}
+
+export interface XrEye extends CameraEye {
+    Viewpoint: XRView;
+}
+
+export interface CameraXr {
+    Kind: CameraKind.Xr;
+    Eyes: Array<XrEye>;
+    ClearColor: Vec4;
+}
+
+export function camera_xr(clear_color: Vec4) {
+    return (game: Game, entity: Entity) => {
+        game.World.Signature[entity] |= Has.Camera;
+        game.World.Camera[entity] = {
+            Kind: CameraKind.Xr,
+            Eyes: [],
             ClearColor: clear_color,
         };
     };
