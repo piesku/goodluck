@@ -1,10 +1,12 @@
-import {create_forward_target} from "../common/framebuffer.js";
+import {create_depth_target, create_forward_target} from "../common/framebuffer.js";
 import {Game3D} from "../common/game.js";
+import {mat_forward_textured_gouraud} from "../materials/mat_forward_textured_gouraud.js";
 import {mat_forward_textured_unlit} from "../materials/mat_forward_textured_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mesh_plane} from "../meshes/plane.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
+import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_render_forward} from "./systems/sys_render_forward.js";
 import {sys_resize} from "./systems/sys_resize.js";
@@ -15,12 +17,14 @@ export class Game extends Game3D {
     World = new World();
 
     MaterialTexturedUnlit = mat_forward_textured_unlit(this.Gl);
+    MaterialTexturedGouraud = mat_forward_textured_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
     MeshPlane = mesh_plane(this.Gl);
 
     Textures: Record<string, WebGLTexture> = {};
     override Targets = {
         Minimap: create_forward_target(this.Gl, 256, 256),
+        Sun: create_depth_target(this.Gl, 2048, 2048),
     };
 
     // The rendering pipeline supports 8 lights.
@@ -36,6 +40,7 @@ export class Game extends Game3D {
         sys_move(this, delta);
         sys_transform(this, delta);
 
+        sys_light(this, delta);
         sys_render_forward(this, delta);
     }
 }
