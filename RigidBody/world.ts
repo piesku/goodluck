@@ -3,6 +3,7 @@ import {Camera} from "./components/com_camera.js";
 import {Children} from "./components/com_children.js";
 import {Collide} from "./components/com_collide.js";
 import {ControlAlways} from "./components/com_control_always.js";
+import {EmitParticles} from "./components/com_emit_particles.js";
 import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
 import {Move} from "./components/com_move.js";
@@ -17,6 +18,7 @@ const enum Component {
     Children,
     Collide,
     ControlAlways,
+    EmitParticles,
     Lifespan,
     Light,
     Move,
@@ -33,6 +35,7 @@ export const enum Has {
     Children = 1 << Component.Children,
     Collide = 1 << Component.Collide,
     ControlAlways = 1 << Component.ControlAlways,
+    EmitParticles = 1 << Component.EmitParticles,
     Lifespan = 1 << Component.Lifespan,
     Light = 1 << Component.Light,
     Move = 1 << Component.Move,
@@ -48,6 +51,7 @@ export class World extends WorldImpl {
     Children: Array<Children> = [];
     Collide: Array<Collide> = [];
     ControlAlways: Array<ControlAlways> = [];
+    EmitParticles: Array<EmitParticles> = [];
     Lifespan: Array<Lifespan> = [];
     Light: Array<Light> = [];
     Move: Array<Move> = [];

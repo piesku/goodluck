@@ -1,6 +1,7 @@
 import {Game3D} from "../common/game.js";
 import {mat_forward_colored_phong} from "../materials/mat_forward_colored_phong.js";
 import {mat_forward_colored_wireframe} from "../materials/mat_forward_colored_unlit.js";
+import {mat_forward_particles_colored} from "../materials/mat_forward_particles_colored.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {sys_animate} from "./systems/sys_animate.js";
 import {sys_audio_listener} from "./systems/sys_audio_listener.js";
@@ -19,6 +20,7 @@ import {sys_lifespan} from "./systems/sys_lifespan.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_mimic} from "./systems/sys_mimic.js";
 import {sys_move} from "./systems/sys_move.js";
+import {sys_particles} from "./systems/sys_particles.js";
 import {sys_physics_integrate} from "./systems/sys_physics_integrate.js";
 import {sys_physics_kinematic} from "./systems/sys_physics_kinematic.js";
 import {sys_physics_resolve} from "./systems/sys_physics_resolve.js";
@@ -38,6 +40,7 @@ export class Game extends Game3D {
 
     MaterialWireframe = mat_forward_colored_wireframe(this.Gl);
     MaterialColoredShaded = mat_forward_colored_phong(this.Gl);
+    MaterialParticlesColored = mat_forward_particles_colored(this.Gl);
 
     MeshCube = mesh_cube(this.Gl);
 
@@ -85,6 +88,7 @@ export class Game extends Game3D {
         sys_shake(this, delta);
         sys_toggle(this, delta);
         sys_spawn(this, delta);
+        sys_particles(this, delta);
         sys_transform(this, delta);
 
         if (false) {

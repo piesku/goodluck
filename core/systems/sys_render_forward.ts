@@ -20,7 +20,7 @@ import {
 } from "../../common/webgl.js";
 import {Entity, first_having} from "../../common/world.js";
 import {CameraEye, CameraKind} from "../components/com_camera.js";
-import {Render, RenderKind, RenderPhase} from "../components/com_render.js";
+import {FLOATS_PER_PARTICLE, Render, RenderKind, RenderPhase} from "../components/com_render.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -163,16 +163,18 @@ function use_material(game: Game, render: Render, eye: CameraEye) {
             game.Gl.uniform4fv(render.Material.Locations.LightPositions, game.LightPositions);
             game.Gl.uniform4fv(render.Material.Locations.LightDetails, game.LightDetails);
             break;
-        case RenderKind.Vertices:
-            game.Gl.useProgram(render.Material.Program);
-            game.Gl.uniformMatrix4fv(render.Material.Locations.Pv, false, eye.Pv);
-            break;
         case RenderKind.MappedShaded:
             game.Gl.useProgram(render.Material.Program);
             game.Gl.uniformMatrix4fv(render.Material.Locations.Pv, false, eye.Pv);
             game.Gl.uniform3fv(render.Material.Locations.Eye, eye.Position);
             game.Gl.uniform4fv(render.Material.Locations.LightPositions, game.LightPositions);
             game.Gl.uniform4fv(render.Material.Locations.LightDetails, game.LightDetails);
+            break;
+        case RenderKind.Vertices:
+        case RenderKind.ParticlesColored:
+        case RenderKind.ParticlesTextured:
+            game.Gl.useProgram(render.Material.Program);
+            game.Gl.uniformMatrix4fv(render.Material.Locations.Pv, false, eye.Pv);
             break;
     }
 }
@@ -274,21 +276,6 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
             );
             game.Gl.bindVertexArray(null);
             break;
-        case RenderKind.Vertices:
-            game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
-            game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, render.VertexBuffer);
-            game.Gl.enableVertexAttribArray(render.Material.Locations.VertexPosition);
-            game.Gl.vertexAttribPointer(
-                render.Material.Locations.VertexPosition,
-                3,
-                GL_FLOAT,
-                false,
-                0,
-                0
-            );
-            game.Gl.drawArrays(render.Material.Mode, 0, render.IndexCount);
-            break;
         case RenderKind.MappedShaded:
             if (render.DiffuseMap === current_target) {
                 // Prevent feedback loop between the active render target
@@ -321,5 +308,63 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
             );
             game.Gl.bindVertexArray(null);
             break;
+        case RenderKind.Vertices:
+            game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
+            game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, render.VertexBuffer);
+            game.Gl.enableVertexAttribArray(render.Material.Locations.VertexPosition);
+            game.Gl.vertexAttribPointer(
+                render.Material.Locations.VertexPosition,
+                3,
+                GL_FLOAT,
+                false,
+                0,
+                0
+            );
+            game.Gl.drawArrays(render.Material.Mode, 0, render.IndexCount);
+            break;
+        case RenderKind.ParticlesColored: {
+            let emitter = game.World.EmitParticles[entity];
+
+            game.Gl.uniform4fv(render.Material.Locations.ColorStart, render.ColorStart);
+            game.Gl.uniform4fv(render.Material.Locations.ColorEnd, render.ColorEnd);
+
+            game.Gl.uniform4f(
+                render.Material.Locations.Details,
+                emitter.Lifespan,
+                emitter.Speed,
+                ...render.Size
+            );
+
+            let instances = Float32Array.from(emitter.Instances);
+            game.Gl.bindBuffer(GL_ARRAY_BUFFER, render.Buffer);
+            game.Gl.bufferSubData(GL_ARRAY_BUFFER, 0, instances);
+
+            game.Gl.enableVertexAttribArray(render.Material.Locations.OriginAge);
+            game.Gl.vertexAttribPointer(
+                render.Material.Locations.OriginAge,
+                4,
+                GL_FLOAT,
+                false,
+                FLOATS_PER_PARTICLE * 4,
+                0
+            );
+
+            game.Gl.enableVertexAttribArray(render.Material.Locations.Direction);
+            game.Gl.vertexAttribPointer(
+                render.Material.Locations.Direction,
+                3,
+                GL_FLOAT,
+                false,
+                FLOATS_PER_PARTICLE * 4,
+                4 * 4
+            );
+            game.Gl.drawArrays(
+                render.Material.Mode,
+                0,
+                emitter.Instances.length / FLOATS_PER_PARTICLE
+            );
+            break;
+        }
     }
 }

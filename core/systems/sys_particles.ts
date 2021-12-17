@@ -1,7 +1,7 @@
 import {get_forward, get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
-import {DATA_PER_PARTICLE} from "../components/com_render.js";
+import {FLOATS_PER_PARTICLE} from "../components/com_render.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -38,9 +38,9 @@ function update(game: Game, entity: Entity, delta: number) {
     for (let i = 0; i < emitter.Instances.length; ) {
         emitter.Instances[i + 3] += delta;
         if (emitter.Instances[i + 3] > emitter.Lifespan) {
-            emitter.Instances.splice(i, DATA_PER_PARTICLE);
+            emitter.Instances.splice(i, FLOATS_PER_PARTICLE);
         } else {
-            i += DATA_PER_PARTICLE;
+            i += FLOATS_PER_PARTICLE;
         }
     }
 }

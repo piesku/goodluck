@@ -5,6 +5,7 @@ import {Collide} from "./components/com_collide.js";
 import {ControlDolly} from "./components/com_control_dolly.js";
 import {ControlPlayer} from "./components/com_control_player.js";
 import {Draw} from "./components/com_draw.js";
+import {EmitParticles} from "./components/com_emit_particles.js";
 import {Light} from "./components/com_light.js";
 import {Move} from "./components/com_move.js";
 import {NavAgent} from "./components/com_nav_agent.js";
@@ -20,6 +21,7 @@ const enum Component {
     ControlDolly,
     ControlPlayer,
     Draw,
+    EmitParticles,
     Light,
     Move,
     NavAgent,
@@ -37,6 +39,7 @@ export const enum Has {
     ControlDolly = 1 << Component.ControlDolly,
     ControlPlayer = 1 << Component.ControlPlayer,
     Draw = 1 << Component.Draw,
+    EmitParticles = 1 << Component.EmitParticles,
     Light = 1 << Component.Light,
     Move = 1 << Component.Move,
     NavAgent = 1 << Component.NavAgent,
@@ -53,6 +56,7 @@ export class World extends WorldImpl {
     ControlDolly: Array<ControlDolly> = [];
     ControlPlayer: Array<ControlPlayer> = [];
     Draw: Array<Draw> = [];
+    EmitParticles: Array<EmitParticles> = [];
     Light: Array<Light> = [];
     Move: Array<Move> = [];
     NavAgent: Array<NavAgent> = [];

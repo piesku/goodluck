@@ -3,6 +3,7 @@ import {Camera} from "./components/com_camera.js";
 import {Children} from "./components/com_children.js";
 import {ControlPlayer} from "./components/com_control_player.js";
 import {Draw} from "./components/com_draw.js";
+import {EmitParticles} from "./components/com_emit_particles.js";
 import {Light} from "./components/com_light.js";
 import {Move} from "./components/com_move.js";
 import {Render} from "./components/com_render.js";
@@ -13,6 +14,7 @@ const enum Component {
     Children,
     ControlPlayer,
     Draw,
+    EmitParticles,
     Light,
     Move,
     Render,
@@ -25,6 +27,7 @@ export const enum Has {
     Children = 1 << Component.Children,
     ControlPlayer = 1 << Component.ControlPlayer,
     Draw = 1 << Component.Draw,
+    EmitParticles = 1 << Component.EmitParticles,
     Light = 1 << Component.Light,
     Move = 1 << Component.Move,
     Render = 1 << Component.Render,
@@ -36,6 +39,7 @@ export class World extends WorldImpl {
     Children: Array<Children> = [];
     ControlPlayer: Array<ControlPlayer> = [];
     Draw: Array<Draw> = [];
+    EmitParticles: Array<EmitParticles> = [];
     Light: Array<Light> = [];
     Move: Array<Move> = [];
     Render: Array<Render> = [];
