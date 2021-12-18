@@ -26,7 +26,8 @@ export interface Transform2D {
 
 export function transform2d(translation: Vec2 = [0, 0], rotation: Deg = 0, scale: Vec2 = [1, 1]) {
     return (game: Game, entity: Entity) => {
-        game.World.Signature[entity] |= Has.Transform2D | Has.Dirty;
+        game.World.Signature[entity] |= Has.Transform2D;
+        game.World.Dirty[entity] |= Has.Transform2D;
         game.World.Transform2D[entity] = {
             World: game.InstanceData.subarray(
                 entity * FLOATS_PER_INSTANCE,
@@ -47,7 +48,8 @@ export function transform2d_gyroscope(
     scale: Vec2 = [1, 1]
 ) {
     return (game: Game, entity: Entity) => {
-        game.World.Signature[entity] |= Has.Transform2D | Has.Dirty;
+        game.World.Signature[entity] |= Has.Transform2D;
+        game.World.Dirty[entity] |= Has.Transform2D;
         game.World.Transform2D[entity] = {
             World: game.InstanceData.subarray(
                 entity * FLOATS_PER_INSTANCE,
