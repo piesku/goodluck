@@ -14,7 +14,6 @@ const enum Component {
     ControlAlways2D,
     ControlPlayer,
     Children,
-    Dirty,
     Move2D,
     Render2D,
     RigidBody2D,
@@ -28,7 +27,6 @@ export const enum Has {
     ControlAlways2D = 1 << Component.ControlAlways2D,
     ControlPlayer = 1 << Component.ControlPlayer,
     Children = 1 << Component.Children,
-    Dirty = 1 << Component.Dirty,
     Move2D = 1 << Component.Move2D,
     Render2D = 1 << Component.Render2D,
     RigidBody2D = 1 << Component.RigidBody2D,
@@ -37,6 +35,8 @@ export const enum Has {
 }
 
 export class World extends WorldImpl {
+    Dirty: Array<number> = [];
+
     Camera: Array<Camera> = [];
     ControlAlways2D: Array<ControlAlways2D> = [];
     ControlPlayer: Array<ControlPlayer> = [];

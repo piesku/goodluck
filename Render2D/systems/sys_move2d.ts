@@ -13,7 +13,9 @@ const QUERY = Has.Transform2D | Has.Move2D;
 export function sys_move2d(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
-            update(game, i, delta);
+            if (game.World.Dirty[i] & Has.Move2D) {
+                update(game, i, delta);
+            }
         }
     }
 }
@@ -21,6 +23,8 @@ export function sys_move2d(game: Game, delta: number) {
 const direction: Vec2 = [0, 0];
 
 function update(game: Game, entity: Entity, delta: number) {
+    game.World.Dirty[entity] &= ~Has.Move2D;
+
     let transform = game.World.Transform2D[entity];
     let move = game.World.Move2D[entity];
 
@@ -50,7 +54,7 @@ function update(game: Game, entity: Entity, delta: number) {
         scale(direction, direction, amount * move.MoveSpeed * delta);
 
         add(transform.Translation, transform.Translation, direction);
-        game.World.Signature[entity] |= Has.Dirty;
+        game.World.Dirty[entity] |= Has.Transform2D;
 
         move.Direction[0] = 0;
         move.Direction[1] = 0;
@@ -58,7 +62,7 @@ function update(game: Game, entity: Entity, delta: number) {
 
     if (move.Rotation) {
         transform.Rotation += move.Rotation * move.RotationSpeed * delta;
-        game.World.Signature[entity] |= Has.Dirty;
+        game.World.Dirty[entity] |= Has.Transform2D;
 
         move.Rotation = 0;
     }
