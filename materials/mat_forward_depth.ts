@@ -1,6 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {DepthMappingLayout} from "./layout.js";
+import {WorldSpaceLayout} from "./layout.js";
 
 let vertex = `#version 300 es\n
 
@@ -26,7 +26,7 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat_forward_depth(gl: WebGL2RenderingContext): Material<DepthMappingLayout> {
+export function mat_forward_depth(gl: WebGL2RenderingContext): Material<WorldSpaceLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
