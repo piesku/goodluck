@@ -20,7 +20,6 @@ export interface Transform {
     /** Local scale relative to the parent. */
     Scale: Vec3;
     Parent?: Entity;
-    Dirty: boolean;
     /** Ignore parent's rotation and scale? */
     Gyroscope: boolean;
 }
@@ -31,14 +30,13 @@ export function transform(
     scale: Vec3 = [1, 1, 1]
 ) {
     return (game: Game, entity: Entity) => {
-        game.World.Signature[entity] |= Has.Transform;
+        game.World.Signature[entity] |= Has.Transform | Has.Dirty;
         game.World.Transform[entity] = {
             World: create(),
             Self: create(),
             Translation: translation,
             Rotation: rotation,
             Scale: scale,
-            Dirty: true,
             Gyroscope: false,
         };
     };
@@ -50,14 +48,13 @@ export function transform_gyroscope(
     scale: Vec3 = [1, 1, 1]
 ) {
     return (game: Game, entity: Entity) => {
-        game.World.Signature[entity] |= Has.Transform;
+        game.World.Signature[entity] |= Has.Transform | Has.Dirty;
         game.World.Transform[entity] = {
             World: create(),
             Self: create(),
             Translation: translation,
             Rotation: rotation,
             Scale: scale,
-            Dirty: true,
             Gyroscope: true,
         };
     };

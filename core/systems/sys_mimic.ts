@@ -11,10 +11,10 @@ import {Has} from "../world.js";
 const QUERY = Has.Transform | Has.Mimic;
 
 export function sys_mimic(game: Game, delta: number) {
-    for (let i = 0; i < game.World.Signature.length; i++) {
-        if ((game.World.Signature[i] & QUERY) === QUERY) {
-            let follower_transform = game.World.Transform[i];
-            let follower_mimic = game.World.Mimic[i];
+    for (let ent = 0; ent < game.World.Signature.length; ent++) {
+        if ((game.World.Signature[ent] & QUERY) === QUERY) {
+            let follower_transform = game.World.Transform[ent];
+            let follower_mimic = game.World.Mimic[ent];
             let target_transform = game.World.Transform[follower_mimic.Target];
             let target_world_position = get_translation([0, 0, 0], target_transform.World);
             let target_world_rotation = get_rotation([0, 0, 0, 0], target_transform.World);
@@ -31,7 +31,7 @@ export function sys_mimic(game: Game, delta: number) {
                 target_world_rotation,
                 follower_mimic.Stiffness
             );
-            follower_transform.Dirty = true;
+            game.World.Signature[ent] |= Has.Dirty;
         }
     }
 }

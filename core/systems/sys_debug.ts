@@ -57,7 +57,7 @@ function wireframe_invisible(game: Game, entity: Entity) {
         ]);
         let wireframe_transform = game.World.Transform[wireframe_entity];
         wireframe_transform.World = anchor_transform.World;
-        wireframe_transform.Dirty = false;
+        game.World.Signature[wireframe_entity] &= ~Has.Dirty;
         wireframes.set(anchor_transform, {
             entity: wireframe_entity,
             transform: wireframe_transform,
@@ -89,7 +89,7 @@ function wireframe_collider(game: Game, entity: Entity) {
     if (anchor_collide.Dynamic) {
         wireframe.transform.Translation = anchor_collide.Center;
         scale(wireframe.transform.Scale, anchor_collide.Half, 2);
-        wireframe.transform.Dirty = true;
+        game.World.Signature[wireframe.entity] |= Has.Dirty;
     }
 
     let render = game.World.Render[wireframe.entity];

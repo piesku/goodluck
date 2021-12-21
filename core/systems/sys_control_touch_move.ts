@@ -55,7 +55,7 @@ function update(game: Game, entity: Entity) {
         // See sys_control_mouse.
         from_axis(rotation, AXIS_Y, -amount);
         multiply(transform.Rotation, rotation, transform.Rotation);
-        transform.Dirty = true;
+        game.World.Signature[entity] |= Has.Dirty;
     }
 
     if (control.Pitch && game.InputDelta["Touch1Y"]) {
@@ -72,6 +72,6 @@ function update(game: Game, entity: Entity) {
         // Pitch is post-multiplied, i.e. applied relative to the entity's self
         // space; the X axis is always aligned with its left and right sides.
         multiply(transform.Rotation, transform.Rotation, rotation);
-        transform.Dirty = true;
+        game.World.Signature[entity] |= Has.Dirty;
     }
 }

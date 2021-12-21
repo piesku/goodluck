@@ -36,7 +36,7 @@ function update(game: Game, entity: Entity) {
         // Yaw is pre-multiplied, i.e. applied relative to the entity's local
         // space; the Y axis is not affected by its current orientation.
         multiply(transform.Rotation, rotation, transform.Rotation);
-        transform.Dirty = true;
+        game.World.Signature[entity] |= Has.Dirty;
     }
 
     if (control.Pitch && game.InputDelta.MouseY) {
@@ -49,6 +49,6 @@ function update(game: Game, entity: Entity) {
         // Pitch is post-multiplied, i.e. applied relative to the entity's self
         // space; the X axis is always aligned with its left and right sides.
         multiply(transform.Rotation, transform.Rotation, rotation);
-        transform.Dirty = true;
+        game.World.Signature[entity] |= Has.Dirty;
     }
 }

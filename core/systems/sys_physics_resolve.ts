@@ -40,7 +40,7 @@ function update(game: Game, entity: Entity) {
                 // entities. Thus, no need to apply the world → self → local
                 // conversion to the collision response. Local space is world space.
                 add(transform.Translation, transform.Translation, collision.Hit);
-                transform.Dirty = true;
+                game.World.Signature[entity] |= Has.Dirty;
 
                 // Assume mass = 1 for all rigid bodies. On collision,
                 // velocities are swapped, unless the other body is a static

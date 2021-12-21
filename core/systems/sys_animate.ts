@@ -72,7 +72,7 @@ function update(game: Game, entity: Entity, delta: number) {
                 next_keyframe.Translation,
                 interpolant
             );
-            transform.Dirty = true;
+            game.World.Signature[entity] |= Has.Dirty;
         }
 
         if (current_keyframe.Rotation && next_keyframe.Rotation) {
@@ -82,12 +82,12 @@ function update(game: Game, entity: Entity, delta: number) {
                 next_keyframe.Rotation,
                 interpolant
             );
-            transform.Dirty = true;
+            game.World.Signature[entity] |= Has.Dirty;
         }
 
         if (current_keyframe.Scale && next_keyframe.Scale) {
             lerp(transform.Scale, current_keyframe.Scale, next_keyframe.Scale, interpolant);
-            transform.Dirty = true;
+            game.World.Signature[entity] |= Has.Dirty;
         }
     }
 

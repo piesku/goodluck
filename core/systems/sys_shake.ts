@@ -23,5 +23,5 @@ function update(game: Game, entity: Entity) {
 
     transform.Translation = [Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5];
     scale(transform.Translation, transform.Translation, shake.Magnitude * 2);
-    transform.Dirty = true;
+    game.World.Signature[entity] |= Has.Dirty;
 }

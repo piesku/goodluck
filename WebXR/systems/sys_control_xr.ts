@@ -36,7 +36,7 @@ function update(game: Game, entity: Entity) {
         transform.Rotation[1] = pose.transform.orientation.y;
         transform.Rotation[2] = pose.transform.orientation.z;
         transform.Rotation[3] = pose.transform.orientation.w;
-        transform.Dirty = true;
+        game.World.Signature[entity] |= Has.Dirty;
         return;
     }
 
@@ -52,7 +52,7 @@ function update(game: Game, entity: Entity) {
                 transform.Rotation[1] = pose.transform.orientation.y;
                 transform.Rotation[2] = pose.transform.orientation.z;
                 transform.Rotation[3] = pose.transform.orientation.w;
-                transform.Dirty = true;
+                game.World.Signature[entity] |= Has.Dirty;
             }
 
             if (input.gamepad) {
@@ -65,7 +65,7 @@ function update(game: Game, entity: Entity) {
                     let hand_transform = game.World.Transform[hand_entity];
                     hand_transform.Scale[2] = map_range(squeeze.value, 0, 1, 1, 0.5);
                     from_axis(hand_transform.Rotation, AXIS_Y, -squeeze.value);
-                    hand_transform.Dirty = true;
+                    game.World.Signature[hand_entity] |= Has.Dirty;
                 }
             }
         }
@@ -84,7 +84,7 @@ function update(game: Game, entity: Entity) {
                 transform.Rotation[1] = pose.transform.orientation.y;
                 transform.Rotation[2] = pose.transform.orientation.z;
                 transform.Rotation[3] = pose.transform.orientation.w;
-                transform.Dirty = true;
+                game.World.Signature[entity] |= Has.Dirty;
             }
 
             if (input.gamepad) {
@@ -97,7 +97,7 @@ function update(game: Game, entity: Entity) {
                     let hand_transform = game.World.Transform[hand_entity];
                     hand_transform.Scale[2] = map_range(squeeze.value, 0, 1, 1, 0.5);
                     from_axis(hand_transform.Rotation, AXIS_Y, squeeze.value);
-                    hand_transform.Dirty = true;
+                    game.World.Signature[hand_entity] |= Has.Dirty;
                 }
             }
         }

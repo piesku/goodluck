@@ -14,15 +14,13 @@ import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";
 
-const QUERY = Has.Transform;
+const QUERY = Has.Transform | Has.Dirty;
 
 export function sys_transform(game: Game, delta: number) {
-    for (let i = 0; i < game.World.Signature.length; i++) {
-        if ((game.World.Signature[i] & QUERY) === QUERY) {
-            let transform = game.World.Transform[i];
-            if (transform.Dirty) {
-                update_transform(game.World, i, transform);
-            }
+    for (let ent = 0; ent < game.World.Signature.length; ent++) {
+        if ((game.World.Signature[ent] & QUERY) === QUERY) {
+            let transform = game.World.Transform[ent];
+            update_transform(game.World, ent, transform);
         }
     }
 }
@@ -30,7 +28,7 @@ export function sys_transform(game: Game, delta: number) {
 const world_position: Vec3 = [0, 0, 0];
 
 function update_transform(world: World, entity: Entity, transform: Transform) {
-    transform.Dirty = false;
+    world.Signature[entity] &= ~Has.Dirty;
 
     from_rotation_translation_scale(
         transform.World,

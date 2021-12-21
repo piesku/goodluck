@@ -49,7 +49,7 @@ function update(game: Game, entity: Entity, delta: number) {
         // Scale by the amount and distance traveled in this tick.
         scale(move.Direction, move.Direction, amount * move.MoveSpeed * delta);
         add(transform.Translation, transform.Translation, move.Direction);
-        transform.Dirty = true;
+        game.World.Signature[entity] |= Has.Dirty;
         vec3_set(move.Direction, 0, 0, 0);
     }
 
@@ -60,7 +60,7 @@ function update(game: Game, entity: Entity, delta: number) {
 
         // Pre-multiply.
         multiply(transform.Rotation, move.LocalRotation, transform.Rotation);
-        transform.Dirty = true;
+        game.World.Signature[entity] |= Has.Dirty;
         quat_set(move.LocalRotation, 0, 0, 0, 1);
     }
 
@@ -71,7 +71,7 @@ function update(game: Game, entity: Entity, delta: number) {
 
         // Post-multiply.
         multiply(transform.Rotation, transform.Rotation, move.SelfRotation);
-        transform.Dirty = true;
+        game.World.Signature[entity] |= Has.Dirty;
         quat_set(move.SelfRotation, 0, 0, 0, 1);
     }
 }

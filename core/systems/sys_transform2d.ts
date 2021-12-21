@@ -9,15 +9,13 @@ import {Transform2D} from "../components/com_transform2d.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";
 
-const QUERY = Has.Transform2D;
+const QUERY = Has.Transform2D | Has.Dirty;
 
 export function sys_transform2d(game: Game, delta: number) {
-    for (let i = 0; i < game.World.Signature.length; i++) {
-        if ((game.World.Signature[i] & QUERY) === QUERY) {
-            let transform = game.World.Transform2D[i];
-            if (transform.Dirty) {
-                update_transform(game.World, i, transform);
-            }
+    for (let ent = 0; ent < game.World.Signature.length; ent++) {
+        if ((game.World.Signature[ent] & QUERY) === QUERY) {
+            let transform = game.World.Transform2D[ent];
+            update_transform(game.World, ent, transform);
         }
     }
 }
@@ -25,7 +23,7 @@ export function sys_transform2d(game: Game, delta: number) {
 const world_position: Vec2 = [0, 0];
 
 function update_transform(world: World, entity: Entity, transform: Transform2D) {
-    transform.Dirty = false;
+    world.Signature[entity] &= ~Has.Dirty;
 
     compose(transform.World, transform.Translation, transform.Rotation, transform.Scale);
 

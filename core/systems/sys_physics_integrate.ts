@@ -36,7 +36,7 @@ function update(game: Game, entity: Entity, delta: number) {
         let vel_delta: Vec3 = [0, 0, 0];
         scale(vel_delta, rigid_body.VelocityIntegrated, delta);
         add(transform.Translation, transform.Translation, vel_delta);
-        transform.Dirty = true;
+        game.World.Signature[entity] |= Has.Dirty;
 
         // Reset force/acceleration.
         set(rigid_body.Acceleration, 0, 0, 0);
