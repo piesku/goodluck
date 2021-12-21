@@ -16,7 +16,6 @@ import {mesh_icosphere_smooth} from "../meshes/icosphere_smooth.js";
 import {mesh_quad} from "../meshes/quad.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_always} from "./systems/sys_control_always.js";
-import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_render_deferred} from "./systems/sys_render_deferred.js";
 import {sys_render_depth} from "./systems/sys_render_depth.js";
@@ -71,7 +70,6 @@ export class Game extends Game3D {
         sys_move(this, delta);
         sys_transform(this, delta);
 
-        sys_light(this, delta);
         sys_render_depth(this, delta);
         sys_render_deferred(this, delta);
         sys_render_shading(this, delta);

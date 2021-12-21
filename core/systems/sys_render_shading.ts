@@ -1,15 +1,18 @@
 /**
- * @module systems/sys_render_postprocess
+ * @module systems/sys_render_shading
  */
 
 import {
     GL_ARRAY_BUFFER,
+    GL_BLEND,
     GL_COLOR_BUFFER_BIT,
     GL_CW,
     GL_DEPTH_BUFFER_BIT,
+    GL_DEPTH_TEST,
     GL_ELEMENT_ARRAY_BUFFER,
     GL_FLOAT,
     GL_FRAMEBUFFER,
+    GL_ONE,
     GL_TEXTURE0,
     GL_TEXTURE1,
     GL_TEXTURE2,
@@ -21,15 +24,21 @@ import {
 } from "../../common/webgl.js";
 import {first_having} from "../../common/world.js";
 import {CameraKind} from "../components/com_camera.js";
+import {LightKind} from "../components/com_light.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
+
+const QUERY = Has.Light | Has.Transform;
 
 export function sys_render_shading(game: Game, delta: number) {
     game.Gl.bindFramebuffer(GL_FRAMEBUFFER, game.Targets.Shaded.Framebuffer);
     game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
-    game.Gl.clearColor(0.9, 0.9, 0.9, 1);
+    game.Gl.clearColor(0, 0, 0, 1);
     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     game.Gl.frontFace(GL_CW);
+    game.Gl.blendFunc(GL_ONE, GL_ONE);
+    game.Gl.enable(GL_BLEND);
+    game.Gl.disable(GL_DEPTH_TEST);
 
     let camera_entity = game.Cameras[0];
     let camera = game.World.Camera[camera_entity];
@@ -42,9 +51,8 @@ export function sys_render_shading(game: Game, delta: number) {
     let target = game.Targets.Gbuffer;
 
     game.Gl.useProgram(material.Program);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, camera.Pv);
     game.Gl.uniform3fv(material.Locations.Eye, camera.Position);
-    game.Gl.uniform4fv(material.Locations.LightPositions, game.LightPositions);
-    game.Gl.uniform4fv(material.Locations.LightDetails, game.LightDetails);
 
     game.Gl.activeTexture(GL_TEXTURE0);
     game.Gl.bindTexture(GL_TEXTURE_2D, target.DiffuseTexture);
@@ -84,10 +92,34 @@ export function sys_render_shading(game: Game, delta: number) {
     game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
     game.Gl.vertexAttribPointer(material.Locations.VertexPosition, 3, GL_FLOAT, false, 0, 0);
 
-    game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.TexCoordBuffer);
-    game.Gl.enableVertexAttribArray(material.Locations.VertexTexcoord);
-    game.Gl.vertexAttribPointer(material.Locations.VertexTexcoord, 2, GL_FLOAT, false, 0, 0);
-
     game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
-    game.Gl.drawElements(material.Mode, mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
+
+    for (let ent = 0; ent < game.World.Signature.length; ent++) {
+        if ((game.World.Signature[ent] & QUERY) === QUERY) {
+            let transform = game.World.Transform[ent];
+            let light = game.World.Light[ent];
+
+            if (light.Kind === LightKind.Point) {
+                game.Gl.uniformMatrix4fv(material.Locations.World, false, transform.World);
+                game.Gl.uniform3f(
+                    material.Locations.LightPositions,
+                    transform.World[12],
+                    transform.World[13],
+                    transform.World[14]
+                );
+                game.Gl.uniform4f(
+                    material.Locations.LightDetails,
+                    light.Color[0],
+                    light.Color[1],
+                    light.Color[2],
+                    light.Intensity
+                );
+
+                game.Gl.drawElements(material.Mode, mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
+            }
+        }
+    }
+
+    game.Gl.enable(GL_DEPTH_TEST);
+    game.Gl.disable(GL_BLEND);
 }

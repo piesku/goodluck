@@ -70,7 +70,6 @@ export interface DeferredPostprocessLayout {
 
     // Attributes
     VertexPosition: GLint;
-    VertexTexcoord: GLint;
 }
 
 export interface PostprocessLayout {

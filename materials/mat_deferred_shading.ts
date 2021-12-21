@@ -1,16 +1,24 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {DeferredPostprocessLayout, ForwardShadingLayout, ShadowMappingLayout} from "./layout.js";
+import {
+    DeferredPostprocessLayout,
+    ForwardShadingLayout,
+    ShadowMappingLayout,
+    WorldSpaceLayout,
+} from "./layout.js";
 
 let vertex = `#version 300 es\n
-    in vec4 attr_position;
-    in vec2 attr_texcoord;
+    uniform mat4 pv;
+    uniform mat4 world;
 
-    out vec2 vert_texcoord;
+    in vec4 attr_position;
+
+    out vec4 vert_position;
 
     void main() {
-        gl_Position = attr_position;
-        vert_texcoord = attr_texcoord;
+        // TODO: Billboard.
+        vert_position = pv * world * attr_position;
+        gl_Position = vert_position;
     }
 `;
 
@@ -18,20 +26,18 @@ let fragment = `#version 300 es\n
     precision mediump float;
     precision lowp sampler2DShadow;
 
-    const int MAX_LIGHTS = 64;
-
     uniform vec3 eye;
     uniform sampler2D diffuse_map;
     uniform sampler2D specular_map;
     uniform sampler2D position_map;
     uniform sampler2D normal_map;
     uniform sampler2D depth_map;
-    uniform vec4 light_positions[MAX_LIGHTS];
-    uniform vec4 light_details[MAX_LIGHTS];
+    uniform vec3 light_positions;
+    uniform vec4 light_details;
     uniform mat4 shadow_space;
     uniform sampler2DShadow shadow_map;
 
-    in vec2 vert_texcoord;
+    in vec4 vert_position;
 
     out vec4 frag_color;
 
@@ -50,44 +56,31 @@ let fragment = `#version 300 es\n
     }
 
     void main() {
-        vec3 current_normal = texture(normal_map, vert_texcoord).xyz;
+        vec2 uv = vert_position.xy / vert_position.w * 0.5 + 0.5;
+        vec3 current_normal = texture(normal_map, uv).xyz;
         if (current_normal == vec3(0.0, 0.0, 0.0)) {
             // "Black" normals identify fragments with no renderable objects; clear color them.
             discard;
         }
 
-        vec4 current_diffuse = texture(diffuse_map, vert_texcoord);
-        vec4 current_specular = texture(specular_map, vert_texcoord);
-        vec4 current_position = texture(position_map, vert_texcoord);
+        vec4 current_diffuse = texture(diffuse_map, uv);
+        vec4 current_specular = texture(specular_map, uv);
+        vec4 current_position = texture(position_map, uv);
 
         vec3 view_dir = eye - current_position.xyz;
         vec3 view_normal = normalize(view_dir);
 
-        // Ambient light.
-        vec3 light_acc = current_diffuse.rgb * 0.1;
+        vec3 light_acc = vec3(0.0);
 
-        for (int i = 0; i < MAX_LIGHTS; i++) {
-            int light_kind = int(light_positions[i].w);
-            if (light_kind == 0) {
-                // The first inactive light means we're done.
-                break;
-            }
+            vec3 light_rgb = light_details.rgb;
+            float light_intensity = light_details.a;
 
-            vec3 light_rgb = light_details[i].rgb;
-            float light_intensity = light_details[i].a;
-
-            vec3 light_normal;
-            if (light_kind == 1) {
-                // Directional light.
-                light_normal = light_positions[i].xyz;
-            } else if (light_kind == 2) {
                 // Point light.
-                vec3 light_dir = light_positions[i].xyz - current_position.xyz;
+                vec3 light_dir = light_positions.xyz - current_position.xyz;
                 float light_dist = length(light_dir);
-                light_normal = light_dir / light_dist;
+                vec3 light_normal = light_dir / light_dist;
                 // Distance attenuation.
                 light_intensity /= (light_dist * light_dist);
-            }
 
             float diffuse_factor = dot(current_normal, light_normal);
             if (diffuse_factor > 0.0) {
@@ -104,7 +97,6 @@ let fragment = `#version 300 es\n
                     light_acc += current_specular.rgb * specular_factor * light_rgb * light_intensity;
                 }
             }
-        }
 
         vec3 shaded_rgb = light_acc * shadow_factor(current_position, 0.5);
         frag_color = vec4(shaded_rgb, 1.0);
@@ -113,12 +105,17 @@ let fragment = `#version 300 es\n
 
 export function mat_deferred_shading(
     gl: WebGL2RenderingContext
-): Material<DeferredPostprocessLayout & ForwardShadingLayout & ShadowMappingLayout> {
+): Material<
+    DeferredPostprocessLayout & WorldSpaceLayout & ForwardShadingLayout & ShadowMappingLayout
+> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
         Program: program,
         Locations: {
+            Pv: gl.getUniformLocation(program, "pv")!,
+            World: gl.getUniformLocation(program, "world")!,
+
             DiffuseMap: gl.getUniformLocation(program, "diffuse_map")!,
             SpecularMap: gl.getUniformLocation(program, "specular_map")!,
             PositionMap: gl.getUniformLocation(program, "position_map")!,
@@ -133,7 +130,6 @@ export function mat_deferred_shading(
             ShadowMap: gl.getUniformLocation(program, "shadow_map")!,
 
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
-            VertexTexcoord: gl.getAttribLocation(program, "attr_texcoord")!,
         },
     };
 }
