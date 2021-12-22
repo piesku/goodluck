@@ -8,7 +8,7 @@ import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.Transform2D | Has.Move2D;
+const QUERY = Has.Transform2D | Has.Move2D | Has.Dirty;
 
 export function sys_move2d(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
@@ -50,7 +50,6 @@ function update(game: Game, entity: Entity, delta: number) {
         scale(direction, direction, amount * move.MoveSpeed * delta);
 
         add(transform.Translation, transform.Translation, direction);
-        game.World.Signature[entity] |= Has.Dirty;
 
         move.Direction[0] = 0;
         move.Direction[1] = 0;
@@ -58,7 +57,6 @@ function update(game: Game, entity: Entity, delta: number) {
 
     if (move.Rotation) {
         transform.Rotation += move.Rotation * move.RotationSpeed * delta;
-        game.World.Signature[entity] |= Has.Dirty;
 
         move.Rotation = 0;
     }

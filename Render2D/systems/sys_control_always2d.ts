@@ -1,5 +1,5 @@
 /**
- * @module systems/sys_control_always
+ * @module systems/sys_control_always2d
  */
 
 import {Entity} from "../../common/world.js";
@@ -23,9 +23,11 @@ function update(game: Game, entity: Entity) {
     if (control.Direction) {
         move.Direction[0] = control.Direction[0];
         move.Direction[1] = control.Direction[1];
+        game.World.Signature[entity] |= Has.Dirty;
     }
 
     if (control.Rotation) {
         move.Rotation = control.Rotation;
+        game.World.Signature[entity] |= Has.Dirty;
     }
 }

@@ -1,5 +1,5 @@
 /**
- * @module systems/sys_control_always
+ * @module systems/sys_control_player
  */
 
 import {get_translation} from "../../common/mat2d.js";
