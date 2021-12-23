@@ -64,7 +64,7 @@ let fragment = `#version 300 es\n
             float light_intensity = light_details[i].a;
 
             vec3 light_normal;
-            if (light_positions[i].w == 1.0) {
+            if (light_positions[i].w == 2.0) {
                 // Directional light.
                 light_normal = light_positions[i].xyz;
             } else {

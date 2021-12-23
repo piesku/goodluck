@@ -7,12 +7,30 @@ import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-export type Light = LightDirectional | LightPoint;
+export type Light = LightAmbient | LightDirectional | LightPoint;
 
 export const enum LightKind {
     Inactive,
+    Ambient,
     Directional,
     Point,
+}
+
+export interface LightAmbient {
+    Kind: LightKind.Ambient;
+    Color: Vec3;
+    Intensity: number;
+}
+
+export function light_ambient(color: Vec3 = [1, 1, 1], intensity: number = 0.2) {
+    return (game: Game, entity: Entity) => {
+        game.World.Signature[entity] |= Has.Light;
+        game.World.Light[entity] = {
+            Kind: LightKind.Ambient,
+            Color: color,
+            Intensity: intensity,
+        };
+    };
 }
 
 export interface LightDirectional {

@@ -19,8 +19,8 @@ let vertex = `#version 300 es\n
 
     void main() {
         light_position = world[3];
-        if (light_kind == 1) {
-            // Directional light.
+        if (light_kind < 3) {
+            // Ambient or directional light.
             vert_position = attr_position;
         } else {
             // Point light.
@@ -87,6 +87,12 @@ let fragment = `#version 300 es\n
         vec3 light_normal;
 
         if (light_kind == 1) {
+            // Ambient light.
+            frag_color = current_diffuse * vec4(light_rgb, 1.0) * light_intensity;
+            return;
+        }
+
+        if (light_kind == 2) {
             // Directional light.
             light_normal = normalize(light_position.xyz);
         } else {

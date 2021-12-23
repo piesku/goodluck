@@ -33,7 +33,7 @@ export function scene_stage(game: Game) {
 
     // Tower.
     instantiate(game, [
-        transform([-5, 5, 0], undefined, [2, 10, 2]),
+        transform([-5, 4, 0], undefined, [2, 8, 2]),
         render_colored_deferred(game.MaterialColored, game.MeshCube, [1, 1, 1, 1]),
     ]);
 

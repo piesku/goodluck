@@ -114,6 +114,7 @@ export function sys_render_shading(game: Game, delta: number) {
 
             let mesh: Mesh;
             switch (light.Kind) {
+                case LightKind.Ambient:
                 case LightKind.Directional:
                     mesh = game.MeshQuad;
                     break;
