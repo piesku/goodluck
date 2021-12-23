@@ -41,16 +41,20 @@ export interface MappedShadedLayout extends WorldSpaceLayout, CorrectNormalsLayo
     DiffuseColor: WebGLUniformLocation;
     NormalMap: WebGLUniformLocation;
     RoughnessMap: WebGLUniformLocation;
-
     VertexTexCoord: GLint;
     VertexTangent: GLint;
     VertexBitangent: GLint;
 }
 
 export interface ForwardShadingLayout {
-    // Uniforms
     Eye: WebGLUniformLocation;
     LightPositions: WebGLUniformLocation;
+    LightDetails: WebGLUniformLocation;
+}
+
+export interface DeferredShadingLayout {
+    Eye: WebGLUniformLocation;
+    LightKind: WebGLUniformLocation;
     LightDetails: WebGLUniformLocation;
 }
 

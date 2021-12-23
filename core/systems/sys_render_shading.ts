@@ -2,6 +2,7 @@
  * @module systems/sys_render_shading
  */
 
+import {Mesh} from "../../common/mesh.js";
 import {
     GL_ARRAY_BUFFER,
     GL_BLEND,
@@ -61,7 +62,6 @@ export function sys_render_shading(game: Game, delta: number) {
     }
 
     let material = game.MaterialShading;
-    let mesh = game.MeshSphereSmooth;
     let target = game.Targets.Gbuffer;
 
     game.Gl.useProgram(material.Program);
@@ -102,35 +102,42 @@ export function sys_render_shading(game: Game, delta: number) {
         game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, light_camera.Pv);
     }
 
-    game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
-    game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
-    game.Gl.vertexAttribPointer(material.Locations.VertexPosition, 3, GL_FLOAT, false, 0, 0);
-
-    game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
-
+    let current_mesh: Mesh | undefined;
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
         if ((game.World.Signature[ent] & QUERY) === QUERY) {
             let transform = game.World.Transform[ent];
             let light = game.World.Light[ent];
 
-            if (light.Kind === LightKind.Point) {
-                game.Gl.uniformMatrix4fv(material.Locations.World, false, transform.World);
-                game.Gl.uniform3f(
-                    material.Locations.LightPositions,
-                    transform.World[12],
-                    transform.World[13],
-                    transform.World[14]
-                );
-                game.Gl.uniform4f(
-                    material.Locations.LightDetails,
-                    light.Color[0],
-                    light.Color[1],
-                    light.Color[2],
-                    light.Intensity
-                );
+            game.Gl.uniformMatrix4fv(material.Locations.World, false, transform.World);
+            game.Gl.uniform1i(material.Locations.LightKind, light.Kind);
+            game.Gl.uniform4f(material.Locations.LightDetails, ...light.Color, light.Intensity);
 
-                game.Gl.drawElements(material.Mode, mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
+            let mesh: Mesh;
+            switch (light.Kind) {
+                case LightKind.Directional:
+                    mesh = game.MeshQuad;
+                    break;
+                case LightKind.Point:
+                    mesh = game.MeshSphereSmooth;
+                    break;
             }
+
+            if (current_mesh !== mesh) {
+                current_mesh = mesh;
+                game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
+                game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
+                game.Gl.vertexAttribPointer(
+                    material.Locations.VertexPosition,
+                    3,
+                    GL_FLOAT,
+                    false,
+                    0,
+                    0
+                );
+                game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
+            }
+
+            game.Gl.drawElements(material.Mode, mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
         }
     }
 

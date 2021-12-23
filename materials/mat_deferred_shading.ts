@@ -2,7 +2,7 @@ import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
 import {
     DeferredPostprocessLayout,
-    ForwardShadingLayout,
+    DeferredShadingLayout,
     ShadowMappingLayout,
     WorldSpaceLayout,
 } from "./layout.js";
@@ -10,14 +10,23 @@ import {
 let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
+    uniform lowp int light_kind;
 
     in vec4 attr_position;
 
+    out vec4 light_position;
     out vec4 vert_position;
 
     void main() {
-        // TODO: Billboard.
-        vert_position = pv * world * attr_position;
+        light_position = world[3];
+        if (light_kind == 1) {
+            // Directional light.
+            vert_position = attr_position;
+        } else {
+            // Point light.
+            vert_position = pv * world * attr_position;
+        }
+
         gl_Position = vert_position;
     }
 `;
@@ -32,11 +41,12 @@ let fragment = `#version 300 es\n
     uniform sampler2D position_map;
     uniform sampler2D normal_map;
     uniform sampler2D depth_map;
-    uniform vec3 light_positions;
-    uniform vec4 light_details;
+    uniform lowp int light_kind;
+    uniform vec4 light_details; // rgb, a: intensity
     uniform mat4 shadow_space;
     uniform sampler2DShadow shadow_map;
 
+    in vec4 light_position;
     in vec4 vert_position;
 
     out vec4 frag_color;
@@ -70,33 +80,39 @@ let fragment = `#version 300 es\n
         vec3 view_dir = eye - current_position.xyz;
         vec3 view_normal = normalize(view_dir);
 
+        vec3 light_rgb = light_details.rgb;
+        float light_intensity = light_details.a;
+
         vec3 light_acc = vec3(0.0);
+        vec3 light_normal;
 
-            vec3 light_rgb = light_details.rgb;
-            float light_intensity = light_details.a;
+        if (light_kind == 1) {
+            // Directional light.
+            light_normal = normalize(light_position.xyz);
+        } else {
+            // Point light.
+            vec3 light_dir = light_position.xyz - current_position.xyz;
+            float light_dist = length(light_dir);
+            light_normal = light_dir / light_dist;
+            // Distance attenuation.
+            light_intensity /= (light_dist * light_dist);
+        }
 
-                // Point light.
-                vec3 light_dir = light_positions.xyz - current_position.xyz;
-                float light_dist = length(light_dir);
-                vec3 light_normal = light_dir / light_dist;
-                // Distance attenuation.
-                light_intensity /= (light_dist * light_dist);
+        float diffuse_factor = dot(current_normal, light_normal);
+        if (diffuse_factor > 0.0) {
+            // Diffuse color.
+            light_acc += current_diffuse.rgb * diffuse_factor * light_rgb * light_intensity;
 
-            float diffuse_factor = dot(current_normal, light_normal);
-            if (diffuse_factor > 0.0) {
-                // Diffuse color.
-                light_acc += current_diffuse.rgb * diffuse_factor * light_rgb * light_intensity;
+            if (current_specular.a > 0.0) {
+                // For non-zero shininess, apply the Blinn-Phong reflection model.
+                vec3 h = normalize(light_normal + view_normal);
+                float specular_angle = max(dot(h, current_normal), 0.0);
+                float specular_factor = pow(specular_angle, current_specular.a);
 
-                if (current_specular.a > 0.0) {
-                    // For non-zero shininess, apply the Blinn-Phong reflection model.
-                    vec3 h = normalize(light_normal + view_normal);
-                    float specular_angle = max(dot(h, current_normal), 0.0);
-                    float specular_factor = pow(specular_angle, current_specular.a);
-
-                    // Specular color.
-                    light_acc += current_specular.rgb * specular_factor * light_rgb * light_intensity;
-                }
+                // Specular color.
+                light_acc += current_specular.rgb * specular_factor * light_rgb * light_intensity;
             }
+        }
 
         vec3 shaded_rgb = light_acc * shadow_factor(current_position, 0.5);
         frag_color = vec4(shaded_rgb, 1.0);
@@ -106,7 +122,7 @@ let fragment = `#version 300 es\n
 export function mat_deferred_shading(
     gl: WebGL2RenderingContext
 ): Material<
-    DeferredPostprocessLayout & WorldSpaceLayout & ForwardShadingLayout & ShadowMappingLayout
+    DeferredPostprocessLayout & WorldSpaceLayout & DeferredShadingLayout & ShadowMappingLayout
 > {
     let program = link(gl, vertex, fragment);
     return {
@@ -123,7 +139,7 @@ export function mat_deferred_shading(
             DepthMap: gl.getUniformLocation(program, "depth_map")!,
 
             Eye: gl.getUniformLocation(program, "eye")!,
-            LightPositions: gl.getUniformLocation(program, "light_positions")!,
+            LightKind: gl.getUniformLocation(program, "light_kind")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
 
             ShadowSpace: gl.getUniformLocation(program, "shadow_space")!,
