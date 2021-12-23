@@ -31,10 +31,16 @@ export function scene_stage(game: Game) {
         render_colored_deferred(game.MaterialColored, game.MeshCube, [1, 1, 1, 1]),
     ]);
 
+    // Tower.
+    instantiate(game, [
+        transform([-5, 5, 0], undefined, [2, 10, 2]),
+        render_colored_deferred(game.MaterialColored, game.MeshCube, [1, 1, 1, 1]),
+    ]);
+
     for (let i = 0; i < 100; i++) {
         let range = 1;
         // TODO: Auto-compute scale from the light's range.
-        let scale = (range ** 2 / 0.1) ** 0.5;
+        let scale = (range ** 2 / 0.02) ** 0.5 * 2;
         instantiate(game, [
             transform([float(-8, 8), 3, float(-8, 8)], undefined, [scale, scale, scale]),
             light_point([float(), float(), float()], range),

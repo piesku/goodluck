@@ -8,11 +8,12 @@ import {
     GL_COLOR_BUFFER_BIT,
     GL_CW,
     GL_DEPTH_BUFFER_BIT,
-    GL_DEPTH_TEST,
+    GL_DRAW_FRAMEBUFFER,
     GL_ELEMENT_ARRAY_BUFFER,
     GL_FLOAT,
-    GL_FRAMEBUFFER,
+    GL_NEAREST,
     GL_ONE,
+    GL_READ_FRAMEBUFFER,
     GL_TEXTURE0,
     GL_TEXTURE1,
     GL_TEXTURE2,
@@ -31,14 +32,27 @@ import {Has} from "../world.js";
 const QUERY = Has.Light | Has.Transform;
 
 export function sys_render_shading(game: Game, delta: number) {
-    game.Gl.bindFramebuffer(GL_FRAMEBUFFER, game.Targets.Shaded.Framebuffer);
-    game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
+    game.Gl.bindFramebuffer(GL_READ_FRAMEBUFFER, game.Targets.Gbuffer.Framebuffer);
+    game.Gl.bindFramebuffer(GL_DRAW_FRAMEBUFFER, game.Targets.Shaded.Framebuffer);
+    game.Gl.blitFramebuffer(
+        0,
+        0,
+        game.Targets.Gbuffer.Width,
+        game.Targets.Gbuffer.Height,
+        0,
+        0,
+        game.Targets.Shaded.Width,
+        game.Targets.Shaded.Height,
+        GL_DEPTH_BUFFER_BIT,
+        GL_NEAREST
+    );
+    game.Gl.viewport(0, 0, game.Targets.Shaded.Width, game.Targets.Shaded.Height);
     game.Gl.clearColor(0, 0, 0, 1);
-    game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    game.Gl.clear(GL_COLOR_BUFFER_BIT);
     game.Gl.frontFace(GL_CW);
     game.Gl.blendFunc(GL_ONE, GL_ONE);
     game.Gl.enable(GL_BLEND);
-    game.Gl.disable(GL_DEPTH_TEST);
+    game.Gl.depthMask(false);
 
     let camera_entity = game.Cameras[0];
     let camera = game.World.Camera[camera_entity];
@@ -47,7 +61,7 @@ export function sys_render_shading(game: Game, delta: number) {
     }
 
     let material = game.MaterialShading;
-    let mesh = game.MeshQuad;
+    let mesh = game.MeshSphereSmooth;
     let target = game.Targets.Gbuffer;
 
     game.Gl.useProgram(material.Program);
@@ -120,6 +134,6 @@ export function sys_render_shading(game: Game, delta: number) {
         }
     }
 
-    game.Gl.enable(GL_DEPTH_TEST);
+    game.Gl.depthMask(true);
     game.Gl.disable(GL_BLEND);
 }
