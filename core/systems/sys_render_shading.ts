@@ -93,21 +93,25 @@ export function sys_render_shading(game: Game, delta: number) {
             let transform = game.World.Transform[ent];
             let light = game.World.Light[ent];
 
-            game.Gl.uniformMatrix4fv(material.Locations.World, false, transform.World);
-            game.Gl.uniform1i(material.Locations.LightKind, light.Kind);
-            game.Gl.uniform4f(material.Locations.LightDetails, ...light.Color, light.Intensity);
-
+            let light_is_shadow_source: number;
             if (game.World.Signature[ent] & Has.Camera) {
+                light_is_shadow_source = 1;
                 let camera = game.World.Camera[ent];
                 if (camera.Kind !== CameraKind.Depth) {
-                    throw new Error("Only depth camera can be shadow sources.");
+                    throw new Error("Only depth cameras can be shadow sources.");
                 }
                 game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, camera.Pv);
 
                 game.Gl.activeTexture(GL_TEXTURE5);
                 game.Gl.bindTexture(GL_TEXTURE_2D, camera.Target.DepthTexture);
                 game.Gl.uniform1i(material.Locations.ShadowMap, 5);
+            } else {
+                light_is_shadow_source = 0;
             }
+
+            game.Gl.uniformMatrix4fv(material.Locations.World, false, transform.World);
+            game.Gl.uniform2i(material.Locations.LightKind, light.Kind, light_is_shadow_source);
+            game.Gl.uniform4f(material.Locations.LightDetails, ...light.Color, light.Intensity);
 
             let mesh: Mesh;
             switch (light.Kind) {

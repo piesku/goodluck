@@ -26,7 +26,7 @@ export function scene_stage(game: Game) {
     ]);
 
     // Backlight.
-    instantiate(game, [transform([-1, -1, 1]), light_directional([1, 0, 0], 0.2)]);
+    instantiate(game, [transform([-1, 1, 1]), light_directional([1, 1, 0], 0.2)]);
 
     // Ground.
     instantiate(game, [
@@ -41,11 +41,11 @@ export function scene_stage(game: Game) {
     ]);
 
     for (let i = 0; i < 100; i++) {
-        let range = 1;
+        let range = float(0.5, 1);
         // TODO: Auto-compute scale from the light's range.
         let scale = (range ** 2 / 0.02) ** 0.5 * 2;
         instantiate(game, [
-            transform([float(-8, 8), 3, float(-8, 8)], undefined, [scale, scale, scale]),
+            transform([float(-8, 8), float(3, 5), float(-8, 8)], undefined, [scale, scale, scale]),
             light_point([float(), float(), float()], range),
         ]);
     }

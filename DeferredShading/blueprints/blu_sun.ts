@@ -13,7 +13,7 @@ export function blueprint_sun(game: Game) {
         children(
             [
                 transform([0, 0, 10]),
-                light_directional([1, 1, 1], 0.5),
+                light_directional([1, 1, 1], 0.4),
                 camera_depth_ortho(game.Targets.Sun, 15, 1, 100),
             ],
             [transform(), light_ambient([1, 1, 1], 0.1)]

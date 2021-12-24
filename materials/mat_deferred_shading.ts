@@ -10,7 +10,7 @@ import {
 let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
-    uniform lowp int light_kind;
+    uniform lowp ivec2 light_kind; // x: kind, y: is shadow source
 
     in vec4 attr_position;
 
@@ -19,7 +19,7 @@ let vertex = `#version 300 es\n
 
     void main() {
         light_position = world[3];
-        if (light_kind < 3) {
+        if (light_kind.x < 3) {
             // Ambient or directional light.
             vert_position = attr_position;
         } else {
@@ -41,7 +41,7 @@ let fragment = `#version 300 es\n
     uniform sampler2D position_map;
     uniform sampler2D normal_map;
     uniform sampler2D depth_map;
-    uniform lowp int light_kind;
+    uniform lowp ivec2 light_kind; // x: kind, y: is shadow source
     uniform vec4 light_details; // rgb, a: intensity
     uniform mat4 shadow_space;
     uniform sampler2DShadow shadow_map;
@@ -83,7 +83,7 @@ let fragment = `#version 300 es\n
         vec3 light_rgb = light_details.rgb;
         float light_intensity = light_details.a;
 
-        if (light_kind == 1) {
+        if (light_kind.x == 1) {
             // Ambient light.
             frag_color = current_diffuse * vec4(light_rgb, 1.0) * light_intensity;
             return;
@@ -92,7 +92,7 @@ let fragment = `#version 300 es\n
         vec3 light_acc = vec3(0.0);
         vec3 light_normal;
 
-        if (light_kind == 2) {
+        if (light_kind.x == 2) {
             // Directional light.
             light_normal = normalize(light_position.xyz);
         } else {
@@ -120,8 +120,9 @@ let fragment = `#version 300 es\n
             }
         }
 
-        if (light_kind == 2) {
-            vec3 shaded_rgb = light_acc * shadow_factor(current_position, 0.5);
+        if (light_kind.y == 1) {
+            // The light is a shadow source.
+            vec3 shaded_rgb = light_acc * shadow_factor(current_position, 0.0);
             frag_color = vec4(shaded_rgb, 1.0);
         } else {
             frag_color = vec4(light_acc, 1.0);
