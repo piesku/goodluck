@@ -24,7 +24,6 @@ import {
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {first_having} from "../../common/world.js";
 import {CameraKind} from "../components/com_camera.js";
 import {LightKind} from "../components/com_light.js";
 import {Game} from "../game.js";
@@ -88,20 +87,6 @@ export function sys_render_shading(game: Game, delta: number) {
     game.Gl.bindTexture(GL_TEXTURE_2D, target.DepthTexture);
     game.Gl.uniform1i(material.Locations.DepthMap, 4);
 
-    game.Gl.activeTexture(GL_TEXTURE5);
-    game.Gl.bindTexture(GL_TEXTURE_2D, game.Targets.Sun.DepthTexture);
-    game.Gl.uniform1i(material.Locations.ShadowMap, 5);
-
-    // Only one shadow source is supported.
-    let light_entity = first_having(game.World, Has.Camera | Has.Light);
-    if (light_entity) {
-        let light_camera = game.World.Camera[light_entity];
-        if (light_camera.Kind === CameraKind.Xr) {
-            throw new Error("XR cameras cannot be shadow sources.");
-        }
-        game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, light_camera.Pv);
-    }
-
     let current_mesh: Mesh | undefined;
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
         if ((game.World.Signature[ent] & QUERY) === QUERY) {
@@ -111,6 +96,18 @@ export function sys_render_shading(game: Game, delta: number) {
             game.Gl.uniformMatrix4fv(material.Locations.World, false, transform.World);
             game.Gl.uniform1i(material.Locations.LightKind, light.Kind);
             game.Gl.uniform4f(material.Locations.LightDetails, ...light.Color, light.Intensity);
+
+            if (game.World.Signature[ent] & Has.Camera) {
+                let camera = game.World.Camera[ent];
+                if (camera.Kind !== CameraKind.Depth) {
+                    throw new Error("Only depth camera can be shadow sources.");
+                }
+                game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, camera.Pv);
+
+                game.Gl.activeTexture(GL_TEXTURE5);
+                game.Gl.bindTexture(GL_TEXTURE_2D, camera.Target.DepthTexture);
+                game.Gl.uniform1i(material.Locations.ShadowMap, 5);
+            }
 
             let mesh: Mesh;
             switch (light.Kind) {

@@ -83,14 +83,14 @@ let fragment = `#version 300 es\n
         vec3 light_rgb = light_details.rgb;
         float light_intensity = light_details.a;
 
-        vec3 light_acc = vec3(0.0);
-        vec3 light_normal;
-
         if (light_kind == 1) {
             // Ambient light.
             frag_color = current_diffuse * vec4(light_rgb, 1.0) * light_intensity;
             return;
         }
+
+        vec3 light_acc = vec3(0.0);
+        vec3 light_normal;
 
         if (light_kind == 2) {
             // Directional light.
@@ -120,8 +120,12 @@ let fragment = `#version 300 es\n
             }
         }
 
-        vec3 shaded_rgb = light_acc * shadow_factor(current_position, 0.5);
-        frag_color = vec4(shaded_rgb, 1.0);
+        if (light_kind == 2) {
+            vec3 shaded_rgb = light_acc * shadow_factor(current_position, 0.5);
+            frag_color = vec4(shaded_rgb, 1.0);
+        } else {
+            frag_color = vec4(light_acc, 1.0);
+        }
     }
 `;
 
