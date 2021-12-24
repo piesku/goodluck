@@ -3,7 +3,7 @@ import {from_euler} from "../../common/quat.js";
 import {element, float} from "../../common/random.js";
 import {blueprint_camera_main} from "../blueprints/blu_camera_main.js";
 import {blueprint_sun} from "../blueprints/blu_sun.js";
-import {light_directional, light_point} from "../components/com_light.js";
+import {light_point} from "../components/com_light.js";
 import {render_colored_deferred} from "../components/com_render.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
@@ -24,9 +24,6 @@ export function scene_stage(game: Game) {
         transform(undefined, from_euler([0, 0, 0, 0], -45, 45, 0)),
         ...blueprint_sun(game),
     ]);
-
-    // Backlight.
-    instantiate(game, [transform([-1, 1, 1]), light_directional([1, 1, 0], 0.2)]);
 
     // Ground.
     instantiate(game, [

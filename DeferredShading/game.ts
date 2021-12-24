@@ -41,6 +41,7 @@ export class Game extends Game3D {
         Gbuffer: DeferredTarget;
         Shaded: ForwardTarget;
         Sun: DepthTarget;
+        Back: DepthTarget;
     };
     Textures: Record<string, WebGLTexture> = {};
 
@@ -58,6 +59,7 @@ export class Game extends Game3D {
             Gbuffer: create_deferred_target(this.Gl, this.ViewportWidth, this.ViewportHeight),
             Shaded: create_forward_target(this.Gl, this.ViewportWidth, this.ViewportHeight),
             Sun: create_depth_target(this.Gl, 1024, 1024),
+            Back: create_depth_target(this.Gl, 256, 256),
         };
     }
 
