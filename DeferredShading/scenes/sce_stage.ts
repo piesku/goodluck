@@ -1,10 +1,13 @@
 import {instantiate} from "../../common/game.js";
 import {from_euler} from "../../common/quat.js";
 import {element, float} from "../../common/random.js";
+import {blueprint_bulb} from "../blueprints/blu_bulb.js";
 import {blueprint_camera_main} from "../blueprints/blu_camera_main.js";
 import {blueprint_sun} from "../blueprints/blu_sun.js";
-import {light_point} from "../components/com_light.js";
+import {children} from "../components/com_children.js";
 import {render_colored_deferred} from "../components/com_render.js";
+import {shake} from "../components/com_shake.js";
+import {spawn} from "../components/com_spawn.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
@@ -37,15 +40,18 @@ export function scene_stage(game: Game) {
         render_colored_deferred(game.MaterialColored, game.MeshCube, [1, 1, 1, 1]),
     ]);
 
-    for (let i = 0; i < 100; i++) {
-        let range = float(0.5, 1);
-        // TODO: Auto-compute scale from the light's range.
-        let scale = (range ** 2 / 0.02) ** 0.5 * 2;
-        instantiate(game, [
-            transform([float(-8, 8), float(3, 5), float(-8, 8)], undefined, [scale, scale, scale]),
-            light_point([float(), float(), float()], range),
-        ]);
-    }
+    // Bulb spawner.
+    instantiate(game, [
+        transform([0, 3, 0], undefined, [20, 1, 20]),
+        children([
+            transform(),
+            shake(0.5),
+            spawn((game) => {
+                game.BulbCount++;
+                return blueprint_bulb(game);
+            }, 0.1),
+        ]),
+    ]);
 
     for (let i = 0; i < 100; i++) {
         instantiate(game, [

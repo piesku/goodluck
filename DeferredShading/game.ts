@@ -22,7 +22,10 @@ import {sys_render_depth} from "./systems/sys_render_depth.js";
 import {sys_render_postprocess} from "./systems/sys_render_postprocess.js";
 import {sys_render_shading} from "./systems/sys_render_shading.js";
 import {sys_resize} from "./systems/sys_resize.js";
+import {sys_shake} from "./systems/sys_shake.js";
+import {sys_spawn} from "./systems/sys_spawn.js";
 import {sys_transform} from "./systems/sys_transform.js";
+import {sys_ui} from "./systems/sys_ui.js";
 import {World} from "./world.js";
 
 export class Game extends Game3D {
@@ -45,9 +48,7 @@ export class Game extends Game3D {
     };
     Textures: Record<string, WebGLTexture> = {};
 
-    // The rendering pipeline supports 64 lights.
-    LightPositions = new Float32Array(4 * 64);
-    LightDetails = new Float32Array(4 * 64);
+    BulbCount = 0;
 
     constructor() {
         super();
@@ -70,11 +71,14 @@ export class Game extends Game3D {
         sys_control_always(this, delta);
 
         sys_move(this, delta);
+        sys_shake(this, delta);
+        sys_spawn(this, delta);
         sys_transform(this, delta);
 
         sys_render_depth(this, delta);
         sys_render_deferred(this, delta);
         sys_render_shading(this, delta);
         sys_render_postprocess(this, delta);
+        sys_ui(this, delta);
     }
 }

@@ -5,6 +5,8 @@ import {ControlAlways} from "./components/com_control_always.js";
 import {Light} from "./components/com_light.js";
 import {Move} from "./components/com_move.js";
 import {Render} from "./components/com_render.js";
+import {Shake} from "./components/com_shake.js";
+import {Spawn} from "./components/com_spawn.js";
 import {Transform} from "./components/com_transform.js";
 
 const enum Component {
@@ -14,6 +16,8 @@ const enum Component {
     Light,
     Move,
     Render,
+    Shake,
+    Spawn,
     Transform,
 }
 
@@ -25,6 +29,8 @@ export const enum Has {
     Light = 1 << Component.Light,
     Move = 1 << Component.Move,
     Render = 1 << Component.Render,
+    Shake = 1 << Component.Shake,
+    Spawn = 1 << Component.Spawn,
     Transform = 1 << Component.Transform,
 }
 
@@ -35,5 +41,7 @@ export class World extends WorldImpl {
     Light: Array<Light> = [];
     Move: Array<Move> = [];
     Render: Array<Render> = [];
+    Shake: Array<Shake> = [];
+    Spawn: Array<Spawn> = [];
     Transform: Array<Transform> = [];
 }
