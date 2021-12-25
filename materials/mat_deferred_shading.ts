@@ -16,10 +16,13 @@ let vertex = `#version 300 es\n
     in vec4 attr_position;
 
     out vec4 light_position;
+    out vec3 light_direction;
     out vec4 vert_position;
 
     void main() {
         light_position = world[3];
+        light_direction = normalize(world[2].xyz);
+
         if (light_kind.x < ${LightKind.Point}) {
             // Ambient or directional light.
             vert_position = attr_position;
@@ -48,6 +51,7 @@ let fragment = `#version 300 es\n
     uniform sampler2DShadow shadow_map;
 
     in vec4 light_position;
+    in vec3 light_direction;
     in vec4 vert_position;
 
     out vec4 frag_color;
@@ -93,7 +97,9 @@ let fragment = `#version 300 es\n
         vec3 light_normal;
 
         if (light_kind.x == ${LightKind.Directional}) {
-            light_normal = normalize(light_position.xyz);
+            // Directional lights shine backwards, to match the way cameras work.
+            // Add a depth camera to the light entity to make it a shadow source.
+            light_normal = light_direction;
         } else {
             // Point light.
             vec3 light_dir = light_position.xyz - current_position.xyz;

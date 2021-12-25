@@ -2,9 +2,8 @@
  * @module systems/sys_light
  */
 
-import {get_translation} from "../../common/mat4.js";
+import {get_forward, get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
-import {normalize} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
 import {LightKind} from "../../materials/light.js";
 import {Game} from "../game.js";
@@ -30,11 +29,12 @@ function update(game: Game, entity: Entity, idx: number) {
     let light = game.World.Light[entity];
     let transform = game.World.Transform[entity];
 
-    get_translation(world_pos, transform.World);
     if (light.Kind === LightKind.Directional) {
-        // For directional lights, their normalized position in the world
-        // describes the light's normal.
-        normalize(world_pos, world_pos);
+        // Directional lights shine backwards, to match the way cameras work.
+        // Rather than the light's world position, store the light's world normal.
+        get_forward(world_pos, transform.World);
+    } else {
+        get_translation(world_pos, transform.World);
     }
 
     game.LightPositions[4 * idx + 0] = world_pos[0];

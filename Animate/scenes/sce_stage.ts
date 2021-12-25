@@ -1,4 +1,5 @@
 import {instantiate} from "../../common/game.js";
+import {from_euler} from "../../common/quat.js";
 import {set_seed} from "../../common/random.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {blueprint_character_rigged} from "../blueprints/blu_character_rigged.js";
@@ -27,10 +28,16 @@ export function scene_stage(game: Game) {
     ]);
 
     // Light 1.
-    instantiate(game, [transform([2, 3, 5]), light_directional([1, 1, 1], 1)]);
+    instantiate(game, [
+        transform(undefined, from_euler([0, 0, 0, 1], -30, 30, 0)),
+        light_directional([1, 1, 1], 1),
+    ]);
 
     // Bottom light.
-    instantiate(game, [transform([0, -5, 0]), light_directional([1, 1, 1], 0.7)]);
+    instantiate(game, [
+        transform(undefined, from_euler([0, 0, 0, 1], 30, -60, 0)),
+        light_directional([1, 1, 1], 0.7),
+    ]);
 
     // Character carousel.
     instantiate(game, [
