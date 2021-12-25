@@ -1,4 +1,5 @@
 import {Game3D} from "../common/game.js";
+import {MAX_FORWARD_LIGHTS} from "../materials/light.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mat_forward_instanced} from "./materials/mat_forward_instanced.js";
 import {sys_camera} from "./systems/sys_camera.js";
@@ -14,9 +15,8 @@ export class Game extends Game3D {
     MaterialInstanced = mat_forward_instanced(this.Gl);
     MeshCube = mesh_cube(this.Gl);
 
-    // The rendering pipeline supports 8 lights.
-    LightPositions = new Float32Array(4 * 8);
-    LightDetails = new Float32Array(4 * 8);
+    LightPositions = new Float32Array(4 * MAX_FORWARD_LIGHTS);
+    LightDetails = new Float32Array(4 * MAX_FORWARD_LIGHTS);
 
     override FrameUpdate(delta: number) {
         sys_resize(this, delta);

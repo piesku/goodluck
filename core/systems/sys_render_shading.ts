@@ -24,8 +24,8 @@ import {
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
+import {LightKind} from "../../materials/light.js";
 import {CameraKind} from "../components/com_camera.js";
-import {LightKind} from "../components/com_light.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

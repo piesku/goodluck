@@ -4,17 +4,11 @@
 
 import {Vec3} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
+import {LightKind} from "../../materials/light.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 export type Light = LightAmbient | LightDirectional | LightPoint;
-
-export const enum LightKind {
-    Inactive,
-    Ambient,
-    Directional,
-    Point,
-}
 
 export interface LightAmbient {
     Kind: LightKind.Ambient;

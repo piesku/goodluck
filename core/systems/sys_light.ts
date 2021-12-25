@@ -6,7 +6,7 @@ import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {normalize} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
-import {LightKind} from "../components/com_light.js";
+import {LightKind} from "../../materials/light.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

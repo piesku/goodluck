@@ -1,13 +1,10 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
 import {ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.js";
+import {LightKind, MAX_FORWARD_LIGHTS} from "../../materials/light.js";
 import {SkinningLayout} from "./layout_skinning.js";
 
 let vertex = `#version 300 es\n
-
-    // See Game.LightPositions and Game.LightDetails.
-    const int MAX_LIGHTS = 8;
-
     uniform mat4 pv;
     uniform mat4 world;
     uniform mat4 self;
@@ -15,8 +12,8 @@ let vertex = `#version 300 es\n
     uniform vec4 diffuse_color;
     uniform vec4 specular_color;
     uniform float shininess;
-    uniform vec4 light_positions[MAX_LIGHTS];
-    uniform vec4 light_details[MAX_LIGHTS];
+    uniform vec4 light_positions[${MAX_FORWARD_LIGHTS}];
+    uniform vec4 light_details[${MAX_FORWARD_LIGHTS}];
     uniform mat4 bones[6];
 
     in vec4 attr_position;
@@ -41,8 +38,9 @@ let vertex = `#version 300 es\n
         // Ambient light.
         vec3 light_acc = diffuse_color.rgb * 0.1;
 
-        for (int i = 0; i < MAX_LIGHTS; i++) {
-            if (light_positions[i].w == 0.0) {
+        for (int i = 0; i < ${MAX_FORWARD_LIGHTS}; i++) {
+            int light_kind = int(light_positions[i].w);
+            if (light_kind == ${LightKind.Inactive}) {
                 break;
             }
 
@@ -50,10 +48,9 @@ let vertex = `#version 300 es\n
             float light_intensity = light_details[i].a;
 
             vec3 light_normal;
-            if (light_positions[i].w == 2.0) {
-                // Directional light.
+            if (light_kind == ${LightKind.Directional}) {
                 light_normal = light_positions[i].xyz;
-            } else {
+            } else if (light_kind == ${LightKind.Point}) {
                 vec3 light_dir = light_positions[i].xyz - world_position.xyz;
                 float light_dist = length(light_dir);
                 light_normal = light_dir / light_dist;

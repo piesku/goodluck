@@ -6,6 +6,7 @@ import {
     ShadowMappingLayout,
     WorldSpaceLayout,
 } from "./layout.js";
+import {LightKind} from "./light.js";
 
 let vertex = `#version 300 es\n
     uniform mat4 pv;
@@ -19,7 +20,7 @@ let vertex = `#version 300 es\n
 
     void main() {
         light_position = world[3];
-        if (light_kind.x < 3) {
+        if (light_kind.x < ${LightKind.Point}) {
             // Ambient or directional light.
             vert_position = attr_position;
         } else {
@@ -83,8 +84,7 @@ let fragment = `#version 300 es\n
         vec3 light_rgb = light_details.rgb;
         float light_intensity = light_details.a;
 
-        if (light_kind.x == 1) {
-            // Ambient light.
+        if (light_kind.x == ${LightKind.Ambient}) {
             frag_color = current_diffuse * vec4(light_rgb, 1.0) * light_intensity;
             return;
         }
@@ -92,8 +92,7 @@ let fragment = `#version 300 es\n
         vec3 light_acc = vec3(0.0);
         vec3 light_normal;
 
-        if (light_kind.x == 2) {
-            // Directional light.
+        if (light_kind.x == ${LightKind.Directional}) {
             light_normal = normalize(light_position.xyz);
         } else {
             // Point light.
