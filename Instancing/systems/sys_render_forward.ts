@@ -18,7 +18,7 @@ export function sys_render_forward(game: Game, delta: number) {
     for (let camera_entity of game.Cameras) {
         let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
-            case CameraKind.Forward:
+            case CameraKind.Canvas:
                 render_forward(game, camera);
                 break;
         }

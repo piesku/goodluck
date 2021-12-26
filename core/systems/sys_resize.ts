@@ -28,7 +28,7 @@ export function sys_resize(game: Game, delta: number) {
             if ((game.World.Signature[i] & QUERY) === QUERY) {
                 let camera = game.World.Camera[i];
                 switch (camera.Kind) {
-                    case CameraKind.Forward:
+                    case CameraKind.Canvas:
                         update_projection(
                             camera.Projection,
                             game.ViewportWidth / game.ViewportHeight

@@ -1,4 +1,4 @@
-import {camera_forward_perspective} from "../components/com_camera.js";
+import {camera_canvas_perspective} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {control_player} from "../components/com_control_player.js";
 import {move} from "../components/com_move.js";
@@ -9,6 +9,6 @@ export function blueprint_camera_fly(game: Game) {
     return [
         control_player(true, 0.1, 0.1, -89, 89),
         move(10, 2),
-        children([transform(undefined, [0, 1, 0, 0]), camera_forward_perspective(1, 0.1, 1000)]),
+        children([transform(undefined, [0, 1, 0, 0]), camera_canvas_perspective(1, 0.1, 1000)]),
     ];
 }

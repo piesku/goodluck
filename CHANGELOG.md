@@ -38,7 +38,7 @@ Once you bootstrap a new project, feel free to merge the super class with `Game`
         Children: [
             {
                 Rotation: [0, 1, 0, 0],
-                Using: [camera_forward_perspective(1, 0.1, 1000)],
+                Using: [camera_canvas_perspective(1, 0.1, 1000)],
             },
         ],
     });
@@ -48,7 +48,7 @@ Once you bootstrap a new project, feel free to merge the super class with `Game`
         transform([0, 1, 5], [0, 1, 0, 0]),
         children([
             transform(undefined, [0, 1, 0, 0]),
-            camera_forward_perspective(1, 0.1, 1000)
+            camera_canvas_perspective(1, 0.1, 1000)
         ]),
     ]);
     ```

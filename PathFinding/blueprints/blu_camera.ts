@@ -1,5 +1,5 @@
 import {from_euler} from "../../common/quat.js";
-import {camera_forward_perspective} from "../components/com_camera.js";
+import {camera_canvas_perspective} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {control_dolly} from "../components/com_control_dolly.js";
 import {control_player} from "../components/com_control_player.js";
@@ -22,7 +22,7 @@ export function blueprint_camera(game: Game) {
                 control_player(false, 0, 0),
                 control_dolly(200),
                 move(200, 0),
-                camera_forward_perspective(1, 1, 1000),
+                camera_canvas_perspective(1, 1, 1000),
             ]),
         ]),
     ];

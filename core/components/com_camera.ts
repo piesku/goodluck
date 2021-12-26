@@ -13,7 +13,7 @@ import {Has} from "../world.js";
 export type Camera = CameraForward | CameraDeferred | CameraFramebuffer | CameraDepth | CameraXr;
 
 export const enum CameraKind {
-    Forward,
+    Canvas,
     Deferred,
     Framebuffer,
     Depth,
@@ -28,12 +28,12 @@ export interface CameraEye {
 }
 
 export interface CameraForward extends CameraEye {
-    Kind: CameraKind.Forward;
+    Kind: CameraKind.Canvas;
     Projection: Projection;
     ClearColor: Vec4;
 }
 
-export function camera_forward_perspective(
+export function camera_canvas_perspective(
     fovy: number,
     near: number,
     far: number,
@@ -42,7 +42,7 @@ export function camera_forward_perspective(
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;
         game.World.Camera[entity] = {
-            Kind: CameraKind.Forward,
+            Kind: CameraKind.Canvas,
             Projection: {
                 Kind: ProjectionKind.Perspective,
                 FovY: fovy,
@@ -59,7 +59,7 @@ export function camera_forward_perspective(
     };
 }
 
-export function camera_forward_ortho(
+export function camera_canvas_ortho(
     radius: number,
     near: number,
     far: number,
@@ -68,7 +68,7 @@ export function camera_forward_ortho(
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;
         game.World.Camera[entity] = {
-            Kind: CameraKind.Forward,
+            Kind: CameraKind.Canvas,
             Projection: {
                 Kind: ProjectionKind.Ortho,
                 Radius: radius,

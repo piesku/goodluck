@@ -30,7 +30,7 @@ export function sys_render_forward(game: Game, delta: number) {
     for (let camera_entity of game.Cameras) {
         let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
-            case CameraKind.Forward:
+            case CameraKind.Canvas:
                 game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
                 game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
                 game.Gl.clearColor(...camera.ClearColor);

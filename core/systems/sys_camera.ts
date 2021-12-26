@@ -15,7 +15,7 @@ export function sys_camera(game: Game, delta: number) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
             let camera = game.World.Camera[i];
             switch (camera.Kind) {
-                case CameraKind.Forward:
+                case CameraKind.Canvas:
                 case CameraKind.Deferred:
                 case CameraKind.Framebuffer:
                 case CameraKind.Depth:

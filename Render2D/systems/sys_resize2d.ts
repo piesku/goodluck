@@ -22,7 +22,7 @@ export function sys_resize2d(game: Game, delta: number) {
             if ((game.World.Signature[i] & QUERY) === QUERY) {
                 let camera = game.World.Camera[i];
                 if (
-                    camera.Kind == CameraKind.Forward &&
+                    camera.Kind == CameraKind.Canvas &&
                     camera.Projection.Kind == ProjectionKind.Ortho
                 ) {
                     let aspect = game.ViewportWidth / game.ViewportHeight;

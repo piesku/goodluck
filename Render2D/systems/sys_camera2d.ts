@@ -13,8 +13,8 @@ export function sys_camera2d(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
             let camera = game.World.Camera[i];
-            if (camera.Kind !== CameraKind.Forward) {
-                throw new Error("Only Forward cameras are supported.");
+            if (camera.Kind !== CameraKind.Canvas) {
+                throw new Error("Only canvas cameras are supported.");
             }
 
             let transform = game.World.Transform[i];
