@@ -16,9 +16,7 @@ export function sys_camera(game: Game, delta: number) {
             let camera = game.World.Camera[i];
             switch (camera.Kind) {
                 case CameraKind.Canvas:
-                case CameraKind.Deferred:
-                case CameraKind.Framebuffer:
-                case CameraKind.Depth:
+                case CameraKind.Target:
                     update_camera(game, i, camera);
                     game.Cameras.push(i);
                     break;

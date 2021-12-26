@@ -61,9 +61,7 @@ export function sys_resize(game: Game, delta: number) {
                             game.ViewportWidth / game.ViewportHeight
                         );
                         break;
-                    case CameraKind.Framebuffer:
-                    case CameraKind.Depth:
-                    case CameraKind.Deferred:
+                    case CameraKind.Target:
                         update_projection(
                             camera.Projection,
                             camera.Target.Width / camera.Target.Height

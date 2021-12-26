@@ -2,6 +2,7 @@
  * @module systems/sys_render_shading
  */
 
+import {TargetKind} from "../../common/framebuffer.js";
 import {Mesh} from "../../common/mesh.js";
 import {
     GL_ARRAY_BUFFER,
@@ -97,11 +98,11 @@ export function sys_render_shading(game: Game, delta: number) {
             if (game.World.Signature[ent] & Has.Camera) {
                 light_is_shadow_source = 1;
                 let camera = game.World.Camera[ent];
-                if (camera.Kind !== CameraKind.Depth) {
+                if (camera.Kind !== CameraKind.Target || camera.Target.Kind !== TargetKind.Depth) {
                     throw new Error("Only depth cameras can be shadow sources.");
                 }
-                game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, camera.Pv);
 
+                game.Gl.uniformMatrix4fv(material.Locations.ShadowSpace, false, camera.Pv);
                 game.Gl.activeTexture(GL_TEXTURE5);
                 game.Gl.bindTexture(GL_TEXTURE_2D, camera.Target.DepthTexture);
                 game.Gl.uniform1i(material.Locations.ShadowMap, 5);

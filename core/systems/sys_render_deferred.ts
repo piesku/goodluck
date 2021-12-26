@@ -2,6 +2,7 @@
  * @module systems/sys_render_deferred
  */
 
+import {TargetKind} from "../../common/framebuffer.js";
 import {
     GL_COLOR_BUFFER_BIT,
     GL_DEPTH_BUFFER_BIT,
@@ -19,14 +20,12 @@ const QUERY = Has.Transform | Has.Render;
 export function sys_render_deferred(game: Game, delta: number) {
     for (let camera_entity of game.Cameras) {
         let camera = game.World.Camera[camera_entity];
-        switch (camera.Kind) {
-            case CameraKind.Deferred:
-                game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target.Framebuffer);
-                game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
-                game.Gl.clearColor(...camera.ClearColor);
-                game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                render_all(game, camera);
-                break;
+        if (camera.Kind === CameraKind.Target && camera.Target.Kind === TargetKind.Deferred) {
+            game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target.Framebuffer);
+            game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
+            game.Gl.clearColor(...camera.ClearColor);
+            game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            render_all(game, camera);
         }
     }
 }

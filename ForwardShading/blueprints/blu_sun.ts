@@ -1,4 +1,4 @@
-import {camera_depth_ortho} from "../components/com_camera.js";
+import {camera_target_ortho} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {control_always} from "../components/com_control_always.js";
 import {light_directional} from "../components/com_light.js";
@@ -13,7 +13,7 @@ export function blueprint_sun(game: Game) {
         children([
             transform([0, 0, 10]),
             light_directional([1, 1, 1], 0.3),
-            camera_depth_ortho(game.Targets.Sun, 10, 1, 100),
+            camera_target_ortho(game.Targets.Sun, 10, 1, 100),
         ]),
     ];
 }

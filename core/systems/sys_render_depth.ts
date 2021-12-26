@@ -2,6 +2,7 @@
  * @module systems/sys_render_depth
  */
 
+import {TargetKind} from "../../common/framebuffer.js";
 import {
     GL_ARRAY_BUFFER,
     GL_COLOR_BUFFER_BIT,
@@ -11,7 +12,7 @@ import {
     GL_FRAMEBUFFER,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {CameraDepth, CameraKind} from "../components/com_camera.js";
+import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {RenderKind} from "../components/com_render.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -21,25 +22,23 @@ const QUERY = Has.Transform | Has.Render;
 export function sys_render_depth(game: Game, delta: number) {
     for (let camera_entity of game.Cameras) {
         let camera = game.World.Camera[camera_entity];
-        switch (camera.Kind) {
-            case CameraKind.Depth:
-                render_depth(game, camera);
-                break;
+        if (camera.Kind === CameraKind.Target && camera.Target.Kind === TargetKind.Depth) {
+            game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target.Framebuffer);
+            game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
+            game.Gl.clearColor(...camera.ClearColor);
+            game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            render_all(game, camera);
+            break;
         }
     }
 }
 
-function render_depth(game: Game, camera: CameraDepth) {
-    game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target.Framebuffer);
-    game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
-    game.Gl.clearColor(...camera.ClearColor);
-    game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+function render_all(game: Game, eye: CameraEye) {
     let material = game.MaterialDepth;
     let current_front_face: GLint | null = null;
 
     game.Gl.useProgram(material.Program);
-    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, camera.Pv);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
 
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
         if ((game.World.Signature[ent] & QUERY) === QUERY) {
