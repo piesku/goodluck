@@ -1,4 +1,5 @@
 import {instantiate} from "../../common/game.js";
+import {from_euler} from "../../common/quat.js";
 import {float} from "../../common/random.js";
 import {blueprint_camera_follow} from "../blueprints/blu_camera_follow.js";
 import {blueprint_ground} from "../blueprints/blu_ground.js";
@@ -36,7 +37,10 @@ export function scene_stage(game: Game) {
     }
 
     // Directional light.
-    instantiate(game, [transform([1, 1, 1]), light_directional([1, 1, 1], 0.2)]);
+    instantiate(game, [
+        transform(undefined, from_euler([0, 0, 0, 1], -30, 30, 0)),
+        light_directional([1, 1, 1], 0.1),
+    ]);
 
     // Player.
     instantiate(game, [...blueprint_player(game), transform([0, 1, 0], [0, 1, 0, 0])]);

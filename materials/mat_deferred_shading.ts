@@ -1,16 +1,37 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {DeferredPostprocessLayout, ForwardShadingLayout, ShadowMappingLayout} from "./layout.js";
+import {
+    DeferredPostprocessLayout,
+    DeferredShadingLayout,
+    ShadowMappingLayout,
+    WorldSpaceLayout,
+} from "./layout.js";
+import {LightKind} from "./light.js";
 
 let vertex = `#version 300 es\n
-    in vec4 attr_position;
-    in vec2 attr_texcoord;
+    uniform mat4 pv;
+    uniform mat4 world;
+    uniform lowp ivec2 light_kind; // x: kind, y: is shadow source
 
-    out vec2 vert_texcoord;
+    in vec4 attr_position;
+
+    out vec4 light_position;
+    out vec3 light_direction;
+    out vec4 vert_position;
 
     void main() {
-        gl_Position = attr_position;
-        vert_texcoord = attr_texcoord;
+        light_position = world[3];
+        light_direction = normalize(world[2].xyz);
+
+        if (light_kind.x < ${LightKind.Point}) {
+            // Ambient or directional light.
+            vert_position = attr_position;
+        } else {
+            // Point light.
+            vert_position = pv * world * attr_position;
+        }
+
+        gl_Position = vert_position;
     }
 `;
 
@@ -18,20 +39,20 @@ let fragment = `#version 300 es\n
     precision mediump float;
     precision lowp sampler2DShadow;
 
-    const int MAX_LIGHTS = 64;
-
     uniform vec3 eye;
     uniform sampler2D diffuse_map;
     uniform sampler2D specular_map;
     uniform sampler2D position_map;
     uniform sampler2D normal_map;
     uniform sampler2D depth_map;
-    uniform vec4 light_positions[MAX_LIGHTS];
-    uniform vec4 light_details[MAX_LIGHTS];
+    uniform lowp ivec2 light_kind; // x: kind, y: is shadow source
+    uniform vec4 light_details; // rgb, a: intensity
     uniform mat4 shadow_space;
     uniform sampler2DShadow shadow_map;
 
-    in vec2 vert_texcoord;
+    in vec4 light_position;
+    in vec3 light_direction;
+    in vec4 vert_position;
 
     out vec4 frag_color;
 
@@ -50,75 +71,83 @@ let fragment = `#version 300 es\n
     }
 
     void main() {
-        vec3 current_normal = texture(normal_map, vert_texcoord).xyz;
+        vec2 uv = vert_position.xy / vert_position.w * 0.5 + 0.5;
+        vec3 current_normal = texture(normal_map, uv).xyz;
         if (current_normal == vec3(0.0, 0.0, 0.0)) {
             // "Black" normals identify fragments with no renderable objects; clear color them.
             discard;
         }
 
-        vec4 current_diffuse = texture(diffuse_map, vert_texcoord);
-        vec4 current_specular = texture(specular_map, vert_texcoord);
-        vec4 current_position = texture(position_map, vert_texcoord);
+        vec4 current_diffuse = texture(diffuse_map, uv);
+        vec4 current_specular = texture(specular_map, uv);
+        vec4 current_position = texture(position_map, uv);
 
         vec3 view_dir = eye - current_position.xyz;
         vec3 view_normal = normalize(view_dir);
 
-        // Ambient light.
-        vec3 light_acc = current_diffuse.rgb * 0.1;
+        vec3 light_rgb = light_details.rgb;
+        float light_intensity = light_details.a;
 
-        for (int i = 0; i < MAX_LIGHTS; i++) {
-            int light_kind = int(light_positions[i].w);
-            if (light_kind == 0) {
-                // The first inactive light means we're done.
-                break;
-            }
+        if (light_kind.x == ${LightKind.Ambient}) {
+            frag_color = current_diffuse * vec4(light_rgb, 1.0) * light_intensity;
+            return;
+        }
 
-            vec3 light_rgb = light_details[i].rgb;
-            float light_intensity = light_details[i].a;
+        vec3 light_acc = vec3(0.0);
+        vec3 light_normal;
 
-            vec3 light_normal;
-            if (light_kind == 1) {
-                // Directional light.
-                light_normal = light_positions[i].xyz;
-            } else if (light_kind == 2) {
-                // Point light.
-                vec3 light_dir = light_positions[i].xyz - current_position.xyz;
-                float light_dist = length(light_dir);
-                light_normal = light_dir / light_dist;
-                // Distance attenuation.
-                light_intensity /= (light_dist * light_dist);
-            }
+        if (light_kind.x == ${LightKind.Directional}) {
+            // Directional lights shine backwards, to match the way cameras work.
+            // Add a depth camera to the light entity to make it a shadow source.
+            light_normal = light_direction;
+        } else {
+            // Point light.
+            vec3 light_dir = light_position.xyz - current_position.xyz;
+            float light_dist = length(light_dir);
+            light_normal = light_dir / light_dist;
+            // Distance attenuation.
+            light_intensity /= (light_dist * light_dist);
+        }
 
-            float diffuse_factor = dot(current_normal, light_normal);
-            if (diffuse_factor > 0.0) {
-                // Diffuse color.
-                light_acc += current_diffuse.rgb * diffuse_factor * light_rgb * light_intensity;
+        float diffuse_factor = dot(current_normal, light_normal);
+        if (diffuse_factor > 0.0) {
+            // Diffuse color.
+            light_acc += current_diffuse.rgb * diffuse_factor * light_rgb * light_intensity;
 
-                if (current_specular.a > 0.0) {
-                    // For non-zero shininess, apply the Blinn-Phong reflection model.
-                    vec3 h = normalize(light_normal + view_normal);
-                    float specular_angle = max(dot(h, current_normal), 0.0);
-                    float specular_factor = pow(specular_angle, current_specular.a);
+            if (current_specular.a > 0.0) {
+                // For non-zero shininess, apply the Blinn-Phong reflection model.
+                vec3 h = normalize(light_normal + view_normal);
+                float specular_angle = max(dot(h, current_normal), 0.0);
+                float specular_factor = pow(specular_angle, current_specular.a);
 
-                    // Specular color.
-                    light_acc += current_specular.rgb * specular_factor * light_rgb * light_intensity;
-                }
+                // Specular color.
+                light_acc += current_specular.rgb * specular_factor * light_rgb * light_intensity;
             }
         }
 
-        vec3 shaded_rgb = light_acc * shadow_factor(current_position, 0.5);
-        frag_color = vec4(shaded_rgb, 1.0);
+        if (light_kind.y == 1) {
+            // The light is a shadow source.
+            vec3 shaded_rgb = light_acc * shadow_factor(current_position, 0.0);
+            frag_color = vec4(shaded_rgb, 1.0);
+        } else {
+            frag_color = vec4(light_acc, 1.0);
+        }
     }
 `;
 
 export function mat_deferred_shading(
     gl: WebGL2RenderingContext
-): Material<DeferredPostprocessLayout & ForwardShadingLayout & ShadowMappingLayout> {
+): Material<
+    DeferredPostprocessLayout & WorldSpaceLayout & DeferredShadingLayout & ShadowMappingLayout
+> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
         Program: program,
         Locations: {
+            Pv: gl.getUniformLocation(program, "pv")!,
+            World: gl.getUniformLocation(program, "world")!,
+
             DiffuseMap: gl.getUniformLocation(program, "diffuse_map")!,
             SpecularMap: gl.getUniformLocation(program, "specular_map")!,
             PositionMap: gl.getUniformLocation(program, "position_map")!,
@@ -126,14 +155,13 @@ export function mat_deferred_shading(
             DepthMap: gl.getUniformLocation(program, "depth_map")!,
 
             Eye: gl.getUniformLocation(program, "eye")!,
-            LightPositions: gl.getUniformLocation(program, "light_positions")!,
+            LightKind: gl.getUniformLocation(program, "light_kind")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
 
             ShadowSpace: gl.getUniformLocation(program, "shadow_space")!,
             ShadowMap: gl.getUniformLocation(program, "shadow_map")!,
 
             VertexPosition: gl.getAttribLocation(program, "attr_position")!,
-            VertexTexcoord: gl.getAttribLocation(program, "attr_texcoord")!,
         },
     };
 }

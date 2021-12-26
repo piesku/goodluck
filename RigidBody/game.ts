@@ -1,4 +1,5 @@
 import {Game3D} from "../common/game.js";
+import {MAX_FORWARD_LIGHTS} from "../materials/light.js";
 import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
 import {mat_forward_colored_wireframe} from "../materials/mat_forward_colored_unlit.js";
 import {mesh_cube} from "../meshes/cube.js";
@@ -28,9 +29,8 @@ export class Game extends Game3D {
     MeshCube = mesh_cube(this.Gl);
     MeshHand = mesh_hand(this.Gl);
 
-    // The rendering pipeline supports 8 lights.
-    LightPositions = new Float32Array(4 * 8);
-    LightDetails = new Float32Array(4 * 8);
+    LightPositions = new Float32Array(4 * MAX_FORWARD_LIGHTS);
+    LightDetails = new Float32Array(4 * MAX_FORWARD_LIGHTS);
 
     override FixedUpdate(delta: number) {
         // Collisions and physics.

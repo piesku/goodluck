@@ -1,5 +1,6 @@
 import {create_depth_target, create_forward_target} from "../common/framebuffer.js";
 import {Game3D} from "../common/game.js";
+import {MAX_FORWARD_LIGHTS} from "../materials/light.js";
 import {mat_forward_colored_flat} from "../materials/mat_forward_colored_flat.js";
 import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
 import {mat_forward_colored_phong} from "../materials/mat_forward_colored_phong.js";
@@ -54,9 +55,8 @@ export class Game extends Game3D {
         Minimap: create_forward_target(this.Gl, 256, 256),
     };
 
-    // The rendering pipeline supports 8 lights.
-    LightPositions = new Float32Array(4 * 8);
-    LightDetails = new Float32Array(4 * 8);
+    LightPositions = new Float32Array(4 * MAX_FORWARD_LIGHTS);
+    LightDetails = new Float32Array(4 * MAX_FORWARD_LIGHTS);
 
     override FrameUpdate(delta: number) {
         sys_resize(this, delta);

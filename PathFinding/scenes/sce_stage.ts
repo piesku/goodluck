@@ -1,5 +1,6 @@
 import {instantiate} from "../../common/game.js";
 import {nav_bake} from "../../common/navmesh.js";
+import {from_euler} from "../../common/quat.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {children} from "../components/com_children.js";
 import {collide} from "../components/com_collide.js";
@@ -25,7 +26,10 @@ export function scene_stage(game: Game) {
     instantiate(game, [...blueprint_camera(game), transform([0, 0, 15], [0, 1, 0, 0])]);
 
     // Directional light.
-    instantiate(game, [transform([-1, 1, 1]), light_directional([1, 1, 1], 1.2)]);
+    instantiate(game, [
+        transform(undefined, from_euler([0, 0, 0, 1], -30, 30, 0)),
+        light_directional([1, 1, 1], 1),
+    ]);
 
     // Terrain. For the nav mesh to work properly, it must be in the world space
     // and have the scale of 1.

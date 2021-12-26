@@ -1,4 +1,5 @@
 import {instantiate} from "../../common/game.js";
+import {from_euler} from "../../common/quat.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light_directional} from "../components/com_light.js";
 import {render_colored_shaded} from "../components/com_render.js";
@@ -14,7 +15,10 @@ export function scene_stage(game: Game) {
     instantiate(game, [transform([1, 2, 5], [0, 1, 0, 0]), ...blueprint_camera(game)]);
 
     // Light.
-    instantiate(game, [transform([2, 3, 5]), light_directional([1, 1, 1], 1)]);
+    instantiate(game, [
+        transform(undefined, from_euler([0, 0, 0, 1], -30, 30, 0)),
+        light_directional([1, 1, 1], 1),
+    ]);
 
     // Ground.
     instantiate(game, [

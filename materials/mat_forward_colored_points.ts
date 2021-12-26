@@ -3,7 +3,6 @@ import {GL_POINTS} from "../common/webgl.js";
 import {ColoredUnlitLayout} from "./layout.js";
 
 let vertex = `#version 300 es\n
-
     uniform mat4 pv;
     uniform mat4 world;
 

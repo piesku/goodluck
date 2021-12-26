@@ -6,10 +6,10 @@ import {Entity} from "../common/world.js";
 import {
     ColoredUnlitLayout,
     DeferredPostprocessLayout,
-    DepthMappingLayout,
-    ForwardShadingLayout,
+    DeferredShadingLayout,
     PostprocessLayout,
     ShadowMappingLayout,
+    WorldSpaceLayout,
 } from "../materials/layout.js";
 import {World} from "./world.js";
 
@@ -27,13 +27,14 @@ export interface Game extends GameXR {
 
     MaterialWireframe: Material<ColoredUnlitLayout>;
     MaterialShading: Material<
-        DeferredPostprocessLayout & ForwardShadingLayout & ShadowMappingLayout
+        DeferredPostprocessLayout & WorldSpaceLayout & DeferredShadingLayout & ShadowMappingLayout
     >;
     MaterialPostprocess: Material<PostprocessLayout>;
-    MaterialDepth: Material<DepthMappingLayout>;
+    MaterialDepth: Material<WorldSpaceLayout>;
 
     MeshQuad: Mesh;
     MeshCube: Mesh;
+    MeshSphereSmooth: Mesh;
 
     LightPositions: Float32Array;
     LightDetails: Float32Array;

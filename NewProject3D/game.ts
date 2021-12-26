@@ -1,4 +1,5 @@
 import {Game3D} from "../common/game.js";
+import {MAX_FORWARD_LIGHTS} from "../materials/light.js";
 import {mat_forward_colored_phong} from "../materials/mat_forward_colored_phong.js";
 import {mat_forward_colored_wireframe} from "../materials/mat_forward_colored_unlit.js";
 import {mat_forward_particles_colored} from "../materials/mat_forward_particles_colored.js";
@@ -44,9 +45,8 @@ export class Game extends Game3D {
 
     MeshCube = mesh_cube(this.Gl);
 
-    // The rendering pipeline supports 8 lights.
-    LightPositions = new Float32Array(4 * 8);
-    LightDetails = new Float32Array(4 * 8);
+    LightPositions = new Float32Array(4 * MAX_FORWARD_LIGHTS);
+    LightDetails = new Float32Array(4 * MAX_FORWARD_LIGHTS);
 
     ItemsCollected = 0;
     ItemsMissed = 0;
