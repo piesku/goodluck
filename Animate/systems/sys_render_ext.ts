@@ -8,7 +8,7 @@ import {
 } from "../../common/webgl.js";
 import {Entity} from "../../common/world.js";
 import {ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.js";
-import {CameraEye, CameraForward, CameraKind} from "../components/com_camera.js";
+import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {query_down} from "../components/com_children.js";
 import {
     RenderColoredShaded,
@@ -26,18 +26,14 @@ export function sys_render_forward(game: Game, delta: number) {
         let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
             case CameraKind.Canvas:
-                render_forward(game, camera);
+                game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
+                game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
+                game.Gl.clearColor(...camera.ClearColor);
+                game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                render(game, camera);
                 break;
         }
     }
-}
-
-function render_forward(game: Game, camera: CameraForward) {
-    game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
-    game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
-    game.Gl.clearColor(...camera.ClearColor);
-    game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    render(game, camera);
 }
 
 function render(game: Game, eye: CameraEye) {

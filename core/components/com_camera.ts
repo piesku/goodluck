@@ -10,7 +10,7 @@ import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-export type Camera = CameraForward | CameraDeferred | CameraFramebuffer | CameraDepth | CameraXr;
+export type Camera = CameraCanvas | CameraDeferred | CameraFramebuffer | CameraDepth | CameraXr;
 
 export const enum CameraKind {
     Canvas,
@@ -27,7 +27,7 @@ export interface CameraEye {
     Position: Vec3;
 }
 
-export interface CameraForward extends CameraEye {
+export interface CameraCanvas extends CameraEye {
     Kind: CameraKind.Canvas;
     Projection: Projection;
     ClearColor: Vec4;

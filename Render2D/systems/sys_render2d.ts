@@ -6,7 +6,7 @@ import {
     GL_TEXTURE0,
     GL_TEXTURE_2D,
 } from "../../common/webgl.js";
-import {CameraForward, CameraKind} from "../components/com_camera.js";
+import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {FLOATS_PER_INSTANCE, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -32,17 +32,17 @@ export function sys_render2d(game: Game, delta: number) {
         let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
             case CameraKind.Canvas:
-                render_forward(game, camera);
+                render_all(game, camera);
                 break;
         }
     }
 }
 
-function render_forward(game: Game, camera: CameraForward) {
+function render_all(game: Game, eye: CameraEye) {
     let material = game.MaterialInstanced;
 
     game.Gl.useProgram(material.Program);
-    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, camera.Pv);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
 
     game.Gl.activeTexture(GL_TEXTURE0);
     game.Gl.bindTexture(GL_TEXTURE_2D, game.Textures["checker1.png"]);

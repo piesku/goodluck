@@ -1,6 +1,6 @@
 import {Material} from "../../common/material.js";
 import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
-import {CameraEye, CameraForward, CameraKind} from "../components/com_camera.js";
+import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {RenderInstanced, RenderKind} from "../components/com_render.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
@@ -19,13 +19,13 @@ export function sys_render_forward(game: Game, delta: number) {
         let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
             case CameraKind.Canvas:
-                render_forward(game, camera);
+                render_eye(game, camera);
                 break;
         }
     }
 }
 
-function render_forward(game: Game, camera: CameraForward) {
+function render_eye(game: Game, eye: CameraEye) {
     // Keep track of the current material to minimize switching.
     let current_material = null;
     let current_front_face = null;
@@ -39,7 +39,7 @@ function render_forward(game: Game, camera: CameraForward) {
                 current_material = render.Material;
                 switch (render.Kind) {
                     case RenderKind.Instanced:
-                        use_instanced(game, render.Material, camera);
+                        use_instanced(game, render.Material, eye);
                         break;
                 }
             }
