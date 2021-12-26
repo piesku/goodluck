@@ -36,7 +36,7 @@ export function scene_stage(game: Game) {
     // Bottom light.
     instantiate(game, [
         transform(undefined, from_euler([0, 0, 0, 1], 30, -60, 0)),
-        light_directional([1, 1, 1], 0.7),
+        light_directional([1, 1, 1], 0.5),
     ]);
 
     // Character carousel.
