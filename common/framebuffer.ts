@@ -12,19 +12,34 @@ import {
 
 export type RenderTarget = ForwardTarget | DeferredTarget | DepthTarget;
 
+export const enum TargetKind {
+    Forward,
+    Deferred,
+    Depth,
+}
+
 export interface ForwardTarget {
+    Kind: TargetKind.Forward;
     Framebuffer: WebGLFramebuffer;
     Width: number;
     Height: number;
+    ResizeToViewport: boolean;
     RenderTexture: WebGLTexture;
     DepthTexture: WebGLTexture;
 }
 
-export function create_forward_target(gl: WebGL2RenderingContext, width: number, height: number) {
+export function create_forward_target(
+    gl: WebGL2RenderingContext,
+    width: number,
+    height: number,
+    resize_to_viewport: boolean
+) {
     let target: ForwardTarget = {
+        Kind: TargetKind.Forward,
         Framebuffer: gl.createFramebuffer()!,
         Width: width,
         Height: height,
+        ResizeToViewport: resize_to_viewport,
         RenderTexture: resize_texture_rgba8(gl, gl.createTexture()!, width, height),
         DepthTexture: resize_texture_depth24(gl, gl.createTexture()!, width, height),
     };
@@ -67,9 +82,11 @@ export function resize_forward_target(
 }
 
 export interface DeferredTarget {
+    Kind: TargetKind.Deferred;
     Framebuffer: WebGLFramebuffer;
     Width: number;
     Height: number;
+    ResizeToViewport: boolean;
     DiffuseTexture: WebGLTexture;
     SpecularTexture: WebGLTexture;
     PositionTexture: WebGLTexture;
@@ -78,11 +95,18 @@ export interface DeferredTarget {
 }
 
 /** Requires WEBGL_color_buffer_float. */
-export function create_deferred_target(gl: WebGL2RenderingContext, width: number, height: number) {
+export function create_deferred_target(
+    gl: WebGL2RenderingContext,
+    width: number,
+    height: number,
+    resize_to_viewport: boolean
+) {
     let target: DeferredTarget = {
+        Kind: TargetKind.Deferred,
         Framebuffer: gl.createFramebuffer()!,
         Width: width,
         Height: height,
+        ResizeToViewport: resize_to_viewport,
         DiffuseTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
         SpecularTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
         PositionTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
@@ -160,9 +184,11 @@ export function resize_deferred_target(
 }
 
 export interface DepthTarget {
+    Kind: TargetKind.Depth;
     Framebuffer: WebGLFramebuffer;
     Width: number;
     Height: number;
+    ResizeToViewport: false;
     DepthTexture: WebGLTexture;
     // For the framebuffer to be complete, a color texture must be attached too,
     // even if it won't be used.
@@ -171,9 +197,11 @@ export interface DepthTarget {
 
 export function create_depth_target(gl: WebGL2RenderingContext, width: number, height: number) {
     let target: DepthTarget = {
+        Kind: TargetKind.Depth,
         Framebuffer: gl.createFramebuffer()!,
         Width: width,
         Height: height,
+        ResizeToViewport: false,
         ColorTexture: resize_texture_rgba8(gl, gl.createTexture()!, width, height),
         DepthTexture: resize_texture_depth24(gl, gl.createTexture()!, width, height),
     };

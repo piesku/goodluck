@@ -1,4 +1,4 @@
-import {DeferredTarget, DepthTarget, ForwardTarget} from "../common/framebuffer.js";
+import {DeferredTarget, DepthTarget, ForwardTarget, RenderTarget} from "../common/framebuffer.js";
 import {GameXR} from "../common/game.js";
 import {Material} from "../common/material.js";
 import {Mesh} from "../common/mesh.js";
@@ -20,9 +20,11 @@ export interface Game extends GameXR {
     World: World;
 
     Targets: {
+        [name: string]: RenderTarget;
         Gbuffer: DeferredTarget;
         Shaded: ForwardTarget;
         Sun: DepthTarget;
+        Back: DepthTarget;
     };
 
     MaterialWireframe: Material<ColoredUnlitLayout>;

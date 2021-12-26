@@ -2,7 +2,11 @@
  * @module systems/sys_resize
  */
 
-import {resize_deferred_target} from "../../common/framebuffer.js";
+import {
+    resize_deferred_target,
+    resize_forward_target,
+    TargetKind,
+} from "../../common/framebuffer.js";
 import {
     Projection,
     ProjectionKind,
@@ -24,6 +28,29 @@ export function sys_resize(game: Game, delta: number) {
         game.ViewportWidth = game.Canvas3D.width = game.Canvas2D.width = window.innerWidth;
         game.ViewportHeight = game.Canvas3D.height = game.Canvas2D.height = window.innerHeight;
 
+        for (let target of Object.values(game.Targets)) {
+            if (target.ResizeToViewport) {
+                switch (target.Kind) {
+                    case TargetKind.Forward:
+                        resize_forward_target(
+                            game.Gl,
+                            target,
+                            game.ViewportWidth,
+                            game.ViewportHeight
+                        );
+                        break;
+                    case TargetKind.Deferred:
+                        resize_deferred_target(
+                            game.Gl,
+                            target,
+                            game.ViewportWidth,
+                            game.ViewportHeight
+                        );
+                        break;
+                }
+            }
+        }
+
         for (let i = 0; i < game.World.Signature.length; i++) {
             if ((game.World.Signature[i] & QUERY) === QUERY) {
                 let camera = game.World.Camera[i];
@@ -36,18 +63,7 @@ export function sys_resize(game: Game, delta: number) {
                         break;
                     case CameraKind.Framebuffer:
                     case CameraKind.Depth:
-                        update_projection(
-                            camera.Projection,
-                            camera.Target.Width / camera.Target.Height
-                        );
-                        break;
                     case CameraKind.Deferred:
-                        resize_deferred_target(
-                            game.Gl,
-                            camera.Target,
-                            game.ViewportWidth,
-                            game.ViewportHeight
-                        );
                         update_projection(
                             camera.Projection,
                             camera.Target.Width / camera.Target.Height

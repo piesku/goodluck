@@ -5,6 +5,7 @@ import {
     DeferredTarget,
     DepthTarget,
     ForwardTarget,
+    RenderTarget,
 } from "../common/framebuffer.js";
 import {Game3D} from "../common/game.js";
 import {mat_deferred_colored} from "../materials/mat_deferred_colored.js";
@@ -40,13 +41,14 @@ export class Game extends Game3D {
     MeshCube = mesh_cube(this.Gl);
     MeshQuad = mesh_quad(this.Gl);
 
+    Textures: Record<string, WebGLTexture> = {};
     override Targets: {
+        [name: string]: RenderTarget;
         Gbuffer: DeferredTarget;
         Shaded: ForwardTarget;
         Sun: DepthTarget;
         Back: DepthTarget;
     };
-    Textures: Record<string, WebGLTexture> = {};
 
     BulbCount = 0;
 
@@ -57,8 +59,8 @@ export class Game extends Game3D {
         this.Gl.getExtension("EXT_color_buffer_float");
         this.Targets = {
             // Create the main framebuffer for deferred rendering.
-            Gbuffer: create_deferred_target(this.Gl, this.ViewportWidth, this.ViewportHeight),
-            Shaded: create_forward_target(this.Gl, this.ViewportWidth, this.ViewportHeight),
+            Gbuffer: create_deferred_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
+            Shaded: create_forward_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
             Sun: create_depth_target(this.Gl, 1024, 1024),
             Back: create_depth_target(this.Gl, 256, 256),
         };

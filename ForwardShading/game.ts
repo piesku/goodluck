@@ -1,4 +1,10 @@
-import {create_depth_target, create_forward_target} from "../common/framebuffer.js";
+import {
+    create_depth_target,
+    create_forward_target,
+    DepthTarget,
+    ForwardTarget,
+    RenderTarget,
+} from "../common/framebuffer.js";
 import {Game3D} from "../common/game.js";
 import {MAX_FORWARD_LIGHTS} from "../materials/light.js";
 import {mat_forward_colored_flat} from "../materials/mat_forward_colored_flat.js";
@@ -50,9 +56,13 @@ export class Game extends Game3D {
     MeshIcosphereFlat = mesh_icosphere_flat(this.Gl);
 
     Textures: Record<string, WebGLTexture> = {};
-    override Targets = {
+    override Targets: {
+        [name: string]: RenderTarget;
+        Sun: DepthTarget;
+        Minimap: ForwardTarget;
+    } = {
         Sun: create_depth_target(this.Gl, 2048, 2048),
-        Minimap: create_forward_target(this.Gl, 256, 256),
+        Minimap: create_forward_target(this.Gl, 256, 256, false),
     };
 
     LightPositions = new Float32Array(4 * MAX_FORWARD_LIGHTS);
