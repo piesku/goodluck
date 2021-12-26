@@ -30,7 +30,7 @@ export function sys_render_postprocess(game: Game, delta: number) {
     game.Gl.useProgram(material.Program);
 
     game.Gl.activeTexture(GL_TEXTURE0);
-    game.Gl.bindTexture(GL_TEXTURE_2D, target.RenderTexture);
+    game.Gl.bindTexture(GL_TEXTURE_2D, target.ColorTexture);
     game.Gl.uniform1i(material.Locations.Sampler, 0);
     game.Gl.uniform2f(material.Locations.ViewportSize, game.ViewportWidth, game.ViewportHeight);
 

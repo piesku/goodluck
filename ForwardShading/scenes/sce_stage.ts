@@ -134,7 +134,7 @@ export function scene_stage(game: Game) {
         render_textured_unlit(
             game.MaterialTexturedUnlit,
             game.MeshCube,
-            game.Targets.Minimap.RenderTexture
+            game.Targets.Minimap.ColorTexture
         ),
 
         // Textured Gouraud shading (diffuse only)
@@ -156,7 +156,7 @@ export function scene_stage(game: Game) {
         render_textured_shaded(
             game.MaterialTexturedGouraud,
             game.MeshCube,
-            game.Targets.Minimap.RenderTexture
+            game.Targets.Minimap.ColorTexture
         ),
 
         // Textured Phong shading (high specular)
@@ -181,7 +181,7 @@ export function scene_stage(game: Game) {
         render_textured_shaded(
             game.MaterialTexturedPhong,
             game.MeshCube,
-            game.Targets.Minimap.RenderTexture,
+            game.Targets.Minimap.ColorTexture,
             512
         ),
 
@@ -210,7 +210,7 @@ export function scene_stage(game: Game) {
         render_mapped_shaded(
             game.MaterialMapped,
             game.MeshCube,
-            game.Targets.Minimap.RenderTexture,
+            game.Targets.Minimap.ColorTexture,
             game.Textures["Concrete018_1K_Normal.jpg"],
             game.Textures["Concrete018_1K_Roughness.jpg"]
         ),

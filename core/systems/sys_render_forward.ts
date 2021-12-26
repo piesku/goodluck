@@ -44,7 +44,7 @@ export function sys_render_forward(game: Game, delta: number) {
                     game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
                     game.Gl.clearColor(...camera.ClearColor);
                     game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                    render_all(game, camera, camera.Target.RenderTexture);
+                    render_all(game, camera, camera.Target.ColorTexture);
                 }
                 break;
         }
