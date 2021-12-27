@@ -5,8 +5,6 @@
 import {TargetKind} from "../../common/framebuffer.js";
 import {
     GL_ARRAY_BUFFER,
-    GL_COLOR_BUFFER_BIT,
-    GL_DEPTH_BUFFER_BIT,
     GL_ELEMENT_ARRAY_BUFFER,
     GL_FLOAT,
     GL_FRAMEBUFFER,
@@ -27,7 +25,7 @@ export function sys_render_depth(game: Game, delta: number) {
             game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target.Framebuffer);
             game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
             game.Gl.clearColor(...camera.ClearColor);
-            game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            game.Gl.clear(camera.ClearMask);
             render_all(game, camera);
             break;
         }

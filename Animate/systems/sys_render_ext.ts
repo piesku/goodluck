@@ -1,11 +1,6 @@
 import {multiply} from "../../common/mat4.js";
 import {Material} from "../../common/material.js";
-import {
-    GL_COLOR_BUFFER_BIT,
-    GL_DEPTH_BUFFER_BIT,
-    GL_FRAMEBUFFER,
-    GL_UNSIGNED_SHORT,
-} from "../../common/webgl.js";
+import {GL_FRAMEBUFFER, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
 import {Entity} from "../../common/world.js";
 import {ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.js";
 import {CameraEye, CameraKind} from "../components/com_camera.js";
@@ -29,7 +24,7 @@ export function sys_render_forward(game: Game, delta: number) {
                 game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
                 game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
                 game.Gl.clearColor(...camera.ClearColor);
-                game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                game.Gl.clear(camera.ClearMask);
                 render(game, camera);
                 break;
         }

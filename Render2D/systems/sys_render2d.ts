@@ -1,7 +1,6 @@
 import {
     GL_ARRAY_BUFFER,
-    GL_COLOR_BUFFER_BIT,
-    GL_DEPTH_BUFFER_BIT,
+    GL_FRAMEBUFFER,
     GL_STREAM_DRAW,
     GL_TEXTURE0,
     GL_TEXTURE_2D,
@@ -11,12 +10,6 @@ import {FLOATS_PER_INSTANCE, Game} from "../game.js";
 import {Has} from "../world.js";
 
 export function sys_render2d(game: Game, delta: number) {
-    game.Gl.clearColor(0.9, 0.9, 0.9, 1);
-    game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    if (game.ViewportResized) {
-        game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
-    }
-
     for (let i = 0; i < game.World.Signature.length; i++) {
         let offset = i * FLOATS_PER_INSTANCE + 7;
         if (game.World.Signature[i] & Has.Render2D) {
@@ -32,6 +25,10 @@ export function sys_render2d(game: Game, delta: number) {
         let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
             case CameraKind.Canvas:
+                game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
+                game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
+                game.Gl.clearColor(...camera.ClearColor);
+                game.Gl.clear(camera.ClearMask);
                 render_all(game, camera);
                 break;
         }

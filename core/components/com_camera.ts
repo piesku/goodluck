@@ -6,6 +6,7 @@ import {DepthTarget, RenderTarget} from "../../common/framebuffer.js";
 import {create} from "../../common/mat4.js";
 import {Mat4, Vec3, Vec4} from "../../common/math.js";
 import {Projection, ProjectionKind} from "../../common/projection.js";
+import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT} from "../../common/webgl.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -29,13 +30,15 @@ export interface CameraCanvas extends CameraEye {
     Kind: CameraKind.Canvas;
     Projection: Projection;
     ClearColor: Vec4;
+    ClearMask: number;
 }
 
 export function camera_canvas_perspective(
     fovy: number,
     near: number,
     far: number,
-    clear_color: Vec4 = [0.9, 0.9, 0.9, 1]
+    clear_color: Vec4 = [0.9, 0.9, 0.9, 1],
+    clear_mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;
@@ -53,6 +56,7 @@ export function camera_canvas_perspective(
             Pv: create(),
             Position: [0, 0, 0],
             ClearColor: clear_color,
+            ClearMask: clear_mask,
         };
     };
 }
@@ -61,7 +65,8 @@ export function camera_canvas_ortho(
     radius: number,
     near: number,
     far: number,
-    clear_color: Vec4 = [0.9, 0.9, 0.9, 1]
+    clear_color: Vec4 = [0.9, 0.9, 0.9, 1],
+    clear_mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;
@@ -79,6 +84,7 @@ export function camera_canvas_ortho(
             Pv: create(),
             Position: [0, 0, 0],
             ClearColor: clear_color,
+            ClearMask: clear_mask,
         };
     };
 }
@@ -88,6 +94,7 @@ export interface CameraTarget extends CameraEye {
     Target: RenderTarget;
     Projection: Projection;
     ClearColor: Vec4;
+    ClearMask: number;
 }
 
 export function camera_target_perspective(
@@ -95,7 +102,8 @@ export function camera_target_perspective(
     fovy: number,
     near: number,
     far: number,
-    clear_color: Vec4
+    clear_color: Vec4 = [0, 0, 0, 1],
+    clear_mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;
@@ -114,6 +122,7 @@ export function camera_target_perspective(
             Pv: create(),
             Position: [0, 0, 0],
             ClearColor: clear_color,
+            ClearMask: clear_mask,
         };
     };
 }
@@ -123,7 +132,8 @@ export function camera_target_ortho(
     radius: number,
     near: number,
     far: number,
-    clear_color: Vec4 = [0, 0, 0, 1]
+    clear_color: Vec4 = [0, 0, 0, 1],
+    clear_mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;
@@ -142,6 +152,7 @@ export function camera_target_ortho(
             Pv: create(),
             Position: [0, 0, 0],
             ClearColor: clear_color,
+            ClearMask: clear_mask,
         };
     };
 }
@@ -154,15 +165,20 @@ export interface CameraXr {
     Kind: CameraKind.Xr;
     Eyes: Array<XrEye>;
     ClearColor: Vec4;
+    ClearMask: number;
 }
 
-export function camera_xr(clear_color: Vec4) {
+export function camera_xr(
+    clear_color: Vec4 = [0.9, 0.9, 0.9, 1],
+    clear_mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
+) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;
         game.World.Camera[entity] = {
             Kind: CameraKind.Xr,
             Eyes: [],
             ClearColor: clear_color,
+            ClearMask: clear_mask,
         };
     };
 }

@@ -3,12 +3,7 @@
  */
 
 import {TargetKind} from "../../common/framebuffer.js";
-import {
-    GL_COLOR_BUFFER_BIT,
-    GL_DEPTH_BUFFER_BIT,
-    GL_FRAMEBUFFER,
-    GL_UNSIGNED_SHORT,
-} from "../../common/webgl.js";
+import {GL_FRAMEBUFFER, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
 import {Entity} from "../../common/world.js";
 import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {Render, RenderKind} from "../components/com_render.js";
@@ -24,7 +19,7 @@ export function sys_render_deferred(game: Game, delta: number) {
             game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target.Framebuffer);
             game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
             game.Gl.clearColor(...camera.ClearColor);
-            game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            game.Gl.clear(camera.ClearMask);
             render_all(game, camera);
         }
     }
