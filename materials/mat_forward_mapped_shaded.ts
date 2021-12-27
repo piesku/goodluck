@@ -125,12 +125,6 @@ export function mat_forward_mapped_shaded(
             Eye: gl.getUniformLocation(program, "eye")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
-
-            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
-            VertexTexCoord: gl.getAttribLocation(program, "attr_texcoord")!,
-            VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
-            VertexTangent: gl.getAttribLocation(program, "attr_tangent")!,
-            VertexBitangent: gl.getAttribLocation(program, "attr_bitangent")!,
         },
     };
 }

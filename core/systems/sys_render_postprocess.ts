@@ -14,6 +14,7 @@ import {
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
+import {Attribute} from "../../materials/layout.js";
 import {Game} from "../game.js";
 
 export function sys_render_postprocess(game: Game, delta: number) {
@@ -35,12 +36,12 @@ export function sys_render_postprocess(game: Game, delta: number) {
     game.Gl.uniform2f(material.Locations.ViewportSize, game.ViewportWidth, game.ViewportHeight);
 
     game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
-    game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
-    game.Gl.vertexAttribPointer(material.Locations.VertexPosition, 3, GL_FLOAT, false, 0, 0);
+    game.Gl.enableVertexAttribArray(Attribute.Position);
+    game.Gl.vertexAttribPointer(Attribute.Position, 3, GL_FLOAT, false, 0, 0);
 
     game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.TexCoordBuffer);
-    game.Gl.enableVertexAttribArray(material.Locations.VertexTexcoord);
-    game.Gl.vertexAttribPointer(material.Locations.VertexTexcoord, 2, GL_FLOAT, false, 0, 0);
+    game.Gl.enableVertexAttribArray(Attribute.TexCoord);
+    game.Gl.vertexAttribPointer(Attribute.TexCoord, 2, GL_FLOAT, false, 0, 0);
 
     game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
     game.Gl.drawElements(material.Mode, mesh.IndexCount, GL_UNSIGNED_SHORT, 0);

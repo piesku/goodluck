@@ -20,6 +20,7 @@ import {
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
 import {Entity, first_having} from "../../common/world.js";
+import {Attribute} from "../../materials/layout.js";
 import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {FLOATS_PER_PARTICLE, Render, RenderKind, RenderPhase} from "../components/com_render.js";
 import {Game} from "../game.js";
@@ -315,15 +316,8 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
             game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
             game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
             game.Gl.bindBuffer(GL_ARRAY_BUFFER, render.VertexBuffer);
-            game.Gl.enableVertexAttribArray(render.Material.Locations.VertexPosition);
-            game.Gl.vertexAttribPointer(
-                render.Material.Locations.VertexPosition,
-                3,
-                GL_FLOAT,
-                false,
-                0,
-                0
-            );
+            game.Gl.enableVertexAttribArray(Attribute.Position);
+            game.Gl.vertexAttribPointer(Attribute.Position, 3, GL_FLOAT, false, 0, 0);
             game.Gl.drawArrays(render.Material.Mode, 0, render.IndexCount);
             break;
         case RenderKind.ParticlesColored: {

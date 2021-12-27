@@ -136,9 +136,6 @@ export function mat_forward_colored_shadows(
 
             ShadowSpace: gl.getUniformLocation(program, "shadow_space")!,
             ShadowMap: gl.getUniformLocation(program, "shadow_map")!,
-
-            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
-            VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
         },
     };
 }

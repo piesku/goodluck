@@ -9,8 +9,5 @@ export interface ForwardInstancedLayout {
     LightPositions: WebGLUniformLocation;
     LightDetails: WebGLUniformLocation;
 
-    // Attributes
-    VertexPosition: GLint;
-    VertexNormal: GLint;
     VertexOffset: GLint;
 }

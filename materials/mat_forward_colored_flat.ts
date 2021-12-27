@@ -102,9 +102,6 @@ export function mat_forward_colored_flat(
             Eye: gl.getUniformLocation(program, "eye")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
-
-            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
-            VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
         },
     };
 }

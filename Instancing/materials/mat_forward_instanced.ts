@@ -90,8 +90,6 @@ export function mat_forward_instanced(
             LightPositions: gl.getUniformLocation(program, "light_positions")!,
             LightDetails: gl.getUniformLocation(program, "light_details")!,
 
-            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
-            VertexNormal: gl.getAttribLocation(program, "attr_normal")!,
             VertexOffset: gl.getAttribLocation(program, "attr_offset")!,
         },
     };

@@ -25,6 +25,7 @@ import {
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
+import {Attribute} from "../../materials/layout.js";
 import {LightKind} from "../../materials/light.js";
 import {CameraKind} from "../components/com_camera.js";
 import {Game} from "../game.js";
@@ -128,15 +129,8 @@ export function sys_render_shading(game: Game, delta: number) {
             if (current_mesh !== mesh) {
                 current_mesh = mesh;
                 game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
-                game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
-                game.Gl.vertexAttribPointer(
-                    material.Locations.VertexPosition,
-                    3,
-                    GL_FLOAT,
-                    false,
-                    0,
-                    0
-                );
+                game.Gl.enableVertexAttribArray(Attribute.Position);
+                game.Gl.vertexAttribPointer(Attribute.Position, 3, GL_FLOAT, false, 0, 0);
                 game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
             }
 

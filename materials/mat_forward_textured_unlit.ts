@@ -46,9 +46,6 @@ export function mat_forward_textured_unlit(
 
             TextureMap: gl.getUniformLocation(program, "texture_map")!,
             Color: gl.getUniformLocation(program, "color")!,
-
-            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
-            VertexTexCoord: gl.getAttribLocation(program, "attr_texcoord")!,
         },
     };
 }

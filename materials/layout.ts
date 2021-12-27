@@ -10,12 +10,8 @@ export const enum Attribute {
     Weights = 5,
 }
 
-export interface ClipSpaceLayout {
+export interface WorldSpaceLayout {
     Pv: WebGLUniformLocation;
-    VertexPosition: GLint;
-}
-
-export interface WorldSpaceLayout extends ClipSpaceLayout {
     World: WebGLUniformLocation;
 }
 
@@ -23,12 +19,8 @@ export interface ColoredUnlitLayout extends WorldSpaceLayout {
     Color: WebGLUniformLocation;
 }
 
-export interface CorrectNormalsLayout {
+export interface ColoredShadedLayout extends WorldSpaceLayout {
     Self: WebGLUniformLocation;
-    VertexNormal: GLint;
-}
-
-export interface ColoredShadedLayout extends WorldSpaceLayout, CorrectNormalsLayout {
     DiffuseColor: WebGLUniformLocation;
     SpecularColor: WebGLUniformLocation;
     Shininess: WebGLUniformLocation;
@@ -37,25 +29,22 @@ export interface ColoredShadedLayout extends WorldSpaceLayout, CorrectNormalsLay
 export interface TexturedUnlitLayout extends WorldSpaceLayout {
     TextureMap: WebGLUniformLocation;
     Color: WebGLUniformLocation;
-    VertexTexCoord: GLint;
 }
 
-export interface TexturedShadedLayout extends WorldSpaceLayout, CorrectNormalsLayout {
+export interface TexturedShadedLayout extends WorldSpaceLayout {
+    Self: WebGLUniformLocation;
     DiffuseMap: WebGLUniformLocation;
     DiffuseColor: WebGLUniformLocation;
     SpecularColor: WebGLUniformLocation;
     Shininess: WebGLUniformLocation;
-    VertexTexCoord: GLint;
 }
 
-export interface MappedShadedLayout extends WorldSpaceLayout, CorrectNormalsLayout {
+export interface MappedShadedLayout extends WorldSpaceLayout {
+    Self: WebGLUniformLocation;
     DiffuseMap: WebGLUniformLocation;
     DiffuseColor: WebGLUniformLocation;
     NormalMap: WebGLUniformLocation;
     RoughnessMap: WebGLUniformLocation;
-    VertexTexCoord: GLint;
-    VertexTangent: GLint;
-    VertexBitangent: GLint;
 }
 
 export interface ForwardShadingLayout {
@@ -71,37 +60,25 @@ export interface DeferredShadingLayout {
 }
 
 export interface ShadowMappingLayout {
-    // Uniforms
     ShadowSpace: WebGLUniformLocation;
     ShadowMap: WebGLUniformLocation;
 }
 
 export interface DeferredPostprocessLayout {
-    // Uniforms
     DiffuseMap: WebGLUniformLocation;
     SpecularMap: WebGLUniformLocation;
     PositionMap: WebGLUniformLocation;
     NormalMap: WebGLUniformLocation;
     DepthMap: WebGLUniformLocation;
-
-    // Attributes
-    VertexPosition: GLint;
 }
 
 export interface PostprocessLayout {
-    // Uniforms
     Sampler: WebGLUniformLocation;
     ViewportSize: WebGLUniformLocation;
-
-    // Attributes
-    VertexPosition: GLint;
-    VertexTexcoord: GLint;
 }
 
 export interface ParticlesColoredLayout {
-    // Uniforms
     Pv: WebGLUniformLocation;
-
     ColorStart: WebGLUniformLocation;
     ColorEnd: WebGLUniformLocation;
     Details: WebGLUniformLocation;
@@ -112,9 +89,7 @@ export interface ParticlesColoredLayout {
 }
 
 export interface ParticlesTexturedLayout {
-    // Uniforms
     Pv: WebGLUniformLocation;
-
     TextureMap: WebGLUniformLocation;
     ColorStart: WebGLUniformLocation;
     ColorEnd: WebGLUniformLocation;

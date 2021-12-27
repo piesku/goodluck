@@ -161,8 +161,6 @@ export function mat_deferred_shading(
 
             ShadowSpace: gl.getUniformLocation(program, "shadow_space")!,
             ShadowMap: gl.getUniformLocation(program, "shadow_map")!,
-
-            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
         },
     };
 }

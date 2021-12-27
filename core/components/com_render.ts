@@ -15,6 +15,7 @@ import {
 } from "../../common/webgl.js";
 import {Entity} from "../../common/world.js";
 import {
+    Attribute,
     ColoredShadedLayout,
     ColoredUnlitLayout,
     ForwardShadingLayout,
@@ -339,21 +340,14 @@ export function render_mapped_shaded(
             let tangent_buf = game.Gl.createBuffer()!;
             game.Gl.bindBuffer(GL_ARRAY_BUFFER, tangent_buf);
             game.Gl.bufferData(GL_ARRAY_BUFFER, tangent_arr, GL_STATIC_DRAW);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexTangent);
-            game.Gl.vertexAttribPointer(material.Locations.VertexTangent, 3, GL_FLOAT, false, 0, 0);
+            game.Gl.enableVertexAttribArray(Attribute.Tangent);
+            game.Gl.vertexAttribPointer(Attribute.Tangent, 3, GL_FLOAT, false, 0, 0);
 
             let bitangent_buf = game.Gl.createBuffer()!;
             game.Gl.bindBuffer(GL_ARRAY_BUFFER, bitangent_buf);
             game.Gl.bufferData(GL_ARRAY_BUFFER, bitangent_arr, GL_STATIC_DRAW);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexBitangent);
-            game.Gl.vertexAttribPointer(
-                material.Locations.VertexBitangent,
-                3,
-                GL_FLOAT,
-                false,
-                0,
-                0
-            );
+            game.Gl.enableVertexAttribArray(Attribute.Bitangent);
+            game.Gl.vertexAttribPointer(Attribute.Bitangent, 3, GL_FLOAT, false, 0, 0);
 
             game.Gl.bindVertexArray(null);
         }

@@ -87,8 +87,6 @@ export function mat_postprocess_fxaa(gl: WebGL2RenderingContext): Material<Postp
         Locations: {
             Sampler: gl.getUniformLocation(program, "sampler")!,
             ViewportSize: gl.getUniformLocation(program, "viewport_size")!,
-            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
-            VertexTexcoord: gl.getAttribLocation(program, "attr_texcoord")!,
         },
     };
 }

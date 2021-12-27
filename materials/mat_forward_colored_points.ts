@@ -38,8 +38,6 @@ export function mat_forward_colored_points(
             World: gl.getUniformLocation(program, "world")!,
 
             Color: gl.getUniformLocation(program, "color")!,
-
-            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
         },
     };
 }
