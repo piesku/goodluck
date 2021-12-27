@@ -1,6 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {Attribute, ColoredShadedLayout} from "./layout.js";
+import {Attribute, ColoredShadedLayout, Output} from "./layout.js";
 
 let vertex = `#version 300 es\n
 
@@ -31,10 +31,10 @@ let fragment = `#version 300 es\n
     in vec4 vert_position;
     in vec4 vert_normal;
 
-    layout(location = 0) out vec4 frag_diffuse;
-    layout(location = 1) out vec4 frag_specular;
-    layout(location = 2) out vec4 frag_position;
-    layout(location = 3) out vec3 frag_normal;
+    layout(location=${Output.Diffuse}) out vec4 frag_diffuse;
+    layout(location=${Output.Specular}) out vec4 frag_specular;
+    layout(location=${Output.Position}) out vec4 frag_position;
+    layout(location=${Output.Normal}) out vec3 frag_normal;
 
     void main() {
         frag_diffuse = diffuse_color;

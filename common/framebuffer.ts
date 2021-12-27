@@ -1,9 +1,7 @@
+import {Output} from "../materials/layout.js";
 import {resize_texture_depth24, resize_texture_rgba32f, resize_texture_rgba8} from "./texture.js";
 import {
     GL_COLOR_ATTACHMENT0,
-    GL_COLOR_ATTACHMENT1,
-    GL_COLOR_ATTACHMENT2,
-    GL_COLOR_ATTACHMENT3,
     GL_DEPTH_ATTACHMENT,
     GL_FRAMEBUFFER,
     GL_FRAMEBUFFER_COMPLETE,
@@ -117,28 +115,28 @@ export function create_deferred_target(
     gl.bindFramebuffer(GL_FRAMEBUFFER, target.Framebuffer);
     gl.framebufferTexture2D(
         GL_FRAMEBUFFER,
-        GL_COLOR_ATTACHMENT0,
+        GL_COLOR_ATTACHMENT0 + Output.Diffuse,
         GL_TEXTURE_2D,
         target.DiffuseTexture,
         0
     );
     gl.framebufferTexture2D(
         GL_FRAMEBUFFER,
-        GL_COLOR_ATTACHMENT1,
+        GL_COLOR_ATTACHMENT0 + Output.Specular,
         GL_TEXTURE_2D,
         target.SpecularTexture,
         0
     );
     gl.framebufferTexture2D(
         GL_FRAMEBUFFER,
-        GL_COLOR_ATTACHMENT2,
+        GL_COLOR_ATTACHMENT0 + Output.Position,
         GL_TEXTURE_2D,
         target.PositionTexture,
         0
     );
     gl.framebufferTexture2D(
         GL_FRAMEBUFFER,
-        GL_COLOR_ATTACHMENT3,
+        GL_COLOR_ATTACHMENT0 + Output.Normal,
         GL_TEXTURE_2D,
         target.NormalTexture,
         0
@@ -152,10 +150,10 @@ export function create_deferred_target(
     );
 
     gl.drawBuffers([
-        GL_COLOR_ATTACHMENT0,
-        GL_COLOR_ATTACHMENT1,
-        GL_COLOR_ATTACHMENT2,
-        GL_COLOR_ATTACHMENT3,
+        GL_COLOR_ATTACHMENT0 + Output.Diffuse,
+        GL_COLOR_ATTACHMENT0 + Output.Specular,
+        GL_COLOR_ATTACHMENT0 + Output.Position,
+        GL_COLOR_ATTACHMENT0 + Output.Normal,
     ]);
 
     let status = gl.checkFramebufferStatus(GL_FRAMEBUFFER);

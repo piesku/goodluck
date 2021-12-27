@@ -17,15 +17,11 @@ import {
     GL_ONE,
     GL_READ_FRAMEBUFFER,
     GL_TEXTURE0,
-    GL_TEXTURE1,
-    GL_TEXTURE2,
-    GL_TEXTURE3,
-    GL_TEXTURE4,
     GL_TEXTURE5,
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {Attribute} from "../../materials/layout.js";
+import {Attribute, Output} from "../../materials/layout.js";
 import {LightKind} from "../../materials/light.js";
 import {CameraKind} from "../components/com_camera.js";
 import {Game} from "../game.js";
@@ -69,25 +65,25 @@ export function sys_render_shading(game: Game, delta: number) {
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, camera.Pv);
     game.Gl.uniform3fv(material.Locations.Eye, camera.Position);
 
-    game.Gl.activeTexture(GL_TEXTURE0);
+    game.Gl.activeTexture(GL_TEXTURE0 + Output.Diffuse);
     game.Gl.bindTexture(GL_TEXTURE_2D, target.DiffuseTexture);
-    game.Gl.uniform1i(material.Locations.DiffuseMap, 0);
+    game.Gl.uniform1i(material.Locations.DiffuseMap, Output.Diffuse);
 
-    game.Gl.activeTexture(GL_TEXTURE1);
+    game.Gl.activeTexture(GL_TEXTURE0 + Output.Specular);
     game.Gl.bindTexture(GL_TEXTURE_2D, target.SpecularTexture);
-    game.Gl.uniform1i(material.Locations.SpecularMap, 1);
+    game.Gl.uniform1i(material.Locations.SpecularMap, Output.Specular);
 
-    game.Gl.activeTexture(GL_TEXTURE2);
+    game.Gl.activeTexture(GL_TEXTURE0 + Output.Position);
     game.Gl.bindTexture(GL_TEXTURE_2D, target.PositionTexture);
-    game.Gl.uniform1i(material.Locations.PositionMap, 2);
+    game.Gl.uniform1i(material.Locations.PositionMap, Output.Position);
 
-    game.Gl.activeTexture(GL_TEXTURE3);
+    game.Gl.activeTexture(GL_TEXTURE0 + Output.Normal);
     game.Gl.bindTexture(GL_TEXTURE_2D, target.NormalTexture);
-    game.Gl.uniform1i(material.Locations.NormalMap, 3);
+    game.Gl.uniform1i(material.Locations.NormalMap, Output.Normal);
 
-    game.Gl.activeTexture(GL_TEXTURE4);
+    game.Gl.activeTexture(GL_TEXTURE0 + Output.Depth);
     game.Gl.bindTexture(GL_TEXTURE_2D, target.DepthTexture);
-    game.Gl.uniform1i(material.Locations.DepthMap, 4);
+    game.Gl.uniform1i(material.Locations.DepthMap, Output.Depth);
 
     let current_mesh: Mesh | undefined;
     for (let ent = 0; ent < game.World.Signature.length; ent++) {

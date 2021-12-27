@@ -10,6 +10,14 @@ export const enum Attribute {
     Weights = 5,
 }
 
+export const enum Output {
+    Diffuse = 0,
+    Specular = 1,
+    Position = 2,
+    Normal = 3,
+    Depth = 4,
+}
+
 export interface WorldSpaceLayout {
     Pv: WebGLUniformLocation;
     World: WebGLUniformLocation;
