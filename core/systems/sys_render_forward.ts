@@ -190,7 +190,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
         case RenderKind.ColoredUnlit:
             game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
             game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
-            game.Gl.bindVertexArray(render.Vao);
+            game.Gl.bindVertexArray(render.Mesh.Vao);
             game.Gl.drawElements(
                 render.Material.Mode,
                 render.Mesh.IndexCount,
@@ -206,7 +206,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
             game.Gl.uniform4fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
             game.Gl.uniform4fv(render.Material.Locations.SpecularColor, render.SpecularColor);
             game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
-            game.Gl.bindVertexArray(render.Vao);
+            game.Gl.bindVertexArray(render.Mesh.Vao);
             game.Gl.drawElements(
                 render.Material.Mode,
                 render.Mesh.IndexCount,
@@ -221,7 +221,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
             game.Gl.uniform4fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
             game.Gl.uniform4fv(render.Material.Locations.SpecularColor, render.SpecularColor);
             game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
-            game.Gl.bindVertexArray(render.Vao);
+            game.Gl.bindVertexArray(render.Mesh.Vao);
             game.Gl.drawElements(
                 render.Material.Mode,
                 render.Mesh.IndexCount,
@@ -244,7 +244,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
             game.Gl.bindTexture(GL_TEXTURE_2D, render.Texture);
             game.Gl.uniform1i(render.Material.Locations.TextureMap, 0);
 
-            game.Gl.bindVertexArray(render.Vao);
+            game.Gl.bindVertexArray(render.Mesh.Vao);
             game.Gl.drawElements(
                 render.Material.Mode,
                 render.Mesh.IndexCount,
@@ -270,7 +270,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
             game.Gl.bindTexture(GL_TEXTURE_2D, render.Texture);
             game.Gl.uniform1i(render.Material.Locations.DiffuseMap, 0);
 
-            game.Gl.bindVertexArray(render.Vao);
+            game.Gl.bindVertexArray(render.Mesh.Vao);
             game.Gl.drawElements(
                 render.Material.Mode,
                 render.Mesh.IndexCount,
@@ -302,7 +302,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
             game.Gl.bindTexture(GL_TEXTURE_2D, render.RoughnessMap);
             game.Gl.uniform1i(render.Material.Locations.RoughnessMap, 3);
 
-            game.Gl.bindVertexArray(render.Vao);
+            game.Gl.bindVertexArray(render.Mesh.Vao);
             game.Gl.drawElements(
                 render.Material.Mode,
                 render.Mesh.IndexCount,

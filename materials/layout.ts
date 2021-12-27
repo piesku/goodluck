@@ -7,6 +7,7 @@ export const enum Attribute {
     TexCoord = 2,
     Tangent = 3,
     Bitangent = 4,
+    Weights = 5,
 }
 
 export interface ClipSpaceLayout {

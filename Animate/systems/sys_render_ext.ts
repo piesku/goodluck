@@ -93,7 +93,7 @@ function draw_colored_shaded(game: Game, transform: Transform, render: RenderCol
     game.Gl.uniform4fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
     game.Gl.uniform4fv(render.Material.Locations.SpecularColor, render.SpecularColor);
     game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
-    game.Gl.bindVertexArray(render.Vao);
+    game.Gl.bindVertexArray(render.Mesh.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
     game.Gl.bindVertexArray(null);
 }
@@ -131,7 +131,7 @@ function draw_colored_skinned(
     }
     game.Gl.uniformMatrix4fv(render.Material.Locations.Bones, false, bones);
 
-    game.Gl.bindVertexArray(render.Vao);
+    game.Gl.bindVertexArray(render.Mesh.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
     game.Gl.bindVertexArray(null);
 }

@@ -10,7 +10,6 @@ import {
     GL_ARRAY_BUFFER,
     GL_CW,
     GL_DYNAMIC_DRAW,
-    GL_ELEMENT_ARRAY_BUFFER,
     GL_FLOAT,
     GL_STATIC_DRAW,
 } from "../../common/webgl.js";
@@ -59,21 +58,12 @@ export const enum RenderPhase {
     Transparent,
 }
 
-const colored_unlit_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
-const colored_shaded_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
-const colored_shadows_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
-const colored_deferred_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
-const textured_unlit_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
-const textured_shaded_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
-const mapped_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
-
 export interface RenderColoredUnlit {
     readonly Kind: RenderKind.ColoredUnlit;
     Material: Material<ColoredUnlitLayout>;
     Mesh: Mesh;
     Phase: RenderPhase;
     FrontFace: GLenum;
-    Vao: WebGLVertexArrayObject;
     Color: Vec4;
 }
 
@@ -83,28 +73,6 @@ export function render_colored_unlit(
     color: Vec4
 ) {
     return (game: Game, entity: Entity) => {
-        if (!colored_unlit_vaos.has(mesh)) {
-            // We only need to create the VAO once.
-            let vao = game.Gl.createVertexArray()!;
-            game.Gl.bindVertexArray(vao);
-
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
-            game.Gl.vertexAttribPointer(
-                material.Locations.VertexPosition,
-                3,
-                GL_FLOAT,
-                false,
-                0,
-                0
-            );
-
-            game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
-
-            game.Gl.bindVertexArray(null);
-            colored_unlit_vaos.set(mesh, vao);
-        }
-
         game.World.Signature[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.ColoredUnlit,
@@ -112,7 +80,6 @@ export function render_colored_unlit(
             Mesh: mesh,
             Phase: color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
             FrontFace: GL_CW,
-            Vao: colored_unlit_vaos.get(mesh)!,
             Color: color,
         };
     };
@@ -124,7 +91,6 @@ export interface RenderColoredShaded {
     Mesh: Mesh;
     Phase: RenderPhase;
     FrontFace: GLenum;
-    Vao: WebGLVertexArrayObject;
     DiffuseColor: Vec4;
     SpecularColor: Vec4;
     Shininess: number;
@@ -139,32 +105,6 @@ export function render_colored_shaded(
     front_face: GLenum = GL_CW
 ) {
     return (game: Game, entity: Entity) => {
-        if (!colored_shaded_vaos.has(mesh)) {
-            // We only need to create the VAO once.
-            let vao = game.Gl.createVertexArray()!;
-            game.Gl.bindVertexArray(vao);
-
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
-            game.Gl.vertexAttribPointer(
-                material.Locations.VertexPosition,
-                3,
-                GL_FLOAT,
-                false,
-                0,
-                0
-            );
-
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.NormalBuffer);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexNormal);
-            game.Gl.vertexAttribPointer(material.Locations.VertexNormal, 3, GL_FLOAT, false, 0, 0);
-
-            game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
-
-            game.Gl.bindVertexArray(null);
-            colored_shaded_vaos.set(mesh, vao);
-        }
-
         game.World.Signature[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.ColoredShaded,
@@ -172,7 +112,6 @@ export function render_colored_shaded(
             Mesh: mesh,
             Phase: diffuse_color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
             FrontFace: front_face,
-            Vao: colored_shaded_vaos.get(mesh)!,
             DiffuseColor: diffuse_color,
             SpecularColor: specular_color,
             Shininess: shininess,
@@ -186,7 +125,6 @@ export interface RenderColoredShadows {
     Mesh: Mesh;
     Phase: RenderPhase;
     FrontFace: GLenum;
-    Vao: WebGLVertexArrayObject;
     DiffuseColor: Vec4;
     SpecularColor: Vec4;
     Shininess: number;
@@ -201,32 +139,6 @@ export function render_colored_shadows(
     front_face: GLenum = GL_CW
 ) {
     return (game: Game, entity: Entity) => {
-        if (!colored_shadows_vaos.has(mesh)) {
-            // We only need to create the VAO once.
-            let vao = game.Gl.createVertexArray()!;
-            game.Gl.bindVertexArray(vao);
-
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
-            game.Gl.vertexAttribPointer(
-                material.Locations.VertexPosition,
-                3,
-                GL_FLOAT,
-                false,
-                0,
-                0
-            );
-
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.NormalBuffer);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexNormal);
-            game.Gl.vertexAttribPointer(material.Locations.VertexNormal, 3, GL_FLOAT, false, 0, 0);
-
-            game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
-
-            game.Gl.bindVertexArray(null);
-            colored_shadows_vaos.set(mesh, vao);
-        }
-
         game.World.Signature[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.ColoredShadows,
@@ -234,7 +146,6 @@ export function render_colored_shadows(
             Mesh: mesh,
             Phase: diffuse_color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
             FrontFace: front_face,
-            Vao: colored_shadows_vaos.get(mesh)!,
             DiffuseColor: diffuse_color,
             SpecularColor: specular_color,
             Shininess: shininess,
@@ -248,7 +159,6 @@ export interface RenderColoredDeferred {
     Mesh: Mesh;
     Phase: RenderPhase;
     FrontFace: GLenum;
-    Vao: WebGLVertexArrayObject;
     DiffuseColor: Vec4;
     SpecularColor: Vec3;
     Shininess: number;
@@ -263,32 +173,6 @@ export function render_colored_deferred(
     front_face: GLenum = GL_CW
 ) {
     return (game: Game, entity: Entity) => {
-        if (!colored_deferred_vaos.has(mesh)) {
-            // We only need to create the VAO once.
-            let vao = game.Gl.createVertexArray()!;
-            game.Gl.bindVertexArray(vao);
-
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
-            game.Gl.vertexAttribPointer(
-                material.Locations.VertexPosition,
-                3,
-                GL_FLOAT,
-                false,
-                0,
-                0
-            );
-
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.NormalBuffer);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexNormal);
-            game.Gl.vertexAttribPointer(material.Locations.VertexNormal, 3, GL_FLOAT, false, 0, 0);
-
-            game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
-
-            game.Gl.bindVertexArray(null);
-            colored_deferred_vaos.set(mesh, vao);
-        }
-
         game.World.Signature[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.ColoredDeferred,
@@ -296,7 +180,6 @@ export function render_colored_deferred(
             Mesh: mesh,
             Phase: diffuse_color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
             FrontFace: front_face,
-            Vao: colored_deferred_vaos.get(mesh)!,
             DiffuseColor: diffuse_color,
             SpecularColor: specular_color,
             Shininess: shininess,
@@ -310,7 +193,6 @@ export interface RenderTexturedUnlit {
     Mesh: Mesh;
     Phase: RenderPhase;
     FrontFace: GLenum;
-    Vao: WebGLVertexArrayObject;
     Texture: WebGLTexture;
     Color: Vec4;
 }
@@ -322,39 +204,6 @@ export function render_textured_unlit(
     color: Vec4 = [1, 1, 1, 1]
 ) {
     return (game: Game, entity: Entity) => {
-        if (!textured_unlit_vaos.has(mesh)) {
-            // We only need to create the VAO once.
-            let vao = game.Gl.createVertexArray()!;
-            game.Gl.bindVertexArray(vao);
-
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
-            game.Gl.vertexAttribPointer(
-                material.Locations.VertexPosition,
-                3,
-                GL_FLOAT,
-                false,
-                0,
-                0
-            );
-
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.TexCoordBuffer);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexTexCoord);
-            game.Gl.vertexAttribPointer(
-                material.Locations.VertexTexCoord,
-                2,
-                GL_FLOAT,
-                false,
-                0,
-                0
-            );
-
-            game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
-
-            game.Gl.bindVertexArray(null);
-            textured_unlit_vaos.set(mesh, vao);
-        }
-
         game.World.Signature[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.TexturedUnlit,
@@ -362,7 +211,6 @@ export function render_textured_unlit(
             Mesh: mesh,
             Phase: color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
             FrontFace: GL_CW,
-            Vao: textured_unlit_vaos.get(mesh)!,
             Texture: texture,
             Color: color,
         };
@@ -375,7 +223,6 @@ export interface RenderTexturedShaded {
     Mesh: Mesh;
     Phase: RenderPhase;
     FrontFace: GLenum;
-    Vao: WebGLVertexArrayObject;
     Texture: WebGLTexture;
     DiffuseColor: Vec4;
     SpecularColor: Vec4;
@@ -392,43 +239,6 @@ export function render_textured_shaded(
     front_face: GLenum = GL_CW
 ) {
     return (game: Game, entity: Entity) => {
-        if (!textured_shaded_vaos.has(mesh)) {
-            // We only need to create the VAO once.
-            let vao = game.Gl.createVertexArray()!;
-            game.Gl.bindVertexArray(vao);
-
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
-            game.Gl.vertexAttribPointer(
-                material.Locations.VertexPosition,
-                3,
-                GL_FLOAT,
-                false,
-                0,
-                0
-            );
-
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.NormalBuffer);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexNormal);
-            game.Gl.vertexAttribPointer(material.Locations.VertexNormal, 3, GL_FLOAT, false, 0, 0);
-
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.TexCoordBuffer);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexTexCoord);
-            game.Gl.vertexAttribPointer(
-                material.Locations.VertexTexCoord,
-                2,
-                GL_FLOAT,
-                false,
-                0,
-                0
-            );
-
-            game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
-
-            game.Gl.bindVertexArray(null);
-            textured_shaded_vaos.set(mesh, vao);
-        }
-
         game.World.Signature[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.TexturedShaded,
@@ -436,7 +246,6 @@ export function render_textured_shaded(
             Mesh: mesh,
             Phase: diffuse_color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
             FrontFace: front_face,
-            Vao: textured_shaded_vaos.get(mesh)!,
             Texture: texture,
             DiffuseColor: diffuse_color,
             SpecularColor: specular_color,
@@ -451,13 +260,13 @@ export interface RenderMappedShaded {
     Mesh: Mesh;
     Phase: RenderPhase;
     FrontFace: GLenum;
-    Vao: WebGLVertexArrayObject;
     DiffuseMap: WebGLTexture;
     DiffuseColor: Vec4;
     NormalMap: WebGLTexture;
     RoughnessMap: WebGLTexture;
 }
 
+const mapped_meshes: WeakSet<Mesh> = new WeakSet();
 export function render_mapped_shaded(
     material: Material<MappedShadedLayout & ForwardShadingLayout>,
     mesh: Mesh,
@@ -467,38 +276,10 @@ export function render_mapped_shaded(
     diffuse_color: Vec4 = [1, 1, 1, 1]
 ) {
     return (game: Game, entity: Entity) => {
-        if (!mapped_vaos.has(mesh)) {
-            // We only need to create the VAO once.
-            let vao = game.Gl.createVertexArray()!;
-            game.Gl.bindVertexArray(vao);
-
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
-            game.Gl.vertexAttribPointer(
-                material.Locations.VertexPosition,
-                3,
-                GL_FLOAT,
-                false,
-                0,
-                0
-            );
-
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.NormalBuffer);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexNormal);
-            game.Gl.vertexAttribPointer(material.Locations.VertexNormal, 3, GL_FLOAT, false, 0, 0);
-
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.TexCoordBuffer);
-            game.Gl.enableVertexAttribArray(material.Locations.VertexTexCoord);
-            game.Gl.vertexAttribPointer(
-                material.Locations.VertexTexCoord,
-                2,
-                GL_FLOAT,
-                false,
-                0,
-                0
-            );
-
-            game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
+        if (!mapped_meshes.has(mesh)) {
+            // Extend the VAO with tangent and bitangent attributes.
+            mapped_meshes.add(mesh);
+            game.Gl.bindVertexArray(mesh.Vao);
 
             let tangent_arr = new Float32Array(mesh.NormalArray.length);
             let bitangent_arr = new Float32Array(mesh.NormalArray.length);
@@ -575,7 +356,6 @@ export function render_mapped_shaded(
             );
 
             game.Gl.bindVertexArray(null);
-            mapped_vaos.set(mesh, vao);
         }
 
         game.World.Signature[entity] |= Has.Render;
@@ -585,7 +365,6 @@ export function render_mapped_shaded(
             Mesh: mesh,
             Phase: diffuse_color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
             FrontFace: GL_CW,
-            Vao: mapped_vaos.get(mesh)!,
             DiffuseMap: diffuse_map,
             DiffuseColor: diffuse_color,
             NormalMap: normal_map,

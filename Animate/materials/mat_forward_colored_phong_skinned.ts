@@ -12,7 +12,7 @@ let vertex = `#version 300 es\n
 
     layout(location=${Attribute.Position}) in vec4 attr_position;
     layout(location=${Attribute.Normal}) in vec3 attr_normal;
-    in vec4 attr_weights;
+    layout(location=${Attribute.Weights}) in vec4 attr_weights;
 
     out vec4 vert_position;
     out vec3 vert_normal;

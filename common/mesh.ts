@@ -3,6 +3,7 @@ import {element, float} from "./random.js";
 import {cross, length, normalize, subtract} from "./vec3.js";
 
 export interface Mesh {
+    Vao: WebGLVertexArrayObject;
     VertexBuffer: WebGLBuffer;
     VertexArray: Float32Array;
     NormalBuffer: WebGLBuffer;
