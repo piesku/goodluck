@@ -15,9 +15,6 @@ export const enum RenderKind {
     ColoredSkinned,
 }
 
-const colored_shaded_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
-const colored_skinned_vaos: WeakMap<Mesh, WebGLVertexArrayObject> = new WeakMap();
-
 export interface RenderColoredShaded {
     Kind: RenderKind.ColoredShaded;
     Material: Material<ColoredShadedLayout & ForwardShadingLayout>;
