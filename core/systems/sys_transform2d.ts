@@ -3,7 +3,7 @@
  */
 
 import {compose, get_translation, invert, multiply} from "../../common/mat2d.js";
-import {Vec2} from "../../common/math.js";
+import {DEG_TO_RAD, Vec2} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
 import {Transform2D} from "../components/com_transform2d.js";
 import {Game} from "../game.js";
@@ -25,7 +25,12 @@ const world_position: Vec2 = [0, 0];
 function update_transform(world: World, entity: Entity, transform: Transform2D) {
     world.Signature[entity] &= ~Has.Dirty;
 
-    compose(transform.World, transform.Translation, transform.Rotation, transform.Scale);
+    compose(
+        transform.World,
+        transform.Translation,
+        transform.Rotation * DEG_TO_RAD,
+        transform.Scale
+    );
 
     if (transform.Parent !== undefined) {
         let parent_transform = world.Transform2D[transform.Parent];
@@ -33,7 +38,12 @@ function update_transform(world: World, entity: Entity, transform: Transform2D) 
 
         if (transform.Gyroscope) {
             get_translation(world_position, transform.World);
-            compose(transform.World, world_position, transform.Rotation, transform.Scale);
+            compose(
+                transform.World,
+                world_position,
+                transform.Rotation * DEG_TO_RAD,
+                transform.Scale
+            );
         }
     }
 
