@@ -1,5 +1,11 @@
 import {Material} from "../../common/material.js";
-import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
+import {
+    GL_ARRAY_BUFFER,
+    GL_COLOR_BUFFER_BIT,
+    GL_DEPTH_BUFFER_BIT,
+    GL_FLOAT,
+    GL_UNSIGNED_SHORT,
+} from "../../common/webgl.js";
 import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {RenderInstanced, RenderKind} from "../components/com_render.js";
 import {Transform} from "../components/com_transform.js";
@@ -19,13 +25,13 @@ export function sys_render_forward(game: Game, delta: number) {
         let camera = game.World.Camera[camera_entity];
         switch (camera.Kind) {
             case CameraKind.Canvas:
-                render_eye(game, camera);
+                render_all(game, camera);
                 break;
         }
     }
 }
 
-function render_eye(game: Game, eye: CameraEye) {
+function render_all(game: Game, eye: CameraEye) {
     // Keep track of the current material to minimize switching.
     let current_material = null;
     let current_front_face = null;
@@ -69,7 +75,13 @@ function draw_instanced(game: Game, transform: Transform, render: RenderInstance
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
     game.Gl.uniform3fv(render.Material.Locations.Palette, render.Palette);
-    game.Gl.bindVertexArray(render.Vao);
+
+    game.Gl.bindVertexArray(render.Mesh.Vao);
+    game.Gl.bindBuffer(GL_ARRAY_BUFFER, render.InstanceOffsets);
+    game.Gl.enableVertexAttribArray(render.Material.Locations.VertexOffset);
+    game.Gl.vertexAttribPointer(render.Material.Locations.VertexOffset, 4, GL_FLOAT, false, 0, 0);
+    game.Gl.vertexAttribDivisor(render.Material.Locations.VertexOffset, 1);
+
     game.Gl.drawElementsInstanced(
         render.Material.Mode,
         render.Mesh.IndexCount,
