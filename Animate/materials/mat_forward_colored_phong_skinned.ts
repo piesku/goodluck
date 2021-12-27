@@ -1,6 +1,6 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
-import {ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.js";
+import {Attribute, ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.js";
 import {LightKind, MAX_FORWARD_LIGHTS} from "../../materials/light.js";
 import {SkinningLayout} from "./layout_skinning.js";
 
@@ -10,8 +10,8 @@ let vertex = `#version 300 es\n
     uniform mat4 self;
     uniform mat4 bones[6];
 
-    in vec4 attr_position;
-    in vec3 attr_normal;
+    layout(location=${Attribute.Position}) in vec4 attr_position;
+    layout(location=${Attribute.Normal}) in vec3 attr_normal;
     in vec4 attr_weights;
 
     out vec4 vert_position;

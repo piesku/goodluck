@@ -1,5 +1,6 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
+import {Attribute} from "../../materials/layout.js";
 import {LightKind, MAX_FORWARD_LIGHTS} from "../../materials/light.js";
 import {ForwardInstancedLayout} from "./layout_instancing.js";
 
@@ -13,8 +14,8 @@ let vertex = `#version 300 es\n
     uniform vec4 light_positions[${MAX_FORWARD_LIGHTS}];
     uniform vec4 light_details[${MAX_FORWARD_LIGHTS}];
 
-    in vec4 attr_position;
-    in vec3 attr_normal;
+    layout(location=${Attribute.Position}) in vec4 attr_position;
+    layout(location=${Attribute.Normal}) in vec3 attr_normal;
     in vec4 attr_offset;
 
     out vec4 vert_color;

@@ -1,6 +1,11 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {ColoredShadedLayout, ForwardShadingLayout, ShadowMappingLayout} from "./layout.js";
+import {
+    Attribute,
+    ColoredShadedLayout,
+    ForwardShadingLayout,
+    ShadowMappingLayout,
+} from "./layout.js";
 import {LightKind, MAX_FORWARD_LIGHTS} from "./light.js";
 
 let vertex = `#version 300 es\n
@@ -8,8 +13,8 @@ let vertex = `#version 300 es\n
     uniform mat4 world;
     uniform mat4 self;
 
-    in vec4 attr_position;
-    in vec3 attr_normal;
+    layout(location=${Attribute.Position}) in vec4 attr_position;
+    layout(location=${Attribute.Normal}) in vec3 attr_normal;
 
     out vec4 vert_position;
     out vec3 vert_normal;

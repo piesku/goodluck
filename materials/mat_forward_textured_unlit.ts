@@ -1,13 +1,14 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {TexturedUnlitLayout} from "./layout.js";
+import {Attribute, TexturedUnlitLayout} from "./layout.js";
 
 let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
 
-    in vec4 attr_position;
-    in vec2 attr_texcoord;
+    layout(location=${Attribute.Position}) in vec4 attr_position;
+    layout(location=${Attribute.TexCoord}) in vec2 attr_texcoord;
+
     out vec2 vert_texcoord;
 
     void main() {

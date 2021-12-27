@@ -1,6 +1,7 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
 import {
+    Attribute,
     DeferredPostprocessLayout,
     DeferredShadingLayout,
     ShadowMappingLayout,
@@ -13,7 +14,7 @@ let vertex = `#version 300 es\n
     uniform mat4 world;
     uniform lowp ivec2 light_kind; // x: kind, y: is shadow source
 
-    in vec4 attr_position;
+    layout(location=${Attribute.Position}) in vec4 attr_position;
 
     out vec4 light_position;
     out vec3 light_direction;

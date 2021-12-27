@@ -1,17 +1,17 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {ForwardShadingLayout, MappedShadedLayout} from "./layout.js";
+import {Attribute, ForwardShadingLayout, MappedShadedLayout} from "./layout.js";
 import {LightKind, MAX_FORWARD_LIGHTS} from "./light.js";
 
 let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
 
-    in vec4 attr_position;
-    in vec2 attr_texcoord;
-    in vec3 attr_normal;
-    in vec3 attr_tangent;
-    in vec3 attr_bitangent;
+    layout(location=${Attribute.Position}) in vec4 attr_position;
+    layout(location=${Attribute.Normal}) in vec3 attr_normal;
+    layout(location=${Attribute.TexCoord}) in vec2 attr_texcoord;
+    layout(location=${Attribute.Tangent}) in vec3 attr_tangent;
+    layout(location=${Attribute.Bitangent}) in vec3 attr_bitangent;
 
     out vec4 vert_position;
     out vec2 vert_texcoord;

@@ -1,12 +1,12 @@
 import {link, Material} from "../common/material.js";
 import {GL_POINTS} from "../common/webgl.js";
-import {ColoredUnlitLayout} from "./layout.js";
+import {Attribute, ColoredUnlitLayout} from "./layout.js";
 
 let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
 
-    in vec4 attr_position;
+    layout(location=${Attribute.Position}) in vec4 attr_position;
 
     void main() {
         gl_Position = pv * world * attr_position;

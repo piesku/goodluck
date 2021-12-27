@@ -1,3 +1,14 @@
+/**
+ * The following attribute locations are shared by all material layouts.
+ */
+export const enum Attribute {
+    Position = 0,
+    Normal = 1,
+    TexCoord = 2,
+    Tangent = 3,
+    Bitangent = 4,
+}
+
 export interface ClipSpaceLayout {
     Pv: WebGLUniformLocation;
     VertexPosition: GLint;
