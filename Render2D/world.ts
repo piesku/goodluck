@@ -6,7 +6,6 @@ import {ControlPlayer} from "./components/com_control_player.js";
 import {Move2D} from "./components/com_move2d.js";
 import {Render2D} from "./components/com_render2d.js";
 import {RigidBody2D} from "./components/com_rigid_body2d.js";
-import {Transform} from "./components/com_transform.js";
 import {Transform2D} from "./components/com_transform2d.js";
 
 const enum Component {
@@ -18,7 +17,6 @@ const enum Component {
     Move2D,
     Render2D,
     RigidBody2D,
-    Transform,
     Transform2D,
 }
 
@@ -32,7 +30,6 @@ export const enum Has {
     Move2D = 1 << Component.Move2D,
     Render2D = 1 << Component.Render2D,
     RigidBody2D = 1 << Component.RigidBody2D,
-    Transform = 1 << Component.Transform,
     Transform2D = 1 << Component.Transform2D,
 }
 
@@ -44,6 +41,5 @@ export class World extends WorldImpl {
     Move2D: Array<Move2D> = [];
     Render2D: Array<Render2D> = [];
     RigidBody2D: Array<RigidBody2D> = [];
-    Transform: Array<Transform> = [];
     Transform2D: Array<Transform2D> = [];
 }

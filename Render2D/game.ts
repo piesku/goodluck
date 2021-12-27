@@ -8,7 +8,6 @@ import {sys_move2d} from "./systems/sys_move2d.js";
 import {sys_physics2d_integrate} from "./systems/sys_physics2d_integrate.js";
 import {sys_render2d} from "./systems/sys_render2d.js";
 import {sys_resize2d} from "./systems/sys_resize2d.js";
-import {sys_transform} from "./systems/sys_transform.js";
 import {sys_transform2d} from "./systems/sys_transform2d.js";
 import {World} from "./world.js";
 
@@ -106,7 +105,6 @@ export class Game extends Game3D {
         sys_move2d(this, delta);
         sys_physics2d_integrate(this, delta);
         sys_transform2d(this, delta);
-        sys_transform(this, delta);
 
         sys_render2d(this, delta);
     }

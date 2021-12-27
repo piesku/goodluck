@@ -2,7 +2,7 @@
  * @module systems/sys_control_player
  */
 
-import {get_translation} from "../../common/mat2d.js";
+import {get_translation, transform_point} from "../../common/mat2d.js";
 import {Vec2, Vec3} from "../../common/math.js";
 import {distance_squared, subtract} from "../../common/vec2.js";
 import {transform_position} from "../../common/vec3.js";
@@ -26,7 +26,7 @@ export function sys_control_player(game: Game, delta: number) {
         throw new Error("XR not implemented");
     }
 
-    let camera_transform = game.World.Transform[camera_entity];
+    let camera_transform = game.World.Transform2D[camera_entity];
 
     if (game.InputState["Mouse0"]) {
         let x_ndc = (game.InputState["MouseX"] / game.ViewportWidth) * 2 - 1;
@@ -35,12 +35,10 @@ export function sys_control_player(game: Game, delta: number) {
 
         // The pointer position is in NDC space. Transform it to the eye space,
         // and then to the world space.
-        let pointer_3d_position: Vec3 = [x_ndc, y_ndc, 0];
-        transform_position(pointer_3d_position, pointer_3d_position, camera.Projection.Inverse);
-        transform_position(pointer_3d_position, pointer_3d_position, camera_transform.World);
-
-        pointer_world_position[0] = pointer_3d_position[0];
-        pointer_world_position[1] = pointer_3d_position[1];
+        let pointer3d: Vec3 = [x_ndc, y_ndc, 0];
+        transform_position(pointer3d, pointer3d, camera.Projection.Inverse);
+        let pointer2d: Vec2 = [pointer3d[0], pointer3d[1]];
+        transform_point(pointer_world_position, pointer2d, camera_transform.World);
 
         for (let i = 0; i < game.World.Signature.length; i++) {
             if ((game.World.Signature[i] & QUERY) === QUERY) {

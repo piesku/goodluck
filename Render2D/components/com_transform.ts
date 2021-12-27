@@ -1,1 +1,0 @@
-../../core/components/com_transform.ts
