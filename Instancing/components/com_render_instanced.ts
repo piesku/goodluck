@@ -45,10 +45,12 @@ export interface RenderInstanced {
     FrontFace: GLenum;
 }
 
-export function render_instanced(mesh: Mesh, transforms: Float32Array, colors: Float32Array) {
+export function render_instanced_colored_unlit(
+    mesh: Mesh,
+    transforms: Float32Array,
+    colors: Float32Array
+) {
     return (game: Game, entity: Entity) => {
-        let material = game.MaterialInstanced;
-
         let instance_transforms_buffer = game.Gl.createBuffer()!;
         game.Gl.bindBuffer(GL_ARRAY_BUFFER, instance_transforms_buffer);
         game.Gl.bufferData(GL_ARRAY_BUFFER, transforms, GL_STATIC_DRAW);
@@ -60,7 +62,7 @@ export function render_instanced(mesh: Mesh, transforms: Float32Array, colors: F
         game.World.Signature[entity] |= Has.Render;
         game.World.Render[entity] = {
             Kind: RenderKind.Instanced,
-            Material: material,
+            Material: game.MaterialInstancedColoredUnlit,
             Phase: RenderPhase.Opaque,
             Mesh: mesh,
             InstanceCount: transforms.length / 16,

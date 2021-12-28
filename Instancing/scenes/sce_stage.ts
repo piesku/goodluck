@@ -3,7 +3,7 @@ import {from_rotation_translation_scale} from "../../common/mat4.js";
 import {from_euler} from "../../common/quat.js";
 import {float} from "../../common/random.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
-import {render_instanced} from "../components/com_render_instanced.js";
+import {render_instanced_colored_unlit} from "../components/com_render_instanced.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
@@ -39,5 +39,8 @@ export function scene_stage(game: Game) {
         color[2] = float(0, 1);
     }
 
-    instantiate(game, [transform(), render_instanced(game.MeshCube, transforms, colors)]);
+    instantiate(game, [
+        transform(),
+        render_instanced_colored_unlit(game.MeshCube, transforms, colors),
+    ]);
 }
