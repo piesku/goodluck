@@ -24,7 +24,7 @@ let vertex = `#version 300 es\n
 let fragment = `#version 300 es\n
     precision mediump float;
 
-    uniform vec4 diffuse_color;
+    uniform vec3 diffuse_color;
     uniform vec3 specular_color;
     uniform float shininess;
 
@@ -37,7 +37,7 @@ let fragment = `#version 300 es\n
     layout(location=${Output.Normal}) out vec3 frag_normal;
 
     void main() {
-        frag_diffuse = diffuse_color;
+        frag_diffuse = vec4(diffuse_color, 1.0);
         frag_specular = vec4(specular_color, shininess);
         frag_position = vert_position;
         frag_normal = normalize(vert_normal.xyz);

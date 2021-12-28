@@ -31,13 +31,13 @@ export function scene_stage(game: Game) {
     // Ground.
     instantiate(game, [
         transform(undefined, undefined, [20, 1, 20]),
-        render_colored_deferred(game.MaterialColored, game.MeshCube, [1, 1, 1, 1]),
+        render_colored_deferred(game.MaterialColored, game.MeshCube, [1, 1, 1]),
     ]);
 
     // Tower.
     instantiate(game, [
         transform([-5, 4, 0], undefined, [2, 8, 2]),
-        render_colored_deferred(game.MaterialColored, game.MeshCube, [1, 1, 1, 1]),
+        render_colored_deferred(game.MaterialColored, game.MeshCube, [1, 1, 1]),
     ]);
 
     // Bulb spawner.
@@ -59,7 +59,7 @@ export function scene_stage(game: Game) {
             render_colored_deferred(
                 game.MaterialColored,
                 game.MeshSphereSmooth,
-                [1, 1, 1, 1],
+                [1, 1, 1],
                 element([64, 128, 256, 512])
             ),
         ]);

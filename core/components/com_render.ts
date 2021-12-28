@@ -158,9 +158,9 @@ export interface RenderColoredDeferred {
     readonly Kind: RenderKind.ColoredDeferred;
     Material: Material<ColoredShadedLayout>;
     Mesh: Mesh;
-    Phase: RenderPhase;
+    Phase: RenderPhase.Opaque;
     FrontFace: GLenum;
-    DiffuseColor: Vec4;
+    DiffuseColor: Vec3;
     SpecularColor: Vec3;
     Shininess: number;
 }
@@ -168,7 +168,7 @@ export interface RenderColoredDeferred {
 export function render_colored_deferred(
     material: Material<ColoredShadedLayout>,
     mesh: Mesh,
-    diffuse_color: Vec4,
+    diffuse_color: Vec3,
     shininess: number = 0,
     specular_color: Vec3 = [1, 1, 1],
     front_face: GLenum = GL_CW
@@ -179,7 +179,7 @@ export function render_colored_deferred(
             Kind: RenderKind.ColoredDeferred,
             Material: material,
             Mesh: mesh,
-            Phase: diffuse_color[3] < 1 ? RenderPhase.Transparent : RenderPhase.Opaque,
+            Phase: RenderPhase.Opaque,
             FrontFace: front_face,
             DiffuseColor: diffuse_color,
             SpecularColor: specular_color,
