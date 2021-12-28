@@ -34,6 +34,10 @@ export interface ColoredShadedLayout extends WorldSpaceLayout {
     Shininess: WebGLUniformLocation;
 }
 
+export interface ColoredEmissiveLayout extends ColoredShadedLayout {
+    Emission: WebGLUniformLocation;
+}
+
 export interface TexturedUnlitLayout extends WorldSpaceLayout {
     TextureMap: WebGLUniformLocation;
     Color: WebGLUniformLocation;

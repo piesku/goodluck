@@ -90,7 +90,8 @@ let fragment = `#version 300 es\n
         float light_intensity = light_details.a;
 
         if (light_kind.x == ${LightKind.Ambient}) {
-            frag_color = current_diffuse * vec4(light_rgb, 1.0) * light_intensity;
+            vec3 emissive_rgb = current_diffuse.rgb * current_diffuse.a;
+            frag_color = vec4(emissive_rgb + current_diffuse.rgb * light_rgb * light_intensity, 1.0);
             return;
         }
 

@@ -16,6 +16,7 @@ import {
 import {Entity} from "../../common/world.js";
 import {
     Attribute,
+    ColoredEmissiveLayout,
     ColoredShadedLayout,
     ColoredUnlitLayout,
     ForwardShadingLayout,
@@ -156,19 +157,21 @@ export function render_colored_shadows(
 
 export interface RenderColoredDeferred {
     readonly Kind: RenderKind.ColoredDeferred;
-    Material: Material<ColoredShadedLayout>;
+    Material: Material<ColoredEmissiveLayout>;
     Mesh: Mesh;
     Phase: RenderPhase.Opaque;
     FrontFace: GLenum;
     DiffuseColor: Vec3;
     SpecularColor: Vec3;
     Shininess: number;
+    Emission: number;
 }
 
 export function render_colored_deferred(
-    material: Material<ColoredShadedLayout>,
+    material: Material<ColoredEmissiveLayout>,
     mesh: Mesh,
     diffuse_color: Vec3,
+    emission: number = 0,
     shininess: number = 0,
     specular_color: Vec3 = [1, 1, 1],
     front_face: GLenum = GL_CW
@@ -184,6 +187,7 @@ export function render_colored_deferred(
             DiffuseColor: diffuse_color,
             SpecularColor: specular_color,
             Shininess: shininess,
+            Emission: emission,
         };
     };
 }

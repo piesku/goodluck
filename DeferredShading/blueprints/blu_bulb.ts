@@ -1,7 +1,6 @@
 import {Vec3} from "../../common/math.js";
 import {from_euler} from "../../common/quat.js";
 import {element, float} from "../../common/random.js";
-import {scale} from "../../common/vec3.js";
 import {children} from "../components/com_children.js";
 import {control_always} from "../components/com_control_always.js";
 import {light_point} from "../components/com_light.js";
@@ -25,8 +24,6 @@ export function blueprint_bulb(game: Game) {
     let diameter = (range ** 2 / 0.02) ** 0.5 * 2;
     let light_color = element(colors);
     let bulb_color: Vec3 = [...light_color];
-    // TODO(stasm): Implement emissive lighting.
-    scale(bulb_color, bulb_color, 5);
     return [
         control_always(null, from_euler([0, 0, 0, 1], float(0, 360), float(0, 360), float(0, 360))),
         move(0, float()),
@@ -38,11 +35,12 @@ export function blueprint_bulb(game: Game) {
                     light_point(light_color, range),
                 ],
                 [
-                    transform(undefined, undefined, [0.1, 0.1, 0.1]),
+                    transform(undefined, undefined, [0.2, 0.2, 0.2]),
                     render_colored_deferred(
                         game.MaterialColored,
                         game.MeshSphereSmooth,
-                        bulb_color
+                        bulb_color,
+                        1
                     ),
                 ]
             ),

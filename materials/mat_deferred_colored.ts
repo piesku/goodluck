@@ -1,6 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {Attribute, ColoredShadedLayout, Output} from "./layout.js";
+import {Attribute, ColoredEmissiveLayout, Output} from "./layout.js";
 
 let vertex = `#version 300 es\n
 
@@ -27,6 +27,7 @@ let fragment = `#version 300 es\n
     uniform vec3 diffuse_color;
     uniform vec3 specular_color;
     uniform float shininess;
+    uniform float emission;
 
     in vec4 vert_position;
     in vec4 vert_normal;
@@ -37,14 +38,14 @@ let fragment = `#version 300 es\n
     layout(location=${Output.Normal}) out vec3 frag_normal;
 
     void main() {
-        frag_diffuse = vec4(diffuse_color, 1.0);
+        frag_diffuse = vec4(diffuse_color, emission);
         frag_specular = vec4(specular_color, shininess);
         frag_position = vert_position;
         frag_normal = normalize(vert_normal.xyz);
     }
 `;
 
-export function mat_deferred_colored(gl: WebGL2RenderingContext): Material<ColoredShadedLayout> {
+export function mat_deferred_colored(gl: WebGL2RenderingContext): Material<ColoredEmissiveLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
@@ -57,6 +58,7 @@ export function mat_deferred_colored(gl: WebGL2RenderingContext): Material<Color
             DiffuseColor: gl.getUniformLocation(program, "diffuse_color")!,
             SpecularColor: gl.getUniformLocation(program, "specular_color")!,
             Shininess: gl.getUniformLocation(program, "shininess")!,
+            Emission: gl.getUniformLocation(program, "emission")!,
         },
     };
 }

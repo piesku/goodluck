@@ -69,6 +69,7 @@ function draw_entity(game: Game, entity: Entity) {
             game.Gl.uniform3fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
             game.Gl.uniform3fv(render.Material.Locations.SpecularColor, render.SpecularColor);
             game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
+            game.Gl.uniform1f(render.Material.Locations.Emission, render.Emission);
 
             game.Gl.bindVertexArray(render.Mesh.Vao);
             game.Gl.drawElements(

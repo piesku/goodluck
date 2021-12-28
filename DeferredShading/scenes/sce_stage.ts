@@ -60,6 +60,7 @@ export function scene_stage(game: Game) {
                 game.MaterialColored,
                 game.MeshSphereSmooth,
                 [1, 1, 1],
+                0,
                 element([64, 128, 256, 512])
             ),
         ]);
