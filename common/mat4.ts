@@ -213,7 +213,13 @@ export function from_rotation_translation_scale(out: Mat4, q: Quat, v: Vec3, s: 
     return out;
 }
 
-export function perspective(out: Mat4, fovy: number, aspect: number, near: number, far: number) {
+export function from_perspective(
+    out: Mat4,
+    fovy: number,
+    aspect: number,
+    near: number,
+    far: number
+) {
     let f = 1.0 / Math.tan(fovy / 2),
         nf;
     out[0] = f / aspect;
@@ -243,7 +249,7 @@ export function perspective(out: Mat4, fovy: number, aspect: number, near: numbe
     return out;
 }
 
-export function ortho(
+export function from_ortho(
     out: Mat4,
     top: number,
     right: number,

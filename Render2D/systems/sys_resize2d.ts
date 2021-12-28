@@ -23,7 +23,7 @@ export function sys_resize2d(game: Game, delta: number) {
                 let camera = game.World.Camera[i];
                 if (
                     camera.Kind == CameraKind.Canvas &&
-                    camera.Projection.Kind == ProjectionKind.Ortho
+                    camera.Projection.Kind == ProjectionKind.Orthographic
                 ) {
                     let aspect = game.ViewportWidth / game.ViewportHeight;
                     resize_ortho_keeping_unit_size(

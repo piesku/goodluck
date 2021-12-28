@@ -82,7 +82,7 @@ function update_projection(projection: Projection, aspect: number) {
             resize_perspective(projection, aspect);
             break;
         }
-        case ProjectionKind.Ortho:
+        case ProjectionKind.Orthographic:
             resize_ortho(projection, aspect);
             break;
     }

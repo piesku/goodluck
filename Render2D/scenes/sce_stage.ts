@@ -1,7 +1,8 @@
 import {hsva_to_vec4} from "../../common/color.js";
 import {instantiate} from "../../common/game.js";
+import {orthographic} from "../../common/projection.js";
 import {float} from "../../common/random.js";
-import {camera_canvas_ortho} from "../components/com_camera.js";
+import {camera_canvas} from "../components/com_camera.js";
 import {control_always2d} from "../components/com_control_always2d.js";
 import {control_player} from "../components/com_control_player.js";
 import {move2d} from "../components/com_move2d.js";
@@ -16,7 +17,7 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
 
     // Camera.
-    instantiate(game, [transform2d([0, 0]), camera_canvas_ortho(5, 1, 3)]);
+    instantiate(game, [transform2d([0, 0]), camera_canvas(orthographic(5, 1, 3))]);
 
     let dynamic_count = Math.floor(WORLD_CAPACITY / 2);
     let static_count = Math.floor(WORLD_CAPACITY / 2);
