@@ -24,6 +24,8 @@ export interface CameraEye {
     View: Mat4;
     Pv: Mat4;
     Position: Vec3;
+    FogColor: Vec4;
+    FogDistance: number;
 }
 
 export interface CameraCanvas extends CameraEye {
@@ -55,6 +57,8 @@ export function camera_canvas_perspective(
             View: create(),
             Pv: create(),
             Position: [0, 0, 0],
+            FogColor: clear_color,
+            FogDistance: far,
             ClearColor: clear_color,
             ClearMask: clear_mask,
         };
@@ -83,6 +87,8 @@ export function camera_canvas_ortho(
             View: create(),
             Pv: create(),
             Position: [0, 0, 0],
+            FogColor: clear_color,
+            FogDistance: far,
             ClearColor: clear_color,
             ClearMask: clear_mask,
         };
@@ -121,6 +127,8 @@ export function camera_target_perspective(
             View: create(),
             Pv: create(),
             Position: [0, 0, 0],
+            FogColor: clear_color,
+            FogDistance: far,
             ClearColor: clear_color,
             ClearMask: clear_mask,
         };
@@ -151,6 +159,8 @@ export function camera_target_ortho(
             View: create(),
             Pv: create(),
             Position: [0, 0, 0],
+            FogColor: clear_color,
+            FogDistance: far,
             ClearColor: clear_color,
             ClearMask: clear_mask,
         };

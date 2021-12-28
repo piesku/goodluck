@@ -35,6 +35,8 @@ function update_xr(game: Game, entity: Entity, camera: CameraXr) {
             View: create(),
             Pv: create(),
             Position: [0, 0, 0],
+            FogColor: camera.ClearColor,
+            FogDistance: game.XrSession?.renderState.depthFar ?? 0,
         };
 
         // Compute the eye's world matrix.

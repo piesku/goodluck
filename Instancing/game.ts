@@ -1,5 +1,4 @@
 import {Game3D} from "../common/game.js";
-import {Vec4} from "../common/math.js";
 import {MAX_FORWARD_LIGHTS} from "../materials/light.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mat_forward_instanced_colored_unlit} from "./materials/mat_forward_instanced_colored_unlit.js";
@@ -18,9 +17,6 @@ export class Game extends Game3D {
 
     LightPositions = new Float32Array(4 * MAX_FORWARD_LIGHTS);
     LightDetails = new Float32Array(4 * MAX_FORWARD_LIGHTS);
-
-    FogColor: Vec4 = [0.9, 0.9, 0.9, 1];
-    FogDistance = 150;
 
     override FrameUpdate(delta: number) {
         sys_resize(this, delta);

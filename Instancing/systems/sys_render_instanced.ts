@@ -56,8 +56,8 @@ function use_material(game: Game, render: Render, eye: CameraEye) {
             game.Gl.useProgram(render.Material.Program);
             game.Gl.uniformMatrix4fv(render.Material.Locations.Pv, false, eye.Pv);
             game.Gl.uniform3fv(render.Material.Locations.Eye, eye.Position);
-            game.Gl.uniform4fv(render.Material.Locations.FogColor, game.FogColor);
-            game.Gl.uniform1f(render.Material.Locations.FogDistance, game.FogDistance);
+            game.Gl.uniform4fv(render.Material.Locations.FogColor, eye.FogColor);
+            game.Gl.uniform1f(render.Material.Locations.FogDistance, eye.FogDistance);
             break;
     }
 }
