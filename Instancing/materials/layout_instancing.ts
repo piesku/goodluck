@@ -1,13 +1,16 @@
-export interface ForwardInstancedLayout {
-    // Uniforms
-    Pv: WebGLUniformLocation;
-    World: WebGLUniformLocation;
-    Self: WebGLUniformLocation;
+export interface InstancedColumnLayout {
+    InstanceColumn1: GLint;
+    InstanceColumn2: GLint;
+    InstanceColumn3: GLint;
+    InstanceColumn4: GLint;
+}
 
-    Palette: WebGLUniformLocation;
+export interface InstancedColorLayout {
+    InstanceColor: GLint;
+}
 
-    LightPositions: WebGLUniformLocation;
-    LightDetails: WebGLUniformLocation;
-
-    VertexOffset: GLint;
+export interface FogLayout {
+    Eye: WebGLUniformLocation;
+    FogColor: WebGLUniformLocation;
+    FogDistance: WebGLUniformLocation;
 }

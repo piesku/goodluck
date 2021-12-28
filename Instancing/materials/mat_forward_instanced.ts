@@ -1,67 +1,44 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLES} from "../../common/webgl.js";
-import {Attribute} from "../../materials/layout.js";
-import {LightKind, MAX_FORWARD_LIGHTS} from "../../materials/light.js";
-import {ForwardInstancedLayout} from "./layout_instancing.js";
+import {Attribute, WorldSpaceLayout} from "../../materials/layout.js";
+import {FogLayout, InstancedColorLayout, InstancedColumnLayout} from "./layout_instancing.js";
 
 let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
-    uniform mat4 self;
-    uniform vec3 palette[16];
-
-    uniform int light_count;
-    uniform vec4 light_positions[${MAX_FORWARD_LIGHTS}];
-    uniform vec4 light_details[${MAX_FORWARD_LIGHTS}];
+    uniform vec3 eye;
+    uniform vec4 fog_color;
+    uniform float fog_distance;
 
     layout(location=${Attribute.Position}) in vec4 attr_position;
-    layout(location=${Attribute.Normal}) in vec3 attr_normal;
-    in vec4 attr_offset;
+    in vec4 attr_column1;
+    in vec4 attr_column2;
+    in vec4 attr_column3;
+    in vec4 attr_column4;
+    in vec3 attr_color;
 
     out vec4 vert_color;
 
     void main() {
-        vec4 world_position = world * vec4(attr_position.xyz + attr_offset.xyz, 1.0);
-        vec3 world_normal = normalize((vec4(attr_normal, 0.0) * self).xyz);
-        gl_Position = pv * world_position;
+        mat4 instance = mat4(
+            attr_column1,
+            attr_column2,
+            attr_column3,
+            attr_column4
+        );
 
-        // Ambient light.
-        vec3 color = palette[int(attr_offset[3])];
-        vec3 light_acc = color * 0.1;
+        vec4 vert_position = world * instance * attr_position;
+        gl_Position = pv * vert_position;
 
-        for (int i = 0; i < ${MAX_FORWARD_LIGHTS}; i++) {
-            int light_kind = int(light_positions[i].w);
-            if (light_kind == ${LightKind.Inactive}) {
-                break;
-            }
+        vert_color = vec4(attr_color, 1.0);
 
-            vec3 light_color = light_details[i].rgb;
-            float light_intensity = light_details[i].a;
-
-            vec3 light_normal;
-            if (light_kind == ${LightKind.Directional}) {
-                light_normal = light_positions[i].xyz;
-            } else if (light_kind == ${LightKind.Point}) {
-                vec3 light_dir = light_positions[i].xyz - world_position.xyz;
-                float light_dist = length(light_dir);
-                light_normal = light_dir / light_dist;
-                // Distance attenuation.
-                light_intensity /= (light_dist * light_dist);
-            }
-
-            float diffuse_factor = dot(world_normal, light_normal);
-            if (diffuse_factor > 0.0) {
-                // Diffuse color.
-                light_acc += color * diffuse_factor * light_color * light_intensity;
-            }
-        }
-
-        vert_color = vec4(light_acc, 1.0);
+        float eye_distance = length(eye - vert_position.xyz);
+        float fog_amount = clamp(0.0, 1.0, eye_distance / fog_distance);
+        vert_color = mix(vert_color, fog_color, smoothstep(0.0, 1.0, fog_amount));
     }
 `;
 
 let fragment = `#version 300 es\n
-
     precision mediump float;
 
     in vec4 vert_color;
@@ -75,7 +52,7 @@ let fragment = `#version 300 es\n
 
 export function mat_forward_instanced(
     gl: WebGL2RenderingContext
-): Material<ForwardInstancedLayout> {
+): Material<WorldSpaceLayout & InstancedColumnLayout & InstancedColorLayout & FogLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
@@ -83,14 +60,17 @@ export function mat_forward_instanced(
         Locations: {
             Pv: gl.getUniformLocation(program, "pv")!,
             World: gl.getUniformLocation(program, "world")!,
-            Self: gl.getUniformLocation(program, "self")!,
 
-            Palette: gl.getUniformLocation(program, "palette")!,
+            Eye: gl.getUniformLocation(program, "eye")!,
+            FogColor: gl.getUniformLocation(program, "fog_color")!,
+            FogDistance: gl.getUniformLocation(program, "fog_distance")!,
 
-            LightPositions: gl.getUniformLocation(program, "light_positions")!,
-            LightDetails: gl.getUniformLocation(program, "light_details")!,
+            InstanceColumn1: gl.getAttribLocation(program, "attr_column1")!,
+            InstanceColumn2: gl.getAttribLocation(program, "attr_column2")!,
+            InstanceColumn3: gl.getAttribLocation(program, "attr_column3")!,
+            InstanceColumn4: gl.getAttribLocation(program, "attr_column4")!,
 
-            VertexOffset: gl.getAttribLocation(program, "attr_offset")!,
+            InstanceColor: gl.getAttribLocation(program, "attr_color")!,
         },
     };
 }
