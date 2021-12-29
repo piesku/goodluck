@@ -17,8 +17,13 @@ let {vertices, normals, faces, texturecoords = [[]]} = scene.meshes[0];
 
 console.log(`\
 import {Mesh} from "../common/mesh.js";
+import {
+    GL_ARRAY_BUFFER,
+    GL_ELEMENT_ARRAY_BUFFER,
+    GL_FLOAT,
+    GL_STATIC_DRAW,
+} from "../common/webgl.js";
 import {Attribute} from "../materials/layout.js";
-import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW} from "../common/webgl.js";
 
 export function mesh_${process.argv[2]}(gl: WebGL2RenderingContext): Mesh {
     let vao = gl.createVertexArray()!;
@@ -28,25 +33,25 @@ export function mesh_${process.argv[2]}(gl: WebGL2RenderingContext): Mesh {
     gl.bindBuffer(GL_ARRAY_BUFFER, vertex_buf);
     gl.bufferData(GL_ARRAY_BUFFER, vertex_arr, GL_STATIC_DRAW);
     gl.enableVertexAttribArray(Attribute.Position);
-    gl.vertexAttribPointer(Attribute.Position, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(Attribute.Position, 3, GL_FLOAT, false, 0, 0);
 
     let normal_buf = gl.createBuffer()!;
     gl.bindBuffer(GL_ARRAY_BUFFER, normal_buf);
     gl.bufferData(GL_ARRAY_BUFFER, normal_arr, GL_STATIC_DRAW);
     gl.enableVertexAttribArray(Attribute.Normal);
-    gl.vertexAttribPointer(Attribute.Normal, 3, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(Attribute.Normal, 3, GL_FLOAT, false, 0, 0);
 
     let texcoord_buf = gl.createBuffer()!;
     gl.bindBuffer(GL_ARRAY_BUFFER, texcoord_buf);
     gl.bufferData(GL_ARRAY_BUFFER, texcoord_arr, GL_STATIC_DRAW);
     gl.enableVertexAttribArray(Attribute.TexCoord);
-    gl.vertexAttribPointer(Attribute.TexCoord, 2, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(Attribute.TexCoord, 2, GL_FLOAT, false, 0, 0);
 
     let weights_buf = gl.createBuffer()!;
     gl.bindBuffer(GL_ARRAY_BUFFER, weights_buf);
     gl.bufferData(GL_ARRAY_BUFFER, weights_arr, GL_STATIC_DRAW);
     gl.enableVertexAttribArray(Attribute.Weights);
-    gl.vertexAttribPointer(Attribute.Weights, 4, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(Attribute.Weights, 4, GL_FLOAT, false, 0, 0);
 
     let index_buf = gl.createBuffer()!;
     gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buf);
