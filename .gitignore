@@ -1,3 +1,4 @@
 node_modules
 *.js
+*.js.map
 play/index.html
