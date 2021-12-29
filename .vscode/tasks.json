@@ -4,23 +4,33 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "esbuild (transpile, bundle, serve)",
+            "group": "build",
             "type": "npm",
             "script": "start",
-            "group": "build",
-            "runOptions": {
-                "runOn": "folderOpen"
-            }
         },
         {
+            "label": "tsc --noEmit (watch for file changes and type-check)",
+            "group": "build",
             "type": "npm",
             "script": "ts:watch",
             "problemMatcher": [
                 "$tsc-watch"
             ],
-            "group": "build",
+        },
+        {
+            "label": "All (default)",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [
+                "esbuild (transpile, bundle, serve)",
+                "tsc --noEmit (watch for file changes and type-check)",
+            ],
             "runOptions": {
                 "runOn": "folderOpen"
             }
-        },
+        }
     ]
 }
