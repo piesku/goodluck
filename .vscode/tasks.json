@@ -8,15 +8,15 @@
             "group": "build",
             "type": "npm",
             "script": "start",
+            "isBackground": true,
         },
         {
             "label": "tsc --noEmit (watch for file changes and type-check)",
             "group": "build",
             "type": "npm",
             "script": "ts:watch",
-            "problemMatcher": [
-                "$tsc-watch"
-            ],
+            "isBackground": true,
+            "problemMatcher": "$tsc-watch",
         },
         {
             "label": "All (default)",
