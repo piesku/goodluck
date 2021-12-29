@@ -15,12 +15,14 @@ const QUERY = Has.Transform | Has.Render;
 export function sys_render_deferred(game: Game, delta: number) {
     for (let camera_entity of game.Cameras) {
         let camera = game.World.Camera[camera_entity];
-        if (camera.Kind === CameraKind.Target && camera.Target.Kind === TargetKind.Deferred) {
-            game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target.Framebuffer);
-            game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
-            game.Gl.clearColor(...camera.ClearColor);
-            game.Gl.clear(camera.ClearMask);
-            render_all(game, camera);
+        if (camera.Kind === CameraKind.Target) {
+            if (camera.Target.Kind === TargetKind.Deferred) {
+                game.Gl.bindFramebuffer(GL_FRAMEBUFFER, camera.Target.Framebuffer);
+                game.Gl.viewport(0, 0, camera.Target.Width, camera.Target.Height);
+                game.Gl.clearColor(...camera.ClearColor);
+                game.Gl.clear(camera.ClearMask);
+                render_all(game, camera);
+            }
         }
     }
 }
