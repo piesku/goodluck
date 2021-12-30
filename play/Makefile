@@ -9,7 +9,13 @@ type-check: $(SOURCES)
 	npx tsc --noEmit
 
 game.esbuild.js: $(SOURCES)
-	npx esbuild ../$(EXAMPLE)/index.ts --bundle --define:DEBUG=false --analyze > $@
+	npx esbuild ../$(EXAMPLE)/index.ts \
+		--preserve-symlinks \
+		--define:DEBUG=false \
+		--target=es2020 \
+		--bundle \
+		--analyze \
+	> $@
 
 game.sed.js: game.esbuild.js sed.txt
 	sed  -f sed.txt  $< > $@
