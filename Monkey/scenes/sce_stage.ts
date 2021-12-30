@@ -26,12 +26,7 @@ export function scene_stage(game: Game) {
     // Flat.
     instantiate(game, [
         transform([-0.7, 0.5, 0]),
-        render_colored_shaded(
-            game.MaterialColoredGouraud,
-            game.Meshes["monkey_flat"],
-            [1, 1, 0.3, 1],
-            0
-        ),
+        render_colored_shaded(game.MaterialColoredGouraud, game.MeshMonkeyFlat, [1, 1, 0.3, 1], 0),
     ]);
 
     // Phong.
@@ -39,7 +34,7 @@ export function scene_stage(game: Game) {
         transform([0.7, -0.5, 0]),
         render_colored_shaded(
             game.MaterialColoredPhong,
-            game.Meshes["monkey_smooth"],
+            game.MeshMonkeySmooth,
             [1, 1, 0.3, 1],
             512
         ),

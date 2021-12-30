@@ -1,8 +1,9 @@
 import {Game3D} from "../common/game.js";
-import {Mesh} from "../common/mesh.js";
 import {MAX_FORWARD_LIGHTS} from "../materials/light.js";
 import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
 import {mat_forward_colored_phong} from "../materials/mat_forward_colored_phong.js";
+import {mesh_monkey_flat} from "../meshes/monkey_flat.js";
+import {mesh_monkey_smooth} from "../meshes/monkey_smooth.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_render_forward} from "./systems/sys_render_forward.js";
@@ -16,7 +17,8 @@ export class Game extends Game3D {
     MaterialColoredGouraud = mat_forward_colored_gouraud(this.Gl);
     MaterialColoredPhong = mat_forward_colored_phong(this.Gl);
 
-    Meshes: Record<string, Mesh> = {};
+    MeshMonkeyFlat = mesh_monkey_flat(this.Gl);
+    MeshMonkeySmooth = mesh_monkey_smooth(this.Gl);
 
     LightPositions = new Float32Array(4 * MAX_FORWARD_LIGHTS);
     LightDetails = new Float32Array(4 * MAX_FORWARD_LIGHTS);

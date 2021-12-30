@@ -35,26 +35,18 @@ export function scene_stage(game: Game) {
     // and have the scale of 1.
     instantiate(game, [
         transform(),
-        render_colored_shaded(
-            game.MaterialColoredGouraud,
-            game.Meshes["terrain"],
-            [0.3, 0.3, 0.8, 1]
-        ),
-        pickable_mesh(game.Meshes["terrain"]),
+        render_colored_shaded(game.MaterialColoredGouraud, game.MeshTerrain, [0.3, 0.3, 0.8, 1]),
+        pickable_mesh(game.MeshTerrain),
         collide(false, Layer.None, Layer.None, [100, 1, 100]),
         children([
             transform([0, 0.1, 0]),
-            render_colored_unlit(
-                game.MaterialColoredLine,
-                game.Meshes["terrain"],
-                [0.4, 0.4, 0.8, 1]
-            ),
+            render_colored_unlit(game.MaterialColoredLine, game.MeshTerrain, [0.4, 0.4, 0.8, 1]),
         ]),
     ]);
 
     console.time("nav_bake");
     // Bake the nav mesh; maximum walkable slope is 30°.
-    let nav = nav_bake(game.Meshes["terrain"], Math.PI / 6);
+    let nav = nav_bake(game.MeshTerrain, Math.PI / 6);
     console.timeEnd("nav_bake");
 
     for (let node = 0; node < nav.Centroids.length; node++) {
@@ -81,11 +73,7 @@ export function scene_stage(game: Game) {
             [transform(), draw_selection("#ff0"), disable(Has.Draw)],
             [
                 transform([0, 1, 0], undefined, [2, 2, 2]),
-                render_colored_shaded(
-                    game.MaterialColoredGouraud,
-                    game.Meshes["cube"],
-                    [1, 0, 0, 1]
-                ),
+                render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [1, 0, 0, 1]),
             ]
         ),
     ]);
@@ -105,11 +93,7 @@ export function scene_stage(game: Game) {
             [transform([0, 1, 0]), draw_selection("#ff0"), disable(Has.Draw)],
             [
                 transform([0, 1, 0], undefined, [2, 2, 2]),
-                render_colored_shaded(
-                    game.MaterialColoredGouraud,
-                    game.Meshes["cube"],
-                    [0, 1, 0, 1]
-                ),
+                render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [0, 1, 0, 1]),
             ]
         ),
     ]);

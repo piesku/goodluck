@@ -1,4 +1,4 @@
-import {create_texture_from, fetch_image} from "../common/texture.js";
+import {load_texture} from "../common/load.js";
 import {Game} from "./game.js";
 import {scene_stage} from "./scenes/sce_stage.js";
 
@@ -23,8 +23,3 @@ Promise.all([
     scene_stage(game);
     game.Start();
 });
-
-async function load_texture(game: Game, name: string) {
-    let image = await fetch_image("../textures/" + name + ".webp");
-    game.Textures[name] = create_texture_from(game.Gl, image);
-}
