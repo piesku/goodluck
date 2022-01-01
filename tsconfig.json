@@ -1,16 +1,9 @@
 {
     "compilerOptions": {
-        "target": "es2019",
-        "lib": [
-            "ES2019",
-            "DOM",
-        ],
+        "target": "es2020",
         "module": "es2020",
-        "moduleResolution": "node",
         "strict": true,
-        "inlineSourceMap": true,
         "noImplicitOverride": true,
-        "useUnknownInCatchVariables": true,
     },
     "exclude": [
         "node_modules"
