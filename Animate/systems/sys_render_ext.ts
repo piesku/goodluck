@@ -87,7 +87,7 @@ function draw_colored_shaded(game: Game, transform: Transform, render: RenderCol
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
     game.Gl.uniform4fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
     game.Gl.uniform4fv(render.Material.Locations.SpecularColor, render.SpecularColor);
-    game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
+    game.Gl.uniform4fv(render.Material.Locations.EmissiveColor, render.EmissiveColor);
     game.Gl.bindVertexArray(render.Mesh.Vao);
     game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
     game.Gl.bindVertexArray(null);
@@ -116,7 +116,7 @@ function draw_colored_skinned(
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
     game.Gl.uniform4fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
     game.Gl.uniform4fv(render.Material.Locations.SpecularColor, render.SpecularColor);
-    game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
+    game.Gl.uniform4fv(render.Material.Locations.EmissiveColor, render.EmissiveColor);
 
     for (let bone_entity of query_down(game.World, entity, Has.Bone | Has.Transform)) {
         let bone_transform = game.World.Transform[bone_entity];

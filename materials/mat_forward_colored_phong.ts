@@ -27,7 +27,7 @@ let fragment = `#version 300 es\n
     uniform vec3 eye;
     uniform vec4 diffuse_color;
     uniform vec4 specular_color;
-    uniform float shininess;
+    uniform vec4 emissive_color;
     uniform vec4 light_positions[${MAX_FORWARD_LIGHTS}];
     uniform vec4 light_details[${MAX_FORWARD_LIGHTS}];
 
@@ -70,16 +70,16 @@ let fragment = `#version 300 es\n
                 // Diffuse color.
                 light_acc += diffuse_color.rgb * diffuse_factor * light_color * light_intensity;
 
-                if (shininess > 0.0) {
+                if (specular_color.a > 0.0) {
                     // Phong reflection model.
                     // vec3 r = reflect(-light_normal, world_normal);
                     // float specular_angle = max(dot(r, view_normal), 0.0);
-                    // float specular_factor = pow(specular_angle, shininess);
+                    // float specular_factor = pow(specular_angle, specular_color.a);
 
                     // Blinn-Phong reflection model.
                     vec3 h = normalize(light_normal + view_normal);
                     float specular_angle = max(dot(h, world_normal), 0.0);
-                    float specular_factor = pow(specular_angle, shininess);
+                    float specular_factor = pow(specular_angle, specular_color.a);
 
                     // Specular color.
                     light_acc += specular_color.rgb * specular_factor * light_color * light_intensity;
@@ -87,7 +87,8 @@ let fragment = `#version 300 es\n
             }
         }
 
-        frag_color = vec4(light_acc, diffuse_color.a);
+        vec3 emissive_rgb = emissive_color.rgb * emissive_color.a;
+        frag_color = vec4(light_acc + emissive_rgb, diffuse_color.a);
     }
 `;
 
@@ -105,7 +106,7 @@ export function mat_forward_colored_phong(
 
             DiffuseColor: gl.getUniformLocation(program, "diffuse_color")!,
             SpecularColor: gl.getUniformLocation(program, "specular_color")!,
-            Shininess: gl.getUniformLocation(program, "shininess")!,
+            EmissiveColor: gl.getUniformLocation(program, "emissive_color")!,
 
             Eye: gl.getUniformLocation(program, "eye")!,
             LightPositions: gl.getUniformLocation(program, "light_positions")!,

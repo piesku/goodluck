@@ -1,5 +1,5 @@
 import {Material} from "../../common/material.js";
-import {Vec4} from "../../common/math.js";
+import {Vec3, Vec4} from "../../common/math.js";
 import {Mesh} from "../../common/mesh.js";
 import {GL_CW} from "../../common/webgl.js";
 import {Entity} from "../../common/world.js";
@@ -22,7 +22,7 @@ export interface RenderColoredShaded {
     FrontFace: GLenum;
     DiffuseColor: Vec4;
     SpecularColor: Vec4;
-    Shininess: number;
+    EmissiveColor: Vec4;
 }
 
 export function render_colored_shaded(
@@ -30,7 +30,8 @@ export function render_colored_shaded(
     mesh: Mesh,
     diffuse_color: Vec4,
     shininess: number = 0,
-    specular_color: Vec4 = [1, 1, 1, 1],
+    emissive: number = 0,
+    specular_rgb: Vec3 = [1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
     return (game: Game, entity: Entity) => {
@@ -41,8 +42,8 @@ export function render_colored_shaded(
             Mesh: mesh,
             FrontFace: front_face,
             DiffuseColor: diffuse_color,
-            SpecularColor: specular_color,
-            Shininess: shininess,
+            SpecularColor: [...specular_rgb, shininess],
+            EmissiveColor: [diffuse_color[0], diffuse_color[1], diffuse_color[2], emissive],
         };
     };
 }
@@ -54,7 +55,7 @@ export interface RenderColoredSkinned {
     FrontFace: GLenum;
     DiffuseColor: Vec4;
     SpecularColor: Vec4;
-    Shininess: number;
+    EmissiveColor: Vec4;
 }
 
 export function render_colored_skinned(
@@ -62,7 +63,8 @@ export function render_colored_skinned(
     mesh: Mesh,
     diffuse_color: Vec4,
     shininess: number = 0,
-    specular_color: Vec4 = [1, 1, 1, 1],
+    emissive: number = 0,
+    specular_rgb: Vec3 = [1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
     return (game: Game, entity: Entity) => {
@@ -73,8 +75,8 @@ export function render_colored_skinned(
             Mesh: mesh,
             FrontFace: front_face,
             DiffuseColor: diffuse_color,
-            SpecularColor: specular_color,
-            Shininess: shininess,
+            SpecularColor: [...specular_rgb, shininess],
+            EmissiveColor: [diffuse_color[0], diffuse_color[1], diffuse_color[2], emissive],
         };
     };
 }

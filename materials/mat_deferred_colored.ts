@@ -1,6 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {Attribute, ColoredEmissiveLayout, Output} from "./layout.js";
+import {Attribute, ColoredShadedLayout, Output} from "./layout.js";
 
 let vertex = `#version 300 es\n
 
@@ -25,27 +25,28 @@ let fragment = `#version 300 es\n
     precision mediump float;
 
     uniform vec3 diffuse_color;
-    uniform vec3 specular_color;
-    uniform float shininess;
-    uniform float emission;
+    uniform vec4 specular_color;
+    uniform vec4 emissive_color;
 
     in vec4 vert_position;
     in vec4 vert_normal;
 
     layout(location=${Output.Diffuse}) out vec4 frag_diffuse;
     layout(location=${Output.Specular}) out vec4 frag_specular;
+    layout(location=${Output.Emissive}) out vec4 frag_emissive;
     layout(location=${Output.Position}) out vec4 frag_position;
     layout(location=${Output.Normal}) out vec3 frag_normal;
 
     void main() {
-        frag_diffuse = vec4(diffuse_color, emission);
-        frag_specular = vec4(specular_color, shininess);
+        frag_diffuse = vec4(diffuse_color, 1.0);
+        frag_specular = specular_color;
+        frag_emissive = emissive_color;
         frag_position = vert_position;
         frag_normal = normalize(vert_normal.xyz);
     }
 `;
 
-export function mat_deferred_colored(gl: WebGL2RenderingContext): Material<ColoredEmissiveLayout> {
+export function mat_deferred_colored(gl: WebGL2RenderingContext): Material<ColoredShadedLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
@@ -57,8 +58,7 @@ export function mat_deferred_colored(gl: WebGL2RenderingContext): Material<Color
 
             DiffuseColor: gl.getUniformLocation(program, "diffuse_color")!,
             SpecularColor: gl.getUniformLocation(program, "specular_color")!,
-            Shininess: gl.getUniformLocation(program, "shininess")!,
-            Emission: gl.getUniformLocation(program, "emission")!,
+            EmissiveColor: gl.getUniformLocation(program, "emissive_color")!,
         },
     };
 }

@@ -87,6 +87,7 @@ export interface DeferredTarget {
     ResizeToViewport: boolean;
     DiffuseTexture: WebGLTexture;
     SpecularTexture: WebGLTexture;
+    EmissiveTexture: WebGLTexture;
     PositionTexture: WebGLTexture;
     NormalTexture: WebGLTexture;
     DepthTexture: WebGLTexture;
@@ -107,6 +108,7 @@ export function create_deferred_target(
         ResizeToViewport: resize_to_viewport,
         DiffuseTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
         SpecularTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
+        EmissiveTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
         PositionTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
         NormalTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
         DepthTexture: resize_texture_depth24(gl, gl.createTexture()!, width, height),
@@ -125,6 +127,13 @@ export function create_deferred_target(
         GL_COLOR_ATTACHMENT0 + Output.Specular,
         GL_TEXTURE_2D,
         target.SpecularTexture,
+        0
+    );
+    gl.framebufferTexture2D(
+        GL_FRAMEBUFFER,
+        GL_COLOR_ATTACHMENT0 + Output.Emissive,
+        GL_TEXTURE_2D,
+        target.EmissiveTexture,
         0
     );
     gl.framebufferTexture2D(
@@ -152,6 +161,7 @@ export function create_deferred_target(
     gl.drawBuffers([
         GL_COLOR_ATTACHMENT0 + Output.Diffuse,
         GL_COLOR_ATTACHMENT0 + Output.Specular,
+        GL_COLOR_ATTACHMENT0 + Output.Emissive,
         GL_COLOR_ATTACHMENT0 + Output.Position,
         GL_COLOR_ATTACHMENT0 + Output.Normal,
     ]);
@@ -176,6 +186,7 @@ export function resize_deferred_target(
 
     resize_texture_rgba32f(gl, target.DiffuseTexture, target.Width, target.Height);
     resize_texture_rgba32f(gl, target.SpecularTexture, target.Width, target.Height);
+    resize_texture_rgba32f(gl, target.EmissiveTexture, target.Width, target.Height);
     resize_texture_rgba32f(gl, target.PositionTexture, target.Width, target.Height);
     resize_texture_rgba32f(gl, target.NormalTexture, target.Width, target.Height);
     resize_texture_depth24(gl, target.DepthTexture, target.Width, target.Height);

@@ -1,12 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {
-    Attribute,
-    DeferredPostprocessLayout,
-    DeferredShadingLayout,
-    ShadowMappingLayout,
-    WorldSpaceLayout,
-} from "./layout.js";
+import {Attribute, DeferredShadingLayout, ShadowMappingLayout, WorldSpaceLayout} from "./layout.js";
 import {LightKind} from "./light.js";
 
 let vertex = `#version 300 es\n
@@ -43,6 +37,7 @@ let fragment = `#version 300 es\n
     uniform vec3 eye;
     uniform sampler2D diffuse_map;
     uniform sampler2D specular_map;
+    uniform sampler2D emissive_map;
     uniform sampler2D position_map;
     uniform sampler2D normal_map;
     uniform sampler2D depth_map;
@@ -81,6 +76,7 @@ let fragment = `#version 300 es\n
 
         vec4 current_diffuse = texture(diffuse_map, uv);
         vec4 current_specular = texture(specular_map, uv);
+        vec4 current_emissive = texture(emissive_map, uv);
         vec4 current_position = texture(position_map, uv);
 
         vec3 view_dir = eye - current_position.xyz;
@@ -90,7 +86,7 @@ let fragment = `#version 300 es\n
         float light_intensity = light_details.a;
 
         if (light_kind.x == ${LightKind.Ambient}) {
-            vec3 emissive_rgb = current_diffuse.rgb * current_diffuse.a;
+            vec3 emissive_rgb = current_emissive.rgb * current_emissive.a;
             frag_color = vec4(emissive_rgb + current_diffuse.rgb * light_rgb * light_intensity, 1.0);
             return;
         }
@@ -139,9 +135,7 @@ let fragment = `#version 300 es\n
 
 export function mat_deferred_shading(
     gl: WebGL2RenderingContext
-): Material<
-    DeferredPostprocessLayout & WorldSpaceLayout & DeferredShadingLayout & ShadowMappingLayout
-> {
+): Material<WorldSpaceLayout & DeferredShadingLayout & ShadowMappingLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
@@ -152,6 +146,7 @@ export function mat_deferred_shading(
 
             DiffuseMap: gl.getUniformLocation(program, "diffuse_map")!,
             SpecularMap: gl.getUniformLocation(program, "specular_map")!,
+            EmissiveMap: gl.getUniformLocation(program, "emissive_map")!,
             PositionMap: gl.getUniformLocation(program, "position_map")!,
             NormalMap: gl.getUniformLocation(program, "normal_map")!,
             DepthMap: gl.getUniformLocation(program, "depth_map")!,

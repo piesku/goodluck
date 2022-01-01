@@ -5,7 +5,6 @@ import {Mesh} from "../common/mesh.js";
 import {Entity} from "../common/world.js";
 import {
     ColoredUnlitLayout,
-    DeferredPostprocessLayout,
     DeferredShadingLayout,
     PostprocessLayout,
     ShadowMappingLayout,
@@ -28,9 +27,7 @@ export interface Game extends GameXR {
     };
 
     MaterialWireframe: Material<ColoredUnlitLayout>;
-    MaterialShading: Material<
-        DeferredPostprocessLayout & WorldSpaceLayout & DeferredShadingLayout & ShadowMappingLayout
-    >;
+    MaterialShading: Material<WorldSpaceLayout & DeferredShadingLayout & ShadowMappingLayout>;
     MaterialPostprocess: Material<PostprocessLayout>;
     MaterialDepth: Material<WorldSpaceLayout>;
 

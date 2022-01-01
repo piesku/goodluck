@@ -69,9 +69,8 @@ function draw_entity(game: Game, entity: Entity) {
             game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
             game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
             game.Gl.uniform3fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
-            game.Gl.uniform3fv(render.Material.Locations.SpecularColor, render.SpecularColor);
-            game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
-            game.Gl.uniform1f(render.Material.Locations.Emission, render.Emission);
+            game.Gl.uniform4fv(render.Material.Locations.SpecularColor, render.SpecularColor);
+            game.Gl.uniform4fv(render.Material.Locations.EmissiveColor, render.EmissiveColor);
 
             game.Gl.bindVertexArray(render.Mesh.Vao);
             game.Gl.drawElements(

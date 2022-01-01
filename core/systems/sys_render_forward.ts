@@ -204,7 +204,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
             game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
             game.Gl.uniform4fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
             game.Gl.uniform4fv(render.Material.Locations.SpecularColor, render.SpecularColor);
-            game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
+            game.Gl.uniform4fv(render.Material.Locations.EmissiveColor, render.EmissiveColor);
             game.Gl.bindVertexArray(render.Mesh.Vao);
             game.Gl.drawElements(
                 render.Material.Mode,
@@ -219,7 +219,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
             game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);
             game.Gl.uniform4fv(render.Material.Locations.DiffuseColor, render.DiffuseColor);
             game.Gl.uniform4fv(render.Material.Locations.SpecularColor, render.SpecularColor);
-            game.Gl.uniform1f(render.Material.Locations.Shininess, render.Shininess);
+            game.Gl.uniform4fv(render.Material.Locations.EmissiveColor, render.EmissiveColor);
             game.Gl.bindVertexArray(render.Mesh.Vao);
             game.Gl.drawElements(
                 render.Material.Mode,

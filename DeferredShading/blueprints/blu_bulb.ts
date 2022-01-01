@@ -40,6 +40,7 @@ export function blueprint_bulb(game: Game) {
                         game.MaterialColored,
                         game.MeshSphereSmooth,
                         bulb_color,
+                        0,
                         1
                     ),
                 ]

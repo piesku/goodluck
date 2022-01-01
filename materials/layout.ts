@@ -2,20 +2,21 @@
  * The following attribute locations are shared by all material layouts.
  */
 export const enum Attribute {
-    Position = 0,
-    Normal = 1,
-    TexCoord = 2,
-    Tangent = 3,
-    Bitangent = 4,
-    Weights = 5,
+    Position,
+    Normal,
+    TexCoord,
+    Tangent,
+    Bitangent,
+    Weights,
 }
 
 export const enum Output {
-    Diffuse = 0,
-    Specular = 1,
-    Position = 2,
-    Normal = 3,
-    Depth = 4,
+    Diffuse,
+    Specular,
+    Emissive,
+    Position,
+    Normal,
+    Depth,
 }
 
 export interface WorldSpaceLayout {
@@ -31,11 +32,7 @@ export interface ColoredShadedLayout extends WorldSpaceLayout {
     Self: WebGLUniformLocation;
     DiffuseColor: WebGLUniformLocation;
     SpecularColor: WebGLUniformLocation;
-    Shininess: WebGLUniformLocation;
-}
-
-export interface ColoredEmissiveLayout extends ColoredShadedLayout {
-    Emission: WebGLUniformLocation;
+    EmissiveColor: WebGLUniformLocation;
 }
 
 export interface TexturedUnlitLayout extends WorldSpaceLayout {
@@ -69,19 +66,18 @@ export interface DeferredShadingLayout {
     Eye: WebGLUniformLocation;
     LightKind: WebGLUniformLocation;
     LightDetails: WebGLUniformLocation;
+
+    DiffuseMap: WebGLUniformLocation;
+    SpecularMap: WebGLUniformLocation;
+    EmissiveMap: WebGLUniformLocation;
+    PositionMap: WebGLUniformLocation;
+    NormalMap: WebGLUniformLocation;
+    DepthMap: WebGLUniformLocation;
 }
 
 export interface ShadowMappingLayout {
     ShadowSpace: WebGLUniformLocation;
     ShadowMap: WebGLUniformLocation;
-}
-
-export interface DeferredPostprocessLayout {
-    DiffuseMap: WebGLUniformLocation;
-    SpecularMap: WebGLUniformLocation;
-    PositionMap: WebGLUniformLocation;
-    NormalMap: WebGLUniformLocation;
-    DepthMap: WebGLUniformLocation;
 }
 
 export interface PostprocessLayout {

@@ -73,6 +73,10 @@ export function sys_render_shading(game: Game, delta: number) {
     game.Gl.bindTexture(GL_TEXTURE_2D, target.SpecularTexture);
     game.Gl.uniform1i(material.Locations.SpecularMap, Output.Specular);
 
+    game.Gl.activeTexture(GL_TEXTURE0 + Output.Emissive);
+    game.Gl.bindTexture(GL_TEXTURE_2D, target.EmissiveTexture);
+    game.Gl.uniform1i(material.Locations.EmissiveMap, Output.Emissive);
+
     game.Gl.activeTexture(GL_TEXTURE0 + Output.Position);
     game.Gl.bindTexture(GL_TEXTURE_2D, target.PositionTexture);
     game.Gl.uniform1i(material.Locations.PositionMap, Output.Position);

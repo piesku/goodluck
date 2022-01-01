@@ -74,21 +74,24 @@ export function scene_stage(game: Game) {
             game.MeshIcosphereSmooth,
             [1, 1, 0, 1],
             16,
-            [1, 1, 0, 1]
+            0,
+            [1, 1, 0]
         ),
         render_colored_shaded(
             game.MaterialColoredGouraud,
             game.MeshIcosphereSmooth,
             [1, 1, 0, 1],
             128,
-            [1, 1, 0, 1]
+            0,
+            [1, 1, 0]
         ),
         render_colored_shaded(
             game.MaterialColoredGouraud,
             game.MeshIcosphereSmooth,
             [1, 1, 0, 1],
             512,
-            [1, 1, 0, 1]
+            0,
+            [1, 1, 0]
         ),
 
         // Colored Phong shading
@@ -98,21 +101,24 @@ export function scene_stage(game: Game) {
             game.MeshIcosphereSmooth,
             [1, 1, 0, 1],
             16,
-            [1, 1, 0, 1]
+            0,
+            [1, 1, 0]
         ),
         render_colored_shaded(
             game.MaterialColoredPhong,
             game.MeshIcosphereSmooth,
             [1, 1, 0, 1],
             128,
-            [1, 1, 0, 1]
+            0,
+            [1, 1, 0]
         ),
         render_colored_shaded(
             game.MaterialColoredPhong,
             game.MeshIcosphereSmooth,
             [1, 1, 0, 1],
             512,
-            [1, 1, 0, 1]
+            0,
+            [1, 1, 0]
         ),
 
         // Textured unlit shading

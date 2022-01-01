@@ -26,7 +26,8 @@ export function blueprint_viewer(game: Game) {
                         game.MeshHand,
                         [1, 1, 0.3, 1],
                         0,
-                        [1, 1, 1, 1],
+                        0,
+                        [1, 1, 1],
                         GL_CCW
                     ),
                 ]),
@@ -43,7 +44,8 @@ export function blueprint_viewer(game: Game) {
                         game.MeshHand,
                         [1, 1, 0.3, 1],
                         0,
-                        [1, 1, 1, 1],
+                        0,
+                        [1, 1, 1],
                         GL_CW
                     ),
                 ]),
