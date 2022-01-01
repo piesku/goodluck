@@ -13,11 +13,11 @@
     ],
     "license": "ISC",
     "scripts": {
-        "clean": "rm */index.js */index.js.map",
+        "clean": "find . -type d -name node_modules -prune -o \\( -name '*.js' -o -name '*.js.map' \\) -exec rm {} +",
         "lint": "prettier --check \"**/*.ts\"",
         "pretty": "prettier --write \"**/*.ts\"",
-        "start": "esbuild */index.ts --define:DEBUG=true --target=es2020 --format=esm --preserve-symlinks --bundle --sourcemap --outdir=. --outbase=. --color=false --servedir=. --serve=1234",
-        "test": "npm run clean && npm run lint && npm run ts:check",
+        "start": "esbuild */index.ts --define:DEBUG=true --target=es2020 --preserve-symlinks --bundle --sourcemap --outdir=. --outbase=. --color=false --servedir=. --serve=1234",
+        "test": "npm run lint && npm run ts:check",
         "ts:check": "tsc --noEmit",
         "ts:watch": "tsc --noEmit --watch -p ."
     },
