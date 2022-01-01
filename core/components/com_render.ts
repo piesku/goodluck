@@ -230,7 +230,7 @@ export interface RenderTexturedShaded {
     Texture: WebGLTexture;
     DiffuseColor: Vec4;
     SpecularColor: Vec4;
-    Shininess: number;
+    EmissiveColor: Vec4;
 }
 
 export function render_textured_shaded(
@@ -238,8 +238,9 @@ export function render_textured_shaded(
     mesh: Mesh,
     texture: WebGLTexture,
     shininess: number = 0,
+    emissive: number = 0,
     diffuse_color: Vec4 = [1, 1, 1, 1],
-    specular_color: Vec4 = [1, 1, 1, 1],
+    specular_rgb: Vec3 = [1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
     return (game: Game, entity: Entity) => {
@@ -252,8 +253,8 @@ export function render_textured_shaded(
             FrontFace: front_face,
             Texture: texture,
             DiffuseColor: diffuse_color,
-            SpecularColor: specular_color,
-            Shininess: shininess,
+            SpecularColor: [...specular_rgb, shininess],
+            EmissiveColor: [diffuse_color[0], diffuse_color[1], diffuse_color[2], emissive],
         };
     };
 }

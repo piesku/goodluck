@@ -45,7 +45,7 @@ export interface TexturedShadedLayout extends WorldSpaceLayout {
     DiffuseMap: WebGLUniformLocation;
     DiffuseColor: WebGLUniformLocation;
     SpecularColor: WebGLUniformLocation;
-    Shininess: WebGLUniformLocation;
+    EmissiveColor: WebGLUniformLocation;
 }
 
 export interface MappedShadedLayout extends WorldSpaceLayout {
