@@ -35,14 +35,14 @@ let fragment = `#version 300 es\n
     layout(location=${Output.Specular}) out vec4 frag_specular;
     layout(location=${Output.Emissive}) out vec4 frag_emissive;
     layout(location=${Output.Position}) out vec4 frag_position;
-    layout(location=${Output.Normal}) out vec3 frag_normal;
+    layout(location=${Output.Normal}) out vec4 frag_normal;
 
     void main() {
         frag_diffuse = vec4(diffuse_color, 1.0);
         frag_specular = specular_color;
         frag_emissive = emissive_color;
         frag_position = vert_position;
-        frag_normal = normalize(vert_normal.xyz);
+        frag_normal = vec4(normalize(vert_normal.xyz), 1.0);
     }
 `;
 
