@@ -34,7 +34,7 @@ export class Game extends Game3D {
 
     MaterialColored = mat_deferred_colored(this.Gl);
     MaterialShading = mat_deferred_shading(this.Gl);
-    MaterialPostprocess = mat_postprocess_fxaa(this.Gl);
+    MaterialPostprocessFXAA = mat_postprocess_fxaa(this.Gl);
     MaterialDepth = mat_forward_depth(this.Gl);
 
     MeshSphereSmooth = mesh_icosphere_smooth(this.Gl);

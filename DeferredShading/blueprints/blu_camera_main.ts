@@ -9,7 +9,7 @@ export function blueprint_camera_main(game: Game) {
         children([
             transform(undefined, [0, 1, 0, 0]),
             // Clear color must be black to not leak into the g-buffer.
-            camera_target(game.Targets.Gbuffer, perspective(1, 0.1, 1000), [0, 0, 0, 1]),
+            camera_target(game.Targets.Gbuffer, perspective(1, 0.1, 1000), [0, 0, 0, 0]),
         ]),
     ];
 }

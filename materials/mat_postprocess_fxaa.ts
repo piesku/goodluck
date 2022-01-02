@@ -17,7 +17,7 @@ let fragment = `#version 300 es\n
     precision mediump float;
 
     uniform sampler2D sampler;
-    uniform vec2 viewport_size;
+    uniform vec2 viewport;
 
     in vec2 vert_texcoord;
     out vec4 frag_color;
@@ -28,14 +28,14 @@ let fragment = `#version 300 es\n
 
     // https://github.com/mitsuhiko/webgl-meincraft/blob/master/assets/shaders/fxaa.glsl
     // https://github.com/mattdesl/glsl-fxaa/blob/master/fxaa.glsl
-    vec4 fxaa(sampler2D tex, vec2 fragCoord) {
+    vec3 fxaa(sampler2D tex, vec2 frag_coord) {
         vec4 color;
-        vec2 inverseVP = vec2(1.0 / viewport_size.x, 1.0 / viewport_size.y);
-        vec3 rgbNW = texture(tex, (fragCoord + vec2(-1.0, -1.0)) * inverseVP).xyz;
-        vec3 rgbNE = texture(tex, (fragCoord + vec2(1.0, -1.0)) * inverseVP).xyz;
-        vec3 rgbSW = texture(tex, (fragCoord + vec2(-1.0, 1.0)) * inverseVP).xyz;
-        vec3 rgbSE = texture(tex, (fragCoord + vec2(1.0, 1.0)) * inverseVP).xyz;
-        vec3 rgbM  = texture(tex, fragCoord  * inverseVP).xyz;
+        vec2 inverseVP = vec2(1.0 / viewport.x, 1.0 / viewport.y);
+        vec3 rgbNW = texture(tex, (frag_coord + vec2(-1.0, -1.0)) * inverseVP).xyz;
+        vec3 rgbNE = texture(tex, (frag_coord + vec2(1.0, -1.0)) * inverseVP).xyz;
+        vec3 rgbSW = texture(tex, (frag_coord + vec2(-1.0, 1.0)) * inverseVP).xyz;
+        vec3 rgbSE = texture(tex, (frag_coord + vec2(1.0, 1.0)) * inverseVP).xyz;
+        vec3 rgbM  = texture(tex, frag_coord  * inverseVP).xyz;
 
         vec3 luma = vec3(0.299, 0.587, 0.114);
         float lumaNW = dot(rgbNW, luma);
@@ -59,23 +59,22 @@ let fragment = `#version 300 es\n
                 dir * rcpDirMin)) * inverseVP;
 
         vec3 rgbA = 0.5 * (
-            texture(tex, fragCoord * inverseVP + dir * (1.0 / 3.0 - 0.5)).xyz +
-            texture(tex, fragCoord * inverseVP + dir * (2.0 / 3.0 - 0.5)).xyz);
+            texture(tex, frag_coord * inverseVP + dir * (1.0 / 3.0 - 0.5)).xyz +
+            texture(tex, frag_coord * inverseVP + dir * (2.0 / 3.0 - 0.5)).xyz);
         vec3 rgbB = rgbA * 0.5 + 0.25 * (
-            texture(tex, fragCoord * inverseVP + dir * -0.5).xyz +
-            texture(tex, fragCoord * inverseVP + dir * 0.5).xyz);
+            texture(tex, frag_coord * inverseVP + dir * -0.5).xyz +
+            texture(tex, frag_coord * inverseVP + dir * 0.5).xyz);
 
         float lumaB = dot(rgbB, luma);
-        if ((lumaB < lumaMin) || (lumaB > lumaMax))
-            color = vec4(rgbA, 1.0);
-        else
-            color = vec4(rgbB, 1.0);
-        return color;
+        if ((lumaB < lumaMin) || (lumaB > lumaMax)) {
+            return rgbA;
+        }
+
+        return rgbB;
     }
 
     void main() {
-        //frag_color = fxaa(sampler, vert_texcoord * vec2(1, -1));
-        frag_color = fxaa(sampler, gl_FragCoord.xy);
+        frag_color = vec4(fxaa(sampler, gl_FragCoord.xy), 1.0);
     }
 `;
 
@@ -86,7 +85,7 @@ export function mat_postprocess_fxaa(gl: WebGL2RenderingContext): Material<Postp
         Program: program,
         Locations: {
             Sampler: gl.getUniformLocation(program, "sampler")!,
-            ViewportSize: gl.getUniformLocation(program, "viewport_size")!,
+            Viewport: gl.getUniformLocation(program, "viewport")!,
         },
     };
 }

@@ -3,46 +3,37 @@
  */
 
 import {
-    GL_ARRAY_BUFFER,
-    GL_COLOR_BUFFER_BIT,
     GL_CW,
-    GL_DEPTH_BUFFER_BIT,
-    GL_ELEMENT_ARRAY_BUFFER,
-    GL_FLOAT,
+    GL_DEPTH_TEST,
     GL_FRAMEBUFFER,
     GL_TEXTURE0,
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
 } from "../../common/webgl.js";
-import {Attribute} from "../../materials/layout.js";
 import {Game} from "../game.js";
 
 export function sys_render_postprocess(game: Game, delta: number) {
     game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
     game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
-    game.Gl.clearColor(0.9, 0.9, 0.9, 1);
-    game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     game.Gl.frontFace(GL_CW);
 
-    let material = game.MaterialPostprocess;
     let mesh = game.MeshQuad;
-    let target = game.Targets.Shaded;
+    game.Gl.bindVertexArray(mesh.Vao);
+    // Allow rendering multiple quads on top of each other.
+    game.Gl.disable(GL_DEPTH_TEST);
 
-    game.Gl.useProgram(material.Program);
+    {
+        // FXAA
+        let material = game.MaterialPostprocessFXAA;
+        game.Gl.useProgram(material.Program);
+        game.Gl.uniform2f(material.Locations.Viewport, game.ViewportWidth, game.ViewportHeight);
+        game.Gl.activeTexture(GL_TEXTURE0);
+        game.Gl.bindTexture(GL_TEXTURE_2D, game.Targets.Shaded.ColorTexture);
+        game.Gl.uniform1i(material.Locations.Sampler, 0);
 
-    game.Gl.activeTexture(GL_TEXTURE0);
-    game.Gl.bindTexture(GL_TEXTURE_2D, target.ColorTexture);
-    game.Gl.uniform1i(material.Locations.Sampler, 0);
-    game.Gl.uniform2f(material.Locations.ViewportSize, game.ViewportWidth, game.ViewportHeight);
+        game.Gl.drawElements(material.Mode, mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
+    }
 
-    game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
-    game.Gl.enableVertexAttribArray(Attribute.Position);
-    game.Gl.vertexAttribPointer(Attribute.Position, 3, GL_FLOAT, false, 0, 0);
-
-    game.Gl.bindBuffer(GL_ARRAY_BUFFER, mesh.TexCoordBuffer);
-    game.Gl.enableVertexAttribArray(Attribute.TexCoord);
-    game.Gl.vertexAttribPointer(Attribute.TexCoord, 2, GL_FLOAT, false, 0, 0);
-
-    game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
-    game.Gl.drawElements(material.Mode, mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
+    game.Gl.enable(GL_DEPTH_TEST);
+    game.Gl.bindVertexArray(null);
 }

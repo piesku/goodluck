@@ -28,7 +28,7 @@ export interface Game extends GameXR {
 
     MaterialWireframe: Material<ColoredUnlitLayout>;
     MaterialShading: Material<WorldSpaceLayout & DeferredShadingLayout & ShadowMappingLayout>;
-    MaterialPostprocess: Material<PostprocessLayout>;
+    MaterialPostprocessFXAA: Material<PostprocessLayout>;
     MaterialDepth: Material<WorldSpaceLayout>;
 
     MeshQuad: Mesh;

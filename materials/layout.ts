@@ -82,7 +82,7 @@ export interface ShadowMappingLayout {
 
 export interface PostprocessLayout {
     Sampler: WebGLUniformLocation;
-    ViewportSize: WebGLUniformLocation;
+    Viewport: WebGLUniformLocation;
 }
 
 export interface ParticlesColoredLayout {
