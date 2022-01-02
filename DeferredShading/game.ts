@@ -32,10 +32,10 @@ import {World} from "./world.js";
 export class Game extends Game3D {
     World = new World();
 
+    MaterialDepth = mat_forward_depth(this.Gl);
     MaterialColored = mat_deferred_colored(this.Gl);
     MaterialShading = mat_deferred_shading(this.Gl);
     MaterialPostprocessFXAA = mat_postprocess_fxaa(this.Gl);
-    MaterialDepth = mat_forward_depth(this.Gl);
 
     MeshSphereSmooth = mesh_icosphere_smooth(this.Gl);
     MeshCube = mesh_cube(this.Gl);
