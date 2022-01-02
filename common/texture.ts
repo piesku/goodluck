@@ -12,6 +12,7 @@ import {
     GL_PIXEL_UNSIGNED_BYTE,
     GL_REPEAT,
     GL_RGBA,
+    GL_RGBA16F,
     GL_RGBA32F,
     GL_RGBA8,
     GL_TEXTURE_2D,
@@ -75,7 +76,23 @@ export function resize_texture_rgba8(
     return texture;
 }
 
-/** Requires WEBGL_color_buffer_float. */
+/** Requires EXT_color_buffer_float. */
+export function resize_texture_rgba16f(
+    gl: WebGL2RenderingContext,
+    texture: WebGLTexture,
+    width: number,
+    height: number
+) {
+    gl.bindTexture(GL_TEXTURE_2D, texture);
+    gl.texImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_DATA_FLOAT, null);
+
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    return texture;
+}
+
+/** Requires EXT_color_buffer_float. */
 export function resize_texture_rgba32f(
     gl: WebGL2RenderingContext,
     texture: WebGLTexture,
