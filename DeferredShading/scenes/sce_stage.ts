@@ -5,6 +5,7 @@ import {blueprint_bulb} from "../blueprints/blu_bulb.js";
 import {blueprint_camera_main} from "../blueprints/blu_camera_main.js";
 import {blueprint_sun} from "../blueprints/blu_sun.js";
 import {children} from "../components/com_children.js";
+import {light_point} from "../components/com_light.js";
 import {render_colored_deferred} from "../components/com_render.js";
 import {shake} from "../components/com_shake.js";
 import {spawn} from "../components/com_spawn.js";
@@ -42,26 +43,33 @@ export function scene_stage(game: Game) {
 
     // Bulb spawner.
     instantiate(game, [
-        transform([0, 3, 0], undefined, [20, 1, 20]),
+        transform([0, 2, 0], undefined, [20, 1, 20]),
         children([
             transform(),
             shake(0.5),
             spawn((game) => {
-                game.BulbCount++;
+                game.LightCount++;
                 return blueprint_bulb(game);
             }, 0.1),
         ]),
     ]);
 
     for (let i = 0; i < 100; i++) {
+        let range = 0.1;
+        let dia = (range / 0.005) ** 0.5 * 2.5;
         instantiate(game, [
-            transform([float(-10, 10), 1, float(-10, 10)], undefined, [1, 1, 1]),
+            transform([float(-9, 9), 1, float(-9, 9)], undefined, [1, 1, 1]),
             render_colored_deferred(
                 game.MaterialColored,
                 game.MeshSphereSmooth,
                 [1, 1, 1],
-                element([64, 128, 256, 512])
+                element([64, 128, 256, 512]),
+                float(0.1, 0.7)
             ),
+            children([
+                transform(undefined, undefined, [dia, dia, dia]),
+                (game.LightCount++, light_point([1, 1, 1], range)),
+            ]),
         ]);
     }
 }

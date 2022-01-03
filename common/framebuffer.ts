@@ -38,7 +38,7 @@ export function create_forward_target(
         Width: width,
         Height: height,
         ResizeToViewport: resize_to_viewport,
-        ColorTexture: resize_texture_rgba8(gl, gl.createTexture()!, width, height),
+        ColorTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
         DepthTexture: resize_texture_depth24(gl, gl.createTexture()!, width, height),
     };
 
@@ -75,7 +75,7 @@ export function resize_forward_target(
     target.Width = width;
     target.Height = height;
 
-    resize_texture_rgba8(gl, target.ColorTexture, target.Width, target.Height);
+    resize_texture_rgba32f(gl, target.ColorTexture, target.Width, target.Height);
     resize_texture_depth24(gl, target.DepthTexture, target.Width, target.Height);
 }
 

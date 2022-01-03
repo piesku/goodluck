@@ -104,7 +104,7 @@ let fragment = `#version 300 es\n
             float light_dist = length(light_dir);
             light_normal = light_dir / light_dist;
             // Distance attenuation.
-            light_intensity /= (light_dist * light_dist);
+            light_intensity /= pow(light_dist, 2.0);
         }
 
         float diffuse_factor = dot(current_normal, light_normal);

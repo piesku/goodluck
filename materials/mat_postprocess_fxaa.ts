@@ -1,10 +1,11 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {PostprocessLayout} from "./layout.js";
+import {Attribute, PostprocessLayout} from "./layout.js";
 
 let vertex = `#version 300 es\n
-    in vec4 attr_position;
-    in vec2 attr_texcoord;
+    layout(location=${Attribute.Position}) in vec4 attr_position;
+    layout(location=${Attribute.TexCoord}) in vec2 attr_texcoord;
+
     out vec2 vert_texcoord;
 
     void main() {
@@ -22,7 +23,7 @@ let fragment = `#version 300 es\n
     in vec2 vert_texcoord;
     out vec4 frag_color;
 
-    #define FXAA_REDUCE_MIN   (1.0/ 128.0)
+    #define FXAA_REDUCE_MIN   (1.0 / 128.0)
     #define FXAA_REDUCE_MUL   (1.0 / 8.0)
     #define FXAA_SPAN_MAX     8.0
 
@@ -73,8 +74,13 @@ let fragment = `#version 300 es\n
         return rgbB;
     }
 
+    // Convert linear to sRGB (approximation).
+    vec3 gamma(vec3 c) {
+        return pow(c, vec3(1.0 / 2.2));
+    }
+
     void main() {
-        frag_color = vec4(fxaa(sampler, gl_FragCoord.xy), 1.0);
+        frag_color = vec4(gamma(fxaa(sampler, gl_FragCoord.xy)), 1.0);
     }
 `;
 

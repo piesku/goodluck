@@ -84,7 +84,7 @@ export function light_point(color: Vec3 = [1, 1, 1], range: number = 1) {
         game.World.Light[entity] = {
             Kind: LightKind.Point,
             Color: color,
-            Intensity: range ** 2,
+            Intensity: range,
         };
     };
 }

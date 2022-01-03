@@ -22,11 +22,11 @@ export function blueprint_sun(game: Game) {
             // Secondary light, from the other side of the scene.
             [
                 transform([0, 20, 0], from_euler([0, 0, 0, 1], -90, 0, 0)),
-                light_directional([1, 1, 0], 0.05),
+                light_directional([1, 1, 1], 0.05),
                 camera_target(game.Targets.Back, orthographic(15, 1, 100)),
             ],
             // Ambient light.
-            [transform(), light_ambient([1, 1, 1], 0.1)]
+            [transform(), light_ambient([1, 1, 1], 0.01)]
         ),
     ];
 }

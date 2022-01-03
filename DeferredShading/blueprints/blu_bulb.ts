@@ -19,9 +19,9 @@ const colors: Array<Vec3> = [
 ];
 
 export function blueprint_bulb(game: Game) {
-    let range = float(0.5, 1.5);
+    let range = float(0.1, 0.5);
     // TODO: Auto-compute from the light's range.
-    let diameter = (range ** 2 / 0.02) ** 0.5 * 2;
+    let diameter = (range / 0.005) ** 0.5 * 2;
     let light_color = element(colors);
     let bulb_color: Vec3 = [...light_color];
     return [

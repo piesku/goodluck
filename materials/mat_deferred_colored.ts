@@ -37,10 +37,15 @@ let fragment = `#version 300 es\n
     layout(location=${Output.Position}) out vec4 frag_position;
     layout(location=${Output.Normal}) out vec4 frag_normal;
 
+    // Convert sRGB to linear (approximation).
+    vec3 linear(vec3 c) {
+        return pow(c, vec3(2.2));
+    }
+
     void main() {
-        frag_diffuse = vec4(diffuse_color, 1.0);
-        frag_specular = specular_color;
-        frag_emissive = emissive_color;
+        frag_diffuse = vec4(linear(diffuse_color), 1.0);
+        frag_specular = vec4(linear(specular_color.rgb), specular_color.a);
+        frag_emissive = vec4(linear(emissive_color.rgb), emissive_color.a);
         frag_position = vert_position;
         frag_normal = vec4(normalize(vert_normal.xyz), 1.0);
     }
