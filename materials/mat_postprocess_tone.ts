@@ -17,8 +17,9 @@ let vertex = `#version 300 es\n
 let fragment = `#version 300 es\n
     precision mediump float;
 
-    uniform sampler2D sampler;
     uniform vec2 viewport;
+    uniform sampler2D sampler;
+    uniform sampler2D bloom_map;
 
     in vec2 vert_texcoord;
     out vec4 frag_color;
@@ -41,18 +42,22 @@ let fragment = `#version 300 es\n
 
     void main() {
         vec3 hdr_rgb = texture(sampler, vert_texcoord).xyz;
-        frag_color = vec4(map_tone_aces(hdr_rgb), 1.0);
+        vec3 bloom_rgb = texture(bloom_map, vert_texcoord).xyz;
+        frag_color = vec4(map_tone_aces(hdr_rgb + bloom_rgb), 1.0);
     }
 `;
 
-export function mat_postprocess_tone(gl: WebGL2RenderingContext): Material<PostprocessLayout> {
+export function mat_postprocess_tone(
+    gl: WebGL2RenderingContext
+): Material<PostprocessLayout & {Bloom: WebGLUniformLocation}> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
         Program: program,
         Locations: {
-            Sampler: gl.getUniformLocation(program, "sampler")!,
             Viewport: gl.getUniformLocation(program, "viewport")!,
+            Sampler: gl.getUniformLocation(program, "sampler")!,
+            Bloom: gl.getUniformLocation(program, "bloom_map")!,
         },
     };
 }

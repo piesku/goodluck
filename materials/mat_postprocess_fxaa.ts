@@ -17,8 +17,8 @@ let vertex = `#version 300 es\n
 let fragment = `#version 300 es\n
     precision mediump float;
 
-    uniform sampler2D sampler;
     uniform vec2 viewport;
+    uniform sampler2D sampler;
 
     in vec2 vert_texcoord;
     out vec4 frag_color;
@@ -90,8 +90,8 @@ export function mat_postprocess_fxaa(gl: WebGL2RenderingContext): Material<Postp
         Mode: GL_TRIANGLES,
         Program: program,
         Locations: {
-            Sampler: gl.getUniformLocation(program, "sampler")!,
             Viewport: gl.getUniformLocation(program, "viewport")!,
+            Sampler: gl.getUniformLocation(program, "sampler")!,
         },
     };
 }

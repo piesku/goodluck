@@ -11,6 +11,7 @@ import {Game3D} from "../common/game.js";
 import {mat_deferred_colored} from "../materials/mat_deferred_colored.js";
 import {mat_deferred_shading} from "../materials/mat_deferred_shading.js";
 import {mat_forward_depth} from "../materials/mat_forward_depth.js";
+import {mat_postprocess_blur} from "../materials/mat_postprocess_blur.js";
 import {mat_postprocess_fxaa} from "../materials/mat_postprocess_fxaa.js";
 import {mat_postprocess_tone} from "../materials/mat_postprocess_tone.js";
 import {mesh_cube} from "../meshes/cube.js";
@@ -38,6 +39,7 @@ export class Game extends Game3D {
     MaterialShading = mat_deferred_shading(this.Gl);
     MaterialPostprocessTone = mat_postprocess_tone(this.Gl);
     MaterialPostprocessFXAA = mat_postprocess_fxaa(this.Gl);
+    MaterialPostprocessBlur = mat_postprocess_blur(this.Gl);
 
     MeshSphereSmooth = mesh_icosphere_smooth(this.Gl);
     MeshCube = mesh_cube(this.Gl);
@@ -48,6 +50,8 @@ export class Game extends Game3D {
         [name: string]: RenderTarget;
         Gbuffer: DeferredTarget;
         Shaded: ForwardTarget;
+        Ping: ForwardTarget;
+        Pong: ForwardTarget;
         Toned: ForwardTarget;
         Sun: DepthTarget;
         Back: DepthTarget;
@@ -64,6 +68,8 @@ export class Game extends Game3D {
             // Create the main framebuffer for deferred rendering.
             Gbuffer: create_deferred_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
             Shaded: create_forward_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
+            Ping: create_forward_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
+            Pong: create_forward_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
             Toned: create_forward_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
             Sun: create_depth_target(this.Gl, 1024, 1024),
             Back: create_depth_target(this.Gl, 256, 256),

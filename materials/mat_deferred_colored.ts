@@ -45,7 +45,7 @@ let fragment = `#version 300 es\n
     void main() {
         frag_diffuse = vec4(linear(diffuse_color), 1.0);
         frag_specular = vec4(linear(specular_color.rgb), specular_color.a);
-        frag_emissive = vec4(linear(emissive_color.rgb), emissive_color.a);
+        frag_emissive = vec4(linear(emissive_color.rgb) * emissive_color.a, 1.0);
         frag_position = vert_position;
         frag_normal = vec4(normalize(vert_normal.xyz), 1.0);
     }

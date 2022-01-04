@@ -11,6 +11,7 @@ import {shake} from "../components/com_shake.js";
 import {spawn} from "../components/com_spawn.js";
 import {transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
+import {sys_transform} from "../systems/sys_transform.js";
 import {World} from "../world.js";
 
 export function scene_stage(game: Game) {
@@ -72,4 +73,6 @@ export function scene_stage(game: Game) {
             ]),
         ]);
     }
+
+    sys_transform(game, 0);
 }
