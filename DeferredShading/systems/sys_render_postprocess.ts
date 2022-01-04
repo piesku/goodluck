@@ -24,6 +24,23 @@ export function sys_render_postprocess(game: Game, delta: number) {
     game.Gl.clearColor(0, 0, 0, 1);
 
     {
+        // Detect bright areas.
+        let material = game.MaterialPostprocessBrightness;
+        game.Gl.useProgram(material.Program);
+
+        let target = game.Targets.Brightness;
+        game.Gl.bindFramebuffer(GL_FRAMEBUFFER, target.Framebuffer);
+        game.Gl.viewport(0, 0, target.Width, target.Height);
+        game.Gl.uniform2f(material.Locations.Viewport, target.Width, target.Height);
+
+        game.Gl.uniform1i(material.Locations.Sampler, 0);
+        game.Gl.activeTexture(GL_TEXTURE0);
+        game.Gl.bindTexture(GL_TEXTURE_2D, game.Targets.Shaded.ColorTexture);
+
+        game.Gl.drawElements(material.Mode, mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
+    }
+
+    {
         // Bloom.
         let material = game.MaterialPostprocessBlur;
         game.Gl.useProgram(material.Program);
@@ -41,7 +58,7 @@ export function sys_render_postprocess(game: Game, delta: number) {
                 game.Gl.viewport(0, 0, target.Width, target.Height);
                 game.Gl.uniform2f(material.Locations.Viewport, target.Width, target.Height);
                 if (i == 0) {
-                    game.Gl.bindTexture(GL_TEXTURE_2D, game.Targets.Shaded.ColorTexture);
+                    game.Gl.bindTexture(GL_TEXTURE_2D, game.Targets.Brightness.ColorTexture);
                 } else {
                     game.Gl.bindTexture(GL_TEXTURE_2D, game.Targets.Pong.ColorTexture);
                 }

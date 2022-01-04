@@ -14,6 +14,7 @@ import {mat_deferred_colored} from "../materials/mat_deferred_colored.js";
 import {mat_deferred_shading} from "../materials/mat_deferred_shading.js";
 import {mat_forward_depth} from "../materials/mat_forward_depth.js";
 import {mat_postprocess_blur} from "../materials/mat_postprocess_blur.js";
+import {mat_postprocess_brightness} from "../materials/mat_postprocess_brightness.js";
 import {mat_postprocess_fxaa} from "../materials/mat_postprocess_fxaa.js";
 import {mat_postprocess_tone} from "../materials/mat_postprocess_tone.js";
 import {mesh_cube} from "../meshes/cube.js";
@@ -39,9 +40,10 @@ export class Game extends Game3D {
     MaterialDepth = mat_forward_depth(this.Gl);
     MaterialColored = mat_deferred_colored(this.Gl);
     MaterialShading = mat_deferred_shading(this.Gl);
+    MaterialPostprocessBrightness = mat_postprocess_brightness(this.Gl);
+    MaterialPostprocessBlur = mat_postprocess_blur(this.Gl);
     MaterialPostprocessTone = mat_postprocess_tone(this.Gl);
     MaterialPostprocessFXAA = mat_postprocess_fxaa(this.Gl);
-    MaterialPostprocessBlur = mat_postprocess_blur(this.Gl);
 
     MeshSphereSmooth = mesh_icosphere_smooth(this.Gl);
     MeshCube = mesh_cube(this.Gl);
@@ -52,6 +54,7 @@ export class Game extends Game3D {
         [name: string]: RenderTarget;
         Gbuffer: DeferredTarget;
         Shaded: HdrTarget;
+        Brightness: HdrTarget;
         Ping: HdrTarget;
         Pong: HdrTarget;
         Toned: ForwardTarget;
@@ -70,6 +73,7 @@ export class Game extends Game3D {
             // Create the main framebuffer for deferred rendering.
             Gbuffer: create_deferred_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
             Shaded: create_hdr_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
+            Brightness: create_hdr_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
             Ping: create_hdr_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
             Pong: create_hdr_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
             Toned: create_forward_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
