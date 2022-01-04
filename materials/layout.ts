@@ -13,7 +13,6 @@ export const enum Attribute {
 export const enum Output {
     Diffuse,
     Specular,
-    Emissive,
     Position,
     Normal,
     Depth,
@@ -33,6 +32,13 @@ export interface ColoredShadedLayout extends WorldSpaceLayout {
     DiffuseColor: WebGLUniformLocation;
     SpecularColor: WebGLUniformLocation;
     EmissiveColor: WebGLUniformLocation;
+}
+
+export interface ColoredDeferredLayout extends WorldSpaceLayout {
+    Self: WebGLUniformLocation;
+    DiffuseColor: WebGLUniformLocation;
+    SpecularColor: WebGLUniformLocation;
+    Emission: WebGLUniformLocation;
 }
 
 export interface TexturedUnlitLayout extends WorldSpaceLayout {

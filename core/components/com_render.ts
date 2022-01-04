@@ -16,6 +16,7 @@ import {
 import {Entity} from "../../common/world.js";
 import {
     Attribute,
+    ColoredDeferredLayout,
     ColoredShadedLayout,
     ColoredUnlitLayout,
     ForwardShadingLayout,
@@ -102,7 +103,7 @@ export function render_colored_shaded(
     mesh: Mesh,
     diffuse_color: Vec4,
     shininess: number = 0,
-    emissive: number = 0,
+    emission: number = 0,
     specular_rgb: Vec3 = [1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
@@ -116,7 +117,7 @@ export function render_colored_shaded(
             FrontFace: front_face,
             DiffuseColor: diffuse_color,
             SpecularColor: [...specular_rgb, shininess],
-            EmissiveColor: [diffuse_color[0], diffuse_color[1], diffuse_color[2], emissive],
+            EmissiveColor: [diffuse_color[0], diffuse_color[1], diffuse_color[2], emission],
         };
     };
 }
@@ -137,7 +138,7 @@ export function render_colored_shadows(
     mesh: Mesh,
     diffuse_color: Vec4,
     shininess: number = 0,
-    emissive: number = 0,
+    emission: number = 0,
     specular_rgb: Vec3 = [1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
@@ -151,28 +152,28 @@ export function render_colored_shadows(
             FrontFace: front_face,
             DiffuseColor: diffuse_color,
             SpecularColor: [...specular_rgb, shininess],
-            EmissiveColor: [diffuse_color[0], diffuse_color[1], diffuse_color[2], emissive],
+            EmissiveColor: [diffuse_color[0], diffuse_color[1], diffuse_color[2], emission],
         };
     };
 }
 
 export interface RenderColoredDeferred {
     readonly Kind: RenderKind.ColoredDeferred;
-    Material: Material<ColoredShadedLayout>;
+    Material: Material<ColoredDeferredLayout>;
     Mesh: Mesh;
     Phase: RenderPhase.Opaque;
     FrontFace: GLenum;
     DiffuseColor: Vec3;
     SpecularColor: Vec4;
-    EmissiveColor: Vec4;
+    Emission: number;
 }
 
 export function render_colored_deferred(
-    material: Material<ColoredShadedLayout>,
+    material: Material<ColoredDeferredLayout>,
     mesh: Mesh,
     diffuse_color: Vec3,
     shininess: number = 0,
-    emissive: number = 0,
+    emission: number = 0,
     specular_rgb: Vec3 = [1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
@@ -186,7 +187,7 @@ export function render_colored_deferred(
             FrontFace: front_face,
             DiffuseColor: diffuse_color,
             SpecularColor: [...specular_rgb, shininess],
-            EmissiveColor: [diffuse_color[0], diffuse_color[1], diffuse_color[2], emissive],
+            Emission: emission,
         };
     };
 }
@@ -238,7 +239,7 @@ export function render_textured_shaded(
     mesh: Mesh,
     texture: WebGLTexture,
     shininess: number = 0,
-    emissive: number = 0,
+    emission: number = 0,
     diffuse_color: Vec4 = [1, 1, 1, 1],
     specular_rgb: Vec3 = [1, 1, 1],
     front_face: GLenum = GL_CW
@@ -254,7 +255,7 @@ export function render_textured_shaded(
             Texture: texture,
             DiffuseColor: diffuse_color,
             SpecularColor: [...specular_rgb, shininess],
-            EmissiveColor: [diffuse_color[0], diffuse_color[1], diffuse_color[2], emissive],
+            EmissiveColor: [diffuse_color[0], diffuse_color[1], diffuse_color[2], emission],
         };
     };
 }

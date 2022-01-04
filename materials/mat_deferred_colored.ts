@@ -1,6 +1,6 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
-import {Attribute, ColoredShadedLayout, Output} from "./layout.js";
+import {Attribute, ColoredDeferredLayout, Output} from "./layout.js";
 
 let vertex = `#version 300 es\n
 
@@ -26,14 +26,13 @@ let fragment = `#version 300 es\n
 
     uniform vec3 diffuse_color;
     uniform vec4 specular_color;
-    uniform vec4 emissive_color;
+    uniform float emission;
 
     in vec4 vert_position;
     in vec4 vert_normal;
 
     layout(location=${Output.Diffuse}) out vec4 frag_diffuse;
     layout(location=${Output.Specular}) out vec4 frag_specular;
-    layout(location=${Output.Emissive}) out vec4 frag_emissive;
     layout(location=${Output.Position}) out vec4 frag_position;
     layout(location=${Output.Normal}) out vec4 frag_normal;
 
@@ -43,15 +42,14 @@ let fragment = `#version 300 es\n
     }
 
     void main() {
-        frag_diffuse = vec4(linear(diffuse_color), 1.0);
+        frag_diffuse = vec4(linear(diffuse_color), emission);
         frag_specular = vec4(linear(specular_color.rgb), specular_color.a);
-        frag_emissive = vec4(linear(emissive_color.rgb) * emissive_color.a, 1.0);
         frag_position = vert_position;
         frag_normal = vec4(normalize(vert_normal.xyz), 1.0);
     }
 `;
 
-export function mat_deferred_colored(gl: WebGL2RenderingContext): Material<ColoredShadedLayout> {
+export function mat_deferred_colored(gl: WebGL2RenderingContext): Material<ColoredDeferredLayout> {
     let program = link(gl, vertex, fragment);
     return {
         Mode: GL_TRIANGLES,
@@ -63,7 +61,7 @@ export function mat_deferred_colored(gl: WebGL2RenderingContext): Material<Color
 
             DiffuseColor: gl.getUniformLocation(program, "diffuse_color")!,
             SpecularColor: gl.getUniformLocation(program, "specular_color")!,
-            EmissiveColor: gl.getUniformLocation(program, "emissive_color")!,
+            Emission: gl.getUniformLocation(program, "emission")!,
         },
     };
 }

@@ -76,7 +76,6 @@ let fragment = `#version 300 es\n
 
         vec4 current_diffuse = texture(diffuse_map, uv);
         vec4 current_specular = texture(specular_map, uv);
-        vec4 current_emissive = texture(emissive_map, uv);
         vec4 current_position = texture(position_map, uv);
 
         vec3 view_dir = eye - current_position.xyz;
@@ -86,7 +85,8 @@ let fragment = `#version 300 es\n
         float light_intensity = light_details.a;
 
         if (light_kind.x == ${LightKind.Ambient}) {
-            frag_color = vec4(current_emissive.rgb + current_diffuse.rgb * light_rgb * light_intensity, 1.0);
+            vec3 emissive_rgb = current_diffuse.rgb * current_diffuse.a;
+            frag_color = vec4(emissive_rgb + current_diffuse.rgb * light_rgb * light_intensity, 1.0);
             return;
         }
 

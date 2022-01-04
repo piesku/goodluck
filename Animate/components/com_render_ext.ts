@@ -30,7 +30,7 @@ export function render_colored_shaded(
     mesh: Mesh,
     diffuse_color: Vec4,
     shininess: number = 0,
-    emissive: number = 0,
+    emission: number = 0,
     specular_rgb: Vec3 = [1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
@@ -43,7 +43,7 @@ export function render_colored_shaded(
             FrontFace: front_face,
             DiffuseColor: diffuse_color,
             SpecularColor: [...specular_rgb, shininess],
-            EmissiveColor: [diffuse_color[0], diffuse_color[1], diffuse_color[2], emissive],
+            EmissiveColor: [diffuse_color[0], diffuse_color[1], diffuse_color[2], emission],
         };
     };
 }
@@ -63,7 +63,7 @@ export function render_colored_skinned(
     mesh: Mesh,
     diffuse_color: Vec4,
     shininess: number = 0,
-    emissive: number = 0,
+    emission: number = 0,
     specular_rgb: Vec3 = [1, 1, 1],
     front_face: GLenum = GL_CW
 ) {
@@ -76,7 +76,7 @@ export function render_colored_skinned(
             FrontFace: front_face,
             DiffuseColor: diffuse_color,
             SpecularColor: [...specular_rgb, shininess],
-            EmissiveColor: [diffuse_color[0], diffuse_color[1], diffuse_color[2], emissive],
+            EmissiveColor: [diffuse_color[0], diffuse_color[1], diffuse_color[2], emission],
         };
     };
 }

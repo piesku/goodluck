@@ -41,7 +41,7 @@ export function sys_render_postprocess(game: Game, delta: number) {
                 game.Gl.viewport(0, 0, target.Width, target.Height);
                 game.Gl.uniform2f(material.Locations.Viewport, target.Width, target.Height);
                 if (i == 0) {
-                    game.Gl.bindTexture(GL_TEXTURE_2D, game.Targets.Gbuffer.EmissiveTexture);
+                    game.Gl.bindTexture(GL_TEXTURE_2D, game.Targets.Shaded.ColorTexture);
                 } else {
                     game.Gl.bindTexture(GL_TEXTURE_2D, game.Targets.Pong.ColorTexture);
                 }
