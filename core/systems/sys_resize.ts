@@ -5,6 +5,7 @@
 import {
     resize_deferred_target,
     resize_forward_target,
+    resize_hdr_target,
     TargetKind,
 } from "../../common/framebuffer.js";
 import {
@@ -38,6 +39,9 @@ export function sys_resize(game: Game, delta: number) {
                             game.ViewportWidth,
                             game.ViewportHeight
                         );
+                        break;
+                    case TargetKind.Hdr:
+                        resize_hdr_target(game.Gl, target, game.ViewportWidth, game.ViewportHeight);
                         break;
                     case TargetKind.Deferred:
                         resize_deferred_target(

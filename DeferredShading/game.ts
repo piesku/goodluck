@@ -2,9 +2,11 @@ import {
     create_deferred_target,
     create_depth_target,
     create_forward_target,
+    create_hdr_target,
     DeferredTarget,
     DepthTarget,
     ForwardTarget,
+    HdrTarget,
     RenderTarget,
 } from "../common/framebuffer.js";
 import {Game3D} from "../common/game.js";
@@ -49,9 +51,9 @@ export class Game extends Game3D {
     override Targets: {
         [name: string]: RenderTarget;
         Gbuffer: DeferredTarget;
-        Shaded: ForwardTarget;
-        Ping: ForwardTarget;
-        Pong: ForwardTarget;
+        Shaded: HdrTarget;
+        Ping: HdrTarget;
+        Pong: HdrTarget;
         Toned: ForwardTarget;
         Sun: DepthTarget;
         Back: DepthTarget;
@@ -67,9 +69,9 @@ export class Game extends Game3D {
         this.Targets = {
             // Create the main framebuffer for deferred rendering.
             Gbuffer: create_deferred_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
-            Shaded: create_forward_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
-            Ping: create_forward_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
-            Pong: create_forward_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
+            Shaded: create_hdr_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
+            Ping: create_hdr_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
+            Pong: create_hdr_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
             Toned: create_forward_target(this.Gl, this.ViewportWidth, this.ViewportHeight, true),
             Sun: create_depth_target(this.Gl, 1024, 1024),
             Back: create_depth_target(this.Gl, 256, 256),
