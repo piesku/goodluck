@@ -1,4 +1,4 @@
-import {Vec4} from "./math.js";
+import {Vec3, Vec4} from "./math.js";
 
 export function vec4_to_hex(color: Vec4) {
     let r = (color[0] * 255).toString(16).padStart(2, "0");
@@ -80,4 +80,25 @@ export function hsva_to_vec4(h: number, s: number, v: number, a: number): Vec4 {
         default:
             return [v, p, q, a];
     }
+}
+
+/**
+ * Expand (decode) an sRGB color to linear color space, similar to how the
+ * monitor does it when displaying pixels to the user.
+ * @param color The sRGB color to expand to linear color space.
+ */
+export function gamma_expand(color: Vec3): Vec3 {
+    let gamma = 2.2;
+    return [color[0] ** gamma, color[1] ** gamma, color[2] ** gamma];
+}
+
+/**
+ * Compress (encode) a linear RGB color to sRGB. Usually this is done after
+ * lighting computations and just before sending the color to the canvas, to
+ * compensate for the loss in brightness caused by the monitor.
+ * @param color The linear color to compress to sRGB.
+ */
+export function gamma_compress(color: Vec3): Vec3 {
+    let gamma = 1 / 2.2;
+    return [color[0] ** gamma, color[1] ** gamma, color[2] ** gamma];
 }

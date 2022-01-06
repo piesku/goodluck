@@ -1,6 +1,7 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
 import {Attribute, PostprocessLayout} from "./layout.js";
+import {INCLUDE_GAMMA_COMPRESS} from "./light.js";
 
 let vertex = `#version 300 es\n
     layout(location=${Attribute.Position}) in vec4 attr_position;
@@ -74,13 +75,10 @@ let fragment = `#version 300 es\n
         return rgbB;
     }
 
-    // Convert linear to sRGB (approximation).
-    vec3 gamma(vec3 c) {
-        return pow(c, vec3(1.0 / 2.2));
-    }
+    ${INCLUDE_GAMMA_COMPRESS}
 
     void main() {
-        frag_color = vec4(gamma(fxaa(sampler, gl_FragCoord.xy)), 1.0);
+        frag_color = vec4(GAMMA_COMPRESS(fxaa(sampler, gl_FragCoord.xy)), 1.0);
     }
 `;
 
