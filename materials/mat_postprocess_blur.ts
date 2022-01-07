@@ -24,22 +24,23 @@ let fragment = `#version 300 es\n
     in vec2 vert_texcoord;
     out vec4 frag_color;
 
-    const float weight[5] = float[] (0.227027, 0.1945946, 0.1216216, 0.054054, 0.016216);
+    // https://www.rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling/
+    const float offset[3] = float[](0.0, 1.3846153846, 3.2307692308);
+    const float weight[3] = float[](0.2270270270, 0.3162162162, 0.0702702703);
 
     void main() {
-        vec2 offset = 1.0 / viewport;
+        vec2 unit = 1.0 / viewport;
         vec3 result = texture(sampler, vert_texcoord).rgb * weight[0];
 
         if (horizontal) {
-            for (int i = 1; i < 5; i++) {
-                result += texture(sampler, vert_texcoord + vec2(offset.x * float(i), 0.0)).rgb * weight[i];
-                result += texture(sampler, vert_texcoord - vec2(offset.x * float(i), 0.0)).rgb * weight[i];
+            for (int i = 1; i < 3; i++) {
+                result += texture(sampler, vert_texcoord + vec2(unit.x * offset[i], 0.0)).rgb * weight[i];
+                result += texture(sampler, vert_texcoord - vec2(unit.x * offset[i], 0.0)).rgb * weight[i];
             }
-        }
-        else {
-            for (int i = 1; i < 5; i++) {
-                result += texture(sampler, vert_texcoord + vec2(0.0, offset.y * float(i))).rgb * weight[i];
-                result += texture(sampler, vert_texcoord - vec2(0.0, offset.y * float(i))).rgb * weight[i];
+        } else {
+            for (int i = 1; i < 3; i++) {
+                result += texture(sampler, vert_texcoord + vec2(0.0, unit.y * offset[i])).rgb * weight[i];
+                result += texture(sampler, vert_texcoord - vec2(0.0, unit.y * offset[i])).rgb * weight[i];
             }
         }
 
