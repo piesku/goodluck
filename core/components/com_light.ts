@@ -88,3 +88,12 @@ export function light_point(color: Vec3 = [1, 1, 1], intensity: number = 1) {
         };
     };
 }
+
+/**
+ * Compute the radius of a light given the minimum desired intensity.
+ * @param base_intensity The base intensity of the light.
+ * @param min_intensity The minimum desired intensity at the computed radius.
+ */
+export function light_radius(base_intensity: number, min_intensity: number = 0.005) {
+    return (base_intensity / min_intensity) ** 0.5;
+}

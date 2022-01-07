@@ -1,3 +1,4 @@
+import {light_radius} from "../../Animate/components/com_light.js";
 import {instantiate} from "../../common/game.js";
 import {from_euler} from "../../common/quat.js";
 import {element, float} from "../../common/random.js";
@@ -56,8 +57,8 @@ export function scene_stage(game: Game) {
     ]);
 
     for (let i = 0; i < 100; i++) {
-        let range = 0.1;
-        let dia = (range / 0.005) ** 0.5 * 2.5;
+        let intensity = 0.1;
+        let diameter = light_radius(intensity) * 2.5;
         instantiate(game, [
             transform([float(-9, 9), 1, float(-9, 9)], undefined, [1, 1, 1]),
             render_colored_deferred(
@@ -68,8 +69,8 @@ export function scene_stage(game: Game) {
                 float(0.1, 0.7)
             ),
             children([
-                transform(undefined, undefined, [dia, dia, dia]),
-                (game.LightCount++, light_point([1, 1, 1], range)),
+                transform(undefined, undefined, [diameter, diameter, diameter]),
+                (game.LightCount++, light_point([1, 1, 1], intensity)),
             ]),
         ]);
     }

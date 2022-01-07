@@ -1,6 +1,7 @@
 import {Vec3} from "../../common/math.js";
 import {from_euler} from "../../common/quat.js";
 import {element, float} from "../../common/random.js";
+import {light_radius} from "../../core/components/com_light.js";
 import {children} from "../components/com_children.js";
 import {control_always} from "../components/com_control_always.js";
 import {light_point} from "../components/com_light.js";
@@ -19,9 +20,8 @@ const colors: Array<Vec3> = [
 ];
 
 export function blueprint_bulb(game: Game) {
-    let range = float(0.1, 0.5);
-    // TODO: Auto-compute from the light's range.
-    let diameter = (range / 0.005) ** 0.5 * 2;
+    let intensity = float(0.1, 0.5);
+    let diameter = light_radius(intensity) * 2;
     let light_color = element(colors);
     let bulb_color: Vec3 = [...light_color];
     return [
@@ -32,7 +32,7 @@ export function blueprint_bulb(game: Game) {
             children(
                 [
                     transform(undefined, undefined, [diameter, diameter, diameter]),
-                    light_point(light_color, range),
+                    light_point(light_color, intensity),
                 ],
                 [
                     transform(undefined, undefined, [0.2, 0.2, 0.2]),
