@@ -3,14 +3,7 @@
  */
 
 import {TargetKind} from "../../common/framebuffer.js";
-import {
-    GL_ARRAY_BUFFER,
-    GL_ELEMENT_ARRAY_BUFFER,
-    GL_FLOAT,
-    GL_FRAMEBUFFER,
-    GL_UNSIGNED_SHORT,
-} from "../../common/webgl.js";
-import {Attribute} from "../../materials/layout.js";
+import {GL_FRAMEBUFFER, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
 import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {RenderKind} from "../components/com_render.js";
 import {Game} from "../game.js";
@@ -61,13 +54,9 @@ function render_all(game: Game, eye: CameraEye) {
             // Pass uniforms at locations specific to MaterialDepth.
             game.Gl.uniformMatrix4fv(material.Locations.World, false, transform.World);
 
-            // Pass attributes at locations specific to MaterialDepth.
-            game.Gl.bindBuffer(GL_ARRAY_BUFFER, render.Mesh.VertexBuffer);
-            game.Gl.enableVertexAttribArray(Attribute.Position);
-            game.Gl.vertexAttribPointer(Attribute.Position, 3, GL_FLOAT, false, 0, 0);
-
-            game.Gl.bindBuffer(GL_ELEMENT_ARRAY_BUFFER, render.Mesh.IndexBuffer);
+            game.Gl.bindVertexArray(render.Mesh.Vao);
             game.Gl.drawElements(material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
+            game.Gl.bindVertexArray(null);
         }
     }
 }
