@@ -87,7 +87,7 @@ export function hsva_to_vec4(h: number, s: number, v: number, a: number): Vec4 {
  * monitor does it when displaying pixels to the user.
  * @param color The sRGB color to expand to linear color space.
  */
-export function gamma_expand(color: Vec3): Vec3 {
+export function gamma_decode(color: Vec3): Vec3 {
     let gamma = 2.2;
     return [color[0] ** gamma, color[1] ** gamma, color[2] ** gamma];
 }
@@ -98,7 +98,7 @@ export function gamma_expand(color: Vec3): Vec3 {
  * compensate for the loss in brightness caused by the monitor.
  * @param color The linear color to compress to sRGB.
  */
-export function gamma_compress(color: Vec3): Vec3 {
+export function gamma_encode(color: Vec3): Vec3 {
     let gamma = 1 / 2.2;
     return [color[0] ** gamma, color[1] ** gamma, color[2] ** gamma];
 }

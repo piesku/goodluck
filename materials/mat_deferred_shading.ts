@@ -1,7 +1,7 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
 import {Attribute, DeferredShadingLayout, ShadowMappingLayout, WorldSpaceLayout} from "./layout.js";
-import {INCLUDE_GAMMA_EXPAND, LightKind} from "./light.js";
+import {INCLUDE_GAMMA_CORRECTION, LightKind} from "./light.js";
 
 let vertex = `#version 300 es\n
     uniform mat4 pv;
@@ -66,7 +66,7 @@ let fragment = `#version 300 es\n
         return texture(shadow_map, shadow_space_ndc) * (1.0 - min) + min;
     }
 
-    ${INCLUDE_GAMMA_EXPAND}
+    ${INCLUDE_GAMMA_CORRECTION}
 
     void main() {
         vec2 uv = vert_position.xy / vert_position.w * 0.5 + 0.5;
@@ -83,7 +83,7 @@ let fragment = `#version 300 es\n
         vec3 view_dir = eye - current_position.xyz;
         vec3 view_normal = normalize(view_dir);
 
-        vec3 light_rgb = GAMMA_EXPAND(light_details.rgb);
+        vec3 light_rgb = GAMMA_DECODE(light_details.rgb);
         float light_intensity = light_details.a;
 
         if (light_kind.x == ${LightKind.Ambient}) {

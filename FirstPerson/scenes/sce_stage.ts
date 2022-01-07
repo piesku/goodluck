@@ -19,7 +19,7 @@ export function scene_stage(game: Game) {
     // Light.
     instantiate(game, [
         transform(undefined, from_euler([0, 0, 0, 1], -30, 30, 0)),
-        light_directional([1, 1, 1], 1),
+        light_directional([1, 1, 1], 0.5),
     ]);
 
     // Ground.

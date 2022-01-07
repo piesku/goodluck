@@ -1,7 +1,7 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
 import {Attribute, ForwardShadingLayout, MappedShadedLayout} from "./layout.js";
-import {LightKind, MAX_FORWARD_LIGHTS} from "./light.js";
+import {INCLUDE_GAMMA_CORRECTION, LightKind, MAX_FORWARD_LIGHTS} from "./light.js";
 
 let vertex = `#version 300 es\n
     uniform mat4 pv;
@@ -48,6 +48,8 @@ let fragment = `#version 300 es\n
 
     out vec4 frag_color;
 
+    ${INCLUDE_GAMMA_CORRECTION}
+
     void main() {
         vec3 tex_normal = texture(normal_map, vert_texcoord).rgb;
         vec3 frag_normal = vert_tbn * normalize(tex_normal * 2.0 - 1.0);
@@ -56,8 +58,8 @@ let fragment = `#version 300 es\n
         vec3 view_dir = eye - vert_position.xyz;
         vec3 view_normal = normalize(view_dir);
 
-        vec4 tex_color = texture(diffuse_map, vert_texcoord);
-        vec3 unlit_rgb = tex_color.rgb * diffuse_color.rgb;
+        vec4 tex_color = GAMMA_DECODE(texture(diffuse_map, vert_texcoord));
+        vec3 unlit_rgb = tex_color.rgb * GAMMA_DECODE(diffuse_color.rgb);
 
         // Ambient light.
         vec3 light_acc = unlit_rgb * 0.1;
@@ -68,7 +70,7 @@ let fragment = `#version 300 es\n
                 break;
             }
 
-            vec3 light_color = light_details[i].rgb;
+            vec3 light_rgb = GAMMA_DECODE(light_details[i].rgb);
             float light_intensity = light_details[i].a;
 
             vec3 light_normal;
@@ -85,7 +87,7 @@ let fragment = `#version 300 es\n
             float diffuse_factor = dot(world_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
-                light_acc += unlit_rgb * diffuse_factor * light_color * light_intensity;
+                light_acc += unlit_rgb * diffuse_factor * light_rgb * light_intensity;
 
                 // Blinn-Phong reflection model.
                 float roughness = texture(roughness_map, vert_texcoord).x;
@@ -96,12 +98,12 @@ let fragment = `#version 300 es\n
                     float specular_factor = pow(specular_angle, shininess);
 
                     // Specular color.
-                    light_acc += unlit_rgb * specular_factor * light_color * light_intensity;
+                    light_acc += unlit_rgb * specular_factor * light_rgb * light_intensity;
                 }
             }
         }
 
-        frag_color = vec4(light_acc, diffuse_color.a);
+        frag_color = vec4(GAMMA_ENCODE(light_acc), diffuse_color.a);
     }
 `;
 

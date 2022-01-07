@@ -1,7 +1,7 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
 import {Attribute, PostprocessLayout} from "./layout.js";
-import {INCLUDE_GAMMA_COMPRESS} from "./light.js";
+import {INCLUDE_GAMMA_CORRECTION} from "./light.js";
 
 let vertex = `#version 300 es\n
     layout(location=${Attribute.Position}) in vec4 attr_position;
@@ -75,10 +75,10 @@ let fragment = `#version 300 es\n
         return rgbB;
     }
 
-    ${INCLUDE_GAMMA_COMPRESS}
+    ${INCLUDE_GAMMA_CORRECTION}
 
     void main() {
-        frag_color = vec4(GAMMA_COMPRESS(fxaa(sampler, gl_FragCoord.xy)), 1.0);
+        frag_color = vec4(GAMMA_ENCODE(fxaa(sampler, gl_FragCoord.xy)), 1.0);
     }
 `;
 

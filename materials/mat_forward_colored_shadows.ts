@@ -6,7 +6,7 @@ import {
     ForwardShadingLayout,
     ShadowMappingLayout,
 } from "./layout.js";
-import {LightKind, MAX_FORWARD_LIGHTS} from "./light.js";
+import {INCLUDE_GAMMA_CORRECTION, LightKind, MAX_FORWARD_LIGHTS} from "./light.js";
 
 let vertex = `#version 300 es\n
     uniform mat4 pv;
@@ -44,6 +44,8 @@ let fragment = `#version 300 es\n
 
     out vec4 frag_color;
 
+    ${INCLUDE_GAMMA_CORRECTION}
+
     // How much shadow to apply at world_pos, expressed as [min, 1]:
     // min = completely in shadow, 1 = completely not in shadow
     float shadow_factor(vec4 world_pos, float min) {
@@ -65,7 +67,7 @@ let fragment = `#version 300 es\n
         vec3 view_normal = normalize(view_dir);
 
         // Ambient light.
-        vec3 light_acc = diffuse_color.rgb * 0.1;
+        vec3 light_acc = GAMMA_DECODE(diffuse_color.rgb) * 0.1;
 
         for (int i = 0; i < ${MAX_FORWARD_LIGHTS}; i++) {
             int light_kind = int(light_positions[i].w);
@@ -73,7 +75,7 @@ let fragment = `#version 300 es\n
                 break;
             }
 
-            vec3 light_color = light_details[i].rgb;
+            vec3 light_rgb = GAMMA_DECODE(light_details[i].rgb);
             float light_intensity = light_details[i].a;
 
             vec3 light_normal;
@@ -90,7 +92,7 @@ let fragment = `#version 300 es\n
             float diffuse_factor = dot(world_normal, light_normal);
             if (diffuse_factor > 0.0) {
                 // Diffuse color.
-                light_acc += diffuse_color.rgb * diffuse_factor * light_color * light_intensity;
+                light_acc += GAMMA_DECODE(diffuse_color.rgb) * diffuse_factor * light_rgb * light_intensity;
 
                 if (specular_color.a > 0.0) {
                     // Phong reflection model.
@@ -104,14 +106,14 @@ let fragment = `#version 300 es\n
                     float specular_factor = pow(specular_angle, specular_color.a);
 
                     // Specular color.
-                    light_acc += specular_color.rgb * specular_factor * light_color * light_intensity;
+                    light_acc += GAMMA_DECODE(specular_color.rgb) * specular_factor * light_rgb * light_intensity;
                 }
             }
         }
 
-        vec3 emissive_rgb = emissive_color.rgb * emissive_color.a;
+        vec3 emissive_rgb = GAMMA_DECODE(emissive_color.rgb) * emissive_color.a;
         vec3 shaded_rgb = light_acc * shadow_factor(vert_position, 0.5);
-        frag_color= vec4(shaded_rgb + emissive_rgb, diffuse_color.a);
+        frag_color= vec4(GAMMA_ENCODE(shaded_rgb + emissive_rgb), diffuse_color.a);
     }
 `;
 

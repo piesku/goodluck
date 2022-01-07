@@ -1,7 +1,7 @@
 import {link, Material} from "../common/material.js";
 import {GL_TRIANGLES} from "../common/webgl.js";
 import {Attribute, ColoredDeferredLayout, Output} from "./layout.js";
-import {INCLUDE_GAMMA_EXPAND} from "./light.js";
+import {INCLUDE_GAMMA_CORRECTION} from "./light.js";
 
 let vertex = `#version 300 es\n
 
@@ -37,11 +37,11 @@ let fragment = `#version 300 es\n
     layout(location=${Output.Position}) out vec4 frag_position;
     layout(location=${Output.Normal}) out vec4 frag_normal;
 
-    ${INCLUDE_GAMMA_EXPAND}
+    ${INCLUDE_GAMMA_CORRECTION}
 
     void main() {
-        frag_diffuse = vec4(GAMMA_EXPAND(diffuse_color), emission);
-        frag_specular = vec4(GAMMA_EXPAND(specular_color.rgb), specular_color.a);
+        frag_diffuse = vec4(GAMMA_DECODE(diffuse_color), emission);
+        frag_specular = vec4(GAMMA_DECODE(specular_color.rgb), specular_color.a);
         frag_position = vert_position;
         frag_normal = vec4(normalize(vert_normal.xyz), 1.0);
     }

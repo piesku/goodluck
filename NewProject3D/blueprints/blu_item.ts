@@ -47,7 +47,7 @@ export function blueprint_item(game: Game) {
                 children([
                     transform([0, 1, 0]),
                     render_colored_shaded(game.MaterialColoredShaded, game.MeshCube, [5, 3, 0, 1]),
-                    children([transform([0, 2, 0]), light_point([1, 0.5, 0], 3)]),
+                    children([transform([0, 1, 0]), light_point([1, 0.5, 0], 3)]),
                 ]),
             ],
             [

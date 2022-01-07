@@ -74,17 +74,17 @@ export interface LightPoint {
  *
  * The position of the entity is used as the position of the light during shading.
  * @param color The color of the light.
- * @param range The range of the light, in world units. The range of N means
- * that at N units away, the light intensity (color multiplier) is 1. The
- * intensity is attenuated exponentially.
+ * @param intensity The intensity of the light at 1 world unit away. The
+ * intensity of 1 results in 100% of the object's color being visible, adjusted for
+ * the angle. The intensity is attenuated exponentially.
  */
-export function light_point(color: Vec3 = [1, 1, 1], range: number = 1) {
+export function light_point(color: Vec3 = [1, 1, 1], intensity: number = 1) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Light;
         game.World.Light[entity] = {
             Kind: LightKind.Point,
             Color: color,
-            Intensity: range,
+            Intensity: intensity,
         };
     };
 }
