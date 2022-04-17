@@ -51,6 +51,35 @@ export function create_texture_from(gl: WebGLRenderingContext, image: HTMLImageE
     return texture;
 }
 
+export interface Spritesheet {
+    Texture: WebGLTexture;
+    Width: number;
+    Height: number;
+}
+
+export function create_spritesheet_from(
+    gl: WebGLRenderingContext,
+    image: HTMLImageElement
+): Spritesheet {
+    let texture = gl.createTexture()!;
+    gl.bindTexture(GL_TEXTURE_2D, texture);
+    gl.texImage2D(GL_TEXTURE_2D, 0, GL_RGBA, GL_RGBA, GL_PIXEL_UNSIGNED_BYTE, image);
+
+    // No mipmapping nor LINEAR scaling to preserve the exact pixel data.
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    // GL_REPEAT is the default; make it explicit.
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    return {
+        Texture: texture,
+        Width: image.width,
+        Height: image.height,
+    };
+}
+
 export function resize_texture_rgba8(
     gl: WebGL2RenderingContext,
     texture: WebGLTexture,

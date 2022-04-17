@@ -4,6 +4,8 @@
         "module": "es2020",
         "strict": true,
         "noImplicitOverride": true,
+        "resolveJsonModule": true,
+        "moduleResolution": "node"
     },
     "exclude": [
         "node_modules"

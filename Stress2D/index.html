@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<meta charset="utf8" />
+<meta name="viewport" content="width=device-width, user-scalable=0" />
+<title>Stress2D</title>
+<link rel="stylesheet" href="../play/game.css" />
+<link rel="stylesheet" href="../play/debug.css" />
+<body>
+    <canvas id="scene"></canvas>
+    <canvas id="billboard"></canvas>
+    <main></main>
+
+    <div id="debug">
+        <div>update: <span id="update"></span></div>
+        <div>delta: <span id="delta"></span></div>
+        <div>fps: <span id="fps"></span></div>
+        <div><button onclick="toggle(this)">pause</button></div>
+    </div>
+    <script type="module">
+        import "./index.js";
+
+        window.toggle = function toggle(button) {
+            if (game.Running) {
+                game.Stop();
+                button.textContent = "resume";
+            } else {
+                game.Start();
+                button.textContent = "pause";
+            }
+        };
+    </script>
+</body>
