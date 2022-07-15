@@ -2,7 +2,6 @@
  * @module systems/sys_move
  */
 
-import {Quat} from "../../common/math.js";
 import {multiply, set as quat_set, slerp} from "../../common/quat.js";
 import {
     add,
@@ -17,7 +16,6 @@ import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform | Has.Move;
-const NO_ROTATION: Quat = [0, 0, 0, 1];
 
 export function sys_move(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
@@ -55,22 +53,24 @@ function update(game: Game, entity: Entity, delta: number) {
 
     // Rotations applied relative to the local space (parent's or world).
     if (move.LocalRotation[3] < 1) {
-        let t = Math.min(1, (move.RotationSpeed / Math.PI) * delta);
-        slerp(move.LocalRotation, NO_ROTATION, move.LocalRotation, t);
-
         // Pre-multiply.
-        multiply(transform.Rotation, move.LocalRotation, transform.Rotation);
+        multiply(move.LocalRotation, move.LocalRotation, transform.Rotation);
+
+        let t = Math.min(1, (move.RotationSpeed / Math.PI) * delta);
+        slerp(transform.Rotation, transform.Rotation, move.LocalRotation, t);
+
         game.World.Signature[entity] |= Has.Dirty;
         quat_set(move.LocalRotation, 0, 0, 0, 1);
     }
 
     // Rotations applied relative to the self space.
     if (move.SelfRotation[3] < 1) {
-        let t = Math.min(1, (move.RotationSpeed / Math.PI) * delta);
-        slerp(move.SelfRotation, NO_ROTATION, move.SelfRotation, t);
-
         // Post-multiply.
-        multiply(transform.Rotation, transform.Rotation, move.SelfRotation);
+        multiply(move.SelfRotation, transform.Rotation, move.SelfRotation);
+
+        let t = Math.min(1, (move.RotationSpeed / Math.PI) * delta);
+        slerp(transform.Rotation, transform.Rotation, move.SelfRotation, t);
+
         game.World.Signature[entity] |= Has.Dirty;
         quat_set(move.SelfRotation, 0, 0, 0, 1);
     }
