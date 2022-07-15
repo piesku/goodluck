@@ -3,8 +3,10 @@
  */
 
 import {get_rotation, get_translation} from "../../common/mat4.js";
+import {Quat, Vec3} from "../../common/math.js";
 import {slerp} from "../../common/quat.js";
 import {lerp} from "../../common/vec3.js";
+import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -13,25 +15,25 @@ const QUERY = Has.Transform | Has.Mimic;
 export function sys_mimic(game: Game, delta: number) {
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
         if ((game.World.Signature[ent] & QUERY) === QUERY) {
-            let follower_transform = game.World.Transform[ent];
-            let follower_mimic = game.World.Mimic[ent];
-            let target_transform = game.World.Transform[follower_mimic.Target];
-            let target_world_position = get_translation([0, 0, 0], target_transform.World);
-            let target_world_rotation = get_rotation([0, 0, 0, 0], target_transform.World);
-            // XXX Follower must be a top-level transform for this to work.
-            lerp(
-                follower_transform.Translation,
-                follower_transform.Translation,
-                target_world_position,
-                follower_mimic.Stiffness
-            );
-            slerp(
-                follower_transform.Rotation,
-                follower_transform.Rotation,
-                target_world_rotation,
-                follower_mimic.Stiffness
-            );
-            game.World.Signature[ent] |= Has.Dirty;
+            update(game, ent);
         }
     }
+}
+
+let target_position: Vec3 = [0, 0, 0];
+let target_rotation: Quat = [0, 0, 0, 1];
+
+function update(game: Game, entity: Entity) {
+    // Follower must be a top-level transform for this to work.
+    let transform = game.World.Transform[entity];
+    let mimic = game.World.Mimic[entity];
+    let target_transform = game.World.Transform[mimic.Target];
+
+    get_translation(target_position, target_transform.World);
+    get_rotation(target_rotation, target_transform.World);
+
+    lerp(transform.Translation, transform.Translation, target_position, mimic.Stiffness);
+    slerp(transform.Rotation, transform.Rotation, target_rotation, mimic.Stiffness);
+
+    game.World.Signature[entity] |= Has.Dirty;
 }

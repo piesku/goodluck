@@ -1,6 +1,12 @@
-import {DEG_TO_RAD, EPSILON, Quat, RAD_TO_DEG, Vec3} from "./math.js";
+import {DEG_TO_RAD, EPSILON, Quat, RAD_TO_DEG, Vec2, Vec3} from "./math.js";
 import {clamp} from "./number.js";
-import {cross, dot, length, normalize as normalize_vec3} from "./vec3.js";
+import {normalize as vec2_normalize} from "./vec2.js";
+import {
+    cross as vec3_cross,
+    dot as vec3_dot,
+    length as vec3_length,
+    normalize as vec3_normalize,
+} from "./vec3.js";
 
 export function set(out: Quat, x: number, y: number, z: number, w: number) {
     out[0] = x;
@@ -164,11 +170,11 @@ export const rotation_to = (function () {
     let yUnitVec3 = <Vec3>[0, 1, 0];
 
     return function (out: Quat, a: Vec3, b: Vec3) {
-        let d = dot(a, b);
+        let d = vec3_dot(a, b);
         if (d < -0.999999) {
-            cross(tmpvec3, xUnitVec3, a);
-            if (length(tmpvec3) < 0.000001) cross(tmpvec3, yUnitVec3, a);
-            normalize_vec3(tmpvec3, tmpvec3);
+            vec3_cross(tmpvec3, xUnitVec3, a);
+            if (vec3_length(tmpvec3) < 0.000001) vec3_cross(tmpvec3, yUnitVec3, a);
+            vec3_normalize(tmpvec3, tmpvec3);
             from_axis(out, tmpvec3, Math.PI);
             return out;
         } else if (d > 0.999999) {
@@ -178,7 +184,7 @@ export const rotation_to = (function () {
             out[3] = 1;
             return out;
         } else {
-            cross(tmpvec3, a, b);
+            vec3_cross(tmpvec3, a, b);
             out[0] = tmpvec3[0];
             out[1] = tmpvec3[1];
             out[2] = tmpvec3[2];
@@ -187,6 +193,26 @@ export const rotation_to = (function () {
         }
     };
 })();
+
+const AXIS_Y: Vec3 = [0, 1, 0];
+let target_xz: Vec2 = [0, 0];
+export function look_yaw(out: Quat, target: Vec3) {
+    target_xz[0] = target[0];
+    target_xz[1] = target[2];
+    vec2_normalize(target_xz, target_xz);
+    let y_angle = Math.PI / 2 - Math.atan2(target_xz[1], target_xz[0]);
+    return from_axis(out, AXIS_Y, y_angle);
+}
+
+const AXIS_X: Vec3 = [1, 0, 0];
+let target_yz: Vec2 = [0, 0];
+export function look_pitch(out: Quat, target: Vec3) {
+    target_yz[0] = target[1];
+    target_yz[1] = target[2];
+    vec2_normalize(target_yz, target_yz);
+    let x_angle = Math.PI / 2 - Math.atan2(target_yz[1], target_yz[0]);
+    return from_axis(out, AXIS_X, -x_angle);
+}
 
 export function lerp(out: Quat, a: Quat, b: Quat, t: number) {
     let ax = a[0];

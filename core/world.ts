@@ -8,8 +8,10 @@ import {ControlAlways} from "./components/com_control_always.js";
 import {ControlPlayer} from "./components/com_control_player.js";
 import {Draw} from "./components/com_draw.js";
 import {EmitParticles} from "./components/com_emit_particles.js";
+import {Follow} from "./components/com_follow.js";
 import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
+import {LookAt} from "./components/com_look_at.js";
 import {Mimic} from "./components/com_mimic.js";
 import {Move} from "./components/com_move.js";
 import {Named} from "./components/com_named.js";
@@ -35,8 +37,10 @@ const enum Component {
     Dirty,
     Draw,
     EmitParticles,
+    Follow,
     Lifespan,
     Light,
+    LookAt,
     Mimic,
     Move,
     Named,
@@ -64,8 +68,10 @@ export const enum Has {
     Dirty = 1 << Component.Dirty,
     Draw = 1 << Component.Draw,
     EmitParticles = 1 << Component.EmitParticles,
+    Follow = 1 << Component.Follow,
     Lifespan = 1 << Component.Lifespan,
     Light = 1 << Component.Light,
+    LookAt = 1 << Component.LookAt,
     Mimic = 1 << Component.Mimic,
     Move = 1 << Component.Move,
     Named = 1 << Component.Named,
@@ -90,8 +96,10 @@ export interface World extends WorldImpl {
     ControlPlayer: Array<ControlPlayer>;
     Draw: Array<Draw>;
     EmitParticles: Array<EmitParticles>;
+    Follow: Array<Follow>;
     Lifespan: Array<Lifespan>;
     Light: Array<Light>;
+    LookAt: Array<LookAt>;
     Mimic: Array<Mimic>;
     Move: Array<Move>;
     Named: Array<Named>;
