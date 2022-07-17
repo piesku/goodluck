@@ -11,7 +11,7 @@ import {light_directional} from "../components/com_light.js";
 import {move} from "../components/com_move.js";
 import {nav_agent} from "../components/com_nav_agent.js";
 import {pickable_aabb, pickable_mesh} from "../components/com_pickable.js";
-import {render_colored_shaded, render_colored_unlit} from "../components/com_render.js";
+import {render_colored_shaded} from "../components/com_render.js";
 import {selectable} from "../components/com_selectable.js";
 import {transform} from "../components/com_transform.js";
 import {Game, Layer} from "../game.js";
@@ -38,10 +38,6 @@ export function scene_stage(game: Game) {
         render_colored_shaded(game.MaterialColoredGouraud, game.MeshTerrain, [0.3, 0.3, 0.8, 1]),
         pickable_mesh(game.MeshTerrain),
         collide(false, Layer.None, Layer.None, [100, 1, 100]),
-        children([
-            transform([0, 0.1, 0]),
-            render_colored_unlit(game.MaterialColoredLine, game.MeshTerrain, [0.4, 0.4, 0.8, 1]),
-        ]),
     ]);
 
     console.time("nav_bake");
@@ -58,42 +54,22 @@ export function scene_stage(game: Game) {
         }
     }
 
-    // Cube 1.
+    // The player.
     instantiate(game, [
-        transform([26, 0, 39]),
+        transform([35, 0, 35]),
         control_player(false, 0, 0),
         disable(Has.ControlPlayer),
         pickable_aabb([1, 0, 0, 1]),
         selectable(),
         collide(true, Layer.None, Layer.None, [2, 2, 2]),
         // The origin node must match the entity's translation.
-        nav_agent(nav, 190),
+        nav_agent(nav, 96),
         move(10, 5),
         children(
             [transform(), draw_selection("#ff0"), disable(Has.Draw)],
             [
                 transform([0, 1, 0], undefined, [2, 2, 2]),
                 render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [1, 0, 0, 1]),
-            ]
-        ),
-    ]);
-
-    // Cube 2.
-    instantiate(game, [
-        transform([-18, 0, -23]),
-        control_player(false, 0, 0),
-        disable(Has.ControlPlayer),
-        pickable_aabb([0, 1, 0, 1]),
-        selectable(),
-        collide(true, Layer.None, Layer.None, [2, 2, 2]),
-        // The origin node must match the entity's translation.
-        nav_agent(nav, 89),
-        move(15, 10),
-        children(
-            [transform([0, 1, 0]), draw_selection("#ff0"), disable(Has.Draw)],
-            [
-                transform([0, 1, 0], undefined, [2, 2, 2]),
-                render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [0, 1, 0, 1]),
             ]
         ),
     ]);

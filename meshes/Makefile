@@ -1,12 +1,8 @@
-OBJS := $(wildcard *.obj)
-MESHES := $(OBJS:%.obj=%.ts)
+TARGETS := $(wildcard *.ts)
 
-all: $(MESHES)
+all: $(TARGETS)
 
-%.json: %.obj
+%.ts: ../assets/%.gltf
 	@echo "$< → $@"
-	@docker run --rm -v $(CURDIR):/data piesku/assimp2json:latest /data/$< > $@
-
-%.ts: %.json
-	@echo "$< → $@"
-	@cat $< | node json2mesh.cjs $* > $@
+	@cat $< | node gltf2mesh.cjs $* > $@
+	@npx prettier --loglevel=silent --write $@

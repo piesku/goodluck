@@ -1,37 +1,21 @@
 # Assets
 
-This directory contains asset files which require further preprocessing to be
-usable in GoodLuck.
+The Blender files in this directory are first exported to GLTF,
+and then converted to TypeScript source files in `meshes/`
+using `make -C meshes`.
 
-## *.blend
+Even though GLTF files contain data buffers that are ready to be uploaded to the GPU,
+the mesh files reconstruct the arrays of numbers from these buffers.
+This is done for two reasons:
 
-The Blender files must be exported to OBJ files via Blender's built-in
-exporter. The following are recommended:
+- Some logic requires the actual vertex data anyways, e.g.
+path finding on a navigation mesh,
+tangent and bitangent computation for normal mapping, etc.
 
-| Include                |     |
-| -----------------------|-----|
-| Selection Only         | Off |
-| Objects as OBJ Objects | Off |
-| Objects as OBJ Groups  | Off |
-| Material Groups        | Off |
-| Animation              | Off |
+- In testing, it turned out that DEFLATE can compress these source files better than the equivalent GLTF files.
 
-| Transform |            |
-| ----------|-----------:|
-| Scale     |       1.00 |
-| Path Mode |       Auto |
-| Forward   | -Z Forward |
-| Up        |       Y Up |
+## Hints for GLTF Export
 
-| Geometry              |             |
-| ----------------------|------------:|
-| Apply Modifiers       |          On |
-| Smooth Groups         |         Off |
-| Bitflag Smooth Groups |         Off |
-| Write Normals         | Your Choice |
-| Include UVs           | Your Choice |
-| Write Materials       |         Off |
-| Triangulate Faces     |          On |
-| Curves as NURBS       |         Off |
-| Polygroups            |         Off |
-| Keep Vertex Order     |         Off |
+- Export only one mesh at a time.
+- +Y is up.
+- Apply modifiers.
