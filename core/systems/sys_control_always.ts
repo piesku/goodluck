@@ -5,6 +5,7 @@
 import {multiply} from "../../common/quat.js";
 import {add} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
+import {query_down} from "../components/com_children.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -28,5 +29,12 @@ function update(game: Game, entity: Entity) {
 
     if (control.Rotation) {
         multiply(move.LocalRotation, move.LocalRotation, control.Rotation);
+    }
+
+    if (control.Animation) {
+        for (let ent of query_down(game.World, entity, Has.Animate)) {
+            let animate = game.World.Animate[ent];
+            animate.Trigger = control.Animation;
+        }
     }
 }
