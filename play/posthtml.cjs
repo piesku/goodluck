@@ -18,6 +18,7 @@ let processor = posthtml([
         mergeStyles: true,
         minifyCss: true,
         minifyJs: false,
+        minifySvg: false,
         removeComments: "all",
         removeEmptyAttributes: true,
         removeRedundantAttributes: false,

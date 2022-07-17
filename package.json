@@ -23,13 +23,14 @@
         "ts:watch": "tsc --noEmit --watch -p ."
     },
     "devDependencies": {
+        "cssnano": "5.1",
         "esbuild": "0.14",
-        "htmlnano": "1.1",
-        "posthtml-cli": "0.10",
+        "htmlnano": "2.0",
+        "posthtml": "0.16",
         "posthtml-inline-assets": "3.1",
-        "prettier": "2.5",
-        "terser": "5.10",
-        "typescript": "4.5"
+        "prettier": "2.7",
+        "terser": "5.14",
+        "typescript": "4.7"
     },
     "engines": {
         "node": ">=16"
