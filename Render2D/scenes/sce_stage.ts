@@ -1,7 +1,7 @@
 import {hsva_to_vec4} from "../../common/color.js";
 import {instantiate} from "../../common/game.js";
 import {orthographic} from "../../common/projection.js";
-import {float} from "../../common/random.js";
+import {element, float} from "../../common/random.js";
 import {camera_canvas} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {control_player} from "../components/com_control_player.js";
@@ -34,7 +34,10 @@ export function scene_stage(game: Game) {
         instantiate(game, [
             transform2d([float(-10, 10), float(9, 10)], 0),
             control_player(),
-            render2d("potato_raw.png", hsva_to_vec4(float(0.1, 0.2), 0.5, 1, 1)),
+            render2d(
+                element(["potato_raw.png", "carrot_raw.png"]),
+                hsva_to_vec4(float(0.1, 0.2), 0.5, 1, 1)
+            ),
             // Place entities from closest to the farthest away to avoid overdraw.
             order(1 - i / dynamic_count),
             rigid_body2d(RigidKind.Dynamic, float(0.98, 0.99)),

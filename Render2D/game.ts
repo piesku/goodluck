@@ -6,7 +6,6 @@ import {
     GL_FLOAT,
     GL_STATIC_DRAW,
     GL_STREAM_DRAW,
-    GL_UNPACK_FLIP_Y_WEBGL,
 } from "../common/webgl.js";
 import {mat_instanced2d} from "./materials/mat_instanced2d.js";
 import {sys_camera2d} from "./systems/sys_camera2d.js";
@@ -38,7 +37,6 @@ export class Game extends Game3D {
     constructor() {
         super();
 
-        this.Gl.pixelStorei(GL_UNPACK_FLIP_Y_WEBGL, true);
         this.Gl.enable(GL_BLEND);
 
         let material = this.MaterialInstanced;
@@ -136,10 +134,11 @@ export class Game extends Game3D {
     }
 }
 
+// Texcoords are +Y=down for compatibility with spritesheet map coordinates.
 // prettier-ignore
 let vertex_arr = Float32Array.from([
-    -0.5, -0.5, 0,    0, 0,    // SW
-    0.5, -0.5, 0,     1, 0,    // SE
-    -0.5, 0.5, 0,     0, 1,    // NW
-    0.5, 0.5, 0,      1, 1     // NE
+    -0.5, -0.5, 0,    0, 1,    // SW
+    0.5, -0.5, 0,     1, 1,    // SE
+    -0.5, 0.5, 0,     0, 0,    // NW
+    0.5, 0.5, 0,      1, 0     // NE
 ]);
