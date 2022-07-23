@@ -12,6 +12,7 @@ import {mat_instanced2d} from "./materials/mat_instanced2d.js";
 import {sys_camera2d} from "./systems/sys_camera2d.js";
 import {sys_control_always2d} from "./systems/sys_control_always2d.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
+import {sys_draw2d} from "./systems/sys_draw2d.js";
 import {sys_move2d} from "./systems/sys_move2d.js";
 import {sys_physics2d_bounds} from "./systems/sys_physics2d_bounds.js";
 import {sys_physics2d_integrate} from "./systems/sys_physics2d_integrate.js";
@@ -20,7 +21,7 @@ import {sys_resize2d} from "./systems/sys_resize2d.js";
 import {sys_transform2d} from "./systems/sys_transform2d.js";
 import {World} from "./world.js";
 
-export const WORLD_CAPACITY = 100_001;
+export const WORLD_CAPACITY = 100_005;
 export const FLOATS_PER_INSTANCE = 16;
 export const BYTES_PER_INSTANCE = FLOATS_PER_INSTANCE * 4;
 export const UNIT_PX = 32;
@@ -130,6 +131,7 @@ export class Game extends Game3D {
         sys_control_player(this, delta);
         sys_control_always2d(this, delta);
         sys_move2d(this, delta);
+        sys_draw2d(this, delta);
         sys_render2d(this, delta);
     }
 }

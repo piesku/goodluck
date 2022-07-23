@@ -3,7 +3,9 @@ import {instantiate} from "../../common/game.js";
 import {orthographic} from "../../common/projection.js";
 import {float} from "../../common/random.js";
 import {camera_canvas} from "../components/com_camera.js";
+import {children} from "../components/com_children.js";
 import {control_player} from "../components/com_control_player.js";
+import {draw_arc, draw_rect} from "../components/com_draw.js";
 import {order, render2d} from "../components/com_render2d.js";
 import {RigidKind, rigid_body2d} from "../components/com_rigid_body2d.js";
 import {transform2d} from "../components/com_transform2d.js";
@@ -15,7 +17,16 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
 
     // Camera.
-    instantiate(game, [transform2d([0, 0]), camera_canvas(orthographic(5, 1, 3))]);
+    instantiate(game, [transform2d([0, 0]), camera_canvas(orthographic(5, 1, 3), [0, 0, 0, 0])]);
+
+    {
+        // Background.
+        instantiate(game, [transform2d([-5, 3], 0), draw_arc(7, "#D4FCA9")]);
+        instantiate(game, [
+            transform2d([0, 0], -30, [4, 1]),
+            children([transform2d([0, 0], 30), draw_rect(5, 5, "#FFAA79")]),
+        ]);
+    }
 
     let dynamic_count = 100_000;
 
