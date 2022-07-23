@@ -37,16 +37,17 @@ export function sys_render2d(game: Game, delta: number) {
 
 function render_all(game: Game, eye: CameraEye) {
     let material = game.MaterialInstanced;
+    let sheet = game.Spritesheets["spritesheet.png"];
 
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
 
     game.Gl.activeTexture(GL_TEXTURE0);
-    game.Gl.bindTexture(GL_TEXTURE_2D, game.Textures["checker1.png"]);
-    game.Gl.uniform1i(material.Locations.SpriteSheet, 0);
+    game.Gl.bindTexture(GL_TEXTURE_2D, sheet.Texture);
+    game.Gl.uniform1i(material.Locations.SheetTexture, 0);
+    game.Gl.uniform2f(material.Locations.SheetSize, sheet.Width, sheet.Height);
 
     game.Gl.bindBuffer(GL_ARRAY_BUFFER, game.InstanceBuffer);
-    // Creating a new buffer each frame seems to be ~25% faster than bufferSubData.
     game.Gl.bufferData(GL_ARRAY_BUFFER, game.InstanceData, GL_STREAM_DRAW);
 
     game.Gl.drawArraysInstanced(material.Mode, 0, 4, game.World.Signature.length);

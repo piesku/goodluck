@@ -10,7 +10,7 @@ import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform2D | Has.RigidBody2D;
-const GRAVITY = 0;
+const GRAVITY = -9.81;
 
 export function sys_physics2d_integrate(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {

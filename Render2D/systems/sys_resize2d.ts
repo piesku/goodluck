@@ -4,7 +4,7 @@
 
 import {ProjectionKind, resize_ortho_keeping_unit_size} from "../../common/projection.js";
 import {CameraKind} from "../components/com_camera.js";
-import {Game} from "../game.js";
+import {Game, UNIT_PX} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Camera;
@@ -30,7 +30,7 @@ export function sys_resize2d(game: Game, delta: number) {
                         camera.Projection,
                         aspect,
                         game.ViewportHeight,
-                        16
+                        UNIT_PX
                     );
                     break;
                 }
