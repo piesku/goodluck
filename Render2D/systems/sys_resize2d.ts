@@ -2,7 +2,7 @@
  * @module systems/sys_resize2d
  */
 
-import {ProjectionKind, resize_ortho_keeping_unit_size} from "../../common/projection.js";
+import {ProjectionKind, resize_ortho_constant} from "../../common/projection.js";
 import {CameraKind} from "../components/com_camera.js";
 import {Game, UNIT_PX} from "../game.js";
 import {Has} from "../world.js";
@@ -25,13 +25,9 @@ export function sys_resize2d(game: Game, delta: number) {
                     camera.Kind == CameraKind.Canvas &&
                     camera.Projection.Kind == ProjectionKind.Orthographic
                 ) {
+                    camera.Projection.Radius = game.ViewportHeight / UNIT_PX / 2;
                     let aspect = game.ViewportWidth / game.ViewportHeight;
-                    resize_ortho_keeping_unit_size(
-                        camera.Projection,
-                        aspect,
-                        game.ViewportHeight,
-                        UNIT_PX
-                    );
+                    resize_ortho_constant(camera.Projection, aspect);
                     break;
                 }
             }

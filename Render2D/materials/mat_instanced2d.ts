@@ -34,7 +34,6 @@ let vertex = `#version 300 es\n
             gl_Position.z = 2.0;
         }
 
-
         // attr_texcoords are +Y=down for compatibility with spritesheet frame coordinates.
         vert_texcoord = (attr_sprite.xy + attr_sprite.zw * attr_texcoord) / sheet_size;
         vert_color = attr_color;
