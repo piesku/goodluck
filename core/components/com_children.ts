@@ -62,5 +62,9 @@ export function destroy_all(world: World, entity: Entity) {
         }
     }
 
-    world.DestroyEntity(entity);
+    if (world.Signature[entity] === Has.None) {
+        // This entity has already been deleted.
+    } else {
+        world.DestroyEntity(entity);
+    }
 }
