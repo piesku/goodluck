@@ -1,4 +1,4 @@
-import {input_clicked} from "../../common/input.js";
+import {pointer_clicked} from "../../common/input.js";
 import {Entity} from "../../common/world.js";
 import {SelectedState} from "../components/com_selectable.js";
 import {Game} from "../game.js";
@@ -31,7 +31,7 @@ function update(game: Game, entity: Entity) {
         selectable.Selected = SelectedState.Currently;
     }
 
-    if (input_clicked(game, 0, 0)) {
+    if (pointer_clicked(game, 0, 0)) {
         // When the user left-clicks…
 
         if (game.Picked?.Entity === entity) {
@@ -45,7 +45,7 @@ function update(game: Game, entity: Entity) {
             selectable.Selected = SelectedState.None;
             game.World.Signature[entity] &= ~Has.ControlPlayer;
         }
-    } else if (input_clicked(game, 2, 1)) {
+    } else if (pointer_clicked(game, 2, 1)) {
         // When the user right-clicks…
 
         if (selectable.Selected > SelectedState.None) {

@@ -1,4 +1,4 @@
-import {input_pointer_position} from "../../common/input.js";
+import {pointer_viewport} from "../../common/input.js";
 import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {ray_intersect_aabb, ray_intersect_mesh} from "../../common/raycast.js";
@@ -33,7 +33,7 @@ function update(game: Game, entity: Entity, pickables: Array<Collide>) {
         throw new Error("XR not implemented");
     }
 
-    let pointer_position = input_pointer_position(game);
+    let pointer_position = pointer_viewport(game);
     if (pointer_position === null) {
         // No mouse, no touch.
         return;

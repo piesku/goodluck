@@ -40,7 +40,7 @@ export function scene_stage(game: Game) {
             ),
             // Place entities from closest to the farthest away to avoid overdraw.
             order(1 - i / dynamic_count),
-            rigid_body2d(RigidKind.Dynamic, float(0.98, 0.99)),
+            rigid_body2d(RigidKind.Dynamic, float(0.01, 0.02)),
         ]);
     }
 }

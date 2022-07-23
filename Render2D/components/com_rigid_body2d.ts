@@ -19,6 +19,7 @@ export interface RigidBody2D {
     Friction: number;
     Acceleration: Vec2;
     VelocityIntegrated: Vec2;
+    VelocityAngular: number;
 }
 
 export function rigid_body2d(kind: RigidKind, friction: number) {
@@ -29,6 +30,7 @@ export function rigid_body2d(kind: RigidKind, friction: number) {
             Friction: friction,
             Acceleration: [0, 0],
             VelocityIntegrated: [0, 0],
+            VelocityAngular: 0,
         };
     };
 }

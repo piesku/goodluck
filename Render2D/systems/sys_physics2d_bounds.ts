@@ -1,5 +1,5 @@
 /**
- * @module systems/sys_physics_integrate
+ * @module systems/sys_physics2d_bounds
  */
 
 import {float} from "../../common/random.js";
@@ -29,16 +29,19 @@ function update(game: Game, entity: Entity, delta: number) {
         if (transform.Translation[1] < bottom) {
             transform.Translation[1] = bottom;
             rigid_body.VelocityIntegrated[1] *= float(-3, -1);
+            rigid_body.VelocityAngular = float(-180, 180);
         }
 
         if (transform.Translation[0] < left) {
             transform.Translation[0] = left;
             rigid_body.VelocityIntegrated[0] *= -1;
+            rigid_body.VelocityAngular = float(-180, 180);
         }
 
         if (transform.Translation[0] > -left) {
             transform.Translation[0] = -left;
             rigid_body.VelocityIntegrated[0] *= -1;
+            rigid_body.VelocityAngular = float(-180, 180);
         }
     }
 }

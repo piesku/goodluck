@@ -1,5 +1,5 @@
 /**
- * @module systems/sys_physics_integrate
+ * @module systems/sys_physics2d_integrate
  */
 
 import {Vec2} from "../../common/math.js";
@@ -10,7 +10,8 @@ import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Transform2D | Has.RigidBody2D;
-const GRAVITY = -9.81;
+const GRAVITY = -9.8;
+const MOBILITY = 0.999;
 
 export function sys_physics2d_integrate(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
@@ -20,21 +21,29 @@ export function sys_physics2d_integrate(game: Game, delta: number) {
     }
 }
 
+let velocity_delta: Vec2 = [0, 0];
+
 function update(game: Game, entity: Entity, delta: number) {
     let transform = game.World.Transform2D[entity];
     let rigid_body = game.World.RigidBody2D[entity];
 
     if (rigid_body.Kind === RigidKind.Dynamic) {
-        // Compute change to velocity, including the gravity.
+        // Compute change to velocity due to the gravity.
+        rigid_body.VelocityIntegrated[1] += GRAVITY * delta;
+        // Compute change to velocity due to external forces.
         scale(rigid_body.Acceleration, rigid_body.Acceleration, delta);
         add(rigid_body.VelocityIntegrated, rigid_body.VelocityIntegrated, rigid_body.Acceleration);
-        scale(rigid_body.VelocityIntegrated, rigid_body.VelocityIntegrated, rigid_body.Friction);
-        rigid_body.VelocityIntegrated[1] += GRAVITY * delta;
+        // Apply friction.
+        scale(
+            rigid_body.VelocityIntegrated,
+            rigid_body.VelocityIntegrated,
+            MOBILITY - rigid_body.Friction
+        );
 
         // Apply velocity to position.
-        let vel_delta: Vec2 = [0, 0];
-        scale(vel_delta, rigid_body.VelocityIntegrated, delta);
-        add(transform.Translation, transform.Translation, vel_delta);
+        scale(velocity_delta, rigid_body.VelocityIntegrated, delta);
+        add(transform.Translation, transform.Translation, velocity_delta);
+        transform.Rotation += rigid_body.VelocityAngular * delta;
         game.World.Signature[entity] |= Has.Dirty;
 
         // Reset force/acceleration.
