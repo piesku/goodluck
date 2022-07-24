@@ -1,5 +1,6 @@
 import {WorldImpl} from "../common/world.js";
 import {Animate} from "./components/com_animate.js";
+import {AnimateSprite} from "./components/com_animate_sprite.js";
 import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
 import {Children} from "./components/com_children.js";
@@ -31,6 +32,7 @@ import {Trigger} from "./components/com_trigger.js";
 
 const enum Component {
     Animate,
+    AnimateSprite,
     AudioListener,
     AudioSource,
     Camera,
@@ -66,6 +68,7 @@ const enum Component {
 export const enum Has {
     None = 0,
     Animate = 1 << Component.Animate,
+    AnimateSprite = 1 << Component.AnimateSprite,
     AudioListener = 1 << Component.AudioListener,
     AudioSource = 1 << Component.AudioSource,
     Camera = 1 << Component.Camera,
@@ -100,6 +103,7 @@ export const enum Has {
 
 export interface World extends WorldImpl {
     Animate: Array<Animate>;
+    AnimateSprite: Array<AnimateSprite>;
     AudioSource: Array<AudioSource>;
     Camera: Array<Camera>;
     Children: Array<Children>;
