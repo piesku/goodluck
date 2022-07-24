@@ -1,1 +1,1 @@
-../../core2d/systems/sys_move2d.ts
+../../core/systems/sys_move2d.ts

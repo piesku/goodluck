@@ -1,1 +1,1 @@
-../../core2d/components/com_rigid_body2d.ts
+../../core/components/com_rigid_body2d.ts

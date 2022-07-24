@@ -1,1 +1,1 @@
-../../core2d/systems/sys_render2d.ts
+../../core/systems/sys_render2d.ts

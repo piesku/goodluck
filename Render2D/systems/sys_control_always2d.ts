@@ -1,1 +1,1 @@
-../../core2d/systems/sys_control_always2d.ts
+../../core/systems/sys_control_always2d.ts

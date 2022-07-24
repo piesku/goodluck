@@ -1,1 +1,1 @@
-../../core2d/systems/sys_transform2d.ts
+../../core/systems/sys_transform2d.ts

@@ -1,1 +1,1 @@
-../../core2d/components/com_render2d.ts
+../../core/components/com_render2d.ts

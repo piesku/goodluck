@@ -1,1 +1,1 @@
-../../core2d/systems/sys_resize2d.ts
+../../core/systems/sys_resize2d.ts

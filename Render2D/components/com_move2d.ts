@@ -1,1 +1,1 @@
-../../core2d/components/com_move2d.ts
+../../core/components/com_move2d.ts

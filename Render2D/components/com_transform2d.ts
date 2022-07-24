@@ -1,1 +1,1 @@
-../../core2d/components/com_transform2d.ts
+../../core/components/com_transform2d.ts

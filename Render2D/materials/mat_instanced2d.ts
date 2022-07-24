@@ -1,6 +1,6 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLE_STRIP} from "../../common/webgl.js";
-import {Instanced2DLayout} from "./layout_instanced2d.js";
+import {Instanced2DLayout} from "../../materials/layout2d.js";
 
 let vertex = `#version 300 es\n
     uniform mat4 pv;
