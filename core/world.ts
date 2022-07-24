@@ -22,7 +22,6 @@ import {Spawn} from "./components/com_spawn.js";
 import {Task} from "./components/com_task.js";
 import {Toggle} from "./components/com_toggle.js";
 import {Transform} from "./components/com_transform.js";
-import {Transform2D} from "./components/com_transform2d.js";
 import {Trigger} from "./components/com_trigger.js";
 
 const enum Component {
@@ -51,7 +50,6 @@ const enum Component {
     Task,
     Toggle,
     Transform,
-    Transform2D,
     Trigger,
 }
 
@@ -82,7 +80,6 @@ export const enum Has {
     Task = 1 << Component.Task,
     Toggle = 1 << Component.Toggle,
     Transform = 1 << Component.Transform,
-    Transform2D = 1 << Component.Transform2D,
     Trigger = 1 << Component.Trigger,
 }
 
@@ -110,6 +107,5 @@ export interface World extends WorldImpl {
     Task: Array<Task>;
     Toggle: Array<Toggle>;
     Transform: Array<Transform>;
-    Transform2D: Array<Transform2D>;
     Trigger: Array<Trigger>;
 }

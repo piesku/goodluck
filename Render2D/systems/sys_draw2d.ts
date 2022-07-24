@@ -1,1 +1,1 @@
-../../core/systems/sys_draw2d.ts
+../../core2d/systems/sys_draw2d.ts

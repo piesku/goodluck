@@ -21,7 +21,7 @@ while read dir; do
     rm -rf "$dir"
 done < <(ls -1d */ | grep "^[A-Z]")
 
-echo "  Replacing symlinks by the originals from core"
+echo "  Replacing symlinks by the originals from core/core2d"
 while read link; do
     echo "    symlink found: $link"
     real=$(readlink "$link")
@@ -32,8 +32,9 @@ while read link; do
     echo "      replaced by: $real"
 done < <(find $EXAMPLE -type l)
 
-echo "  Removing core"
+echo "  Removing core, core2d"
 rm -rf core
+rm -rf core2d
 
 echo "  Renaming $EXAMPLE to src"
 rm -rf src
