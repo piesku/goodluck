@@ -13,6 +13,8 @@ const QUERY = Has.Transform2D | Has.Camera;
 const CAMERA_Z = 2;
 
 export function sys_camera2d(game: Game, delta: number) {
+    game.Cameras = [];
+
     for (let i = 0; i < game.World.Signature.length; i++) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
             let camera = game.World.Camera[i];

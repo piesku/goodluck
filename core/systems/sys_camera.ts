@@ -11,6 +11,8 @@ import {Has} from "../world.js";
 const QUERY = Has.Transform | Has.Camera;
 
 export function sys_camera(game: Game, delta: number) {
+    game.Cameras = [];
+
     for (let i = 0; i < game.World.Signature.length; i++) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
             let camera = game.World.Camera[i];
