@@ -20,7 +20,7 @@ import {sys_resize2d} from "./systems/sys_resize2d.js";
 import {sys_transform2d} from "./systems/sys_transform2d.js";
 import {World} from "./world.js";
 
-export const WORLD_CAPACITY = 100_005;
+export const WORLD_CAPACITY = 65_536; // = 4MB of InstanceData.
 export const FLOATS_PER_INSTANCE = 16;
 export const BYTES_PER_INSTANCE = FLOATS_PER_INSTANCE * 4;
 export const UNIT_PX = 32;

@@ -28,7 +28,7 @@ export function scene_stage(game: Game) {
         ]);
     }
 
-    let dynamic_count = 100_000;
+    let dynamic_count = WORLD_CAPACITY - 4;
 
     for (let i = 0; i < dynamic_count; i++) {
         instantiate(game, [
