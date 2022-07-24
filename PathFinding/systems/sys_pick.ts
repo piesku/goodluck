@@ -1,4 +1,4 @@
-import {pointer_viewport} from "../../common/input.js";
+import {pointer_ndc_far} from "../../common/input.js";
 import {get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {ray_intersect_aabb, ray_intersect_mesh} from "../../common/raycast.js";
@@ -26,6 +26,9 @@ export function sys_pick(game: Game, delta: number) {
     }
 }
 
+// The target is the point on the far plane where the mouse click happens.
+let pointer_target: Vec3 = [0, 0, 0];
+
 function update(game: Game, entity: Entity, pickables: Array<Collide>) {
     let transform = game.World.Transform[entity];
     let camera = game.World.Camera[entity];
@@ -33,31 +36,24 @@ function update(game: Game, entity: Entity, pickables: Array<Collide>) {
         throw new Error("XR not implemented");
     }
 
-    let pointer_position = pointer_viewport(game);
-    if (pointer_position === null) {
+    if (!pointer_ndc_far(pointer_target, game)) {
         // No mouse, no touch.
         return;
     }
 
-    let x = (pointer_position[0] / game.ViewportWidth) * 2 - 1;
-    // In the browser, +Y is down. Invert it, so that in NDC it's up.
-    let y = -(pointer_position[1] / game.ViewportHeight) * 2 + 1;
-
     // The ray's origin is at the camera's world position.
-    let origin = get_translation([0, 0, 0], transform.World);
+    let pointer_origin = get_translation([0, 0, 0], transform.World);
 
-    // The target is the point on the far plane where the mouse click happens;
-    // first transform it to the eye space, and then to the world space.
-    let target: Vec3 = [x, y, -1];
-    transform_position(target, target, camera.Projection.Inverse);
-    transform_position(target, target, transform.World);
+    // Transform pointer position to the eye space, and then to the world space.
+    transform_position(pointer_target, pointer_target, camera.Projection.Inverse);
+    transform_position(pointer_target, pointer_target, transform.World);
 
     // The ray's direction.
     let direction: Vec3 = [0, 0, 0];
-    subtract(direction, target, origin);
+    subtract(direction, pointer_target, pointer_origin);
     normalize(direction, direction);
 
-    let hit = ray_intersect_aabb(pickables, origin, direction);
+    let hit = ray_intersect_aabb(pickables, pointer_origin, direction);
     if (hit) {
         let collider = hit.Collider as Collide;
         let entity = collider.EntityId;
@@ -80,10 +76,10 @@ function update(game: Game, entity: Entity, pickables: Array<Collide>) {
                 let transform = game.World.Transform[entity];
                 // Transform the ray to the pickable's space, which is cheaper than
                 // transforming all vertices of the pickable to the world space.
-                transform_position(origin_self, origin, transform.Self);
+                transform_position(origin_self, pointer_origin, transform.Self);
                 transform_direction(direction_self, direction, transform.Self);
 
-                let hit = ray_intersect_mesh(pickable.Mesh, origin, direction);
+                let hit = ray_intersect_mesh(pickable.Mesh, pointer_origin, direction);
                 if (hit) {
                     // Transform the intersection point back to the world space.
                     transform_position(hit.Point, hit.Point, transform.World);

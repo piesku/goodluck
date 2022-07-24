@@ -1,12 +1,12 @@
 import {GameImpl} from "./game";
-import {Vec2} from "./math";
+import {Vec2, Vec3} from "./math";
 
 export function input_pointer_lock(game: GameImpl) {
     game.Ui.addEventListener("click", () => game.Ui.requestPointerLock());
 }
 
 export function pointer_down(game: GameImpl, mouse_button: number, touch_id = mouse_button) {
-    return game.InputState["Mouse" + mouse_button] || game.InputState["Touch" + touch_id];
+    return game.InputState["Mouse" + mouse_button] > 0 || game.InputState["Touch" + touch_id] > 0;
 }
 
 export function pointer_clicked(game: GameImpl, mouse_button: number, touch_id = mouse_button) {
@@ -17,15 +17,33 @@ export function pointer_clicked(game: GameImpl, mouse_button: number, touch_id =
     );
 }
 
-export function pointer_viewport(game: GameImpl): Vec2 | null {
+export function pointer_viewport(out: Vec2 | Vec3, game: GameImpl): boolean {
     if (game.InputState["Touch0"] === 1 || game.InputDelta["Touch0"] === -1) {
-        return [game.InputState["Touch0X"], game.InputState["Touch0Y"]];
+        out[0] = game.InputState["Touch0X"];
+        out[1] = game.InputState["Touch0Y"];
+        return true;
     }
 
     if (game.InputDistance["Mouse"] > 0) {
-        return [game.InputState["MouseX"], game.InputState["MouseY"]];
+        out[0] = game.InputState["MouseX"];
+        out[1] = game.InputState["MouseY"];
+        return true;
     }
 
     // No mouse, no touch.
-    return null;
+    return false;
+}
+
+export function pointer_ndc_far(out: Vec3, game: GameImpl): boolean {
+    if (pointer_viewport(out, game)) {
+        out[0] = (out[0] / game.ViewportWidth) * 2 - 1;
+        // In the browser, +Y is down. Invert it, so that in NDC it's up.
+        out[1] = -(out[1] / game.ViewportHeight) * 2 + 1;
+        // Assume the pointer is on the far plane.
+        out[2] = 1;
+        return true;
+    }
+
+    // No mouse, no touch.
+    return false;
 }
