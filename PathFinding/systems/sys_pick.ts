@@ -26,8 +26,10 @@ export function sys_pick(game: Game, delta: number) {
     }
 }
 
+let pointer_origin: Vec3 = [0, 0, 0];
 // The target is the point on the far plane where the mouse click happens.
 let pointer_target: Vec3 = [0, 0, 0];
+let pointer_direction: Vec3 = [0, 0, 0];
 
 function update(game: Game, entity: Entity, pickables: Array<Collide>) {
     let transform = game.World.Transform[entity];
@@ -42,18 +44,17 @@ function update(game: Game, entity: Entity, pickables: Array<Collide>) {
     }
 
     // The ray's origin is at the camera's world position.
-    let pointer_origin = get_translation([0, 0, 0], transform.World);
+    get_translation(pointer_origin, transform.World);
 
     // Transform pointer position to the eye space, and then to the world space.
     transform_position(pointer_target, pointer_target, camera.Projection.Inverse);
     transform_position(pointer_target, pointer_target, transform.World);
 
     // The ray's direction.
-    let direction: Vec3 = [0, 0, 0];
-    subtract(direction, pointer_target, pointer_origin);
-    normalize(direction, direction);
+    subtract(pointer_direction, pointer_target, pointer_origin);
+    normalize(pointer_direction, pointer_direction);
 
-    let hit = ray_intersect_aabb(pickables, pointer_origin, direction);
+    let hit = ray_intersect_aabb(pickables, pointer_origin, pointer_direction);
     if (hit) {
         let collider = hit.Collider as Collide;
         let entity = collider.EntityId;
@@ -77,9 +78,9 @@ function update(game: Game, entity: Entity, pickables: Array<Collide>) {
                 // Transform the ray to the pickable's space, which is cheaper than
                 // transforming all vertices of the pickable to the world space.
                 transform_position(origin_self, pointer_origin, transform.Self);
-                transform_direction(direction_self, direction, transform.Self);
+                transform_direction(direction_self, pointer_direction, transform.Self);
 
-                let hit = ray_intersect_mesh(pickable.Mesh, pointer_origin, direction);
+                let hit = ray_intersect_mesh(pickable.Mesh, origin_self, direction_self);
                 if (hit) {
                     // Transform the intersection point back to the world space.
                     transform_position(hit.Point, hit.Point, transform.World);
