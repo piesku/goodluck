@@ -8,7 +8,7 @@ import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.Local2D | Has.Transform2D | Has.Move2D | Has.Dirty;
+const QUERY = Has.LocalTransform2D | Has.NodeTransform2D | Has.Move2D | Has.Dirty;
 
 export function sys_move2d(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
@@ -21,8 +21,8 @@ export function sys_move2d(game: Game, delta: number) {
 const direction: Vec2 = [0, 0];
 
 function update(game: Game, entity: Entity, delta: number) {
-    let local = game.World.Local2D[entity];
-    let transform = game.World.Transform2D[entity];
+    let local = game.World.LocalTransform2D[entity];
+    let node = game.World.NodeTransform2D[entity];
     let move = game.World.Move2D[entity];
 
     if (move.Direction[0] || move.Direction[1]) {
@@ -36,11 +36,11 @@ function update(game: Game, entity: Entity, delta: number) {
 
         // Transform the direction into the world or the parent space. This will
         // also scale the result by the scale encoded in the transform.
-        if (transform.Parent !== undefined) {
-            let parent = game.World.Transform2D[transform.Parent];
+        if (node.Parent !== undefined) {
+            let parent = game.World.NodeTransform2D[node.Parent];
             transform_direction(direction, direction, parent.Self);
         } else {
-            transform_direction(direction, direction, transform.World);
+            transform_direction(direction, direction, node.World);
         }
 
         // Normalize the direction to remove the transform's scale. The length

@@ -25,7 +25,7 @@ let vertex = `#version 300 es\n
         int signature = int(attr_translation.w);
         if ((signature & ${Has.Render2D}) == ${Has.Render2D}) {
             mat4 world;
-            if ((signature & ${Has.Transform2D}) == ${Has.Transform2D}) {
+            if ((signature & ${Has.NodeTransform2D}) == ${Has.NodeTransform2D}) {
                 world = mat4(
                     attr_rotation.xy, 0, 0,
                     attr_rotation.zw, 0, 0,

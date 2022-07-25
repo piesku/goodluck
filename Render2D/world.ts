@@ -7,7 +7,7 @@ import {Draw} from "./components/com_draw.js";
 import {Move2D} from "./components/com_move2d.js";
 import {Render2D} from "./components/com_render2d.js";
 import {RigidBody2D} from "./components/com_rigid_body2d.js";
-import {Local2D, Transform2D} from "./components/com_transform2d.js";
+import {LocalTransform2D, NodeTransform2D} from "./components/com_transform2d.js";
 
 const enum Component {
     Camera,
@@ -16,11 +16,11 @@ const enum Component {
     Children,
     Dirty,
     Draw,
-    Local2D,
+    LocalTransform2D,
     Move2D,
+    NodeTransform2D,
     Render2D,
     RigidBody2D,
-    Transform2D,
 }
 
 export const enum Has {
@@ -31,11 +31,11 @@ export const enum Has {
     Children = 1 << Component.Children,
     Dirty = 1 << Component.Dirty,
     Draw = 1 << Component.Draw,
-    Local2D = 1 << Component.Local2D,
+    LocalTransform2D = 1 << Component.LocalTransform2D,
     Move2D = 1 << Component.Move2D,
     Render2D = 1 << Component.Render2D,
     RigidBody2D = 1 << Component.RigidBody2D,
-    Transform2D = 1 << Component.Transform2D,
+    NodeTransform2D = 1 << Component.NodeTransform2D,
 }
 
 export class World extends WorldImpl {
@@ -44,9 +44,9 @@ export class World extends WorldImpl {
     ControlPlayer: Array<ControlPlayer> = [];
     Children: Array<Children> = [];
     Draw: Array<Draw> = [];
-    Local2D: Array<Local2D> = [];
+    LocalTransform2D: Array<LocalTransform2D> = [];
     Move2D: Array<Move2D> = [];
+    NodeTransform2D: Array<NodeTransform2D> = [];
     Render2D: Array<Render2D> = [];
     RigidBody2D: Array<RigidBody2D> = [];
-    Transform2D: Array<Transform2D> = [];
 }

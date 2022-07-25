@@ -8,7 +8,7 @@ import {Entity} from "../../common/world.js";
 import {FLOATS_PER_INSTANCE, Game} from "../game.js";
 import {Has, World} from "../world.js";
 
-export interface Local2D {
+export interface LocalTransform2D {
     /** Local translation relative to the parent. */
     Translation: Vec2;
     /** Local rotation relative to the parent. */
@@ -17,10 +17,14 @@ export interface Local2D {
     Scale: Vec2;
 }
 
-export function local2d(translation: Vec2 = [0, 0], rotation: Deg = 0, scale: Vec2 = [1, 1]) {
+export function local_transform2d(
+    translation: Vec2 = [0, 0],
+    rotation: Deg = 0,
+    scale: Vec2 = [1, 1]
+) {
     return (game: Game, entity: Entity) => {
-        game.World.Signature[entity] |= Has.Local2D | Has.Dirty;
-        game.World.Local2D[entity] = {
+        game.World.Signature[entity] |= Has.LocalTransform2D | Has.Dirty;
+        game.World.LocalTransform2D[entity] = {
             Translation: translation,
             Rotation: rotation,
             Scale: scale,
@@ -28,7 +32,7 @@ export function local2d(translation: Vec2 = [0, 0], rotation: Deg = 0, scale: Ve
     };
 }
 
-export interface Transform2D {
+export interface NodeTransform2D {
     /** Absolute matrix relative to the world. */
     World: Mat2D;
     /** World to self matrix. */
@@ -38,10 +42,10 @@ export interface Transform2D {
     Gyroscope: boolean;
 }
 
-export function transform2d(is_gyroscope = false) {
+export function node_transform2d(is_gyroscope = false) {
     return (game: Game, entity: Entity) => {
-        game.World.Signature[entity] |= Has.Transform2D | Has.Dirty;
-        game.World.Transform2D[entity] = {
+        game.World.Signature[entity] |= Has.NodeTransform2D | Has.Dirty;
+        game.World.NodeTransform2D[entity] = {
             World: game.InstanceData.subarray(
                 entity * FLOATS_PER_INSTANCE,
                 entity * FLOATS_PER_INSTANCE + 6
@@ -64,7 +68,7 @@ export function* query_up(world: World, entity: Entity, mask: Has): IterableIter
         yield entity;
     }
 
-    let parent = world.Transform2D[entity].Parent;
+    let parent = world.NodeTransform2D[entity].Parent;
     if (parent !== undefined) {
         yield* query_up(world, parent, mask);
     }

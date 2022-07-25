@@ -8,7 +8,7 @@ import {RigidKind} from "../components/com_rigid_body2d.js";
 import {Game, UNIT_PX} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.Local2D | Has.RigidBody2D;
+const QUERY = Has.LocalTransform2D | Has.RigidBody2D;
 
 export function sys_physics2d_bounds(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
@@ -19,7 +19,7 @@ export function sys_physics2d_bounds(game: Game, delta: number) {
 }
 
 function update(game: Game, entity: Entity, delta: number) {
-    let local = game.World.Local2D[entity];
+    let local = game.World.LocalTransform2D[entity];
     let rigid_body = game.World.RigidBody2D[entity];
 
     if (rigid_body.Kind === RigidKind.Dynamic) {

@@ -8,13 +8,13 @@ import {Entity} from "../../common/world.js";
 import {FLOATS_PER_INSTANCE, Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY_DIRTY = Has.Local2D | Has.Dirty;
-const QUERY_TRANSFORM = Has.Local2D | Has.Transform2D;
+const QUERY_DIRTY = Has.LocalTransform2D | Has.Dirty;
+const QUERY_NODE = Has.LocalTransform2D | Has.NodeTransform2D;
 
 export function sys_transform2d(game: Game, delta: number) {
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
         if ((game.World.Signature[ent] & QUERY_DIRTY) === QUERY_DIRTY) {
-            if (game.World.Signature[ent] & Has.Transform2D) {
+            if (game.World.Signature[ent] & Has.NodeTransform2D) {
                 update_transform(game, ent);
             } else {
                 update_instance(game, ent);
@@ -26,7 +26,7 @@ export function sys_transform2d(game: Game, delta: number) {
 function update_instance(game: Game, entity: Entity) {
     game.World.Signature[entity] &= ~Has.Dirty;
 
-    let local = game.World.Local2D[entity];
+    let local = game.World.LocalTransform2D[entity];
     let instance_offset = entity * FLOATS_PER_INSTANCE;
     game.InstanceData[instance_offset + 0] = local.Scale[0];
     game.InstanceData[instance_offset + 1] = local.Scale[1];
@@ -40,8 +40,8 @@ const world_position: Vec2 = [0, 0];
 function update_transform(game: Game, entity: Entity, parent?: Entity) {
     game.World.Signature[entity] &= ~Has.Dirty;
 
-    let local = game.World.Local2D[entity];
-    let transform = game.World.Transform2D[entity];
+    let local = game.World.LocalTransform2D[entity];
+    let transform = game.World.NodeTransform2D[entity];
 
     compose(transform.World, local.Translation, local.Rotation * DEG_TO_RAD, local.Scale);
 
@@ -50,7 +50,7 @@ function update_transform(game: Game, entity: Entity, parent?: Entity) {
     }
 
     if (transform.Parent !== undefined) {
-        let parent_transform = game.World.Transform2D[transform.Parent];
+        let parent_transform = game.World.NodeTransform2D[transform.Parent];
         multiply(transform.World, parent_transform.World, transform.World);
 
         if (transform.Gyroscope) {
@@ -65,7 +65,7 @@ function update_transform(game: Game, entity: Entity, parent?: Entity) {
         let children = game.World.Children[entity];
         for (let i = 0; i < children.Children.length; i++) {
             let child = children.Children[i];
-            if ((game.World.Signature[child] & QUERY_TRANSFORM) === QUERY_TRANSFORM) {
+            if ((game.World.Signature[child] & QUERY_NODE) === QUERY_NODE) {
                 update_transform(game, child, entity);
             }
         }

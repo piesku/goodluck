@@ -33,10 +33,10 @@ export function sys_control_player(game: Game, delta: number) {
         transform_position(pointer_3d_position, pointer_3d_position, camera.Projection.Inverse);
 
         // ...and then to the world space.
-        let camera_transform = game.World.Transform2D[camera_entity];
+        let camera_node = game.World.NodeTransform2D[camera_entity];
         pointer_2d_position[0] = pointer_3d_position[0];
         pointer_2d_position[1] = pointer_3d_position[1];
-        transform_point(pointer_2d_position, pointer_2d_position, camera_transform.World);
+        transform_point(pointer_2d_position, pointer_2d_position, camera_node.World);
 
         for (let i = 0; i < game.World.Signature.length; i++) {
             if ((game.World.Signature[i] & QUERY) === QUERY) {
@@ -47,7 +47,7 @@ export function sys_control_player(game: Game, delta: number) {
 }
 
 function update(game: Game, entity: Entity, pointer_position: Vec2) {
-    let local = game.World.Local2D[entity];
+    let local = game.World.LocalTransform2D[entity];
     let rigid_body = game.World.RigidBody2D[entity];
 
     let distance = distance_squared(pointer_position, local.Translation);
