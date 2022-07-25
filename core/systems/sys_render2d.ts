@@ -7,12 +7,15 @@ import {
 } from "../../common/webgl.js";
 import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {FLOATS_PER_INSTANCE, Game} from "../game.js";
+import {Has} from "../world.js";
 
 export function sys_render2d(game: Game, delta: number) {
-    for (let i = 0; i < game.World.Signature.length; i++) {
-        let offset = i * FLOATS_PER_INSTANCE + 7;
-        if (game.InstanceData[offset] !== game.World.Signature[i]) {
-            game.InstanceData[offset] = game.World.Signature[i];
+    for (let ent = 0; ent < game.World.Signature.length; ent++) {
+        // The shader queries the instance data for presence of the following components.
+        let signature = game.World.Signature[ent] & (Has.Render2D | Has.SpatialNode2D);
+        let offset = ent * FLOATS_PER_INSTANCE + 7;
+        if (game.InstanceData[offset] !== signature) {
+            game.InstanceData[offset] = signature;
         }
     }
 
