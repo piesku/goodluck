@@ -17,13 +17,13 @@ export function sys_transform2d(game: Game, delta: number) {
             if (game.World.Signature[ent] & Has.Transform2D) {
                 update_transform(game, ent);
             } else {
-                set_transform(game, ent);
+                update_instance(game, ent);
             }
         }
     }
 }
 
-function set_transform(game: Game, entity: Entity) {
+function update_instance(game: Game, entity: Entity) {
     game.World.Signature[entity] &= ~Has.Dirty;
 
     let local = game.World.Local2D[entity];
@@ -37,13 +37,17 @@ function set_transform(game: Game, entity: Entity) {
 
 const world_position: Vec2 = [0, 0];
 
-function update_transform(game: Game, entity: Entity) {
+function update_transform(game: Game, entity: Entity, parent?: Entity) {
     game.World.Signature[entity] &= ~Has.Dirty;
 
     let local = game.World.Local2D[entity];
     let transform = game.World.Transform2D[entity];
 
     compose(transform.World, local.Translation, local.Rotation * DEG_TO_RAD, local.Scale);
+
+    if (parent !== undefined) {
+        transform.Parent = parent;
+    }
 
     if (transform.Parent !== undefined) {
         let parent_transform = game.World.Transform2D[transform.Parent];
@@ -62,9 +66,7 @@ function update_transform(game: Game, entity: Entity) {
         for (let i = 0; i < children.Children.length; i++) {
             let child = children.Children[i];
             if ((game.World.Signature[child] & QUERY_TRANSFORM) === QUERY_TRANSFORM) {
-                let child_transform = game.World.Transform2D[child];
-                child_transform.Parent = entity;
-                update_transform(game, child);
+                update_transform(game, child, entity);
             }
         }
     }
