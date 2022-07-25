@@ -1,5 +1,5 @@
 import {instantiate} from "../../common/game.js";
-import {input_clicked} from "../../common/input.js";
+import {pointer_clicked} from "../../common/input.js";
 import {get_translation} from "../../common/mat4.js";
 import {path_find} from "../../common/pathfind.js";
 import {GL_ARRAY_BUFFER} from "../../common/webgl.js";
@@ -41,7 +41,7 @@ function update(game: Game, entity: Entity, pick: Picked) {
     if (node !== undefined && agent.NavMesh.Graph[node]) {
         // The cursor is over a pickable mesh and over a navigable triangle?
         goal = node;
-        if (input_clicked(game, 0, 0)) {
+        if (pointer_clicked(game, 0, 0)) {
             agent.Goal = {Node: goal, Position: pick.Point};
         }
     }

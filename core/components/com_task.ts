@@ -1,65 +1,114 @@
 /**
  * @module components/com_task
+ *
+ * The Task component is used to schedule tasks to be executed at a later time.
+ * A task can either complete when a predicate is met, or after a certain amount
+ * of time has passed, or as soon as possible. The Children component can be
+ * additionally used to create dependencies between tasks, with child tasks
+ * blocking the parent.
+ *
+ *     instantiate(game, [
+ *         // 3. Then run do_something().
+ *         task_then(() => do_something()),
+ *         children([
+ *             // 2. Then wait for 10 seconds.
+ *             task_delay(10),
+ *             children([
+ *                 // 1. First wait for is_something_true() to return true.
+ *                 task_when(() => is_something_true()),
+ *             ]),
+ *         ]),
+ *     ]);
+ *
+ * When a task completes, its entity is destroyed. For this reason, when adding
+ * tasks to entities which represent game objects, don't mix them with other
+ * components; add them as children instead.
+
+ *     instantiate(game, [
+ *         transform(...),
+ *         render(...),
+ *         control_player(...),
+ *         children([
+ *             // This child entity is safe to destroy after the task completes.
+ *             task_then(() => do_something()),
+ *             children([
+ *                 task_delay(10),
+ *             ]),
+ *         ]),
+ *     ]);
  */
 
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-export type Task = TaskUntil | TaskTimeout;
+export type Task = TaskWhen | TaskDelay | TaskThen;
 
 export const enum TaskKind {
-    Until,
-    Timeout,
+    When,
+    Delay,
+    Then,
 }
 
 type Predicate = (entity: Entity) => boolean;
 type Callback = (entity: Entity) => void;
 
-export interface TaskUntil {
-    Kind: TaskKind.Until;
+export interface TaskWhen {
+    Kind: TaskKind.When;
     Predicate: Predicate;
-    OnDone?: Callback;
 }
 
-/** A task that completes when the predicate returns true. */
-export function task_until(predicate: Predicate, on_done?: Callback) {
+/** A task that completes when the predicate returns true.
+ *
+ * If the task entity has any task children (dependencies), they must
+ * complete before the predicate is evaluated for the first time.
+ */
+export function task_when(predicate: Predicate) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Task;
         game.World.Task[entity] = {
-            Kind: TaskKind.Until,
+            Kind: TaskKind.When,
             Predicate: predicate,
-            OnDone: on_done,
         };
     };
 }
 
-export interface TaskTimeout {
-    Kind: TaskKind.Timeout;
+export interface TaskDelay {
+    Kind: TaskKind.Delay;
     Remaining: number;
-    OnDone?: Callback;
 }
 
-/** A task that completes after the specified duration (in seconds). */
-export function task_timeout(duration: number, on_done?: Callback) {
+/** A task that completes after the specified duration (in seconds).
+ *
+ * If the task entity has any task children (dependencies), they must
+ * complete before the timer is started.
+ */
+export function task_delay(duration: number) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Task;
         game.World.Task[entity] = {
-            Kind: TaskKind.Timeout,
+            Kind: TaskKind.Delay,
             Remaining: duration,
-            OnDone: on_done,
         };
     };
 }
 
-/** A task that completes as soon as possible. */
-export function task_complete(on_done: Callback) {
+export interface TaskThen {
+    Kind: TaskKind.Then;
+    Callback: Callback;
+}
+
+/** A task that completes as soon as possible.
+ *
+ * If the task entity has any task children (dependencies), they must
+ * complete before this task can complete.
+ */
+export function task_then(callback: Callback) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Task;
         game.World.Task[entity] = {
-            Kind: TaskKind.Timeout,
-            Remaining: 0,
-            OnDone: on_done,
+            Kind: TaskKind.Then,
+            Callback: callback,
         };
     };
 }

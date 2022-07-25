@@ -3,6 +3,7 @@ import {Camera} from "./components/com_camera.js";
 import {Children} from "./components/com_children.js";
 import {ControlAlways2D} from "./components/com_control_always2d.js";
 import {ControlPlayer} from "./components/com_control_player.js";
+import {Draw} from "./components/com_draw.js";
 import {Move2D} from "./components/com_move2d.js";
 import {Render2D} from "./components/com_render2d.js";
 import {RigidBody2D} from "./components/com_rigid_body2d.js";
@@ -14,6 +15,7 @@ const enum Component {
     ControlPlayer,
     Children,
     Dirty,
+    Draw,
     Move2D,
     Render2D,
     RigidBody2D,
@@ -27,6 +29,7 @@ export const enum Has {
     ControlPlayer = 1 << Component.ControlPlayer,
     Children = 1 << Component.Children,
     Dirty = 1 << Component.Dirty,
+    Draw = 1 << Component.Draw,
     Move2D = 1 << Component.Move2D,
     Render2D = 1 << Component.Render2D,
     RigidBody2D = 1 << Component.RigidBody2D,
@@ -38,6 +41,7 @@ export class World extends WorldImpl {
     ControlAlways2D: Array<ControlAlways2D> = [];
     ControlPlayer: Array<ControlPlayer> = [];
     Children: Array<Children> = [];
+    Draw: Array<Draw> = [];
     Move2D: Array<Move2D> = [];
     Render2D: Array<Render2D> = [];
     RigidBody2D: Array<RigidBody2D> = [];

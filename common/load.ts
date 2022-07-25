@@ -1,5 +1,5 @@
 import {Mesh} from "./mesh.js";
-import {create_texture_from, fetch_image} from "./texture.js";
+import {create_spritesheet_from, create_texture_from, fetch_image, Spritesheet} from "./texture.js";
 
 /**
  * Asynchronously load a texture.
@@ -23,6 +23,23 @@ export async function load_texture(
 ) {
     let image = await fetch_image("../textures/" + name + ".webp");
     game.Textures[name] = create_texture_from(game.Gl, image);
+}
+
+/**
+ * Asynchronously load a spritesheet.
+ *
+ * The spritesheet will be uploaded to the GPU without mipmaps and using only
+ * GL_NEAREST for scaling.
+ */
+export async function load_spritesheet(
+    game: {
+        Gl: WebGL2RenderingContext;
+        Spritesheets: Record<string, Spritesheet>;
+    },
+    name: string
+) {
+    let image = await fetch_image("../sprites/" + name + ".webp");
+    game.Spritesheets[name] = create_spritesheet_from(game.Gl, image);
 }
 
 /**

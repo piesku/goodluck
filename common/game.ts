@@ -276,11 +276,6 @@ export abstract class Game3D extends GameImpl {
 
         this.Gl.blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
-
-    override FrameSetup(delta: number) {
-        super.FrameSetup(delta);
-        this.Cameras = [];
-    }
 }
 
 export abstract class GameXR extends Game3D {

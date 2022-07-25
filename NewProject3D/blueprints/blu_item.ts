@@ -18,7 +18,7 @@ import {
 } from "../components/com_render.js";
 import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
 import {shake} from "../components/com_shake.js";
-import {task_timeout} from "../components/com_task.js";
+import {task_delay, task_then} from "../components/com_task.js";
 import {toggle} from "../components/com_toggle.js";
 import {transform} from "../components/com_transform.js";
 import {trigger} from "../components/com_trigger.js";
@@ -26,9 +26,11 @@ import {Game, Layer} from "../game.js";
 import {Has} from "../world.js";
 
 export function blueprint_item(game: Game) {
+    let item_entity: Entity;
     let shaker_entity: Entity;
     let particles_entity: Entity;
     return [
+        callback((game, entity) => (item_entity = entity)),
         collide(true, Layer.Collectable, Layer.Terrain | Layer.Player),
         trigger(Layer.Player, Action.CollectItem),
         rigid_body(RigidKind.Dynamic, 0.3),
@@ -70,25 +72,30 @@ export function blueprint_item(game: Game) {
                         ),
                     ]),
                 ]),
+            ],
+            [
+                children([task_delay(10)]),
+                task_then(() => {
+                    // Start the lifetime countdown.
+                    game.World.Signature[item_entity] |= Has.Lifespan;
+
+                    // Start shaking the mesh.
+                    game.World.Signature[shaker_entity] |= Has.Shake | Has.Toggle;
+
+                    // Change particles to a flame.
+                    let particles_shake = game.World.Shake[particles_entity];
+                    particles_shake.Magnitude = 0.1;
+                    let particles_emit = game.World.EmitParticles[particles_entity];
+                    particles_emit.Lifespan = 1;
+                    particles_emit.Frequency = 0.1;
+                    let particles_render = game.World.Render[
+                        particles_entity
+                    ] as RenderParticlesColored;
+                    particles_render.ColorStart = [1, 1, 0, 1];
+                    particles_render.ColorEnd = [1, 0, 0, 0];
+                    particles_render.Size = [10, 5];
+                }),
             ]
         ),
-        task_timeout(10, (entity) => {
-            // Start the lifetime countdown.
-            game.World.Signature[entity] |= Has.Lifespan;
-
-            // Start shaking the mesh.
-            game.World.Signature[shaker_entity] |= Has.Shake | Has.Toggle;
-
-            // Change particles to a flame.
-            let particles_shake = game.World.Shake[particles_entity];
-            particles_shake.Magnitude = 0.1;
-            let particles_emit = game.World.EmitParticles[particles_entity];
-            particles_emit.Lifespan = 1;
-            particles_emit.Frequency = 0.1;
-            let particles_render = game.World.Render[particles_entity] as RenderParticlesColored;
-            particles_render.ColorStart = [1, 1, 0, 1];
-            particles_render.ColorEnd = [1, 0, 0, 0];
-            particles_render.Size = [10, 5];
-        }),
     ];
 }

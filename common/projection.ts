@@ -98,19 +98,13 @@ export function resize_ortho(projection: ProjectionOrthographic, aspect: number)
     invert(projection.Inverse, projection.Projection);
 }
 
-export function resize_ortho_keeping_unit_size(
-    projection: ProjectionOrthographic,
-    aspect: number,
-    viewport_height: number,
-    unit_size_in_px: number
-) {
-    let radius_in_units = viewport_height / unit_size_in_px / 2;
+export function resize_ortho_constant(projection: ProjectionOrthographic, aspect: number) {
     from_ortho(
         projection.Projection,
-        radius_in_units,
-        radius_in_units * aspect,
-        -radius_in_units,
-        -radius_in_units * aspect,
+        projection.Radius,
+        projection.Radius * aspect,
+        -projection.Radius,
+        -projection.Radius * aspect,
         projection.Near,
         projection.Far
     );

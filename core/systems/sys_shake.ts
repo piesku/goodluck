@@ -2,7 +2,6 @@
  * @module systems/sys_shake
  */
 
-import {scale} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -21,7 +20,8 @@ function update(game: Game, entity: Entity) {
     let shake = game.World.Shake[entity];
     let transform = game.World.Transform[entity];
 
-    transform.Translation = [Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5];
-    scale(transform.Translation, transform.Translation, shake.Magnitude * 2);
+    transform.Translation[0] = (Math.random() - 0.5) * shake.Magnitude * 2;
+    transform.Translation[1] = (Math.random() - 0.5) * shake.Magnitude * 2;
+    transform.Translation[2] = (Math.random() - 0.5) * shake.Magnitude * 2;
     game.World.Signature[entity] |= Has.Dirty;
 }

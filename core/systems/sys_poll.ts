@@ -11,50 +11,51 @@ const QUERY = Has.Task;
 
 export function sys_poll(game: Game, delta: number) {
     // Collect all ready tasks first to avoid completing them while we stil
-    // literate over ohter tasks. This guarantees that tasks blocked by other
-    // tasks will be completed during the next frame.
+    // iterate over other tasks. This guarantees that tasks blocked by other
+    // tasks will be completed deterministically in the next frame.
     let tasks_to_complete: Array<Entity> = [];
 
-    for (let i = 0; i < game.World.Signature.length; i++) {
-        if ((game.World.Signature[i] & QUERY) === QUERY) {
-            if (has_blocking_dependencies(game.World, i)) {
+    for (let ent = 0; ent < game.World.Signature.length; ent++) {
+        if ((game.World.Signature[ent] & QUERY) === QUERY) {
+            if (has_blocking_dependencies(game.World, ent)) {
                 continue;
             }
 
-            let task = game.World.Task[i];
+            let task = game.World.Task[ent];
             switch (task.Kind) {
-                case TaskKind.Until: {
-                    if (task.Predicate(i)) {
-                        tasks_to_complete.push(i);
+                case TaskKind.When: {
+                    if (task.Predicate(ent)) {
+                        tasks_to_complete.push(ent);
                     }
                     break;
                 }
-                case TaskKind.Timeout: {
+                case TaskKind.Delay: {
                     task.Remaining -= delta;
                     if (task.Remaining < 0) {
-                        tasks_to_complete.push(i);
+                        tasks_to_complete.push(ent);
                     }
+                    break;
+                }
+                case TaskKind.Then: {
+                    tasks_to_complete.push(ent);
                     break;
                 }
             }
         }
     }
 
-    for (let entity of tasks_to_complete) {
-        let task = game.World.Task[entity];
-        if (task.OnDone) {
-            task.OnDone(entity);
+    for (let ent of tasks_to_complete) {
+        let task = game.World.Task[ent];
+        switch (task.Kind) {
+            case TaskKind.Then:
+                task.Callback(ent);
+            case TaskKind.When:
+            case TaskKind.Delay:
+                game.World.DestroyEntity(ent);
         }
 
-        game.World.Signature[entity] &= ~Has.Task;
-        if (game.World.Signature[entity] === Has.None) {
-            // Task was the last component on the entity.
-            game.World.DestroyEntity(entity);
-        }
-
-        // Explicitly delete the component data for this task to avoid memory
-        // leaks from closures.
-        delete game.World.Task[entity];
+        // Delete component data to avoid memory leaks from closures.
+        delete game.World.Task[ent];
     }
 }
 
