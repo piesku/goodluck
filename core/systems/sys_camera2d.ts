@@ -7,7 +7,7 @@ import {CameraKind} from "../components/com_camera.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.NodeTransform2D | Has.Camera;
+const QUERY = Has.SpatialNode2D | Has.Camera;
 
 // The camera is hardcoded at z=2, with near=1 and far=3.
 const CAMERA_Z = 2;
@@ -23,7 +23,7 @@ export function sys_camera2d(game: Game, delta: number) {
             }
 
             let projection = camera.Projection;
-            let camera_node = game.World.NodeTransform2D[ent];
+            let camera_node = game.World.SpatialNode2D[ent];
 
             camera.View[0] = camera_node.Self[0];
             camera.View[1] = camera_node.Self[1];

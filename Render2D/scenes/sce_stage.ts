@@ -8,7 +8,7 @@ import {control_player} from "../components/com_control_player.js";
 import {draw_arc, draw_rect} from "../components/com_draw.js";
 import {order, render2d} from "../components/com_render2d.js";
 import {RigidKind, rigid_body2d} from "../components/com_rigid_body2d.js";
-import {local_transform2d, node_transform2d} from "../components/com_transform2d.js";
+import {local_transform2d, spatial_node2d} from "../components/com_transform2d.js";
 import {Game, WORLD_CAPACITY} from "../game.js";
 import {World} from "../world.js";
 
@@ -18,26 +18,22 @@ export function scene_stage(game: Game) {
 
     // Camera.
     instantiate(game, [
+        spatial_node2d(),
         local_transform2d([0, 0]),
-        node_transform2d(),
         camera_canvas(orthographic(5, 1, 3), [0, 0, 0, 0]),
     ]);
 
     {
         // Background.
         instantiate(game, [
+            spatial_node2d(),
             local_transform2d([-5, 3], 0),
-            node_transform2d(),
             draw_arc(7, "#D4FCA9"),
         ]);
         instantiate(game, [
+            spatial_node2d(),
             local_transform2d([0, 0], -30, [4, 1]),
-            node_transform2d(),
-            children([
-                local_transform2d([0, 0], 30),
-                node_transform2d(),
-                draw_rect(5, 5, "#FFAA79"),
-            ]),
+            children([spatial_node2d(), local_transform2d([0, 0], 30), draw_rect(5, 5, "#FFAA79")]),
         ]);
     }
 

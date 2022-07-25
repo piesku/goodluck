@@ -7,7 +7,7 @@ import {Draw} from "./components/com_draw.js";
 import {Move2D} from "./components/com_move2d.js";
 import {Render2D} from "./components/com_render2d.js";
 import {RigidBody2D} from "./components/com_rigid_body2d.js";
-import {LocalTransform2D, NodeTransform2D} from "./components/com_transform2d.js";
+import {LocalTransform2D, SpatialNode2D} from "./components/com_transform2d.js";
 
 const enum Component {
     Camera,
@@ -18,9 +18,9 @@ const enum Component {
     Draw,
     LocalTransform2D,
     Move2D,
-    NodeTransform2D,
     Render2D,
     RigidBody2D,
+    SpatialNode2D,
 }
 
 export const enum Has {
@@ -35,7 +35,7 @@ export const enum Has {
     Move2D = 1 << Component.Move2D,
     Render2D = 1 << Component.Render2D,
     RigidBody2D = 1 << Component.RigidBody2D,
-    NodeTransform2D = 1 << Component.NodeTransform2D,
+    SpatialNode2D = 1 << Component.SpatialNode2D,
 }
 
 export class World extends WorldImpl {
@@ -46,7 +46,7 @@ export class World extends WorldImpl {
     Draw: Array<Draw> = [];
     LocalTransform2D: Array<LocalTransform2D> = [];
     Move2D: Array<Move2D> = [];
-    NodeTransform2D: Array<NodeTransform2D> = [];
     Render2D: Array<Render2D> = [];
     RigidBody2D: Array<RigidBody2D> = [];
+    SpatialNode2D: Array<SpatialNode2D> = [];
 }

@@ -9,21 +9,23 @@ import {FLOATS_PER_INSTANCE, Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY_DIRTY = Has.LocalTransform2D | Has.Dirty;
-const QUERY_NODE = Has.LocalTransform2D | Has.NodeTransform2D;
+const QUERY_NODE = Has.LocalTransform2D | Has.SpatialNode2D;
 
 export function sys_transform2d(game: Game, delta: number) {
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
         if ((game.World.Signature[ent] & QUERY_DIRTY) === QUERY_DIRTY) {
-            if (game.World.Signature[ent] & Has.NodeTransform2D) {
-                update_transform(game, ent);
+            if (game.World.Signature[ent] & Has.SpatialNode2D) {
+                update_spatial_node(game, ent);
             } else {
-                update_instance(game, ent);
+                // Fast path for top-level transforms which aren't scene graph
+                // nodes (they can't be parents nor children).
+                update_instance_data(game, ent);
             }
         }
     }
 }
 
-function update_instance(game: Game, entity: Entity) {
+function update_instance_data(game: Game, entity: Entity) {
     game.World.Signature[entity] &= ~Has.Dirty;
 
     let local = game.World.LocalTransform2D[entity];
@@ -37,36 +39,36 @@ function update_instance(game: Game, entity: Entity) {
 
 const world_position: Vec2 = [0, 0];
 
-function update_transform(game: Game, entity: Entity, parent?: Entity) {
+function update_spatial_node(game: Game, entity: Entity, parent?: Entity) {
     game.World.Signature[entity] &= ~Has.Dirty;
 
     let local = game.World.LocalTransform2D[entity];
-    let transform = game.World.NodeTransform2D[entity];
+    let node = game.World.SpatialNode2D[entity];
 
-    compose(transform.World, local.Translation, local.Rotation * DEG_TO_RAD, local.Scale);
+    compose(node.World, local.Translation, local.Rotation * DEG_TO_RAD, local.Scale);
 
     if (parent !== undefined) {
-        transform.Parent = parent;
+        node.Parent = parent;
     }
 
-    if (transform.Parent !== undefined) {
-        let parent_transform = game.World.NodeTransform2D[transform.Parent];
-        multiply(transform.World, parent_transform.World, transform.World);
+    if (node.Parent !== undefined) {
+        let parent_transform = game.World.SpatialNode2D[node.Parent];
+        multiply(node.World, parent_transform.World, node.World);
 
-        if (transform.Gyroscope) {
-            get_translation(world_position, transform.World);
-            compose(transform.World, world_position, local.Rotation * DEG_TO_RAD, local.Scale);
+        if (node.Gyroscope) {
+            get_translation(world_position, node.World);
+            compose(node.World, world_position, local.Rotation * DEG_TO_RAD, local.Scale);
         }
     }
 
-    invert(transform.Self, transform.World);
+    invert(node.Self, node.World);
 
     if (game.World.Signature[entity] & Has.Children) {
         let children = game.World.Children[entity];
         for (let i = 0; i < children.Children.length; i++) {
             let child = children.Children[i];
             if ((game.World.Signature[child] & QUERY_NODE) === QUERY_NODE) {
-                update_transform(game, child, entity);
+                update_spatial_node(game, child, entity);
             }
         }
     }

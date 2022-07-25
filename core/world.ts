@@ -27,7 +27,7 @@ import {Spawn} from "./components/com_spawn.js";
 import {Task} from "./components/com_task.js";
 import {Toggle} from "./components/com_toggle.js";
 import {Transform} from "./components/com_transform.js";
-import {LocalTransform2D, NodeTransform2D} from "./components/com_transform2d.js";
+import {LocalTransform2D, SpatialNode2D} from "./components/com_transform2d.js";
 import {Trigger} from "./components/com_trigger.js";
 
 const enum Component {
@@ -53,12 +53,12 @@ const enum Component {
     Move,
     Move2D,
     Named,
-    NodeTransform2D,
     Render,
     Render2D,
     RigidBody,
     RigidBody2D,
     Shake,
+    SpatialNode2D,
     Spawn,
     Task,
     Toggle,
@@ -90,12 +90,12 @@ export const enum Has {
     Move = 1 << Component.Move,
     Move2D = 1 << Component.Move2D,
     Named = 1 << Component.Named,
-    NodeTransform2D = 1 << Component.NodeTransform2D,
     Render = 1 << Component.Render,
     Render2D = 1 << Component.Render2D,
     RigidBody = 1 << Component.RigidBody,
     RigidBody2D = 1 << Component.RigidBody2D,
     Shake = 1 << Component.Shake,
+    SpatialNode2D = 1 << Component.SpatialNode2D,
     Spawn = 1 << Component.Spawn,
     Task = 1 << Component.Task,
     Toggle = 1 << Component.Toggle,
@@ -124,7 +124,7 @@ export interface World extends WorldImpl {
     Move: Array<Move>;
     Move2D: Array<Move2D>;
     Named: Array<Named>;
-    NodeTransform2D: Array<NodeTransform2D>;
+    SpatialNode2D: Array<SpatialNode2D>;
     Render: Array<Render>;
     Render2D: Array<Render2D>;
     RigidBody: Array<RigidBody>;

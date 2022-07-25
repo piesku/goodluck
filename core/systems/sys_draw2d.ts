@@ -7,7 +7,7 @@ import {DrawKind} from "../components/com_draw.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.NodeTransform2D | Has.Draw;
+const QUERY = Has.SpatialNode2D | Has.Draw;
 
 export function sys_draw2d(game: Game, delta: number) {
     let camera_entity = game.Cameras[0];
@@ -38,7 +38,7 @@ export function sys_draw2d(game: Game, delta: number) {
 
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
         if ((game.World.Signature[ent] & QUERY) == QUERY) {
-            let node = game.World.NodeTransform2D[ent];
+            let node = game.World.SpatialNode2D[ent];
 
             ctx.transform(
                 node.World[0],

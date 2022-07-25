@@ -32,7 +32,7 @@ export function local_transform2d(
     };
 }
 
-export interface NodeTransform2D {
+export interface SpatialNode2D {
     /** Absolute matrix relative to the world. */
     World: Mat2D;
     /** World to self matrix. */
@@ -42,10 +42,10 @@ export interface NodeTransform2D {
     Gyroscope: boolean;
 }
 
-export function node_transform2d(is_gyroscope = false) {
+export function spatial_node2d(is_gyroscope = false) {
     return (game: Game, entity: Entity) => {
-        game.World.Signature[entity] |= Has.NodeTransform2D | Has.Dirty;
-        game.World.NodeTransform2D[entity] = {
+        game.World.Signature[entity] |= Has.SpatialNode2D | Has.Dirty;
+        game.World.SpatialNode2D[entity] = {
             World: game.InstanceData.subarray(
                 entity * FLOATS_PER_INSTANCE,
                 entity * FLOATS_PER_INSTANCE + 6
@@ -68,7 +68,7 @@ export function* query_up(world: World, entity: Entity, mask: Has): IterableIter
         yield entity;
     }
 
-    let parent = world.NodeTransform2D[entity].Parent;
+    let parent = world.SpatialNode2D[entity].Parent;
     if (parent !== undefined) {
         yield* query_up(world, parent, mask);
     }
