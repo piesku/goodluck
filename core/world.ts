@@ -27,7 +27,7 @@ import {Spawn} from "./components/com_spawn.js";
 import {Task} from "./components/com_task.js";
 import {Toggle} from "./components/com_toggle.js";
 import {Transform} from "./components/com_transform.js";
-import {Transform2D} from "./components/com_transform2d.js";
+import {LocalTransform2D, SpatialNode2D} from "./components/com_transform2d.js";
 import {Trigger} from "./components/com_trigger.js";
 
 const enum Component {
@@ -47,6 +47,7 @@ const enum Component {
     Follow,
     Lifespan,
     Light,
+    LocalTransform2D,
     LookAt,
     Mimic,
     Move,
@@ -57,11 +58,11 @@ const enum Component {
     RigidBody,
     RigidBody2D,
     Shake,
+    SpatialNode2D,
     Spawn,
     Task,
     Toggle,
     Transform,
-    Transform2D,
     Trigger,
 }
 
@@ -83,6 +84,7 @@ export const enum Has {
     Follow = 1 << Component.Follow,
     Lifespan = 1 << Component.Lifespan,
     Light = 1 << Component.Light,
+    LocalTransform2D = 1 << Component.LocalTransform2D,
     LookAt = 1 << Component.LookAt,
     Mimic = 1 << Component.Mimic,
     Move = 1 << Component.Move,
@@ -93,11 +95,11 @@ export const enum Has {
     RigidBody = 1 << Component.RigidBody,
     RigidBody2D = 1 << Component.RigidBody2D,
     Shake = 1 << Component.Shake,
+    SpatialNode2D = 1 << Component.SpatialNode2D,
     Spawn = 1 << Component.Spawn,
     Task = 1 << Component.Task,
     Toggle = 1 << Component.Toggle,
     Transform = 1 << Component.Transform,
-    Transform2D = 1 << Component.Transform2D,
     Trigger = 1 << Component.Trigger,
 }
 
@@ -116,11 +118,13 @@ export interface World extends WorldImpl {
     Follow: Array<Follow>;
     Lifespan: Array<Lifespan>;
     Light: Array<Light>;
+    LocalTransform2D: Array<LocalTransform2D>;
     LookAt: Array<LookAt>;
     Mimic: Array<Mimic>;
     Move: Array<Move>;
     Move2D: Array<Move2D>;
     Named: Array<Named>;
+    SpatialNode2D: Array<SpatialNode2D>;
     Render: Array<Render>;
     Render2D: Array<Render2D>;
     RigidBody: Array<RigidBody>;
@@ -130,6 +134,5 @@ export interface World extends WorldImpl {
     Task: Array<Task>;
     Toggle: Array<Toggle>;
     Transform: Array<Transform>;
-    Transform2D: Array<Transform2D>;
     Trigger: Array<Trigger>;
 }

@@ -8,56 +8,81 @@ import {Entity} from "../../common/world.js";
 import {FLOATS_PER_INSTANCE, Game} from "../game.js";
 import {Has, World} from "../world.js";
 
-export interface Transform2D {
-    /** Absolute matrix relative to the world. */
-    World: Mat2D;
-    /** World to self matrix. */
-    Self: Mat2D;
+export interface LocalTransform2D {
     /** Local translation relative to the parent. */
     Translation: Vec2;
     /** Local rotation relative to the parent. */
     Rotation: Deg;
     /** Local scale relative to the parent. */
     Scale: Vec2;
-    Parent?: Entity;
-    /** Ignore parent's rotation and scale? */
-    Gyroscope: boolean;
 }
 
-export function transform2d(translation: Vec2 = [0, 0], rotation: Deg = 0, scale: Vec2 = [1, 1]) {
-    return (game: Game, entity: Entity) => {
-        game.World.Signature[entity] |= Has.Transform2D | Has.Dirty;
-        game.World.Transform2D[entity] = {
-            World: game.InstanceData.subarray(
-                entity * FLOATS_PER_INSTANCE,
-                entity * FLOATS_PER_INSTANCE + 6
-            ),
-            Self: create(),
-            Translation: translation,
-            Rotation: rotation,
-            Scale: scale,
-            Gyroscope: false,
-        };
-    };
-}
-
-export function transform2d_gyroscope(
+/**
+ * Add `LocalTransform2D` to an entity.
+ *
+ * `LocalTransform2D` component only stores the local (parent-space) transform
+ * data. If the entity is a top-level entity, the local data is also the
+ * world-space data.
+ *
+ * In order to be a parent of other entities, or to be a child of another entity,
+ * the entity must also have the `SpatialNode2D` component (see `spatial_node2d()`).
+ *
+ * OTOH, entities with `LocalTransform2D` but without `SpatialNode2D` have their
+ * model matrix computed in the shader, making them very fast to update.
+ *
+ * @param translation Local translation relative to the parent.
+ * @param rotation Local rotation relative to the parent.
+ * @param scale Local scale relative to the parent.
+ */
+export function local_transform2d(
     translation: Vec2 = [0, 0],
     rotation: Deg = 0,
     scale: Vec2 = [1, 1]
 ) {
     return (game: Game, entity: Entity) => {
-        game.World.Signature[entity] |= Has.Transform2D | Has.Dirty;
-        game.World.Transform2D[entity] = {
+        game.World.Signature[entity] |= Has.LocalTransform2D | Has.Dirty;
+        game.World.LocalTransform2D[entity] = {
+            Translation: translation,
+            Rotation: rotation,
+            Scale: scale,
+        };
+    };
+}
+
+export interface SpatialNode2D {
+    /** Absolute matrix relative to the world. */
+    World: Mat2D;
+    /** World to self matrix. */
+    Self: Mat2D;
+    Parent?: Entity;
+    /** Ignore parent's rotation and scale? */
+    Gyroscope: boolean;
+}
+
+/**
+ * Add `SpatialNode2D` to an entity.
+
+ * In order to be a parent of other entities, or to be a child of another entity,
+ * the entity must also have the `SpatialNode2D` component. It's also required
+ * if you're going to need to switch between the world space and the entity's
+ * self space, or if you're going to query the entity's parent.
+ *
+ * Entities with `LocalTransform2D` and `SpatialNode2D` have their model matrix
+ * computed in sys_transform2d() on the CPU, making them slower than entities
+ * with only `LocalTransform2D`, but more fully-featured.
+ *
+ * @param is_gyroscope Ignore parent's rotation and scale?
+ */
+export function spatial_node2d(is_gyroscope = false) {
+    return (game: Game, entity: Entity) => {
+        game.World.Signature[entity] |= Has.SpatialNode2D | Has.Dirty;
+        game.World.SpatialNode2D[entity] = {
             World: game.InstanceData.subarray(
                 entity * FLOATS_PER_INSTANCE,
                 entity * FLOATS_PER_INSTANCE + 6
             ),
             Self: create(),
-            Translation: translation,
-            Rotation: rotation,
-            Scale: scale,
-            Gyroscope: true,
+            Gyroscope: is_gyroscope,
         };
     };
 }
@@ -74,7 +99,7 @@ export function* query_up(world: World, entity: Entity, mask: Has): IterableIter
         yield entity;
     }
 
-    let parent = world.Transform2D[entity].Parent;
+    let parent = world.SpatialNode2D[entity].Parent;
     if (parent !== undefined) {
         yield* query_up(world, parent, mask);
     }

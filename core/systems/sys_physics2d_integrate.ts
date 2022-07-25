@@ -9,7 +9,7 @@ import {RigidKind} from "../components/com_rigid_body2d.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.Transform2D | Has.RigidBody2D;
+const QUERY = Has.LocalTransform2D | Has.RigidBody2D;
 const GRAVITY = -9.8;
 const MOBILITY = 0.999;
 
@@ -24,7 +24,7 @@ export function sys_physics2d_integrate(game: Game, delta: number) {
 let velocity_delta: Vec2 = [0, 0];
 
 function update(game: Game, entity: Entity, delta: number) {
-    let transform = game.World.Transform2D[entity];
+    let local = game.World.LocalTransform2D[entity];
     let rigid_body = game.World.RigidBody2D[entity];
 
     if (rigid_body.Kind === RigidKind.Dynamic) {
@@ -42,8 +42,8 @@ function update(game: Game, entity: Entity, delta: number) {
 
         // Apply velocity to position.
         scale(velocity_delta, rigid_body.VelocityIntegrated, delta);
-        add(transform.Translation, transform.Translation, velocity_delta);
-        transform.Rotation += rigid_body.VelocityAngular * delta;
+        add(local.Translation, local.Translation, velocity_delta);
+        local.Rotation += rigid_body.VelocityAngular * delta;
         game.World.Signature[entity] |= Has.Dirty;
 
         // Reset force/acceleration.
