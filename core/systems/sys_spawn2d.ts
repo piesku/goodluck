@@ -6,7 +6,7 @@ import {instantiate} from "../../common/game.js";
 import {get_translation} from "../../common/mat2d.js";
 import {Vec2} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
-import {local2d} from "../components/com_local2d.js";
+import {local2d} from "../components/com_transform2d.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

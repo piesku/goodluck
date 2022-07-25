@@ -4,11 +4,10 @@ import {Children} from "./components/com_children.js";
 import {ControlAlways2D} from "./components/com_control_always2d.js";
 import {ControlPlayer} from "./components/com_control_player.js";
 import {Draw} from "./components/com_draw.js";
-import {Local2D} from "./components/com_local2d.js";
 import {Move2D} from "./components/com_move2d.js";
 import {Render2D} from "./components/com_render2d.js";
 import {RigidBody2D} from "./components/com_rigid_body2d.js";
-import {Transform2D} from "./components/com_transform2d.js";
+import {Local2D, Transform2D} from "./components/com_transform2d.js";
 
 const enum Component {
     Camera,

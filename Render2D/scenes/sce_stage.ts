@@ -6,10 +6,9 @@ import {camera_canvas} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {control_player} from "../components/com_control_player.js";
 import {draw_arc, draw_rect} from "../components/com_draw.js";
-import {local2d} from "../components/com_local2d.js";
 import {order, render2d} from "../components/com_render2d.js";
 import {RigidKind, rigid_body2d} from "../components/com_rigid_body2d.js";
-import {transform2d} from "../components/com_transform2d.js";
+import {local2d, transform2d} from "../components/com_transform2d.js";
 import {Game, WORLD_CAPACITY} from "../game.js";
 import {World} from "../world.js";
 

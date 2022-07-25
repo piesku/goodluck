@@ -13,7 +13,6 @@ import {EmitParticles} from "./components/com_emit_particles.js";
 import {Follow} from "./components/com_follow.js";
 import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
-import {Local2D} from "./components/com_local2d.js";
 import {LookAt} from "./components/com_look_at.js";
 import {Mimic} from "./components/com_mimic.js";
 import {Move} from "./components/com_move.js";
@@ -28,7 +27,7 @@ import {Spawn} from "./components/com_spawn.js";
 import {Task} from "./components/com_task.js";
 import {Toggle} from "./components/com_toggle.js";
 import {Transform} from "./components/com_transform.js";
-import {Transform2D} from "./components/com_transform2d.js";
+import {Local2D, Transform2D} from "./components/com_transform2d.js";
 import {Trigger} from "./components/com_trigger.js";
 
 const enum Component {
