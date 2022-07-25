@@ -15,9 +15,23 @@ export function sys_transform2d(game: Game, delta: number) {
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
         if ((game.World.Signature[ent] & QUERY) === QUERY) {
             let transform = game.World.Transform2D[ent];
-            update_transform(game.World, ent, transform);
+            if (game.World.Signature[ent] & Has.ControlPlayer) {
+                set_transform(game.World, ent, transform);
+            } else {
+                update_transform(game.World, ent, transform);
+            }
         }
     }
+}
+
+function set_transform(world: World, entity: Entity, transform: Transform2D) {
+    world.Signature[entity] &= ~Has.Dirty;
+    transform.World[0] = transform.Scale[0];
+    transform.World[1] = transform.Scale[1];
+    transform.World[2] = transform.Rotation * DEG_TO_RAD;
+    transform.World[3] = 0;
+    transform.World[4] = transform.Translation[0];
+    transform.World[5] = transform.Translation[1];
 }
 
 const world_position: Vec2 = [0, 0];

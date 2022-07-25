@@ -7,17 +7,12 @@ import {
 } from "../../common/webgl.js";
 import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {FLOATS_PER_INSTANCE, Game} from "../game.js";
-import {Has} from "../world.js";
 
 export function sys_render2d(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
         let offset = i * FLOATS_PER_INSTANCE + 7;
-        if (game.World.Signature[i] & Has.Render2D) {
-            if (game.InstanceData[offset] == 0) {
-                game.InstanceData[offset] = 1;
-            }
-        } else if (game.InstanceData[offset] == 1) {
-            game.InstanceData[offset] = 0;
+        if (game.InstanceData[offset] !== game.World.Signature[i]) {
+            game.InstanceData[offset] = game.World.Signature[i];
         }
     }
 
