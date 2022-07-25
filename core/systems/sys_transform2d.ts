@@ -25,6 +25,8 @@ export function sys_transform2d(game: Game, delta: number) {
     }
 }
 
+// Write translation, rotation, and scale directly into the instance data
+// buffer. The model matrix will be computed from them in the shader.
 function update_instance_data(game: Game, entity: Entity) {
     game.World.Signature[entity] &= ~Has.Dirty;
 

@@ -17,6 +17,23 @@ export interface LocalTransform2D {
     Scale: Vec2;
 }
 
+/**
+ * Add `LocalTransform2D` to an entity.
+ *
+ * `LocalTransform2D` component only stores the local (parent-space) transform
+ * data. If the entity is a top-level entity, the local data is also the
+ * world-space data.
+ *
+ * In order to be a parent of other entities, or to be a child of another entity,
+ * the entity must also have the `SpatialNode2D` component (see `spatial_node2d()`).
+ *
+ * OTOH, entities with `LocalTransform2D` but without `SpatialNode2D` have their
+ * model matrix computed in the shader, making them very fast to update.
+ *
+ * @param translation Local translation relative to the parent.
+ * @param rotation Local rotation relative to the parent.
+ * @param scale Local scale relative to the parent.
+ */
 export function local_transform2d(
     translation: Vec2 = [0, 0],
     rotation: Deg = 0,
@@ -42,6 +59,20 @@ export interface SpatialNode2D {
     Gyroscope: boolean;
 }
 
+/**
+ * Add `SpatialNode2D` to an entity.
+
+ * In order to be a parent of other entities, or to be a child of another entity,
+ * the entity must also have the `SpatialNode2D` component. It's also required
+ * if you're going to need to switch between the world space and the entity's
+ * self space, or if you're going to query the entity's parent.
+ *
+ * Entities with `LocalTransform2D` and `SpatialNode2D` have their model matrix
+ * computed in sys_transform2d() on the CPU, making them slower than entities
+ * with only `LocalTransform2D`, but more fully-featured.
+ *
+ * @param is_gyroscope Ignore parent's rotation and scale?
+ */
 export function spatial_node2d(is_gyroscope = false) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.SpatialNode2D | Has.Dirty;
