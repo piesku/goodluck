@@ -13,6 +13,7 @@ import {EmitParticles} from "./components/com_emit_particles.js";
 import {Follow} from "./components/com_follow.js";
 import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
+import {Local2D} from "./components/com_local2d.js";
 import {LookAt} from "./components/com_look_at.js";
 import {Mimic} from "./components/com_mimic.js";
 import {Move} from "./components/com_move.js";
@@ -47,6 +48,7 @@ const enum Component {
     Follow,
     Lifespan,
     Light,
+    Local2D,
     LookAt,
     Mimic,
     Move,
@@ -83,6 +85,7 @@ export const enum Has {
     Follow = 1 << Component.Follow,
     Lifespan = 1 << Component.Lifespan,
     Light = 1 << Component.Light,
+    Local2D = 1 << Component.Local2D,
     LookAt = 1 << Component.LookAt,
     Mimic = 1 << Component.Mimic,
     Move = 1 << Component.Move,
@@ -116,6 +119,7 @@ export interface World extends WorldImpl {
     Follow: Array<Follow>;
     Lifespan: Array<Lifespan>;
     Light: Array<Light>;
+    Local2D: Array<Local2D>;
     LookAt: Array<LookAt>;
     Mimic: Array<Mimic>;
     Move: Array<Move>;

@@ -6,7 +6,7 @@ import {instantiate} from "../../common/game.js";
 import {get_translation} from "../../common/mat2d.js";
 import {Vec2} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
-import {transform2d} from "../components/com_transform2d.js";
+import {local2d} from "../components/com_local2d.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -32,7 +32,7 @@ function update(game: Game, entity: Entity, delta: number) {
         get_translation(world_position, entity_transform.World);
 
         if (game.World.Signature.length - game.World.Graveyard.length < game.World.Capacity) {
-            instantiate(game, [...spawn.Creator(game), transform2d(world_position, 0)]);
+            instantiate(game, [...spawn.Creator(game), local2d(world_position, 0)]);
         } else if (DEBUG) {
             throw new Error("No more entities can be created; the world at maximum capacity.");
         }

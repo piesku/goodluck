@@ -25,7 +25,14 @@ let vertex = `#version 300 es\n
         int signature = int(attr_translation.w);
         if ((signature & ${Has.Render2D}) == ${Has.Render2D}) {
             mat4 world;
-            if ((signature & ${Has.ControlPlayer}) == ${Has.ControlPlayer}) {
+            if ((signature & ${Has.Transform2D}) == ${Has.Transform2D}) {
+                world = mat4(
+                    attr_rotation.xy, 0, 0,
+                    attr_rotation.zw, 0, 0,
+                    0, 0, 1, 0,
+                    attr_translation.xyz, 1
+                );
+            } else {
                 vec3 translation = attr_translation.xyz;
                 vec2 scale = attr_rotation.xy;
                 float rotation = attr_rotation.z;
@@ -34,13 +41,6 @@ let vertex = `#version 300 es\n
                     -sin(rotation) * scale.y, cos(rotation) * scale.y, 0, 0,
                     0, 0, 1, 0,
                     translation, 1
-                );
-            } else {
-                world = mat4(
-                    attr_rotation.xy, 0, 0,
-                    attr_rotation.zw, 0, 0,
-                    0, 0, 1, 0,
-                    attr_translation.xyz, 1
                 );
             }
 

@@ -3,7 +3,7 @@
  */
 
 import {pointer_down, pointer_ndc_far} from "../../common/input.js";
-import {get_translation, transform_point} from "../../common/mat2d.js";
+import {transform_point} from "../../common/mat2d.js";
 import {Vec2, Vec3} from "../../common/math.js";
 import {distance_squared, scale} from "../../common/vec2.js";
 import {transform_position} from "../../common/vec3.js";
@@ -46,17 +46,14 @@ export function sys_control_player(game: Game, delta: number) {
     }
 }
 
-const entity_world_position: Vec2 = [0, 0];
-
 function update(game: Game, entity: Entity, pointer_position: Vec2) {
-    let entity_transform = game.World.Transform2D[entity];
-    let entity_body = game.World.RigidBody2D[entity];
+    let local = game.World.Local2D[entity];
+    let rigid_body = game.World.RigidBody2D[entity];
 
-    get_translation(entity_world_position, entity_transform.World);
-    let distance = distance_squared(pointer_position, entity_world_position);
+    let distance = distance_squared(pointer_position, local.Translation);
     if (distance < 5) {
-        entity_body.Acceleration[0] = entity_world_position[0] - pointer_position[0];
-        entity_body.Acceleration[1] = entity_world_position[1] - pointer_position[1];
-        scale(entity_body.Acceleration, entity_body.Acceleration, 100);
+        rigid_body.Acceleration[0] = local.Translation[0] - pointer_position[0];
+        rigid_body.Acceleration[1] = local.Translation[1] - pointer_position[1];
+        scale(rigid_body.Acceleration, rigid_body.Acceleration, 100);
     }
 }

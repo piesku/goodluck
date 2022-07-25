@@ -5,72 +5,66 @@
 import {compose, get_translation, invert, multiply} from "../../common/mat2d.js";
 import {DEG_TO_RAD, Vec2} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
-import {Transform2D} from "../components/com_transform2d.js";
-import {Game} from "../game.js";
-import {Has, World} from "../world.js";
+import {FLOATS_PER_INSTANCE, Game} from "../game.js";
+import {Has} from "../world.js";
 
-const QUERY = Has.Transform2D | Has.Dirty;
+const QUERY_DIRTY = Has.Local2D | Has.Dirty;
+const QUERY_TRANSFORM = Has.Local2D | Has.Transform2D;
 
 export function sys_transform2d(game: Game, delta: number) {
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
-        if ((game.World.Signature[ent] & QUERY) === QUERY) {
-            let transform = game.World.Transform2D[ent];
-            if (game.World.Signature[ent] & Has.ControlPlayer) {
-                set_transform(game.World, ent, transform);
+        if ((game.World.Signature[ent] & QUERY_DIRTY) === QUERY_DIRTY) {
+            if (game.World.Signature[ent] & Has.Transform2D) {
+                update_transform(game, ent);
             } else {
-                update_transform(game.World, ent, transform);
+                set_transform(game, ent);
             }
         }
     }
 }
 
-function set_transform(world: World, entity: Entity, transform: Transform2D) {
-    world.Signature[entity] &= ~Has.Dirty;
-    transform.World[0] = transform.Scale[0];
-    transform.World[1] = transform.Scale[1];
-    transform.World[2] = transform.Rotation * DEG_TO_RAD;
-    transform.World[3] = 0;
-    transform.World[4] = transform.Translation[0];
-    transform.World[5] = transform.Translation[1];
+function set_transform(game: Game, entity: Entity) {
+    game.World.Signature[entity] &= ~Has.Dirty;
+
+    let local = game.World.Local2D[entity];
+    let instance_offset = entity * FLOATS_PER_INSTANCE;
+    game.InstanceData[instance_offset + 0] = local.Scale[0];
+    game.InstanceData[instance_offset + 1] = local.Scale[1];
+    game.InstanceData[instance_offset + 2] = local.Rotation * DEG_TO_RAD;
+    game.InstanceData[instance_offset + 4] = local.Translation[0];
+    game.InstanceData[instance_offset + 5] = local.Translation[1];
 }
 
 const world_position: Vec2 = [0, 0];
 
-function update_transform(world: World, entity: Entity, transform: Transform2D) {
-    world.Signature[entity] &= ~Has.Dirty;
+function update_transform(game: Game, entity: Entity) {
+    game.World.Signature[entity] &= ~Has.Dirty;
 
-    compose(
-        transform.World,
-        transform.Translation,
-        transform.Rotation * DEG_TO_RAD,
-        transform.Scale
-    );
+    let local = game.World.Local2D[entity];
+    let transform = game.World.Transform2D[entity];
+
+    compose(transform.World, local.Translation, local.Rotation * DEG_TO_RAD, local.Scale);
 
     if (transform.Parent !== undefined) {
-        let parent_transform = world.Transform2D[transform.Parent];
+        let parent_transform = game.World.Transform2D[transform.Parent];
         multiply(transform.World, parent_transform.World, transform.World);
 
         if (transform.Gyroscope) {
             get_translation(world_position, transform.World);
-            compose(
-                transform.World,
-                world_position,
-                transform.Rotation * DEG_TO_RAD,
-                transform.Scale
-            );
+            compose(transform.World, world_position, local.Rotation * DEG_TO_RAD, local.Scale);
         }
     }
 
     invert(transform.Self, transform.World);
 
-    if (world.Signature[entity] & Has.Children) {
-        let children = world.Children[entity];
+    if (game.World.Signature[entity] & Has.Children) {
+        let children = game.World.Children[entity];
         for (let i = 0; i < children.Children.length; i++) {
             let child = children.Children[i];
-            if (world.Signature[child] & Has.Transform2D) {
-                let child_transform = world.Transform2D[child];
+            if ((game.World.Signature[child] & QUERY_TRANSFORM) === QUERY_TRANSFORM) {
+                let child_transform = game.World.Transform2D[child];
                 child_transform.Parent = entity;
-                update_transform(world, child, child_transform);
+                update_transform(game, child);
             }
         }
     }

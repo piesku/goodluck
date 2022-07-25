@@ -8,7 +8,7 @@ import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.Transform2D | Has.Move2D | Has.Dirty;
+const QUERY = Has.Local2D | Has.Transform2D | Has.Move2D | Has.Dirty;
 
 export function sys_move2d(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
@@ -21,6 +21,7 @@ export function sys_move2d(game: Game, delta: number) {
 const direction: Vec2 = [0, 0];
 
 function update(game: Game, entity: Entity, delta: number) {
+    let local = game.World.Local2D[entity];
     let transform = game.World.Transform2D[entity];
     let move = game.World.Move2D[entity];
 
@@ -49,14 +50,14 @@ function update(game: Game, entity: Entity, delta: number) {
         // Scale by the amount and distance traveled in this tick.
         scale(direction, direction, amount * move.MoveSpeed * delta);
 
-        add(transform.Translation, transform.Translation, direction);
+        add(local.Translation, local.Translation, direction);
 
         move.Direction[0] = 0;
         move.Direction[1] = 0;
     }
 
     if (move.Rotation) {
-        transform.Rotation += move.Rotation * move.RotationSpeed * delta;
+        local.Rotation += move.Rotation * move.RotationSpeed * delta;
 
         move.Rotation = 0;
     }

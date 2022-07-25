@@ -6,6 +6,7 @@ import {camera_canvas} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {control_player} from "../components/com_control_player.js";
 import {draw_arc, draw_rect} from "../components/com_draw.js";
+import {local2d} from "../components/com_local2d.js";
 import {order, render2d} from "../components/com_render2d.js";
 import {RigidKind, rigid_body2d} from "../components/com_rigid_body2d.js";
 import {transform2d} from "../components/com_transform2d.js";
@@ -17,14 +18,19 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
 
     // Camera.
-    instantiate(game, [transform2d([0, 0]), camera_canvas(orthographic(5, 1, 3), [0, 0, 0, 0])]);
+    instantiate(game, [
+        local2d([0, 0]),
+        transform2d(),
+        camera_canvas(orthographic(5, 1, 3), [0, 0, 0, 0]),
+    ]);
 
     {
         // Background.
-        instantiate(game, [transform2d([-5, 3], 0), draw_arc(7, "#D4FCA9")]);
+        instantiate(game, [local2d([-5, 3], 0), transform2d(), draw_arc(7, "#D4FCA9")]);
         instantiate(game, [
-            transform2d([0, 0], -30, [4, 1]),
-            children([transform2d([0, 0], 30), draw_rect(5, 5, "#FFAA79")]),
+            local2d([0, 0], -30, [4, 1]),
+            transform2d(),
+            children([local2d([0, 0], 30), transform2d(), draw_rect(5, 5, "#FFAA79")]),
         ]);
     }
 
@@ -32,7 +38,7 @@ export function scene_stage(game: Game) {
 
     for (let i = 0; i < dynamic_count; i++) {
         instantiate(game, [
-            transform2d([float(-10, 10), float(9, 10)], 0),
+            local2d([float(-10, 10), float(9, 10)], float(-180, 180)),
             control_player(),
             render2d(
                 element(["potato_raw.png", "carrot_raw.png"]),

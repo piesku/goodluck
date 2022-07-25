@@ -3,7 +3,7 @@
  */
 
 import {create} from "../../common/mat2d.js";
-import {Deg, Mat2D, Vec2} from "../../common/math.js";
+import {Mat2D} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
 import {FLOATS_PER_INSTANCE, Game} from "../game.js";
 import {Has, World} from "../world.js";
@@ -13,18 +13,12 @@ export interface Transform2D {
     World: Mat2D;
     /** World to self matrix. */
     Self: Mat2D;
-    /** Local translation relative to the parent. */
-    Translation: Vec2;
-    /** Local rotation relative to the parent. */
-    Rotation: Deg;
-    /** Local scale relative to the parent. */
-    Scale: Vec2;
     Parent?: Entity;
     /** Ignore parent's rotation and scale? */
     Gyroscope: boolean;
 }
 
-export function transform2d(translation: Vec2 = [0, 0], rotation: Deg = 0, scale: Vec2 = [1, 1]) {
+export function transform2d(is_gyroscope = false) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Transform2D | Has.Dirty;
         game.World.Transform2D[entity] = {
@@ -33,31 +27,7 @@ export function transform2d(translation: Vec2 = [0, 0], rotation: Deg = 0, scale
                 entity * FLOATS_PER_INSTANCE + 6
             ),
             Self: create(),
-            Translation: translation,
-            Rotation: rotation,
-            Scale: scale,
-            Gyroscope: false,
-        };
-    };
-}
-
-export function transform2d_gyroscope(
-    translation: Vec2 = [0, 0],
-    rotation: Deg = 0,
-    scale: Vec2 = [1, 1]
-) {
-    return (game: Game, entity: Entity) => {
-        game.World.Signature[entity] |= Has.Transform2D | Has.Dirty;
-        game.World.Transform2D[entity] = {
-            World: game.InstanceData.subarray(
-                entity * FLOATS_PER_INSTANCE,
-                entity * FLOATS_PER_INSTANCE + 6
-            ),
-            Self: create(),
-            Translation: translation,
-            Rotation: rotation,
-            Scale: scale,
-            Gyroscope: true,
+            Gyroscope: is_gyroscope,
         };
     };
 }
