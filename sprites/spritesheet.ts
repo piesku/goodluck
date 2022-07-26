@@ -1,4 +1,11 @@
-{
+export let spritesheet: {
+    [key: string]: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
+} = {
     "carrot_peeled.png": {
         "x": 0,
         "y": 192,

@@ -20,6 +20,16 @@ Spritesmith.run(
         }
 
         writeFileSync(__dirname + "/" + sheet, result.image);
-        console.log(JSON.stringify(result.coordinates, null, 4));
+        console.log(
+            `export let spritesheet: {
+    [key: string]: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
+} =`,
+            JSON.stringify(result.coordinates, null, 4)
+        );
     }
 );

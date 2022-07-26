@@ -1,7 +1,7 @@
 import {Vec4} from "../../common/math.js";
 import {map_range} from "../../common/number.js";
 import {Entity} from "../../common/world.js";
-import * as _spritesheet from "../../sprites/spritesheet.json";
+import {spritesheet} from "../../sprites/spritesheet.js";
 import {FLOATS_PER_INSTANCE, Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -10,15 +10,6 @@ export interface Render2D {
     Color: Float32Array;
     Sprite: Float32Array;
 }
-
-const spritesheet: {
-    [key: string]: {
-        x: number;
-        y: number;
-        width: number;
-        height: number;
-    };
-} = _spritesheet;
 
 export function render2d(sprite_name: string, color: Vec4 = [1, 1, 1, 1]) {
     return (game: Game, entity: Entity) => {
