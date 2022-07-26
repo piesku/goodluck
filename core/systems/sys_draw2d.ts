@@ -25,7 +25,7 @@ export function sys_draw2d(game: Game, delta: number) {
     ctx.fillStyle = "#FFD6D5";
     ctx.fillRect(0, 0, game.ViewportWidth, game.ViewportHeight);
 
-    ctx.setTransform(
+    ctx.transform(
         (camera.Pv[0] / 2) * game.ViewportWidth,
         (camera.Pv[1] / 2) * game.ViewportWidth,
         (camera.Pv[4] / 2) * game.ViewportHeight,
@@ -34,12 +34,11 @@ export function sys_draw2d(game: Game, delta: number) {
         ((camera.Pv[13] + 1) / 2) * game.ViewportHeight
     );
 
-    ctx.save();
-
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
         if ((game.World.Signature[ent] & QUERY) == QUERY) {
             let node = game.World.SpatialNode2D[ent];
 
+            ctx.save();
             ctx.transform(
                 node.World[0],
                 -node.World[1],
