@@ -13,7 +13,9 @@ main {
     user-select: none;
     touch-action: none;
 }
-
+img {
+    display: none;
+}
 [onclick] {
     cursor: pointer;
 }

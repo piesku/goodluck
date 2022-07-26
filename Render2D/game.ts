@@ -1,5 +1,5 @@
 import {Game3D} from "../common/game.js";
-import {Spritesheet} from "../common/texture.js";
+import {create_spritesheet_from} from "../common/texture.js";
 import {
     GL_ARRAY_BUFFER,
     GL_BLEND,
@@ -29,7 +29,7 @@ export class Game extends Game3D {
     World = new World(WORLD_CAPACITY);
 
     MaterialInstanced = mat_instanced2d(this.Gl);
-    Spritesheets: Record<string, Spritesheet> = {};
+    Spritesheet = create_spritesheet_from(this.Gl, document.querySelector("img")!);
 
     InstanceData = new Float32Array(this.World.Capacity * FLOATS_PER_INSTANCE);
     InstanceBuffer = this.Gl.createBuffer()!;

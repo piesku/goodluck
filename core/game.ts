@@ -47,7 +47,7 @@ export interface Game extends GameXR {
     Cameras: Array<Entity>;
 
     MaterialInstanced: Material<Instanced2DLayout>;
-    Spritesheets: Record<string, Spritesheet>;
+    Spritesheet: Spritesheet;
     InstanceData: Float32Array;
     InstanceBuffer: WebGLBuffer;
 }
