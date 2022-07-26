@@ -9,6 +9,7 @@ import {
 } from "../common/webgl.js";
 import {Attribute} from "../materials/layout2d.js";
 import {mat_instanced2d} from "./materials/mat_instanced2d.js";
+import {sys_animate2d_sprite} from "./systems/sys_animate2d_sprite.js";
 import {sys_camera2d} from "./systems/sys_camera2d.js";
 import {sys_control_always2d} from "./systems/sys_control_always2d.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
@@ -113,6 +114,7 @@ export class Game extends Game3D {
         sys_camera2d(this, delta);
         sys_control_player(this, delta);
         sys_control_always2d(this, delta);
+        sys_animate2d_sprite(this, delta);
         sys_move2d(this, delta);
         sys_draw2d(this, delta);
         sys_render2d(this, delta);

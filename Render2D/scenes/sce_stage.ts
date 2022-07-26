@@ -2,6 +2,7 @@ import {hsva_to_vec4} from "../../common/color.js";
 import {instantiate} from "../../common/game.js";
 import {orthographic} from "../../common/projection.js";
 import {element, float} from "../../common/random.js";
+import {animate_sprite} from "../components/com_animate_sprite.js";
 import {camera_canvas} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {control_always2d} from "../components/com_control_always2d.js";
@@ -41,7 +42,21 @@ export function scene_stage(game: Game) {
         ]);
     }
 
-    let dynamic_count = WORLD_CAPACITY - 4;
+    // Pot.
+    instantiate(game, [
+        spatial_node2d(),
+        local_transform2d(undefined, 0, [4, 3]),
+        render2d("cooking_pot1.png"),
+        order(0),
+        animate_sprite({
+            "cooking_pot1.png": 0.1,
+            "cooking_pot2.png": 0.1,
+            "cooking_pot3.png": 0.1,
+            "cooking_pot4.png": 0.1,
+        }),
+    ]);
+
+    let dynamic_count = WORLD_CAPACITY - 5;
 
     for (let i = 0; i < dynamic_count; i++) {
         instantiate(game, [
@@ -51,8 +66,6 @@ export function scene_stage(game: Game) {
                 element(["potato_raw.png", "carrot_raw.png"]),
                 hsva_to_vec4(float(0.1, 0.2), 0.5, 1, 1)
             ),
-            // Place entities from closest to the farthest away to avoid overdraw.
-            order(1 - i / dynamic_count),
             rigid_body2d(RigidKind.Dynamic, float(0.01, 0.02)),
         ]);
     }
