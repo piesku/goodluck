@@ -7,6 +7,7 @@ import {
     GL_STATIC_DRAW,
     GL_STREAM_DRAW,
 } from "../common/webgl.js";
+import {Attribute} from "../materials/layout2d.js";
 import {mat_instanced2d} from "./materials/mat_instanced2d.js";
 import {sys_camera2d} from "./systems/sys_camera2d.js";
 import {sys_control_always2d} from "./systems/sys_control_always2d.js";
@@ -39,30 +40,14 @@ export class Game extends Game3D {
 
         this.Gl.enable(GL_BLEND);
 
-        let material = this.MaterialInstanced;
-
         // Vertex positions and texture coordinates.
         let vertex_buf = this.Gl.createBuffer()!;
         this.Gl.bindBuffer(GL_ARRAY_BUFFER, vertex_buf);
         this.Gl.bufferData(GL_ARRAY_BUFFER, vertex_arr, GL_STATIC_DRAW);
-        this.Gl.enableVertexAttribArray(material.Locations.VertexPosition);
-        this.Gl.vertexAttribPointer(
-            material.Locations.VertexPosition,
-            3,
-            GL_FLOAT,
-            false,
-            4 * 5,
-            0
-        );
-        this.Gl.enableVertexAttribArray(material.Locations.VertexTexcoord);
-        this.Gl.vertexAttribPointer(
-            material.Locations.VertexTexcoord,
-            2,
-            GL_FLOAT,
-            false,
-            4 * 5,
-            4 * 3
-        );
+        this.Gl.enableVertexAttribArray(Attribute.VertexPosition);
+        this.Gl.vertexAttribPointer(Attribute.VertexPosition, 3, GL_FLOAT, false, 4 * 5, 0);
+        this.Gl.enableVertexAttribArray(Attribute.VertexTexCoord);
+        this.Gl.vertexAttribPointer(Attribute.VertexTexCoord, 2, GL_FLOAT, false, 4 * 5, 4 * 3);
 
         // Instance data.
         this.Gl.bindBuffer(GL_ARRAY_BUFFER, this.InstanceBuffer);
@@ -72,10 +57,10 @@ export class Game extends Game3D {
             GL_STREAM_DRAW
         );
 
-        this.Gl.enableVertexAttribArray(material.Locations.InstanceRotation);
-        this.Gl.vertexAttribDivisor(material.Locations.InstanceRotation, 1);
+        this.Gl.enableVertexAttribArray(Attribute.InstanceRotation);
+        this.Gl.vertexAttribDivisor(Attribute.InstanceRotation, 1);
         this.Gl.vertexAttribPointer(
-            material.Locations.InstanceRotation,
+            Attribute.InstanceRotation,
             4,
             GL_FLOAT,
             false,
@@ -83,10 +68,10 @@ export class Game extends Game3D {
             0
         );
 
-        this.Gl.enableVertexAttribArray(material.Locations.InstanceTranslation);
-        this.Gl.vertexAttribDivisor(material.Locations.InstanceTranslation, 1);
+        this.Gl.enableVertexAttribArray(Attribute.InstanceTranslation);
+        this.Gl.vertexAttribDivisor(Attribute.InstanceTranslation, 1);
         this.Gl.vertexAttribPointer(
-            material.Locations.InstanceTranslation,
+            Attribute.InstanceTranslation,
             4,
             GL_FLOAT,
             false,
@@ -94,10 +79,10 @@ export class Game extends Game3D {
             4 * 4
         );
 
-        this.Gl.enableVertexAttribArray(material.Locations.InstanceColor);
-        this.Gl.vertexAttribDivisor(material.Locations.InstanceColor, 1);
+        this.Gl.enableVertexAttribArray(Attribute.InstanceColor);
+        this.Gl.vertexAttribDivisor(Attribute.InstanceColor, 1);
         this.Gl.vertexAttribPointer(
-            material.Locations.InstanceColor,
+            Attribute.InstanceColor,
             4,
             GL_FLOAT,
             false,
@@ -105,10 +90,10 @@ export class Game extends Game3D {
             4 * 8
         );
 
-        this.Gl.enableVertexAttribArray(material.Locations.InstanceSprite);
-        this.Gl.vertexAttribDivisor(material.Locations.InstanceSprite, 1);
+        this.Gl.enableVertexAttribArray(Attribute.InstanceSprite);
+        this.Gl.vertexAttribDivisor(Attribute.InstanceSprite, 1);
         this.Gl.vertexAttribPointer(
-            material.Locations.InstanceSprite,
+            Attribute.InstanceSprite,
             4,
             GL_FLOAT,
             false,

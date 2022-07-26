@@ -1,6 +1,6 @@
 import {link, Material} from "../../common/material.js";
 import {GL_TRIANGLE_STRIP} from "../../common/webgl.js";
-import {Instanced2DLayout} from "../../materials/layout2d.js";
+import {Attribute, Instanced2DLayout} from "../../materials/layout2d.js";
 import {Has} from "../world.js";
 
 let vertex = `#version 300 es\n
@@ -8,14 +8,14 @@ let vertex = `#version 300 es\n
     uniform vec2 sheet_size;
 
     // Vertex attributes
-    in vec4 attr_position;
-    in vec2 attr_texcoord;
+    layout(location=${Attribute.VertexPosition}) in vec4 attr_position;
+    layout(location=${Attribute.VertexTexCoord}) in vec2 attr_texcoord;
 
     // Instance attributes
-    in vec4 attr_rotation; // [a, b, c, d]
-    in vec4 attr_translation; // [x, y, z, w: Signature]
-    in vec4 attr_color;
-    in vec4 attr_sprite;
+    layout(location=${Attribute.InstanceRotation}) in vec4 attr_rotation; // [a, b, c, d]
+    layout(location=${Attribute.InstanceTranslation}) in vec4 attr_translation; // [x, y, z, w: Signature]
+    layout(location=${Attribute.InstanceColor}) in vec4 attr_color;
+    layout(location=${Attribute.InstanceSprite}) in vec4 attr_sprite;
 
     out vec2 vert_texcoord;
     out vec4 vert_color;
@@ -85,14 +85,6 @@ export function mat_instanced2d(gl: WebGL2RenderingContext): Material<Instanced2
             World: gl.getUniformLocation(program, "world")!,
             SheetTexture: gl.getUniformLocation(program, "sheet_texture")!,
             SheetSize: gl.getUniformLocation(program, "sheet_size")!,
-
-            VertexPosition: gl.getAttribLocation(program, "attr_position")!,
-            VertexTexcoord: gl.getAttribLocation(program, "attr_texcoord")!,
-
-            InstanceRotation: gl.getAttribLocation(program, "attr_rotation")!,
-            InstanceTranslation: gl.getAttribLocation(program, "attr_translation")!,
-            InstanceColor: gl.getAttribLocation(program, "attr_color")!,
-            InstanceSprite: gl.getAttribLocation(program, "attr_sprite")!,
         },
     };
 }
