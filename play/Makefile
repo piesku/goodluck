@@ -28,7 +28,10 @@ game.terser.js: game.sed.js terser_compress.txt
 		--compress $(shell paste -sd, terser_compress.txt) \
 	> $@
 
-index.html: game.html game.terser.js game.css debug.css posthtml.cjs
+game.roadroller.js: game.terser.js
+	npx --quiet roadroller -O2 --dirty $< -o $@
+
+index.html: game.html game.roadroller.js game.css debug.css posthtml.cjs
 	node posthtml.cjs $< > $@
 
 # On Ubuntu, install p7zip-full. See https://www.7-zip.org/download.html.
