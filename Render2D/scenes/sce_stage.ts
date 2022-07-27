@@ -23,11 +23,19 @@ export function scene_stage(game: Game) {
     instantiate(game, [
         spatial_node2d(),
         local_transform2d([0, 0]),
-        camera_canvas(orthographic([0, 0], 1, 3), [0, 0, 0, 0]),
+        camera_canvas(
+            orthographic([game.SceneWidth / 2 + 1, game.SceneHeight / 2 + 1], 1, 3),
+            [0, 0, 0, 0]
+        ),
     ]);
 
     {
         // Background.
+        instantiate(game, [
+            spatial_node2d(),
+            local_transform2d(),
+            draw_rect(game.SceneWidth, game.SceneHeight, "#FFD6D5"),
+        ]);
         instantiate(game, [
             spatial_node2d(),
             local_transform2d([-5, 3], 0),
@@ -56,7 +64,7 @@ export function scene_stage(game: Game) {
         }),
     ]);
 
-    let dynamic_count = WORLD_CAPACITY - 5;
+    let dynamic_count = WORLD_CAPACITY - game.World.Signature.length;
 
     for (let i = 0; i < dynamic_count; i++) {
         instantiate(game, [

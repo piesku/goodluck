@@ -25,7 +25,6 @@ import {World} from "./world.js";
 export const WORLD_CAPACITY = 65_536; // = 4MB of InstanceData.
 export const FLOATS_PER_INSTANCE = 16;
 export const BYTES_PER_INSTANCE = FLOATS_PER_INSTANCE * 4;
-export const UNIT_PX = 32;
 
 export class Game extends Game3D {
     World = new World(WORLD_CAPACITY);
@@ -35,6 +34,9 @@ export class Game extends Game3D {
 
     InstanceData = new Float32Array(this.World.Capacity * FLOATS_PER_INSTANCE);
     InstanceBuffer = this.Gl.createBuffer()!;
+
+    SceneWidth = 32;
+    SceneHeight = 32;
 
     constructor() {
         super();

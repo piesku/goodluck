@@ -22,7 +22,7 @@ export function sys_draw2d(game: Game, delta: number) {
 
     let ctx = game.Context2D;
     ctx.resetTransform();
-    ctx.fillStyle = "#FFD6D5";
+    ctx.fillStyle = "#D7AAA9";
     ctx.fillRect(0, 0, game.ViewportWidth, game.ViewportHeight);
 
     ctx.transform(

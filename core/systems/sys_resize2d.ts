@@ -4,10 +4,11 @@
 
 import {ProjectionKind, resize_ortho, resize_ortho_constant} from "../../common/projection.js";
 import {CameraKind} from "../components/com_camera.js";
-import {Game, UNIT_PX} from "../game.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Camera;
+const UNIT_PX = 32;
 
 export function sys_resize2d(game: Game, delta: number) {
     if (game.ViewportWidth != window.innerWidth || game.ViewportHeight != window.innerHeight) {
