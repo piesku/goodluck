@@ -23,7 +23,7 @@ export function scene_stage(game: Game) {
     instantiate(game, [
         spatial_node2d(),
         local_transform2d([0, 0]),
-        camera_canvas(orthographic(5, 1, 3), [0, 0, 0, 0]),
+        camera_canvas(orthographic([0, 0], 1, 3), [0, 0, 0, 0]),
     ]);
 
     {
