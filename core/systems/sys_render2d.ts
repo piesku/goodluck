@@ -5,8 +5,9 @@ import {
     GL_TEXTURE0,
     GL_TEXTURE_2D,
 } from "../../common/webgl.js";
+import {FLOATS_PER_INSTANCE} from "../../materials/layout2d.js";
 import {CameraEye, CameraKind} from "../components/com_camera.js";
-import {FLOATS_PER_INSTANCE, Game} from "../game.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 export function sys_render2d(game: Game, delta: number) {

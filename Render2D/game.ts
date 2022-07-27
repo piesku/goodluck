@@ -1,13 +1,7 @@
 import {Game3D} from "../common/game.js";
 import {create_spritesheet_from} from "../common/texture.js";
-import {
-    GL_ARRAY_BUFFER,
-    GL_BLEND,
-    GL_FLOAT,
-    GL_STATIC_DRAW,
-    GL_STREAM_DRAW,
-} from "../common/webgl.js";
-import {Attribute} from "../materials/layout2d.js";
+import {GL_BLEND} from "../common/webgl.js";
+import {FLOATS_PER_INSTANCE, setup_render2d_buffers} from "../materials/layout2d.js";
 import {mat_instanced2d} from "./materials/mat_instanced2d.js";
 import {sys_animate2d_sprite} from "./systems/sys_animate2d_sprite.js";
 import {sys_camera2d} from "./systems/sys_camera2d.js";
@@ -23,8 +17,6 @@ import {sys_transform2d} from "./systems/sys_transform2d.js";
 import {World} from "./world.js";
 
 export const WORLD_CAPACITY = 65_536; // = 4MB of InstanceData.
-export const FLOATS_PER_INSTANCE = 16;
-export const BYTES_PER_INSTANCE = FLOATS_PER_INSTANCE * 4;
 
 export class Game extends Game3D {
     World = new World(WORLD_CAPACITY);
@@ -42,67 +34,7 @@ export class Game extends Game3D {
         super();
 
         this.Gl.enable(GL_BLEND);
-
-        // Vertex positions and texture coordinates.
-        let vertex_buf = this.Gl.createBuffer()!;
-        this.Gl.bindBuffer(GL_ARRAY_BUFFER, vertex_buf);
-        this.Gl.bufferData(GL_ARRAY_BUFFER, vertex_arr, GL_STATIC_DRAW);
-        this.Gl.enableVertexAttribArray(Attribute.VertexPosition);
-        this.Gl.vertexAttribPointer(Attribute.VertexPosition, 3, GL_FLOAT, false, 4 * 5, 0);
-        this.Gl.enableVertexAttribArray(Attribute.VertexTexCoord);
-        this.Gl.vertexAttribPointer(Attribute.VertexTexCoord, 2, GL_FLOAT, false, 4 * 5, 4 * 3);
-
-        // Instance data.
-        this.Gl.bindBuffer(GL_ARRAY_BUFFER, this.InstanceBuffer);
-        this.Gl.bufferData(
-            GL_ARRAY_BUFFER,
-            this.World.Capacity * BYTES_PER_INSTANCE,
-            GL_STREAM_DRAW
-        );
-
-        this.Gl.enableVertexAttribArray(Attribute.InstanceRotation);
-        this.Gl.vertexAttribDivisor(Attribute.InstanceRotation, 1);
-        this.Gl.vertexAttribPointer(
-            Attribute.InstanceRotation,
-            4,
-            GL_FLOAT,
-            false,
-            BYTES_PER_INSTANCE,
-            0
-        );
-
-        this.Gl.enableVertexAttribArray(Attribute.InstanceTranslation);
-        this.Gl.vertexAttribDivisor(Attribute.InstanceTranslation, 1);
-        this.Gl.vertexAttribPointer(
-            Attribute.InstanceTranslation,
-            4,
-            GL_FLOAT,
-            false,
-            BYTES_PER_INSTANCE,
-            4 * 4
-        );
-
-        this.Gl.enableVertexAttribArray(Attribute.InstanceColor);
-        this.Gl.vertexAttribDivisor(Attribute.InstanceColor, 1);
-        this.Gl.vertexAttribPointer(
-            Attribute.InstanceColor,
-            4,
-            GL_FLOAT,
-            false,
-            BYTES_PER_INSTANCE,
-            4 * 8
-        );
-
-        this.Gl.enableVertexAttribArray(Attribute.InstanceSprite);
-        this.Gl.vertexAttribDivisor(Attribute.InstanceSprite, 1);
-        this.Gl.vertexAttribPointer(
-            Attribute.InstanceSprite,
-            4,
-            GL_FLOAT,
-            false,
-            BYTES_PER_INSTANCE,
-            4 * 12
-        );
+        setup_render2d_buffers(this.Gl, this.InstanceBuffer);
     }
 
     override FixedUpdate(delta: number) {
@@ -122,12 +54,3 @@ export class Game extends Game3D {
         sys_render2d(this, delta);
     }
 }
-
-// Texcoords are +Y=down for compatibility with spritesheet map coordinates.
-// prettier-ignore
-let vertex_arr = Float32Array.from([
-    -0.5, -0.5, 0,    0, 1,    // SW
-    0.5, -0.5, 0,     1, 1,    // SE
-    -0.5, 0.5, 0,     0, 0,    // NW
-    0.5, 0.5, 0,      1, 0     // NE
-]);

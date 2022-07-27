@@ -5,7 +5,8 @@
 import {create} from "../../common/mat2d.js";
 import {Deg, Mat2D, Vec2} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
-import {FLOATS_PER_INSTANCE, Game} from "../game.js";
+import {FLOATS_PER_INSTANCE} from "../../materials/layout2d.js";
+import {Game} from "../game.js";
 import {Has, World} from "../world.js";
 
 export interface LocalTransform2D {

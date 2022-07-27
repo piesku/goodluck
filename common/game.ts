@@ -243,20 +243,6 @@ export abstract class GameImpl {
     }
 }
 
-export abstract class Game2D extends GameImpl {
-    Canvas2D = document.querySelector("canvas")!;
-    Context2D = this.Canvas2D.getContext("2d")!;
-    Audio = new AudioContext();
-
-    constructor() {
-        super();
-
-        this.Canvas2D.width = this.ViewportWidth;
-        this.Canvas2D.height = this.ViewportHeight;
-        this.Context2D = this.Canvas2D.getContext("2d")!;
-    }
-}
-
 export abstract class Game3D extends GameImpl {
     Canvas2D = document.querySelector("#billboard")! as HTMLCanvasElement;
     Context2D = this.Canvas2D.getContext("2d")!;

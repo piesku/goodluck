@@ -5,7 +5,8 @@
 import {compose, get_translation, invert, multiply} from "../../common/mat2d.js";
 import {DEG_TO_RAD, Vec2} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
-import {FLOATS_PER_INSTANCE, Game} from "../game.js";
+import {FLOATS_PER_INSTANCE} from "../../materials/layout2d.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY_DIRTY = Has.LocalTransform2D | Has.Dirty;

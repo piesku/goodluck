@@ -1,8 +1,9 @@
 import {Vec4} from "../../common/math.js";
 import {map_range} from "../../common/number.js";
 import {Entity} from "../../common/world.js";
+import {FLOATS_PER_INSTANCE} from "../../materials/layout2d.js";
 import {spritesheet} from "../../sprites/spritesheet.js";
-import {FLOATS_PER_INSTANCE, Game} from "../game.js";
+import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 export interface Render2D {
