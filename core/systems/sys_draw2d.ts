@@ -27,8 +27,8 @@ export function sys_draw2d(game: Game, delta: number) {
 
     ctx.transform(
         (camera.Pv[0] / 2) * game.ViewportWidth,
-        (camera.Pv[1] / 2) * game.ViewportWidth,
-        (camera.Pv[4] / 2) * game.ViewportHeight,
+        -(camera.Pv[1] / 2) * game.ViewportWidth,
+        -(camera.Pv[4] / 2) * game.ViewportHeight,
         (camera.Pv[5] / 2) * game.ViewportHeight,
         ((camera.Pv[12] + 1) / 2) * game.ViewportWidth,
         ((camera.Pv[13] + 1) / 2) * game.ViewportHeight
