@@ -33,6 +33,7 @@ export class Game extends Game3D {
     constructor() {
         super();
 
+        this.Gl.clearColor(0, 0, 0, 0);
         this.Gl.enable(GL_BLEND);
         setup_render2d_buffers(this.Gl, this.InstanceBuffer);
     }

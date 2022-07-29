@@ -82,7 +82,7 @@ export interface ProjectionOrthographic {
  * As a special case, if the radius is [0, 0], sys_resize2d will dynamically
  * resize the projection to keep the unit size in pixels constant.
  *
- * @param radius The radius of the projection: [top, left].
+ * @param radius The radius of the projection: [left, top].
  * @param near The near clipping plane.
  * @param far The far clipping plane.
  */

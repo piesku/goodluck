@@ -18,7 +18,7 @@ export function render2d(sprite_name: string, color: Vec4 = [1, 1, 1, 1]) {
         // Detail.
         // Place entities from closest to the farthest away to avoid overdraw.
         game.InstanceData[instance_offset + 6] = map_range(entity, 0, game.World.Capacity, 1, 0);
-        game.InstanceData[instance_offset + 7] = 1; // Has.Render2D
+        game.InstanceData[instance_offset + 7] = Has.Render2D;
         // Color.
         game.InstanceData[instance_offset + 8] = color[0];
         game.InstanceData[instance_offset + 9] = color[1];

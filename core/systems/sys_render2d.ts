@@ -1,12 +1,14 @@
 import {
     GL_ARRAY_BUFFER,
+    GL_COLOR_BUFFER_BIT,
+    GL_DEPTH_BUFFER_BIT,
     GL_FRAMEBUFFER,
     GL_STREAM_DRAW,
     GL_TEXTURE0,
     GL_TEXTURE_2D,
 } from "../../common/webgl.js";
 import {FLOATS_PER_INSTANCE} from "../../materials/layout2d.js";
-import {CameraEye, CameraKind} from "../components/com_camera.js";
+import {Camera2D} from "../components/com_camera2d.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -21,25 +23,21 @@ export function sys_render2d(game: Game, delta: number) {
     }
 
     for (let camera_entity of game.Cameras) {
-        let camera = game.World.Camera[camera_entity];
-        switch (camera.Kind) {
-            case CameraKind.Canvas:
-                game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
-                game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
-                game.Gl.clearColor(...camera.ClearColor);
-                game.Gl.clear(camera.ClearMask);
-                render_all(game, camera);
-                break;
-        }
+        let camera = game.World.Camera2D[camera_entity];
+        game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
+        game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
+        game.Gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        render_all(game, camera);
+        break;
     }
 }
 
-function render_all(game: Game, eye: CameraEye) {
+function render_all(game: Game, eye: Camera2D) {
     let material = game.MaterialInstanced;
     let sheet = game.Spritesheet;
 
     game.Gl.useProgram(material.Program);
-    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
+    game.Gl.uniformMatrix3x2fv(material.Locations.Pv, false, eye.Pv);
 
     game.Gl.activeTexture(GL_TEXTURE0);
     game.Gl.bindTexture(GL_TEXTURE_2D, sheet.Texture);

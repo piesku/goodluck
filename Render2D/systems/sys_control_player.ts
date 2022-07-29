@@ -6,9 +6,7 @@ import {pointer_down, pointer_ndc_far} from "../../common/input.js";
 import {transform_point} from "../../common/mat2d.js";
 import {Vec2, Vec3} from "../../common/math.js";
 import {distance_squared, scale} from "../../common/vec2.js";
-import {transform_position} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
-import {CameraKind} from "../components/com_camera.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -23,19 +21,17 @@ export function sys_control_player(game: Game, delta: number) {
         return;
     }
 
-    let camera = game.World.Camera[camera_entity];
-    if (camera.Kind === CameraKind.Xr) {
-        throw new Error("XR not implemented");
-    }
+    let camera = game.World.Camera2D[camera_entity];
 
     if (pointer_ndc_far(pointer_3d_position, game) && pointer_down(game, 0)) {
+        pointer_2d_position[0] = pointer_3d_position[0];
+        pointer_2d_position[1] = pointer_3d_position[1];
+
         // The pointer position is in NDC space. Transform it to the eye space...
-        transform_position(pointer_3d_position, pointer_3d_position, camera.Projection.Inverse);
+        transform_point(pointer_2d_position, pointer_2d_position, camera.Projection.Inverse);
 
         // ...and then to the world space.
         let camera_node = game.World.SpatialNode2D[camera_entity];
-        pointer_2d_position[0] = pointer_3d_position[0];
-        pointer_2d_position[1] = pointer_3d_position[1];
         transform_point(pointer_2d_position, pointer_2d_position, camera_node.World);
 
         for (let i = 0; i < game.World.Signature.length; i++) {

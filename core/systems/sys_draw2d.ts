@@ -2,7 +2,6 @@
  * @module systems/sys_draw2d
  */
 
-import {CameraKind} from "../components/com_camera.js";
 import {DrawKind} from "../components/com_draw.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -15,10 +14,7 @@ export function sys_draw2d(game: Game, delta: number) {
         return;
     }
 
-    let camera = game.World.Camera[camera_entity];
-    if (camera.Kind === CameraKind.Xr) {
-        throw new Error("XR not implemented");
-    }
+    let camera = game.World.Camera2D[camera_entity];
 
     let ctx = game.Context2D;
     ctx.resetTransform();
@@ -28,10 +24,10 @@ export function sys_draw2d(game: Game, delta: number) {
     ctx.transform(
         (camera.Pv[0] / 2) * game.ViewportWidth,
         -(camera.Pv[1] / 2) * game.ViewportWidth,
-        -(camera.Pv[4] / 2) * game.ViewportHeight,
-        (camera.Pv[5] / 2) * game.ViewportHeight,
-        ((camera.Pv[12] + 1) / 2) * game.ViewportWidth,
-        ((camera.Pv[13] + 1) / 2) * game.ViewportHeight
+        -(camera.Pv[2] / 2) * game.ViewportHeight,
+        (camera.Pv[3] / 2) * game.ViewportHeight,
+        ((camera.Pv[4] + 1) / 2) * game.ViewportWidth,
+        ((camera.Pv[5] + 1) / 2) * game.ViewportHeight
     );
 
     for (let ent = 0; ent < game.World.Signature.length; ent++) {

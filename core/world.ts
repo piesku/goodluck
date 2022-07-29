@@ -3,6 +3,7 @@ import {Animate} from "./components/com_animate.js";
 import {AnimateSprite} from "./components/com_animate_sprite.js";
 import {AudioSource} from "./components/com_audio_source.js";
 import {Camera} from "./components/com_camera.js";
+import {Camera2D} from "./components/com_camera2d.js";
 import {Children} from "./components/com_children.js";
 import {Collide} from "./components/com_collide.js";
 import {ControlAlways} from "./components/com_control_always.js";
@@ -36,6 +37,7 @@ const enum Component {
     AudioListener,
     AudioSource,
     Camera,
+    Camera2D,
     Children,
     Collide,
     ControlAlways,
@@ -73,6 +75,7 @@ export const enum Has {
     AudioListener = 1 << Component.AudioListener,
     AudioSource = 1 << Component.AudioSource,
     Camera = 1 << Component.Camera,
+    Camera2D = 1 << Component.Camera2D,
     Children = 1 << Component.Children,
     Collide = 1 << Component.Collide,
     ControlAlways = 1 << Component.ControlAlways,
@@ -108,6 +111,7 @@ export interface World extends WorldImpl {
     AnimateSprite: Array<AnimateSprite>;
     AudioSource: Array<AudioSource>;
     Camera: Array<Camera>;
+    Camera2D: Array<Camera2D>;
     Children: Array<Children>;
     Collide: Array<Collide>;
     ControlAlways: Array<ControlAlways>;
