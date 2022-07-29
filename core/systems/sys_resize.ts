@@ -8,12 +8,8 @@ import {
     resize_hdr_target,
     TargetKind,
 } from "../../common/framebuffer.js";
-import {
-    Projection,
-    ProjectionKind,
-    resize_ortho,
-    resize_perspective,
-} from "../../common/projection.js";
+import {from_ortho, from_perspective, invert} from "../../common/mat4.js";
+import {Projection, ProjectionKind} from "../../common/projection.js";
 import {CameraKind} from "../components/com_camera.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -83,11 +79,54 @@ export function sys_resize(game: Game, delta: number) {
 function update_projection(projection: Projection, aspect: number) {
     switch (projection.Kind) {
         case ProjectionKind.Perspective: {
-            resize_perspective(projection, aspect);
+            if (aspect < 1) {
+                // Portrait orientation.
+                from_perspective(
+                    projection.Projection,
+                    projection.FovY / aspect,
+                    aspect,
+                    projection.Near,
+                    projection.Far
+                );
+            } else {
+                // Landscape orientation.
+                from_perspective(
+                    projection.Projection,
+                    projection.FovY,
+                    aspect,
+                    projection.Near,
+                    projection.Far
+                );
+            }
             break;
         }
         case ProjectionKind.Orthographic:
-            resize_ortho(projection, aspect);
+            let target_aspect = projection.Radius[0] / projection.Radius[1];
+            if (aspect < target_aspect) {
+                // Portrait orientation.
+                from_ortho(
+                    projection.Projection,
+                    projection.Radius[0] / aspect,
+                    projection.Radius[0],
+                    -projection.Radius[0] / aspect,
+                    -projection.Radius[0],
+                    projection.Near,
+                    projection.Far
+                );
+            } else {
+                // Landscape orientation.
+                from_ortho(
+                    projection.Projection,
+                    projection.Radius[1],
+                    projection.Radius[1] * aspect,
+                    -projection.Radius[1],
+                    -projection.Radius[1] * aspect,
+                    projection.Near,
+                    projection.Far
+                );
+            }
             break;
     }
+
+    invert(projection.Inverse, projection.Projection);
 }

@@ -2,8 +2,7 @@
  * @module systems/sys_resize2d
  */
 
-import {invert} from "../../common/mat2d.js";
-import {from_ortho} from "../../common/projection2d.js";
+import {from_ortho, invert} from "../../common/mat2d.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
