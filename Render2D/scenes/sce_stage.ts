@@ -70,6 +70,7 @@ export function scene_stage(game: Game) {
                 element(["potato_raw.png", "carrot_raw.png"]),
                 hsva_to_vec4(float(0.1, 0.2), 0.5, 1, 1)
             ),
+            order(0.1),
             rigid_body2d(RigidKind.Dynamic, float(0.01, 0.02)),
         ]);
     }

@@ -43,7 +43,7 @@ let vertex = `#version 300 es\n
 
             vec3 world_position = mat3(world) * vec3(attr_position, 1);
             vec3 clip_position = mat3(pv) * world_position;
-            gl_Position = vec4(clip_position.xy, attr_translation.z, 1);
+            gl_Position = vec4(clip_position.xy, -attr_translation.z, 1);
 
             // attr_texcoords are +Y=down for compatibility with spritesheet frame coordinates.
             vert_texcoord = (attr_sprite.xy + attr_sprite.zw * attr_texcoord) / sheet_size;
