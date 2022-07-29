@@ -8,7 +8,7 @@ let vertex = `#version 300 es\n
     uniform vec2 sheet_size;
 
     // Vertex attributes
-    layout(location=${Attribute.VertexPosition}) in vec3 attr_position;
+    layout(location=${Attribute.VertexPosition}) in vec2 attr_position;
     layout(location=${Attribute.VertexTexCoord}) in vec2 attr_texcoord;
 
     // Instance attributes
@@ -41,7 +41,7 @@ let vertex = `#version 300 es\n
                 );
             }
 
-            vec3 world_position = mat3(world) * attr_position;
+            vec3 world_position = mat3(world) * vec3(attr_position, 1);
             vec3 clip_position = mat3(pv) * world_position;
             gl_Position = vec4(clip_position.xy, attr_translation.z, 1);
 
