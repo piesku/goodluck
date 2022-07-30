@@ -2,9 +2,9 @@
  * @module systems/sys_camera
  */
 
-import {get_translation, multiply} from "../../common/mat4.js";
+import {copy, get_translation, multiply} from "../../common/mat4.js";
 import {Entity} from "../../common/world.js";
-import {Camera, CameraKind, CameraXr} from "../components/com_camera.js";
+import {CameraCanvas, CameraKind, CameraTarget} from "../components/com_camera.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -16,6 +16,9 @@ export function sys_camera(game: Game, delta: number) {
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
         if ((game.World.Signature[ent] & QUERY) === QUERY) {
             let camera = game.World.Camera[ent];
+            let transform = game.World.Transform[ent];
+            copy(camera.World, transform.World);
+
             switch (camera.Kind) {
                 case CameraKind.Canvas:
                 case CameraKind.Target:
@@ -27,7 +30,7 @@ export function sys_camera(game: Game, delta: number) {
     }
 }
 
-function update_camera(game: Game, entity: Entity, camera: Exclude<Camera, CameraXr>) {
+function update_camera(game: Game, entity: Entity, camera: CameraCanvas | CameraTarget) {
     let transform = game.World.Transform[entity];
     let projection = camera.Projection;
 

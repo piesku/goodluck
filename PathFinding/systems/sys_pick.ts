@@ -1,10 +1,10 @@
-import {pointer_ndc_far} from "../../common/input.js";
+import {pointer_viewport} from "../../common/input.js";
 import {get_translation} from "../../common/mat4.js";
-import {Vec3} from "../../common/math.js";
+import {Vec2, Vec3} from "../../common/math.js";
 import {ray_intersect_aabb, ray_intersect_mesh} from "../../common/raycast.js";
 import {normalize, subtract, transform_direction, transform_position} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
-import {CameraKind} from "../components/com_camera.js";
+import {CameraKind, viewport_to_world} from "../components/com_camera.js";
 import {Collide} from "../components/com_collide.js";
 import {PickableKind} from "../components/com_pickable.js";
 import {Game} from "../game.js";
@@ -26,29 +26,28 @@ export function sys_pick(game: Game, delta: number) {
     }
 }
 
+let pointer_position: Vec2 = [0, 0];
 let pointer_origin: Vec3 = [0, 0, 0];
 // The target is the point on the far plane where the mouse click happens.
 let pointer_target: Vec3 = [0, 0, 0];
 let pointer_direction: Vec3 = [0, 0, 0];
 
 function update(game: Game, entity: Entity, pickables: Array<Collide>) {
-    let transform = game.World.Transform[entity];
     let camera = game.World.Camera[entity];
     if (camera.Kind === CameraKind.Xr) {
         throw new Error("XR not implemented");
     }
 
-    if (!pointer_ndc_far(pointer_target, game)) {
+    if (!pointer_viewport(pointer_position, game)) {
         // No mouse, no touch.
         return;
     }
 
     // The ray's origin is at the camera's world position.
-    get_translation(pointer_origin, transform.World);
+    get_translation(pointer_origin, camera.World);
 
-    // Transform pointer position to the eye space, and then to the world space.
-    transform_position(pointer_target, pointer_target, camera.Projection.Inverse);
-    transform_position(pointer_target, pointer_target, transform.World);
+    // The pointer target in the world space.
+    viewport_to_world(pointer_target, camera, pointer_position);
 
     // The ray's direction.
     subtract(pointer_direction, pointer_target, pointer_origin);

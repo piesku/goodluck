@@ -64,6 +64,8 @@ export function sys_resize(game: Game, delta: number) {
                         );
                         break;
                     case CameraKind.Target:
+                        camera.ViewportWidth = game.ViewportWidth;
+                        camera.ViewportHeight = game.ViewportHeight;
                         update_projection(
                             camera.Projection,
                             camera.Target.Width / camera.Target.Height
