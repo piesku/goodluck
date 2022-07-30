@@ -18,6 +18,20 @@ export interface Camera2D {
     ViewportHeight: number;
 }
 
+/**
+ * Add Camera2D to an entity.
+ *
+ * Camera2D always uses an orthographic projection. The projection is set up
+ * with z-order +1 as the near plane and -1 as the far plane. Use render2d's
+ * order() mixin to change the z-order.
+ *
+ * The radius of the projection specifies how much of the world is visible
+ * min(horizontally, vertically), depending on the aspect ratio.  As a special
+ * case, if the radius is [0, 0], sys_resize2d will dynamically resize the
+ * projection to keep the unit size in pixels constant.
+ *
+ * @param radius The radius of the projection: [left, top].
+ */
 export function camera2d(radius: Vec2) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera2D;
