@@ -34,7 +34,6 @@ function update_xr(game: Game, entity: Entity, camera: CameraXr) {
     for (let viewpoint of pose.views) {
         let eye: XrEye = {
             Viewpoint: viewpoint,
-            View: create(),
             Pv: create(),
             Position: [0, 0, 0],
             FogColor: camera.ClearColor,
@@ -42,13 +41,13 @@ function update_xr(game: Game, entity: Entity, camera: CameraXr) {
         };
 
         // Compute the eye's world matrix.
-        multiply(eye.View, transform.World, viewpoint.transform.matrix);
-        get_translation(eye.Position, eye.View);
+        multiply(eye.Pv /* world */, transform.World, viewpoint.transform.matrix);
+        get_translation(eye.Position, eye.Pv /* world */);
 
         // Compute the view matrix.
-        invert(eye.View, eye.View);
+        invert(eye.Pv /* view */, eye.Pv /* world */);
         // Compute the PV matrix.
-        multiply(eye.Pv, viewpoint.projectionMatrix, eye.View);
+        multiply(eye.Pv, viewpoint.projectionMatrix, eye.Pv /* view */);
 
         camera.Eyes.push(eye);
     }

@@ -1,5 +1,5 @@
 import {Vec4} from "../../common/math.js";
-import {map_range} from "../../common/number.js";
+import {clamp} from "../../common/number.js";
 import {Entity} from "../../common/world.js";
 import {FLOATS_PER_INSTANCE} from "../../materials/layout2d.js";
 import {spritesheet} from "../../sprites/spritesheet.js";
@@ -12,13 +12,20 @@ export interface Render2D {
     Sprite: Float32Array;
 }
 
+/**
+ * Add Render2D to an entity.
+ *
+ * By default, the z-order is 0. Use the order() mixin to change it.
+ *
+ * @param sprite_name The name of the sprite to render.
+ * @param color The tint of the sprite.
+ */
 export function render2d(sprite_name: string, color: Vec4 = [1, 1, 1, 1]) {
     return (game: Game, entity: Entity) => {
         let instance_offset = entity * FLOATS_PER_INSTANCE;
         // Detail.
-        // Place entities from closest to the farthest away to avoid overdraw.
-        game.InstanceData[instance_offset + 6] = map_range(entity, 0, game.World.Capacity, 1, 0);
-        game.InstanceData[instance_offset + 7] = 1; // Has.Render2D
+        game.InstanceData[instance_offset + 6] = 0; // z-order.
+        game.InstanceData[instance_offset + 7] = Has.Render2D; // signature.
         // Color.
         game.InstanceData[instance_offset + 8] = color[0];
         game.InstanceData[instance_offset + 9] = color[1];
@@ -39,10 +46,20 @@ export function render2d(sprite_name: string, color: Vec4 = [1, 1, 1, 1]) {
     };
 }
 
+/**
+ * Set the z-order of an entity.
+ *
+ * Camera2D's projection is set up with z-order +1 as the near plane and -1 as
+ * the far plane. The z-order set by this mixin is clamped to the [-1, 1] range.
+ * If you want to skip the sprite while rendering, remove Has.Render2D from its
+ * signature.
+ *
+ * @param z The z-order of the sprite, clamped to [-1, 1].
+ */
 export function order(z: number) {
     return (game: Game, entity: Entity) => {
         let instance_offset = entity * FLOATS_PER_INSTANCE;
-        game.InstanceData[instance_offset + 6] = z;
+        game.InstanceData[instance_offset + 6] = clamp(-1, 1, z);
     };
 }
 

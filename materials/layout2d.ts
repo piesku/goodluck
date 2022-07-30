@@ -25,19 +25,19 @@ export function setup_render2d_buffers(gl: WebGL2RenderingContext, instance_buff
     // with spritesheet map coordinates.
     // prettier-ignore
     let vertex_arr = Float32Array.from([
-        -0.5, -0.5, 0,    0, 1,    // SW
-        0.5, -0.5, 0,     1, 1,    // SE
-        -0.5, 0.5, 0,     0, 0,    // NW
-        0.5, 0.5, 0,      1, 0     // NE
+        -0.5, -0.5,    0, 1,    // SW
+        0.5, -0.5,     1, 1,    // SE
+        -0.5, 0.5,     0, 0,    // NW
+        0.5, 0.5,      1, 0     // NE
     ]);
 
     // Vertex positions and texture coordinates.
     gl.bindBuffer(GL_ARRAY_BUFFER, gl.createBuffer()!);
     gl.bufferData(GL_ARRAY_BUFFER, vertex_arr, GL_STATIC_DRAW);
     gl.enableVertexAttribArray(Attribute.VertexPosition);
-    gl.vertexAttribPointer(Attribute.VertexPosition, 3, GL_FLOAT, false, 4 * 5, 0);
+    gl.vertexAttribPointer(Attribute.VertexPosition, 2, GL_FLOAT, false, 4 * 4, 0);
     gl.enableVertexAttribArray(Attribute.VertexTexCoord);
-    gl.vertexAttribPointer(Attribute.VertexTexCoord, 2, GL_FLOAT, false, 4 * 5, 4 * 3);
+    gl.vertexAttribPointer(Attribute.VertexTexCoord, 2, GL_FLOAT, false, 4 * 4, 4 * 2);
 
     // Instance data.
     gl.bindBuffer(GL_ARRAY_BUFFER, instance_buffer);

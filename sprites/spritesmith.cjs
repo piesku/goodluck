@@ -21,7 +21,8 @@ Spritesmith.run(
 
         writeFileSync(__dirname + "/" + sheet, result.image);
         console.log(
-            `export let spritesheet: {
+            `// prettier-ignore
+export let spritesheet: {
     [key: string]: {
         x: number;
         y: number;

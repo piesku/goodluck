@@ -4,11 +4,11 @@ import {Attribute, Instanced2DLayout} from "../../materials/layout2d.js";
 import {Has} from "../world.js";
 
 let vertex = `#version 300 es\n
-    uniform mat4 pv;
+    uniform mat3x2 pv;
     uniform vec2 sheet_size;
 
     // Vertex attributes
-    layout(location=${Attribute.VertexPosition}) in vec4 attr_position;
+    layout(location=${Attribute.VertexPosition}) in vec2 attr_position;
     layout(location=${Attribute.VertexTexCoord}) in vec2 attr_texcoord;
 
     // Instance attributes
@@ -24,28 +24,26 @@ let vertex = `#version 300 es\n
     void main() {
         int signature = int(attr_translation.w);
         if ((signature & ${Has.Render2D}) == ${Has.Render2D}) {
-            mat4 world;
+            mat3x2 world;
             if ((signature & ${Has.SpatialNode2D}) == ${Has.SpatialNode2D}) {
-                world = mat4(
-                    attr_rotation.xy, 0, 0,
-                    attr_rotation.zw, 0, 0,
-                    0, 0, 1, 0,
-                    attr_translation.xyz, 1
+                world = mat3x2(
+                    attr_rotation.xy,
+                    attr_rotation.zw,
+                    attr_translation.xy
                 );
             } else {
-                vec3 translation = attr_translation.xyz;
                 vec2 scale = attr_rotation.xy;
                 float rotation = attr_rotation.z;
-                world = mat4(
-                    cos(rotation) * scale.x, sin(rotation) * scale.x, 0, 0,
-                    -sin(rotation) * scale.y, cos(rotation) * scale.y, 0, 0,
-                    0, 0, 1, 0,
-                    translation, 1
+                world = mat3x2(
+                    cos(rotation) * scale.x, sin(rotation) * scale.x,
+                    -sin(rotation) * scale.y, cos(rotation) * scale.y,
+                    attr_translation.xy
                 );
             }
 
-            vec4 world_position = world * attr_position;
-            gl_Position = pv * world_position;
+            vec3 world_position = mat3(world) * vec3(attr_position, 1);
+            vec3 clip_position = mat3(pv) * world_position;
+            gl_Position = vec4(clip_position.xy, -attr_translation.z, 1);
 
             // attr_texcoords are +Y=down for compatibility with spritesheet frame coordinates.
             vert_texcoord = (attr_sprite.xy + attr_sprite.zw * attr_texcoord) / sheet_size;

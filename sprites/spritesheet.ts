@@ -1,3 +1,4 @@
+// prettier-ignore
 export let spritesheet: {
     [key: string]: {
         x: number;

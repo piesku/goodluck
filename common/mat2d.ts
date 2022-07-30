@@ -22,6 +22,11 @@ export function set(
     return out;
 }
 
+export function copy(out: Mat2D, a: Mat2D) {
+    set(out, a[0], a[1], a[2], a[3], a[4], a[5]);
+    return out;
+}
+
 export function invert(out: Mat2D, a: Mat2D) {
     let aa = a[0],
         ab = a[1],
@@ -177,10 +182,7 @@ export function get_translation(out: Vec2, a: Mat2D) {
     return out;
 }
 
-export function transform_point(out: Vec2, a: Vec2, m: Mat2D) {
-    let x = a[0];
-    let y = a[1];
-    out[0] = m[0] * x + m[2] * y + m[4];
-    out[1] = m[1] * x + m[3] * y + m[5];
+export function from_ortho(out: Mat2D, left: number, top: number) {
+    set(out, left, 0, 0, top, 0, 0);
     return out;
 }

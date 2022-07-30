@@ -1,6 +1,6 @@
 import {WorldImpl} from "../common/world.js";
 import {AnimateSprite} from "./components/com_animate_sprite.js";
-import {Camera} from "./components/com_camera.js";
+import {Camera2D} from "./components/com_camera2d.js";
 import {Children} from "./components/com_children.js";
 import {ControlAlways2D} from "./components/com_control_always2d.js";
 import {ControlPlayer} from "./components/com_control_player.js";
@@ -12,7 +12,7 @@ import {LocalTransform2D, SpatialNode2D} from "./components/com_transform2d.js";
 
 const enum Component {
     AnimateSprite,
-    Camera,
+    Camera2D,
     ControlAlways2D,
     ControlPlayer,
     Children,
@@ -28,7 +28,7 @@ const enum Component {
 export const enum Has {
     None = 0,
     AnimateSprite = 1 << Component.AnimateSprite,
-    Camera = 1 << Component.Camera,
+    Camera2D = 1 << Component.Camera2D,
     ControlAlways2D = 1 << Component.ControlAlways2D,
     ControlPlayer = 1 << Component.ControlPlayer,
     Children = 1 << Component.Children,
@@ -43,7 +43,7 @@ export const enum Has {
 
 export class World extends WorldImpl {
     AnimateSprite: Array<AnimateSprite> = [];
-    Camera: Array<Camera> = [];
+    Camera2D: Array<Camera2D> = [];
     ControlAlways2D: Array<ControlAlways2D> = [];
     ControlPlayer: Array<ControlPlayer> = [];
     Children: Array<Children> = [];
