@@ -16,8 +16,16 @@ export function sys_resize2d(game: Game, delta: number) {
     }
 
     if (game.ViewportResized) {
-        game.ViewportWidth = game.Canvas3D.width = game.Canvas2D.width = window.innerWidth;
-        game.ViewportHeight = game.Canvas3D.height = game.Canvas2D.height = window.innerHeight;
+        game.ViewportWidth =
+            game.BackgroundCanvas.width =
+            game.SceneCanvas.width =
+            game.ForegroundCanvas.width =
+                window.innerWidth;
+        game.ViewportHeight =
+            game.BackgroundCanvas.height =
+            game.SceneCanvas.height =
+            game.ForegroundCanvas.height =
+                window.innerHeight;
 
         for (let ent = 0; ent < game.World.Signature.length; ent++) {
             if ((game.World.Signature[ent] & QUERY) === QUERY) {

@@ -16,7 +16,8 @@ export function sys_draw2d(game: Game, delta: number) {
 
     let camera = game.World.Camera2D[camera_entity];
 
-    let ctx = game.Context2D;
+    // TODO Allow entities to specify background vs. foreground.
+    let ctx = game.BackgroundContext;
     ctx.resetTransform();
     ctx.fillStyle = "#D7AAA9";
     ctx.fillRect(0, 0, game.ViewportWidth, game.ViewportHeight);

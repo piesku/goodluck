@@ -13,8 +13,8 @@ import {Has} from "../world.js";
 const QUERY = Has.Transform | Has.Draw;
 
 export function sys_draw(game: Game, delta: number) {
-    game.Context2D.resetTransform();
-    game.Context2D.clearRect(0, 0, game.ViewportWidth, game.ViewportHeight);
+    game.ForegroundContext.resetTransform();
+    game.ForegroundContext.clearRect(0, 0, game.ViewportWidth, game.ViewportHeight);
     let position = <Vec3>[0, 0, 0];
 
     let camera_entity = game.Cameras[0];
@@ -39,7 +39,7 @@ export function sys_draw(game: Game, delta: number) {
                 continue;
             }
 
-            game.Context2D.setTransform(
+            game.ForegroundContext.setTransform(
                 1,
                 0,
                 0,
@@ -62,13 +62,13 @@ export function sys_draw(game: Game, delta: number) {
 }
 
 function draw_text(game: Game, draw: DrawText) {
-    game.Context2D.textAlign = "center";
-    game.Context2D.font = draw.Font;
-    game.Context2D.fillStyle = draw.FillStyle;
-    game.Context2D.fillText(draw.Text, 0, 0);
+    game.ForegroundContext.textAlign = "center";
+    game.ForegroundContext.font = draw.Font;
+    game.ForegroundContext.fillStyle = draw.FillStyle;
+    game.ForegroundContext.fillText(draw.Text, 0, 0);
 }
 
 function draw_selection(game: Game, draw: DrawSelection) {
-    game.Context2D.strokeStyle = draw.Color;
-    game.Context2D.strokeRect(-draw.Size / 2, -draw.Size / 2, draw.Size, draw.Size);
+    game.ForegroundContext.strokeStyle = draw.Color;
+    game.ForegroundContext.strokeRect(-draw.Size / 2, -draw.Size / 2, draw.Size, draw.Size);
 }
