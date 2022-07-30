@@ -56,6 +56,8 @@ export function sys_resize(game: Game, delta: number) {
                 let camera = game.World.Camera[i];
                 switch (camera.Kind) {
                     case CameraKind.Canvas:
+                        camera.ViewportWidth = game.ViewportWidth;
+                        camera.ViewportHeight = game.ViewportHeight;
                         update_projection(
                             camera.Projection,
                             game.ViewportWidth / game.ViewportHeight

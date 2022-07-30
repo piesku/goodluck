@@ -31,6 +31,8 @@ export interface CameraEye {
 export interface CameraCanvas extends CameraEye {
     Kind: CameraKind.Canvas;
     Projection: Projection;
+    ViewportWidth: number;
+    ViewportHeight: number;
     ClearColor: Vec4;
     ClearMask: number;
 }
@@ -45,6 +47,8 @@ export function camera_canvas(
         game.World.Camera[entity] = {
             Kind: CameraKind.Canvas,
             Projection: projection,
+            ViewportWidth: 0,
+            ViewportHeight: 0,
             View: create(),
             Pv: create(),
             Position: [0, 0, 0],

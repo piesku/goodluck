@@ -18,8 +18,6 @@ export function sys_camera2d(game: Game, delta: number) {
 
             multiply(camera.Pv, camera.Projection.Projection, camera_node.Self);
             copy(camera.World, camera_node.World);
-            camera.ViewportSize[0] = game.ViewportWidth;
-            camera.ViewportSize[1] = game.ViewportHeight;
 
             game.Cameras.push(ent);
         }

@@ -13,7 +13,8 @@ export interface Camera2D {
     Projection: Projection2D;
     Pv: Mat2D;
     World: Mat2D;
-    ViewportSize: Vec2;
+    ViewportWidth: number;
+    ViewportHeight: number;
 }
 
 export function camera2d(radius: Vec2) {
@@ -27,17 +28,18 @@ export function camera2d(radius: Vec2) {
             },
             Pv: create(),
             World: create(),
-            ViewportSize: [0, 0],
+            ViewportWidth: 0,
+            ViewportHeight: 0,
         };
     };
 }
 
 export function viewport_to_world(out: Vec2, camera: Camera2D, pos: Vec2) {
-    // Transform the position from viewport space to NDC space (where +Y is up).
-    out[0] = (pos[0] / camera.ViewportSize[0]) * 2 - 1;
-    out[1] = -(pos[1] / camera.ViewportSize[1]) * 2 + 1;
+    // Transform the position from viewport space to the NDC space (where +Y is up).
+    out[0] = (pos[0] / camera.ViewportWidth) * 2 - 1;
+    out[1] = -(pos[1] / camera.ViewportHeight) * 2 + 1;
 
-    // ...then the eye space...
+    // ...then to the eye space...
     transform_point(out, out, camera.Projection.Inverse);
 
     // ...and then to the world space.

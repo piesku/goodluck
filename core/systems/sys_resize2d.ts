@@ -30,6 +30,9 @@ export function sys_resize2d(game: Game, delta: number) {
 function update(game: Game, entity: Entity) {
     let camera = game.World.Camera2D[entity];
 
+    camera.ViewportWidth = game.ViewportWidth;
+    camera.ViewportHeight = game.ViewportHeight;
+
     let projection = camera.Projection;
     let aspect = game.ViewportWidth / game.ViewportHeight;
     if (projection.Radius[0] === 0 && projection.Radius[1] === 0) {

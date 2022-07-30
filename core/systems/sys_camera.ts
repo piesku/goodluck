@@ -13,14 +13,14 @@ const QUERY = Has.Transform | Has.Camera;
 export function sys_camera(game: Game, delta: number) {
     game.Cameras = [];
 
-    for (let i = 0; i < game.World.Signature.length; i++) {
-        if ((game.World.Signature[i] & QUERY) === QUERY) {
-            let camera = game.World.Camera[i];
+    for (let ent = 0; ent < game.World.Signature.length; ent++) {
+        if ((game.World.Signature[ent] & QUERY) === QUERY) {
+            let camera = game.World.Camera[ent];
             switch (camera.Kind) {
                 case CameraKind.Canvas:
                 case CameraKind.Target:
-                    update_camera(game, i, camera);
-                    game.Cameras.push(i);
+                    update_camera(game, ent, camera);
+                    game.Cameras.push(ent);
                     break;
             }
         }
