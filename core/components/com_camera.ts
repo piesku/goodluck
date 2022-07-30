@@ -21,7 +21,6 @@ export const enum CameraKind {
 
 // The subset of camera data passed into render methods.
 export interface CameraEye {
-    View: Mat4;
     Pv: Mat4;
     Position: Vec3;
     FogColor: Vec4;
@@ -49,7 +48,6 @@ export function camera_canvas(
             Projection: projection,
             ViewportWidth: 0,
             ViewportHeight: 0,
-            View: create(),
             Pv: create(),
             Position: [0, 0, 0],
             FogColor: clear_color,
@@ -80,7 +78,6 @@ export function camera_target(
             Kind: CameraKind.Target,
             Target: target,
             Projection: projection,
-            View: create(),
             Pv: create(),
             Position: [0, 0, 0],
             FogColor: clear_color,

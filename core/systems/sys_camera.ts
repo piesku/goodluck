@@ -2,7 +2,7 @@
  * @module systems/sys_camera
  */
 
-import {copy, get_translation, multiply} from "../../common/mat4.js";
+import {get_translation, multiply} from "../../common/mat4.js";
 import {Entity} from "../../common/world.js";
 import {Camera, CameraKind, CameraXr} from "../components/com_camera.js";
 import {Game} from "../game.js";
@@ -31,7 +31,6 @@ function update_camera(game: Game, entity: Entity, camera: Exclude<Camera, Camer
     let transform = game.World.Transform[entity];
     let projection = camera.Projection;
 
-    copy(camera.View, transform.Self);
-    multiply(camera.Pv, projection.Projection, camera.View);
+    multiply(camera.Pv, projection.Projection, transform.Self);
     get_translation(camera.Position, transform.World);
 }
