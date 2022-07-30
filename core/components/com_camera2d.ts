@@ -2,9 +2,10 @@
  * @module components/com_camera2d
  */
 
-import {create, transform_point} from "../../common/mat2d.js";
+import {create} from "../../common/mat2d.js";
 import {Mat2D, Vec2} from "../../common/math.js";
 import {Projection2D} from "../../common/projection2d.js";
+import {transform_position} from "../../common/vec2.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -40,8 +41,8 @@ export function viewport_to_world(out: Vec2, camera: Camera2D, pos: Vec2) {
     out[1] = -(pos[1] / camera.ViewportHeight) * 2 + 1;
 
     // ...then to the eye space...
-    transform_point(out, out, camera.Projection.Inverse);
+    transform_position(out, out, camera.Projection.Inverse);
 
     // ...and then to the world space.
-    transform_point(out, out, camera.World);
+    transform_position(out, out, camera.World);
 }
