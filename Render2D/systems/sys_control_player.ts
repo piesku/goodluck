@@ -22,7 +22,7 @@ export function sys_control_player(game: Game, delta: number) {
 
     let camera = game.World.Camera2D[camera_entity];
 
-    if (pointer_viewport(pointer_position, game) && pointer_down(game, 0)) {
+    if (pointer_viewport(game, pointer_position) && pointer_down(game, 0)) {
         viewport_to_world(pointer_position, camera, pointer_position);
 
         for (let i = 0; i < game.World.Signature.length; i++) {

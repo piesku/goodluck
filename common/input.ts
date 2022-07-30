@@ -17,7 +17,7 @@ export function pointer_clicked(game: GameImpl, mouse_button: number, touch_id =
     );
 }
 
-export function pointer_viewport(out: Vec2, game: GameImpl): boolean {
+export function pointer_viewport(game: GameImpl, out: Vec2): boolean {
     if (game.InputState["Touch0"] === 1 || game.InputDelta["Touch0"] === -1) {
         out[0] = game.InputState["Touch0X"];
         out[1] = game.InputState["Touch0Y"];

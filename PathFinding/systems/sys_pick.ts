@@ -38,7 +38,7 @@ function update(game: Game, entity: Entity, pickables: Array<Collide>) {
         throw new Error("XR not implemented");
     }
 
-    if (!pointer_viewport(pointer_position, game)) {
+    if (!pointer_viewport(game, pointer_position)) {
         // No mouse, no touch.
         return;
     }
