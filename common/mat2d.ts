@@ -22,6 +22,11 @@ export function set(
     return out;
 }
 
+export function copy(out: Mat2D, a: Mat2D) {
+    set(out, a[0], a[1], a[2], a[3], a[4], a[5]);
+    return out;
+}
+
 export function invert(out: Mat2D, a: Mat2D) {
     let aa = a[0],
         ab = a[1],

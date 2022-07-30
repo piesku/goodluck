@@ -2,7 +2,7 @@
  * @module systems/sys_camera2d
  */
 
-import {multiply} from "../../common/mat2d.js";
+import {copy, multiply} from "../../common/mat2d.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -17,8 +17,9 @@ export function sys_camera2d(game: Game, delta: number) {
             let camera_node = game.World.SpatialNode2D[ent];
 
             multiply(camera.Pv, camera.Projection.Projection, camera_node.Self);
-            camera.Position[0] = camera_node.World[4];
-            camera.Position[1] = camera_node.World[5];
+            copy(camera.World, camera_node.World);
+            camera.ViewportSize[0] = game.ViewportWidth;
+            camera.ViewportSize[1] = game.ViewportHeight;
 
             game.Cameras.push(ent);
         }

@@ -1,6 +1,6 @@
 import {WorldImpl} from "../common/world.js";
-import {Camera2D} from "../core/components/com_camera2d.js";
 import {AnimateSprite} from "./components/com_animate_sprite.js";
+import {Camera2D} from "./components/com_camera2d.js";
 import {Children} from "./components/com_children.js";
 import {ControlAlways2D} from "./components/com_control_always2d.js";
 import {ControlPlayer} from "./components/com_control_player.js";

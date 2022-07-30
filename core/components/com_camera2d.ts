@@ -2,7 +2,7 @@
  * @module components/com_camera2d
  */
 
-import {create} from "../../common/mat2d.js";
+import {create, transform_point} from "../../common/mat2d.js";
 import {Mat2D, Vec2} from "../../common/math.js";
 import {Projection2D} from "../../common/projection2d.js";
 import {Entity} from "../../common/world.js";
@@ -12,7 +12,8 @@ import {Has} from "../world.js";
 export interface Camera2D {
     Projection: Projection2D;
     Pv: Mat2D;
-    Position: Vec2;
+    World: Mat2D;
+    ViewportSize: Vec2;
 }
 
 export function camera2d(radius: Vec2) {
@@ -25,7 +26,20 @@ export function camera2d(radius: Vec2) {
                 Inverse: [radius[0], 0, 0, radius[1], 0, 0],
             },
             Pv: create(),
-            Position: [0, 0],
+            World: create(),
+            ViewportSize: [0, 0],
         };
     };
+}
+
+export function viewport_to_world(out: Vec2, camera: Camera2D, pos: Vec2) {
+    // Transform the position from viewport space to NDC space (where +Y is up).
+    out[0] = (pos[0] / camera.ViewportSize[0]) * 2 - 1;
+    out[1] = -(pos[1] / camera.ViewportSize[1]) * 2 + 1;
+
+    // ...then the eye space...
+    transform_point(out, out, camera.Projection.Inverse);
+
+    // ...and then to the world space.
+    transform_point(out, out, camera.World);
 }
