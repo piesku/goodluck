@@ -36,40 +36,40 @@ export function draw_text(text: string, font: string, fill_style: string) {
 
 export interface DrawRect {
     Kind: DrawKind.Rect;
+    Color: string;
     Width: number;
     Height: number;
-    Color: string;
 }
 
-export function draw_rect(width: number, height: number, color: string) {
+export function draw_rect(color: string, width = 1, height = 1) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Draw;
         game.World.Draw[entity] = {
             Kind: DrawKind.Rect,
+            Color: color,
             Width: width,
             Height: height,
-            Color: color,
         };
     };
 }
 
 export interface DrawArc {
     Kind: DrawKind.Arc;
+    Color: string;
     Radius: number;
     StartAngle: number;
     EndAngle: number;
-    Color: string;
 }
 
-export function draw_arc(radius: number, color: string, start_angle = 0, end_angle = Math.PI * 2) {
+export function draw_arc(color: string, radius: number, start_angle = 0, end_angle = Math.PI * 2) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Draw;
         game.World.Draw[entity] = {
             Kind: DrawKind.Arc,
+            Color: color,
             Radius: radius,
             StartAngle: start_angle,
             EndAngle: end_angle,
-            Color: color,
         };
     };
 }

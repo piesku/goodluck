@@ -30,19 +30,19 @@ export function scene_stage(game: Game) {
         instantiate(game, [
             spatial_node2d(),
             local_transform2d(),
-            draw_rect(game.SceneWidth, game.SceneHeight, "#FFD6D5"),
+            draw_rect("#FFD6D5", game.SceneWidth, game.SceneHeight),
         ]);
         instantiate(game, [
             spatial_node2d(),
             local_transform2d([-5, 3], 0),
-            draw_arc(7, "#D4FCA9"),
+            draw_arc("#D4FCA9", 7),
         ]);
         instantiate(game, [
             spatial_node2d(),
             local_transform2d([0, 0], -30, [4, 1]),
             move2d(0, 5),
             control_always2d(null, 1),
-            children([spatial_node2d(), local_transform2d([0, 0], 30), draw_rect(5, 5, "#FFAA79")]),
+            children([spatial_node2d(), local_transform2d([0, 0], 30), draw_rect("#FFAA79", 5, 5)]),
         ]);
     }
 
