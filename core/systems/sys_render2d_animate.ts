@@ -1,5 +1,5 @@
 /**
- * @module systems/sys_animate2d_sprite
+ * @module systems/sys_render2d_animate
  */
 
 import {Entity} from "../../common/world.js";
@@ -9,7 +9,7 @@ import {Has} from "../world.js";
 
 const QUERY = Has.AnimateSprite | Has.Render2D;
 
-export function sys_animate2d_sprite(game: Game, delta: number) {
+export function sys_render2d_animate(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
         if ((game.World.Signature[i] & QUERY) === QUERY) {
             update(game, i, delta);

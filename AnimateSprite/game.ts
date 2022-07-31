@@ -3,10 +3,10 @@ import {create_spritesheet_from} from "../common/texture.js";
 import {GL_BLEND} from "../common/webgl.js";
 import {FLOATS_PER_INSTANCE, setup_render2d_buffers} from "../materials/layout2d.js";
 import {mat_render2d} from "../materials/mat_render2d.js";
-import {sys_animate2d_sprite} from "./systems/sys_animate2d_sprite.js";
 import {sys_camera2d} from "./systems/sys_camera2d.js";
 import {sys_draw2d} from "./systems/sys_draw2d.js";
 import {sys_render2d} from "./systems/sys_render2d.js";
+import {sys_render2d_animate} from "./systems/sys_render2d_animate.js";
 import {sys_resize2d} from "./systems/sys_resize2d.js";
 import {sys_transform2d} from "./systems/sys_transform2d.js";
 import {Has, World} from "./world.js";
@@ -33,9 +33,9 @@ export class Game extends Game3D {
     override FrameUpdate(delta: number) {
         sys_resize2d(this, delta);
         sys_camera2d(this, delta);
-        sys_animate2d_sprite(this, delta);
         sys_transform2d(this, delta);
         sys_draw2d(this, delta);
+        sys_render2d_animate(this, delta);
         sys_render2d(this, delta);
     }
 }

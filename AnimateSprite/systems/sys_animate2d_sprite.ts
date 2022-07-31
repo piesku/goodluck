@@ -1,1 +1,0 @@
-../../core/systems/sys_animate2d_sprite.ts

@@ -3,7 +3,6 @@ import {create_spritesheet_from} from "../common/texture.js";
 import {GL_BLEND} from "../common/webgl.js";
 import {FLOATS_PER_INSTANCE, setup_render2d_buffers} from "../materials/layout2d.js";
 import {mat_render2d} from "../materials/mat_render2d.js";
-import {sys_animate2d_sprite} from "./systems/sys_animate2d_sprite.js";
 import {sys_camera2d} from "./systems/sys_camera2d.js";
 import {sys_collide2d} from "./systems/sys_collide2d.js";
 import {sys_control_always2d} from "./systems/sys_control_always2d.js";
@@ -17,6 +16,7 @@ import {sys_physics2d_integrate} from "./systems/sys_physics2d_integrate.js";
 import {sys_physics2d_resolve} from "./systems/sys_physics2d_resolve.js";
 import {sys_poll} from "./systems/sys_poll.js";
 import {sys_render2d} from "./systems/sys_render2d.js";
+import {sys_render2d_animate} from "./systems/sys_render2d_animate.js";
 import {sys_resize2d} from "./systems/sys_resize2d.js";
 import {sys_shake2d} from "./systems/sys_shake2d.js";
 import {sys_spawn2d} from "./systems/sys_spawn2d.js";
@@ -74,7 +74,6 @@ export class Game extends Game3D {
         sys_control_always2d(this, delta);
 
         // Game logic.
-        sys_animate2d_sprite(this, delta);
         sys_move2d(this, delta);
         sys_lifespan(this, delta);
         sys_shake2d(this, delta);
@@ -86,6 +85,7 @@ export class Game extends Game3D {
 
         // Rendering.
         sys_draw2d(this, delta);
+        sys_render2d_animate(this, delta);
         sys_render2d(this, delta);
         sys_ui(this, delta);
     }
