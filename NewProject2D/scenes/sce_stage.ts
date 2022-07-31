@@ -1,8 +1,11 @@
 import {instantiate} from "../../common/game.js";
 import {float} from "../../common/random.js";
 import {camera2d} from "../components/com_camera2d.js";
+import {children} from "../components/com_children.js";
 import {collide2d} from "../components/com_collide2d.js";
+import {control_always2d} from "../components/com_control_always2d.js";
 import {draw_arc, draw_rect} from "../components/com_draw.js";
+import {move2d} from "../components/com_move2d.js";
 import {RigidKind, rigid_body2d} from "../components/com_rigid_body2d.js";
 import {local_transform2d, spatial_node2d} from "../components/com_transform2d.js";
 import {Game, Layer, WORLD_CAPACITY} from "../game.js";
@@ -31,6 +34,13 @@ export function scene_stage(game: Game) {
             spatial_node2d(),
             local_transform2d([-5, 3], 0),
             draw_arc("#D4FCA9", 7),
+        ]);
+        instantiate(game, [
+            spatial_node2d(),
+            local_transform2d([0, 0], -30, [4, 1]),
+            move2d(0, 5),
+            control_always2d(null, 1),
+            children([spatial_node2d(), local_transform2d([0, 0], 30), draw_rect("#FFAA79", 5, 5)]),
         ]);
     }
 

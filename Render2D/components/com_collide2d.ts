@@ -1,1 +1,0 @@
-../../core/components/com_collide2d.ts
