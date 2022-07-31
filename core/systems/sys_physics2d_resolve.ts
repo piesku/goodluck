@@ -39,7 +39,7 @@ function update(game: Game, entity: Entity) {
     let collide = game.World.Collide2D[entity];
 
     if (rigid_body.Kind === RigidKind.Dynamic) {
-        rigid_body.IsAirborne = true;
+        rigid_body.IsGrounded = false;
         let has_collision = false;
 
         for (let i = 0; i < collide.Collisions.length; i++) {
@@ -85,7 +85,7 @@ function update(game: Game, entity: Entity) {
                 if (collision.Hit[1] > 0 && rigid_body.VelocityResolved[1] < 1) {
                     // Collision from the bottom stops the downward movement.
                     rigid_body.VelocityResolved[1] = 0;
-                    rigid_body.IsAirborne = false;
+                    rigid_body.IsGrounded = true;
                 }
             }
         }

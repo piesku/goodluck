@@ -26,7 +26,7 @@ function update(game: Game, entity: Entity) {
         game.World.Signature[entity] |= Has.Dirty;
     }
 
-    if (game.InputState["ArrowUp"] && !rigid_body.IsAirborne) {
-        rigid_body.Acceleration[1] += 500;
+    if (game.InputState["ArrowUp"] && rigid_body.IsGrounded) {
+        rigid_body.Acceleration[1] = 500;
     }
 }

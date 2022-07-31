@@ -22,7 +22,7 @@ export interface RigidBody2D {
     VelocityLinear: Vec2;
     VelocityResolved: Vec2;
     VelocityAngular: number;
-    IsAirborne: boolean;
+    IsGrounded: boolean;
 }
 
 export function rigid_body2d(kind: RigidKind, bounciness = 1, friction = 0) {
@@ -36,7 +36,7 @@ export function rigid_body2d(kind: RigidKind, bounciness = 1, friction = 0) {
             VelocityLinear: [0, 0],
             VelocityResolved: [0, 0],
             VelocityAngular: 0,
-            IsAirborne: false,
+            IsGrounded: false,
         };
     };
 }
