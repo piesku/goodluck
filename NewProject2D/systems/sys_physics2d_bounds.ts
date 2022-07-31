@@ -2,7 +2,6 @@
  * @module systems/sys_physics2d_bounds
  */
 
-import {float} from "../../common/random.js";
 import {Entity} from "../../common/world.js";
 import {RigidKind} from "../components/com_rigid_body2d.js";
 import {Game} from "../game.js";
@@ -29,26 +28,21 @@ function update(game: Game, entity: Entity, delta: number) {
         if (local.Translation[1] > top) {
             local.Translation[1] = top;
             rigid_body.VelocityLinear[1] *= -rigid_body.Bounciness;
-            rigid_body.VelocityAngular = float(-180, 180);
         }
 
         if (local.Translation[1] < -top) {
             local.Translation[1] = -top;
-            rigid_body.VelocityLinear[0] += float(-10, 10);
-            rigid_body.VelocityLinear[1] *= -(rigid_body.Bounciness + 1);
-            rigid_body.VelocityAngular = float(-180, 180);
+            rigid_body.VelocityLinear[1] *= -rigid_body.Bounciness;
         }
 
         if (local.Translation[0] < -right) {
             local.Translation[0] = -right;
             rigid_body.VelocityLinear[0] *= -rigid_body.Bounciness;
-            rigid_body.VelocityAngular = float(-180, 180);
         }
 
         if (local.Translation[0] > right) {
             local.Translation[0] = right;
             rigid_body.VelocityLinear[0] *= -rigid_body.Bounciness;
-            rigid_body.VelocityAngular = float(-180, 180);
         }
     }
 }

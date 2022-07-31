@@ -69,7 +69,7 @@ export function scene_stage(game: Game) {
             spatial_node2d(),
             local_transform2d([float(-10, 10), float(9, 10)], float(-180, 180)),
             collide2d(true, Layer.Object, Layer.Terrain | Layer.Object),
-            rigid_body2d(RigidKind.Dynamic, float(0.01, 0.02)),
+            rigid_body2d(RigidKind.Dynamic, 1, float(0.01, 0.02)),
             control_player(),
             render2d("carrot_raw.png", hsva_to_vec4(float(0.1, 0.2), 0.5, 1, 1)),
             order(0.1),
@@ -84,7 +84,7 @@ export function scene_stage(game: Game) {
             control_player(),
             render2d("potato_raw.png", hsva_to_vec4(float(0.1, 0.2), 0.5, 1, 1)),
             order(0.1),
-            rigid_body2d(RigidKind.Dynamic, float(0.01, 0.02)),
+            rigid_body2d(RigidKind.Dynamic, float(0.5, 1.1), float(0.01, 0.02)),
         ]);
     }
 }

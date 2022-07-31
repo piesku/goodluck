@@ -25,7 +25,7 @@ export interface RigidBody2D {
     IsAirborne: boolean;
 }
 
-export function rigid_body2d(kind: RigidKind, friction = 0, bounciness = 1) {
+export function rigid_body2d(kind: RigidKind, bounciness = 1, friction = 0) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.RigidBody2D;
         game.World.RigidBody2D[entity] = {

@@ -1,0 +1,1 @@
+../../core/systems/sys_resize2d.ts

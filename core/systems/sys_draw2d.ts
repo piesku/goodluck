@@ -19,7 +19,7 @@ export function sys_draw2d(game: Game, delta: number) {
     // TODO Allow entities to specify background vs. foreground.
     let ctx = game.BackgroundContext;
     ctx.resetTransform();
-    ctx.fillStyle = "#D7AAA9";
+    ctx.fillStyle = "#EEE";
     ctx.fillRect(0, 0, game.ViewportWidth, game.ViewportHeight);
 
     ctx.transform(
