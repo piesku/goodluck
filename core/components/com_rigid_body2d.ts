@@ -1,5 +1,5 @@
 /**
- * @module components/com_rigid_body
+ * @module components/com_rigid_body2d
  */
 
 import {Vec2} from "../../common/math.js";
@@ -17,20 +17,26 @@ export const enum RigidKind {
 export interface RigidBody2D {
     Kind: RigidKind;
     Friction: number;
+    Bounciness: number;
     Acceleration: Vec2;
-    VelocityIntegrated: Vec2;
+    VelocityLinear: Vec2;
+    VelocityResolved: Vec2;
     VelocityAngular: number;
+    IsAirborne: boolean;
 }
 
-export function rigid_body2d(kind: RigidKind, friction: number) {
+export function rigid_body2d(kind: RigidKind, friction = 0, bounciness = 1) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.RigidBody2D;
         game.World.RigidBody2D[entity] = {
             Kind: kind,
             Friction: friction,
+            Bounciness: bounciness,
             Acceleration: [0, 0],
-            VelocityIntegrated: [0, 0],
+            VelocityLinear: [0, 0],
+            VelocityResolved: [0, 0],
             VelocityAngular: 0,
+            IsAirborne: false,
         };
     };
 }

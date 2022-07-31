@@ -5,12 +5,14 @@ import {FLOATS_PER_INSTANCE, setup_render2d_buffers} from "../materials/layout2d
 import {mat_instanced2d} from "./materials/mat_instanced2d.js";
 import {sys_animate2d_sprite} from "./systems/sys_animate2d_sprite.js";
 import {sys_camera2d} from "./systems/sys_camera2d.js";
+import {sys_collide2d} from "./systems/sys_collide2d.js";
 import {sys_control_always2d} from "./systems/sys_control_always2d.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
 import {sys_draw2d} from "./systems/sys_draw2d.js";
 import {sys_move2d} from "./systems/sys_move2d.js";
 import {sys_physics2d_bounds} from "./systems/sys_physics2d_bounds.js";
 import {sys_physics2d_integrate} from "./systems/sys_physics2d_integrate.js";
+import {sys_physics2d_resolve} from "./systems/sys_physics2d_resolve.js";
 import {sys_render2d} from "./systems/sys_render2d.js";
 import {sys_resize2d} from "./systems/sys_resize2d.js";
 import {sys_transform2d} from "./systems/sys_transform2d.js";
@@ -40,8 +42,11 @@ export class Game extends Game3D {
 
     override FixedUpdate(delta: number) {
         sys_physics2d_integrate(this, delta);
-        sys_transform2d(this, delta);
         sys_physics2d_bounds(this, delta);
+        sys_transform2d(this, delta);
+        sys_collide2d(this, delta);
+        sys_physics2d_resolve(this, delta);
+        sys_transform2d(this, delta);
     }
 
     override FrameUpdate(delta: number) {
@@ -54,4 +59,10 @@ export class Game extends Game3D {
         sys_draw2d(this, delta);
         sys_render2d(this, delta);
     }
+}
+
+export const enum Layer {
+    None = 0,
+    Terrain = 1,
+    Object = 2,
 }

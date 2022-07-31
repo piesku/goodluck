@@ -20,6 +20,8 @@ export function sys_physics_integrate(game: Game, delta: number) {
     }
 }
 
+const velocity_delta: Vec3 = [0, 0, 0];
+
 function update(game: Game, entity: Entity, delta: number) {
     let transform = game.World.Transform[entity];
     let rigid_body = game.World.RigidBody[entity];
@@ -27,15 +29,15 @@ function update(game: Game, entity: Entity, delta: number) {
     if (rigid_body.Kind === RigidKind.Dynamic) {
         copy(rigid_body.VelocityIntegrated, rigid_body.VelocityResolved);
 
-        // Compute change to velocity, including the gravity.
+        // Compute change to velocity due to the gravity.
+        rigid_body.VelocityIntegrated[1] += GRAVITY * delta;
+        // Compute change to velocity due to external forces.
         scale(rigid_body.Acceleration, rigid_body.Acceleration, delta);
         add(rigid_body.VelocityIntegrated, rigid_body.VelocityIntegrated, rigid_body.Acceleration);
-        rigid_body.VelocityIntegrated[1] += GRAVITY * delta;
 
         // Apply velocity to position.
-        let vel_delta: Vec3 = [0, 0, 0];
-        scale(vel_delta, rigid_body.VelocityIntegrated, delta);
-        add(transform.Translation, transform.Translation, vel_delta);
+        scale(velocity_delta, rigid_body.VelocityIntegrated, delta);
+        add(transform.Translation, transform.Translation, velocity_delta);
         game.World.Signature[entity] |= Has.Dirty;
 
         // Reset force/acceleration.

@@ -11,9 +11,9 @@ import {Has} from "../world.js";
 const QUERY = Has.LocalTransform2D | Has.RigidBody2D;
 
 export function sys_physics2d_bounds(game: Game, delta: number) {
-    for (let i = 0; i < game.World.Signature.length; i++) {
-        if ((game.World.Signature[i] & QUERY) === QUERY) {
-            update(game, i, delta);
+    for (let ent = 0; ent < game.World.Signature.length; ent++) {
+        if ((game.World.Signature[ent] & QUERY) === QUERY) {
+            update(game, ent, delta);
         }
     }
 }
@@ -28,26 +28,26 @@ function update(game: Game, entity: Entity, delta: number) {
 
         if (local.Translation[1] > top) {
             local.Translation[1] = top;
-            rigid_body.VelocityIntegrated[1] *= -1;
+            rigid_body.VelocityLinear[1] *= -1;
             rigid_body.VelocityAngular = float(-180, 180);
         }
 
         if (local.Translation[1] < -top) {
             local.Translation[1] = -top;
-            rigid_body.VelocityIntegrated[0] += float(-10, 10);
-            rigid_body.VelocityIntegrated[1] *= float(-2, -1);
+            rigid_body.VelocityLinear[0] += float(-10, 10);
+            rigid_body.VelocityLinear[1] *= float(-2, -1);
             rigid_body.VelocityAngular = float(-180, 180);
         }
 
         if (local.Translation[0] < -right) {
             local.Translation[0] = -right;
-            rigid_body.VelocityIntegrated[0] *= -1;
+            rigid_body.VelocityLinear[0] *= -1;
             rigid_body.VelocityAngular = float(-180, 180);
         }
 
         if (local.Translation[0] > right) {
             local.Translation[0] = right;
-            rigid_body.VelocityIntegrated[0] *= -1;
+            rigid_body.VelocityLinear[0] *= -1;
             rigid_body.VelocityAngular = float(-180, 180);
         }
     }

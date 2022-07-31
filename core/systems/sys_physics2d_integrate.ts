@@ -14,9 +14,9 @@ const GRAVITY = -9.8;
 const MOBILITY = 0.999;
 
 export function sys_physics2d_integrate(game: Game, delta: number) {
-    for (let i = 0; i < game.World.Signature.length; i++) {
-        if ((game.World.Signature[i] & QUERY) === QUERY) {
-            update(game, i, delta);
+    for (let ent = 0; ent < game.World.Signature.length; ent++) {
+        if ((game.World.Signature[ent] & QUERY) === QUERY) {
+            update(game, ent, delta);
         }
     }
 }
@@ -29,19 +29,15 @@ function update(game: Game, entity: Entity, delta: number) {
 
     if (rigid_body.Kind === RigidKind.Dynamic) {
         // Compute change to velocity due to the gravity.
-        rigid_body.VelocityIntegrated[1] += GRAVITY * delta;
+        rigid_body.VelocityLinear[1] += GRAVITY * delta;
         // Compute change to velocity due to external forces.
         scale(rigid_body.Acceleration, rigid_body.Acceleration, delta);
-        add(rigid_body.VelocityIntegrated, rigid_body.VelocityIntegrated, rigid_body.Acceleration);
+        add(rigid_body.VelocityLinear, rigid_body.VelocityLinear, rigid_body.Acceleration);
         // Apply friction.
-        scale(
-            rigid_body.VelocityIntegrated,
-            rigid_body.VelocityIntegrated,
-            MOBILITY - rigid_body.Friction
-        );
+        scale(rigid_body.VelocityLinear, rigid_body.VelocityLinear, MOBILITY - rigid_body.Friction);
 
         // Apply velocity to position.
-        scale(velocity_delta, rigid_body.VelocityIntegrated, delta);
+        scale(velocity_delta, rigid_body.VelocityLinear, delta);
         add(local.Translation, local.Translation, velocity_delta);
         local.Rotation += rigid_body.VelocityAngular * delta;
         game.World.Signature[entity] |= Has.Dirty;
