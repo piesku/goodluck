@@ -33,7 +33,7 @@ export function sys_render2d(game: Game, delta: number) {
 }
 
 function render_all(game: Game, eye: Camera2D) {
-    let material = game.MaterialInstanced;
+    let material = game.MaterialRender2D;
     let sheet = game.Spritesheet;
 
     game.Gl.useProgram(material.Program);

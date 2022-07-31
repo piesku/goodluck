@@ -1,9 +1,14 @@
-import {link, Material} from "../../common/material.js";
-import {GL_TRIANGLE_STRIP} from "../../common/webgl.js";
-import {Attribute, Instanced2DLayout} from "../../materials/layout2d.js";
-import {Has} from "../world.js";
+import {link, Material} from "../common/material.js";
+import {GL_TRIANGLE_STRIP} from "../common/webgl.js";
+import {Attribute, Render2DLayout} from "./layout2d.js";
 
-let vertex = `#version 300 es\n
+// The vertex shader is parameterized over two component bits: Has.Render2D and
+// Has.SpatialNode2D. They cannot be imported directly because each example has
+// its own Has enum. After bootstrapping a new project (i.e. when all other
+// examples are removed), the two bitflags can be imported directly into this
+// module; the vertex shader can be a simple literal rather than a function.
+function vertex(has_render2d: number, has_spatial_node2d: number) {
+    return `#version 300 es\n
     uniform mat3x2 pv;
     uniform vec2 sheet_size;
 
@@ -23,9 +28,9 @@ let vertex = `#version 300 es\n
 
     void main() {
         int signature = int(attr_translation.w);
-        if ((signature & ${Has.Render2D}) == ${Has.Render2D}) {
+        if ((signature & ${has_render2d}) == ${has_render2d}) {
             mat3x2 world;
-            if ((signature & ${Has.SpatialNode2D}) == ${Has.SpatialNode2D}) {
+            if ((signature & ${has_spatial_node2d}) == ${has_spatial_node2d}) {
                 world = mat3x2(
                     attr_rotation.xy,
                     attr_rotation.zw,
@@ -52,8 +57,8 @@ let vertex = `#version 300 es\n
             // Place the vertex outside the frustum.
             gl_Position.z = 2.0;
         }
-    }
-`;
+    }`;
+}
 
 let fragment = `#version 300 es\n
     precision mediump float;
@@ -73,8 +78,12 @@ let fragment = `#version 300 es\n
     }
 `;
 
-export function mat_instanced2d(gl: WebGL2RenderingContext): Material<Instanced2DLayout> {
-    let program = link(gl, vertex, fragment);
+export function mat_render2d(
+    gl: WebGL2RenderingContext,
+    has_render2d: number,
+    has_spatial_node2d: number
+): Material<Render2DLayout> {
+    let program = link(gl, vertex(has_render2d, has_spatial_node2d), fragment);
     return {
         Mode: GL_TRIANGLE_STRIP,
         Program: program,

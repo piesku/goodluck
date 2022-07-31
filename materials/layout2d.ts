@@ -9,7 +9,7 @@ export const enum Attribute {
     InstanceSprite,
 }
 
-export interface Instanced2DLayout {
+export interface Render2DLayout {
     // Uniforms
     Pv: WebGLUniformLocation;
     World: WebGLUniformLocation;

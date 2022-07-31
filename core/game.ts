@@ -11,7 +11,7 @@ import {
     ShadowMappingLayout,
     WorldSpaceLayout,
 } from "../materials/layout.js";
-import {Instanced2DLayout} from "../materials/layout2d.js";
+import {Render2DLayout} from "../materials/layout2d.js";
 import {World} from "./world.js";
 
 export const WORLD_CAPACITY = 100_000;
@@ -46,7 +46,7 @@ export interface Game extends GameXR {
     LightDetails: Float32Array;
     Cameras: Array<Entity>;
 
-    MaterialInstanced: Material<Instanced2DLayout>;
+    MaterialRender2D: Material<Render2DLayout>;
     Spritesheet: Spritesheet;
     InstanceData: Float32Array;
     InstanceBuffer: WebGLBuffer;

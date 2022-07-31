@@ -2,7 +2,7 @@ import {Game3D} from "../common/game.js";
 import {create_spritesheet_from} from "../common/texture.js";
 import {GL_BLEND} from "../common/webgl.js";
 import {FLOATS_PER_INSTANCE, setup_render2d_buffers} from "../materials/layout2d.js";
-import {mat_instanced2d} from "./materials/mat_instanced2d.js";
+import {mat_render2d} from "../materials/mat_render2d.js";
 import {sys_animate2d_sprite} from "./systems/sys_animate2d_sprite.js";
 import {sys_camera2d} from "./systems/sys_camera2d.js";
 import {sys_collide2d} from "./systems/sys_collide2d.js";
@@ -16,14 +16,14 @@ import {sys_physics2d_resolve} from "./systems/sys_physics2d_resolve.js";
 import {sys_render2d} from "./systems/sys_render2d.js";
 import {sys_resize2d} from "./systems/sys_resize2d.js";
 import {sys_transform2d} from "./systems/sys_transform2d.js";
-import {World} from "./world.js";
+import {Has, World} from "./world.js";
 
 export const WORLD_CAPACITY = 65_536; // = 4MB of InstanceData.
 
 export class Game extends Game3D {
     World = new World(WORLD_CAPACITY);
 
-    MaterialInstanced = mat_instanced2d(this.Gl);
+    MaterialRender2D = mat_render2d(this.Gl, Has.Render2D, Has.SpatialNode2D);
     Spritesheet = create_spritesheet_from(this.Gl, document.querySelector("img")!);
 
     InstanceData = new Float32Array(this.World.Capacity * FLOATS_PER_INSTANCE);
