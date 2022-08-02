@@ -4,6 +4,7 @@
 
 import {create} from "../../common/mat2d.js";
 import {Deg, Mat2D, Vec2} from "../../common/math.js";
+import {copy} from "../../common/vec2.js";
 import {Entity} from "../../common/world.js";
 import {FLOATS_PER_INSTANCE} from "../../materials/layout2d.js";
 import {Game} from "../game.js";
@@ -47,6 +48,21 @@ export function local_transform2d(
             Rotation: rotation,
             Scale: scale,
         };
+    };
+}
+
+/**
+ * Copy a position into the entity's local transform.
+ *
+ * This mixin must be used after `local_transform2d()` in order to ensure that
+ * the entity already has the `LocalTransform2D` component.
+ *
+ * @param translation Local translation relative to the parent.
+ */
+export function copy_position(translation: Vec2) {
+    return (game: Game, entity: Entity) => {
+        let local = game.World.LocalTransform2D[entity];
+        copy(local.Translation, translation);
     };
 }
 

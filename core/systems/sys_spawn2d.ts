@@ -6,7 +6,7 @@ import {instantiate} from "../../common/game.js";
 import {get_translation} from "../../common/mat2d.js";
 import {Vec2} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
-import {local_transform2d} from "../components/com_transform2d.js";
+import {copy_position} from "../components/com_transform2d.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -20,6 +20,8 @@ export function sys_spawn2d(game: Game, delta: number) {
     }
 }
 
+const world_position: Vec2 = [0, 0];
+
 function update(game: Game, entity: Entity, delta: number) {
     let spawn = game.World.Spawn[entity];
 
@@ -28,11 +30,10 @@ function update(game: Game, entity: Entity, delta: number) {
         spawn.SinceLast = 0;
 
         let spatial_node = game.World.SpatialNode2D[entity];
-        let world_position: Vec2 = [0, 0];
         get_translation(world_position, spatial_node.World);
 
         if (game.World.Signature.length - game.World.Graveyard.length < game.World.Capacity) {
-            instantiate(game, [...spawn.Creator(game), local_transform2d(world_position, 0)]);
+            instantiate(game, [...spawn.Creator(game), copy_position(world_position)]);
         } else if (DEBUG) {
             throw new Error("No more entities can be created; the world at maximum capacity.");
         }
