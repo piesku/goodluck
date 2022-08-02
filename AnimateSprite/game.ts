@@ -1,6 +1,6 @@
 import {Game3D} from "../common/game.js";
 import {create_spritesheet_from} from "../common/texture.js";
-import {GL_BLEND} from "../common/webgl.js";
+import {GL_BLEND, GL_DEPTH_TEST} from "../common/webgl.js";
 import {FLOATS_PER_INSTANCE, setup_render2d_buffers} from "../materials/layout2d.js";
 import {mat_render2d} from "../materials/mat_render2d.js";
 import {sys_camera2d} from "./systems/sys_camera2d.js";
@@ -26,6 +26,7 @@ export class Game extends Game3D {
         super();
 
         this.Gl.clearColor(0, 0, 0, 0);
+        this.Gl.disable(GL_DEPTH_TEST);
         this.Gl.enable(GL_BLEND);
         setup_render2d_buffers(this.Gl, this.InstanceBuffer);
     }
