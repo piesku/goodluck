@@ -1,14 +1,14 @@
 /**
- * @module systems/sys_move
+ * @module systems/sys_move2d
  */
 
 import {Vec2} from "../../common/math.js";
-import {add, length, normalize, scale, transform_direction} from "../../common/vec2.js";
+import {add, length, normalize, rotate, scale, transform_direction} from "../../common/vec2.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.LocalTransform2D | Has.SpatialNode2D | Has.Move2D | Has.Dirty;
+const QUERY = Has.LocalTransform2D | Has.Move2D | Has.Dirty;
 
 export function sys_move2d(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
@@ -22,10 +22,11 @@ const direction: Vec2 = [0, 0];
 
 function update(game: Game, entity: Entity, delta: number) {
     let local = game.World.LocalTransform2D[entity];
-    let node = game.World.SpatialNode2D[entity];
     let move = game.World.Move2D[entity];
 
     if (move.Direction[0] || move.Direction[1]) {
+        // Directions are given in the entity's self space, i.e. [0, 1] is the
+        // entity's up, not the world's up.
         direction[0] = move.Direction[0];
         direction[1] = move.Direction[1];
 
@@ -34,13 +35,20 @@ function update(game: Game, entity: Entity, delta: number) {
         // They may not, however, intensify one another; hence max amount is 1.
         let amount = Math.min(1, length(direction));
 
-        // Transform the direction into the world or the parent space. This will
-        // also scale the result by the scale encoded in the transform.
-        if (node.Parent !== undefined) {
-            let parent = game.World.SpatialNode2D[node.Parent];
-            transform_direction(direction, direction, parent.Self);
+        if (game.World.Signature[entity] & Has.SpatialNode2D) {
+            // Transform the direction into the world or the parent space. This will
+            // also scale the result by the scale encoded in the transform.
+            let node = game.World.SpatialNode2D[entity];
+            if (node.Parent !== undefined) {
+                let parent = game.World.SpatialNode2D[node.Parent];
+                transform_direction(direction, direction, parent.Self);
+            } else {
+                transform_direction(direction, direction, node.World);
+            }
         } else {
-            transform_direction(direction, direction, node.World);
+            // The entity isn't a spatial node, i.e. it's guaranteed to be a
+            // top-level entity. Transform the direction into the world space.
+            rotate(direction, direction, local.Rotation);
         }
 
         // Normalize the direction to remove the transform's scale. The length

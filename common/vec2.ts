@@ -50,6 +50,14 @@ export function normalize(out: Vec2, a: Vec2) {
     return out;
 }
 
+export function rotate(out: Vec2, a: Vec2, r: number) {
+    let c = Math.cos(r);
+    let s = Math.sin(r);
+    out[0] = c * a[0] - s * a[1];
+    out[1] = s * a[0] + c * a[1];
+    return out;
+}
+
 export function dot(a: Vec2, b: Vec2) {
     return a[0] * b[0] + a[1] * b[1];
 }
