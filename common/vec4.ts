@@ -39,3 +39,15 @@ export function scale(out: Vec4, a: Vec4, b: number) {
     out[3] = a[3] * b;
     return out;
 }
+
+export function lerp(out: Vec4, a: Vec4, b: Vec4, t: number) {
+    let ax = a[0];
+    let ay = a[1];
+    let az = a[2];
+    let aw = a[3];
+    out[0] = ax + t * (b[0] - ax);
+    out[1] = ay + t * (b[1] - ay);
+    out[2] = az + t * (b[2] - az);
+    out[3] = aw + t * (b[3] - aw);
+    return out;
+}
