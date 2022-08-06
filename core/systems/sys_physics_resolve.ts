@@ -19,12 +19,12 @@ export function sys_physics_resolve(game: Game, delta: number) {
     }
 
     // When all collisions are resolved, copy resolved velocities to
-    // VelocityIntegrated, for other systems to use.
+    // VelocityLinear, for other systems to use.
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
         if ((game.World.Signature[ent] & QUERY) === QUERY) {
             let rigid_body = game.World.RigidBody[ent];
             if (rigid_body.Kind === RigidKind.Dynamic) {
-                copy(rigid_body.VelocityIntegrated, rigid_body.VelocityResolved);
+                copy(rigid_body.VelocityLinear, rigid_body.VelocityResolved);
             }
         }
     }
@@ -67,12 +67,12 @@ function update(game: Game, entity: Entity) {
                         // Compute n.
                         normalize(a, collision.Hit);
                         // Compute - 2 * (v·n) * n.
-                        scale(a, a, -2 * dot(rigid_body.VelocityIntegrated, a));
-                        add(rigid_body.VelocityResolved, rigid_body.VelocityIntegrated, a);
+                        scale(a, a, -2 * dot(rigid_body.VelocityLinear, a));
+                        add(rigid_body.VelocityResolved, rigid_body.VelocityLinear, a);
                         break;
                     case RigidKind.Dynamic:
                     case RigidKind.Kinematic:
-                        copy(rigid_body.VelocityResolved, other_body.VelocityIntegrated);
+                        copy(rigid_body.VelocityResolved, other_body.VelocityLinear);
                         break;
                 }
 
@@ -92,7 +92,7 @@ function update(game: Game, entity: Entity) {
         }
 
         if (!has_collision) {
-            copy(rigid_body.VelocityResolved, rigid_body.VelocityIntegrated);
+            copy(rigid_body.VelocityResolved, rigid_body.VelocityLinear);
         }
     }
 }

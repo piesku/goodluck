@@ -33,7 +33,7 @@ function update(game: Game, entity: Entity, delta: number) {
         subtract(movement_delta, current_position, rigid_body.LastPosition);
 
         // Compute velocity from this frame's movement.
-        scale(rigid_body.VelocityIntegrated, movement_delta, 1 / delta);
+        scale(rigid_body.VelocityLinear, movement_delta, 1 / delta);
     }
 
     copy(rigid_body.LastPosition, current_position);

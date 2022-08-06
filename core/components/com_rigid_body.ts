@@ -20,7 +20,7 @@ export interface RigidBody {
     ColliderId: Entity;
     Bounciness: number;
     Acceleration: Vec3;
-    VelocityIntegrated: Vec3;
+    VelocityLinear: Vec3;
     VelocityResolved: Vec3;
     LastPosition: Vec3;
     IsGrounded: boolean;
@@ -34,7 +34,7 @@ export function rigid_body(kind: RigidKind, bounciness = 0.5) {
             ColliderId: entity,
             Bounciness: bounciness,
             Acceleration: [0, 0, 0],
-            VelocityIntegrated: [0, 0, 0],
+            VelocityLinear: [0, 0, 0],
             VelocityResolved: [0, 0, 0],
             LastPosition: [0, 0, 0],
             IsGrounded: false,

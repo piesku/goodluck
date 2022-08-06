@@ -28,13 +28,13 @@ function update(game: Game, entity: Entity, delta: number) {
 
     if (rigid_body.Kind === RigidKind.Dynamic) {
         // Compute change to velocity due to the gravity.
-        rigid_body.VelocityIntegrated[1] += GRAVITY * delta;
+        rigid_body.VelocityLinear[1] += GRAVITY * delta;
         // Compute change to velocity due to external forces.
         scale(rigid_body.Acceleration, rigid_body.Acceleration, delta);
-        add(rigid_body.VelocityIntegrated, rigid_body.VelocityIntegrated, rigid_body.Acceleration);
+        add(rigid_body.VelocityLinear, rigid_body.VelocityLinear, rigid_body.Acceleration);
 
         // Apply velocity to position.
-        scale(velocity_delta, rigid_body.VelocityIntegrated, delta);
+        scale(velocity_delta, rigid_body.VelocityLinear, delta);
         add(transform.Translation, transform.Translation, velocity_delta);
         game.World.Signature[entity] |= Has.Dirty;
 
