@@ -17,6 +17,17 @@ export function sys_physics_resolve(game: Game, delta: number) {
             update(game, i);
         }
     }
+
+    // When all collisions are resolved, copy resolved velocities to
+    // VelocityIntegrated, for other systems to use.
+    for (let ent = 0; ent < game.World.Signature.length; ent++) {
+        if ((game.World.Signature[ent] & QUERY) === QUERY) {
+            let rigid_body = game.World.RigidBody[ent];
+            if (rigid_body.Kind === RigidKind.Dynamic) {
+                copy(rigid_body.VelocityIntegrated, rigid_body.VelocityResolved);
+            }
+        }
+    }
 }
 
 // Temp vector used to compute the reflection off of a static body.
@@ -83,7 +94,5 @@ function update(game: Game, entity: Entity) {
         if (!has_collision) {
             copy(rigid_body.VelocityResolved, rigid_body.VelocityIntegrated);
         }
-    } else if (rigid_body.Kind === RigidKind.Kinematic) {
-        copy(rigid_body.VelocityResolved, rigid_body.VelocityIntegrated);
     }
 }

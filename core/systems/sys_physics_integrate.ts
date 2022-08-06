@@ -3,7 +3,7 @@
  */
 
 import {Vec3} from "../../common/math.js";
-import {add, copy, scale, set} from "../../common/vec3.js";
+import {add, scale, set} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
 import {RigidKind} from "../components/com_rigid_body.js";
 import {Game} from "../game.js";
@@ -27,8 +27,6 @@ function update(game: Game, entity: Entity, delta: number) {
     let rigid_body = game.World.RigidBody[entity];
 
     if (rigid_body.Kind === RigidKind.Dynamic) {
-        copy(rigid_body.VelocityIntegrated, rigid_body.VelocityResolved);
-
         // Compute change to velocity due to the gravity.
         rigid_body.VelocityIntegrated[1] += GRAVITY * delta;
         // Compute change to velocity due to external forces.
