@@ -13,7 +13,7 @@ main {
     user-select: none;
     touch-action: none;
 }
-img {
+[hidden] {
     display: none;
 }
 [onclick] {
