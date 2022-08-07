@@ -7,7 +7,7 @@ import {control_always2d} from "../components/com_control_always2d.js";
 import {draw_arc, draw_rect} from "../components/com_draw.js";
 import {move2d} from "../components/com_move2d.js";
 import {RigidKind, rigid_body2d} from "../components/com_rigid_body2d.js";
-import {copy_position, local_transform2d, spatial_node2d} from "../components/com_transform2d.js";
+import {local_transform2d, set_position, spatial_node2d} from "../components/com_transform2d.js";
 import {Game, Layer, WORLD_CAPACITY} from "../game.js";
 import {World} from "../world.js";
 import {blueprint_square} from "./blu_square.js";
@@ -58,5 +58,5 @@ export function scene_stage(game: Game) {
     }
 
     // Square.
-    instantiate(game, [...blueprint_square(game), copy_position([0, 5])]);
+    instantiate(game, [...blueprint_square(game), set_position(0, 5)]);
 }
