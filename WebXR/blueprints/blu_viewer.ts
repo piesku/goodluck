@@ -8,6 +8,7 @@ import {Game} from "../game.js";
 
 export function blueprint_viewer(game: Game) {
     return [
+        transform(),
         children(
             [
                 // Headset.

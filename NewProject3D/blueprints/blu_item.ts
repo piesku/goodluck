@@ -30,6 +30,7 @@ export function blueprint_item(game: Game) {
     let shaker_entity: Entity;
     let particles_entity: Entity;
     return [
+        transform(),
         callback((game, entity) => (item_entity = entity)),
         collide(true, Layer.Collectable, Layer.Terrain | Layer.Player),
         trigger(Layer.Player, Action.CollectItem),

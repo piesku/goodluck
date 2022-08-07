@@ -1,5 +1,4 @@
 import {instantiate} from "../../common/game.js";
-import {from_euler} from "../../common/quat.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {blueprint_camera_minimap} from "../blueprints/blu_camera_minimap.js";
 import {blueprint_sun} from "../blueprints/blu_sun.js";
@@ -15,7 +14,7 @@ import {
     render_textured_shaded,
     render_textured_unlit,
 } from "../components/com_render.js";
-import {transform} from "../components/com_transform.js";
+import {set_position, set_rotation, transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 
@@ -24,16 +23,17 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
 
     // Camera.
-    instantiate(game, [...blueprint_camera(game), transform([0, 0, 7], [0, 1, 0, 0])]);
+    instantiate(game, [...blueprint_camera(game), set_position(0, 0, 7), set_rotation(0, 180, 0)]);
 
     // Minimap Camera.
-    instantiate(game, [...blueprint_camera_minimap(game), transform([0, 0, 7], [0, 1, 0, 0])]);
+    instantiate(game, [
+        ...blueprint_camera_minimap(game),
+        set_position(0, 0, 7),
+        set_rotation(0, 180, 0),
+    ]);
 
     // Sun.
-    instantiate(game, [
-        transform(undefined, from_euler([0, 0, 0, 0], -45, 45, 0)),
-        ...blueprint_sun(game),
-    ]);
+    instantiate(game, [...blueprint_sun(game), set_rotation(-45, 45, 0)]);
 
     // Ground.
     instantiate(game, [

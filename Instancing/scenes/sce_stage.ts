@@ -4,7 +4,7 @@ import {from_euler} from "../../common/quat.js";
 import {float} from "../../common/random.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {render_instanced_colored_unlit} from "../components/com_render_instanced.js";
-import {transform} from "../components/com_transform.js";
+import {set_position, set_rotation, transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 
@@ -15,7 +15,8 @@ export function scene_stage(game: Game) {
     // Camera.
     instantiate(game, [
         ...blueprint_camera(game),
-        transform([0, 40, 90], from_euler([0, 0, 0, 1], 30, 180, 0)),
+        set_position(0, 40, 90),
+        set_rotation(30, 180, 0),
     ]);
 
     let edge_length = 100;

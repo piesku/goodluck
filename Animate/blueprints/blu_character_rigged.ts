@@ -18,6 +18,7 @@ const enum BoneIndex {
 
 export function blueprint_character_rigged(game: Game) {
     return [
+        transform(),
         render_colored_skinned(
             game.MaterialColoredPhongSkinned,
             game.MeshLudek,

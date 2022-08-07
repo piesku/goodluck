@@ -10,6 +10,7 @@ import {Game} from "../game.js";
 
 export function blueprint_camera(game: Game) {
     return [
+        transform(),
         control_player(true, 1, 0),
         control_dolly(100),
         move(100, 0.2),

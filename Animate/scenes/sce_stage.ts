@@ -10,7 +10,7 @@ import {audio_source} from "../components/com_audio_source.js";
 import {children} from "../components/com_children.js";
 import {control} from "../components/com_control.js";
 import {light_directional} from "../components/com_light.js";
-import {transform} from "../components/com_transform.js";
+import {set_position, set_rotation, set_scale, transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 
@@ -23,7 +23,8 @@ export function scene_stage(game: Game) {
     // Camera.
     instantiate(game, [
         ...blueprint_camera(game),
-        transform([0, 0, 15], [0, 1, 0, 0]),
+        set_position(0, 0, 15),
+        set_rotation(0, 180, 0),
         audio_listener(),
     ]);
 
@@ -64,13 +65,15 @@ export function scene_stage(game: Game) {
         children(
             [
                 ...blueprint_character_voxel(game),
-                transform([-7, 0, 0]),
+                set_position(-7, 0, 0),
                 control(),
                 audio_source(true),
             ],
             [
                 ...blueprint_character_rigged(game),
-                transform([7, -4, 0], [0, 1, 0, 0], [3, 3, 3]),
+                set_position(7, -4, 0),
+                set_rotation(0, 180, 0),
+                set_scale(3, 3, 3),
                 control(),
                 audio_source(true),
             ]

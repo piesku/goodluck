@@ -7,6 +7,7 @@ import {Game, Layer} from "../game.js";
 
 export function blueprint_hand(game: Game) {
     return [
+        transform(),
         collide(true, Layer.Physics, Layer.Physics, [0.5, 0.5, 0.5]),
         rigid_body(RigidKind.Kinematic),
         children([

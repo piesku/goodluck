@@ -4,7 +4,7 @@ import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {blueprint_viewer} from "../blueprints/blu_viewer.js";
 import {light_directional} from "../components/com_light.js";
 import {render_colored_shaded} from "../components/com_render.js";
-import {transform} from "../components/com_transform.js";
+import {set_position, set_rotation, transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 
@@ -15,10 +15,10 @@ export function scene_stage(game: Game) {
     game.Gl.clearColor(0.9, 0.9, 0.9, 1);
 
     // Camera.
-    instantiate(game, [...blueprint_camera(game), transform([1, 2, 5], [0, 1, 0, 0])]);
+    instantiate(game, [...blueprint_camera(game), set_position(1, 2, 5), set_rotation(0, 180, 0)]);
 
     // VR Camera.
-    instantiate(game, [...blueprint_viewer(game), transform([1, 2, 5])]);
+    instantiate(game, [...blueprint_viewer(game), set_position(1, 2, 5)]);
 
     // Light.
     instantiate(game, [

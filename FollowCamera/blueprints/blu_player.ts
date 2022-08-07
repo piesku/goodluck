@@ -12,6 +12,7 @@ import {Game, Layer} from "../game.js";
 export function blueprint_player(game: Game) {
     return [
         named("player"),
+        transform(),
         control_player(true, 0.2, 0),
         move(10, 3),
         collide(true, Layer.Player, Layer.Terrain),

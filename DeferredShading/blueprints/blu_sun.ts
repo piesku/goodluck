@@ -10,6 +10,7 @@ import {Game} from "../game.js";
 
 export function blueprint_sun(game: Game) {
     return [
+        transform(),
         control_always(null, [0, 1, 0, 0]),
         move(0, 0.5),
         children(

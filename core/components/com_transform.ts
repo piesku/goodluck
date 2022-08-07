@@ -4,6 +4,8 @@
 
 import {create} from "../../common/mat4.js";
 import {Mat4, Quat, Vec3} from "../../common/math.js";
+import {copy as quat_copy, from_euler} from "../../common/quat.js";
+import {copy as vec3_copy} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";
@@ -57,6 +59,106 @@ export function transform_gyroscope(
             Scale: scale,
             Gyroscope: true,
         };
+    };
+}
+
+/**
+ * Set position in the entity's transform.
+ *
+ * This mixin must be used after `transform()` in order to ensure that
+ * the entity already has the `Transform` component.
+ *
+ * @param x The X coordinate, relative to the parent.
+ * @param y The Y coordinate, relative to the parent.
+ * @param z The Z coordinate, relative to the parent.
+ */
+export function set_position(x: number, y: number, z: number) {
+    return (game: Game, entity: Entity) => {
+        let local = game.World.Transform[entity];
+        local.Translation[0] = x;
+        local.Translation[1] = y;
+        local.Translation[2] = z;
+    };
+}
+
+/**
+ * Copy a position into the entity's transform.
+ *
+ * This mixin must be used after `transform()` in order to ensure that
+ * the entity already has the `Transform` component.
+ *
+ * @param translation Local translation relative to the parent.
+ */
+export function copy_position(translation: Vec3) {
+    return (game: Game, entity: Entity) => {
+        let local = game.World.Transform[entity];
+        vec3_copy(local.Translation, translation);
+    };
+}
+
+/**
+ * Set Euler (YXZ) rotation in the entity's transform.
+ *
+ * This mixin must be used after `transform()` in order to ensure that
+ * the entity already has the `Transform` component.
+ *
+ * @param x Rotation around the X axis, in degrees. (Applied second.)
+ * @param y Rotation around the Y axis, in degrees. (Applied first.)
+ * @param z Rotation around the Z axis, in degrees. (Applied third.)
+ */
+export function set_rotation(x: number, y: number, z: number) {
+    return (game: Game, entity: Entity) => {
+        let local = game.World.Transform[entity];
+        from_euler(local.Rotation, x, y, z);
+    };
+}
+
+/**
+ * Copy a rotation into the entity's transform.
+ *
+ * This mixin must be used after `transform()` in order to ensure that
+ * the entity already has the `Transform` component.
+ *
+ * @param rotation Local rotation relative to the parent.
+ */
+export function copy_rotation(rotation: Quat) {
+    return (game: Game, entity: Entity) => {
+        let local = game.World.Transform[entity];
+        quat_copy(local.Rotation, rotation);
+    };
+}
+
+/**
+ * Set scale in the entity's transform.
+ *
+ * This mixin must be used after `transform()` in order to ensure that
+ * the entity already has the `Transform` component.
+ *
+ * @param x The X scale, relative to the parent.
+ * @param y The Y scale, relative to the parent.
+ * @param z The Z scale, relative to the parent.
+ */
+export function set_scale(x: number, y: number, z: number) {
+    return (game: Game, entity: Entity) => {
+        let local = game.World.Transform[entity];
+        local.Scale[0] = x;
+        local.Scale[1] = y;
+        local.Scale[2] = z;
+    };
+}
+
+/**
+ * Copy a scale vector into the entity's transform.
+ *
+ * This mixin must be used after `transform()` in order to ensure that
+ * the entity already has the `Transform` component.
+ *
+ * @param scale Local scale relative to the parent.
+ */
+export function copy_scale(scale: Vec3) {
+    return (game: Game, entity: Entity) => {
+        let local = game.World.Transform[entity];
+        vec3_copy(local.Scale, scale);
     };
 }
 

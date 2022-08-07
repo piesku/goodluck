@@ -1,6 +1,5 @@
 import {light_radius} from "../../Animate/components/com_light.js";
 import {instantiate} from "../../common/game.js";
-import {from_euler} from "../../common/quat.js";
 import {element, float} from "../../common/random.js";
 import {blueprint_bulb} from "../blueprints/blu_bulb.js";
 import {blueprint_camera_main} from "../blueprints/blu_camera_main.js";
@@ -10,7 +9,7 @@ import {light_point} from "../components/com_light.js";
 import {render_colored_deferred} from "../components/com_render.js";
 import {shake} from "../components/com_shake.js";
 import {spawn} from "../components/com_spawn.js";
-import {transform} from "../components/com_transform.js";
+import {set_position, set_rotation, transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {sys_transform} from "../systems/sys_transform.js";
 import {World} from "../world.js";
@@ -22,14 +21,12 @@ export function scene_stage(game: Game) {
     // Camera.
     instantiate(game, [
         ...blueprint_camera_main(game),
-        transform([0, 10, 25], from_euler([0, 0, 0, 1], 15, 180, 0)),
+        set_position(0, 10, 25),
+        set_rotation(15, 180, 0),
     ]);
 
     // Sun.
-    instantiate(game, [
-        transform(undefined, from_euler([0, 0, 0, 0], -45, 45, 0)),
-        ...blueprint_sun(game),
-    ]);
+    instantiate(game, [...blueprint_sun(game), set_rotation(-45, 45, 0)]);
 
     // Ground.
     instantiate(game, [

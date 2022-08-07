@@ -12,7 +12,7 @@ import {render_colored_shaded} from "../components/com_render.js";
 import {RigidKind, rigid_body} from "../components/com_rigid_body.js";
 import {shake} from "../components/com_shake.js";
 import {spawn} from "../components/com_spawn.js";
-import {transform} from "../components/com_transform.js";
+import {set_position, set_rotation, transform} from "../components/com_transform.js";
 import {Game, Layer} from "../game.js";
 import {World} from "../world.js";
 
@@ -21,7 +21,7 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
 
     // Camera.
-    instantiate(game, [...blueprint_camera(game), transform([0, 2, 6], [0, 1, 0, 0])]);
+    instantiate(game, [...blueprint_camera(game), set_position(0, 2, 6), set_rotation(0, 180, 0)]);
 
     // Light.
     instantiate(game, [
@@ -56,6 +56,6 @@ export function scene_stage(game: Game) {
         transform([0, 1, -3]),
         control_always(null, [0, 1, 0, 0]),
         move(0, 2),
-        children([...blueprint_hand(game), transform([0, 0, -3])]),
+        children([...blueprint_hand(game), set_position(0, 0, -3)]),
     ]);
 }

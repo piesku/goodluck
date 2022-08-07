@@ -25,6 +25,7 @@ export function blueprint_bulb(game: Game) {
     let light_color = element(colors);
     let bulb_color: Vec3 = [...light_color];
     return [
+        transform(),
         control_always(null, from_euler([0, 0, 0, 1], float(0, 360), float(0, 360), float(0, 360))),
         move(0, float()),
         children([

@@ -9,6 +9,7 @@ import {Game} from "../game.js";
 
 export function blueprint_camera_follow(game: Game) {
     return [
+        transform(),
         follow(first_named(game.World, "camera anchor"), 0.01),
         look_at(first_named(game.World, "player"), 0.01),
         children([

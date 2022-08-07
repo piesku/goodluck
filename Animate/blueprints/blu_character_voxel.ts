@@ -37,6 +37,7 @@ export function blueprint_character_voxel(game: Game) {
     let shirt_color = element(shirt_colors);
     let pants_color = element(pants_colors);
     return [
+        transform(),
         children(
             // spine
             [

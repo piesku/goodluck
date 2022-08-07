@@ -13,7 +13,7 @@ import {nav_agent} from "../components/com_nav_agent.js";
 import {pickable_aabb, pickable_mesh} from "../components/com_pickable.js";
 import {render_colored_shaded} from "../components/com_render.js";
 import {selectable} from "../components/com_selectable.js";
-import {transform} from "../components/com_transform.js";
+import {set_position, set_rotation, transform} from "../components/com_transform.js";
 import {Game, Layer} from "../game.js";
 import {Has, World} from "../world.js";
 
@@ -23,7 +23,7 @@ export function scene_stage(game: Game) {
     game.Gl.clearColor(0.9, 0.9, 0.9, 1);
 
     // Camera.
-    instantiate(game, [...blueprint_camera(game), transform([0, 0, 15], [0, 1, 0, 0])]);
+    instantiate(game, [...blueprint_camera(game), set_position(0, 0, 15), set_rotation(0, 180, 0)]);
 
     // Directional light.
     instantiate(game, [

@@ -6,6 +6,7 @@ import {Game} from "../game.js";
 
 export function blueprint_camera_main(game: Game) {
     return [
+        transform(),
         children([
             transform(undefined, [0, 1, 0, 0]),
             // Clear color must be black to not leak into the g-buffer.

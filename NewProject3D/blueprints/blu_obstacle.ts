@@ -7,6 +7,7 @@ import {Game, Layer} from "../game.js";
 
 export function blueprint_obstacle(game: Game) {
     return [
+        transform(),
         collide(true, Layer.Obstacle, Layer.Terrain | Layer.Player),
         rigid_body(RigidKind.Dynamic, 0.3),
         children([
