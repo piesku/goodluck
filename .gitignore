@@ -5,3 +5,4 @@ node_modules
 *.js
 *.js.map
 play/index.*
+reference/*.html
