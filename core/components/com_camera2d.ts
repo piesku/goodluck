@@ -1,5 +1,8 @@
 /**
- * @module components/com_camera2d
+ * # Camera2D
+ *
+ * The `Camera2D` component makes the rendering system render the scene from the
+ * vantage point of the entity.
  */
 
 import {create} from "../../common/mat2d.js";
@@ -49,6 +52,14 @@ export function camera2d(radius: Vec2) {
     };
 }
 
+/**
+ * Transform a point on the screen (in pixel coords) into a point in the world's
+ * 2D space (in world units).
+ *
+ * @param out The world-space position to write to.
+ * @param camera The camera whose projection to unapply.
+ * @param pos  The screen-space position to transform.
+ */
 export function viewport_to_world(out: Vec2, camera: Camera2D, pos: Vec2) {
     // Transform the position from viewport space to the NDC space (where +Y is up).
     out[0] = (pos[0] / camera.ViewportWidth) * 2 - 1;

@@ -1,3 +1,14 @@
+/**
+ * # EmitParticles
+ *
+ * The `EmitParticles` component makes the entity emit particles.
+ *
+ * The particles are data points stored in an array, updated by
+ * [`sys_particles`](sys_particles.html). If the entity has one of the
+ * [`RenderParticles`](com_render.html) components (colored or textured), the
+ * particles are rendered by [`sys_render_forward`](sys_render_forward.html).
+ */
+
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -11,7 +22,10 @@ export interface EmitParticles {
 }
 
 /**
- * Add EmitParticles.
+ * Add `EmitParticles` to an entity.
+ *
+ * The entity also needs the [`RenderParticlesColored`](com_render.html) or
+ * [`RenderParticlesTextured`](com_render.html) component.
  *
  * @param lifespan How long particles live for.
  * @param frequency How often particles spawn.

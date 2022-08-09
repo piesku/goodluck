@@ -1,5 +1,8 @@
 /**
- * @module components/com_audio_source
+ * # AudioSource
+ *
+ * The `AudioSource` component is used to make entities play back audio. The
+ * sound data is defined by the [`AudioClip` interface](common_audio.html).
  */
 
 import {AudioClip} from "../../common/audio.js";
@@ -21,7 +24,7 @@ export interface AudioSource {
 }
 
 /**
- * Add the AudioSource component.
+ * Add `AudioSource` to an entity.
  *
  * @param spatial Does the source produce 3D sound?
  * @param idle The name of the clip to play by default, in a loop.

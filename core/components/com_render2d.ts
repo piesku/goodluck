@@ -1,3 +1,9 @@
+/**
+ * # Render2D
+ *
+ * The `Render2D` component allows an entity to be rendered in 2D space.
+ */
+
 import {Vec4} from "../../common/math.js";
 import {clamp} from "../../common/number.js";
 import {Entity} from "../../common/world.js";
@@ -13,9 +19,9 @@ export interface Render2D {
 }
 
 /**
- * Add Render2D to an entity.
+ * Add `Render2D` to an entity.
  *
- * By default, the z-order is 0. Use the order() mixin to change it.
+ * By default, the z-order is 0. Use `order()` to change it.
  *
  * @param sprite_name The name of the sprite to render.
  * @param color The tint of the sprite.
@@ -51,7 +57,7 @@ export function render2d(sprite_name: string, color: Vec4 = [1, 1, 1, 1]) {
  *
  * Camera2D's projection is set up with z-order +1 as the near plane and -1 as
  * the far plane. The z-order set by this mixin is clamped to the [-1, 1] range.
- * If you want to skip the sprite while rendering, remove Has.Render2D from its
+ * If you want to skip the sprite while rendering, remove `Has.Render2D` from its
  * signature.
  *
  * @param z The z-order of the sprite, clamped to [-1, 1].

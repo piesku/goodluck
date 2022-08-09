@@ -1,3 +1,16 @@
+/**
+ * # Collide2D
+ *
+ * The `Collide2D` component allows detecting AABB collisions between entities.
+ *
+ * When used together with [`RigidBody2D`](com_rigid_body2d.html), collisions are
+ * processed by [`sys_physics2d_resolve`](sys_physics2d_resolve.html) to respond to
+ * the physics simulation.
+ *
+ * When used together with [`Trigger`](com_trigger.html), collisions can trigger
+ * arbitrary logic through `Actions`.
+ */
+
 import {AABB2D} from "../../common/aabb2d.js";
 import {Vec2} from "../../common/math.js";
 import {Entity} from "../../common/world.js";

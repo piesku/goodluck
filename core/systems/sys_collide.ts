@@ -1,5 +1,20 @@
 /**
- * @module systems/sys_collide
+ * # sys_collide
+ *
+ * Detect collisions between static and dynamic colliders.
+ *
+ * Collision detection is done using axis-aligned bounding boxes (AABB).
+ *
+ * Static vs. dynamic collision detection is O(n*m). All dynamic colliders are
+ * checked against all static colliders. This works great for a small number of
+ * dynamic colliders and a large number of static colliders.
+ *
+ * Dynamic vs. dynamic collision detection is O(n^2). All dynamic colliders are
+ * checked against all other dynamic colliders. This can become very expensive
+ * if there are many dynamic colliders. In general, fewer than 100 dynamic
+ * colliders is recommended.
+ *
+ * Static vs. static collisions are not checked at all.
  */
 
 import {compute_aabb, intersect_aabb, penetrate_aabb} from "../../common/aabb.js";

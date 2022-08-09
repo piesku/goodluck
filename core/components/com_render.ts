@@ -1,5 +1,11 @@
 /**
- * @module components/com_render
+ * # Render
+ *
+ * The `Render` component allows the entity to be rendered.
+ *
+ * There are many kinds of the render components, suitable for use with
+ * different materials. The materials are defined in terms of the layout of the
+ * shader's uniforms, and sometimes the attributes.
  */
 
 import {Material} from "../../common/material.js";

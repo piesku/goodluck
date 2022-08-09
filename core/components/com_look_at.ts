@@ -1,5 +1,7 @@
 /**
- * @module components/com_look_at
+ * # LooktAt
+ *
+ * The `LookAt` component allows an entity to look at another entity.
  */
 
 import {Entity} from "../../common/world.js";
@@ -13,6 +15,12 @@ export interface LookAt {
     Stiffness: number;
 }
 
+/**
+ * Add `LookAt` to an entity.
+ *
+ * @param target Entity to look at.
+ * @param stiffness How laggy vs. precise is the following [0-1].
+ */
 export function look_at(target: Entity, stiffness = 0.1) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.LookAt;

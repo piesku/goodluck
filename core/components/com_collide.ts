@@ -1,5 +1,14 @@
 /**
- * @module components/com_collide
+ * # Collide
+ *
+ * The `Collide` component allows detecting AABB collisions between entities.
+ *
+ * When used together with [`RigidBody`](com_rigid_body.html), collisions are
+ * processed by [`sys_physics_resolve`](sys_physics_resolve.html) to respond to
+ * the physics simulation.
+ *
+ * When used together with [`Trigger`](com_trigger.html), collisions can trigger
+ * arbitrary logic through `Actions`.
  */
 
 import {AABB} from "../../common/aabb.js";

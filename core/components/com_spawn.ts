@@ -1,5 +1,7 @@
 /**
- * @module components/com_spawn
+ * # Spawn
+ *
+ * The `Spawn` component allows the entity to spawn other entities.
  */
 
 import {Blueprint} from "../../common/game.js";

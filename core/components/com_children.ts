@@ -1,5 +1,12 @@
 /**
- * @module components/com_children
+ * # Children
+ *
+ * The `Children` component is used to group entities together under a common parent.
+ *
+ * The parent-child relationship can express a hierarchy of entities in the
+ * scene graph (when used with [`transform`](com_transform.html) or
+ * [`spatial_node2d`](com_transform2d.html)), or it can be used to create
+ * dependencies between [tasks](com_task.html).
  */
 
 import {Blueprint, instantiate} from "../../common/game.js";
@@ -11,6 +18,11 @@ export interface Children {
     Children: Array<Entity>;
 }
 
+/**
+ * Add `Children` to an entity.
+ *
+ * @param blueprints Blueprints to instantiate as children of the entity.
+ */
 export function children(...blueprints: Array<Blueprint<Game>>) {
     return (game: Game, entity: Entity) => {
         if (game.World.Signature[entity] & Has.Children) {
@@ -52,6 +64,7 @@ export function* query_down(world: World, entity: Entity, mask: Has): IterableIt
 
 /**
  * Delete the entity with all its descendants.
+ *
  * @param world World object which stores the component data.
  * @param entity The root entity to start removing at.
  */
