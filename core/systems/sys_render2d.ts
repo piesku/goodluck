@@ -1,3 +1,11 @@
+/**
+ * # sys_render2d
+ *
+ * Render all sprites in the world using the WebGL renderer.
+ *
+ * Sprites are rendered on instanced quads, which means that they are all
+ * rendered in a single draw call.
+ */
 import {
     GL_ARRAY_BUFFER,
     GL_COLOR_BUFFER_BIT,

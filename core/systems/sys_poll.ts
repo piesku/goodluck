@@ -1,5 +1,13 @@
 /**
- * @module systems/sys_poll
+ * # sys_task
+ *
+ * Complete [tasks](com_task.html) whose ready condition has been satisifed.
+ *
+ * Additionally, if a task has a [`Children`](com_children.html) component,
+ * child tasks block the parent task from completing. When all children
+ * complete, the parent task is completed on the next frame. This is done for
+ * consistency, to make `sys_poll` independent of the order in which tasks are
+ * added to the world.
  */
 
 import {Entity} from "../../common/world.js";

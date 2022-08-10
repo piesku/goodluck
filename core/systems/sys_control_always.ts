@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_control_always
+ * # sys_control_always
+ *
+ * Update the entity's `Move` and `Animate` components every frame.
  */
 
 import {multiply} from "../../common/quat.js";

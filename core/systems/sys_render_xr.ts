@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_render_xr
+ * # sys_render_xr
+ *
+ * Render the world using an XR [camera](com_camera.html).
  */
 
 import {GL_FRAMEBUFFER} from "../../common/webgl.js";

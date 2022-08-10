@@ -1,5 +1,12 @@
 /**
- * @module systems/sys_physics_resolve
+ * # sys_physics_resolve
+ *
+ * The second step of the physics simulation: resolve the collisions between
+ * [rigid bodies](com_rigid_body.html).
+ *
+ * The positions of colliding rigid bodies are updated to account for the
+ * collision response, i.e. the bodies are moved apart. Their velocities are
+ * sawpped, too.
  */
 
 import {Vec3} from "../../common/math.js";

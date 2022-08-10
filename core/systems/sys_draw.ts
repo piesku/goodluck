@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_draw
+ * # sys_draw
+ *
+ * Draw 2D [primitives](com_draw.html) in the 3D scene using the Context2D API.
  */
 
 import {get_translation} from "../../common/mat4.js";

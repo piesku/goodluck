@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_audio_listener
+ * # sys_audio_listener
+ *
+ * Update the position and orientation of `game.Audio`'s listener.
  */
 
 import {get_forward, get_translation, get_up} from "../../common/mat4.js";

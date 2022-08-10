@@ -1,5 +1,8 @@
 /**
- * @module systems/sys_resize2d
+ * # sys_resize2d
+ *
+ * Resize the inner resolution of canvases when the browser's window is resized,
+ * and update the projection matrices of cameras in the scene.
  */
 
 import {from_ortho, invert} from "../../common/mat2d.js";

@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_trigger2d
+ * # sys_trigger2d
+ *
+ * Emit an `Action` when another entity collides with this entity.
  */
 
 import {Entity} from "../../common/world.js";

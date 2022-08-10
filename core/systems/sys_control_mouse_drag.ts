@@ -1,3 +1,14 @@
+/**
+ * # system_control_mouse_drag
+ *
+ * Handle mouse input when dragging with one of the buttons pressed. Good for
+ * cameras overlooking the scene.
+ *
+ * When the mouse is dragged with the left mouse button pressed, the entity
+ * pans. When it is dragged with the right mouse button pressed, the entity
+ * rotates.
+ */
+
 import {DEG_TO_RAD, Quat, Vec3} from "../../common/math.js";
 import {from_axis, multiply} from "../../common/quat.js";
 import {Entity} from "../../common/world.js";

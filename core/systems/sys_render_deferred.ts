@@ -1,5 +1,14 @@
 /**
- * @module systems/sys_render_deferred
+ * # sys_render_deferred
+ *
+ * Render the world using the deferred rendering pipeline: the g-buffer pass.
+ *
+ * The pipeline supports [cameras](com_camera.html) which render to a deferred
+ * target. No shading is done in the deferred pass. Instead, the information
+ * about the fragments' position, color, normals, shininess, etc. is stored in
+ * the deferred target's textures.
+ *
+ * Transparent objects are not supported.
  */
 
 import {TargetKind} from "../../common/framebuffer.js";

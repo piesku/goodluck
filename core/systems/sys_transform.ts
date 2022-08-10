@@ -1,5 +1,18 @@
 /**
- * @module systems/sys_transform
+ * # sys_transform
+ *
+ * Apply changes to position, rotation, and scale to the entities' `World`
+ * transformation matrix, taking into account transforms of parents.
+ *
+ * `sys_transform` doesn't depend on the order of entities in the world, but it
+ * works best when parents are added before children. This is the default
+ * insertion order of `instantiate()`, but because entities can be later
+ * recycled, it's not guaranteed.
+ *
+ * `sys_transform` also updates the transform's `Parent` field. When reparenting
+ * entities, it's not necessary to assign the new parent manually. OTOH, the
+ * `Parent` field should only be referenced after `sys_transform` has already
+ * run during the frame.
  */
 
 import {

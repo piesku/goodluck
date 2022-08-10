@@ -1,5 +1,8 @@
 /**
- * @module systems/sys_camera2d
+ * # sys_camera2d
+ *
+ * Update the `PV` matrix of the [camera](com_camera2d.html) used for 2D
+ * rendering.
  */
 
 import {copy, multiply} from "../../common/mat2d.js";

@@ -1,5 +1,9 @@
 /**
- * @module systems/sys_physics2d_integrate
+ * # sys_physics_integrate
+ *
+ * The first step of the physics simulation: integrate the [rigid
+ * body](com_rigid_body2d.html)'s acceleration and velocity, and update the
+ * entity's transform.
  */
 
 import {Vec2} from "../../common/math.js";

@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_camera
+ * # sys_camera
+ *
+ * Update the `PV` matrix of the [camera](com_camera.html).
  */
 
 import {copy, get_translation, multiply} from "../../common/mat4.js";

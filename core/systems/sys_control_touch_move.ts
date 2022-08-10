@@ -1,3 +1,12 @@
+/**
+ * # sys_control_touch_move
+ *
+ * Handle touch input using the "invisible joystick" approach. Good for FPS and
+ * TPS camera controls.
+ *
+ * Single swipes rotate the entity. Tap-and-swipe moves it.
+ */
+
 import {DEG_TO_RAD, Quat, Vec2, Vec3} from "../../common/math.js";
 import {clamp} from "../../common/number.js";
 import {from_axis, get_pitch, multiply} from "../../common/quat.js";

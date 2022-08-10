@@ -36,8 +36,8 @@ export class Game extends Game3D {
         // Collisions and physics.
         sys_physics_integrate(this, delta);
         sys_transform(this, delta);
-        sys_physics_kinematic(this, delta);
         sys_collide(this, delta);
+        sys_physics_kinematic(this, delta);
         sys_physics_resolve(this, delta);
         sys_transform(this, delta);
     }

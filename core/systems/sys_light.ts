@@ -1,5 +1,9 @@
 /**
- * @module systems/sys_light
+ * # sys_light
+ *
+ * Collect the [lights](com_light.html) in the scene and update the array of
+ * light positions and details to be passed to shaders in
+ * [sys_render_forward](sys_render_forward.html).
  */
 
 import {get_forward, get_translation} from "../../common/mat4.js";

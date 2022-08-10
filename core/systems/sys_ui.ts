@@ -1,5 +1,13 @@
 /**
- * @module systems/sys_ui
+ * # sys_ui
+ *
+ * Render the UI.
+ *
+ * The entire `App` UI component is evaluated every frame to a string. If the
+ * result is different from the previous frame, the UI is re-rendered.
+ *
+ * Because `sys_ui` uses `innerHTML`, it's not a great choice for stateful UI
+ * elements, like input forms.
  */
 
 import {Game} from "../game.js";

@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_look_at
+ * # sys_look_at
+ *
+ * Update the entity's position to look at another entity.
  */
 
 import {get_translation} from "../../common/mat4.js";

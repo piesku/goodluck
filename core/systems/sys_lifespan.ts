@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_lifespan
+ * # sys_lifespan
+ *
+ * Autodestruct entities after a given time.
  */
 
 import {Entity} from "../../common/world.js";

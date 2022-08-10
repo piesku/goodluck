@@ -1,5 +1,13 @@
 /**
- * @module systems/sys_physics_kinematic
+ * # sys_physics_kinematic
+ *
+ * Derive the velocity of kinematic [rigid bodies](com_rigid_body.html) from the
+ * change in their position.
+ *
+ * This allows entities to move by changing their transform directly (e.g.
+ * through [`sys_move`](sys_move.html)) and also take part in the physics
+ * simulation, in particular in the collision response step in
+ * [`sys_physics_resolve`](sys_physics_resolve.html).
  */
 
 import {get_translation} from "../../common/mat4.js";

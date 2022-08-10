@@ -1,5 +1,20 @@
 /**
- * @module systems/sys_render_shading
+ * # sys_render_shading
+ *
+ * Render the world using the deferred rendering pipeline: the shading pass.
+ *
+ * `sys_render_shading` requires that the `GBuffer` target be rendered to by
+ * [`sys_render_deferred`](sys_render_deferred.html) first. Then, the shading
+ * pass adds lighting, shading, and shadows using light volumes, which are
+ * blended on top of each other.
+ *
+ * For materials which support shadows, the shadow map must be first rendered by
+ * [`sys_render_depth`](sys_render_depth.html).
+ *
+ * The result is rendered to the `Shaded` render target, which can be then used
+ * by the postprocessing step. Consult the `DeferredShading` example's
+ * `sys_render_postprocess` to learn how to implement the bloom effect,
+ * tone-mapping, and FXAA.
  */
 
 import {TargetKind} from "../../common/framebuffer.js";
