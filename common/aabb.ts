@@ -27,8 +27,10 @@ const BOX: Array<Vec3> = [
 ];
 
 /**
- * Computes the AABB based on the translation, rotation and scale of the
- * transform. This is the most accurate function from the compute_aabb family.
+ * Compute the AABB based on the translation, rotation and scale of the
+ * transform.
+ *
+ * This is the most accurate function from the compute_aabb family.
  */
 export function compute_aabb(world: Mat4, aabb: AABB) {
     get_translation(aabb.Center, world);
@@ -84,8 +86,9 @@ export function compute_aabb(world: Mat4, aabb: AABB) {
 const world_scale: Vec3 = [0, 0, 0];
 
 /**
- * Computes the AABB based on the translation and scale of the transform. It
- * assumes [0, 0, 0, 1] rotation, which is to say that the scaling will align
+ * Compute the AABB based on the translation and scale of the transform.
+ *
+ * Assume [0, 0, 0, 1] rotation, which is to say that the scaling will align
  * with the world's axes (e.g. the scale of [2, 1, 1] will scale the AABB on the
  * world's X axis regardless of the transform's coordinate system). For best
  * results the scaling should be uniform or the transform should not be rotated.
@@ -105,9 +108,11 @@ export function compute_aabb_without_rotation(world: Mat4, aabb: AABB) {
 }
 
 /**
- * Computes the AABB based on the translation of the transform and the Size
- * property of the collider. This is the simplest function from the compute_aabb
- * family and requires the collider to have a Size property.
+ * Compute the AABB based on the translation of the transform and the Size
+ * property of the collider.
+ *
+ * This is the simplest function from the compute_aabb family and requires the
+ * collider to have a Size property.
  */
 export function compute_aabb_without_rotation_scale(world: Mat4, aabb: AABB) {
     get_translation(aabb.Center, world);

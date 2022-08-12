@@ -7,6 +7,12 @@ const delta_span = document.getElementById("delta");
 const fps_span = document.getElementById("fps");
 const step = 1 / 60;
 
+/**
+ * The base Game class.
+ *
+ * This class is the base class for all games. It runs the main loop and
+ * registers event listeners for input handling.
+ */
 export abstract class GameImpl {
     Running = 0;
     Now = 0;
@@ -243,6 +249,12 @@ export abstract class GameImpl {
     }
 }
 
+/**
+ * The base Game class for 3D games.
+ *
+ * Stores references to the canvas elements and the WebGL2 context, as well as
+ * Context2D instances for drawing behind and in front of the scene.
+ */
 export abstract class Game3D extends GameImpl {
     BackgroundCanvas = document.querySelector("#background")! as HTMLCanvasElement;
     BackgroundContext = this.BackgroundCanvas.getContext("2d")!;
@@ -267,6 +279,11 @@ export abstract class Game3D extends GameImpl {
     }
 }
 
+/**
+ * Base Game class for XR games.
+ *
+ * XR games use the WebXR API's `requestAnimationFrame` to run the game loop.
+ */
 export abstract class GameXR extends Game3D {
     XrSupported = false;
     XrSession?: XRSession;

@@ -1,5 +1,13 @@
 export type Entity = number;
 
+/**
+ * The base World class
+ *
+ * Stores all the component data for all entities, as well as the component
+ * masks.
+ *
+ * Creating and destroying entities is O(1).
+ */
 export class WorldImpl {
     Capacity: number;
     Signature: Array<number> = [];
@@ -35,6 +43,13 @@ export class WorldImpl {
 
 // Other methods are free functions for the sake of tree-shakability.
 
+/**
+ * Find the first entity in the world with the given component mask.
+ *
+ * @param world The world to query.
+ * @param query The component mask to query for.
+ * @param start_at Start searching at this entity.
+ */
 export function first_having(
     world: WorldImpl,
     query: number,
