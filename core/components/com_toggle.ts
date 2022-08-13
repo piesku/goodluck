@@ -13,7 +13,6 @@ export interface Toggle {
     Mask: number;
     Frequency: number;
     SinceLast: number;
-    CurrentlyEnabled: boolean;
 }
 
 /**
@@ -21,16 +20,14 @@ export interface Toggle {
  *
  * @param mask The mask of the components to enable or disable.
  * @param frequency How often to toggle, in seconds.
- * @param init Whether to enable the components initially.
  */
-export function toggle(mask: number, frequency: number, init: boolean) {
+export function toggle(mask: number, frequency: number) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Toggle;
         game.World.Toggle[entity] = {
             Mask: mask,
             Frequency: frequency,
-            SinceLast: frequency,
-            CurrentlyEnabled: !init,
+            SinceLast: 0,
         };
     };
 }

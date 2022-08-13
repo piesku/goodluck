@@ -25,11 +25,9 @@ function update(game: Game, entity: Entity, delta: number) {
 
     if (toggle.SinceLast > toggle.Frequency) {
         toggle.SinceLast = 0;
-        if (toggle.CurrentlyEnabled) {
-            toggle.CurrentlyEnabled = false;
+        if ((game.World.Signature[entity] & toggle.Mask) === toggle.Mask) {
             game.World.Signature[entity] &= ~toggle.Mask;
         } else {
-            toggle.CurrentlyEnabled = true;
             game.World.Signature[entity] |= toggle.Mask;
         }
     }

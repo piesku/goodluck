@@ -45,7 +45,7 @@ export function blueprint_item(game: Game) {
                 control_always(null, [0, 1, 0, 0]),
                 move(0, 0.2),
                 shake(0.05),
-                toggle(Has.Shake, 1, true),
+                toggle(Has.Shake, 1),
                 disable(Has.Shake | Has.Toggle),
                 children([
                     transform([0, 1, 0]),
