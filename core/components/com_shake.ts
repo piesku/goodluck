@@ -13,19 +13,19 @@ import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 export interface Shake {
-    Magnitude: number;
+    Radius: number;
 }
 
 /**
  * Add `Shake` to an entity.
  *
- * @param magnitude The radius of the shake, in local units.
+ * @param radius The radius of the shake, in local units.
  */
-export function shake(magnitude: number) {
+export function shake(radius: number) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Shake;
         game.World.Shake[entity] = {
-            Magnitude: magnitude,
+            Radius: radius,
         };
     };
 }

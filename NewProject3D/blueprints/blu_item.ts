@@ -85,7 +85,7 @@ export function blueprint_item(game: Game) {
 
                     // Change particles to a flame.
                     let particles_shake = game.World.Shake[particles_entity];
-                    particles_shake.Magnitude = 0.1;
+                    particles_shake.Radius = 0.1;
                     let particles_emit = game.World.EmitParticles[particles_entity];
                     particles_emit.Lifespan = 1;
                     particles_emit.Frequency = 0.1;

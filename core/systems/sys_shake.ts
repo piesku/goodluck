@@ -22,8 +22,8 @@ function update(game: Game, entity: Entity) {
     let shake = game.World.Shake[entity];
     let transform = game.World.Transform[entity];
 
-    transform.Translation[0] = (Math.random() - 0.5) * shake.Magnitude * 2;
-    transform.Translation[1] = (Math.random() - 0.5) * shake.Magnitude * 2;
-    transform.Translation[2] = (Math.random() - 0.5) * shake.Magnitude * 2;
+    transform.Translation[0] = (Math.random() - 0.5) * shake.Radius * 2;
+    transform.Translation[1] = (Math.random() - 0.5) * shake.Radius * 2;
+    transform.Translation[2] = (Math.random() - 0.5) * shake.Radius * 2;
     game.World.Signature[entity] |= Has.Dirty;
 }

@@ -22,7 +22,7 @@ function update(game: Game, entity: Entity) {
     let shake = game.World.Shake[entity];
     let local = game.World.LocalTransform2D[entity];
 
-    local.Translation[0] = (Math.random() - 0.5) * shake.Magnitude * 2;
-    local.Translation[1] = (Math.random() - 0.5) * shake.Magnitude * 2;
+    local.Translation[0] = (Math.random() - 0.5) * shake.Radius * 2;
+    local.Translation[1] = (Math.random() - 0.5) * shake.Radius * 2;
     game.World.Signature[entity] |= Has.Dirty;
 }
