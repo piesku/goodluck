@@ -1,3 +1,10 @@
+/**
+ * # sys_control_mouse_move
+ *
+ * Handle mouse input when the mouse is moving without any buttons pressed. Good
+ * for FPS and TPS camera controls.
+ */
+
 import {DEG_TO_RAD, Quat, Vec3} from "../../common/math.js";
 import {clamp} from "../../common/number.js";
 import {from_axis, get_pitch, multiply} from "../../common/quat.js";

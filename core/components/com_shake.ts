@@ -1,5 +1,11 @@
 /**
- * @module components/com_shake
+ * # Shake
+ *
+ * The `Shake` component allows the entity to change its position randomly every
+ * frame.
+ *
+ * It should only be used on child entities whose position relative to the
+ * parent is [0, 0, 0].
  */
 
 import {Entity} from "../../common/world.js";
@@ -11,7 +17,9 @@ export interface Shake {
 }
 
 /**
- * sys_shake modifies the transform of the entity. Add it to children only.
+ * Add `Shake` to an entity.
+ *
+ * @param magnitude The radius of the shake, in local units.
  */
 export function shake(magnitude: number) {
     return (game: Game, entity: Entity) => {

@@ -1,5 +1,7 @@
 /**
- * @module components/com_trigger
+ * # Trigger
+ *
+ * The `Trigger` component allows the entity's collider to trigger `Actions`.
  */
 
 import {Entity} from "../../common/world.js";
@@ -12,6 +14,12 @@ export interface Trigger {
     Action: Action;
 }
 
+/**
+ * Add `Trigger` to an entity.
+ *
+ * @param mask The mask of the collision layers to trigger on.
+ * @param action The action to trigger.
+ */
 export function trigger(mask: Layer, action: Action) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Trigger;

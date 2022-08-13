@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_mimic
+ * # sys_mimic
+ *
+ * Update the entity's position and rotation to mimic another entity.
  */
 
 import {get_rotation, get_translation} from "../../common/mat4.js";

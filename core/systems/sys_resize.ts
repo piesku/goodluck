@@ -1,5 +1,9 @@
 /**
- * @module systems/sys_resize
+ * # sys_resize
+ *
+ * Resize the inner resolution of canvases when the browser's window is resized,
+ * resize render-to-texture targets, and update the projection matrices of
+ * cameras in the scene.
  */
 
 import {

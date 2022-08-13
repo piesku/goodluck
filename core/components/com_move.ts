@@ -1,5 +1,7 @@
 /**
- * @module components/com_move
+ * # Move
+ *
+ * The `Move` component allows the entity to move.
  */
 
 import {Quat, Vec3} from "../../common/math.js";
@@ -21,9 +23,9 @@ export interface Move {
 }
 
 /**
- * The Move mixin.
+ * Add `Move` to an entity.
  *
- * @param move_speed - Movement speed in units per second.
+ * @param move_speed - Movement speed in units per second. asdasdasd
  * @param rotation_speed - Rotation speed, in radians per second.
  */
 export function move(move_speed: number, rotation_speed: number) {

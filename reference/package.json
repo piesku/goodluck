@@ -1,0 +1,9 @@
+{
+  "name": "goodluck-docs",
+  "version": "0.0.0",
+  "author": "",
+  "dependencies": {
+    "highlight.js": "^11.6.0",
+    "marked": "^4.0.18"
+  }
+}

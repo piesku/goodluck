@@ -1,5 +1,20 @@
 /**
- * @module systems/sys_collide
+ * # sys_collide
+ *
+ * Detect collisions between static and dynamic [colliders](com_collide.html).
+ *
+ * Collision detection is done using axis-aligned bounding boxes (AABB).
+ *
+ * Static vs. dynamic collision detection is O(n*m). All dynamic colliders are
+ * checked against all static colliders. This works great for a small number of
+ * dynamic colliders and a large number of static colliders.
+ *
+ * Dynamic vs. dynamic collision detection is O(n^2). All dynamic colliders are
+ * checked against all other dynamic colliders. This can become very expensive
+ * if there are many dynamic colliders. In general, fewer than 100 dynamic
+ * colliders is recommended.
+ *
+ * Static vs. static collisions are not checked at all.
  */
 
 import {compute_aabb, intersect_aabb, penetrate_aabb} from "../../common/aabb.js";
@@ -40,12 +55,13 @@ export function sys_collide(game: Game, delta: number) {
 }
 
 /**
- * Check for collisions between a dynamic collider and other colliders. Length
- * is used to control how many colliders to check against. For collisions
- * with static colliders, length should be equal to colliders.length, since
- * we want to consider all static colliders in the scene. For collisions with
- * other dynamic colliders, we only need to check a pair of colliders once.
- * Varying length allows to skip half of the NxN checks matrix.
+ * Check for collisions between a dynamic collider and other colliders.
+ *
+ * Length is used to control how many colliders to check against. For collisions
+ * with static colliders, length should be equal to colliders.length, since we
+ * want to consider all static colliders in the scene. For collisions with other
+ * dynamic colliders, we only need to check a pair of colliders once.  Varying
+ * length allows to skip half of the NxN checks matrix.
  *
  * @param game The game instance.
  * @param collider The current collider.

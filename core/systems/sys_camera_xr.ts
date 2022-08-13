@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_camera_xr
+ * # sys_camera_xr
+ *
+ * Update the `PV` matrix of the WebXR [camera](com_camera.html).
  */
 
 import {create, get_translation, invert, multiply} from "../../common/mat4.js";

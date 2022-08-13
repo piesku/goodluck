@@ -1,5 +1,18 @@
 /**
- * @module components/com_transform2d
+ * # 2D Transform
+ *
+ * The `LocalTransform2D` component allows the entity to be positioned in 2D
+ * space.
+ *
+ * `LocalTransform2D` only stores the local (parent-space) transform data. If
+ * the entity is a top-level entity, the local data is also the world-space
+ * data.
+ *
+ * In order to be a parent of other entities, or to be a child of another entity,
+ * the entity must also have the `SpatialNode2D` component.
+ *
+ * OTOH, entities with `LocalTransform2D` but without `SpatialNode2D` have their
+ * model matrix computed in the shader, making them very fast to update.
  */
 
 import {create} from "../../common/mat2d.js";
@@ -28,9 +41,6 @@ export interface LocalTransform2D {
  *
  * In order to be a parent of other entities, or to be a child of another entity,
  * the entity must also have the `SpatialNode2D` component (see `spatial_node2d()`).
- *
- * OTOH, entities with `LocalTransform2D` but without `SpatialNode2D` have their
- * model matrix computed in the shader, making them very fast to update.
  *
  * @param translation Local translation relative to the parent.
  * @param rotation Local rotation relative to the parent.
@@ -142,7 +152,7 @@ export interface SpatialNode2D {
 
 /**
  * Add `SpatialNode2D` to an entity.
-
+ *
  * In order to be a parent of other entities, or to be a child of another entity,
  * the entity must also have the `SpatialNode2D` component. It's also required
  * if you're going to need to switch between the world space and the entity's

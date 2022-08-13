@@ -9,6 +9,13 @@ export interface RaycastHit {
     TriIndex?: number;
 }
 
+/**
+ * Cast a ray from `origin` into `direction` and return the first collider it hits.
+ *
+ * @param colliders Colliders to test against.
+ * @param origin The origin of the ray in world space.
+ * @param direction The direction of the ray in world space.
+ */
 export function ray_intersect_aabb(
     colliders: Array<AABB>,
     origin: Vec3,
@@ -71,7 +78,15 @@ let F: Vec3 = [0, 0, 0];
 let G: Vec3 = [0, 0, 0];
 let N: Vec3 = [0, 0, 0];
 
-// Based on https://www.codeproject.com/Articles/625787/Pick-Selection-with-OpenGL-and-OpenCL
+/**
+ * Cast a ray into a mesh and return the intersection point and triangle index.
+ *
+ * Based on https://www.codeproject.com/Articles/625787/Pick-Selection-with-OpenGL-and-OpenCL
+ *
+ * @param mesh The mesh to test against.
+ * @param origin The origin of the ray in the mesh's self space.
+ * @param direction The direction of the ray in the mesh's self space.
+ */
 export function ray_intersect_mesh(mesh: Mesh, origin: Vec3, direction: Vec3): RaycastTri | null {
     let tri_count = mesh.IndexCount / 3;
 

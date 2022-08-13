@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_shake
+ * # sys_shake
+ *
+ * Shake entities randomly.
  */
 
 import {Entity} from "../../common/world.js";

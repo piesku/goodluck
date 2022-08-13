@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_move
+ * # sys_move
+ *
+ * Move and rotate entities.
  */
 
 import {multiply, set as quat_set, slerp} from "../../common/quat.js";

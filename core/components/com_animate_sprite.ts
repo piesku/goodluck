@@ -1,3 +1,8 @@
+/**
+ * # AnimateSprite
+ *
+ * The `AnimateSprite` component cycles through spritesheet tiles.
+ */
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

@@ -1,5 +1,18 @@
 /**
- * @module systems/sys_render_forward
+ * # sys_render_forward
+ *
+ * Render the world using the forward rendering pipeline.
+ * 
+ * The pipeline supports multiple [cameras](com_camera.html), which can render
+ * directly to the screen or to a texture.
+ * 
+ * Transparent objects are rendered after opaque objects, sorted back to front.
+ *
+ * For materials which support lighting, the lighting details must be first
+ * collected by [`sys_light`](sys_light.html).
+
+ * For materials which support shadows, the shadow map must be first rendered by
+ * [`sys_render_depth`](sys_render_depth.html).
  */
 
 import {TargetKind} from "../../common/framebuffer.js";

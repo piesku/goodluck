@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_render2d_animate
+ * # sys_render2d_animate
+ *
+ * Animate sprites (WIP).
  */
 
 import {Entity} from "../../common/world.js";

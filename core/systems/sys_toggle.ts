@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_toggle
+ * # sys_toggle
+ *
+ * Enable and disable the entity's other components periodically.
  */
 
 import {Entity} from "../../common/world.js";

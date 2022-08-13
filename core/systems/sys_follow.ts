@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_follow
+ * # sys_follow
+ *
+ * Update the entity's position to follow another entity.
  */
 
 import {get_translation} from "../../common/mat4.js";

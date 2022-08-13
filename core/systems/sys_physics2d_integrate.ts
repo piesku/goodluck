@@ -1,5 +1,9 @@
 /**
- * @module systems/sys_physics2d_integrate
+ * # sys_physics_integrate
+ *
+ * The first step of the physics simulation: integrate the [rigid
+ * body](com_rigid_body2d.html)'s acceleration and velocity, and update the
+ * entity's transform.
  */
 
 import {Vec2} from "../../common/math.js";
@@ -11,7 +15,6 @@ import {Has} from "../world.js";
 
 const QUERY = Has.LocalTransform2D | Has.RigidBody2D;
 const GRAVITY = -9.8;
-const MOBILITY = 0.999;
 
 export function sys_physics2d_integrate(game: Game, delta: number) {
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
@@ -34,7 +37,7 @@ function update(game: Game, entity: Entity, delta: number) {
         scale(rigid_body.Acceleration, rigid_body.Acceleration, delta);
         add(rigid_body.VelocityLinear, rigid_body.VelocityLinear, rigid_body.Acceleration);
         // Apply friction.
-        scale(rigid_body.VelocityLinear, rigid_body.VelocityLinear, MOBILITY - rigid_body.Friction);
+        scale(rigid_body.VelocityLinear, rigid_body.VelocityLinear, 1 - rigid_body.Friction);
 
         // Apply velocity to position.
         scale(velocity_delta, rigid_body.VelocityLinear, delta);

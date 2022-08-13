@@ -1,3 +1,12 @@
+/**
+ * # system_control_touch_drag
+ *
+ * Handle touch input when dragging with one finger. Good for cameras
+ * overlooking the scene.
+ *
+ * Only panning is currently supported.
+ */
+
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

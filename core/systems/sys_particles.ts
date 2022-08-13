@@ -1,3 +1,9 @@
+/**
+ * # sys_particles
+ *
+ * Update the instance arrays of [particle emitters](com_emit_particles.html),
+ * to be passed to the shaders.
+ */
 import {get_forward, get_translation} from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {Entity} from "../../common/world.js";

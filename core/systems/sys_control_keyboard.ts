@@ -1,3 +1,9 @@
+/**
+ * # sys_control_keyboard
+ *
+ * Handle keyboard input.
+ */
+
 import {get_pitch, multiply} from "../../common/quat.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";

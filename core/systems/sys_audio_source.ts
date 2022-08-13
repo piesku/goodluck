@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_audio_source
+ * # sys_audio_source
+ *
+ * Play audio clips from entities with [`AudioSource`](com_audio_source.html).
  */
 
 import {AudioClipKind, play_buffer_clip, play_synth_clip} from "../../common/audio.js";

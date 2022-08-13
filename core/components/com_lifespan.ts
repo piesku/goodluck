@@ -1,5 +1,8 @@
 /**
- * @module components/com_lifespan
+ * # Lifespan
+ *
+ * The `Lifespan` component allows the entity to autodestruct after a certain
+ * time. Upon destruction, the entity can emit an `Action`.
  */
 
 import {Entity} from "../../common/world.js";
@@ -12,6 +15,12 @@ export interface Lifespan {
     Action?: Action;
 }
 
+/**
+ * Add `Lifespan` to an entity.
+ *
+ * @param remaining How long until the entity is destroyed (in seconds).
+ * @param action Optional action to dispatch when the entity is destroyed.
+ */
 export function lifespan(remaining: number, action?: Action) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Lifespan;

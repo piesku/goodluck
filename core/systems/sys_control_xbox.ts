@@ -1,3 +1,9 @@
+/**
+ * # system_control_xbox
+ *
+ * Handle gamepad input.
+ */
+
 import {Vec3} from "../../common/math.js";
 import {from_axis, get_pitch, multiply} from "../../common/quat.js";
 import {Entity} from "../../common/world.js";

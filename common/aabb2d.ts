@@ -12,7 +12,14 @@ export interface AABB2D {
     Center: Vec2;
 }
 
-export function compute_aabb(world: Mat2D, aabb: AABB2D) {
+/**
+ * Compute the AABB based on the translation of the transform and the Size
+ * property of the collider.
+ *
+ * This is the simplest function from the compute_aabb family and requires the
+ * collider to have a Size property.
+ */
+export function compute_aabb_without_rotation_scale(world: Mat2D, aabb: AABB2D) {
     get_translation(aabb.Center, world);
     aabb.Min[0] = aabb.Center[0] - aabb.Size[0] / 2;
     aabb.Min[1] = aabb.Center[1] - aabb.Size[1] / 2;

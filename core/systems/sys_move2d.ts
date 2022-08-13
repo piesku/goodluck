@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_move2d
+ * # sys_move
+ *
+ * Move and rotate entities.
  */
 
 import {Vec2} from "../../common/math.js";

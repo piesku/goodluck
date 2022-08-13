@@ -1,5 +1,10 @@
 /**
- * @module components/com_camera
+ * # Camera
+ *
+ * The `Camera` component makes the rendering system render the scene from the
+ * vantage point of the entity.
+ *
+ * In WebGL, similar to OpenGL, cameras see backwards!
  */
 
 import {RenderTarget} from "../../common/framebuffer.js";
@@ -38,6 +43,15 @@ export interface CameraCanvas extends CameraEye {
     ClearMask: number;
 }
 
+/**
+ * Add `CameraCanvas` to an entity.
+ *
+ * `CameraCanvas` is a camera that renders directly to the canvas.
+ *
+ * @param projection The projection to use.
+ * @param clear_color Color to use when clearing the color buffer.
+ * @param clear_mask Which buffers to clear?
+ */
 export function camera_canvas(
     projection: Projection,
     clear_color: Vec4 = [0.9, 0.9, 0.9, 1],
@@ -72,6 +86,16 @@ export interface CameraTarget extends CameraEye {
     ClearMask: number;
 }
 
+/**
+ * Add `CameraTarget` to an entity.
+ *
+ * `CameraTarget` is a camera that renders to a [render target](common_framebuffer.html).
+ *
+ * @param target The render target to render into.
+ * @param projection The projection to use.
+ * @param clear_color Color to use when clearing the color buffer.
+ * @param clear_mask Which buffers to clear?
+ */
 export function camera_target(
     target: RenderTarget,
     projection: Projection,
@@ -109,6 +133,15 @@ export interface CameraXr {
     ClearMask: number;
 }
 
+/**
+ * Add `CameraXR` to an entity.
+ *
+ * `CameraXR` is a camera that renders to WebXR framebuffers. It always uses a
+ * perspective projection, defined through the WebXR API.
+ *
+ * @param clear_color Color to use when clearing the color buffer.
+ * @param clear_mask Which buffers to clear?
+ */
 export function camera_xr(
     clear_color: Vec4 = [0.9, 0.9, 0.9, 1],
     clear_mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
@@ -127,6 +160,14 @@ export function camera_xr(
 
 // Utilities.
 
+/**
+ * Transform a point on the screen (in pixel coords) into a point in the world's
+ * 3D space (in world units).
+ *
+ * @param out The world-space position to write to.
+ * @param camera The camera whose projection to unapply.
+ * @param pos  The screen-space position to transform.
+ */
 export function viewport_to_world(out: Vec3, camera: CameraCanvas | CameraTarget, pos: Vec2) {
     // Transform the position from viewport space to the NDC space (where +Y is up).
     out[0] = (pos[0] / camera.ViewportWidth) * 2 - 1;

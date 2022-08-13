@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_animate
+ * # sys_animate
+ *
+ * Animate transforms of entities (position, rotation, scale) over time.
  */
 
 import {slerp} from "../../common/quat.js";

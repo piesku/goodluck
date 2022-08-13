@@ -1,13 +1,17 @@
 /**
- * @module components/com_rigid_body
+ * # RigidBody
+ *
+ * The `RigidBody` component allows the entity to collide and interact with
+ * other rigid bodies
+ *
+ * The physics simulation is simplified. Among others, it assumes mass = 1,
+ * which means that acceleration and force are numerically equal.
  */
 
 import {Vec3} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
-
-// Assume mass = 1, which means that acceleration and force are numerically equal.
 
 export const enum RigidKind {
     Static,
@@ -26,6 +30,12 @@ export interface RigidBody {
     IsGrounded: boolean;
 }
 
+/**
+ * Add `RigidBody` to an entity.
+ *
+ * @param kind The type of the rigid body (static, dynamic, kinematic).
+ * @param bounciness Bounciness of the rigid body (0 = no bounce, 1 = full bounce).
+ */
 export function rigid_body(kind: RigidKind, bounciness = 0.5) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.RigidBody;

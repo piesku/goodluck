@@ -1,5 +1,7 @@
 /**
- * @module components/com_move2d
+ * # Move2D
+ *
+ * The `Move2D` component allows the entity to move in 2D space.
  */
 
 import {Deg, Vec2} from "../../common/math.js";
@@ -19,7 +21,7 @@ export interface Move2D {
 }
 
 /**
- * The Move mixin.
+ * Add `Move2D` to an entity.
  *
  * @param move_speed - Movement speed in units per second.
  * @param rotation_speed - Rotation speed, in degrees per second.

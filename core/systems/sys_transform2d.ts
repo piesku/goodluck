@@ -1,5 +1,31 @@
 /**
- * @module systems/sys_transform2d
+ * # sys_transform2d
+ *
+ * Apply changes to position, rotation, and scale, and update the instance array
+ * to be used by the shader.
+ *
+ * A fast path for entities **without the `SpatialNode2D` component** skips the
+ * computation of the `World` transformation matrix on the CPU. Instead, raw
+ * position, rotation, and scale are stored in the instance array, and the
+ * shader computes the transformation matrix from them. This is very fast and
+ * can be used effectively for particles and background tiles.
+ *
+ * Entities **with the `SpatialNode2D` component** have their `World`
+ * transformation matrix computed in the system, i.e. on the CPU. The `World`
+ * matrices of their parents are taken into account. The data is stored in the
+ * instance array implicitly, taking advantage of the fact that the `World`
+ * property of the `SpatialNode2D` component is a view into the instance array
+ * buffer.
+ *
+ * `sys_transform2d` doesn't depend on the order of entities in the world, but
+ * it works best when parents are added before children. This is the default
+ * insertion order of `instantiate()`, but because entities can be later
+ * recycled, it's not guaranteed.
+ *
+ * `sys_transform2d` also updates the node's `Parent` field. When reparenting
+ * entities, it's not necessary to assign the new parent manually. OTOH, the
+ * `Parent` field should only be referenced after `sys_transform2d` has already
+ * run during the frame.
  */
 
 import {compose, get_translation, invert, multiply} from "../../common/mat2d.js";

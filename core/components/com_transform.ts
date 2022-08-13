@@ -1,5 +1,8 @@
 /**
- * @module components/com_transform
+ * # Transform
+ *
+ * The `Transform` component stores the entity's position, rotation and scale in
+ * 3D space, as well as the entity's parent.
  */
 
 import {create} from "../../common/mat4.js";
@@ -26,6 +29,13 @@ export interface Transform {
     Gyroscope: boolean;
 }
 
+/**
+ * Add `Transform` to an entity.
+ *
+ * @param translation Local translation relative to the parent.
+ * @param rotation Local rotation relative to the parent.
+ * @param scale Local scale relative to the parent.
+ */
 export function transform(
     translation: Vec3 = [0, 0, 0],
     rotation: Quat = [0, 0, 0, 1],

@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_control_always2d
+ * # sys_control_always2d
+ *
+ * Update the entity's `Move2D` component every frame.
  */
 
 import {Entity} from "../../common/world.js";

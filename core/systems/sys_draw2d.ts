@@ -1,5 +1,7 @@
 /**
- * @module systems/sys_draw2d
+ * # sys_draw2d
+ *
+ * Draw 2D [primitives](com_draw.html) in the 2D scene using the Context2D API.
  */
 
 import {DrawKind} from "../components/com_draw.js";

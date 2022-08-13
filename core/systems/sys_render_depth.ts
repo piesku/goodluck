@@ -1,5 +1,11 @@
 /**
- * @module systems/sys_render_depth
+ * # sys_render_depth
+ *
+ * Render the world to depth render targets.
+ *
+ * The system supports multiple [cameras](com_camera.html), as long as they
+ * render to a depth target. A hardcoded material, `MaterialDepth`, is used for
+ * all game objects.
  */
 
 import {TargetKind} from "../../common/framebuffer.js";

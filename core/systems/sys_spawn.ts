@@ -1,5 +1,8 @@
 /**
- * @module systems/sys_spawn
+ * # sys_spawn
+ *
+ * Instantiate blueprints into the world periodically. Spawned entities inherit
+ * the spawner's position and rotation.
  */
 
 import {instantiate} from "../../common/game.js";
