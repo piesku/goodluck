@@ -219,12 +219,11 @@ aside {
     padding: 15px;
 }
 
-aside .code {
-}
 aside .docs {
     background-color: cornsilk;
     border: 1px solid #999;
     border-radius: 10px;
+    margin-bottom: 15px;
     padding: 0 15px;
 }
 

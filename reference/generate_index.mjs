@@ -38,11 +38,6 @@ marked.setOptions({
     xhtml: false,
 });
 
-function render_link(filename_html) {
-    let nice_name = filename_html.replace(/^com(mon)?_/, "").replace(/.html$/, "");
-    return `<a href="${filename_html}">${nice_name}</a>`;
-}
-
 function render_definition(filename_html) {
     let nice_name = filename_html.replace(/^com(mon)?_/, "").replace(/.html$/, "");
     let source_path = filename_html.replace(/\.html$/, ".ts");
