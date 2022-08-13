@@ -147,7 +147,7 @@ export interface SpatialNode2D {
     Self: Mat2D;
     Parent?: Entity;
     /** Ignore parent's rotation and scale? */
-    Gyroscope: boolean;
+    IsGyroscope: boolean;
 }
 
 /**
@@ -173,7 +173,7 @@ export function spatial_node2d(is_gyroscope = false) {
                 entity * FLOATS_PER_INSTANCE + 6
             ),
             Self: create(),
-            Gyroscope: is_gyroscope,
+            IsGyroscope: is_gyroscope,
         };
     };
 }

@@ -84,7 +84,7 @@ function update_spatial_node(game: Game, entity: Entity, parent?: Entity) {
         let parent_transform = game.World.SpatialNode2D[node.Parent];
         multiply(node.World, parent_transform.World, node.World);
 
-        if (node.Gyroscope) {
+        if (node.IsGyroscope) {
             get_translation(world_position, node.World);
             compose(node.World, world_position, local.Rotation * DEG_TO_RAD, local.Scale);
         }

@@ -54,7 +54,7 @@ function update_transform(world: World, entity: Entity, transform: Transform) {
         let parent_transform = world.Transform[transform.Parent];
         multiply(transform.World, parent_transform.World, transform.World);
 
-        if (transform.Gyroscope) {
+        if (transform.IsGyroscope) {
             get_translation(world_position, transform.World);
             from_rotation_translation_scale(
                 transform.World,
