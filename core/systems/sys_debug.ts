@@ -5,6 +5,7 @@
  *
  * When a collider registers a collisionm, its wireframe will turn cyan.
  */
+
 import {instantiate} from "../../common/game.js";
 import {scale} from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
