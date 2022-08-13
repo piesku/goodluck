@@ -7,15 +7,16 @@ import {ControlAlways2D} from "./components/com_control_always2d.js";
 import {ControlPlayer} from "./components/com_control_player.js";
 import {Draw} from "./components/com_draw.js";
 import {Lifespan} from "./components/com_lifespan.js";
+import {LocalTransform2D} from "./components/com_local_transform2d.js";
 import {Move2D} from "./components/com_move2d.js";
 import {Named} from "./components/com_named.js";
 import {Render2D} from "./components/com_render2d.js";
 import {RigidBody2D} from "./components/com_rigid_body2d.js";
 import {Shake} from "./components/com_shake.js";
+import {SpatialNode2D} from "./components/com_spatial_node2d.js";
 import {Spawn} from "./components/com_spawn.js";
 import {Task} from "./components/com_task.js";
 import {Toggle} from "./components/com_toggle.js";
-import {LocalTransform2D, SpatialNode2D} from "./components/com_transform2d.js";
 import {Trigger} from "./components/com_trigger.js";
 
 const enum Component {

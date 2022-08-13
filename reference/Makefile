@@ -18,6 +18,7 @@ COMPONENTS := \
 	com_follow.html \
 	com_lifespan.html \
 	com_light.html \
+	com_local_transform2d.html \
 	com_look_at.html \
 	com_mimic.html \
 	com_move.html \
@@ -28,11 +29,11 @@ COMPONENTS := \
 	com_rigid_body.html \
 	com_rigid_body2d.html \
 	com_shake.html \
+	com_spatial_node2d.html \
 	com_spawn.html \
 	com_task.html \
 	com_toggle.html \
 	com_transform.html \
-	com_transform2d.html \
 	com_trigger.html
 
 SYSTEMS := \

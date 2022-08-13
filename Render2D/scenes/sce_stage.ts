@@ -4,9 +4,10 @@ import {float} from "../../common/random.js";
 import {camera2d} from "../components/com_camera2d.js";
 import {control_player} from "../components/com_control_player.js";
 import {draw_arc, draw_rect} from "../components/com_draw.js";
+import {local_transform2d} from "../components/com_local_transform2d.js";
 import {order, render2d} from "../components/com_render2d.js";
 import {RigidKind, rigid_body2d} from "../components/com_rigid_body2d.js";
-import {local_transform2d, spatial_node2d} from "../components/com_transform2d.js";
+import {spatial_node2d} from "../components/com_spatial_node2d.js";
 import {Game, WORLD_CAPACITY} from "../game.js";
 import {World} from "../world.js";
 

@@ -15,6 +15,7 @@ import {EmitParticles} from "./components/com_emit_particles.js";
 import {Follow} from "./components/com_follow.js";
 import {Lifespan} from "./components/com_lifespan.js";
 import {Light} from "./components/com_light.js";
+import {LocalTransform2D} from "./components/com_local_transform2d.js";
 import {LookAt} from "./components/com_look_at.js";
 import {Mimic} from "./components/com_mimic.js";
 import {Move} from "./components/com_move.js";
@@ -25,11 +26,11 @@ import {Render2D} from "./components/com_render2d.js";
 import {RigidBody} from "./components/com_rigid_body.js";
 import {RigidBody2D} from "./components/com_rigid_body2d.js";
 import {Shake} from "./components/com_shake.js";
+import {SpatialNode2D} from "./components/com_spatial_node2d";
 import {Spawn} from "./components/com_spawn.js";
 import {Task} from "./components/com_task.js";
 import {Toggle} from "./components/com_toggle.js";
 import {Transform} from "./components/com_transform.js";
-import {LocalTransform2D, SpatialNode2D} from "./components/com_transform2d.js";
 import {Trigger} from "./components/com_trigger.js";
 
 const enum Component {

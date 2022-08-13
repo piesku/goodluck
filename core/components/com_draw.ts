@@ -7,8 +7,8 @@
  * in the 3D world space at the position of the entity, always facing the
  * camera.
  *
- * When used with [`LocalTransform2D`](com_transform2d.html), they are drawn in
- * the 2D world space at the position of the entity.
+ * When used with [`LocalTransform2D`](com_local_transform2d.html), they are
+ * drawn in the 2D world space at the position of the entity.
  */
 
 import {Entity} from "../../common/world.js";

@@ -1,5 +1,5 @@
 /**
- * # 2D Transform
+ * # LocalTransform2D
  *
  * The `LocalTransform2D` component allows the entity to be positioned in 2D
  * space.
@@ -9,19 +9,20 @@
  * data.
  *
  * In order to be a parent of other entities, or to be a child of another entity,
- * the entity must also have the `SpatialNode2D` component.
+ * the entity must also have the [`SpatialNode2D`](com_spatial_node2d.html) component.
  *
  * OTOH, entities with `LocalTransform2D` but without `SpatialNode2D` have their
  * model matrix computed in the shader, making them very fast to update.
+ *
+ * For an entity to be processed by [`sys_transform2d`](sys_transform2d.html),
+ * it must also be tagged as **dirty** with `Has.Dirty`.
  */
 
-import {create} from "../../common/mat2d.js";
-import {Deg, Mat2D, Vec2} from "../../common/math.js";
+import {Deg, Vec2} from "../../common/math.js";
 import {copy} from "../../common/vec2.js";
 import {Entity} from "../../common/world.js";
-import {FLOATS_PER_INSTANCE} from "../../materials/layout2d.js";
 import {Game} from "../game.js";
-import {Has, World} from "../world.js";
+import {Has} from "../world.js";
 
 export interface LocalTransform2D {
     /** Local translation relative to the parent. */
@@ -40,7 +41,7 @@ export interface LocalTransform2D {
  * world-space data.
  *
  * In order to be a parent of other entities, or to be a child of another entity,
- * the entity must also have the `SpatialNode2D` component (see `spatial_node2d()`).
+ * the entity must also have the `SpatialNode2D` component.
  *
  * @param translation Local translation relative to the parent.
  * @param rotation Local rotation relative to the parent.
@@ -138,60 +139,4 @@ export function copy_scale(scale: Vec2) {
         let local = game.World.LocalTransform2D[entity];
         copy(local.Scale, scale);
     };
-}
-
-export interface SpatialNode2D {
-    /** Absolute matrix relative to the world. */
-    World: Mat2D;
-    /** World to self matrix. */
-    Self: Mat2D;
-    Parent?: Entity;
-    /** Ignore parent's rotation and scale? */
-    IsGyroscope: boolean;
-}
-
-/**
- * Add `SpatialNode2D` to an entity.
- *
- * In order to be a parent of other entities, or to be a child of another entity,
- * the entity must also have the `SpatialNode2D` component. It's also required
- * if you're going to need to switch between the world space and the entity's
- * self space, or if you're going to query the entity's parent.
- *
- * Entities with `LocalTransform2D` and `SpatialNode2D` have their model matrix
- * computed in sys_transform2d() on the CPU, making them slower than entities
- * with only `LocalTransform2D`, but more fully-featured.
- *
- * @param is_gyroscope Ignore parent's rotation and scale?
- */
-export function spatial_node2d(is_gyroscope = false) {
-    return (game: Game, entity: Entity) => {
-        game.World.Signature[entity] |= Has.SpatialNode2D | Has.Dirty;
-        game.World.SpatialNode2D[entity] = {
-            World: game.InstanceData.subarray(
-                entity * FLOATS_PER_INSTANCE,
-                entity * FLOATS_PER_INSTANCE + 6
-            ),
-            Self: create(),
-            IsGyroscope: is_gyroscope,
-        };
-    };
-}
-
-/**
- * Yield ascendants matching a component mask. Start at the current entity.
- *
- * @param world World object which stores the component data.
- * @param entity The first entity to test.
- * @param mask Component mask to look for.
- */
-export function* query_up(world: World, entity: Entity, mask: Has): IterableIterator<Entity> {
-    if ((world.Signature[entity] & mask) === mask) {
-        yield entity;
-    }
-
-    let parent = world.SpatialNode2D[entity].Parent;
-    if (parent !== undefined) {
-        yield* query_up(world, parent, mask);
-    }
 }

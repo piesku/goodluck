@@ -3,8 +3,9 @@ import {AnimateSprite} from "./components/com_animate_sprite.js";
 import {Camera2D} from "./components/com_camera2d.js";
 import {Children} from "./components/com_children.js";
 import {Draw} from "./components/com_draw.js";
+import {LocalTransform2D} from "./components/com_local_transform2d.js";
 import {Render2D} from "./components/com_render2d.js";
-import {LocalTransform2D, SpatialNode2D} from "./components/com_transform2d.js";
+import {SpatialNode2D} from "./components/com_spatial_node2d.js";
 
 const enum Component {
     AnimateSprite,

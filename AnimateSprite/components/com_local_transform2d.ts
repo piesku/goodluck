@@ -1,0 +1,1 @@
+../../core/components/com_local_transform2d.ts

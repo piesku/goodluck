@@ -4,6 +4,11 @@
  * Apply changes to position, rotation, and scale to the entities' `World`
  * transformation matrix, taking into account transforms of parents.
  *
+ * An entity will be processed only if it's marked as **dirty** by another
+ * system:
+ *
+ *     game.World.Signature[entity] |= Has.Dirty;
+ *
  * `sys_transform` doesn't depend on the order of entities in the world, but it
  * works best when parents are added before children. This is the default
  * insertion order of `instantiate()`, but because entities can be later

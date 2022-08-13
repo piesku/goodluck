@@ -3,6 +3,9 @@
  *
  * The `Transform` component stores the entity's position, rotation and scale in
  * 3D space, as well as the entity's parent.
+ *
+ * For an entity to be processed by [`sys_transform`](sys_transform.html),
+ * it must also be tagged as **dirty** with `Has.Dirty`.
  */
 
 import {create} from "../../common/mat4.js";

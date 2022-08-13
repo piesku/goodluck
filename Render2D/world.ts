@@ -3,9 +3,10 @@ import {Camera2D} from "./components/com_camera2d.js";
 import {Children} from "./components/com_children.js";
 import {ControlPlayer} from "./components/com_control_player.js";
 import {Draw} from "./components/com_draw.js";
+import {LocalTransform2D} from "./components/com_local_transform2d.js";
 import {Render2D} from "./components/com_render2d.js";
 import {RigidBody2D} from "./components/com_rigid_body2d.js";
-import {LocalTransform2D, SpatialNode2D} from "./components/com_transform2d.js";
+import {SpatialNode2D} from "./components/com_spatial_node2d.js";
 
 const enum Component {
     Camera2D,

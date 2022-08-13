@@ -2,7 +2,7 @@ import {instantiate} from "../../common/game.js";
 import {pointer_down, pointer_viewport} from "../../common/input.js";
 import {Vec2} from "../../common/math.js";
 import {viewport_to_world} from "../components/com_camera2d.js";
-import {copy_position} from "../components/com_transform2d.js";
+import {copy_position} from "../components/com_local_transform2d.js";
 import {Game} from "../game.js";
 import {blueprint_square} from "../scenes/blu_square.js";
 

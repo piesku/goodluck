@@ -5,7 +5,7 @@
  *
  * The parent-child relationship can express a hierarchy of entities in the
  * scene graph (when used with [`transform`](com_transform.html) or
- * [`spatial_node2d`](com_transform2d.html)), or it can be used to create
+ * [`spatial_node2d`](com_spatial_node2d.html)), or it can be used to create
  * dependencies between [tasks](com_task.html).
  */
 

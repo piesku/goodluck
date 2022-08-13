@@ -1,0 +1,1 @@
+../../core/components/com_spatial_node2d.ts

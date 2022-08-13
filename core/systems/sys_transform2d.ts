@@ -4,6 +4,11 @@
  * Apply changes to position, rotation, and scale, and update the instance array
  * to be used by the shader.
  *
+ * An entity will be processed only if it's marked as **dirty** by another
+ * system:
+ *
+ *     game.World.Signature[entity] |= Has.Dirty;
+ *
  * A fast path for entities **without the `SpatialNode2D` component** skips the
  * computation of the `World` transformation matrix on the CPU. Instead, raw
  * position, rotation, and scale are stored in the instance array, and the
