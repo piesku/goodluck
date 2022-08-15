@@ -205,20 +205,34 @@ body {
     background-color: whitesmoke;
     margin: 0;
 }
-.wrapper {
-    display: flex;
-    flex-flow: row wrap;
+
+@media (min-width: 1024px) {
+    body {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-template-rows: auto auto;
+    }
 }
+
 main {
-    flex: 1;
+    grid-row: 1;
     min-width: 340px;
+    padding: 15px;
     background-color: #fefefe;
+}
+
+aside {
+    grid-row: 1 / span 2;
+    grid-column: 2;
+    min-width: 340px;
     padding: 15px;
 }
-aside {
-    flex: 2;
-    min-width: 340px;
+
+footer {
+    grid-row: 2;
     padding: 15px;
+    background-color: #fefefe;
+    column-width: 10rem;
 }
 
 aside .docs {
@@ -229,18 +243,15 @@ aside .docs {
     padding: 0 15px;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
     aside .docs {
         float: right;
         width: 40%;
+        margin-left: 15px;
     }
 }
 
-main nav {
-    column-width: 10rem;
-}
-
-main nav h1 {
+hr, h1 {
     column-span: all;
 }
 
@@ -255,59 +266,59 @@ aside header {
 pre {
     white-space: pre-wrap;
 }
+
 code {
     font: 14px/1.3 Inconsolata, monospace;
 }
+
 dt small {
     font-style: italic;
 }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.6.0/build/styles/vs.min.css">
-<div class="wrapper">
-    <main>
-        <header>
-            <a href="/">Goodluck</a> /
-            <a href="/reference/">API Reference</a>
-        </header>
-        <article>
-            ${first_section ? render_docs(first_section) : ""}
-        </article>
-        <hr>
-        <nav>
-        ${
-            values.component
-                ? `<section>
-                    <h1>Core Components</h1>
-                    ${values.component.map(render_link).join("<br>")}
-                </section>`
-                : ""
-        }
-        ${
-            values.system
-                ? `<section>
-                    <h1>Core Systems</h1>
-                    ${values.system.map(render_link).join("<br>")}
-                </section>`
-                : ""
-        }
-        ${
-            values.library
-                ? `<section>
-                    <h1>Libraries</h1>
-                    ${values.library.map(render_link).join("<br>")}
-                </section>`
-                : ""
-        }
-        </nav>
-    </main>
-    <aside>
-        <header>
-            <a href="${source_gh}">View source on GitHub</a>
-        </header>
-    ${sections
-        .flatMap((section) => [render_docs(section), render_code(section), "<br clear=right>"])
-        .join("\n")}
-    </aside>
-</div>
+<main>
+    <header>
+        <a href="/">Goodluck</a> /
+        <a href="/reference/">API Reference</a>
+    </header>
+    <article>
+        ${first_section ? render_docs(first_section) : ""}
+    </article>
+</main>
+<aside>
+    <header>
+        <a href="${source_gh}">View source on GitHub</a>
+    </header>
+${sections
+    .flatMap((section) => [render_docs(section), render_code(section), "<br clear=right>"])
+    .join("\n")}
+</aside>
+<footer>
+    <hr>
+    ${
+        values.component
+            ? `<section>
+                <h1>Core Components</h1>
+                ${values.component.map(render_link).join("<br>")}
+            </section>`
+            : ""
+    }
+    ${
+        values.system
+            ? `<section>
+                <h1>Core Systems</h1>
+                ${values.system.map(render_link).join("<br>")}
+            </section>`
+            : ""
+    }
+    ${
+        values.library
+            ? `<section>
+                <h1>Libraries</h1>
+                ${values.library.map(render_link).join("<br>")}
+            </section>`
+            : ""
+    }
+</footer>
 </html>
 `);
