@@ -10,8 +10,8 @@
 
 import {create} from "../../common/mat4.js";
 import {Mat4, Quat, Vec3} from "../../common/math.js";
-import {copy as quat_copy, from_euler} from "../../common/quat.js";
-import {copy as vec3_copy} from "../../common/vec3.js";
+import * as quat from "../../common/quat.js";
+import * as vec3 from "../../common/vec3.js";
 import {Entity} from "../../common/world.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";
@@ -89,7 +89,7 @@ export function set_position(x: number, y: number, z: number) {
 export function copy_position(translation: Vec3) {
     return (game: Game, entity: Entity) => {
         let local = game.World.Transform[entity];
-        vec3_copy(local.Translation, translation);
+        vec3.copy(local.Translation, translation);
     };
 }
 
@@ -106,7 +106,7 @@ export function copy_position(translation: Vec3) {
 export function set_rotation(x: number, y: number, z: number) {
     return (game: Game, entity: Entity) => {
         let local = game.World.Transform[entity];
-        from_euler(local.Rotation, x, y, z);
+        quat.from_euler(local.Rotation, x, y, z);
     };
 }
 
@@ -121,7 +121,7 @@ export function set_rotation(x: number, y: number, z: number) {
 export function copy_rotation(rotation: Quat) {
     return (game: Game, entity: Entity) => {
         let local = game.World.Transform[entity];
-        quat_copy(local.Rotation, rotation);
+        quat.copy(local.Rotation, rotation);
     };
 }
 
@@ -155,7 +155,7 @@ export function set_scale(x: number, y: number, z: number) {
 export function copy_scale(scale: Vec3) {
     return (game: Game, entity: Entity) => {
         let local = game.World.Transform[entity];
-        vec3_copy(local.Scale, scale);
+        vec3.copy(local.Scale, scale);
     };
 }
 

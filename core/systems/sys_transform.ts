@@ -20,12 +20,7 @@
  * run during the frame.
  */
 
-import {
-    from_rotation_translation_scale,
-    get_translation,
-    invert,
-    multiply,
-} from "../../common/mat4.js";
+import * as mat4 from "../../common/mat4.js";
 import {Vec3} from "../../common/math.js";
 import {Entity} from "../../common/world.js";
 import {Transform} from "../components/com_transform.js";
@@ -48,7 +43,7 @@ const world_position: Vec3 = [0, 0, 0];
 function update_transform(world: World, entity: Entity, transform: Transform) {
     world.Signature[entity] &= ~Has.Dirty;
 
-    from_rotation_translation_scale(
+    mat4.from_rotation_translation_scale(
         transform.World,
         transform.Rotation,
         transform.Translation,
@@ -57,11 +52,11 @@ function update_transform(world: World, entity: Entity, transform: Transform) {
 
     if (transform.Parent !== undefined) {
         let parent_transform = world.Transform[transform.Parent];
-        multiply(transform.World, parent_transform.World, transform.World);
+        mat4.multiply(transform.World, parent_transform.World, transform.World);
 
         if (transform.IsGyroscope) {
-            get_translation(world_position, transform.World);
-            from_rotation_translation_scale(
+            mat4.get_translation(world_position, transform.World);
+            mat4.from_rotation_translation_scale(
                 transform.World,
                 transform.Rotation,
                 world_position,
@@ -70,7 +65,7 @@ function update_transform(world: World, entity: Entity, transform: Transform) {
         }
     }
 
-    invert(transform.Self, transform.World);
+    mat4.invert(transform.Self, transform.World);
 
     if (world.Signature[entity] & Has.Children) {
         let children = world.Children[entity];
