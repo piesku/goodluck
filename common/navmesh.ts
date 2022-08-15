@@ -3,7 +3,17 @@ import {face_centroid, face_normal, face_vertices, Mesh} from "./mesh.js";
 import {distance_squared, dot} from "./vec3.js";
 
 export interface NavMesh {
+    /**
+     * The graph of navigable nodes as an adjacency list.
+     *
+     * Each node in the graph is represented by an array of edges.
+     * Each edge is a tuple of the form [node_id, cost_of_travel].
+     */
     Graph: Array<Array<[number, number]>>;
+
+    /**
+     * The centroids of the nodes in the graph.
+     */
     Centroids: Array<Vec3>;
 }
 
