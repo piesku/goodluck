@@ -1,9 +1,9 @@
-import {DeferredTarget, DepthTarget, ForwardTarget, RenderTarget} from "../common/framebuffer.js";
-import {GameXR} from "../common/game.js";
-import {Material} from "../common/material.js";
-import {Mesh} from "../common/mesh.js";
-import {Spritesheet} from "../common/texture.js";
-import {Entity} from "../common/world.js";
+import {DeferredTarget, DepthTarget, ForwardTarget, RenderTarget} from "../lib/framebuffer.js";
+import {GameXR} from "../lib/game.js";
+import {Material} from "../lib/material.js";
+import {Mesh} from "../lib/mesh.js";
+import {Spritesheet} from "../lib/texture.js";
+import {Entity} from "../lib/world.js";
 import {
     ColoredUnlitLayout,
     DeferredShadingLayout,

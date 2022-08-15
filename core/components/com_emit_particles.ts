@@ -9,7 +9,7 @@
  * particles are rendered by [`sys_render_forward`](sys_render_forward.html).
  */
 
-import {Entity} from "../../common/world.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

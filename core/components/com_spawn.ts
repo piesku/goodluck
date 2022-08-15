@@ -4,8 +4,8 @@
  * The `Spawn` component allows the entity to spawn other entities.
  */
 
-import {Blueprint} from "../../common/game.js";
-import {Entity} from "../../common/world.js";
+import {Blueprint} from "../../lib/game.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

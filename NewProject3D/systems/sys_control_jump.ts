@@ -1,4 +1,4 @@
-import {Entity} from "../../common/world.js";
+import {Entity} from "../../lib/world.js";
 import {query_down} from "../components/com_children.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

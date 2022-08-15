@@ -16,7 +16,7 @@ let {positionals, values} = parseArgs({
             type: "string",
             multiple: true,
         },
-        common: {
+        library: {
             type: "string",
             multiple: true,
         },
@@ -180,7 +180,7 @@ function render_code(section) {
 
 function render_link(filename_html) {
     let filename_ts = filename_html.replace(".html", ".ts");
-    let nice_name = filename_html.replace(/^com(mon)?_/, "").replace(/.html$/, "");
+    let nice_name = filename_html.replace(/^(com|lib)_/, "").replace(/.html$/, "");
     if (source_ts.includes(filename_ts)) {
         return nice_name;
     }
@@ -291,10 +291,10 @@ dt small {
                 : ""
         }
         ${
-            values.common
+            values.library
                 ? `<section>
-                    <h1>Common Utilities</h1>
-                    ${values.common.map(render_link).join("<br>")}
+                    <h1>Libraries</h1>
+                    ${values.library.map(render_link).join("<br>")}
                 </section>`
                 : ""
         }

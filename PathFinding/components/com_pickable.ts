@@ -1,6 +1,6 @@
-import {Vec4} from "../../common/math.js";
-import {Mesh} from "../../common/mesh.js";
-import {Entity} from "../../common/world.js";
+import {Vec4} from "../../lib/math.js";
+import {Mesh} from "../../lib/mesh.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

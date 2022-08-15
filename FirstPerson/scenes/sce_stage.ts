@@ -1,4 +1,4 @@
-import {instantiate} from "../../common/game.js";
+import {instantiate} from "../../lib/game.js";
 import {blueprint_camera_fly} from "../blueprints/blu_camera_fly.js";
 import {children} from "../components/com_children.js";
 import {draw_text} from "../components/com_draw.js";

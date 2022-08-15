@@ -1,5 +1,5 @@
-import {link, Material} from "../common/material.js";
-import {GL_POINTS} from "../common/webgl.js";
+import {link, Material} from "../lib/material.js";
+import {GL_POINTS} from "../lib/webgl.js";
 import {ParticlesColoredLayout} from "./layout.js";
 
 let vertex = `#version 300 es\n

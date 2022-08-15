@@ -8,8 +8,8 @@ import {
     ForwardTarget,
     HdrTarget,
     RenderTarget,
-} from "../common/framebuffer.js";
-import {Game3D} from "../common/game.js";
+} from "../lib/framebuffer.js";
+import {Game3D} from "../lib/game.js";
 import {mat_deferred_colored} from "../materials/mat_deferred_colored.js";
 import {mat_deferred_shading} from "../materials/mat_deferred_shading.js";
 import {mat_forward_depth} from "../materials/mat_forward_depth.js";

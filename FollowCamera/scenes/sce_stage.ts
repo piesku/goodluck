@@ -1,5 +1,5 @@
-import {instantiate} from "../../common/game.js";
-import {float} from "../../common/random.js";
+import {instantiate} from "../../lib/game.js";
+import {float} from "../../lib/random.js";
 import {blueprint_camera_follow} from "../blueprints/blu_camera_follow.js";
 import {blueprint_ground} from "../blueprints/blu_ground.js";
 import {blueprint_obstacle} from "../blueprints/blu_obstacle.js";

@@ -1,4 +1,4 @@
-import {AudioClipKind, AudioSynthClip} from "../../common/audio.js";
+import {AudioClipKind, AudioSynthClip} from "../../lib/audio.js";
 
 export let snd_walk: AudioSynthClip = {
     Kind: AudioClipKind.Synth,

@@ -8,18 +8,18 @@
  * shader's uniforms, and sometimes the attributes.
  */
 
-import {Material} from "../../common/material.js";
-import {Vec2, Vec3, Vec4} from "../../common/math.js";
-import {Mesh} from "../../common/mesh.js";
-import {normalize, subtract} from "../../common/vec3.js";
+import {Material} from "../../lib/material.js";
+import {Vec2, Vec3, Vec4} from "../../lib/math.js";
+import {Mesh} from "../../lib/mesh.js";
+import {normalize, subtract} from "../../lib/vec3.js";
 import {
     GL_ARRAY_BUFFER,
     GL_CW,
     GL_DYNAMIC_DRAW,
     GL_FLOAT,
     GL_STATIC_DRAW,
-} from "../../common/webgl.js";
-import {Entity} from "../../common/world.js";
+} from "../../lib/webgl.js";
+import {Entity} from "../../lib/world.js";
 import {
     Attribute,
     ColoredDeferredLayout,

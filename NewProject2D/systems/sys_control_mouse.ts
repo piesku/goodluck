@@ -1,6 +1,6 @@
-import {instantiate} from "../../common/game.js";
-import {pointer_down, pointer_viewport} from "../../common/input.js";
-import {Vec2} from "../../common/math.js";
+import {instantiate} from "../../lib/game.js";
+import {pointer_down, pointer_viewport} from "../../lib/input.js";
+import {Vec2} from "../../lib/math.js";
 import {viewport_to_world} from "../components/com_camera2d.js";
 import {copy_position} from "../components/com_local_transform2d.js";
 import {Game} from "../game.js";

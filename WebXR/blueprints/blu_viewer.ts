@@ -1,4 +1,4 @@
-import {GL_CCW, GL_CW} from "../../common/webgl.js";
+import {GL_CCW, GL_CW} from "../../lib/webgl.js";
 import {camera_xr} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {ControlXrKind, control_xr} from "../components/com_control_xr.js";

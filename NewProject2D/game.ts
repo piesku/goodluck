@@ -1,6 +1,6 @@
-import {Game3D} from "../common/game.js";
-import {create_spritesheet_from} from "../common/texture.js";
-import {GL_BLEND, GL_DEPTH_TEST} from "../common/webgl.js";
+import {Game3D} from "../lib/game.js";
+import {create_spritesheet_from} from "../lib/texture.js";
+import {GL_BLEND, GL_DEPTH_TEST} from "../lib/webgl.js";
 import {FLOATS_PER_INSTANCE, setup_render2d_buffers} from "../materials/layout2d.js";
 import {mat_render2d} from "../materials/mat_render2d.js";
 import {sys_camera2d} from "./systems/sys_camera2d.js";

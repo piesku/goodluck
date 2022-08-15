@@ -1,4 +1,4 @@
-import {Entity} from "../../common/world";
+import {Entity} from "../../lib/world";
 import {Game} from "../game";
 import {Has} from "../world";
 

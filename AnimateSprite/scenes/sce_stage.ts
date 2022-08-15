@@ -1,4 +1,4 @@
-import {instantiate} from "../../common/game.js";
+import {instantiate} from "../../lib/game.js";
 import {animate_sprite} from "../components/com_animate_sprite.js";
 import {camera2d} from "../components/com_camera2d.js";
 import {draw_arc, draw_rect} from "../components/com_draw.js";

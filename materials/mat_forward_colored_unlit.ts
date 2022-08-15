@@ -1,5 +1,5 @@
-import {link, Material} from "../common/material.js";
-import {GL_LINE_LOOP, GL_LINE_STRIP, GL_TRIANGLES} from "../common/webgl.js";
+import {link, Material} from "../lib/material.js";
+import {GL_LINE_LOOP, GL_LINE_STRIP, GL_TRIANGLES} from "../lib/webgl.js";
 import {Attribute, ColoredUnlitLayout} from "./layout.js";
 
 let vertex = `#version 300 es\n

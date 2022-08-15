@@ -8,9 +8,9 @@
  * parents of other entities.
  */
 
-import {create} from "../../common/mat2d.js";
-import {Mat2D} from "../../common/math.js";
-import {Entity} from "../../common/world.js";
+import {create} from "../../lib/mat2d.js";
+import {Mat2D} from "../../lib/math.js";
+import {Entity} from "../../lib/world.js";
 import {FLOATS_PER_INSTANCE} from "../../materials/layout2d.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";

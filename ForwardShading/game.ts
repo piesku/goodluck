@@ -4,8 +4,8 @@ import {
     DepthTarget,
     ForwardTarget,
     RenderTarget,
-} from "../common/framebuffer.js";
-import {Game3D} from "../common/game.js";
+} from "../lib/framebuffer.js";
+import {Game3D} from "../lib/game.js";
 import {MAX_FORWARD_LIGHTS} from "../materials/light.js";
 import {mat_forward_colored_flat} from "../materials/mat_forward_colored_flat.js";
 import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";

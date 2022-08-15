@@ -1,5 +1,5 @@
-import {instantiate} from "../../common/game.js";
-import {float} from "../../common/random.js";
+import {instantiate} from "../../lib/game.js";
+import {float} from "../../lib/random.js";
 import {camera2d} from "../components/com_camera2d.js";
 import {children} from "../components/com_children.js";
 import {collide2d} from "../components/com_collide2d.js";

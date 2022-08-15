@@ -1,6 +1,6 @@
-import {Vec4} from "../../common/math.js";
-import {copy, scale} from "../../common/vec4.js";
-import {Entity} from "../../common/world.js";
+import {Vec4} from "../../lib/math.js";
+import {copy, scale} from "../../lib/vec4.js";
+import {Entity} from "../../lib/world.js";
 import {DrawKind} from "../components/com_draw.js";
 import {PickableAABB, PickableKind} from "../components/com_pickable.js";
 import {RenderKind} from "../components/com_render.js";

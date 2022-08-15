@@ -1,4 +1,4 @@
-import {Game3D} from "../common/game.js";
+import {Game3D} from "../lib/game.js";
 import {MAX_FORWARD_LIGHTS} from "../materials/light.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {mat_forward_instanced_colored_unlit} from "./materials/mat_forward_instanced_colored_unlit.js";

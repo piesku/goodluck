@@ -1,5 +1,5 @@
-import {pointer_clicked} from "../../common/input.js";
-import {Entity} from "../../common/world.js";
+import {pointer_clicked} from "../../lib/input.js";
+import {Entity} from "../../lib/world.js";
 import {SelectedState} from "../components/com_selectable.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

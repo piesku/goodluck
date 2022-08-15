@@ -4,9 +4,9 @@
  * Handle gamepad input.
  */
 
-import {Vec3} from "../../common/math.js";
-import {from_axis, get_pitch, multiply} from "../../common/quat.js";
-import {Entity} from "../../common/world.js";
+import {Vec3} from "../../lib/math.js";
+import {from_axis, get_pitch, multiply} from "../../lib/quat.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

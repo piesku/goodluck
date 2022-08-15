@@ -4,8 +4,8 @@
  * The `Move2D` component allows the entity to move in 2D space.
  */
 
-import {Deg, Vec2} from "../../common/math.js";
-import {Entity} from "../../common/world.js";
+import {Deg, Vec2} from "../../lib/math.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

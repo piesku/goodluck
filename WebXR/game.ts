@@ -1,4 +1,4 @@
-import {GameXR} from "../common/game.js";
+import {GameXR} from "../lib/game.js";
 import {MAX_FORWARD_LIGHTS} from "../materials/light.js";
 import {mat_forward_colored_gouraud} from "../materials/mat_forward_colored_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";

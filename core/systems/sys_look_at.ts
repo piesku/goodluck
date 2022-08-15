@@ -4,11 +4,11 @@
  * Update the entity's position to look at another entity.
  */
 
-import {get_translation} from "../../common/mat4.js";
-import {Quat, Vec3} from "../../common/math.js";
-import {look_pitch, look_yaw, multiply} from "../../common/quat.js";
-import {transform_position} from "../../common/vec3.js";
-import {Entity} from "../../common/world.js";
+import {get_translation} from "../../lib/mat4.js";
+import {Quat, Vec3} from "../../lib/math.js";
+import {look_pitch, look_yaw, multiply} from "../../lib/quat.js";
+import {transform_position} from "../../lib/vec3.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

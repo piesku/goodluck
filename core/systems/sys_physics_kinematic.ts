@@ -10,10 +10,10 @@
  * [`sys_physics_resolve`](sys_physics_resolve.html).
  */
 
-import {get_translation} from "../../common/mat4.js";
-import {Vec3} from "../../common/math.js";
-import {copy, scale, subtract} from "../../common/vec3.js";
-import {Entity} from "../../common/world.js";
+import {get_translation} from "../../lib/mat4.js";
+import {Vec3} from "../../lib/math.js";
+import {copy, scale, subtract} from "../../lib/vec3.js";
+import {Entity} from "../../lib/world.js";
 import {RigidKind} from "../components/com_rigid_body.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

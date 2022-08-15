@@ -1,4 +1,4 @@
-import {instantiate} from "../../common/game.js";
+import {instantiate} from "../../lib/game.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {light_directional, light_point} from "../components/com_light.js";
 import {render_colored_shaded} from "../components/com_render.js";

@@ -10,7 +10,7 @@ import {
     GL_TEXTURE1,
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
-} from "../../common/webgl.js";
+} from "../../lib/webgl.js";
 import {Game} from "../game.js";
 
 export function sys_render_postprocess(game: Game, delta: number) {

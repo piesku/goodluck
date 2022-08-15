@@ -33,9 +33,9 @@
  * run during the frame.
  */
 
-import * as mat2d from "../../common/mat2d.js";
-import {DEG_TO_RAD, Vec2} from "../../common/math.js";
-import {Entity} from "../../common/world.js";
+import * as mat2d from "../../lib/mat2d.js";
+import {DEG_TO_RAD, Vec2} from "../../lib/math.js";
+import {Entity} from "../../lib/world.js";
 import {FLOATS_PER_INSTANCE} from "../../materials/layout2d.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

@@ -8,8 +8,8 @@
  * all game objects.
  */
 
-import {TargetKind} from "../../common/framebuffer.js";
-import {GL_FRAMEBUFFER, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
+import {TargetKind} from "../../lib/framebuffer.js";
+import {GL_FRAMEBUFFER, GL_UNSIGNED_SHORT} from "../../lib/webgl.js";
 import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {RenderKind} from "../components/com_render.js";
 import {Game} from "../game.js";

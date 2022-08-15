@@ -2,11 +2,11 @@
  * # AudioSource
  *
  * The `AudioSource` component is used to make entities play back audio. The
- * sound data is defined by the [`AudioClip` interface](common_audio.html).
+ * sound data is defined by the [`AudioClip` interface](lib_audio.html).
  */
 
-import {AudioClip} from "../../common/audio.js";
-import {Entity} from "../../common/world.js";
+import {AudioClip} from "../../lib/audio.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

@@ -2,10 +2,10 @@
  * @module systems/sys_control_player
  */
 
-import {pointer_down, pointer_viewport} from "../../common/input.js";
-import {Vec2} from "../../common/math.js";
-import {distance_squared, scale} from "../../common/vec2.js";
-import {Entity} from "../../common/world.js";
+import {pointer_down, pointer_viewport} from "../../lib/input.js";
+import {Vec2} from "../../lib/math.js";
+import {distance_squared, scale} from "../../lib/vec2.js";
+import {Entity} from "../../lib/world.js";
 import {viewport_to_world} from "../components/com_camera2d.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

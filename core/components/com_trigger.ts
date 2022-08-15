@@ -4,7 +4,7 @@
  * The `Trigger` component allows the entity's collider to trigger `Actions`.
  */
 
-import {Entity} from "../../common/world.js";
+import {Entity} from "../../lib/world.js";
 import {Action} from "../actions.js";
 import {Game, Layer} from "../game.js";
 import {Has} from "../world.js";

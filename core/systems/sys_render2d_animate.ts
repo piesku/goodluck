@@ -4,7 +4,7 @@
  * Animate sprites (WIP).
  */
 
-import {Entity} from "../../common/world.js";
+import {Entity} from "../../lib/world.js";
 import {set_sprite} from "../components/com_render2d.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

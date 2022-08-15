@@ -21,7 +21,7 @@ import {
     compute_aabb_without_rotation_scale,
     intersect_aabb,
     penetrate_aabb,
-} from "../../common/aabb2d.js";
+} from "../../lib/aabb2d.js";
 import {Collide2D} from "../components/com_collide2d.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

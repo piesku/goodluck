@@ -15,9 +15,9 @@
  * [`sys_render_depth`](sys_render_depth.html).
  */
 
-import {TargetKind} from "../../common/framebuffer.js";
-import {distance_squared_from_point} from "../../common/mat4.js";
-import {Material} from "../../common/material.js";
+import {TargetKind} from "../../lib/framebuffer.js";
+import {distance_squared_from_point} from "../../lib/mat4.js";
+import {Material} from "../../lib/material.js";
 import {
     GL_ARRAY_BUFFER,
     GL_BLEND,
@@ -29,8 +29,8 @@ import {
     GL_TEXTURE3,
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
-} from "../../common/webgl.js";
-import {Entity, first_having} from "../../common/world.js";
+} from "../../lib/webgl.js";
+import {Entity, first_having} from "../../lib/world.js";
 import {Attribute} from "../../materials/layout.js";
 import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {FLOATS_PER_PARTICLE, Render, RenderKind, RenderPhase} from "../components/com_render.js";

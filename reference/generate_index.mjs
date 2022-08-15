@@ -15,7 +15,7 @@ let {values} = parseArgs({
             type: "string",
             multiple: true,
         },
-        common: {
+        library: {
             type: "string",
             multiple: true,
         },
@@ -39,14 +39,14 @@ marked.setOptions({
 });
 
 function render_definition(filename_html) {
-    let nice_name = filename_html.replace(/^com(mon)?_/, "").replace(/.html$/, "");
+    let nice_name = filename_html.replace(/^(com|lib)_/, "").replace(/.html$/, "");
     let source_path = filename_html.replace(/\.html$/, ".ts");
     if (filename_html.startsWith("com_")) {
         source_path = "../core/components/" + source_path;
     } else if (filename_html.startsWith("sys_")) {
         source_path = "../core/systems/" + source_path;
     } else {
-        source_path = "../common/" + nice_name + ".ts";
+        source_path = "../lib/" + nice_name + ".ts";
     }
     let source_contents = fs.readFileSync(source_path, "utf8");
     let source_lines = source_contents.split("\n");
@@ -126,11 +126,11 @@ code {
                 : ""
         }
         ${
-            values.common
+            values.library
                 ? `<section>
-                    <h2>Common Utilities</h2>
+                    <h2>Libraries</h2>
                     <dl>
-                        ${values.common.map(render_definition).join("\n")}
+                        ${values.library.map(render_definition).join("\n")}
                     </dl>
                 </section>`
                 : ""

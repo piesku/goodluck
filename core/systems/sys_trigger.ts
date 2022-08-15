@@ -4,7 +4,7 @@
  * Emit an `Action` when another entity collides with this entity.
  */
 
-import {Entity} from "../../common/world.js";
+import {Entity} from "../../lib/world.js";
 import {dispatch} from "../actions.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

@@ -5,11 +5,11 @@
  * vantage point of the entity.
  */
 
-import {create} from "../../common/mat2d.js";
-import {Mat2D, Vec2} from "../../common/math.js";
-import {Projection2D} from "../../common/projection2d.js";
-import {transform_position} from "../../common/vec2.js";
-import {Entity} from "../../common/world.js";
+import {create} from "../../lib/mat2d.js";
+import {Mat2D, Vec2} from "../../lib/math.js";
+import {Projection2D} from "../../lib/projection2d.js";
+import {transform_position} from "../../lib/vec2.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

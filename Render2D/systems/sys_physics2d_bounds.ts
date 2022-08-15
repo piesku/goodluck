@@ -2,8 +2,8 @@
  * @module systems/sys_physics2d_bounds
  */
 
-import {float} from "../../common/random.js";
-import {Entity} from "../../common/world.js";
+import {float} from "../../lib/random.js";
+import {Entity} from "../../lib/world.js";
 import {RigidKind} from "../components/com_rigid_body2d.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

@@ -4,9 +4,9 @@
  * Update the entity's `Move` and `Animate` components every frame.
  */
 
-import {multiply} from "../../common/quat.js";
-import {add} from "../../common/vec3.js";
-import {Entity} from "../../common/world.js";
+import {multiply} from "../../lib/quat.js";
+import {add} from "../../lib/vec3.js";
+import {Entity} from "../../lib/world.js";
 import {query_down} from "../components/com_children.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

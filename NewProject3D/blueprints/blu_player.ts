@@ -1,5 +1,5 @@
-import {ease_in_out_quad, ease_in_quad, ease_out_quad} from "../../common/easing.js";
-import {from_euler} from "../../common/quat.js";
+import {ease_in_out_quad, ease_in_quad, ease_out_quad} from "../../lib/easing.js";
+import {from_euler} from "../../lib/quat.js";
 import {animate, AnimationFlag} from "../components/com_animate.js";
 import {audio_listener} from "../components/com_audio_listener.js";
 import {audio_source} from "../components/com_audio_source.js";

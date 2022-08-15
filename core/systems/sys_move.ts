@@ -4,9 +4,9 @@
  * Move and rotate entities.
  */
 
-import * as quat from "../../common/quat.js";
-import * as vec3 from "../../common/vec3.js";
-import {Entity} from "../../common/world.js";
+import * as quat from "../../lib/quat.js";
+import * as vec3 from "../../lib/vec3.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

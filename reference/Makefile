@@ -90,65 +90,65 @@ SYSTEMS := \
 	sys_trigger2d.html \
 	sys_ui.html
 
-COMMON := \
-	common_aabb.html \
-	common_aabb2d.html \
-	common_audio.html \
-	common_color.html \
-	common_easing.html \
-	common_framebuffer.html \
-	common_game.html \
-	common_html.html \
-	common_input.html \
-	common_load.html \
-	common_mat2d.html \
-	common_mat4.html \
-	common_material.html \
-	common_math.html \
-	common_mesh.html \
-	common_navmesh.html \
-	common_number.html \
-	common_pathfind.html \
-	common_projection.html \
-	common_projection2d.html \
-	common_quat.html \
-	common_random.html \
-	common_raycast.html \
-	common_texture.html \
-	common_vec2.html \
-	common_vec3.html \
-	common_vec4.html \
-	common_webgl.html \
-	common_world.html
+LIBRARIES := \
+	lib_aabb.html \
+	lib_aabb2d.html \
+	lib_audio.html \
+	lib_color.html \
+	lib_easing.html \
+	lib_framebuffer.html \
+	lib_game.html \
+	lib_html.html \
+	lib_input.html \
+	lib_load.html \
+	lib_mat2d.html \
+	lib_mat4.html \
+	lib_material.html \
+	lib_math.html \
+	lib_mesh.html \
+	lib_navmesh.html \
+	lib_number.html \
+	lib_pathfind.html \
+	lib_projection.html \
+	lib_projection2d.html \
+	lib_quat.html \
+	lib_random.html \
+	lib_raycast.html \
+	lib_texture.html \
+	lib_vec2.html \
+	lib_vec3.html \
+	lib_vec4.html \
+	lib_webgl.html \
+	lib_world.html
 
-all: index.html $(COMPONENTS) $(SYSTEMS) $(COMMON)
+all: index.html $(COMPONENTS) $(SYSTEMS) $(LIBRARIES)
 
-index.html: Makefile generate_index.mjs $(COMPONENTS) $(SYSTEMS) $(COMMON)
+index.html: Makefile generate_index.mjs $(COMPONENTS) $(SYSTEMS) $(LIBRARIES)
 	node generate_index.mjs \
 		$(COMPONENTS:com_%.html=--component com_%.html) \
 		$(SYSTEMS:sys_%.html=--system sys_%.html) \
-		$(COMMON:common_%.html=--common common_%.html) \
+		$(LIBRARIES:lib_%.html=--library lib_%.html) \
 		> $@
 
 com_%.html: ../core/components/com_%.ts generate_reference.mjs
 	node generate_reference.mjs $< \
 		$(COMPONENTS:com_%.html=--component com_%.html) \
 		$(SYSTEMS:sys_%.html=--system sys_%.html) \
-		$(COMMON:common_%.html=--common common_%.html) \
+		$(LIBRARIES:lib_%.html=--library lib_%.html) \
 		> $@
 
 sys_%.html: ../core/systems/sys_%.ts generate_reference.mjs
 	node generate_reference.mjs $< \
 		$(COMPONENTS:com_%.html=--component com_%.html) \
 		$(SYSTEMS:sys_%.html=--system sys_%.html) \
-		$(COMMON:common_%.html=--common common_%.html) \
+		$(LIBRARIES:lib_%.html=--library lib_%.html) \
 		> $@
 
-common_%.html: ../common/%.ts generate_reference.mjs
+lib_%.html: ../lib/%.ts generate_reference.mjs
 	node generate_reference.mjs $< \
 		$(COMPONENTS:com_%.html=--component com_%.html) \
 		$(SYSTEMS:sys_%.html=--system sys_%.html) \
-		$(COMMON:common_%.html=--common common_%.html) \
+		$(LIBRARIES:lib_%.html=--library lib_%.html) \
 		> $@
 
 .PHONY: clean
@@ -156,4 +156,4 @@ clean:
 	rm -f index.html
 	rm -f com_*.html
 	rm -f sys_*.html
-	rm -f common_*.html
+	rm -f lib_*.html

@@ -1,7 +1,7 @@
-import {multiply} from "../../common/mat4.js";
-import {Material} from "../../common/material.js";
-import {GL_FRAMEBUFFER, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
-import {Entity} from "../../common/world.js";
+import {multiply} from "../../lib/mat4.js";
+import {Material} from "../../lib/material.js";
+import {GL_FRAMEBUFFER, GL_UNSIGNED_SHORT} from "../../lib/webgl.js";
+import {Entity} from "../../lib/world.js";
 import {ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.js";
 import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {query_down} from "../components/com_children.js";

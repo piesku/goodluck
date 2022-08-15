@@ -4,7 +4,7 @@
  * Autodestruct entities after a given time.
  */
 
-import {Entity} from "../../common/world.js";
+import {Entity} from "../../lib/world.js";
 import {dispatch} from "../actions.js";
 import {destroy_all} from "../components/com_children.js";
 import {Game} from "../game.js";

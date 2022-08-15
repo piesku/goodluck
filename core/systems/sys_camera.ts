@@ -4,8 +4,8 @@
  * Update the `PV` matrix of the [camera](com_camera.html).
  */
 
-import {copy, get_translation, multiply} from "../../common/mat4.js";
-import {Entity} from "../../common/world.js";
+import {copy, get_translation, multiply} from "../../lib/mat4.js";
+import {Entity} from "../../lib/world.js";
 import {CameraCanvas, CameraKind, CameraTarget} from "../components/com_camera.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

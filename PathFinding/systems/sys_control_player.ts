@@ -1,9 +1,9 @@
-import {instantiate} from "../../common/game.js";
-import {pointer_clicked} from "../../common/input.js";
-import {get_translation} from "../../common/mat4.js";
-import {path_find} from "../../common/pathfind.js";
-import {GL_ARRAY_BUFFER} from "../../common/webgl.js";
-import {Entity} from "../../common/world.js";
+import {instantiate} from "../../lib/game.js";
+import {pointer_clicked} from "../../lib/input.js";
+import {get_translation} from "../../lib/mat4.js";
+import {path_find} from "../../lib/pathfind.js";
+import {GL_ARRAY_BUFFER} from "../../lib/webgl.js";
+import {Entity} from "../../lib/world.js";
 import {disable} from "../components/com_disable.js";
 import {RenderVertices, render_vertices} from "../components/com_render.js";
 import {transform} from "../components/com_transform.js";

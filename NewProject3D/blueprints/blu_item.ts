@@ -1,5 +1,5 @@
-import {from_euler} from "../../common/quat.js";
-import {Entity} from "../../common/world.js";
+import {from_euler} from "../../lib/quat.js";
+import {Entity} from "../../lib/world.js";
 import {Action} from "../actions.js";
 import {audio_source} from "../components/com_audio_source.js";
 import {callback} from "../components/com_callback.js";

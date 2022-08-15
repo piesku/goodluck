@@ -1,5 +1,5 @@
-import {GameImpl} from "../common/game.js";
-import {WorldImpl} from "../common/world.js";
+import {GameImpl} from "../lib/game.js";
+import {WorldImpl} from "../lib/world.js";
 import {sys_ui} from "./systems/sys_ui.js";
 
 export class Game extends GameImpl {

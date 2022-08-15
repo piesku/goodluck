@@ -5,10 +5,10 @@
  * the spawner's position and rotation.
  */
 
-import {instantiate} from "../../common/game.js";
-import {get_translation} from "../../common/mat2d.js";
-import {Vec2} from "../../common/math.js";
-import {Entity} from "../../common/world.js";
+import {instantiate} from "../../lib/game.js";
+import {get_translation} from "../../lib/mat2d.js";
+import {Vec2} from "../../lib/math.js";
+import {Entity} from "../../lib/world.js";
 import {copy_position} from "../components/com_local_transform2d.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

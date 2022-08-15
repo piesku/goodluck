@@ -1,5 +1,5 @@
-import {ease_in_out_quart, ease_out_quart} from "../../common/easing.js";
-import {from_euler} from "../../common/quat.js";
+import {ease_in_out_quart, ease_out_quart} from "../../lib/easing.js";
+import {from_euler} from "../../lib/quat.js";
 import {animate, AnimationFlag} from "../components/com_animate.js";
 import {bone} from "../components/com_bone.js";
 import {children} from "../components/com_children.js";

@@ -1,4 +1,4 @@
-import {perspective} from "../../common/projection.js";
+import {perspective} from "../../lib/projection.js";
 import {camera_canvas} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {mimic} from "../components/com_mimic.js";

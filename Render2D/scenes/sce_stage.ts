@@ -1,6 +1,6 @@
-import {hsva_to_vec4} from "../../common/color.js";
-import {instantiate} from "../../common/game.js";
-import {float} from "../../common/random.js";
+import {hsva_to_vec4} from "../../lib/color.js";
+import {instantiate} from "../../lib/game.js";
+import {float} from "../../lib/random.js";
 import {camera2d} from "../components/com_camera2d.js";
 import {control_player} from "../components/com_control_player.js";
 import {draw_arc, draw_rect} from "../components/com_draw.js";

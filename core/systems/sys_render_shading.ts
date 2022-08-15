@@ -17,8 +17,8 @@
  * tone-mapping, and FXAA.
  */
 
-import {TargetKind} from "../../common/framebuffer.js";
-import {Mesh} from "../../common/mesh.js";
+import {TargetKind} from "../../lib/framebuffer.js";
+import {Mesh} from "../../lib/mesh.js";
 import {
     GL_ARRAY_BUFFER,
     GL_BLEND,
@@ -35,7 +35,7 @@ import {
     GL_TEXTURE5,
     GL_TEXTURE_2D,
     GL_UNSIGNED_SHORT,
-} from "../../common/webgl.js";
+} from "../../lib/webgl.js";
 import {Attribute, Output} from "../../materials/layout.js";
 import {LightKind} from "../../materials/light.js";
 import {CameraKind} from "../components/com_camera.js";

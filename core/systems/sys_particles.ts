@@ -5,9 +5,9 @@
  * to be passed to the shaders.
  */
 
-import {get_forward, get_translation} from "../../common/mat4.js";
-import {Vec3} from "../../common/math.js";
-import {Entity} from "../../common/world.js";
+import {get_forward, get_translation} from "../../lib/mat4.js";
+import {Vec3} from "../../lib/math.js";
+import {Entity} from "../../lib/world.js";
 import {FLOATS_PER_PARTICLE} from "../components/com_render.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

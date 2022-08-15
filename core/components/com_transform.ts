@@ -8,11 +8,11 @@
  * it must also be tagged as **dirty** with `Has.Dirty`.
  */
 
-import {create} from "../../common/mat4.js";
-import {Mat4, Quat, Vec3} from "../../common/math.js";
-import * as quat from "../../common/quat.js";
-import * as vec3 from "../../common/vec3.js";
-import {Entity} from "../../common/world.js";
+import {create} from "../../lib/mat4.js";
+import {Mat4, Quat, Vec3} from "../../lib/math.js";
+import * as quat from "../../lib/quat.js";
+import * as vec3 from "../../lib/vec3.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";
 

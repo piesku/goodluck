@@ -4,8 +4,8 @@
  * Handle keyboard input.
  */
 
-import {get_pitch, multiply} from "../../common/quat.js";
-import {Entity} from "../../common/world.js";
+import {get_pitch, multiply} from "../../lib/quat.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

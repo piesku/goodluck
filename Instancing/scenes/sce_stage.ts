@@ -1,7 +1,7 @@
-import {instantiate} from "../../common/game.js";
-import {from_rotation_translation_scale} from "../../common/mat4.js";
-import {from_euler} from "../../common/quat.js";
-import {float} from "../../common/random.js";
+import {instantiate} from "../../lib/game.js";
+import {from_rotation_translation_scale} from "../../lib/mat4.js";
+import {from_euler} from "../../lib/quat.js";
+import {float} from "../../lib/random.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {render_instanced_colored_unlit} from "../components/com_render_instanced.js";
 import {set_position, set_rotation, transform} from "../components/com_transform.js";

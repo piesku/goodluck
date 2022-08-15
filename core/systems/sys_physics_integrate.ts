@@ -31,9 +31,9 @@
  * to skipped input or input applied multiple times.
  */
 
-import {Vec3} from "../../common/math.js";
-import {add, scale, set} from "../../common/vec3.js";
-import {Entity} from "../../common/world.js";
+import {Vec3} from "../../lib/math.js";
+import {add, scale, set} from "../../lib/vec3.js";
+import {Entity} from "../../lib/world.js";
 import {RigidKind} from "../components/com_rigid_body.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

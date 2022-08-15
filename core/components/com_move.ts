@@ -4,8 +4,8 @@
  * The `Move` component allows the entity to move.
  */
 
-import {Quat, Vec3} from "../../common/math.js";
-import {Entity} from "../../common/world.js";
+import {Quat, Vec3} from "../../lib/math.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

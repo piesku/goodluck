@@ -1,9 +1,9 @@
 /**
  * @module systems/sys_render_forward
  */
-import {Material} from "../../common/material.js";
-import {GL_ARRAY_BUFFER, GL_FLOAT, GL_FRAMEBUFFER, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
-import {Entity} from "../../common/world.js";
+import {Material} from "../../lib/material.js";
+import {GL_ARRAY_BUFFER, GL_FLOAT, GL_FRAMEBUFFER, GL_UNSIGNED_SHORT} from "../../lib/webgl.js";
+import {Entity} from "../../lib/world.js";
 import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {Render, RenderKind} from "../components/com_render_instanced.js";
 import {Game} from "../game.js";

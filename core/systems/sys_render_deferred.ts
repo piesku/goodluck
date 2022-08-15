@@ -11,9 +11,9 @@
  * Transparent objects are not supported.
  */
 
-import {TargetKind} from "../../common/framebuffer.js";
-import {GL_FRAMEBUFFER, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
-import {Entity} from "../../common/world.js";
+import {TargetKind} from "../../lib/framebuffer.js";
+import {GL_FRAMEBUFFER, GL_UNSIGNED_SHORT} from "../../lib/webgl.js";
+import {Entity} from "../../lib/world.js";
 import {CameraEye, CameraKind} from "../components/com_camera.js";
 import {Render, RenderKind} from "../components/com_render.js";
 import {Game} from "../game.js";

@@ -1,4 +1,4 @@
-import {html} from "../../common/html.js";
+import {html} from "../../lib/html.js";
 
 export function CompletedItem(content: string) {
     return html`

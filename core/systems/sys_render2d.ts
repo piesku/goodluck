@@ -15,7 +15,7 @@ import {
     GL_STREAM_DRAW,
     GL_TEXTURE0,
     GL_TEXTURE_2D,
-} from "../../common/webgl.js";
+} from "../../lib/webgl.js";
 import {FLOATS_PER_INSTANCE} from "../../materials/layout2d.js";
 import {Camera2D} from "../components/com_camera2d.js";
 import {Game} from "../game.js";

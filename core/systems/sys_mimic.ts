@@ -4,11 +4,11 @@
  * Update the entity's position and rotation to mimic another entity.
  */
 
-import {get_rotation, get_translation} from "../../common/mat4.js";
-import {Quat, Vec3} from "../../common/math.js";
-import {slerp} from "../../common/quat.js";
-import {lerp} from "../../common/vec3.js";
-import {Entity} from "../../common/world.js";
+import {get_rotation, get_translation} from "../../lib/mat4.js";
+import {Quat, Vec3} from "../../lib/math.js";
+import {slerp} from "../../lib/quat.js";
+import {lerp} from "../../lib/vec3.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

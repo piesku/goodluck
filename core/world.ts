@@ -1,4 +1,4 @@
-import {WorldImpl} from "../common/world.js";
+import {WorldImpl} from "../lib/world.js";
 import {Animate} from "./components/com_animate.js";
 import {AnimateSprite} from "./components/com_animate_sprite.js";
 import {AudioSource} from "./components/com_audio_source.js";

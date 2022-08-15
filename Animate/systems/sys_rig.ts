@@ -1,5 +1,5 @@
-import {multiply} from "../../common/mat4.js";
-import {Entity} from "../../common/world.js";
+import {multiply} from "../../lib/mat4.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

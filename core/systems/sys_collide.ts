@@ -17,8 +17,8 @@
  * Static vs. static collisions are not checked at all.
  */
 
-import {compute_aabb, intersect_aabb, penetrate_aabb} from "../../common/aabb.js";
-import {negate} from "../../common/vec3.js";
+import {compute_aabb, intersect_aabb, penetrate_aabb} from "../../lib/aabb.js";
+import {negate} from "../../lib/vec3.js";
 import {Collide} from "../components/com_collide.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

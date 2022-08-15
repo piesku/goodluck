@@ -1,5 +1,5 @@
-import {perspective} from "../../common/projection.js";
-import {from_euler} from "../../common/quat.js";
+import {perspective} from "../../lib/projection.js";
+import {from_euler} from "../../lib/quat.js";
 import {camera_canvas} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {control_dolly} from "../components/com_control_dolly.js";

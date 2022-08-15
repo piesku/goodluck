@@ -6,9 +6,9 @@
  * entity's transform.
  */
 
-import {Vec2} from "../../common/math.js";
-import {add, scale, set} from "../../common/vec2.js";
-import {Entity} from "../../common/world.js";
+import {Vec2} from "../../lib/math.js";
+import {add, scale, set} from "../../lib/vec2.js";
+import {Entity} from "../../lib/world.js";
 import {RigidKind} from "../components/com_rigid_body2d.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

@@ -1,5 +1,5 @@
-import {instantiate} from "../../common/game.js";
-import {from_euler} from "../../common/quat.js";
+import {instantiate} from "../../lib/game.js";
+import {from_euler} from "../../lib/quat.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {blueprint_viewer} from "../blueprints/blu_viewer.js";
 import {light_directional} from "../components/com_light.js";

@@ -1,4 +1,4 @@
-import {create_texture_from, fetch_image} from "../common/texture.js";
+import {create_texture_from, fetch_image} from "../lib/texture.js";
 import {Game} from "./game.js";
 import {scene_stage} from "./scenes/sce_stage.js";
 

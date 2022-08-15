@@ -5,7 +5,7 @@
  * third-person 3D games, as well as some camera control schemes.
  */
 
-import {Entity} from "../../common/world.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

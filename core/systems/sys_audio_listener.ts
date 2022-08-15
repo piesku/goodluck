@@ -4,9 +4,9 @@
  * Update the position and orientation of `game.Audio`'s listener.
  */
 
-import {get_forward, get_translation, get_up} from "../../common/mat4.js";
-import {Vec3} from "../../common/math.js";
-import {Entity} from "../../common/world.js";
+import {get_forward, get_translation, get_up} from "../../lib/mat4.js";
+import {Vec3} from "../../lib/math.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

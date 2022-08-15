@@ -1,5 +1,5 @@
-import {link, Material} from "../common/material.js";
-import {GL_TRIANGLES} from "../common/webgl.js";
+import {link, Material} from "../lib/material.js";
+import {GL_TRIANGLES} from "../lib/webgl.js";
 import {Attribute, ForwardShadingLayout, MappedShadedLayout} from "./layout.js";
 import {INCLUDE_GAMMA_CORRECTION, LightKind, MAX_FORWARD_LIGHTS} from "./light.js";
 

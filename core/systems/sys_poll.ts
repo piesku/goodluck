@@ -10,7 +10,7 @@
  * added to the world.
  */
 
-import {Entity} from "../../common/world.js";
+import {Entity} from "../../lib/world.js";
 import {TaskKind} from "../components/com_task.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";

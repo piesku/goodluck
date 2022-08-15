@@ -1,5 +1,5 @@
-import {orthographic} from "../../common/projection.js";
-import {from_euler} from "../../common/quat.js";
+import {orthographic} from "../../lib/projection.js";
+import {from_euler} from "../../lib/quat.js";
 import {camera_target} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {control_always} from "../components/com_control_always.js";

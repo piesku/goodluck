@@ -1,9 +1,9 @@
-import {get_translation} from "../../common/mat4.js";
-import {Vec3} from "../../common/math.js";
-import {path_find} from "../../common/pathfind.js";
-import {multiply} from "../../common/quat.js";
-import {add, distance_squared, normalize, transform_position} from "../../common/vec3.js";
-import {Entity} from "../../common/world.js";
+import {get_translation} from "../../lib/mat4.js";
+import {Vec3} from "../../lib/math.js";
+import {path_find} from "../../lib/pathfind.js";
+import {multiply} from "../../lib/quat.js";
+import {add, distance_squared, normalize, transform_position} from "../../lib/vec3.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

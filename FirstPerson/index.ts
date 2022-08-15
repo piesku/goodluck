@@ -1,4 +1,4 @@
-import {input_pointer_lock} from "../common/input.js";
+import {input_pointer_lock} from "../lib/input.js";
 import {dispatch} from "./actions.js";
 import {Game} from "./game.js";
 import {scene_stage} from "./scenes/sce_stage.js";

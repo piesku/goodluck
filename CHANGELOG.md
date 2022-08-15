@@ -6,7 +6,7 @@ However, we do distinguish between _generations_ of Goodluck. The core API chang
 
 ## Generation 7 (since June 2021)
 
-`Game` and `World` now inherit from `GameImpl` and `WorldImpl` respectively, defined in `common/`. Input handling and the game loop are now handled by the base classes, which allows the child classes to be lean and to contain mostly any extra data needed by the example. `Mixin`, `Blueprint`, and `instantiate` are now generic over the type of `Game` passed into them.
+`Game` and `World` now inherit from `GameImpl` and `WorldImpl` respectively, defined in `common/` (renamed to `lib/` in August 2022). Input handling and the game loop are now handled by the base classes, which allows the child classes to be lean and to contain mostly any extra data needed by the example. `Mixin`, `Blueprint`, and `instantiate` are now generic over the type of `Game` passed into them.
 
 Once you bootstrap a new project, feel free to merge the super class with `Game` in `src/game.ts` to save a few bytes.
 
@@ -61,7 +61,7 @@ Once you bootstrap a new project, feel free to merge the super class with `Game`
 
 ## Generation 4 (since February 2020)
 
-- New directory layout. Each example is now an independent Goodluck project, with its own copy of `core.ts`, `game.ts`, etc. Some game-agnostic code has been moved to the top-level `common` directory.
+- New directory layout. Each example is now an independent Goodluck project, with its own copy of `core.ts`, `game.ts`, etc. Some game-agnostic code has been moved to the top-level `common` directory (renamed to `lib` in August 2022).
 
 ## Generation 3 (since December 2019)
 

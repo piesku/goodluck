@@ -9,9 +9,9 @@
  * sawpped, too.
  */
 
-import {Vec3} from "../../common/math.js";
-import {add, copy, dot, normalize, scale} from "../../common/vec3.js";
-import {Entity} from "../../common/world.js";
+import {Vec3} from "../../lib/math.js";
+import {add, copy, dot, normalize, scale} from "../../lib/vec3.js";
+import {Entity} from "../../lib/world.js";
 import {RigidKind} from "../components/com_rigid_body.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

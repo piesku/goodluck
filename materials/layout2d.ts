@@ -1,4 +1,4 @@
-import {GL_ARRAY_BUFFER, GL_FLOAT, GL_STATIC_DRAW} from "../common/webgl.js";
+import {GL_ARRAY_BUFFER, GL_FLOAT, GL_STATIC_DRAW} from "../lib/webgl.js";
 
 export const enum Attribute {
     VertexPosition,

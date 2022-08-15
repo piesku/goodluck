@@ -4,7 +4,7 @@
  * A utility mixin which runs arbitrary logic when an entity is created.
  */
 
-import {Entity} from "../../common/world.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 
 type Callback = (game: Game, entity: Entity) => void;

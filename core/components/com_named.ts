@@ -4,7 +4,7 @@
  * The `Name` component stores a name for the entity.
  */
 
-import {Entity} from "../../common/world.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";
 

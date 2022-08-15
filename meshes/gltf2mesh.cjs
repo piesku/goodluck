@@ -120,13 +120,13 @@ if (joints_data.length > 0 && weights_data.length > 0) {
 }
 
 console.log(`\
-import {Mesh} from "../common/mesh.js";
+import {Mesh} from "../lib/mesh.js";
 import {
     GL_ARRAY_BUFFER,
     GL_ELEMENT_ARRAY_BUFFER,
     GL_FLOAT,
     GL_STATIC_DRAW,
-} from "../common/webgl.js";
+} from "../lib/webgl.js";
 import {Attribute} from "../materials/layout.js";
 
 export function mesh_${process.argv[2]}(gl: WebGL2RenderingContext): Mesh {

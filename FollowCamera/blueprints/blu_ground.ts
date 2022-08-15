@@ -1,4 +1,4 @@
-import {float} from "../../common/random.js";
+import {float} from "../../lib/random.js";
 import {children} from "../components/com_children.js";
 import {collide} from "../components/com_collide.js";
 import {render_colored_shaded} from "../components/com_render.js";

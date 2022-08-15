@@ -1,4 +1,4 @@
-import {html} from "../../common/html.js";
+import {html} from "../../lib/html.js";
 import {Action} from "../actions.js";
 import {Game} from "../game.js";
 

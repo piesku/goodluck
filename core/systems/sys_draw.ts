@@ -4,9 +4,9 @@
  * Draw 2D [primitives](com_draw.html) in the 3D scene using the Context2D API.
  */
 
-import {get_translation} from "../../common/mat4.js";
-import {Vec3} from "../../common/math.js";
-import {transform_position} from "../../common/vec3.js";
+import {get_translation} from "../../lib/mat4.js";
+import {Vec3} from "../../lib/math.js";
+import {transform_position} from "../../lib/vec3.js";
 import {CameraKind} from "../components/com_camera.js";
 import {DrawKind, DrawSelection, DrawText} from "../components/com_draw.js";
 import {Game} from "../game.js";

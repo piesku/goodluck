@@ -4,10 +4,10 @@
  * Play audio clips from entities with [`AudioSource`](com_audio_source.html).
  */
 
-import {AudioClipKind, play_buffer_clip, play_synth_clip} from "../../common/audio.js";
-import {get_forward, get_translation} from "../../common/mat4.js";
-import {Vec3} from "../../common/math.js";
-import {Entity} from "../../common/world.js";
+import {AudioClipKind, play_buffer_clip, play_synth_clip} from "../../lib/audio.js";
+import {get_forward, get_translation} from "../../lib/mat4.js";
+import {Vec3} from "../../lib/math.js";
+import {Entity} from "../../lib/world.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

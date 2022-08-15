@@ -9,8 +9,8 @@
  * dependencies between [tasks](com_task.html).
  */
 
-import {Blueprint, instantiate} from "../../common/game.js";
-import {Entity} from "../../common/world.js";
+import {Blueprint, instantiate} from "../../lib/game.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";
 

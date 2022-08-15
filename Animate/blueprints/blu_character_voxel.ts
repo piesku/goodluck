@@ -1,7 +1,7 @@
-import {ease_in_out_quart, ease_out_quart} from "../../common/easing.js";
-import {Vec4} from "../../common/math.js";
-import {from_euler} from "../../common/quat.js";
-import {element} from "../../common/random.js";
+import {ease_in_out_quart, ease_out_quart} from "../../lib/easing.js";
+import {Vec4} from "../../lib/math.js";
+import {from_euler} from "../../lib/quat.js";
+import {element} from "../../lib/random.js";
 import {animate, AnimationFlag} from "../components/com_animate.js";
 import {children} from "../components/com_children.js";
 import {render_colored_shaded} from "../components/com_render_ext.js";

@@ -1,10 +1,5 @@
-import {Mesh} from "../common/mesh.js";
-import {
-    GL_ARRAY_BUFFER,
-    GL_ELEMENT_ARRAY_BUFFER,
-    GL_FLOAT,
-    GL_STATIC_DRAW,
-} from "../common/webgl.js";
+import {Mesh} from "../lib/mesh.js";
+import {GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_FLOAT, GL_STATIC_DRAW} from "../lib/webgl.js";
 import {Attribute} from "../materials/layout.js";
 
 export function mesh_monkey_flat(gl: WebGL2RenderingContext): Mesh {

@@ -2,10 +2,10 @@
  * @module components/com_render
  */
 
-import {Material} from "../../common/material.js";
-import {Mesh} from "../../common/mesh.js";
-import {GL_ARRAY_BUFFER, GL_CW, GL_STATIC_DRAW} from "../../common/webgl.js";
-import {Entity} from "../../common/world.js";
+import {Material} from "../../lib/material.js";
+import {Mesh} from "../../lib/mesh.js";
+import {GL_ARRAY_BUFFER, GL_CW, GL_STATIC_DRAW} from "../../lib/webgl.js";
+import {Entity} from "../../lib/world.js";
 import {WorldSpaceLayout} from "../../materials/layout.js";
 import {Game} from "../game.js";
 import {

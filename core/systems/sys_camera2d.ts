@@ -5,7 +5,7 @@
  * rendering.
  */
 
-import {copy, multiply} from "../../common/mat2d.js";
+import {copy, multiply} from "../../lib/mat2d.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

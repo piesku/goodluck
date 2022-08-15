@@ -4,9 +4,9 @@
  * Animate transforms of entities (position, rotation, scale) over time.
  */
 
-import {slerp} from "../../common/quat.js";
-import {lerp} from "../../common/vec3.js";
-import {Entity} from "../../common/world.js";
+import {slerp} from "../../lib/quat.js";
+import {lerp} from "../../lib/vec3.js";
+import {Entity} from "../../lib/world.js";
 import {AnimationFlag, AnimationKeyframe} from "../components/com_animate.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

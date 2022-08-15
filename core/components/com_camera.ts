@@ -7,13 +7,13 @@
  * In WebGL, similar to OpenGL, cameras see backwards!
  */
 
-import {RenderTarget} from "../../common/framebuffer.js";
-import {create} from "../../common/mat4.js";
-import {Mat4, Vec2, Vec3, Vec4} from "../../common/math.js";
-import {Projection} from "../../common/projection.js";
-import {transform_position} from "../../common/vec3.js";
-import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT} from "../../common/webgl.js";
-import {Entity} from "../../common/world.js";
+import {RenderTarget} from "../../lib/framebuffer.js";
+import {create} from "../../lib/mat4.js";
+import {Mat4, Vec2, Vec3, Vec4} from "../../lib/math.js";
+import {Projection} from "../../lib/projection.js";
+import {transform_position} from "../../lib/vec3.js";
+import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT} from "../../lib/webgl.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -89,7 +89,7 @@ export interface CameraTarget extends CameraEye {
 /**
  * Add `CameraTarget` to an entity.
  *
- * `CameraTarget` is a camera that renders to a [render target](common_framebuffer.html).
+ * `CameraTarget` is a camera that renders to a [render target](lib_framebuffer.html).
  *
  * @param target The render target to render into.
  * @param projection The projection to use.

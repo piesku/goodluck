@@ -1,4 +1,4 @@
-import {html} from "../../common/html.js";
+import {html} from "../../lib/html.js";
 import {Game} from "../game.js";
 import {AddForm} from "./AddForm.js";
 import {CompletedItem} from "./CompletedItem.js";

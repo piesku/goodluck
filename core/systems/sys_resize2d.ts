@@ -5,8 +5,8 @@
  * and update the projection matrices of cameras in the scene.
  */
 
-import {from_ortho, invert} from "../../common/mat2d.js";
-import {Entity} from "../../common/world.js";
+import {from_ortho, invert} from "../../lib/mat2d.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

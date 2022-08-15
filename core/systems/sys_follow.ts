@@ -4,10 +4,10 @@
  * Update the entity's position to follow another entity.
  */
 
-import {get_translation} from "../../common/mat4.js";
-import {Vec3} from "../../common/math.js";
-import {lerp} from "../../common/vec3.js";
-import {Entity} from "../../common/world.js";
+import {get_translation} from "../../lib/mat4.js";
+import {Vec3} from "../../lib/math.js";
+import {lerp} from "../../lib/vec3.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

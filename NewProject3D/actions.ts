@@ -1,4 +1,4 @@
-import {Entity} from "../common/world.js";
+import {Entity} from "../lib/world.js";
 import {destroy_all} from "./components/com_children.js";
 import {Game} from "./game.js";
 

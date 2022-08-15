@@ -5,7 +5,7 @@
  * time. Upon destruction, the entity can emit an `Action`.
  */
 
-import {Entity} from "../../common/world.js";
+import {Entity} from "../../lib/world.js";
 import {Action} from "../actions.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

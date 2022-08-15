@@ -1,7 +1,7 @@
-import {Vec3} from "../../common/math.js";
-import {from_euler} from "../../common/quat.js";
-import {element, float} from "../../common/random.js";
 import {light_radius} from "../../core/components/com_light.js";
+import {Vec3} from "../../lib/math.js";
+import {from_euler} from "../../lib/quat.js";
+import {element, float} from "../../lib/random.js";
 import {children} from "../components/com_children.js";
 import {control_always} from "../components/com_control_always.js";
 import {light_point} from "../components/com_light.js";

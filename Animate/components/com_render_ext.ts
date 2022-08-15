@@ -1,8 +1,8 @@
-import {Material} from "../../common/material.js";
-import {Vec3, Vec4} from "../../common/math.js";
-import {Mesh} from "../../common/mesh.js";
-import {GL_CW} from "../../common/webgl.js";
-import {Entity} from "../../common/world.js";
+import {Material} from "../../lib/material.js";
+import {Vec3, Vec4} from "../../lib/math.js";
+import {Mesh} from "../../lib/mesh.js";
+import {GL_CW} from "../../lib/webgl.js";
+import {Entity} from "../../lib/world.js";
 import {ColoredShadedLayout, ForwardShadingLayout} from "../../materials/layout.js";
 import {Game} from "../game.js";
 import {SkinningLayout} from "../materials/layout_skinning.js";

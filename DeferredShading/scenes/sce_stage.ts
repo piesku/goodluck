@@ -1,6 +1,6 @@
 import {light_radius} from "../../Animate/components/com_light.js";
-import {instantiate} from "../../common/game.js";
-import {element, float} from "../../common/random.js";
+import {instantiate} from "../../lib/game.js";
+import {element, float} from "../../lib/random.js";
 import {blueprint_bulb} from "../blueprints/blu_bulb.js";
 import {blueprint_camera_main} from "../blueprints/blu_camera_main.js";
 import {blueprint_sun} from "../blueprints/blu_sun.js";

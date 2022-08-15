@@ -18,9 +18,9 @@
  * it must also be tagged as **dirty** with `Has.Dirty`.
  */
 
-import {Deg, Vec2} from "../../common/math.js";
-import {copy} from "../../common/vec2.js";
-import {Entity} from "../../common/world.js";
+import {Deg, Vec2} from "../../lib/math.js";
+import {copy} from "../../lib/vec2.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

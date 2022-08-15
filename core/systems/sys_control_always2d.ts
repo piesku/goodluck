@@ -4,7 +4,7 @@
  * Update the entity's `Move2D` component every frame.
  */
 
-import {Entity} from "../../common/world.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 

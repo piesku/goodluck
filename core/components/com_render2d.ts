@@ -4,9 +4,9 @@
  * The `Render2D` component allows an entity to be rendered in 2D space.
  */
 
-import {Vec4} from "../../common/math.js";
-import {clamp} from "../../common/number.js";
-import {Entity} from "../../common/world.js";
+import {Vec4} from "../../lib/math.js";
+import {clamp} from "../../lib/number.js";
+import {Entity} from "../../lib/world.js";
 import {FLOATS_PER_INSTANCE} from "../../materials/layout2d.js";
 import {spritesheet} from "../../sprites/spritesheet.js";
 import {Game} from "../game.js";

@@ -4,7 +4,7 @@
  * Render the world using an XR [camera](com_camera.html).
  */
 
-import {GL_FRAMEBUFFER} from "../../common/webgl.js";
+import {GL_FRAMEBUFFER} from "../../lib/webgl.js";
 import {CameraKind} from "../components/com_camera.js";
 import {Game} from "../game.js";
 import {render_all} from "./sys_render_forward.js";

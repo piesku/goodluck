@@ -11,9 +11,9 @@
  * arbitrary logic through `Actions`.
  */
 
-import {AABB} from "../../common/aabb.js";
-import {Vec3} from "../../common/math.js";
-import {Entity} from "../../common/world.js";
+import {AABB} from "../../lib/aabb.js";
+import {Vec3} from "../../lib/math.js";
+import {Entity} from "../../lib/world.js";
 import {Game, Layer} from "../game.js";
 import {Has} from "../world.js";
 

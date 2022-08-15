@@ -1,4 +1,4 @@
-import {load_texture} from "../common/load.js";
+import {load_texture} from "../lib/load.js";
 import {Game} from "./game.js";
 import {scene_stage} from "./scenes/sce_stage.js";
 

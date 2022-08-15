@@ -11,9 +11,9 @@ import {
     resize_forward_target,
     resize_hdr_target,
     TargetKind,
-} from "../../common/framebuffer.js";
-import {from_ortho, from_perspective, invert} from "../../common/mat4.js";
-import {Projection, ProjectionKind} from "../../common/projection.js";
+} from "../../lib/framebuffer.js";
+import {from_ortho, from_perspective, invert} from "../../lib/mat4.js";
+import {Projection, ProjectionKind} from "../../lib/projection.js";
 import {CameraKind} from "../components/com_camera.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

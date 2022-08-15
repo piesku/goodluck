@@ -4,8 +4,8 @@
  * Update the `PV` matrix of the WebXR [camera](com_camera.html).
  */
 
-import {create, get_translation, invert, multiply} from "../../common/mat4.js";
-import {Entity} from "../../common/world.js";
+import {create, get_translation, invert, multiply} from "../../lib/mat4.js";
+import {Entity} from "../../lib/world.js";
 import {CameraKind, CameraXr, XrEye} from "../components/com_camera.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";

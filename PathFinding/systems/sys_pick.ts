@@ -1,9 +1,9 @@
-import {pointer_viewport} from "../../common/input.js";
-import {get_translation} from "../../common/mat4.js";
-import {Vec2, Vec3} from "../../common/math.js";
-import {ray_intersect_aabb, ray_intersect_mesh} from "../../common/raycast.js";
-import {normalize, subtract, transform_direction, transform_position} from "../../common/vec3.js";
-import {Entity} from "../../common/world.js";
+import {pointer_viewport} from "../../lib/input.js";
+import {get_translation} from "../../lib/mat4.js";
+import {Vec2, Vec3} from "../../lib/math.js";
+import {ray_intersect_aabb, ray_intersect_mesh} from "../../lib/raycast.js";
+import {normalize, subtract, transform_direction, transform_position} from "../../lib/vec3.js";
+import {Entity} from "../../lib/world.js";
 import {CameraKind, viewport_to_world} from "../components/com_camera.js";
 import {Collide} from "../components/com_collide.js";
 import {PickableKind} from "../components/com_pickable.js";

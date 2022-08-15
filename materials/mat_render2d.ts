@@ -1,5 +1,5 @@
-import {link, Material} from "../common/material.js";
-import {GL_TRIANGLE_STRIP} from "../common/webgl.js";
+import {link, Material} from "../lib/material.js";
+import {GL_TRIANGLE_STRIP} from "../lib/webgl.js";
 import {Attribute, Render2DLayout} from "./layout2d.js";
 
 // The vertex shader is parameterized over two component bits: Has.Render2D and

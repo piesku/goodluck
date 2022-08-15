@@ -1,7 +1,7 @@
-import {Quat, Vec3} from "../../common/math.js";
-import {look_yaw, multiply, slerp} from "../../common/quat.js";
-import {add, normalize, set, transform_direction} from "../../common/vec3.js";
-import {Entity} from "../../common/world.js";
+import {Quat, Vec3} from "../../lib/math.js";
+import {look_yaw, multiply, slerp} from "../../lib/quat.js";
+import {add, normalize, set, transform_direction} from "../../lib/vec3.js";
+import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
