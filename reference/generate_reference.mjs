@@ -27,6 +27,8 @@ let source_ts = positionals.shift();
 let content = fs.readFileSync(source_ts);
 let lines = content.toString().split("\n");
 
+let source_gh = "https://github.com/piesku/goodluck/blob/master/" + source_ts.slice(3);
+
 class Section {
     constructor(docs, code) {
         this.docs = docs;
@@ -194,8 +196,8 @@ if (first_section.code.length === 0) {
     first_section = null;
 }
 
-console.log(`
-<html>
+console.log(`<!DOCTYPE html>
+<html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -234,12 +236,20 @@ aside .docs {
     }
 }
 
-nav .columns {
+main nav {
     column-width: 10rem;
+}
+
+main nav h1 {
+    column-span: all;
 }
 
 aside .docs p:first-child {
     font-weight: bold;
+}
+
+aside header {
+    text-align: right;
 }
 
 pre {
@@ -268,9 +278,7 @@ dt small {
             values.component
                 ? `<section>
                     <h1>Core Components</h1>
-                    <div class="columns">
                     ${values.component.map(render_link).join("<br>")}
-                    </div>
                 </section>`
                 : ""
         }
@@ -278,9 +286,7 @@ dt small {
             values.system
                 ? `<section>
                     <h1>Core Systems</h1>
-                    <div class="columns">
                     ${values.system.map(render_link).join("<br>")}
-                    </div>
                 </section>`
                 : ""
         }
@@ -288,15 +294,16 @@ dt small {
             values.common
                 ? `<section>
                     <h1>Common Utilities</h1>
-                    <div class="columns">
                     ${values.common.map(render_link).join("<br>")}
-                    </div>
                 </section>`
                 : ""
         }
         </nav>
     </main>
     <aside>
+        <header>
+            <a href="${source_gh}">View source on GitHub</a>
+        </header>
     ${sections
         .flatMap((section) => [render_docs(section), render_code(section), "<br clear=right>"])
         .join("\n")}

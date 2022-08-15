@@ -66,8 +66,8 @@ function render_definition(filename_html) {
     return `<dt><a href="${filename_html}">${nice_name}</a></dt>`;
 }
 
-console.log(`
-<html>
+console.log(`<!DOCTYPE html>
+<html lang="en">
 <meta charset="utf-8">
 <title>Goodluck API Reference</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
