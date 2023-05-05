@@ -6,8 +6,11 @@ SPRITES := $(filter-out spritesheet.png, $(SPRITES))
 
 all: spritesheet.png.webp
 
-spritesheet.png: $(SPRITES)
-	node spritesmith.cjs $^ $@ > spritesheet.ts
+spritesheet.png: $(SPRITES) node_modules
+	node spritesmith.cjs $(SPRITES) $@ > spritesheet.ts
 
 %.png.webp: %.png
 	cwebp -short -z 9 $< -o $@
+
+node_modules:
+	npm install

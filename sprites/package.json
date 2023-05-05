@@ -1,0 +1,8 @@
+{
+    "name": "goodluck-sprites",
+    "version": "0.0.0",
+    "private": true,
+    "devDependencies": {
+        "spritesmith": "3.4"
+    }
+}

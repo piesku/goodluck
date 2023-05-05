@@ -20,7 +20,7 @@ game.esbuild.js: $(SOURCES)
 game.sed.js: game.esbuild.js sed.txt
 	sed  -f sed.txt  $< > $@
 
-game.terser.js: game.sed.js terser_compress.txt
+game.terser.js: game.sed.js terser_compress.txt node_modules
 	npx --quiet terser $< \
 		--ecma 2022 \
 		--mangle toplevel \
@@ -28,11 +28,11 @@ game.terser.js: game.sed.js terser_compress.txt
 		--compress $(shell paste -sd, terser_compress.txt) \
 	> $@
 
-game.roadroller.js: game.terser.js
+game.roadroller.js: game.terser.js node_modules
 # Set -O2 for better (and longer) compression.
 	npx --quiet roadroller -O1 --dirty $< -o $@
 
-index.html: game.html game.roadroller.js game.css debug.css posthtml.cjs
+index.html: game.html game.roadroller.js game.css debug.css posthtml.cjs node_modules
 	node posthtml.cjs $< > $@
 
 # On Ubuntu, install p7zip-full. See https://www.7-zip.org/download.html.
@@ -42,3 +42,6 @@ index.zip: index.html
 .PHONY: clean
 clean:
 	rm -f *.js index.html index.zip
+
+node_modules:
+	npm install
