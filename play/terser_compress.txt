@@ -1,5 +1,5 @@
 passes=3
-ecma=9
+ecma=2022
 drop_console
 pure_getters
 toplevel

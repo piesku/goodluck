@@ -12,7 +12,7 @@ game.esbuild.js: $(SOURCES)
 	npx esbuild ../$(EXAMPLE)/index.ts \
 		--preserve-symlinks \
 		--define:DEBUG=false \
-		--target=es2020 \
+		--target=es2022 \
 		--bundle \
 		--analyze \
 	> $@
@@ -22,7 +22,7 @@ game.sed.js: game.esbuild.js sed.txt
 
 game.terser.js: game.sed.js terser_compress.txt
 	npx --quiet terser $< \
-		--ecma 9 \
+		--ecma 2022 \
 		--mangle toplevel \
 		--mangle-props keep_quoted,regex=/^[A-Z]/ \
 		--compress $(shell paste -sd, terser_compress.txt) \
