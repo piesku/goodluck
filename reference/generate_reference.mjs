@@ -27,7 +27,7 @@ let source_ts = positionals.shift();
 let content = fs.readFileSync(source_ts);
 let lines = content.toString().split("\n");
 
-let source_gh = "https://github.com/piesku/goodluck/blob/master/" + source_ts.slice(3);
+let source_gh = "https://github.com/piesku/goodluck/blob/main/" + source_ts.slice(3);
 
 class Section {
     constructor(docs, code) {

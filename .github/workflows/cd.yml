@@ -1,7 +1,7 @@
 name: CD
 on:
     push:
-        # Add master after bootstrapping src/
+        # Add "main" after bootstrapping src/
         branches:
             - "!**"
 jobs:
