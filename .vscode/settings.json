@@ -1,6 +1,6 @@
 {
     "files.exclude": {
-        "{common,core,materials,meshes,[A-Z]*}/*.js": true,
+        "{core,lib,materials,meshes,[A-Z]*}/*.js": true,
         "**/*.js.map": true,
         "package-lock.json": true,
     },
