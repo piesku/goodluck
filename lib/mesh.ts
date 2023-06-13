@@ -1,6 +1,6 @@
 import {Vec3} from "./math.js";
 import {element, float} from "./random.js";
-import {cross, length, normalize, subtract} from "./vec3.js";
+import {vec3_cross, vec3_length, vec3_normalize, vec3_subtract} from "./vec3.js";
 
 export interface Mesh {
     Vao: WebGLVertexArrayObject;
@@ -50,7 +50,7 @@ const edge2: Vec3 = [0, 0, 0];
 
 /** Cross product of two face edges: bc×ab. */
 export function face_cross(out: Vec3, mesh: Mesh, face: Vec3): Vec3 {
-    subtract(
+    vec3_subtract(
         edge1,
         [
             mesh.VertexArray[face[1] * 3 + 0],
@@ -64,7 +64,7 @@ export function face_cross(out: Vec3, mesh: Mesh, face: Vec3): Vec3 {
         ]
     );
 
-    subtract(
+    vec3_subtract(
         edge2,
         [
             mesh.VertexArray[face[2] * 3 + 0],
@@ -78,13 +78,13 @@ export function face_cross(out: Vec3, mesh: Mesh, face: Vec3): Vec3 {
         ]
     );
 
-    return cross(out, edge2, edge1);
+    return vec3_cross(out, edge2, edge1);
 }
 
 /** Normal of the face given by a Vec3 of vertex indices. */
 export function face_normal(out: Vec3, mesh: Mesh, face: Vec3): Vec3 {
     face_cross(out, mesh, face);
-    return normalize(out, out);
+    return vec3_normalize(out, out);
 }
 
 const temp: Vec3 = [0, 0, 0];
@@ -92,7 +92,7 @@ const temp: Vec3 = [0, 0, 0];
 /** Area of the face given by a Vec3 of vertex indices. */
 export function face_area(mesh: Mesh, face: Vec3): number {
     face_cross(temp, mesh, face);
-    return length(temp) / 2;
+    return vec3_length(temp) / 2;
 }
 
 export function random_point_facing_up(mesh: Mesh, min_area = 3): Vec3 | null {

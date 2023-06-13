@@ -1,5 +1,5 @@
 import {instantiate} from "../../lib/game.js";
-import {from_euler} from "../../lib/quat.js";
+import {quat_from_euler} from "../../lib/quat.js";
 import {blueprint_box} from "../blueprints/blu_box.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {blueprint_hand} from "../blueprints/blu_hand.js";
@@ -25,7 +25,7 @@ export function scene_stage(game: Game) {
 
     // Light.
     instantiate(game, [
-        transform(undefined, from_euler([0, 0, 0, 1], -30, 30, 0)),
+        transform(undefined, quat_from_euler([0, 0, 0, 1], -30, 30, 0)),
         light_directional([1, 1, 1], 0.5),
     ]);
 

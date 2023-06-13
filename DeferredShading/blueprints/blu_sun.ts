@@ -1,5 +1,5 @@
 import {orthographic} from "../../lib/projection.js";
-import {from_euler} from "../../lib/quat.js";
+import {quat_from_euler} from "../../lib/quat.js";
 import {camera_target} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {control_always} from "../components/com_control_always.js";
@@ -22,7 +22,7 @@ export function blueprint_sun(game: Game) {
             ],
             // Secondary light, from the other side of the scene.
             [
-                transform([0, 20, 0], from_euler([0, 0, 0, 1], -90, 0, 0)),
+                transform([0, 20, 0], quat_from_euler([0, 0, 0, 1], -90, 0, 0)),
                 light_directional([1, 1, 1], 0.05),
                 camera_target(game.Targets.Back, orthographic([15, 15], 1, 100)),
             ],

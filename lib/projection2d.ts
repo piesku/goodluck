@@ -1,4 +1,4 @@
-import {create, from_ortho} from "./mat2d.js";
+import {mat2d_create, mat2d_from_ortho} from "./mat2d.js";
 import {Mat2D, Vec2} from "./math.js";
 
 export interface Projection2D {
@@ -18,7 +18,7 @@ export interface Projection2D {
 export function orthographic2d(radius: Vec2): Projection2D {
     return {
         Radius: radius,
-        Projection: from_ortho(create(), radius[0], radius[1]),
-        Inverse: create(),
+        Projection: mat2d_from_ortho(mat2d_create(), radius[0], radius[1]),
+        Inverse: mat2d_create(),
     };
 }

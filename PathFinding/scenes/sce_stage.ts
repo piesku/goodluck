@@ -1,6 +1,6 @@
 import {instantiate} from "../../lib/game.js";
 import {nav_bake} from "../../lib/navmesh.js";
-import {from_euler} from "../../lib/quat.js";
+import {quat_from_euler} from "../../lib/quat.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {children} from "../components/com_children.js";
 import {collide} from "../components/com_collide.js";
@@ -27,7 +27,7 @@ export function scene_stage(game: Game) {
 
     // Directional light.
     instantiate(game, [
-        transform(undefined, from_euler([0, 0, 0, 1], -30, 30, 0)),
+        transform(undefined, quat_from_euler([0, 0, 0, 1], -30, 30, 0)),
         light_directional([1, 1, 1], 1),
     ]);
 

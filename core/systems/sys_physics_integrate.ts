@@ -32,7 +32,7 @@
  */
 
 import {Vec3} from "../../lib/math.js";
-import {add, scale, set} from "../../lib/vec3.js";
+import {vec3_add, vec3_scale, vec3_set} from "../../lib/vec3.js";
 import {Entity} from "../../lib/world.js";
 import {RigidKind} from "../components/com_rigid_body.js";
 import {Game} from "../game.js";
@@ -59,15 +59,15 @@ function update(game: Game, entity: Entity, delta: number) {
         // Compute change to velocity due to the gravity.
         rigid_body.VelocityLinear[1] += GRAVITY * delta;
         // Compute change to velocity due to external forces.
-        scale(rigid_body.Acceleration, rigid_body.Acceleration, delta);
-        add(rigid_body.VelocityLinear, rigid_body.VelocityLinear, rigid_body.Acceleration);
+        vec3_scale(rigid_body.Acceleration, rigid_body.Acceleration, delta);
+        vec3_add(rigid_body.VelocityLinear, rigid_body.VelocityLinear, rigid_body.Acceleration);
 
         // Apply velocity to position.
-        scale(velocity_delta, rigid_body.VelocityLinear, delta);
-        add(transform.Translation, transform.Translation, velocity_delta);
+        vec3_scale(velocity_delta, rigid_body.VelocityLinear, delta);
+        vec3_add(transform.Translation, transform.Translation, velocity_delta);
         game.World.Signature[entity] |= Has.Dirty;
 
         // Reset force/acceleration.
-        set(rigid_body.Acceleration, 0, 0, 0);
+        vec3_set(rigid_body.Acceleration, 0, 0, 0);
     }
 }

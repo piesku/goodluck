@@ -1,7 +1,7 @@
 import {AABB} from "./aabb.js";
 import {Vec3} from "./math.js";
 import {Mesh} from "./mesh";
-import {add, cross, dot, scale, subtract} from "./vec3.js";
+import {vec3_add, vec3_cross, vec3_dot, vec3_scale, vec3_subtract} from "./vec3.js";
 
 export interface RaycastHit {
     Collider: AABB;
@@ -34,8 +34,8 @@ export function ray_intersect_aabb(
 
     if (nearest_i !== null) {
         let intersection: Vec3 = [0, 0, 0];
-        scale(intersection, direction, nearest_t);
-        add(intersection, intersection, origin);
+        vec3_scale(intersection, direction, nearest_t);
+        vec3_add(intersection, intersection, origin);
         return {Collider: colliders[nearest_i], Point: intersection};
     }
 
@@ -115,11 +115,11 @@ export function ray_intersect_mesh(mesh: Mesh, origin: Vec3, direction: Vec3): R
         // G = kE + lF - tD
 
         // Two edges of the tri: E, F.
-        subtract(E, K, M);
-        subtract(F, L, M);
+        vec3_subtract(E, K, M);
+        vec3_subtract(F, L, M);
 
         // The third "edge" between M and the ray's origin: G.
-        subtract(G, origin, M);
+        vec3_subtract(G, origin, M);
 
         // From now on, M is used as a temporary Vec3.
 
@@ -138,8 +138,8 @@ export function ray_intersect_mesh(mesh: Mesh, origin: Vec3, direction: Vec3): R
         //     l = D·(G×E) / D·(F×E)
         //     t = G·(E×F) / D·(F×E)
 
-        cross(N, F, E);
-        let denominator = dot(direction, N);
+        vec3_cross(N, F, E);
+        let denominator = vec3_dot(direction, N);
         if (denominator >= 0) {
             // The tri's normal and the ray's direction are too similar.
             // The ray would intersect the tri from the back side.
@@ -148,7 +148,7 @@ export function ray_intersect_mesh(mesh: Mesh, origin: Vec3, direction: Vec3): R
 
         // k = D·(F×G) / D·(F×G). Don't divide by D·(F×G) to save cycles, and
         // flip the comparison to emulate the negative denomiator.
-        let k = dot(direction, cross(M, F, G));
+        let k = vec3_dot(direction, vec3_cross(M, F, G));
         if (k > 0) {
             // Barycentric coordinate < 0, no intersection.
             continue;
@@ -156,7 +156,7 @@ export function ray_intersect_mesh(mesh: Mesh, origin: Vec3, direction: Vec3): R
 
         // l = D·(G×E) / D·(F×G). Don't divide by D·(F×G) to save cycles, and
         // flip the comparison to emulate the negative denomiator.
-        let l = dot(direction, cross(M, G, E));
+        let l = vec3_dot(direction, vec3_cross(M, G, E));
         if (l > 0) {
             // Barycentric coordinate < 0, no intersection.
             continue;
@@ -171,12 +171,12 @@ export function ray_intersect_mesh(mesh: Mesh, origin: Vec3, direction: Vec3): R
 
         // t = G·(E×F) / D·(F×G)
         // G·(E×F) = -G·(F×E) = -G·N
-        let t = -dot(G, N) / denominator;
+        let t = -vec3_dot(G, N) / denominator;
 
         // Intersection is O + tD.
         let intersection: Vec3 = [0, 0, 0];
-        scale(intersection, direction, t);
-        add(intersection, intersection, origin);
+        vec3_scale(intersection, direction, t);
+        vec3_add(intersection, intersection, origin);
         return {TriIndex: tri, Point: intersection};
     }
 

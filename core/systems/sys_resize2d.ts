@@ -5,7 +5,7 @@
  * and update the projection matrices of cameras in the scene.
  */
 
-import {from_ortho, invert} from "../../lib/mat2d.js";
+import {mat2d_from_ortho, mat2d_invert} from "../../lib/mat2d.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -53,17 +53,25 @@ function update(game: Game, entity: Entity) {
         // pixels. This is useful for keeping the unit size constant across
         // different viewport dimensions, and help pixel art sprites look crisp.
         let radius = game.ViewportHeight / UNIT_PX / 2;
-        from_ortho(projection.Inverse, radius * aspect, radius);
+        mat2d_from_ortho(projection.Inverse, radius * aspect, radius);
     } else {
         let target_aspect = projection.Radius[0] / projection.Radius[1];
         if (aspect < target_aspect) {
             // Portrait orientation.
-            from_ortho(projection.Inverse, projection.Radius[0], projection.Radius[0] / aspect);
+            mat2d_from_ortho(
+                projection.Inverse,
+                projection.Radius[0],
+                projection.Radius[0] / aspect
+            );
         } else {
             // Landscape orientation.
-            from_ortho(projection.Inverse, projection.Radius[1] * aspect, projection.Radius[1]);
+            mat2d_from_ortho(
+                projection.Inverse,
+                projection.Radius[1] * aspect,
+                projection.Radius[1]
+            );
         }
     }
 
-    invert(projection.Projection, projection.Inverse);
+    mat2d_invert(projection.Projection, projection.Inverse);
 }

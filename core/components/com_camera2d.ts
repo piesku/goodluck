@@ -5,10 +5,10 @@
  * vantage point of the entity.
  */
 
-import {create} from "../../lib/mat2d.js";
+import {mat2d_create} from "../../lib/mat2d.js";
 import {Mat2D, Vec2} from "../../lib/math.js";
 import {Projection2D} from "../../lib/projection2d.js";
-import {transform_position} from "../../lib/vec2.js";
+import {vec2_transform_position} from "../../lib/vec2.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -44,8 +44,8 @@ export function camera2d(radius: Vec2) {
                 Projection: [1 / radius[0], 0, 0, 1 / radius[1], 0, 0],
                 Inverse: [radius[0], 0, 0, radius[1], 0, 0],
             },
-            Pv: create(),
-            World: create(),
+            Pv: mat2d_create(),
+            World: mat2d_create(),
             ViewportWidth: 0,
             ViewportHeight: 0,
         };
@@ -66,8 +66,8 @@ export function viewport_to_world(out: Vec2, camera: Camera2D, pos: Vec2) {
     out[1] = -(pos[1] / camera.ViewportHeight) * 2 + 1;
 
     // ...then to the eye space...
-    transform_position(out, out, camera.Projection.Inverse);
+    vec2_transform_position(out, out, camera.Projection.Inverse);
 
     // ...and then to the world space.
-    transform_position(out, out, camera.World);
+    vec2_transform_position(out, out, camera.World);
 }

@@ -1,6 +1,6 @@
 import {EPSILON} from "./math.js";
 import {NavMesh} from "./navmesh.js";
-import {distance_squared} from "./vec3.js";
+import {vec3_distance_squared} from "./vec3.js";
 
 type VectorField = Array<number>;
 
@@ -48,7 +48,7 @@ export function path_find(navmesh: NavMesh, origin: number, goal: number) {
             if (g[next] === undefined) {
                 // We've never visited this neighboring node before. Update the
                 // G cost, compute the H cost, compute the F cost.
-                h[next] = distance_squared(navmesh.Centroids[next], navmesh.Centroids[goal]);
+                h[next] = vec3_distance_squared(navmesh.Centroids[next], navmesh.Centroids[goal]);
                 g[next] = g_next;
                 f[next] = g_next + h[next];
                 // Record that we've reached this neighbor from the current

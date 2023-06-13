@@ -11,7 +11,7 @@
 import {Material} from "../../lib/material.js";
 import {Vec2, Vec3, Vec4} from "../../lib/math.js";
 import {Mesh} from "../../lib/mesh.js";
-import {normalize, subtract} from "../../lib/vec3.js";
+import {vec3_normalize, vec3_subtract} from "../../lib/vec3.js";
 import {
     GL_ARRAY_BUFFER,
     GL_CW,
@@ -317,8 +317,8 @@ export function render_mapped_shaded(
                     mesh.VertexArray[v2 * 3 + 2],
                 ];
 
-                let edge1 = subtract([0, 0, 0], p1, p0);
-                let edge2 = subtract([0, 0, 0], p2, p0);
+                let edge1 = vec3_subtract([0, 0, 0], p1, p0);
+                let edge2 = vec3_subtract([0, 0, 0], p2, p0);
 
                 let delta_u1 = mesh.TexCoordArray[v1 * 2 + 0] - mesh.TexCoordArray[v0 * 2 + 0];
                 let delta_v1 = mesh.TexCoordArray[v1 * 2 + 1] - mesh.TexCoordArray[v0 * 2 + 1];
@@ -337,12 +337,12 @@ export function render_mapped_shaded(
                     r * (-delta_u2 * edge1[2] + delta_u1 * edge2[2]),
                 ];
 
-                normalize(tangent, tangent);
+                vec3_normalize(tangent, tangent);
                 tangent_arr.set(tangent, v0 * 2);
                 tangent_arr.set(tangent, v1 * 2);
                 tangent_arr.set(tangent, v2 * 2);
 
-                normalize(bitangent, bitangent);
+                vec3_normalize(bitangent, bitangent);
                 bitangent_arr.set(bitangent, v0 * 2);
                 bitangent_arr.set(bitangent, v1 * 2);
                 bitangent_arr.set(bitangent, v2 * 2);

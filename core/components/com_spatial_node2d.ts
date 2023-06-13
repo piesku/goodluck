@@ -8,7 +8,7 @@
  * parents of other entities.
  */
 
-import {create} from "../../lib/mat2d.js";
+import {mat2d_create} from "../../lib/mat2d.js";
 import {Mat2D} from "../../lib/math.js";
 import {Entity} from "../../lib/world.js";
 import {FLOATS_PER_INSTANCE} from "../../materials/layout2d.js";
@@ -47,7 +47,7 @@ export function spatial_node2d(is_gyroscope = false) {
                 entity * FLOATS_PER_INSTANCE,
                 entity * FLOATS_PER_INSTANCE + 6
             ),
-            Self: create(),
+            Self: mat2d_create(),
             IsGyroscope: is_gyroscope,
         };
     };

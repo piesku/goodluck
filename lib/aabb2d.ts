@@ -1,4 +1,4 @@
-import {get_translation} from "./mat2d.js";
+import {mat2d_get_translation} from "./mat2d.js";
 import {Mat2D, Vec2} from "./math.js";
 
 export interface AABB2D {
@@ -20,7 +20,7 @@ export interface AABB2D {
  * collider to have a Size property.
  */
 export function compute_aabb_without_rotation_scale(world: Mat2D, aabb: AABB2D) {
-    get_translation(aabb.Center, world);
+    mat2d_get_translation(aabb.Center, world);
     aabb.Min[0] = aabb.Center[0] - aabb.Size[0] / 2;
     aabb.Min[1] = aabb.Center[1] - aabb.Size[1] / 2;
     aabb.Max[0] = aabb.Center[0] + aabb.Size[0] / 2;

@@ -1,4 +1,4 @@
-import {create} from "./mat4.js";
+import {mat4_create} from "./mat4.js";
 import {Mat4, Vec2} from "./math.js";
 
 export type Projection = ProjectionPerspective | ProjectionOrthographic;
@@ -30,8 +30,8 @@ export function perspective(fov_y: number, near: number, far: number): Projectio
         FovY: fov_y,
         Near: near,
         Far: far,
-        Projection: create(),
-        Inverse: create(),
+        Projection: mat4_create(),
+        Inverse: mat4_create(),
     };
 }
 
@@ -57,7 +57,7 @@ export function orthographic(radius: Vec2, near: number, far: number): Projectio
         Radius: radius,
         Near: near,
         Far: far,
-        Projection: create(),
-        Inverse: create(),
+        Projection: mat4_create(),
+        Inverse: mat4_create(),
     };
 }

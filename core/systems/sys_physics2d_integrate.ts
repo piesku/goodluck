@@ -7,7 +7,7 @@
  */
 
 import {Vec2} from "../../lib/math.js";
-import {add, scale, set} from "../../lib/vec2.js";
+import {vec2_add, vec2_scale, vec2_set} from "../../lib/vec2.js";
 import {Entity} from "../../lib/world.js";
 import {RigidKind} from "../components/com_rigid_body2d.js";
 import {Game} from "../game.js";
@@ -34,18 +34,18 @@ function update(game: Game, entity: Entity, delta: number) {
         // Compute change to velocity due to the gravity.
         rigid_body.VelocityLinear[1] += GRAVITY * delta;
         // Compute change to velocity due to external forces.
-        scale(rigid_body.Acceleration, rigid_body.Acceleration, delta);
-        add(rigid_body.VelocityLinear, rigid_body.VelocityLinear, rigid_body.Acceleration);
+        vec2_scale(rigid_body.Acceleration, rigid_body.Acceleration, delta);
+        vec2_add(rigid_body.VelocityLinear, rigid_body.VelocityLinear, rigid_body.Acceleration);
         // Apply friction.
-        scale(rigid_body.VelocityLinear, rigid_body.VelocityLinear, 1 - rigid_body.Friction);
+        vec2_scale(rigid_body.VelocityLinear, rigid_body.VelocityLinear, 1 - rigid_body.Friction);
 
         // Apply velocity to position.
-        scale(velocity_delta, rigid_body.VelocityLinear, delta);
-        add(local.Translation, local.Translation, velocity_delta);
+        vec2_scale(velocity_delta, rigid_body.VelocityLinear, delta);
+        vec2_add(local.Translation, local.Translation, velocity_delta);
         local.Rotation += rigid_body.VelocityAngular * delta;
         game.World.Signature[entity] |= Has.Dirty;
 
         // Reset force/acceleration.
-        set(rigid_body.Acceleration, 0, 0);
+        vec2_set(rigid_body.Acceleration, 0, 0);
     }
 }

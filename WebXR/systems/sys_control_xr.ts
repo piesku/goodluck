@@ -1,6 +1,6 @@
 import {Vec3} from "../../lib/math.js";
 import {map_range} from "../../lib/number.js";
-import {from_axis} from "../../lib/quat.js";
+import {quat_from_axis} from "../../lib/quat.js";
 import {Entity} from "../../lib/world.js";
 import {ControlXrKind} from "../components/com_control_xr.js";
 import {Game} from "../game.js";
@@ -64,7 +64,7 @@ function update(game: Game, entity: Entity) {
                     let hand_entity = children.Children[0];
                     let hand_transform = game.World.Transform[hand_entity];
                     hand_transform.Scale[2] = map_range(squeeze.value, 0, 1, 1, 0.5);
-                    from_axis(hand_transform.Rotation, AXIS_Y, -squeeze.value);
+                    quat_from_axis(hand_transform.Rotation, AXIS_Y, -squeeze.value);
                     game.World.Signature[hand_entity] |= Has.Dirty;
                 }
             }
@@ -96,7 +96,7 @@ function update(game: Game, entity: Entity) {
                     let hand_entity = children.Children[0];
                     let hand_transform = game.World.Transform[hand_entity];
                     hand_transform.Scale[2] = map_range(squeeze.value, 0, 1, 1, 0.5);
-                    from_axis(hand_transform.Rotation, AXIS_Y, squeeze.value);
+                    quat_from_axis(hand_transform.Rotation, AXIS_Y, squeeze.value);
                     game.World.Signature[hand_entity] |= Has.Dirty;
                 }
             }

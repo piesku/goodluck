@@ -4,9 +4,9 @@
  * Draw 2D [primitives](com_draw.html) in the 3D scene using the Context2D API.
  */
 
-import {get_translation} from "../../lib/mat4.js";
+import {mat4_get_translation} from "../../lib/mat4.js";
 import {Vec3} from "../../lib/math.js";
-import {transform_position} from "../../lib/vec3.js";
+import {vec3_transform_position} from "../../lib/vec3.js";
 import {CameraKind} from "../components/com_camera.js";
 import {DrawKind, DrawSelection, DrawText} from "../components/com_draw.js";
 import {Game} from "../game.js";
@@ -28,9 +28,9 @@ export function sys_draw(game: Game, delta: number) {
     for (let i = 0; i < game.World.Signature.length; i++) {
         if ((game.World.Signature[i] & QUERY) == QUERY) {
             // World position.
-            get_translation(position, game.World.Transform[i].World);
+            mat4_get_translation(position, game.World.Transform[i].World);
             // NDC position.
-            transform_position(position, position, main_camera.Pv);
+            vec3_transform_position(position, position, main_camera.Pv);
 
             if (position[2] < -1 || position[2] > 1) {
                 // The entity is outside the frustum. Only consider the Z axis

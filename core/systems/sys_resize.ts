@@ -12,7 +12,7 @@ import {
     resize_hdr_target,
     TargetKind,
 } from "../../lib/framebuffer.js";
-import {from_ortho, from_perspective, invert} from "../../lib/mat4.js";
+import {mat4_from_ortho, mat4_from_perspective, mat4_invert} from "../../lib/mat4.js";
 import {Projection, ProjectionKind} from "../../lib/projection.js";
 import {CameraKind} from "../components/com_camera.js";
 import {Game} from "../game.js";
@@ -97,7 +97,7 @@ function update_projection(projection: Projection, aspect: number) {
         case ProjectionKind.Perspective: {
             if (aspect < 1) {
                 // Portrait orientation.
-                from_perspective(
+                mat4_from_perspective(
                     projection.Projection,
                     projection.FovY / aspect,
                     aspect,
@@ -106,7 +106,7 @@ function update_projection(projection: Projection, aspect: number) {
                 );
             } else {
                 // Landscape orientation.
-                from_perspective(
+                mat4_from_perspective(
                     projection.Projection,
                     projection.FovY,
                     aspect,
@@ -120,7 +120,7 @@ function update_projection(projection: Projection, aspect: number) {
             let target_aspect = projection.Radius[0] / projection.Radius[1];
             if (aspect < target_aspect) {
                 // Portrait orientation.
-                from_ortho(
+                mat4_from_ortho(
                     projection.Projection,
                     projection.Radius[0] / aspect,
                     projection.Radius[0],
@@ -131,7 +131,7 @@ function update_projection(projection: Projection, aspect: number) {
                 );
             } else {
                 // Landscape orientation.
-                from_ortho(
+                mat4_from_ortho(
                     projection.Projection,
                     projection.Radius[1],
                     projection.Radius[1] * aspect,
@@ -144,5 +144,5 @@ function update_projection(projection: Projection, aspect: number) {
             break;
     }
 
-    invert(projection.Inverse, projection.Projection);
+    mat4_invert(projection.Inverse, projection.Projection);
 }

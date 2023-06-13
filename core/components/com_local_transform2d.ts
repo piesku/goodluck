@@ -19,7 +19,7 @@
  */
 
 import {Deg, Vec2} from "../../lib/math.js";
-import {copy} from "../../lib/vec2.js";
+import {vec2_copy} from "../../lib/vec2.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -90,7 +90,7 @@ export function set_position(x: number, y: number) {
 export function copy_position(translation: Vec2) {
     return (game: Game, entity: Entity) => {
         let local = game.World.LocalTransform2D[entity];
-        copy(local.Translation, translation);
+        vec2_copy(local.Translation, translation);
     };
 }
 
@@ -137,6 +137,6 @@ export function set_scale(x: number, y: number) {
 export function copy_scale(scale: Vec2) {
     return (game: Game, entity: Entity) => {
         let local = game.World.LocalTransform2D[entity];
-        copy(local.Scale, scale);
+        vec2_copy(local.Scale, scale);
     };
 }

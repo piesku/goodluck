@@ -1,6 +1,6 @@
 import {light_radius} from "../../core/components/com_light.js";
 import {Vec3} from "../../lib/math.js";
-import {from_euler} from "../../lib/quat.js";
+import {quat_from_euler} from "../../lib/quat.js";
 import {element, float} from "../../lib/random.js";
 import {children} from "../components/com_children.js";
 import {control_always} from "../components/com_control_always.js";
@@ -26,7 +26,10 @@ export function blueprint_bulb(game: Game) {
     let bulb_color: Vec3 = [...light_color];
     return [
         transform(),
-        control_always(null, from_euler([0, 0, 0, 1], float(0, 360), float(0, 360), float(0, 360))),
+        control_always(
+            null,
+            quat_from_euler([0, 0, 0, 1], float(0, 360), float(0, 360), float(0, 360))
+        ),
         move(0, float()),
         children([
             transform([0, 0, float(1, 5)]),

@@ -1,4 +1,4 @@
-import {create} from "../../lib/mat4.js";
+import {mat4_create} from "../../lib/mat4.js";
 import {Mat4} from "../../lib/math.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
@@ -16,7 +16,7 @@ export function bone(index: number, inverse_bind_pose?: Mat4) {
         game.World.Bone[entity] = {
             Index: index,
             Dirty: inverse_bind_pose === undefined,
-            InverseBindPose: inverse_bind_pose || create(),
+            InverseBindPose: inverse_bind_pose || mat4_create(),
         };
     };
 }

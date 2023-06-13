@@ -1,4 +1,4 @@
-import {multiply} from "../../lib/mat4.js";
+import {mat4_multiply} from "../../lib/mat4.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -33,12 +33,16 @@ function update(game: Game, entity: Entity) {
         if (game.World.Signature[transform.Parent] & Has.Bone) {
             let parent_bone = game.World.Bone[transform.Parent];
             let parent_transform = game.World.Transform[transform.Parent];
-            multiply(bone.InverseBindPose, parent_transform.World, parent_bone.InverseBindPose);
-            multiply(bone.InverseBindPose, transform.Self, bone.InverseBindPose);
+            mat4_multiply(
+                bone.InverseBindPose,
+                parent_transform.World,
+                parent_bone.InverseBindPose
+            );
+            mat4_multiply(bone.InverseBindPose, transform.Self, bone.InverseBindPose);
         } else {
             // `bone` is the root bone parented at the mesh.
             let parent_transform = game.World.Transform[transform.Parent];
-            multiply(bone.InverseBindPose, transform.Self, parent_transform.World);
+            mat4_multiply(bone.InverseBindPose, transform.Self, parent_transform.World);
         }
     }
 }

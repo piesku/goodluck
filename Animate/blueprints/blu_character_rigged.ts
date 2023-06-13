@@ -1,6 +1,6 @@
 import {ease_in_out_quart, ease_out_quart} from "../../lib/easing.js";
-import {from_euler} from "../../lib/quat.js";
-import {animate, AnimationFlag} from "../components/com_animate.js";
+import {quat_from_euler} from "../../lib/quat.js";
+import {AnimationFlag, animate} from "../components/com_animate.js";
 import {bone} from "../components/com_bone.js";
 import {children} from "../components/com_children.js";
 import {render_colored_skinned} from "../components/com_render_ext.js";
@@ -66,11 +66,11 @@ export function blueprint_character_rigged(game: Game) {
                             Keyframes: [
                                 {
                                     Timestamp: 0.0,
-                                    Rotation: from_euler([0, 0, 0, 1], 0, 5, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 0, 5, 0),
                                 },
                                 {
                                     Timestamp: 0.5,
-                                    Rotation: from_euler([0, 0, 0, 1], 0, -5, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 0, -5, 0),
                                 },
                             ],
                         },
@@ -78,11 +78,11 @@ export function blueprint_character_rigged(game: Game) {
                             Keyframes: [
                                 {
                                     Timestamp: 0.0,
-                                    Rotation: from_euler([0, 0, 0, 1], 0, 5, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 0, 5, 0),
                                 },
                                 {
                                     Timestamp: 0.2,
-                                    Rotation: from_euler([0, 0, 0, 1], 0, -5, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 0, -5, 0),
                                 },
                             ],
                         },
@@ -94,12 +94,12 @@ export function blueprint_character_rigged(game: Game) {
                                 },
                                 {
                                     Timestamp: 0.2,
-                                    Rotation: from_euler([0, 0, 0, 1], -15, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], -15, 0, 0),
                                     Ease: ease_in_out_quart,
                                 },
                                 {
                                     Timestamp: 0.4,
-                                    Rotation: from_euler([0, 0, 0, 1], 0, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 0, 0, 0),
                                     Ease: ease_out_quart,
                                 },
                             ],
@@ -108,18 +108,18 @@ export function blueprint_character_rigged(game: Game) {
                     }),
                 ],
                 [
-                    transform([0.3, 0.57, 0], from_euler([0, 0, 0, 1], 0, 0, 90)),
+                    transform([0.3, 0.57, 0], quat_from_euler([0, 0, 0, 1], 0, 0, 90)),
                     bone(BoneIndex.ArmL, [0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, -1.2, 0.3, 0, 1]),
                     animate({
                         idle: {
                             Keyframes: [
                                 {
                                     Timestamp: 0,
-                                    Rotation: from_euler([0, 0, 0, 1], 5, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 5, 0, 0),
                                 },
                                 {
                                     Timestamp: 0.5,
-                                    Rotation: from_euler([0, 0, 0, 1], -5, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], -5, 0, 0),
                                 },
                             ],
                         },
@@ -127,11 +127,11 @@ export function blueprint_character_rigged(game: Game) {
                             Keyframes: [
                                 {
                                     Timestamp: 0,
-                                    Rotation: from_euler([0, 0, 0, 1], 30, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 30, 0, 0),
                                 },
                                 {
                                     Timestamp: 0.2,
-                                    Rotation: from_euler([0, 0, 0, 1], -60, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], -60, 0, 0),
                                 },
                             ],
                         },
@@ -143,7 +143,7 @@ export function blueprint_character_rigged(game: Game) {
                                 },
                                 {
                                     Timestamp: 0.2,
-                                    Rotation: from_euler([0, 0, 0, 1], 0, 0, 135),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 0, 0, 135),
                                     Ease: ease_in_out_quart,
                                 },
                                 {
@@ -157,18 +157,18 @@ export function blueprint_character_rigged(game: Game) {
                     }),
                 ],
                 [
-                    transform([-0.3, 0.57, 0], from_euler([0, 0, 0, 1], 0, 0, -90)),
+                    transform([-0.3, 0.57, 0], quat_from_euler([0, 0, 0, 1], 0, 0, -90)),
                     bone(BoneIndex.ArmR, [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 1.2, 0.3, 0, 1]),
                     animate({
                         idle: {
                             Keyframes: [
                                 {
                                     Timestamp: 0,
-                                    Rotation: from_euler([0, 0, 0, 1], -5, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], -5, 0, 0),
                                 },
                                 {
                                     Timestamp: 0.5,
-                                    Rotation: from_euler([0, 0, 0, 1], 5, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 5, 0, 0),
                                 },
                             ],
                         },
@@ -176,11 +176,11 @@ export function blueprint_character_rigged(game: Game) {
                             Keyframes: [
                                 {
                                     Timestamp: 0,
-                                    Rotation: from_euler([0, 0, 0, 1], -60, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], -60, 0, 0),
                                 },
                                 {
                                     Timestamp: 0.2,
-                                    Rotation: from_euler([0, 0, 0, 1], 30, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 30, 0, 0),
                                 },
                             ],
                         },
@@ -192,7 +192,7 @@ export function blueprint_character_rigged(game: Game) {
                                 },
                                 {
                                     Timestamp: 0.2,
-                                    Rotation: from_euler([0, 0, 0, 1], 0, 0, -135),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 0, 0, -135),
                                     Ease: ease_in_out_quart,
                                 },
                                 {
@@ -213,11 +213,11 @@ export function blueprint_character_rigged(game: Game) {
                             Keyframes: [
                                 {
                                     Timestamp: 0,
-                                    Rotation: from_euler([0, 0, 0, 1], 5, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 5, 0, 0),
                                 },
                                 {
                                     Timestamp: 1,
-                                    Rotation: from_euler([0, 0, 0, 1], 5, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 5, 0, 0),
                                 },
                             ],
                         },
@@ -225,11 +225,11 @@ export function blueprint_character_rigged(game: Game) {
                             Keyframes: [
                                 {
                                     Timestamp: 0,
-                                    Rotation: from_euler([0, 0, 0, 1], -45, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], -45, 0, 0),
                                 },
                                 {
                                     Timestamp: 0.2,
-                                    Rotation: from_euler([0, 0, 0, 1], 45, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 45, 0, 0),
                                 },
                             ],
                         },
@@ -241,7 +241,7 @@ export function blueprint_character_rigged(game: Game) {
                                 },
                                 {
                                     Timestamp: 0.2,
-                                    Rotation: from_euler([0, 0, 0, 1], 0, 0, 45),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 0, 0, 45),
                                     Ease: ease_in_out_quart,
                                 },
                                 {
@@ -262,11 +262,11 @@ export function blueprint_character_rigged(game: Game) {
                             Keyframes: [
                                 {
                                     Timestamp: 0,
-                                    Rotation: from_euler([0, 0, 0, 1], -5, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], -5, 0, 0),
                                 },
                                 {
                                     Timestamp: 1,
-                                    Rotation: from_euler([0, 0, 0, 1], -5, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], -5, 0, 0),
                                 },
                             ],
                         },
@@ -274,11 +274,11 @@ export function blueprint_character_rigged(game: Game) {
                             Keyframes: [
                                 {
                                     Timestamp: 0,
-                                    Rotation: from_euler([0, 0, 0, 1], 45, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 45, 0, 0),
                                 },
                                 {
                                     Timestamp: 0.2,
-                                    Rotation: from_euler([0, 0, 0, 1], -45, 0, 0),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], -45, 0, 0),
                                 },
                             ],
                         },
@@ -290,7 +290,7 @@ export function blueprint_character_rigged(game: Game) {
                                 },
                                 {
                                     Timestamp: 0.2,
-                                    Rotation: from_euler([0, 0, 0, 1], 0, 0, -45),
+                                    Rotation: quat_from_euler([0, 0, 0, 1], 0, 0, -45),
                                     Ease: ease_in_out_quart,
                                 },
                                 {

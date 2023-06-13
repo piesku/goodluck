@@ -5,7 +5,7 @@
  */
 
 import {AudioClipKind, play_buffer_clip, play_synth_clip} from "../../lib/audio.js";
-import {get_forward, get_translation} from "../../lib/mat4.js";
+import {mat4_get_forward, mat4_get_translation} from "../../lib/mat4.js";
 import {Vec3} from "../../lib/math.js";
 import {Entity} from "../../lib/world.js";
 import {Transform} from "../components/com_transform.js";
@@ -68,8 +68,8 @@ const position: Vec3 = [0, 0, 0];
 const forward: Vec3 = [0, 0, 0];
 
 function update_panner(panner: PannerNode, transform: Transform) {
-    get_translation(position, transform.World);
-    get_forward(forward, transform.World);
+    mat4_get_translation(position, transform.World);
+    mat4_get_forward(forward, transform.World);
 
     if (panner.positionX) {
         panner.positionX.value = position[0];

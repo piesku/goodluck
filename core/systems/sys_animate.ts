@@ -4,8 +4,8 @@
  * Animate transforms of entities (position, rotation, scale) over time.
  */
 
-import {slerp} from "../../lib/quat.js";
-import {lerp} from "../../lib/vec3.js";
+import {quat_slerp} from "../../lib/quat.js";
+import {vec3_lerp} from "../../lib/vec3.js";
 import {Entity} from "../../lib/world.js";
 import {AnimationFlag, AnimationKeyframe} from "../components/com_animate.js";
 import {Game} from "../game.js";
@@ -68,7 +68,7 @@ function update(game: Game, entity: Entity, delta: number) {
         }
 
         if (current_keyframe.Translation && next_keyframe.Translation) {
-            lerp(
+            vec3_lerp(
                 transform.Translation,
                 current_keyframe.Translation,
                 next_keyframe.Translation,
@@ -78,7 +78,7 @@ function update(game: Game, entity: Entity, delta: number) {
         }
 
         if (current_keyframe.Rotation && next_keyframe.Rotation) {
-            slerp(
+            quat_slerp(
                 transform.Rotation,
                 current_keyframe.Rotation,
                 next_keyframe.Rotation,
@@ -88,7 +88,7 @@ function update(game: Game, entity: Entity, delta: number) {
         }
 
         if (current_keyframe.Scale && next_keyframe.Scale) {
-            lerp(transform.Scale, current_keyframe.Scale, next_keyframe.Scale, interpolant);
+            vec3_lerp(transform.Scale, current_keyframe.Scale, next_keyframe.Scale, interpolant);
             game.World.Signature[entity] |= Has.Dirty;
         }
     }

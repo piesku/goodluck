@@ -6,7 +6,7 @@
  */
 
 import {instantiate} from "../../lib/game.js";
-import {get_translation} from "../../lib/mat2d.js";
+import {mat2d_get_translation} from "../../lib/mat2d.js";
 import {Vec2} from "../../lib/math.js";
 import {Entity} from "../../lib/world.js";
 import {copy_position} from "../components/com_local_transform2d.js";
@@ -33,7 +33,7 @@ function update(game: Game, entity: Entity, delta: number) {
         spawn.SinceLast = 0;
 
         let spatial_node = game.World.SpatialNode2D[entity];
-        get_translation(world_position, spatial_node.World);
+        mat2d_get_translation(world_position, spatial_node.World);
 
         if (game.World.Signature.length - game.World.Graveyard.length < game.World.Capacity) {
             instantiate(game, [...spawn.Creator(game), copy_position(world_position)]);

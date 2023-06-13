@@ -8,10 +8,10 @@
  */
 
 import {RenderTarget} from "../../lib/framebuffer.js";
-import {create} from "../../lib/mat4.js";
+import {mat4_create} from "../../lib/mat4.js";
 import {Mat4, Vec2, Vec3, Vec4} from "../../lib/math.js";
 import {Projection} from "../../lib/projection.js";
-import {transform_position} from "../../lib/vec3.js";
+import {vec3_transform_position} from "../../lib/vec3.js";
 import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT} from "../../lib/webgl.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
@@ -62,10 +62,10 @@ export function camera_canvas(
         game.World.Camera[entity] = {
             Kind: CameraKind.Canvas,
             Projection: projection,
-            World: create(),
+            World: mat4_create(),
             ViewportWidth: 0,
             ViewportHeight: 0,
-            Pv: create(),
+            Pv: mat4_create(),
             Position: [0, 0, 0],
             FogColor: clear_color,
             FogDistance: projection.Far,
@@ -108,10 +108,10 @@ export function camera_target(
             Kind: CameraKind.Target,
             Target: target,
             Projection: projection,
-            World: create(),
+            World: mat4_create(),
             ViewportWidth: 0,
             ViewportHeight: 0,
-            Pv: create(),
+            Pv: mat4_create(),
             Position: [0, 0, 0],
             FogColor: clear_color,
             FogDistance: projection.Far,
@@ -151,7 +151,7 @@ export function camera_xr(
         game.World.Camera[entity] = {
             Kind: CameraKind.Xr,
             Eyes: [],
-            World: create(),
+            World: mat4_create(),
             ClearColor: clear_color,
             ClearMask: clear_mask,
         };
@@ -176,8 +176,8 @@ export function viewport_to_world(out: Vec3, camera: CameraCanvas | CameraTarget
     out[2] = 1;
 
     // ...then to the eye space...
-    transform_position(out, out, camera.Projection.Inverse);
+    vec3_transform_position(out, out, camera.Projection.Inverse);
 
     // ...and then to the world space.
-    transform_position(out, out, camera.World);
+    vec3_transform_position(out, out, camera.World);
 }

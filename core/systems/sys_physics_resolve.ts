@@ -10,7 +10,7 @@
  */
 
 import {Vec3} from "../../lib/math.js";
-import {add, copy, dot, normalize, scale} from "../../lib/vec3.js";
+import {vec3_add, vec3_copy, vec3_dot, vec3_normalize, vec3_scale} from "../../lib/vec3.js";
 import {Entity} from "../../lib/world.js";
 import {RigidKind} from "../components/com_rigid_body.js";
 import {Game} from "../game.js";
@@ -31,7 +31,7 @@ export function sys_physics_resolve(game: Game, delta: number) {
         if ((game.World.Signature[ent] & QUERY) === QUERY) {
             let rigid_body = game.World.RigidBody[ent];
             if (rigid_body.Kind === RigidKind.Dynamic) {
-                copy(rigid_body.VelocityLinear, rigid_body.VelocityResolved);
+                vec3_copy(rigid_body.VelocityLinear, rigid_body.VelocityResolved);
             }
         }
     }
@@ -57,7 +57,7 @@ function update(game: Game, entity: Entity) {
                 // Dynamic rigid bodies are only supported for top-level
                 // entities. Thus, no need to apply the world → self → local
                 // conversion to the collision response. Local space is world space.
-                add(transform.Translation, transform.Translation, collision.Hit);
+                vec3_add(transform.Translation, transform.Translation, collision.Hit);
                 game.World.Signature[entity] |= Has.Dirty;
 
                 // Assume mass = 1 for all rigid bodies. On collision,
@@ -72,19 +72,19 @@ function update(game: Game, entity: Entity) {
                         //   v — the incident velocity vector
                         //   n — the normal of the surface of reflection
                         // Compute n.
-                        normalize(a, collision.Hit);
+                        vec3_normalize(a, collision.Hit);
                         // Compute - 2 * (v·n) * n.
-                        scale(a, a, -2 * dot(rigid_body.VelocityLinear, a));
-                        add(rigid_body.VelocityResolved, rigid_body.VelocityLinear, a);
+                        vec3_scale(a, a, -2 * vec3_dot(rigid_body.VelocityLinear, a));
+                        vec3_add(rigid_body.VelocityResolved, rigid_body.VelocityLinear, a);
                         break;
                     case RigidKind.Dynamic:
                     case RigidKind.Kinematic:
-                        copy(rigid_body.VelocityResolved, other_body.VelocityLinear);
+                        vec3_copy(rigid_body.VelocityResolved, other_body.VelocityLinear);
                         break;
                 }
 
                 // When Bounciness = 1, collisions are 100% elastic.
-                scale(
+                vec3_scale(
                     rigid_body.VelocityResolved,
                     rigid_body.VelocityResolved,
                     rigid_body.Bounciness
@@ -99,7 +99,7 @@ function update(game: Game, entity: Entity) {
         }
 
         if (!has_collision) {
-            copy(rigid_body.VelocityResolved, rigid_body.VelocityLinear);
+            vec3_copy(rigid_body.VelocityResolved, rigid_body.VelocityLinear);
         }
     }
 }

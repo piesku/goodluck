@@ -1,4 +1,4 @@
-import {from_euler} from "../../lib/quat.js";
+import {quat_from_euler} from "../../lib/quat.js";
 import {Entity} from "../../lib/world.js";
 import {Action} from "../actions.js";
 import {audio_source} from "../components/com_audio_source.js";
@@ -58,7 +58,7 @@ export function blueprint_item(game: Game) {
                 control_always(null, [0, 1, 0, 0]),
                 move(0, 2),
                 children([
-                    transform([0, 0, 0.2], from_euler([0, 0, 0, 1], -90, 0, 0)),
+                    transform([0, 0, 0.2], quat_from_euler([0, 0, 0, 1], -90, 0, 0)),
                     children([
                         callback((game, entity) => (particles_entity = entity)),
                         transform(),

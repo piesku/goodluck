@@ -1,6 +1,6 @@
 import {Quat, Vec3} from "../../lib/math.js";
-import {look_yaw, multiply, slerp} from "../../lib/quat.js";
-import {add, normalize, set, transform_direction} from "../../lib/vec3.js";
+import {quat_look_yaw, quat_multiply, quat_slerp} from "../../lib/quat.js";
+import {vec3_add, vec3_normalize, vec3_set, vec3_transform_direction} from "../../lib/vec3.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -29,36 +29,36 @@ function update(game: Game, entity: Entity) {
     if (control.Move) {
         let move = game.World.Move[entity];
         if (game.InputState["ArrowUp"]) {
-            set(dir, 0, 0, 1);
-            transform_direction(dir, dir, rig_transform.World);
-            transform_direction(dir, dir, transform.Self);
-            add(move.Direction, move.Direction, dir);
+            vec3_set(dir, 0, 0, 1);
+            vec3_transform_direction(dir, dir, rig_transform.World);
+            vec3_transform_direction(dir, dir, transform.Self);
+            vec3_add(move.Direction, move.Direction, dir);
         }
         if (game.InputState["ArrowLeft"]) {
-            set(dir, 1, 0, 0);
-            transform_direction(dir, dir, rig_transform.World);
-            transform_direction(dir, dir, transform.Self);
-            add(move.Direction, move.Direction, dir);
+            vec3_set(dir, 1, 0, 0);
+            vec3_transform_direction(dir, dir, rig_transform.World);
+            vec3_transform_direction(dir, dir, transform.Self);
+            vec3_add(move.Direction, move.Direction, dir);
         }
         if (game.InputState["ArrowDown"]) {
-            set(dir, 0, 0, -1);
-            transform_direction(dir, dir, rig_transform.World);
-            transform_direction(dir, dir, transform.Self);
-            add(move.Direction, move.Direction, dir);
+            vec3_set(dir, 0, 0, -1);
+            vec3_transform_direction(dir, dir, rig_transform.World);
+            vec3_transform_direction(dir, dir, transform.Self);
+            vec3_add(move.Direction, move.Direction, dir);
         }
         if (game.InputState["ArrowRight"]) {
-            set(dir, -1, 0, 0);
-            transform_direction(dir, dir, rig_transform.World);
-            transform_direction(dir, dir, transform.Self);
-            add(move.Direction, move.Direction, dir);
+            vec3_set(dir, -1, 0, 0);
+            vec3_transform_direction(dir, dir, rig_transform.World);
+            vec3_transform_direction(dir, dir, transform.Self);
+            vec3_add(move.Direction, move.Direction, dir);
         }
 
         // Rotate the player towards the direction of movement.
         if (move.Direction[0] !== 0) {
-            normalize(dir, move.Direction);
-            look_yaw(rot, dir);
-            multiply(rot, rot, transform.Rotation);
-            slerp(transform.Rotation, transform.Rotation, rot, 0.2);
+            vec3_normalize(dir, move.Direction);
+            quat_look_yaw(rot, dir);
+            quat_multiply(rot, rot, transform.Rotation);
+            quat_slerp(transform.Rotation, transform.Rotation, rot, 0.2);
             game.World.Signature[entity] |= Has.Dirty;
         }
 

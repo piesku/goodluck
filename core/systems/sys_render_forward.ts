@@ -16,7 +16,7 @@
  */
 
 import {TargetKind} from "../../lib/framebuffer.js";
-import {distance_squared_from_point} from "../../lib/mat4.js";
+import {mat4_distance_squared_from_point} from "../../lib/mat4.js";
 import {Material} from "../../lib/material.js";
 import {
     GL_ARRAY_BUFFER,
@@ -102,8 +102,8 @@ export function render_all(game: Game, eye: CameraEye, current_target?: WebGLTex
         let transform_a = game.World.Transform[a];
         let transform_b = game.World.Transform[b];
         return (
-            distance_squared_from_point(transform_b.World, eye.Position) -
-            distance_squared_from_point(transform_a.World, eye.Position)
+            mat4_distance_squared_from_point(transform_b.World, eye.Position) -
+            mat4_distance_squared_from_point(transform_a.World, eye.Position)
         );
     });
 

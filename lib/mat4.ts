@@ -1,11 +1,11 @@
 import {Mat4, Quat, Vec3} from "./math.js";
-import {normalize} from "./vec3.js";
+import {vec3_normalize} from "./vec3.js";
 
-export function create(): Mat4 {
+export function mat4_create(): Mat4 {
     return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 }
 
-export function set(
+export function mat4_set(
     out: Mat4,
     m00: number,
     m01: number,
@@ -43,7 +43,7 @@ export function set(
     return out;
 }
 
-export function copy(out: Mat4, a: Mat4) {
+export function mat4_copy(out: Mat4, a: Mat4) {
     out[0] = a[0];
     out[1] = a[1];
     out[2] = a[2];
@@ -63,7 +63,7 @@ export function copy(out: Mat4, a: Mat4) {
     return out;
 }
 
-export function invert(out: Mat4, a: Mat4) {
+export function mat4_invert(out: Mat4, a: Mat4) {
     let a00 = a[0],
         a01 = a[1],
         a02 = a[2],
@@ -119,7 +119,7 @@ export function invert(out: Mat4, a: Mat4) {
     return out;
 }
 
-export function multiply(out: Mat4, a: Mat4, b: Mat4) {
+export function mat4_multiply(out: Mat4, a: Mat4, b: Mat4) {
     let a00 = a[0],
         a01 = a[1],
         a02 = a[2],
@@ -173,7 +173,7 @@ export function multiply(out: Mat4, a: Mat4, b: Mat4) {
     return out;
 }
 
-export function from_rotation_translation_scale(out: Mat4, q: Quat, v: Vec3, s: Vec3) {
+export function mat4_compose(out: Mat4, q: Quat, v: Vec3, s: Vec3) {
     // Quaternion math
     let x = q[0],
         y = q[1],
@@ -213,7 +213,7 @@ export function from_rotation_translation_scale(out: Mat4, q: Quat, v: Vec3, s: 
     return out;
 }
 
-export function from_perspective(
+export function mat4_from_perspective(
     out: Mat4,
     fovy: number,
     aspect: number,
@@ -249,7 +249,7 @@ export function from_perspective(
     return out;
 }
 
-export function from_ortho(
+export function mat4_from_ortho(
     out: Mat4,
     top: number,
     right: number,
@@ -280,28 +280,28 @@ export function from_ortho(
     return out;
 }
 
-export function get_left(out: Vec3, mat: Mat4) {
+export function mat4_get_left(out: Vec3, mat: Mat4) {
     out[0] = mat[0];
     out[1] = mat[1];
     out[2] = mat[2];
-    return normalize(out, out);
+    return vec3_normalize(out, out);
 }
 
-export function get_up(out: Vec3, mat: Mat4) {
+export function mat4_get_up(out: Vec3, mat: Mat4) {
     out[0] = mat[4];
     out[1] = mat[5];
     out[2] = mat[6];
-    return normalize(out, out);
+    return vec3_normalize(out, out);
 }
 
-export function get_forward(out: Vec3, mat: Mat4) {
+export function mat4_get_forward(out: Vec3, mat: Mat4) {
     out[0] = mat[8];
     out[1] = mat[9];
     out[2] = mat[10];
-    return normalize(out, out);
+    return vec3_normalize(out, out);
 }
 
-export function get_translation(out: Vec3, mat: Mat4) {
+export function mat4_get_translation(out: Vec3, mat: Mat4) {
     out[0] = mat[12];
     out[1] = mat[13];
     out[2] = mat[14];
@@ -309,7 +309,7 @@ export function get_translation(out: Vec3, mat: Mat4) {
     return out;
 }
 
-export function get_scaling(out: Vec3, mat: Mat4) {
+export function mat4_get_scaling(out: Vec3, mat: Mat4) {
     let m11 = mat[0];
     let m12 = mat[1];
     let m13 = mat[2];
@@ -327,8 +327,8 @@ export function get_scaling(out: Vec3, mat: Mat4) {
     return out;
 }
 
-export function get_rotation(out: Quat, mat: Mat4) {
-    let scaling = get_scaling([0, 0, 0], mat);
+export function mat4_get_rotation(out: Quat, mat: Mat4) {
+    let scaling = mat4_get_scaling([0, 0, 0], mat);
 
     let is1 = 1 / scaling[0];
     let is2 = 1 / scaling[1];
@@ -376,7 +376,7 @@ export function get_rotation(out: Quat, mat: Mat4) {
     return out;
 }
 
-export function target_to(out: Mat4, eye: Vec3, target: Vec3, up: Vec3) {
+export function mat4_target_to(out: Mat4, eye: Vec3, target: Vec3, up: Vec3) {
     let eyex = eye[0],
         eyey = eye[1],
         eyez = eye[2],
@@ -427,14 +427,14 @@ export function target_to(out: Mat4, eye: Vec3, target: Vec3, up: Vec3) {
     return out;
 }
 
-export function distance_squared(a: Mat4, b: Mat4) {
+export function mat4_distance_squared(a: Mat4, b: Mat4) {
     let x = b[12] - a[12];
     let y = b[13] - a[13];
     let z = b[14] - a[14];
     return x * x + y * y + z * z;
 }
 
-export function distance_squared_from_point(m: Mat4, v: Vec3) {
+export function mat4_distance_squared_from_point(m: Mat4, v: Vec3) {
     let x = m[12] - v[0];
     let y = m[13] - v[1];
     let z = m[14] - v[2];

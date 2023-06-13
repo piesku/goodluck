@@ -1,8 +1,13 @@
-import {get_translation} from "../../lib/mat4.js";
+import {mat4_get_translation} from "../../lib/mat4.js";
 import {Vec3} from "../../lib/math.js";
 import {path_find} from "../../lib/pathfind.js";
-import {multiply} from "../../lib/quat.js";
-import {add, distance_squared, normalize, transform_position} from "../../lib/vec3.js";
+import {quat_multiply} from "../../lib/quat.js";
+import {
+    vec3_add,
+    vec3_distance_squared,
+    vec3_normalize,
+    vec3_transform_position,
+} from "../../lib/vec3.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -46,10 +51,13 @@ function update(game: Game, entity: Entity) {
     if (agent.Waypoints) {
         let transform = game.World.Transform[entity];
         let position: Vec3 = [0, 0, 0];
-        get_translation(position, transform.World);
+        mat4_get_translation(position, transform.World);
 
         let current_waypoint = agent.Waypoints[0];
-        let distance_to_current_waypoint = distance_squared(position, current_waypoint.Position);
+        let distance_to_current_waypoint = vec3_distance_squared(
+            position,
+            current_waypoint.Position
+        );
         if (distance_to_current_waypoint < 1) {
             let origin = agent.Waypoints.shift();
             if (origin !== undefined) {
@@ -62,18 +70,18 @@ function update(game: Game, entity: Entity) {
 
         // Transform the waypoint's position into the agent's self space which
         // is where sys_move runs.
-        transform_position(position, current_waypoint.Position, transform.Self);
-        normalize(position, position);
+        vec3_transform_position(position, current_waypoint.Position, transform.Self);
+        vec3_normalize(position, position);
 
         let move = game.World.Move[entity];
-        add(move.Direction, move.Direction, position);
+        vec3_add(move.Direction, move.Direction, position);
 
         if (position[0] < 0) {
             // The target is on the right.
-            multiply(transform.Rotation, move.LocalRotation, [0, -1, 0, 0]);
+            quat_multiply(transform.Rotation, move.LocalRotation, [0, -1, 0, 0]);
         } else {
             // The target is on the left or directly behind.
-            multiply(transform.Rotation, move.LocalRotation, [0, 1, 0, 0]);
+            quat_multiply(transform.Rotation, move.LocalRotation, [0, 1, 0, 0]);
         }
     }
 }

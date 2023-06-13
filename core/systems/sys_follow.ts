@@ -4,9 +4,9 @@
  * Update the entity's position to follow another entity.
  */
 
-import {get_translation} from "../../lib/mat4.js";
+import {mat4_get_translation} from "../../lib/mat4.js";
 import {Vec3} from "../../lib/math.js";
-import {lerp} from "../../lib/vec3.js";
+import {vec3_lerp} from "../../lib/vec3.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -29,8 +29,8 @@ function update(game: Game, entity: Entity) {
     let follow = game.World.Follow[entity];
     let target_transform = game.World.Transform[follow.Target];
 
-    get_translation(target_position, target_transform.World);
-    lerp(transform.Translation, transform.Translation, target_position, follow.Stiffness);
+    mat4_get_translation(target_position, target_transform.World);
+    vec3_lerp(transform.Translation, transform.Translation, target_position, follow.Stiffness);
 
     game.World.Signature[entity] |= Has.Dirty;
 }

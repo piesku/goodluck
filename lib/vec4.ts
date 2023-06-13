@@ -1,6 +1,6 @@
 import {Vec4} from "./math.js";
 
-export function set(out: Vec4, x: number, y: number, z: number, w: number) {
+export function vec4_set(out: Vec4, x: number, y: number, z: number, w: number) {
     out[0] = x;
     out[1] = y;
     out[2] = z;
@@ -8,7 +8,7 @@ export function set(out: Vec4, x: number, y: number, z: number, w: number) {
     return out;
 }
 
-export function copy(out: Vec4, a: Vec4) {
+export function vec4_copy(out: Vec4, a: Vec4) {
     out[0] = a[0];
     out[1] = a[1];
     out[2] = a[2];
@@ -16,7 +16,7 @@ export function copy(out: Vec4, a: Vec4) {
     return out;
 }
 
-export function add(out: Vec4, a: Vec4, b: Vec4) {
+export function vec4_add(out: Vec4, a: Vec4, b: Vec4) {
     out[0] = a[0] + b[0];
     out[1] = a[1] + b[1];
     out[2] = a[2] + b[2];
@@ -24,7 +24,7 @@ export function add(out: Vec4, a: Vec4, b: Vec4) {
     return out;
 }
 
-export function subtract(out: Vec4, a: Vec4, b: Vec4) {
+export function vec4_subtract(out: Vec4, a: Vec4, b: Vec4) {
     out[0] = a[0] - b[0];
     out[1] = a[1] - b[1];
     out[2] = a[2] - b[2];
@@ -32,7 +32,7 @@ export function subtract(out: Vec4, a: Vec4, b: Vec4) {
     return out;
 }
 
-export function scale(out: Vec4, a: Vec4, b: number) {
+export function vec4_scale(out: Vec4, a: Vec4, b: number) {
     out[0] = a[0] * b;
     out[1] = a[1] * b;
     out[2] = a[2] * b;
@@ -40,7 +40,7 @@ export function scale(out: Vec4, a: Vec4, b: number) {
     return out;
 }
 
-export function lerp(out: Vec4, a: Vec4, b: Vec4, t: number) {
+export function vec4_lerp(out: Vec4, a: Vec4, b: Vec4, t: number) {
     let ax = a[0];
     let ay = a[1];
     let az = a[2];

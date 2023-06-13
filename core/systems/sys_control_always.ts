@@ -4,8 +4,8 @@
  * Update the entity's `Move` and `Animate` components every frame.
  */
 
-import {multiply} from "../../lib/quat.js";
-import {add} from "../../lib/vec3.js";
+import {quat_multiply} from "../../lib/quat.js";
+import {vec3_add} from "../../lib/vec3.js";
 import {Entity} from "../../lib/world.js";
 import {query_down} from "../components/com_children.js";
 import {Game} from "../game.js";
@@ -26,11 +26,11 @@ function update(game: Game, entity: Entity) {
     let move = game.World.Move[entity];
 
     if (control.Direction) {
-        add(move.Direction, move.Direction, control.Direction);
+        vec3_add(move.Direction, move.Direction, control.Direction);
     }
 
     if (control.Rotation) {
-        multiply(move.LocalRotation, move.LocalRotation, control.Rotation);
+        quat_multiply(move.LocalRotation, move.LocalRotation, control.Rotation);
     }
 
     if (control.Animation) {

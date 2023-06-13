@@ -1,6 +1,6 @@
 import {instantiate} from "../../lib/game.js";
 import {pointer_clicked} from "../../lib/input.js";
-import {get_translation} from "../../lib/mat4.js";
+import {mat4_get_translation} from "../../lib/mat4.js";
 import {path_find} from "../../lib/pathfind.js";
 import {GL_ARRAY_BUFFER} from "../../lib/webgl.js";
 import {Entity} from "../../lib/world.js";
@@ -51,7 +51,7 @@ function update(game: Game, entity: Entity, pick: Picked) {
         let path = path_find(agent.NavMesh, goal, agent.Origin);
         if (path) {
             let transform = game.World.Transform[entity];
-            let world_pos = get_translation([0, 0, 0], transform.World);
+            let world_pos = mat4_get_translation([0, 0, 0], transform.World);
 
             // Remove the origin and the goal from the path.
             path = path.slice(1, path.length - 1);

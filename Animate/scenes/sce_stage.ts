@@ -1,5 +1,5 @@
 import {instantiate} from "../../lib/game.js";
-import {from_euler} from "../../lib/quat.js";
+import {quat_from_euler} from "../../lib/quat.js";
 import {set_seed} from "../../lib/random.js";
 import {blueprint_camera} from "../blueprints/blu_camera.js";
 import {blueprint_character_rigged} from "../blueprints/blu_character_rigged.js";
@@ -30,13 +30,13 @@ export function scene_stage(game: Game) {
 
     // Light 1.
     instantiate(game, [
-        transform(undefined, from_euler([0, 0, 0, 1], -30, 30, 0)),
+        transform(undefined, quat_from_euler([0, 0, 0, 1], -30, 30, 0)),
         light_directional([1, 1, 1], 0.5),
     ]);
 
     // Bottom light.
     instantiate(game, [
-        transform(undefined, from_euler([0, 0, 0, 1], 30, -60, 0)),
+        transform(undefined, quat_from_euler([0, 0, 0, 1], 30, -60, 0)),
         light_directional([1, 1, 1], 0.2),
     ]);
 

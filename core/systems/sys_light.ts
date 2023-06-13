@@ -6,7 +6,7 @@
  * [sys_render_forward](sys_render_forward.html).
  */
 
-import {get_forward, get_translation} from "../../lib/mat4.js";
+import {mat4_get_forward, mat4_get_translation} from "../../lib/mat4.js";
 import {Vec3} from "../../lib/math.js";
 import {Entity} from "../../lib/world.js";
 import {LightKind} from "../../materials/light.js";
@@ -36,9 +36,9 @@ function update(game: Game, entity: Entity, idx: number) {
     if (light.Kind === LightKind.Directional) {
         // Directional lights shine backwards, to match the way cameras work.
         // Rather than the light's world position, store the light's world normal.
-        get_forward(world_pos, transform.World);
+        mat4_get_forward(world_pos, transform.World);
     } else {
-        get_translation(world_pos, transform.World);
+        mat4_get_translation(world_pos, transform.World);
     }
 
     game.LightPositions[4 * idx + 0] = world_pos[0];

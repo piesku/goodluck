@@ -1,48 +1,48 @@
 import {Mat4, Vec3} from "./math.js";
 
-export function set(out: Vec3, x: number, y: number, z: number) {
+export function vec3_set(out: Vec3, x: number, y: number, z: number) {
     out[0] = x;
     out[1] = y;
     out[2] = z;
     return out;
 }
 
-export function copy(out: Vec3, a: Vec3) {
+export function vec3_copy(out: Vec3, a: Vec3) {
     out[0] = a[0];
     out[1] = a[1];
     out[2] = a[2];
     return out;
 }
 
-export function add(out: Vec3, a: Vec3, b: Vec3) {
+export function vec3_add(out: Vec3, a: Vec3, b: Vec3) {
     out[0] = a[0] + b[0];
     out[1] = a[1] + b[1];
     out[2] = a[2] + b[2];
     return out;
 }
 
-export function subtract(out: Vec3, a: Vec3, b: Vec3) {
+export function vec3_subtract(out: Vec3, a: Vec3, b: Vec3) {
     out[0] = a[0] - b[0];
     out[1] = a[1] - b[1];
     out[2] = a[2] - b[2];
     return out;
 }
 
-export function scale(out: Vec3, a: Vec3, b: number) {
+export function vec3_scale(out: Vec3, a: Vec3, b: number) {
     out[0] = a[0] * b;
     out[1] = a[1] * b;
     out[2] = a[2] * b;
     return out;
 }
 
-export function negate(out: Vec3, a: Vec3) {
+export function vec3_negate(out: Vec3, a: Vec3) {
     out[0] = -a[0];
     out[1] = -a[1];
     out[2] = -a[2];
     return out;
 }
 
-export function normalize(out: Vec3, a: Vec3) {
+export function vec3_normalize(out: Vec3, a: Vec3) {
     let x = a[0];
     let y = a[1];
     let z = a[2];
@@ -59,11 +59,11 @@ export function normalize(out: Vec3, a: Vec3) {
     return out;
 }
 
-export function dot(a: Vec3, b: Vec3) {
+export function vec3_dot(a: Vec3, b: Vec3) {
     return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
 
-export function cross(out: Vec3, a: Vec3, b: Vec3) {
+export function vec3_cross(out: Vec3, a: Vec3, b: Vec3) {
     let ax = a[0],
         ay = a[1],
         az = a[2];
@@ -77,7 +77,7 @@ export function cross(out: Vec3, a: Vec3, b: Vec3) {
     return out;
 }
 
-export function transform_position(out: Vec3, a: Vec3, m: Mat4) {
+export function vec3_transform_position(out: Vec3, a: Vec3, m: Mat4) {
     let x = a[0];
     let y = a[1];
     let z = a[2];
@@ -89,7 +89,7 @@ export function transform_position(out: Vec3, a: Vec3, m: Mat4) {
     return out;
 }
 
-export function transform_direction(out: Vec3, a: Vec3, m: Mat4) {
+export function vec3_transform_direction(out: Vec3, a: Vec3, m: Mat4) {
     let x = a[0];
     let y = a[1];
     let z = a[2];
@@ -100,32 +100,32 @@ export function transform_direction(out: Vec3, a: Vec3, m: Mat4) {
     return out;
 }
 
-export function length(a: Vec3) {
+export function vec3_length(a: Vec3) {
     let x = a[0];
     let y = a[1];
     let z = a[2];
     return Math.hypot(x, y, z);
 }
 
-export function distance(a: Vec3, b: Vec3) {
+export function vec3_distance(a: Vec3, b: Vec3) {
     let x = b[0] - a[0];
     let y = b[1] - a[1];
     let z = b[2] - a[2];
     return Math.hypot(x, y, z);
 }
 
-export function distance_squared(a: Vec3, b: Vec3) {
+export function vec3_distance_squared(a: Vec3, b: Vec3) {
     let x = b[0] - a[0];
     let y = b[1] - a[1];
     let z = b[2] - a[2];
     return x * x + y * y + z * z;
 }
 
-export function manhattan(a: Vec3, b: Vec3) {
+export function vec3_manhattan(a: Vec3, b: Vec3) {
     return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs(a[2] - b[2]);
 }
 
-export function lerp(out: Vec3, a: Vec3, b: Vec3, t: number) {
+export function vec3_lerp(out: Vec3, a: Vec3, b: Vec3, t: number) {
     let ax = a[0];
     let ay = a[1];
     let az = a[2];

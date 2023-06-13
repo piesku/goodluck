@@ -7,11 +7,11 @@
  */
 
 import {instantiate} from "../../lib/game.js";
-import {scale} from "../../lib/vec3.js";
+import {vec3_scale} from "../../lib/vec3.js";
 import {Entity} from "../../lib/world.js";
 import {Collide} from "../components/com_collide.js";
 import {RenderKind, render_colored_unlit} from "../components/com_render.js";
-import {transform, Transform} from "../components/com_transform.js";
+import {Transform, transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
 
@@ -82,7 +82,11 @@ function wireframe_collider(game: Game, entity: Entity) {
     let wireframe = wireframes.get(anchor_collide);
     if (!wireframe) {
         let wireframe_entity = instantiate(game, [
-            transform(anchor_collide.Center, undefined, scale([0, 0, 0], anchor_collide.Half, 2)),
+            transform(
+                anchor_collide.Center,
+                undefined,
+                vec3_scale([0, 0, 0], anchor_collide.Half, 2)
+            ),
             render_colored_unlit(game.MaterialWireframe, game.MeshCube, [0, 1, 0, 1]),
         ]);
         wireframe = {
@@ -96,7 +100,7 @@ function wireframe_collider(game: Game, entity: Entity) {
 
     if (anchor_collide.Dynamic) {
         wireframe.transform.Translation = anchor_collide.Center;
-        scale(wireframe.transform.Scale, anchor_collide.Half, 2);
+        vec3_scale(wireframe.transform.Scale, anchor_collide.Half, 2);
         game.World.Signature[wireframe.entity] |= Has.Dirty;
     }
 

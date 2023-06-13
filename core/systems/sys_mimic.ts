@@ -4,10 +4,10 @@
  * Update the entity's position and rotation to mimic another entity.
  */
 
-import {get_rotation, get_translation} from "../../lib/mat4.js";
+import {mat4_get_rotation, mat4_get_translation} from "../../lib/mat4.js";
 import {Quat, Vec3} from "../../lib/math.js";
-import {slerp} from "../../lib/quat.js";
-import {lerp} from "../../lib/vec3.js";
+import {quat_slerp} from "../../lib/quat.js";
+import {vec3_lerp} from "../../lib/vec3.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -31,11 +31,11 @@ function update(game: Game, entity: Entity) {
     let mimic = game.World.Mimic[entity];
     let target_transform = game.World.Transform[mimic.Target];
 
-    get_translation(target_position, target_transform.World);
-    get_rotation(target_rotation, target_transform.World);
+    mat4_get_translation(target_position, target_transform.World);
+    mat4_get_rotation(target_rotation, target_transform.World);
 
-    lerp(transform.Translation, transform.Translation, target_position, mimic.Stiffness);
-    slerp(transform.Rotation, transform.Rotation, target_rotation, mimic.Stiffness);
+    vec3_lerp(transform.Translation, transform.Translation, target_position, mimic.Stiffness);
+    quat_slerp(transform.Rotation, transform.Rotation, target_rotation, mimic.Stiffness);
 
     game.World.Signature[entity] |= Has.Dirty;
 }

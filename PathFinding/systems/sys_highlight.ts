@@ -1,5 +1,5 @@
 import {Vec4} from "../../lib/math.js";
-import {copy, scale} from "../../lib/vec4.js";
+import {vec4_copy, vec4_scale} from "../../lib/vec4.js";
 import {Entity} from "../../lib/world.js";
 import {DrawKind} from "../components/com_draw.js";
 import {PickableAABB, PickableKind} from "../components/com_pickable.js";
@@ -52,10 +52,10 @@ function update_aabb(game: Game, entity: Entity, pickable: PickableAABB) {
     }
 
     if (game.Picked?.Entity === entity) {
-        copy(mesh_color, pickable.Color);
-        scale(mesh_color, mesh_color, 1.5);
+        vec4_copy(mesh_color, pickable.Color);
+        vec4_scale(mesh_color, mesh_color, 1.5);
     } else {
-        copy(mesh_color, pickable.Color);
+        vec4_copy(mesh_color, pickable.Color);
     }
 
     if (selectable.Selected) {

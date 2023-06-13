@@ -18,7 +18,7 @@
  */
 
 import {compute_aabb, intersect_aabb, penetrate_aabb} from "../../lib/aabb.js";
-import {negate} from "../../lib/vec3.js";
+import {vec3_negate} from "../../lib/vec3.js";
 import {Collide} from "../components/com_collide.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -85,7 +85,7 @@ function check_collisions(collider: Collide, colliders: Collide[], length: numbe
                 if (other_can_intersect) {
                     other.Collisions.push({
                         Other: collider.EntityId,
-                        Hit: negate([0, 0, 0], hit),
+                        Hit: vec3_negate([0, 0, 0], hit),
                     });
                 }
             }

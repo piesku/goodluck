@@ -10,9 +10,9 @@
  * [`sys_physics_resolve`](sys_physics_resolve.html).
  */
 
-import {get_translation} from "../../lib/mat4.js";
+import {mat4_get_translation} from "../../lib/mat4.js";
 import {Vec3} from "../../lib/math.js";
-import {copy, scale, subtract} from "../../lib/vec3.js";
+import {vec3_copy, vec3_scale, vec3_subtract} from "../../lib/vec3.js";
 import {Entity} from "../../lib/world.js";
 import {RigidKind} from "../components/com_rigid_body.js";
 import {Game} from "../game.js";
@@ -35,14 +35,14 @@ function update(game: Game, entity: Entity, delta: number) {
     let transform = game.World.Transform[entity];
     let rigid_body = game.World.RigidBody[entity];
 
-    get_translation(current_position, transform.World);
+    mat4_get_translation(current_position, transform.World);
 
     if (rigid_body.Kind === RigidKind.Kinematic) {
-        subtract(movement_delta, current_position, rigid_body.LastPosition);
+        vec3_subtract(movement_delta, current_position, rigid_body.LastPosition);
 
         // Compute velocity from this frame's movement.
-        scale(rigid_body.VelocityLinear, movement_delta, 1 / delta);
+        vec3_scale(rigid_body.VelocityLinear, movement_delta, 1 / delta);
     }
 
-    copy(rigid_body.LastPosition, current_position);
+    vec3_copy(rigid_body.LastPosition, current_position);
 }

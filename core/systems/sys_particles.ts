@@ -5,7 +5,7 @@
  * to be passed to the shaders.
  */
 
-import {get_forward, get_translation} from "../../lib/mat4.js";
+import {mat4_get_forward, mat4_get_translation} from "../../lib/mat4.js";
 import {Vec3} from "../../lib/math.js";
 import {Entity} from "../../lib/world.js";
 import {FLOATS_PER_PARTICLE} from "../components/com_render.js";
@@ -32,8 +32,8 @@ function update(game: Game, entity: Entity, delta: number) {
     emitter.SinceLast += delta;
     if (emitter.SinceLast > emitter.Frequency) {
         emitter.SinceLast = 0;
-        get_translation(origin, transform.World);
-        get_forward(forward, transform.World);
+        mat4_get_translation(origin, transform.World);
+        mat4_get_forward(forward, transform.World);
         // Push [x, y, z, age].
         emitter.Instances.push(...origin, 0);
         // Push [x, y, z, seed].

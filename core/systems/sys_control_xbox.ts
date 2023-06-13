@@ -5,7 +5,7 @@
  */
 
 import {Vec3} from "../../lib/math.js";
-import {from_axis, get_pitch, multiply} from "../../lib/quat.js";
+import {quat_from_axis, quat_get_pitch, quat_multiply} from "../../lib/quat.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -52,7 +52,11 @@ function update(game: Game, entity: Entity) {
         let amount = game.InputDelta["pad0_axis_3"] * Math.PI;
         // Yaw is applied relative to the entity's local space; the Y axis is
         // not affected by its current orientation.
-        multiply(move.LocalRotation, move.LocalRotation, from_axis([0, 0, 0, 1], AXIS_Y, -amount));
+        quat_multiply(
+            move.LocalRotation,
+            move.LocalRotation,
+            quat_from_axis([0, 0, 0, 1], AXIS_Y, -amount)
+        );
     }
 
     if (control.Pitch && Math.abs(game.InputDelta["pad0_axis_4"]) > DEAD_ZONE) {
@@ -60,14 +64,18 @@ function update(game: Game, entity: Entity) {
         let move = game.World.Move[entity];
 
         let amount = game.InputDelta["pad0_axis_4"] * Math.PI;
-        let current_pitch = get_pitch(transform.Rotation);
+        let current_pitch = quat_get_pitch(transform.Rotation);
         if (
             (amount < 0 && current_pitch > control.MinPitch) ||
             (amount > 0 && current_pitch < control.MaxPitch)
         ) {
             // Pitch applied relative to the entity's self space; the X axis is
             // always aligned with its left and right sides.
-            multiply(move.SelfRotation, move.SelfRotation, from_axis([0, 0, 0, 1], AXIS_X, amount));
+            quat_multiply(
+                move.SelfRotation,
+                move.SelfRotation,
+                quat_from_axis([0, 0, 0, 1], AXIS_X, amount)
+            );
         }
     }
 }

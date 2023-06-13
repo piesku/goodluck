@@ -1,8 +1,8 @@
 import {ease_in_out_quart, ease_out_quart} from "../../lib/easing.js";
 import {Vec4} from "../../lib/math.js";
-import {from_euler} from "../../lib/quat.js";
+import {quat_from_euler} from "../../lib/quat.js";
 import {element} from "../../lib/random.js";
-import {animate, AnimationFlag} from "../components/com_animate.js";
+import {AnimationFlag, animate} from "../components/com_animate.js";
 import {children} from "../components/com_children.js";
 import {render_colored_shaded} from "../components/com_render_ext.js";
 import {transform} from "../components/com_transform.js";
@@ -47,11 +47,11 @@ export function blueprint_character_voxel(game: Game) {
                         Keyframes: [
                             {
                                 Timestamp: 0.0,
-                                Rotation: from_euler([0, 0, 0, 1], 0, 5, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 0, 5, 0),
                             },
                             {
                                 Timestamp: 0.5,
-                                Rotation: from_euler([0, 0, 0, 1], 0, -5, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 0, -5, 0),
                             },
                         ],
                     },
@@ -59,11 +59,11 @@ export function blueprint_character_voxel(game: Game) {
                         Keyframes: [
                             {
                                 Timestamp: 0.0,
-                                Rotation: from_euler([0, 0, 0, 1], 0, 5, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 0, 5, 0),
                             },
                             {
                                 Timestamp: 0.2,
-                                Rotation: from_euler([0, 0, 0, 1], 0, -5, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 0, -5, 0),
                             },
                         ],
                     },
@@ -77,13 +77,13 @@ export function blueprint_character_voxel(game: Game) {
                             {
                                 Timestamp: 0.2,
                                 Translation: [0, 2, 0],
-                                Rotation: from_euler([0, 0, 0, 1], -15, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], -15, 0, 0),
                                 Ease: ease_in_out_quart,
                             },
                             {
                                 Timestamp: 0.4,
                                 Translation: [0, 0, 0],
-                                Rotation: from_euler([0, 0, 0, 1], 0, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 0, 0, 0),
                                 Ease: ease_out_quart,
                             },
                         ],
@@ -128,11 +128,11 @@ export function blueprint_character_voxel(game: Game) {
                         Keyframes: [
                             {
                                 Timestamp: 0,
-                                Rotation: from_euler([0, 0, 0, 1], 5, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 5, 0, 0),
                             },
                             {
                                 Timestamp: 0.5,
-                                Rotation: from_euler([0, 0, 0, 1], -5, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], -5, 0, 0),
                             },
                         ],
                     },
@@ -140,11 +140,11 @@ export function blueprint_character_voxel(game: Game) {
                         Keyframes: [
                             {
                                 Timestamp: 0,
-                                Rotation: from_euler([0, 0, 0, 1], 30, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 30, 0, 0),
                             },
                             {
                                 Timestamp: 0.2,
-                                Rotation: from_euler([0, 0, 0, 1], -60, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], -60, 0, 0),
                             },
                         ],
                     },
@@ -158,7 +158,7 @@ export function blueprint_character_voxel(game: Game) {
                             {
                                 Timestamp: 0.2,
                                 Translation: [1.5, 2, 0],
-                                Rotation: from_euler([0, 0, 0, 1], 0, 0, 135),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 0, 0, 135),
                                 Ease: ease_in_out_quart,
                             },
                             {
@@ -200,11 +200,11 @@ export function blueprint_character_voxel(game: Game) {
                         Keyframes: [
                             {
                                 Timestamp: 0,
-                                Rotation: from_euler([0, 0, 0, 1], -5, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], -5, 0, 0),
                             },
                             {
                                 Timestamp: 0.5,
-                                Rotation: from_euler([0, 0, 0, 1], 5, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 5, 0, 0),
                             },
                         ],
                     },
@@ -212,11 +212,11 @@ export function blueprint_character_voxel(game: Game) {
                         Keyframes: [
                             {
                                 Timestamp: 0,
-                                Rotation: from_euler([0, 0, 0, 1], -60, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], -60, 0, 0),
                             },
                             {
                                 Timestamp: 0.2,
-                                Rotation: from_euler([0, 0, 0, 1], 30, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 30, 0, 0),
                             },
                         ],
                     },
@@ -230,7 +230,7 @@ export function blueprint_character_voxel(game: Game) {
                             {
                                 Timestamp: 0.2,
                                 Translation: [-1.5, 2, 0],
-                                Rotation: from_euler([0, 0, 0, 1], 0, 0, -135),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 0, 0, -135),
                                 Ease: ease_in_out_quart,
                             },
                             {
@@ -272,11 +272,11 @@ export function blueprint_character_voxel(game: Game) {
                         Keyframes: [
                             {
                                 Timestamp: 0,
-                                Rotation: from_euler([0, 0, 0, 1], 5, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 5, 0, 0),
                             },
                             {
                                 Timestamp: 1,
-                                Rotation: from_euler([0, 0, 0, 1], 5, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 5, 0, 0),
                             },
                         ],
                     },
@@ -284,11 +284,11 @@ export function blueprint_character_voxel(game: Game) {
                         Keyframes: [
                             {
                                 Timestamp: 0,
-                                Rotation: from_euler([0, 0, 0, 1], -45, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], -45, 0, 0),
                             },
                             {
                                 Timestamp: 0.2,
-                                Rotation: from_euler([0, 0, 0, 1], 45, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 45, 0, 0),
                             },
                         ],
                     },
@@ -302,7 +302,7 @@ export function blueprint_character_voxel(game: Game) {
                             {
                                 Timestamp: 0.2,
                                 Translation: [0.5, 0, 0],
-                                Rotation: from_euler([0, 0, 0, 1], 0, 0, 45),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 0, 0, 45),
                                 Ease: ease_in_out_quart,
                             },
                             {
@@ -335,11 +335,11 @@ export function blueprint_character_voxel(game: Game) {
                         Keyframes: [
                             {
                                 Timestamp: 0,
-                                Rotation: from_euler([0, 0, 0, 1], -5, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], -5, 0, 0),
                             },
                             {
                                 Timestamp: 1,
-                                Rotation: from_euler([0, 0, 0, 1], -5, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], -5, 0, 0),
                             },
                         ],
                     },
@@ -347,11 +347,11 @@ export function blueprint_character_voxel(game: Game) {
                         Keyframes: [
                             {
                                 Timestamp: 0,
-                                Rotation: from_euler([0, 0, 0, 1], 45, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 45, 0, 0),
                             },
                             {
                                 Timestamp: 0.2,
-                                Rotation: from_euler([0, 0, 0, 1], -45, 0, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], -45, 0, 0),
                             },
                         ],
                     },
@@ -365,7 +365,7 @@ export function blueprint_character_voxel(game: Game) {
                             {
                                 Timestamp: 0.2,
                                 Translation: [-0.5, 0, 0],
-                                Rotation: from_euler([0, 0, 0, 1], 0, 0, -45),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 0, 0, -45),
                                 Ease: ease_in_out_quart,
                             },
                             {

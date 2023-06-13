@@ -1,9 +1,9 @@
 import {DEG_TO_RAD, EPSILON, Quat, RAD_TO_DEG, Vec2, Vec3} from "./math.js";
 import {clamp} from "./number.js";
-import * as vec2 from "./vec2.js";
-import * as vec3 from "./vec3.js";
+import {vec2_normalize} from "./vec2.js";
+import {vec3_cross, vec3_dot, vec3_length, vec3_normalize} from "./vec3.js";
 
-export function set(out: Quat, x: number, y: number, z: number, w: number) {
+export function quat_set(out: Quat, x: number, y: number, z: number, w: number) {
     out[0] = x;
     out[1] = y;
     out[2] = z;
@@ -11,7 +11,7 @@ export function set(out: Quat, x: number, y: number, z: number, w: number) {
     return out;
 }
 
-export function copy(out: Quat, a: Quat) {
+export function quat_copy(out: Quat, a: Quat) {
     out[0] = a[0];
     out[1] = a[1];
     out[2] = a[2];
@@ -19,7 +19,7 @@ export function copy(out: Quat, a: Quat) {
     return out;
 }
 
-export function normalize(out: Quat, a: Quat) {
+export function quat_normalize(out: Quat, a: Quat) {
     let x = a[0];
     let y = a[1];
     let z = a[2];
@@ -35,7 +35,7 @@ export function normalize(out: Quat, a: Quat) {
     return out;
 }
 
-export function multiply(out: Quat, a: Quat, b: Quat) {
+export function quat_multiply(out: Quat, a: Quat, b: Quat) {
     let ax = a[0],
         ay = a[1],
         az = a[2],
@@ -52,7 +52,7 @@ export function multiply(out: Quat, a: Quat, b: Quat) {
     return out;
 }
 
-export function conjugate(out: Quat, a: Quat) {
+export function quat_conjugate(out: Quat, a: Quat) {
     out[0] = -a[0];
     out[1] = -a[1];
     out[2] = -a[2];
@@ -67,7 +67,7 @@ export function conjugate(out: Quat, a: Quat) {
  * @param y Rotation around the Y axis, in degress.
  * @param z Rotation around the Z axis, in degress.
  */
-export function from_euler(out: Quat, x: number, y: number, z: number) {
+export function quat_from_euler(out: Quat, x: number, y: number, z: number) {
     let sx = Math.sin((x / 2) * DEG_TO_RAD);
     let cx = Math.cos((x / 2) * DEG_TO_RAD);
     let sy = Math.sin((y / 2) * DEG_TO_RAD);
@@ -87,7 +87,7 @@ export function from_euler(out: Quat, x: number, y: number, z: number) {
  * @param euler Vector of Euler angles to write into.
  * @param quat Quaternion to decompose.
  */
-export function to_euler(euler: Vec3, quat: Quat) {
+export function quat_to_euler(euler: Vec3, quat: Quat) {
     let x = quat[0];
     let y = quat[1];
     let z = quat[2];
@@ -119,7 +119,7 @@ export function to_euler(euler: Vec3, quat: Quat) {
  * Get the pitch (rotation around the X axis) of a quaternion, in arc degrees.
  * @param quat Quaternion to decompose.
  */
-export function get_pitch(quat: Quat) {
+export function quat_get_pitch(quat: Quat) {
     let x = quat[0];
     let y = quat[1];
     let z = quat[2];
@@ -133,7 +133,7 @@ export function get_pitch(quat: Quat) {
  * Get the yaw (rotation around the Y axis) of a quaternion, in arc degrees.
  * @param quat Quaternion to decompose.
  */
-export function get_yaw(quat: Quat) {
+export function quat_get_yaw(quat: Quat) {
     let x = quat[0];
     let y = quat[1];
     let z = quat[2];
@@ -150,7 +150,7 @@ export function get_yaw(quat: Quat) {
  * @param axis Axis of rotation.
  * @param angle Rotation in radians.
  */
-export function from_axis(out: Quat, axis: Vec3, angle: number) {
+export function quat_from_axis(out: Quat, axis: Vec3, angle: number) {
     let half = angle / 2;
     out[0] = Math.sin(half) * axis[0];
     out[1] = Math.sin(half) * axis[1];
@@ -159,18 +159,18 @@ export function from_axis(out: Quat, axis: Vec3, angle: number) {
     return out;
 }
 
-export const rotation_to = (function () {
+export const quat_rotation_to = (function () {
     let tmpvec3 = <Vec3>[0, 0, 0];
     let xUnitVec3 = <Vec3>[1, 0, 0];
     let yUnitVec3 = <Vec3>[0, 1, 0];
 
     return function (out: Quat, a: Vec3, b: Vec3) {
-        let d = vec3.dot(a, b);
+        let d = vec3_dot(a, b);
         if (d < -0.999999) {
-            vec3.cross(tmpvec3, xUnitVec3, a);
-            if (vec3.length(tmpvec3) < 0.000001) vec3.cross(tmpvec3, yUnitVec3, a);
-            vec3.normalize(tmpvec3, tmpvec3);
-            from_axis(out, tmpvec3, Math.PI);
+            vec3_cross(tmpvec3, xUnitVec3, a);
+            if (vec3_length(tmpvec3) < 0.000001) vec3_cross(tmpvec3, yUnitVec3, a);
+            vec3_normalize(tmpvec3, tmpvec3);
+            quat_from_axis(out, tmpvec3, Math.PI);
             return out;
         } else if (d > 0.999999) {
             out[0] = 0;
@@ -179,37 +179,37 @@ export const rotation_to = (function () {
             out[3] = 1;
             return out;
         } else {
-            vec3.cross(tmpvec3, a, b);
+            vec3_cross(tmpvec3, a, b);
             out[0] = tmpvec3[0];
             out[1] = tmpvec3[1];
             out[2] = tmpvec3[2];
             out[3] = 1 + d;
-            return normalize(out, out);
+            return quat_normalize(out, out);
         }
     };
 })();
 
 const AXIS_Y: Vec3 = [0, 1, 0];
 let target_xz: Vec2 = [0, 0];
-export function look_yaw(out: Quat, target: Vec3) {
+export function quat_look_yaw(out: Quat, target: Vec3) {
     target_xz[0] = target[0];
     target_xz[1] = target[2];
-    vec2.normalize(target_xz, target_xz);
+    vec2_normalize(target_xz, target_xz);
     let y_angle = Math.PI / 2 - Math.atan2(target_xz[1], target_xz[0]);
-    return from_axis(out, AXIS_Y, y_angle);
+    return quat_from_axis(out, AXIS_Y, y_angle);
 }
 
 const AXIS_X: Vec3 = [1, 0, 0];
 let target_yz: Vec2 = [0, 0];
-export function look_pitch(out: Quat, target: Vec3) {
+export function quat_look_pitch(out: Quat, target: Vec3) {
     target_yz[0] = target[1];
     target_yz[1] = target[2];
-    vec2.normalize(target_yz, target_yz);
+    vec2_normalize(target_yz, target_yz);
     let x_angle = Math.PI / 2 - Math.atan2(target_yz[1], target_yz[0]);
-    return from_axis(out, AXIS_X, -x_angle);
+    return quat_from_axis(out, AXIS_X, -x_angle);
 }
 
-export function lerp(out: Quat, a: Quat, b: Quat, t: number) {
+export function quat_lerp(out: Quat, a: Quat, b: Quat, t: number) {
     let ax = a[0];
     let ay = a[1];
     let az = a[2];
@@ -229,7 +229,7 @@ export function lerp(out: Quat, a: Quat, b: Quat, t: number) {
  * @param b - the second operand
  * @param t - interpolation amount, in the range [0-1], between the two inputs
  */
-export function slerp(out: Quat, a: Quat, b: Quat, t: number) {
+export function quat_slerp(out: Quat, a: Quat, b: Quat, t: number) {
     // benchmarks:
     //    http://jsperf.com/quaternion-slerp-implementations
     let ax = a[0],
@@ -275,7 +275,7 @@ export function slerp(out: Quat, a: Quat, b: Quat, t: number) {
     return out;
 }
 
-export function get_axis(out_axis: Vec3, q: Quat) {
+export function quat_get_axis(out_axis: Vec3, q: Quat) {
     let rad = Math.acos(q[3]) * 2.0;
     let s = Math.sin(rad / 2.0);
     if (s > EPSILON) {

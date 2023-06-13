@@ -1,6 +1,6 @@
 import {Vec3} from "./math.js";
 import {face_centroid, face_normal, face_vertices, Mesh} from "./mesh.js";
-import {distance_squared, dot} from "./vec3.js";
+import {vec3_distance_squared, vec3_dot} from "./vec3.js";
 
 export interface NavMesh {
     /**
@@ -52,7 +52,7 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
         face_vertices(face, mesh, f);
 
         face_normal(norm, mesh, face);
-        if (Math.acos(dot(norm, UP)) > max_slope) {
+        if (Math.acos(vec3_dot(norm, UP)) > max_slope) {
             // Skip this face, it's not horizontal enough.
             continue;
         }
@@ -97,7 +97,7 @@ export function nav_bake(mesh: Mesh, max_slope: number) {
                     // Add `other` to the `face`'s adjacency list.
                     navmesh.Graph[f].push([
                         other,
-                        distance_squared(navmesh.Centroids[f], navmesh.Centroids[other]),
+                        vec3_distance_squared(navmesh.Centroids[f], navmesh.Centroids[other]),
                     ]);
                     break;
                 }

@@ -1,6 +1,6 @@
 import {ease_in_out_quad, ease_in_quad, ease_out_quad} from "../../lib/easing.js";
-import {from_euler} from "../../lib/quat.js";
-import {animate, AnimationFlag} from "../components/com_animate.js";
+import {quat_from_euler} from "../../lib/quat.js";
+import {AnimationFlag, animate} from "../components/com_animate.js";
 import {audio_listener} from "../components/com_audio_listener.js";
 import {audio_source} from "../components/com_audio_source.js";
 import {children} from "../components/com_children.js";
@@ -33,12 +33,12 @@ export function blueprint_player(game: Game) {
                         Keyframes: [
                             {
                                 Timestamp: 0,
-                                Rotation: from_euler([0, 0, 0, 1], 0, -5, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 0, -5, 0),
                                 Ease: ease_in_out_quad,
                             },
                             {
                                 Timestamp: 1,
-                                Rotation: from_euler([0, 0, 0, 1], 0, 5, 0),
+                                Rotation: quat_from_euler([0, 0, 0, 1], 0, 5, 0),
                                 Ease: ease_in_out_quad,
                             },
                         ],

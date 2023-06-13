@@ -6,7 +6,7 @@
  */
 
 import {instantiate} from "../../lib/game.js";
-import {get_rotation, get_translation} from "../../lib/mat4.js";
+import {mat4_get_rotation, mat4_get_translation} from "../../lib/mat4.js";
 import {Quat, Vec3} from "../../lib/math.js";
 import {Entity} from "../../lib/world.js";
 import {copy_position, copy_rotation} from "../components/com_transform.js";
@@ -34,8 +34,8 @@ function update(game: Game, entity: Entity, delta: number) {
         spawn.SinceLast = 0;
 
         let entity_transform = game.World.Transform[entity];
-        get_translation(world_position, entity_transform.World);
-        get_rotation(world_rotation, entity_transform.World);
+        mat4_get_translation(world_position, entity_transform.World);
+        mat4_get_rotation(world_rotation, entity_transform.World);
 
         instantiate(game, [
             ...spawn.Creator(game),

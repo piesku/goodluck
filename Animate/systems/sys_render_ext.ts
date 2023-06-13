@@ -1,4 +1,4 @@
-import {multiply} from "../../lib/mat4.js";
+import {mat4_multiply} from "../../lib/mat4.js";
 import {Material} from "../../lib/material.js";
 import {GL_FRAMEBUFFER, GL_UNSIGNED_SHORT} from "../../lib/webgl.js";
 import {Entity} from "../../lib/world.js";
@@ -122,7 +122,7 @@ function draw_colored_skinned(
         let bone_transform = game.World.Transform[bone_entity];
         let bone = game.World.Bone[bone_entity];
         let bone_view = bones.subarray(bone.Index * 16);
-        multiply(bone_view, bone_transform.World, bone.InverseBindPose);
+        mat4_multiply(bone_view, bone_transform.World, bone.InverseBindPose);
     }
     game.Gl.uniformMatrix4fv(render.Material.Locations.Bones, false, bones);
 

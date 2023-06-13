@@ -4,7 +4,7 @@
  * Update the position and orientation of `game.Audio`'s listener.
  */
 
-import {get_forward, get_translation, get_up} from "../../lib/mat4.js";
+import {mat4_get_forward, mat4_get_translation, mat4_get_up} from "../../lib/mat4.js";
 import {Vec3} from "../../lib/math.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
@@ -26,9 +26,9 @@ let up: Vec3 = [0, 0, 0];
 
 function update(game: Game, entity: Entity) {
     let transform = game.World.Transform[entity];
-    get_translation(position, transform.World);
-    get_forward(forward, transform.World);
-    get_up(up, transform.World);
+    mat4_get_translation(position, transform.World);
+    mat4_get_forward(forward, transform.World);
+    mat4_get_up(up, transform.World);
 
     let listener = game.Audio.listener;
     if (listener.positionX) {

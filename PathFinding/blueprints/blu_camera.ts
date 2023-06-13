@@ -1,5 +1,5 @@
 import {perspective} from "../../lib/projection.js";
-import {from_euler} from "../../lib/quat.js";
+import {quat_from_euler} from "../../lib/quat.js";
 import {camera_canvas} from "../components/com_camera.js";
 import {children} from "../components/com_children.js";
 import {control_dolly} from "../components/com_control_dolly.js";
@@ -15,12 +15,12 @@ export function blueprint_camera(game: Game) {
         control_dolly(100),
         move(100, 0.2),
         children([
-            transform(undefined, from_euler([0, 0, 0, 0], -30, 0, 0)),
+            transform(undefined, quat_from_euler([0, 0, 0, 0], -30, 0, 0)),
             control_player(false, 0, 1, -85, 0),
             control_dolly(0),
             move(0, 0.2),
             children([
-                transform([0, 100, 0], from_euler([0, 0, 0, 0], -90, 180, 0)),
+                transform([0, 100, 0], quat_from_euler([0, 0, 0, 0], -90, 180, 0)),
                 control_player(false, 0, 0),
                 control_dolly(200),
                 move(200, 0),

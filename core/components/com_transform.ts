@@ -8,10 +8,10 @@
  * it must also be tagged as **dirty** with `Has.Dirty`.
  */
 
-import {create} from "../../lib/mat4.js";
+import {mat4_create} from "../../lib/mat4.js";
 import {Mat4, Quat, Vec3} from "../../lib/math.js";
-import * as quat from "../../lib/quat.js";
-import * as vec3 from "../../lib/vec3.js";
+import {quat_copy, quat_from_euler} from "../../lib/quat.js";
+import {vec3_copy} from "../../lib/vec3.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";
@@ -49,8 +49,8 @@ export function transform(
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Transform | Has.Dirty;
         game.World.Transform[entity] = {
-            World: create(),
-            Self: create(),
+            World: mat4_create(),
+            Self: mat4_create(),
             Translation: translation,
             Rotation: rotation,
             Scale: scale,
@@ -89,7 +89,7 @@ export function set_position(x: number, y: number, z: number) {
 export function copy_position(translation: Vec3) {
     return (game: Game, entity: Entity) => {
         let local = game.World.Transform[entity];
-        vec3.copy(local.Translation, translation);
+        vec3_copy(local.Translation, translation);
     };
 }
 
@@ -106,7 +106,7 @@ export function copy_position(translation: Vec3) {
 export function set_rotation(x: number, y: number, z: number) {
     return (game: Game, entity: Entity) => {
         let local = game.World.Transform[entity];
-        quat.from_euler(local.Rotation, x, y, z);
+        quat_from_euler(local.Rotation, x, y, z);
     };
 }
 
@@ -121,7 +121,7 @@ export function set_rotation(x: number, y: number, z: number) {
 export function copy_rotation(rotation: Quat) {
     return (game: Game, entity: Entity) => {
         let local = game.World.Transform[entity];
-        quat.copy(local.Rotation, rotation);
+        quat_copy(local.Rotation, rotation);
     };
 }
 
@@ -155,7 +155,7 @@ export function set_scale(x: number, y: number, z: number) {
 export function copy_scale(scale: Vec3) {
     return (game: Game, entity: Entity) => {
         let local = game.World.Transform[entity];
-        vec3.copy(local.Scale, scale);
+        vec3_copy(local.Scale, scale);
     };
 }
 

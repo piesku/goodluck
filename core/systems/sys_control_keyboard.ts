@@ -4,7 +4,7 @@
  * Handle keyboard input.
  */
 
-import {get_pitch, multiply} from "../../lib/quat.js";
+import {quat_get_pitch, quat_multiply} from "../../lib/quat.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -48,11 +48,11 @@ function update(game: Game, entity: Entity) {
         let move = game.World.Move[entity];
         if (game.InputState["ArrowLeft"]) {
             // Look left.
-            multiply(move.LocalRotation, move.LocalRotation, [0, 1, 0, 0]);
+            quat_multiply(move.LocalRotation, move.LocalRotation, [0, 1, 0, 0]);
         }
         if (game.InputState["ArrowRight"]) {
             // Look right.
-            multiply(move.LocalRotation, move.LocalRotation, [0, -1, 0, 0]);
+            quat_multiply(move.LocalRotation, move.LocalRotation, [0, -1, 0, 0]);
         }
     }
 
@@ -62,14 +62,14 @@ function update(game: Game, entity: Entity) {
         let transform = game.World.Transform[entity];
         let move = game.World.Move[entity];
 
-        let current_pitch = get_pitch(transform.Rotation);
+        let current_pitch = quat_get_pitch(transform.Rotation);
         if (game.InputState["ArrowUp"] && current_pitch > control.MinPitch) {
             // Look up.
-            multiply(move.SelfRotation, move.SelfRotation, [-1, 0, 0, 0]);
+            quat_multiply(move.SelfRotation, move.SelfRotation, [-1, 0, 0, 0]);
         }
         if (game.InputState["ArrowDown"] && current_pitch < control.MaxPitch) {
             // Look down.
-            multiply(move.SelfRotation, move.SelfRotation, [1, 0, 0, 0]);
+            quat_multiply(move.SelfRotation, move.SelfRotation, [1, 0, 0, 0]);
         }
     }
 }

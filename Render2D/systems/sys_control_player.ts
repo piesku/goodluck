@@ -4,7 +4,7 @@
 
 import {pointer_down, pointer_viewport} from "../../lib/input.js";
 import {Vec2} from "../../lib/math.js";
-import {distance_squared, scale} from "../../lib/vec2.js";
+import {vec2_distance_squared, vec2_scale} from "../../lib/vec2.js";
 import {Entity} from "../../lib/world.js";
 import {viewport_to_world} from "../components/com_camera2d.js";
 import {Game} from "../game.js";
@@ -37,10 +37,10 @@ function update(game: Game, entity: Entity, pointer_position: Vec2) {
     let local = game.World.LocalTransform2D[entity];
     let rigid_body = game.World.RigidBody2D[entity];
 
-    let distance = distance_squared(pointer_position, local.Translation);
+    let distance = vec2_distance_squared(pointer_position, local.Translation);
     if (distance < 5) {
         rigid_body.Acceleration[0] = local.Translation[0] - pointer_position[0];
         rigid_body.Acceleration[1] = local.Translation[1] - pointer_position[1];
-        scale(rigid_body.Acceleration, rigid_body.Acceleration, 100);
+        vec2_scale(rigid_body.Acceleration, rigid_body.Acceleration, 100);
     }
 }

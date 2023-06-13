@@ -1,8 +1,13 @@
 import {pointer_viewport} from "../../lib/input.js";
-import {get_translation} from "../../lib/mat4.js";
+import {mat4_get_translation} from "../../lib/mat4.js";
 import {Vec2, Vec3} from "../../lib/math.js";
 import {ray_intersect_aabb, ray_intersect_mesh} from "../../lib/raycast.js";
-import {normalize, subtract, transform_direction, transform_position} from "../../lib/vec3.js";
+import {
+    vec3_normalize,
+    vec3_subtract,
+    vec3_transform_direction,
+    vec3_transform_position,
+} from "../../lib/vec3.js";
 import {Entity} from "../../lib/world.js";
 import {CameraKind, viewport_to_world} from "../components/com_camera.js";
 import {Collide} from "../components/com_collide.js";
@@ -44,14 +49,14 @@ function update(game: Game, entity: Entity, pickables: Array<Collide>) {
     }
 
     // The ray's origin is at the camera's world position.
-    get_translation(pointer_origin, camera.World);
+    mat4_get_translation(pointer_origin, camera.World);
 
     // The pointer target in the world space.
     viewport_to_world(pointer_target, camera, pointer_position);
 
     // The ray's direction.
-    subtract(pointer_direction, pointer_target, pointer_origin);
-    normalize(pointer_direction, pointer_direction);
+    vec3_subtract(pointer_direction, pointer_target, pointer_origin);
+    vec3_normalize(pointer_direction, pointer_direction);
 
     let hit = ray_intersect_aabb(pickables, pointer_origin, pointer_direction);
     if (hit) {
@@ -76,13 +81,13 @@ function update(game: Game, entity: Entity, pickables: Array<Collide>) {
                 let transform = game.World.Transform[entity];
                 // Transform the ray to the pickable's space, which is cheaper than
                 // transforming all vertices of the pickable to the world space.
-                transform_position(origin_self, pointer_origin, transform.Self);
-                transform_direction(direction_self, pointer_direction, transform.Self);
+                vec3_transform_position(origin_self, pointer_origin, transform.Self);
+                vec3_transform_direction(direction_self, pointer_direction, transform.Self);
 
                 let hit = ray_intersect_mesh(pickable.Mesh, origin_self, direction_self);
                 if (hit) {
                     // Transform the intersection point back to the world space.
-                    transform_position(hit.Point, hit.Point, transform.World);
+                    vec3_transform_position(hit.Point, hit.Point, transform.World);
                     game.Picked = {
                         Entity: entity,
                         Collider: collider,

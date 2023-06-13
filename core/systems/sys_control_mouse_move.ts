@@ -7,7 +7,7 @@
 
 import {DEG_TO_RAD, Quat, Vec3} from "../../lib/math.js";
 import {clamp} from "../../lib/number.js";
-import {from_axis, get_pitch, multiply} from "../../lib/quat.js";
+import {quat_from_axis, quat_get_pitch, quat_multiply} from "../../lib/quat.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -38,24 +38,24 @@ function update(game: Game, entity: Entity) {
         // instant and precise feel. Note that the rotation won't be passed to
         // sys_move; instead it's applied here and ignores Move.RotationSpeed on
         // purpose.
-        from_axis(rotation, AXIS_Y, -amount);
+        quat_from_axis(rotation, AXIS_Y, -amount);
 
         // Yaw is pre-multiplied, i.e. applied relative to the entity's local
         // space; the Y axis is not affected by its current orientation.
-        multiply(transform.Rotation, rotation, transform.Rotation);
+        quat_multiply(transform.Rotation, rotation, transform.Rotation);
         game.World.Signature[entity] |= Has.Dirty;
     }
 
     if (control.Pitch && game.InputDelta.MouseY) {
-        let current_pitch = get_pitch(transform.Rotation);
+        let current_pitch = quat_get_pitch(transform.Rotation);
         let min_amount = control.MinPitch - current_pitch;
         let max_amount = control.MaxPitch - current_pitch;
 
         let amount = clamp(min_amount, max_amount, game.InputDelta.MouseY * control.Pitch);
-        from_axis(rotation, AXIS_X, amount * DEG_TO_RAD);
+        quat_from_axis(rotation, AXIS_X, amount * DEG_TO_RAD);
         // Pitch is post-multiplied, i.e. applied relative to the entity's self
         // space; the X axis is always aligned with its left and right sides.
-        multiply(transform.Rotation, transform.Rotation, rotation);
+        quat_multiply(transform.Rotation, transform.Rotation, rotation);
         game.World.Signature[entity] |= Has.Dirty;
     }
 }

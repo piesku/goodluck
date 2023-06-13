@@ -4,10 +4,10 @@
  * Update the entity's position to look at another entity.
  */
 
-import {get_translation} from "../../lib/mat4.js";
+import {mat4_get_translation} from "../../lib/mat4.js";
 import {Quat, Vec3} from "../../lib/math.js";
-import {look_pitch, look_yaw, multiply} from "../../lib/quat.js";
-import {transform_position} from "../../lib/vec3.js";
+import {quat_look_pitch, quat_look_yaw, quat_multiply} from "../../lib/quat.js";
+import {vec3_transform_position} from "../../lib/vec3.js";
 import {Entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has} from "../world.js";
@@ -32,15 +32,15 @@ function update(game: Game, entity: Entity) {
     let look_at = game.World.LookAt[entity];
     let target_transform = game.World.Transform[look_at.Target];
 
-    get_translation(world_position, transform.World);
-    get_translation(target_position, target_transform.World);
-    transform_position(target_position, target_position, transform.Self);
+    mat4_get_translation(world_position, transform.World);
+    mat4_get_translation(target_position, target_transform.World);
+    vec3_transform_position(target_position, target_position, transform.Self);
 
-    look_yaw(rotation_to_target, target_position);
-    multiply(transform.Rotation, rotation_to_target, transform.Rotation);
+    quat_look_yaw(rotation_to_target, target_position);
+    quat_multiply(transform.Rotation, rotation_to_target, transform.Rotation);
 
-    look_pitch(rotation_to_target, target_position);
-    multiply(transform.Rotation, transform.Rotation, rotation_to_target);
+    quat_look_pitch(rotation_to_target, target_position);
+    quat_multiply(transform.Rotation, transform.Rotation, rotation_to_target);
 
     game.World.Signature[entity] |= Has.Dirty;
 }
