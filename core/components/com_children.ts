@@ -10,7 +10,7 @@
  */
 
 import {Blueprint, instantiate} from "../../lib/game.js";
-import {Entity} from "../../lib/world.js";
+import {Entity, destroy_entity} from "../../lib/world.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";
 
@@ -78,6 +78,6 @@ export function destroy_all(world: World, entity: Entity) {
     if (world.Signature[entity] === Has.None) {
         // This entity has already been deleted.
     } else {
-        world.DestroyEntity(entity);
+        destroy_entity(world, entity);
     }
 }

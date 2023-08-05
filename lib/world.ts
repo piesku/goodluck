@@ -16,32 +16,32 @@ export class WorldImpl {
     constructor(capacity: number = 10_000) {
         this.Capacity = capacity;
     }
-
-    CreateEntity() {
-        if (this.Graveyard.length > 0) {
-            return this.Graveyard.pop()!;
-        }
-
-        if (DEBUG && this.Signature.length > this.Capacity) {
-            throw new Error("No more entities available.");
-        }
-
-        // Push a new signature and return its index.
-        return this.Signature.push(0) - 1;
-    }
-
-    DestroyEntity(entity: Entity) {
-        this.Signature[entity] = 0;
-
-        if (DEBUG && this.Graveyard.includes(entity)) {
-            throw new Error("Entity already in graveyard.");
-        }
-
-        this.Graveyard.push(entity);
-    }
 }
 
-// Other methods are free functions for the sake of tree-shakability.
+// Methods are free functions for the sake of serialization and tree-shaking.
+
+export function create_entity(world: WorldImpl) {
+    if (world.Graveyard.length > 0) {
+        return world.Graveyard.pop()!;
+    }
+
+    if (DEBUG && world.Signature.length > world.Capacity) {
+        throw new Error("No more entities available.");
+    }
+
+    // Push a new signature and return its index.
+    return world.Signature.push(0) - 1;
+}
+
+export function destroy_entity(world: WorldImpl, entity: Entity) {
+    world.Signature[entity] = 0;
+
+    if (DEBUG && world.Graveyard.includes(entity)) {
+        throw new Error("Entity already in graveyard.");
+    }
+
+    world.Graveyard.push(entity);
+}
 
 /**
  * Find the first entity in the world with the given component mask.

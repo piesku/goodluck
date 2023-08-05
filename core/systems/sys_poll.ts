@@ -10,7 +10,7 @@
  * added to the world.
  */
 
-import {Entity} from "../../lib/world.js";
+import {Entity, destroy_entity} from "../../lib/world.js";
 import {TaskKind} from "../components/com_task.js";
 import {Game} from "../game.js";
 import {Has, World} from "../world.js";
@@ -59,7 +59,7 @@ export function sys_poll(game: Game, delta: number) {
                 task.Callback(ent);
             case TaskKind.When:
             case TaskKind.Delay:
-                game.World.DestroyEntity(ent);
+                destroy_entity(game.World, ent);
         }
 
         // Delete component data to avoid memory leaks from closures.

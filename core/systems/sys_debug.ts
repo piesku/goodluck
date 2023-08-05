@@ -8,7 +8,7 @@
 
 import {instantiate} from "../../lib/game.js";
 import {vec3_scale} from "../../lib/vec3.js";
-import {Entity} from "../../lib/world.js";
+import {Entity, destroy_entity} from "../../lib/world.js";
 import {Collide} from "../components/com_collide.js";
 import {RenderKind, render_colored_unlit} from "../components/com_render.js";
 import {Transform, transform} from "../components/com_transform.js";
@@ -32,7 +32,7 @@ export function sys_debug(game: Game, delta: number) {
             // ...or if it's not the same TRANSFORM.
             game.World.Transform[wireframe.anchor_entity] !== wireframe.anchor_transform
         ) {
-            game.World.DestroyEntity(wireframe.entity);
+            destroy_entity(game.World, wireframe.entity);
             wireframes.delete(key);
         }
     }

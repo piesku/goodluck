@@ -1,6 +1,6 @@
 import {RenderTarget} from "./framebuffer.js";
 import {GL_CULL_FACE, GL_DEPTH_TEST, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA} from "./webgl.js";
-import {Entity, WorldImpl} from "./world.js";
+import {Entity, WorldImpl, create_entity} from "./world.js";
 
 const update_span = document.getElementById("update");
 const delta_span = document.getElementById("delta");
@@ -387,7 +387,7 @@ type Mixin<G extends GameImpl> = (game: G, entity: Entity) => void;
 export type Blueprint<G extends GameImpl> = Array<Mixin<G>>;
 
 export function instantiate<G extends GameImpl>(game: G, blueprint: Blueprint<G>) {
-    let entity = game.World.CreateEntity();
+    let entity = create_entity(game.World);
     for (let mixin of blueprint) {
         mixin(game, entity);
     }
