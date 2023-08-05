@@ -173,8 +173,7 @@ export abstract class GameImpl {
             this.FrameReset(delta);
         };
 
-        this.Stop();
-        tick(last);
+        requestAnimationFrame(tick);
     }
 
     Stop() {
