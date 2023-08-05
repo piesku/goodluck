@@ -38,15 +38,14 @@ export function create_texture_from(gl: WebGLRenderingContext, image: HTMLImageE
 
     gl.generateMipmap(GL_TEXTURE_2D);
 
-    // GL_NEAREST_MIPMAP_LINEAR is the default. Consider switching to
-    // GL_LINEAR_MIPMAP_LINEAR for the best quality.
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
-    // GL_LINEAR is the default; make it explicit.
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    // GL_REPEAT is the default; make it explicit.
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    if (false) {
+        // The following are the default settings in WebGL2.
+        // GL_TEXTURE_MIN_FILTER: Consider switching to GL_LINEAR_MIPMAP_LINEAR for the best quality.
+        gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+        gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    }
 
     return texture;
 }
@@ -69,9 +68,11 @@ export function create_spritesheet_from(
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    // GL_REPEAT is the default; make it explicit.
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    if (false) {
+        // The following are the default settings in WebGL2.
+        gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    }
 
     return {
         Texture: texture,
