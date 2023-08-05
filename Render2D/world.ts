@@ -1,4 +1,5 @@
 import {WorldImpl} from "../lib/world.js";
+import {FLOATS_PER_INSTANCE} from "../materials/layout2d.js";
 import {Camera2D} from "./components/com_camera2d.js";
 import {Children} from "./components/com_children.js";
 import {ControlPlayer} from "./components/com_control_player.js";
@@ -34,6 +35,8 @@ export const enum Has {
 }
 
 export class World extends WorldImpl {
+    InstanceData = new Float32Array(this.Capacity * FLOATS_PER_INSTANCE);
+
     Camera2D: Array<Camera2D> = [];
     ControlPlayer: Array<ControlPlayer> = [];
     Children: Array<Children> = [];

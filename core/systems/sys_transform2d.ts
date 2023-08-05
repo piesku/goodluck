@@ -69,11 +69,11 @@ function update_instance_data(game: Game, entity: Entity) {
 
     let local = game.World.LocalTransform2D[entity];
     let instance_offset = entity * FLOATS_PER_INSTANCE;
-    game.InstanceData[instance_offset + 0] = local.Scale[0];
-    game.InstanceData[instance_offset + 1] = local.Scale[1];
-    game.InstanceData[instance_offset + 2] = local.Rotation * DEG_TO_RAD;
-    game.InstanceData[instance_offset + 4] = local.Translation[0];
-    game.InstanceData[instance_offset + 5] = local.Translation[1];
+    game.World.InstanceData[instance_offset + 0] = local.Scale[0];
+    game.World.InstanceData[instance_offset + 1] = local.Scale[1];
+    game.World.InstanceData[instance_offset + 2] = local.Rotation * DEG_TO_RAD;
+    game.World.InstanceData[instance_offset + 4] = local.Translation[0];
+    game.World.InstanceData[instance_offset + 5] = local.Translation[1];
 }
 
 const world_position: Vec2 = [0, 0];

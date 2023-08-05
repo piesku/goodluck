@@ -26,10 +26,13 @@ export function sys_render2d(game: Game, delta: number) {
         // The shader queries the instance data for presence of the following components.
         let signature = game.World.Signature[ent] & (Has.Render2D | Has.SpatialNode2D);
         let offset = ent * FLOATS_PER_INSTANCE + 7;
-        if (game.InstanceData[offset] !== signature) {
-            game.InstanceData[offset] = signature;
+        if (game.World.InstanceData[offset] !== signature) {
+            game.World.InstanceData[offset] = signature;
         }
     }
+
+    game.Gl.bindBuffer(GL_ARRAY_BUFFER, game.InstanceBuffer);
+    game.Gl.bufferData(GL_ARRAY_BUFFER, game.World.InstanceData, GL_STREAM_DRAW);
 
     for (let camera_entity of game.Cameras) {
         let camera = game.World.Camera2D[camera_entity];
@@ -52,9 +55,6 @@ function render_all(game: Game, eye: Camera2D) {
     game.Gl.bindTexture(GL_TEXTURE_2D, sheet.Texture);
     game.Gl.uniform1i(material.Locations.SheetTexture, 0);
     game.Gl.uniform2f(material.Locations.SheetSize, sheet.Width, sheet.Height);
-
-    game.Gl.bindBuffer(GL_ARRAY_BUFFER, game.InstanceBuffer);
-    game.Gl.bufferData(GL_ARRAY_BUFFER, game.InstanceData, GL_STREAM_DRAW);
 
     game.Gl.drawArraysInstanced(material.Mode, 0, 4, game.World.Signature.length);
 }

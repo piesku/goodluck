@@ -43,7 +43,7 @@ export function spatial_node2d(is_gyroscope = false) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.SpatialNode2D | Has.Dirty;
         game.World.SpatialNode2D[entity] = {
-            World: game.InstanceData.subarray(
+            World: game.World.InstanceData.subarray(
                 entity * FLOATS_PER_INSTANCE,
                 entity * FLOATS_PER_INSTANCE + 6
             ),

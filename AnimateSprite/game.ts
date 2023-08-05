@@ -1,7 +1,7 @@
 import {Game3D} from "../lib/game.js";
 import {create_spritesheet_from} from "../lib/texture.js";
 import {GL_BLEND, GL_DEPTH_TEST} from "../lib/webgl.js";
-import {FLOATS_PER_INSTANCE, setup_render2d_buffers} from "../materials/layout2d.js";
+import {setup_render2d_buffers} from "../materials/layout2d.js";
 import {mat_render2d} from "../materials/mat_render2d.js";
 import {sys_camera2d} from "./systems/sys_camera2d.js";
 import {sys_draw2d} from "./systems/sys_draw2d.js";
@@ -19,7 +19,6 @@ export class Game extends Game3D {
     MaterialRender2D = mat_render2d(this.Gl, Has.Render2D, Has.SpatialNode2D);
     Spritesheet = create_spritesheet_from(this.Gl, document.querySelector("img")!);
 
-    InstanceData = new Float32Array(this.World.Capacity * FLOATS_PER_INSTANCE);
     InstanceBuffer = this.Gl.createBuffer()!;
 
     constructor() {
