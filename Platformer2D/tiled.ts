@@ -1,5 +1,7 @@
+import {animate_sprite} from "./components/com_animate_sprite.js";
 import {local_transform2d} from "./components/com_local_transform2d.js";
 import {render2d} from "./components/com_render2d.js";
+import {atlas} from "./sprites/atlas.js";
 
 interface TiledLayer {
     data: Array<number>;
@@ -27,6 +29,9 @@ export function* tiled_layer_blueprints(layer: TiledLayer) {
         let tile_id = global_id & ~TileFlip.All; // Remove flip flags.
         if (tile_id == 0) {
             continue;
+        } else {
+            // Tiled uses 0 to mean "no tile"; all other tiles are incremented by 1.
+            tile_id -= 1;
         }
 
         let x = (i % layer.width) + 0.5;
@@ -48,7 +53,11 @@ export function* tiled_layer_blueprints(layer: TiledLayer) {
             local = local_transform2d([x, y]);
         }
 
-        let tile_name = `${tile_id - 1}`;
-        yield [local, render2d(tile_name)];
+        let frames = atlas[tile_id].a;
+        if (frames) {
+            yield [local, render2d(tile_id.toString()), animate_sprite(frames)];
+        } else {
+            yield [local, render2d(tile_id.toString())];
+        }
     }
 }
