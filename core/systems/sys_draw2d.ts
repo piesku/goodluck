@@ -18,19 +18,22 @@ export function sys_draw2d(game: Game, delta: number) {
 
     let camera = game.World.Camera2D[camera_entity];
 
-    // TODO Allow entities to specify background vs. foreground.
     let ctx = game.BackgroundContext;
     ctx.resetTransform();
     ctx.fillStyle = game.World.BackgroundColor;
     ctx.fillRect(0, 0, game.ViewportWidth, game.ViewportHeight);
 
+    // TODO Allow entities to specify background vs. foreground.
+    // ctx = game.ForegroundContext;
+    // ctx.clearRect(0, 0, game.ViewportWidth, game.ViewportHeight);
+
     ctx.transform(
-        (camera.Pv[0] / 2) * game.ViewportWidth,
-        -(camera.Pv[1] / 2) * game.ViewportWidth,
-        -(camera.Pv[2] / 2) * game.ViewportHeight,
-        (camera.Pv[3] / 2) * game.ViewportHeight,
-        ((camera.Pv[4] + 1) / 2) * game.ViewportWidth,
-        ((camera.Pv[5] + 1) / 2) * game.ViewportHeight
+        (camera.Pv[0] * game.ViewportWidth) / 2,
+        (-camera.Pv[1] * game.ViewportHeight) / 2,
+        (-camera.Pv[2] * game.ViewportWidth) / 2,
+        (camera.Pv[3] * game.ViewportHeight) / 2,
+        ((1 + camera.Pv[4]) * game.ViewportWidth) / 2,
+        ((1 - camera.Pv[5]) * game.ViewportHeight) / 2
     );
 
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
