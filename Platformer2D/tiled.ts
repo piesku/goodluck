@@ -4,9 +4,9 @@ import {render2d} from "./components/com_render2d.js";
 import {atlas} from "./sprites/atlas.js";
 
 interface TiledLayer {
-    data: Array<number>;
-    height: number;
-    width: number;
+    Data: Array<number>;
+    Width: number;
+    Height: number;
 }
 
 const enum TileFlip {
@@ -24,8 +24,8 @@ const enum TileFlip {
 }
 
 export function* tiled_layer_blueprints(layer: TiledLayer) {
-    for (let i = 0; i < layer.data.length; i++) {
-        let global_id = layer.data[i]; // Global ID with flip flags.
+    for (let i = 0; i < layer.Data.length; i++) {
+        let global_id = layer.Data[i]; // Global ID with flip flags.
         let tile_id = global_id & ~TileFlip.All; // Remove flip flags.
         if (tile_id == 0) {
             continue;
@@ -34,8 +34,8 @@ export function* tiled_layer_blueprints(layer: TiledLayer) {
             tile_id -= 1;
         }
 
-        let x = (i % layer.width) + 0.5;
-        let y = layer.height - Math.floor(i / layer.width) - 0.5;
+        let x = (i % layer.Width) + 0.5;
+        let y = layer.Height - Math.floor(i / layer.Width) - 0.5;
         let local: ReturnType<typeof local_transform2d>;
 
         // Rotate and flip flags are stored in the global ID.

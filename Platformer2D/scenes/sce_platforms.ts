@@ -13,11 +13,12 @@ export function scene_platforms(game: Game) {
     // Camera.
     instantiate(game, [
         ...blueprint_camera(game),
-        set_position(map_platforms.width / 2, map_platforms.height / 2),
+        set_position(map_platforms.Width / 2, map_platforms.Height / 2),
     ]);
 
     // Map from Tiled.
-    for (let layer of map_platforms.layers) {
+    game.World.BackgroundColor = map_platforms.BackgroundColor;
+    for (let layer of map_platforms.Layers) {
         for (let blueprint of tiled_layer_blueprints(layer)) {
             instantiate(game, blueprint);
         }

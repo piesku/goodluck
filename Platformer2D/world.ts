@@ -69,6 +69,7 @@ export const enum Has {
 
 export class World extends WorldImpl {
     InstanceData = new Float32Array(this.Capacity * FLOATS_PER_INSTANCE);
+    BackgroundColor = "#eee";
 
     AnimateSprite: Array<AnimateSprite> = [];
     Camera2D: Array<Camera2D> = [];

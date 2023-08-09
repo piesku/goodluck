@@ -3,7 +3,7 @@ const {readFileSync} = require("fs");
 let args = process.argv.slice(2);
 if (args.length !== 1) {
     console.error("Generate an atlas description from a Tiled tileset (.tsj).");
-    console.error("  node atlas_desc.cjs atlas.tsj");
+    console.error("  node tiled_atlas_desc.cjs atlas.tsj");
     process.exit(1);
 }
 

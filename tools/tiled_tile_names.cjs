@@ -3,7 +3,7 @@ const {readFileSync} = require("fs");
 let args = process.argv.slice(2);
 if (args.length !== 1) {
     console.error("Generate names of tiles from a Tiled tileset (.tsj).");
-    console.error("  node atlas_tile_names.cjs atlas.tsj");
+    console.error("  node tiled_tile_names.cjs atlas.tsj");
     process.exit(1);
 }
 

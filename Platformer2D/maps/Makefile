@@ -1,4 +1,4 @@
-all: map_sample.ts
+all: map_platforms.ts
 
-%.ts: %.json
-	echo '// prettier-ignore\nexport const $* =' $$(cat $^) > $@
+%.ts: %.tmj
+	node ../../tools/tiled_tmj2map.cjs $< > $@
