@@ -1,9 +1,10 @@
+import {animate_sprite} from "../components/com_animate_sprite.js";
 import {collide2d} from "../components/com_collide2d.js";
 import {control_player} from "../components/com_control_player.js";
-import {draw_rect} from "../components/com_draw.js";
 import {lifespan} from "../components/com_lifespan.js";
 import {local_transform2d} from "../components/com_local_transform2d.js";
 import {move2d} from "../components/com_move2d.js";
+import {render2d} from "../components/com_render2d.js";
 import {RigidKind, rigid_body2d} from "../components/com_rigid_body2d.js";
 import {spatial_node2d} from "../components/com_spatial_node2d.js";
 import {Game, Layer} from "../game.js";
@@ -18,7 +19,8 @@ export function blueprint_square(game: Game) {
         rigid_body2d(RigidKind.Dynamic, 0.3),
         control_player(),
         move2d(7, 0),
-        draw_rect("red"),
+        render2d("13"),
+        animate_sprite({13: 0.8, 14: 0.4}),
         lifespan(SQUARE_LIFESPAN),
     ];
 }
