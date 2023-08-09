@@ -25,7 +25,7 @@ export function scene_stage(game: Game) {
         instantiate(game, [
             spatial_node2d(),
             local_transform2d(),
-            draw_rect("#FFD6D5", game.SceneWidth, game.SceneHeight),
+            draw_rect("#FFD6D5", game.World.Width, game.World.Height),
         ]);
         instantiate(game, [
             spatial_node2d(),
@@ -43,8 +43,8 @@ export function scene_stage(game: Game) {
 
     // Platforms.
     for (let i = 0; i < 10; i++) {
-        let x = float(-game.SceneWidth / 2, game.SceneWidth / 2);
-        let y = float(-game.SceneHeight / 2, game.SceneHeight / 2);
+        let x = float(-game.World.Width / 2, game.World.Width / 2);
+        let y = float(-game.World.Height / 2, game.World.Height / 2);
         instantiate(game, [
             spatial_node2d(),
             local_transform2d([x, y], 0, [4, 1]),

@@ -34,8 +34,8 @@ export function* tiled_layer_blueprints(layer: TiledLayer) {
             tile_id -= 1;
         }
 
-        let x = (i % layer.Width) + 0.5;
-        let y = layer.Height - Math.floor(i / layer.Width) - 0.5;
+        let x = i % layer.Width;
+        let y = Math.floor(i / layer.Width);
         let local: ReturnType<typeof local_transform2d>;
 
         // Rotate and flip flags are stored in the global ID.

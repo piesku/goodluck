@@ -22,26 +22,23 @@ function update(game: Game, entity: Entity, delta: number) {
     let rigid_body = game.World.RigidBody2D[entity];
 
     if (rigid_body.Kind === RigidKind.Dynamic) {
-        let top = game.SceneHeight / 2;
-        let right = game.SceneWidth / 2;
-
-        if (local.Translation[1] > top) {
-            local.Translation[1] = top;
+        if (local.Translation[1] > game.World.Height) {
+            local.Translation[1] = game.World.Height;
             rigid_body.VelocityLinear[1] *= -rigid_body.Bounciness;
         }
 
-        if (local.Translation[1] < -top) {
-            local.Translation[1] = -top;
+        if (local.Translation[1] < 0) {
+            local.Translation[1] = 0;
             rigid_body.VelocityLinear[1] *= -rigid_body.Bounciness;
         }
 
-        if (local.Translation[0] < -right) {
-            local.Translation[0] = -right;
+        if (local.Translation[0] < 0) {
+            local.Translation[0] = 0;
             rigid_body.VelocityLinear[0] *= -rigid_body.Bounciness;
         }
 
-        if (local.Translation[0] > right) {
-            local.Translation[0] = right;
+        if (local.Translation[0] > game.World.Width) {
+            local.Translation[0] = game.World.Width;
             rigid_body.VelocityLinear[0] *= -rigid_body.Bounciness;
         }
     }

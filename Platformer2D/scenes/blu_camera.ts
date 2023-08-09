@@ -7,6 +7,6 @@ export function blueprint_camera(game: Game) {
     return [
         spatial_node2d(),
         local_transform2d(),
-        camera2d([game.SceneWidth / 2 + 1, game.SceneHeight / 2 + 1]),
+        camera2d([game.World.Width / 2 + 1, game.World.Height / 2 + 1]),
     ];
 }

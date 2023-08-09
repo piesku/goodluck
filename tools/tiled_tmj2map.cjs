@@ -14,11 +14,6 @@ if (positionals.length !== 1) {
 let tiled_json = readFileSync(positionals[0], "utf8");
 let tiled_map = JSON.parse(tiled_json);
 
-if (tiled_map.renderorder !== "right-up") {
-    console.error("Map must be saved using the right-up render order in Tiled.");
-    process.exit(1);
-}
-
 let map = {
     Width: tiled_map.width,
     Height: tiled_map.height,
@@ -27,8 +22,20 @@ let map = {
 };
 
 for (let tiled_layer of tiled_map.layers) {
+    let data = [];
+
+    // Convert a tile layer from right-down render order to right-up.
+    for (let y = 0; y < tiled_layer.height; y++) {
+        for (let x = 0; x < tiled_layer.width; x++) {
+            data[y * tiled_layer.width + x] =
+                tiled_layer.data[(tiled_layer.height - y - 1) * tiled_layer.width + x];
+            data[(tiled_layer.height - y - 1) * tiled_layer.width + x] =
+                tiled_layer.data[y * tiled_layer.width + x];
+        }
+    }
+
     map.Layers.push({
-        Data: tiled_layer.data,
+        Data: data,
         Width: tiled_layer.width,
         Height: tiled_layer.height,
     });

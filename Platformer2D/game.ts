@@ -43,9 +43,6 @@ export class Game extends Game3D {
     override Gl = this.SceneCanvas.getContext("webgl2", {antialias: false})!;
     InstanceBuffer = this.Gl.createBuffer()!;
 
-    SceneWidth = 32;
-    SceneHeight = 20;
-
     constructor() {
         super();
 
