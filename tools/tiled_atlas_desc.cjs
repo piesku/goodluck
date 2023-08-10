@@ -29,6 +29,13 @@ for (let tile of tileset.tiles) {
             sprites[tile.id].a[frame.tileid] = frame.duration / 1000;
         }
     }
+
+    if (tile.properties) {
+        let collide_prop = tile.properties.find((x) => x.name === "Collision");
+        if (collide_prop) {
+            sprites[tile.id].c = collide_prop.value;
+        }
+    }
 }
 
 console.log(`// prettier-ignore
@@ -39,6 +46,7 @@ export const atlas: {
 		w: number,
 		h: number,
 		a?: Record<string, number>,
+        c?: boolean,
 	}
 } = ${JSON.stringify(sprites, null, 4)};
 `);

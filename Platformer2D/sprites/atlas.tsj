@@ -178,25 +178,49 @@
          "id":27,
          "image":"tile_0000.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":28,
          "image":"tile_0001.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":29,
          "image":"tile_0002.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":30,
          "image":"tile_0003.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":31,
@@ -214,7 +238,13 @@
          "id":33,
          "image":"tile_0006.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":34,
@@ -232,91 +262,181 @@
          "id":36,
          "image":"tile_0009.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":37,
          "image":"tile_0010.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":38,
          "image":"tile_0011.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":39,
          "image":"tile_0012.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":40,
          "image":"tile_0013.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":41,
          "image":"tile_0014.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":42,
          "image":"tile_0015.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":43,
          "image":"tile_0016.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":44,
          "image":"tile_0017.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":45,
          "image":"tile_0018.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":46,
          "image":"tile_0019.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":47,
          "image":"tile_0020.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":48,
          "image":"tile_0021.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":49,
          "image":"tile_0022.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":50,
          "image":"tile_0023.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":51,
@@ -334,7 +454,13 @@
          "id":53,
          "image":"tile_0026.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":54,
@@ -346,25 +472,49 @@
          "id":55,
          "image":"tile_0028.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":56,
          "image":"tile_0029.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":57,
          "image":"tile_0030.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":58,
          "image":"tile_0031.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":59,
@@ -418,13 +568,25 @@
          "id":63,
          "image":"tile_0036.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":64,
          "image":"tile_0037.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":65,
@@ -436,31 +598,61 @@
          "id":66,
          "image":"tile_0039.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":67,
          "image":"tile_0040.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":68,
          "image":"tile_0041.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":69,
          "image":"tile_0042.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":70,
          "image":"tile_0043.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":71,
@@ -484,25 +676,49 @@
          "id":74,
          "image":"tile_0047.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":75,
          "image":"tile_0048.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":76,
          "image":"tile_0049.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":77,
          "image":"tile_0050.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":78,
@@ -541,49 +757,97 @@
          "id":83,
          "image":"tile_0056.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":84,
          "image":"tile_0057.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":85,
          "image":"tile_0058.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":86,
          "image":"tile_0059.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":87,
          "image":"tile_0060.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":88,
          "image":"tile_0061.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":89,
          "image":"tile_0062.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":90,
          "image":"tile_0063.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":91,
@@ -670,49 +934,97 @@
          "id":103,
          "image":"tile_0076.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":104,
          "image":"tile_0077.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":105,
          "image":"tile_0078.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":106,
          "image":"tile_0079.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":107,
          "image":"tile_0080.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":108,
          "image":"tile_0081.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":109,
          "image":"tile_0082.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":110,
          "image":"tile_0083.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":111,
@@ -814,25 +1126,49 @@
          "id":127,
          "image":"tile_0100.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":128,
          "image":"tile_0101.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":129,
          "image":"tile_0102.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":130,
          "image":"tile_0103.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":131,
@@ -943,25 +1279,49 @@
          "id":147,
          "image":"tile_0120.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":148,
          "image":"tile_0121.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":149,
          "image":"tile_0122.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":150,
          "image":"tile_0123.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":151,
@@ -1063,25 +1423,49 @@
          "id":167,
          "image":"tile_0140.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":168,
          "image":"tile_0141.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":169,
          "image":"tile_0142.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":170,
          "image":"tile_0143.png",
          "imageheight":18,
-         "imagewidth":18
+         "imagewidth":18,
+         "properties":[
+                {
+                 "name":"Collision",
+                 "type":"bool",
+                 "value":true
+                }]
         }, 
         {
          "id":171,
