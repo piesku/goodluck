@@ -19,3 +19,6 @@ main {
 [onclick] {
     cursor: pointer;
 }
+.grabbing {
+    cursor: grabbing;
+}

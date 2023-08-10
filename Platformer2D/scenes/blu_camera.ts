@@ -4,9 +4,5 @@ import {spatial_node2d} from "../components/com_spatial_node2d.js";
 import {Game} from "../game.js";
 
 export function blueprint_camera(game: Game) {
-    return [
-        spatial_node2d(),
-        local_transform2d(),
-        camera2d([game.World.Width / 2 + 1, game.World.Height / 2 + 1]),
-    ];
+    return [spatial_node2d(), local_transform2d(), camera2d([0, 0])];
 }

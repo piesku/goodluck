@@ -12,8 +12,8 @@ export function pointer_down(game: GameImpl, mouse_button: number, touch_id = mo
 export function pointer_clicked(game: GameImpl, mouse_button: number, touch_id = mouse_button) {
     return (
         (game.InputDelta["Mouse" + mouse_button] === -1 &&
-            game.InputDistance["Mouse" + mouse_button] < 10) ||
-        (game.InputDelta["Touch" + touch_id] === -1 && game.InputDistance["Touch" + touch_id] < 10)
+            game.InputDistance["Mouse" + mouse_button] < 5) ||
+        (game.InputDelta["Touch" + touch_id] === -1 && game.InputDistance["Touch" + touch_id] < 5)
     );
 }
 

@@ -12,6 +12,7 @@ import {mat_render2d} from "../materials/mat_render2d.js";
 import {sys_camera2d} from "./systems/sys_camera2d.js";
 import {sys_collide2d} from "./systems/sys_collide2d.js";
 import {sys_control_always2d} from "./systems/sys_control_always2d.js";
+import {sys_control_camera} from "./systems/sys_control_camera.js";
 import {sys_control_keyboard} from "./systems/sys_control_keyboard.js";
 import {sys_control_mouse} from "./systems/sys_control_mouse.js";
 import {sys_draw2d} from "./systems/sys_draw2d.js";
@@ -33,6 +34,7 @@ import {sys_ui} from "./systems/sys_ui.js";
 import {Has, World} from "./world.js";
 
 export const WORLD_CAPACITY = 65_536; // = 4MB of InstanceData.
+export const REAL_UNIT_SIZE = 18;
 
 export class Game extends Game3D {
     World = new World(WORLD_CAPACITY);
@@ -42,6 +44,7 @@ export class Game extends Game3D {
 
     override Gl = this.SceneCanvas.getContext("webgl2", {antialias: false})!;
     InstanceBuffer = this.Gl.createBuffer()!;
+    UnitSize = REAL_UNIT_SIZE;
 
     constructor() {
         super();
@@ -67,13 +70,10 @@ export class Game extends Game3D {
         sys_physics2d_resolve(this, delta);
         sys_trigger2d(this, delta);
 
-        // Camera.
-        sys_resize2d(this, delta);
-        sys_camera2d(this, delta);
-
         // Player input.
         sys_control_keyboard(this, delta);
         sys_control_mouse(this, delta);
+        sys_control_camera(this, delta);
 
         // AI.
         sys_control_always2d(this, delta);
@@ -87,6 +87,10 @@ export class Game extends Game3D {
 
         // Commit all positions.
         sys_transform2d(this, delta);
+
+        // Camera.
+        sys_resize2d(this, delta);
+        sys_camera2d(this, delta);
 
         // Rendering.
         sys_draw2d(this, delta);

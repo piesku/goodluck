@@ -48,8 +48,8 @@ export interface Game extends GameXR {
 
     MaterialRender2D: Material<Render2DLayout>;
     Spritesheet: Spritesheet;
-    InstanceData: Float32Array;
     InstanceBuffer: WebGLBuffer;
+    UnitSize: number;
 }
 
 export const enum Layer {
