@@ -55,7 +55,10 @@ export class Game extends Game3D {
         setup_render2d_buffers(this.Gl, this.InstanceBuffer);
     }
 
-    override FixedUpdate(delta: number) {
+    override FrameUpdate(delta: number) {
+        // Event loop.
+        sys_poll(this, delta);
+
         // Collisions and physics.
         sys_physics2d_integrate(this, delta);
         sys_physics2d_bounds(this, delta);
@@ -63,11 +66,6 @@ export class Game extends Game3D {
         sys_collide2d(this, delta);
         sys_physics2d_resolve(this, delta);
         sys_trigger2d(this, delta);
-    }
-
-    override FrameUpdate(delta: number) {
-        // Event loop.
-        sys_poll(this, delta);
 
         // Camera.
         sys_resize2d(this, delta);

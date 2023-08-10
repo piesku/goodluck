@@ -36,16 +36,14 @@ export class Game extends Game3D {
     ItemsCollected = 0;
     ItemsMissed = 0;
 
-    override FixedUpdate(delta: number) {
+    override FrameUpdate(delta: number) {
         // Collisions and physics.
         sys_physics_integrate(this, delta);
         sys_transform(this, delta);
         sys_collide(this, delta);
         sys_physics_resolve(this, delta);
         sys_transform(this, delta);
-    }
 
-    override FrameUpdate(delta: number) {
         // Camera.
         sys_resize(this, delta);
         sys_camera(this, delta);
