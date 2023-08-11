@@ -42,7 +42,6 @@ export class Game extends Game3D {
     MaterialRender2D = mat_render2d(this.Gl, Has.Render2D, Has.SpatialNode2D);
     Spritesheet = create_spritesheet_from(this.Gl, document.querySelector("img")!);
 
-    override Gl = this.SceneCanvas.getContext("webgl2", {antialias: false})!;
     InstanceBuffer = this.Gl.createBuffer()!;
     UnitSize = REAL_UNIT_SIZE;
 

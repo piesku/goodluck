@@ -12,16 +12,16 @@ let tileset_file = readFileSync("./" + tileset_path);
 let tileset = JSON.parse(tileset_file);
 
 let sprites = {};
-let y = 0;
+let y = 1;
 
 for (let tile of tileset.tiles) {
     sprites[tile.id] = {
-        x: 0,
+        x: 1,
         y: y,
         w: tile.imagewidth,
         h: tile.imageheight,
     };
-    y += tile.imageheight;
+    y += tile.imageheight + 2;
 
     if (tile.animation) {
         sprites[tile.id].a = {};
