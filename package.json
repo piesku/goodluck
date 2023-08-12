@@ -23,9 +23,9 @@
         "ts:watch": "tsc --noEmit --watch -p ."
     },
     "devDependencies": {
-        "esbuild": "0.17",
-        "prettier": "2.8",
-        "typescript": "5.0"
+        "esbuild": "0.19",
+        "prettier": "3.0",
+        "typescript": "5.1"
     },
     "engines": {
         "node": ">=18"
