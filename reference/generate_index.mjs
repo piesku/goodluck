@@ -19,6 +19,10 @@ let {values} = parseArgs({
             type: "string",
             multiple: true,
         },
+        utility: {
+            type: "string",
+            multiple: true,
+        },
     },
 });
 
@@ -40,13 +44,15 @@ marked.setOptions({
 
 function render_definition(filename_html) {
     let nice_name = filename_html.replace(/^(com|lib)_/, "").replace(/.html$/, "");
-    let source_path = filename_html.replace(/\.html$/, ".ts");
+    let source_path = "";
     if (filename_html.startsWith("com_")) {
-        source_path = "../core/components/" + source_path;
+        source_path = "../core/components/" + filename_html.replace(/\.html$/, ".ts");
     } else if (filename_html.startsWith("sys_")) {
-        source_path = "../core/systems/" + source_path;
-    } else {
+        source_path = "../core/systems/" + filename_html.replace(/\.html$/, ".ts");
+    } else if (filename_html.startsWith("lib_")) {
         source_path = "../lib/" + nice_name + ".ts";
+    } else {
+        source_path = "../util/" + filename_html.replace(/\.html$/, ".cjs");
     }
     let source_contents = fs.readFileSync(source_path, "utf8");
     let source_lines = source_contents.split("\n");
@@ -131,6 +137,16 @@ code {
                     <h2>Libraries</h2>
                     <dl>
                         ${values.library.map(render_definition).join("\n")}
+                    </dl>
+                </section>`
+                : ""
+        }
+        ${
+            values.utility
+                ? `<section>
+                    <h2>Utilities</h2>
+                    <dl>
+                        ${values.utility.map(render_definition).join("\n")}
                     </dl>
                 </section>`
                 : ""

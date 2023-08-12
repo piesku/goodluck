@@ -2,6 +2,10 @@
  * # Render2D
  *
  * The `Render2D` component allows an entity to be rendered in 2D space.
+ *
+ * Only a single sprite atlas is supported. The atlas is defined in
+ * `src/sprites/atlas.ts`. See [tiled_tsj2atlas.cjs](tiled_tsj2atlas.html) for
+ * more information.
  */
 
 import {Vec4} from "../../lib/math.js";
