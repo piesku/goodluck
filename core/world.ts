@@ -112,6 +112,9 @@ export const enum Has {
 
 export interface World extends WorldImpl {
     InstanceData: Float32Array;
+    BackgroundColor: string;
+    Width: number;
+    Height: number;
 
     Animate: Array<Animate>;
     AnimateSprite: Array<AnimateSprite>;

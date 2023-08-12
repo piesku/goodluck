@@ -11,7 +11,6 @@ import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.Camera2D;
-const UNIT_PX = 32;
 
 export function sys_resize2d(game: Game, delta: number) {
     if (game.ViewportWidth != window.innerWidth || game.ViewportHeight != window.innerHeight) {
@@ -52,26 +51,26 @@ function update(game: Game, entity: Entity) {
         // apply a radius computed taking into account the world unit size in
         // pixels. This is useful for keeping the unit size constant across
         // different viewport dimensions, and help pixel art sprites look crisp.
-        let radius = game.ViewportHeight / UNIT_PX / 2;
-        mat2d_from_ortho(projection.Inverse, radius * aspect, radius);
+        let radius = game.ViewportHeight / game.UnitSize / 2;
+        mat2d_from_ortho(projection.Projection, radius * aspect, radius);
     } else {
         let target_aspect = projection.Radius[0] / projection.Radius[1];
         if (aspect < target_aspect) {
             // Portrait orientation.
             mat2d_from_ortho(
-                projection.Inverse,
+                projection.Projection,
                 projection.Radius[0],
                 projection.Radius[0] / aspect
             );
         } else {
             // Landscape orientation.
             mat2d_from_ortho(
-                projection.Inverse,
+                projection.Projection,
                 projection.Radius[1] * aspect,
                 projection.Radius[1]
             );
         }
     }
 
-    mat2d_invert(projection.Projection, projection.Inverse);
+    mat2d_invert(projection.Inverse, projection.Projection);
 }

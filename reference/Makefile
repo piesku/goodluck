@@ -121,13 +121,18 @@ LIBRARIES := \
 	lib_webgl.html \
 	lib_world.html
 
-all: index.html $(COMPONENTS) $(SYSTEMS) $(LIBRARIES)
+UTILITIES := \
+	tiled_tmj2map.html \
+	tiled_tsj2atlas.html
 
-index.html: Makefile generate_index.mjs $(COMPONENTS) $(SYSTEMS) $(LIBRARIES)
+all: index.html $(COMPONENTS) $(SYSTEMS) $(LIBRARIES) $(UTILITIES)
+
+index.html: Makefile generate_index.mjs $(COMPONENTS) $(SYSTEMS) $(LIBRARIES) $(UTILITIES)
 	node generate_index.mjs \
 		$(COMPONENTS:com_%.html=--component com_%.html) \
 		$(SYSTEMS:sys_%.html=--system sys_%.html) \
 		$(LIBRARIES:lib_%.html=--library lib_%.html) \
+		$(UTILITIES:%.html=--utility %.html) \
 		> $@
 
 com_%.html: ../core/components/com_%.ts generate_reference.mjs
@@ -135,6 +140,7 @@ com_%.html: ../core/components/com_%.ts generate_reference.mjs
 		$(COMPONENTS:com_%.html=--component com_%.html) \
 		$(SYSTEMS:sys_%.html=--system sys_%.html) \
 		$(LIBRARIES:lib_%.html=--library lib_%.html) \
+		$(UTILITIES:%.html=--utility %.html) \
 		> $@
 
 sys_%.html: ../core/systems/sys_%.ts generate_reference.mjs
@@ -142,6 +148,7 @@ sys_%.html: ../core/systems/sys_%.ts generate_reference.mjs
 		$(COMPONENTS:com_%.html=--component com_%.html) \
 		$(SYSTEMS:sys_%.html=--system sys_%.html) \
 		$(LIBRARIES:lib_%.html=--library lib_%.html) \
+		$(UTILITIES:%.html=--utility %.html) \
 		> $@
 
 lib_%.html: ../lib/%.ts generate_reference.mjs
@@ -149,11 +156,17 @@ lib_%.html: ../lib/%.ts generate_reference.mjs
 		$(COMPONENTS:com_%.html=--component com_%.html) \
 		$(SYSTEMS:sys_%.html=--system sys_%.html) \
 		$(LIBRARIES:lib_%.html=--library lib_%.html) \
+		$(UTILITIES:%.html=--utility %.html) \
+		> $@
+
+$(UTILITIES): %.html: ../util/%.cjs generate_reference.mjs
+	node generate_reference.mjs $< \
+		$(COMPONENTS:com_%.html=--component com_%.html) \
+		$(SYSTEMS:sys_%.html=--system sys_%.html) \
+		$(LIBRARIES:lib_%.html=--library lib_%.html) \
+		$(UTILITIES:%.html=--utility %.html) \
 		> $@
 
 .PHONY: clean
 clean:
-	rm -f index.html
-	rm -f com_*.html
-	rm -f sys_*.html
-	rm -f lib_*.html
+	rm -f *.html

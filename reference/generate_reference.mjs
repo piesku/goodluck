@@ -20,6 +20,10 @@ let {positionals, values} = parseArgs({
             type: "string",
             multiple: true,
         },
+        utility: {
+            type: "string",
+            multiple: true,
+        },
     },
 });
 
@@ -316,6 +320,14 @@ ${sections
             ? `<section>
                 <h1>Libraries</h1>
                 ${values.library.map(render_link).join("<br>")}
+            </section>`
+            : ""
+    }
+    ${
+        values.utility
+            ? `<section>
+                <h1>Utilities</h1>
+                ${values.utility.map(render_link).join("<br>")}
             </section>`
             : ""
     }

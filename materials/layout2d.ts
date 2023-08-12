@@ -25,10 +25,10 @@ export function setup_render2d_buffers(gl: WebGL2RenderingContext, instance_buff
     // with spritesheet map coordinates.
     // prettier-ignore
     let vertex_arr = Float32Array.from([
-        -0.5, -0.5,    0, 1,    // SW
-        0.5, -0.5,     1, 1,    // SE
-        -0.5, 0.5,     0, 0,    // NW
-        0.5, 0.5,      1, 0     // NE
+        -0.51, -0.51,    0, 1,    // SW
+        0.51, -0.51,     1, 1,    // SE
+        -0.51, 0.51,     0, 0,    // NW
+        0.51, 0.51,      1, 0     // NE
     ]);
 
     // Vertex positions and texture coordinates.

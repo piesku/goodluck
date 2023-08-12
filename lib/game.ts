@@ -153,7 +153,6 @@ export abstract class GameImpl {
     }
 
     Start() {
-        let accumulator = 0;
         let last = performance.now();
 
         let tick = (now: number) => {
@@ -163,12 +162,6 @@ export abstract class GameImpl {
             this.Running = requestAnimationFrame(tick);
 
             this.FrameSetup(delta);
-            accumulator += delta;
-            while (accumulator >= step) {
-                accumulator -= step;
-                // TODO Adjust InputDelta and InputDistance.
-                this.FixedUpdate(step);
-            }
             this.FrameUpdate(delta);
             this.FrameReset(delta);
         };
@@ -208,7 +201,6 @@ export abstract class GameImpl {
         }
     }
 
-    FixedUpdate(step: number) {}
     FrameUpdate(delta: number) {}
 
     FrameReset(delta: number) {
@@ -305,7 +297,6 @@ export abstract class GameXR extends Game3D {
     }
 
     override Start() {
-        let accumulator = 0;
         let last = performance.now();
 
         let tick = (now: number, frame?: XRFrame) => {
@@ -321,12 +312,6 @@ export abstract class GameXR extends Game3D {
             }
 
             this.FrameSetup(delta);
-            accumulator += delta;
-            while (accumulator >= step) {
-                accumulator -= step;
-                // TODO Adjust InputDelta and InputDistance.
-                this.FixedUpdate(step);
-            }
             this.FrameUpdate(delta);
             this.FrameReset(delta);
         };
