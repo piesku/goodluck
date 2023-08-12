@@ -22,7 +22,7 @@ export function sys_render_forward(game: Game, delta: number) {
         switch (camera.Kind) {
             case CameraKind.Canvas:
                 game.Gl.bindFramebuffer(GL_FRAMEBUFFER, null);
-                game.Gl.viewport(0, 0, game.ViewportWidth, game.ViewportHeight);
+                game.Gl.viewport(0, 0, camera.ViewportWidth, camera.ViewportHeight);
                 game.Gl.clearColor(...camera.ClearColor);
                 game.Gl.clear(camera.ClearMask);
                 render(game, camera);
