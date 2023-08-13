@@ -56,14 +56,11 @@ function update(game: Game, entity: Entity) {
 
     if (rigid_body.Kind === RigidKind.Dynamic) {
         rigid_body.IsGrounded = false;
-        let has_collision = false;
-
         vec2_set(response, 0, 0);
+
         for (let i = 0; i < collide.Collisions.length; i++) {
             let collision = collide.Collisions[i];
             if (game.World.Signature[collision.Other] & Has.RigidBody2D) {
-                has_collision = true;
-
                 // Assume mass = 1 for all rigid bodies. On collision,
                 // velocities are swapped, unless the other body is a static
                 // one (and behaves as if it had infinite mass).
@@ -108,7 +105,7 @@ function update(game: Game, entity: Entity) {
             }
         }
 
-        if (has_collision) {
+        if (response[0] || response[1]) {
             if (Math.abs(response[0]) < 0.1) {
                 // Ignore small horizontal corrections.
                 response[0] = 0;
@@ -116,6 +113,7 @@ function update(game: Game, entity: Entity) {
             vec2_add(local.Translation, local.Translation, response);
             game.World.Signature[entity] |= Has.Dirty;
         } else {
+            // No collision; the entity's resolved velocity is its linear velocity.
             vec2_copy(rigid_body.VelocityResolved, rigid_body.VelocityLinear);
         }
     }
