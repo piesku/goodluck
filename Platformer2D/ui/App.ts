@@ -7,7 +7,6 @@ export function App(game: Game) {
         <div style="margin: 10px;">
             <h1 style="float: left; margin-right: 10px;">Platformer2D</h1>
             <div>Click to spawn new squares.</div>
-            <div>Use the arrow keys to move all squares at once.</div>
             <div>A square lives for ${SQUARE_LIFESPAN} seconds.</div>
         </div>
     `;

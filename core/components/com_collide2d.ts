@@ -31,8 +31,8 @@ export interface Collide2D extends AABB2D {
  *
  * @param dynamic Dynamic colliders collider with all colliders. Static
  * colliders collide only with dynamic colliders.
- * @param layers Bit field with layers this collider is on.
- * @param mask Bit mask with layers visible to this collider.
+ * @param layers Bit field with layers this collider is on ("I'm a ...").
+ * @param mask Bit mask with layers visible to this collider ("I'm interested in ...").
  * @param size Size of the collider in world units.
  */
 export function collide2d(dynamic: boolean, layers: Layer, mask: Layer, size: Vec2 = [1, 1]) {
