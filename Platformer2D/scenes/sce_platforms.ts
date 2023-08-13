@@ -10,6 +10,7 @@ import {map_platforms} from "../maps/map_platforms.js";
 import {tiled_layer_blueprints} from "../tiled.js";
 import {World} from "../world.js";
 import {blueprint_camera} from "./blu_camera.js";
+import {blueprint_player} from "./blu_player.js";
 
 export function scene_platforms(game: Game) {
     game.ViewportResized = true;
@@ -53,4 +54,7 @@ export function scene_platforms(game: Game) {
             instantiate(game, blueprint);
         }
     }
+
+    // Player.
+    instantiate(game, [...blueprint_player(game), set_position(0, 7)]);
 }
