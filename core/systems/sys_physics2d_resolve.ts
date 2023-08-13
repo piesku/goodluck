@@ -101,9 +101,8 @@ function update(game: Game, entity: Entity) {
                     rigid_body.Bounciness
                 );
 
-                if (collision.Hit[1] > 0 && rigid_body.VelocityResolved[1] < 1) {
-                    // Collision from the bottom stops the downward movement.
-                    rigid_body.VelocityResolved[1] = 0;
+                if (collision.Hit[1] > 0) {
+                    // Collision from the bottom means the body is grounded.
                     rigid_body.IsGrounded = true;
                 }
             }
