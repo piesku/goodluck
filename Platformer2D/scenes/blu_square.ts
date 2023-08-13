@@ -15,7 +15,7 @@ export function blueprint_square(game: Game) {
     return [
         spatial_node2d(),
         local_transform2d(undefined, 0, [1.5, 1.5]),
-        collide2d(true, Layer.Object, Layer.Terrain | Layer.Object, [1.5, 1.5]),
+        collide2d(true, Layer.Object, Layer.Terrain | Layer.Object, [1.125, 1.125]),
         rigid_body2d(RigidKind.Dynamic, 0.3),
         control_player(),
         move2d(7, 0),

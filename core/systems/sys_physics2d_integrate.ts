@@ -14,7 +14,7 @@ import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.LocalTransform2D | Has.RigidBody2D;
-const GRAVITY = -9.8;
+export const GRAVITY = -30;
 
 export function sys_physics2d_integrate(game: Game, delta: number) {
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
