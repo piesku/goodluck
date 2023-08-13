@@ -14,7 +14,7 @@ import {Game} from "../game.js";
 import {Has} from "../world.js";
 
 const QUERY = Has.LocalTransform2D | Has.RigidBody2D;
-export const GRAVITY = -30;
+export const GRAVITY = -66;
 
 export function sys_physics2d_integrate(game: Game, delta: number) {
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
@@ -24,6 +24,7 @@ export function sys_physics2d_integrate(game: Game, delta: number) {
     }
 }
 
+let velocity_drag: Vec2 = [0, 0];
 let velocity_delta: Vec2 = [0, 0];
 
 function update(game: Game, entity: Entity, delta: number) {
@@ -36,8 +37,9 @@ function update(game: Game, entity: Entity, delta: number) {
         // Compute change to velocity due to external forces.
         vec2_scale(rigid_body.Acceleration, rigid_body.Acceleration, delta);
         vec2_add(rigid_body.VelocityLinear, rigid_body.VelocityLinear, rigid_body.Acceleration);
-        // Apply friction.
-        vec2_scale(rigid_body.VelocityLinear, rigid_body.VelocityLinear, 1 - rigid_body.Friction);
+        // Compute and apply drag.
+        vec2_scale(velocity_drag, rigid_body.VelocityLinear, -rigid_body.Drag);
+        vec2_add(rigid_body.VelocityLinear, rigid_body.VelocityLinear, velocity_drag);
 
         // Apply velocity to position.
         vec2_scale(velocity_delta, rigid_body.VelocityLinear, delta);

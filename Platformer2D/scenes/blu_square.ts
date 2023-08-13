@@ -14,7 +14,7 @@ export function blueprint_square(game: Game) {
         spatial_node2d(),
         local_transform2d(undefined, 0, [1.5, 1.5]),
         collide2d(true, Layer.Object, Layer.Terrain | Layer.Player | Layer.Object, [1.125, 1.125]),
-        rigid_body2d(RigidKind.Dynamic, 0.3, 0),
+        rigid_body2d(RigidKind.Dynamic, 0.3),
         render2d("13"),
         animate_sprite({13: 0.8, 14: 0.4}),
         lifespan(SQUARE_LIFESPAN),

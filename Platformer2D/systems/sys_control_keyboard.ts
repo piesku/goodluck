@@ -5,7 +5,7 @@ import {GRAVITY} from "./sys_physics2d_integrate.js";
 
 const QUERY = Has.ControlPlayer | Has.RigidBody2D | Has.LocalTransform2D;
 const SPEED_MOVE = 400;
-const SPEED_JUMP = 600;
+const SPEED_JUMP = 900;
 
 export function sys_control_keyboard(game: Game, delta: number) {
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
@@ -34,7 +34,7 @@ function update(game: Game, entity: Entity, delta: number) {
     }
 
     if (game.InputState["ArrowUp"]) {
-        rigid_body.Acceleration[1] = -GRAVITY / 3;
+        rigid_body.Acceleration[1] = -GRAVITY / 4;
         game.World.Signature[entity] |= Has.AnimateSprite;
 
         if (rigid_body.IsGrounded) {

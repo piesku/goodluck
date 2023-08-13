@@ -110,6 +110,7 @@ function update(game: Game, entity: Entity) {
                 // Ignore small horizontal corrections.
                 response[0] = 0;
             }
+            // Collision response.
             vec2_add(local.Translation, local.Translation, response);
             game.World.Signature[entity] |= Has.Dirty;
         } else {
@@ -130,7 +131,7 @@ function update(game: Game, entity: Entity) {
  * @param a The first, base vector, whose components take precedence if necessary.
  * @param b The second vector to extend with.
  */
-export function vec2_extend(out: Vec2, a: Vec2, b: Vec2) {
+function vec2_extend(out: Vec2, a: Vec2, b: Vec2) {
     if (a[0] >= 0 && b[0] >= 0) {
         out[0] = Math.max(a[0], b[0]);
     } else if (a[0] <= 0 && b[0] <= 0) {
@@ -145,8 +146,8 @@ export function vec2_extend(out: Vec2, a: Vec2, b: Vec2) {
         out[1] = Math.min(a[1], b[1]);
     } else if (a[1] > b[1]) {
         // If the values have different signs, only keep the value from a if
-        // it's positive.  On the Y axis, we want to give precedence to
-        // collision responses that move the entity up due to gravity.
+        // it's positive. Due to gravity, we want to give precedence to
+        // collision responses that move the entity up.
         out[1] = a[1];
     }
 }
