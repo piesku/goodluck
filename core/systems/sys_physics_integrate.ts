@@ -8,7 +8,9 @@
  * For the physics simulation to work correctly, the following order of systems
  * is recommended.
  *
- *     FixedUpdate(delta: number) {
+ *     FrameUpdate(delta: number) {
+ *         // ...
+ *
  *         // Apply acceleration and velocity to position.
  *         sys_physics_integrate(this, delta);
  *         // Update transforms.
@@ -21,14 +23,9 @@
  *         sys_physics_resolve(this, delta);
  *         // Update transforms again to account for collision response.
  *         sys_transform(this, delta);
- *     }
  *
- * For deterministic results, the physics simulation should be run inside
- * `Game.FixedUpdate`. Be careful about processing input inside `FixedUpdate`.
- * It's OK to handle _continuous_ input, like "is the key down for the duration
- * of this update?". On the other hand, handling _discrete_ input inside
- * `FixedUpdate`, like "has the key been pressed during this update?" will lead
- * to skipped input or input applied multiple times.
+ *         // ...
+ *     }
  */
 
 import {Vec3} from "../../lib/math.js";
