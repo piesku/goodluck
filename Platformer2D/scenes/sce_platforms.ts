@@ -2,7 +2,7 @@ import {instantiate} from "../../lib/game.js";
 import {children} from "../components/com_children.js";
 import {control_always2d} from "../components/com_control_always2d.js";
 import {draw_arc, draw_rect} from "../components/com_draw.js";
-import {local_transform2d, set_position} from "../components/com_local_transform2d.js";
+import {local_transform2d, set_position, set_scale} from "../components/com_local_transform2d.js";
 import {move2d} from "../components/com_move2d.js";
 import {spatial_node2d} from "../components/com_spatial_node2d.js";
 import {Game, WORLD_CAPACITY} from "../game.js";
@@ -56,5 +56,5 @@ export function scene_platforms(game: Game) {
     }
 
     // Player.
-    instantiate(game, [...blueprint_player(game), set_position(0, 7)]);
+    instantiate(game, [...blueprint_player(game), set_position(0.5, 7), set_scale(-1.5, 1.5)]);
 }
