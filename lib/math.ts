@@ -22,7 +22,7 @@ export type Mat3 =
           m12: number,
           m20: number,
           m21: number,
-          m22: number
+          m22: number,
       ];
 export type Mat4 =
     | Float32Array
@@ -42,5 +42,5 @@ export type Mat4 =
           m30: number,
           n31: number,
           m32: number,
-          m33: number
+          m33: number,
       ];

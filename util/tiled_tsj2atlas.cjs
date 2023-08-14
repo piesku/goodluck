@@ -95,5 +95,4 @@ export const atlas: {
         a?: Record<string, number>,
         c?: boolean,
     }
-} = ${JSON.stringify(sprites, null, 4)};
-`);
+} = ${JSON.stringify(sprites, null, 4)};`);

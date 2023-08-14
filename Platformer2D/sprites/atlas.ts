@@ -1,13 +1,13 @@
 // prettier-ignore
 export const atlas: {
-	[id: string]: {
-		x: number,
-		y: number,
-		w: number,
-		h: number,
-		a?: Record<string, number>,
+    [id: string]: {
+        x: number,
+        y: number,
+        w: number,
+        h: number,
+        a?: Record<string, number>,
         c?: boolean,
-	}
+    }
 } = {
     "0": {
         "x": 1,
@@ -1087,4 +1087,3 @@ export const atlas: {
         "h": 18
     }
 };
-
