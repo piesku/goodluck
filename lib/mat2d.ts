@@ -11,7 +11,7 @@ export function mat2d_set(
     c: number,
     d: number,
     tx: number,
-    ty: number
+    ty: number,
 ) {
     out[0] = a;
     out[1] = b;

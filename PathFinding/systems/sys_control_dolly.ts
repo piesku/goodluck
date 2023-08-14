@@ -34,7 +34,7 @@ function update_camera_dolly(game: Game, entity: Entity) {
     if (game.InputState["Touch0"] && game.InputState["Touch1"]) {
         let hypot_curr = hypot_squared(
             game.InputState["Touch0X"] - game.InputState["Touch1X"],
-            game.InputState["Touch0Y"] - game.InputState["Touch1Y"]
+            game.InputState["Touch0Y"] - game.InputState["Touch1Y"],
         );
         let hypot_last = hypot_squared(
             game.InputState["Touch0X"] +
@@ -44,7 +44,7 @@ function update_camera_dolly(game: Game, entity: Entity) {
             game.InputState["Touch0Y"] +
                 game.InputDelta["Touch0Y"] -
                 game.InputState["Touch1Y"] -
-                game.InputDelta["Touch1Y"]
+                game.InputDelta["Touch1Y"],
         );
         move.Direction[2] += hypot_curr - hypot_last;
     }

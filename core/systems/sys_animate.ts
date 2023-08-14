@@ -72,7 +72,7 @@ function update(game: Game, entity: Entity, delta: number) {
                 transform.Translation,
                 current_keyframe.Translation,
                 next_keyframe.Translation,
-                interpolant
+                interpolant,
             );
             game.World.Signature[entity] |= Has.Dirty;
         }
@@ -82,7 +82,7 @@ function update(game: Game, entity: Entity, delta: number) {
                 transform.Rotation,
                 current_keyframe.Rotation,
                 next_keyframe.Rotation,
-                interpolant
+                interpolant,
             );
             game.World.Signature[entity] |= Has.Dirty;
         }

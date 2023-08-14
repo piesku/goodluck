@@ -19,7 +19,7 @@ export interface RaycastHit {
 export function ray_intersect_aabb(
     colliders: Array<AABB>,
     origin: Vec3,
-    direction: Vec3
+    direction: Vec3,
 ): RaycastHit | null {
     let nearest_t = Infinity;
     let nearest_i = null;

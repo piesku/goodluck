@@ -29,7 +29,7 @@ export function blueprint_viewer(game: Game) {
                         0,
                         0,
                         [1, 1, 1],
-                        GL_CCW
+                        GL_CCW,
                     ),
                 ]),
             ],
@@ -47,10 +47,10 @@ export function blueprint_viewer(game: Game) {
                         0,
                         0,
                         [1, 1, 1],
-                        GL_CW
+                        GL_CW,
                     ),
                 ]),
-            ]
+            ],
         ),
     ];
 }

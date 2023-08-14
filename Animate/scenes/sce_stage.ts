@@ -76,7 +76,7 @@ export function scene_stage(game: Game) {
                 set_scale(3, 3, 3),
                 control(),
                 audio_source(true),
-            ]
+            ],
         ),
     ]);
 }

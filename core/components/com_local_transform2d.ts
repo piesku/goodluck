@@ -50,7 +50,7 @@ export interface LocalTransform2D {
 export function local_transform2d(
     translation: Vec2 = [0, 0],
     rotation: Deg = 0,
-    scale: Vec2 = [1, 1]
+    scale: Vec2 = [1, 1],
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.LocalTransform2D | Has.Dirty;

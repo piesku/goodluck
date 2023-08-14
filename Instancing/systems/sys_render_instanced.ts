@@ -81,7 +81,7 @@ function draw_entity(game: Game, entity: Entity) {
                 GL_FLOAT,
                 false,
                 4 * 16,
-                0
+                0,
             );
 
             game.Gl.enableVertexAttribArray(render.Material.Locations.InstanceColumn2);
@@ -92,7 +92,7 @@ function draw_entity(game: Game, entity: Entity) {
                 GL_FLOAT,
                 false,
                 4 * 16,
-                4 * 4
+                4 * 4,
             );
 
             game.Gl.enableVertexAttribArray(render.Material.Locations.InstanceColumn3);
@@ -102,7 +102,7 @@ function draw_entity(game: Game, entity: Entity) {
                 GL_FLOAT,
                 false,
                 4 * 16,
-                4 * 8
+                4 * 8,
             );
             game.Gl.vertexAttribDivisor(render.Material.Locations.InstanceColumn3, 1);
 
@@ -113,7 +113,7 @@ function draw_entity(game: Game, entity: Entity) {
                 GL_FLOAT,
                 false,
                 4 * 16,
-                4 * 12
+                4 * 12,
             );
             game.Gl.vertexAttribDivisor(render.Material.Locations.InstanceColumn4, 1);
 
@@ -127,7 +127,7 @@ function draw_entity(game: Game, entity: Entity) {
                 GL_FLOAT,
                 false,
                 0,
-                0
+                0,
             );
 
             let instance_count = Math.floor(render.InstanceCount);
@@ -136,7 +136,7 @@ function draw_entity(game: Game, entity: Entity) {
                 render.Mesh.IndexCount,
                 GL_UNSIGNED_SHORT,
                 0,
-                instance_count
+                instance_count,
             );
             game.Gl.bindVertexArray(null);
             break;

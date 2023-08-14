@@ -69,7 +69,7 @@ export function* tiled_layer_blueprints(layer: TiledLayer) {
             blueprint.push(
                 spatial_node2d(),
                 rigid_body2d(RigidKind.Static),
-                collide2d(false, Layer.Terrain, Layer.None)
+                collide2d(false, Layer.Terrain, Layer.None),
             );
         }
 

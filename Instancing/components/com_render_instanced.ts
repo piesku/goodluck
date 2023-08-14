@@ -48,7 +48,7 @@ export interface RenderInstanced {
 export function render_instanced_colored_unlit(
     mesh: Mesh,
     transforms: Float32Array,
-    colors: Float32Array
+    colors: Float32Array,
 ) {
     return (game: Game, entity: Entity) => {
         let instance_transforms_buffer = game.Gl.createBuffer()!;

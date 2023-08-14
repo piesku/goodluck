@@ -86,7 +86,7 @@ function draw_entity(game: Game, entity: Entity) {
                 render.Material.Mode,
                 render.Mesh.IndexCount,
                 GL_UNSIGNED_SHORT,
-                0
+                0,
             );
             game.Gl.bindVertexArray(null);
             break;

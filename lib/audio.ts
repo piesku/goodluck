@@ -93,7 +93,7 @@ export function play_note(
     panner: PannerNode | undefined,
     instr: Instrument,
     note: number,
-    offset: number
+    offset: number,
 ) {
     let time = audio.currentTime + offset;
     let total_duration = 0;
@@ -184,7 +184,7 @@ export function play_note(
                 hfo.frequency.setValueAtTime(freq, time + freq_attack + freq_sustain);
                 hfo.frequency.exponentialRampToValueAtTime(
                     0.00001,
-                    time + freq_attack + freq_sustain + freq_release
+                    time + freq_attack + freq_sustain + freq_release,
                 );
             } else {
                 hfo.frequency.setValueAtTime(freq, time);
@@ -228,7 +228,7 @@ function lazy_noise_buffer(audio: AudioContext) {
 export function play_synth_clip(
     audio: AudioContext,
     panner: PannerNode | undefined,
-    clip: AudioSynthClip
+    clip: AudioSynthClip,
 ) {
     // Seconds per beat, corresponding to a quarter note.
     let spb = 60 / (clip.BPM || 120);
@@ -246,7 +246,7 @@ export function play_synth_clip(
 export function play_synth_random(
     audio: AudioContext,
     panner: PannerNode | undefined,
-    clip: AudioSynthClip
+    clip: AudioSynthClip,
 ) {
     for (let track of clip.Tracks) {
         let note = element(track.Notes);
@@ -259,7 +259,7 @@ export function play_synth_random(
 export function play_buffer_clip(
     audio: AudioContext,
     panner: PannerNode | undefined,
-    clip: AudioBufferClip
+    clip: AudioBufferClip,
 ) {
     let source = audio.createBufferSource();
     source.buffer = clip.Buffer;

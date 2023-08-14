@@ -36,7 +36,7 @@ function update(game: Game, entity: Entity) {
             mat4_multiply(
                 bone.InverseBindPose,
                 parent_transform.World,
-                parent_bone.InverseBindPose
+                parent_bone.InverseBindPose,
             );
             mat4_multiply(bone.InverseBindPose, transform.Self, bone.InverseBindPose);
         } else {

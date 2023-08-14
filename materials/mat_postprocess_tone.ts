@@ -48,7 +48,7 @@ let fragment = `#version 300 es\n
 `;
 
 export function mat_postprocess_tone(
-    gl: WebGL2RenderingContext
+    gl: WebGL2RenderingContext,
 ): Material<PostprocessLayout & {Bloom: WebGLUniformLocation}> {
     let program = link(gl, vertex, fragment);
     return {

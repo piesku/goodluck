@@ -23,7 +23,7 @@ export function blueprint_character_rigged(game: Game) {
             game.MaterialColoredPhongSkinned,
             game.MeshLudek,
             [1, 0.3, 0, 1],
-            128
+            128,
         ),
         children([
             transform([0, 0.63, 0]),
@@ -302,7 +302,7 @@ export function blueprint_character_rigged(game: Game) {
                             Flags: AnimationFlag.None,
                         },
                     }),
-                ]
+                ],
             ),
         ]),
     ];

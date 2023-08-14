@@ -97,7 +97,7 @@ export function blueprint_character_voxel(game: Game) {
                         render_colored_shaded(
                             game.MaterialColoredGouraud,
                             game.MeshCube,
-                            skin_color
+                            skin_color,
                         ),
                     ],
                     // hair
@@ -106,7 +106,7 @@ export function blueprint_character_voxel(game: Game) {
                         render_colored_shaded(
                             game.MaterialColoredGouraud,
                             game.MeshCube,
-                            hair_color
+                            hair_color,
                         ),
                     ],
                     // body
@@ -115,9 +115,9 @@ export function blueprint_character_voxel(game: Game) {
                         render_colored_shaded(
                             game.MaterialColoredGouraud,
                             game.MeshCube,
-                            shirt_color
+                            shirt_color,
                         ),
-                    ]
+                    ],
                 ),
             ],
             // left shoulder
@@ -178,7 +178,7 @@ export function blueprint_character_voxel(game: Game) {
                         render_colored_shaded(
                             game.MaterialColoredGouraud,
                             game.MeshCube,
-                            shirt_color
+                            shirt_color,
                         ),
                     ],
                     // left hand
@@ -187,9 +187,9 @@ export function blueprint_character_voxel(game: Game) {
                         render_colored_shaded(
                             game.MaterialColoredGouraud,
                             game.MeshCube,
-                            skin_color
+                            skin_color,
                         ),
-                    ]
+                    ],
                 ),
             ],
             // right shoulder
@@ -250,7 +250,7 @@ export function blueprint_character_voxel(game: Game) {
                         render_colored_shaded(
                             game.MaterialColoredGouraud,
                             game.MeshCube,
-                            shirt_color
+                            shirt_color,
                         ),
                     ],
                     // right hand
@@ -259,9 +259,9 @@ export function blueprint_character_voxel(game: Game) {
                         render_colored_shaded(
                             game.MaterialColoredGouraud,
                             game.MeshCube,
-                            skin_color
+                            skin_color,
                         ),
-                    ]
+                    ],
                 ),
             ],
             // left hip
@@ -322,9 +322,9 @@ export function blueprint_character_voxel(game: Game) {
                         render_colored_shaded(
                             game.MaterialColoredGouraud,
                             game.MeshCube,
-                            pants_color
+                            pants_color,
                         ),
-                    ]
+                    ],
                 ),
             ],
             // right hip
@@ -385,11 +385,11 @@ export function blueprint_character_voxel(game: Game) {
                         render_colored_shaded(
                             game.MaterialColoredGouraud,
                             game.MeshCube,
-                            pants_color
+                            pants_color,
                         ),
-                    ]
+                    ],
                 ),
-            ]
+            ],
         ),
     ];
 }

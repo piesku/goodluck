@@ -47,7 +47,7 @@ export function sys_draw(game: Game, delta: number) {
                 0,
                 1,
                 0.5 * (position[0] + 1) * game.ViewportWidth,
-                0.5 * (-position[1] + 1) * game.ViewportHeight
+                0.5 * (-position[1] + 1) * game.ViewportHeight,
             );
 
             let draw = game.World.Draw[i];

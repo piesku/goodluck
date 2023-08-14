@@ -36,7 +36,7 @@ export function create_forward_target(
     gl: WebGL2RenderingContext,
     width: number,
     height: number,
-    resize_to_viewport: boolean
+    resize_to_viewport: boolean,
 ) {
     let target: ForwardTarget = {
         Kind: TargetKind.Forward,
@@ -54,14 +54,14 @@ export function create_forward_target(
         GL_COLOR_ATTACHMENT0,
         GL_TEXTURE_2D,
         target.ColorTexture,
-        0
+        0,
     );
     gl.framebufferTexture2D(
         GL_FRAMEBUFFER,
         GL_DEPTH_ATTACHMENT,
         GL_TEXTURE_2D,
         target.DepthTexture,
-        0
+        0,
     );
 
     let status = gl.checkFramebufferStatus(GL_FRAMEBUFFER);
@@ -76,7 +76,7 @@ export function resize_forward_target(
     gl: WebGL2RenderingContext,
     target: ForwardTarget,
     width: number,
-    height: number
+    height: number,
 ) {
     target.Width = width;
     target.Height = height;
@@ -99,7 +99,7 @@ export function create_hdr_target(
     gl: WebGL2RenderingContext,
     width: number,
     height: number,
-    resize_to_viewport: boolean
+    resize_to_viewport: boolean,
 ) {
     let target: HdrTarget = {
         Kind: TargetKind.Hdr,
@@ -117,14 +117,14 @@ export function create_hdr_target(
         GL_COLOR_ATTACHMENT0,
         GL_TEXTURE_2D,
         target.ColorTexture,
-        0
+        0,
     );
     gl.framebufferTexture2D(
         GL_FRAMEBUFFER,
         GL_DEPTH_ATTACHMENT,
         GL_TEXTURE_2D,
         target.DepthTexture,
-        0
+        0,
     );
 
     let status = gl.checkFramebufferStatus(GL_FRAMEBUFFER);
@@ -139,7 +139,7 @@ export function resize_hdr_target(
     gl: WebGL2RenderingContext,
     target: HdrTarget,
     width: number,
-    height: number
+    height: number,
 ) {
     target.Width = width;
     target.Height = height;
@@ -166,7 +166,7 @@ export function create_deferred_target(
     gl: WebGL2RenderingContext,
     width: number,
     height: number,
-    resize_to_viewport: boolean
+    resize_to_viewport: boolean,
 ) {
     let target: DeferredTarget = {
         Kind: TargetKind.Deferred,
@@ -187,35 +187,35 @@ export function create_deferred_target(
         GL_COLOR_ATTACHMENT0 + Output.Diffuse,
         GL_TEXTURE_2D,
         target.DiffuseTexture,
-        0
+        0,
     );
     gl.framebufferTexture2D(
         GL_FRAMEBUFFER,
         GL_COLOR_ATTACHMENT0 + Output.Specular,
         GL_TEXTURE_2D,
         target.SpecularTexture,
-        0
+        0,
     );
     gl.framebufferTexture2D(
         GL_FRAMEBUFFER,
         GL_COLOR_ATTACHMENT0 + Output.Position,
         GL_TEXTURE_2D,
         target.PositionTexture,
-        0
+        0,
     );
     gl.framebufferTexture2D(
         GL_FRAMEBUFFER,
         GL_COLOR_ATTACHMENT0 + Output.Normal,
         GL_TEXTURE_2D,
         target.NormalTexture,
-        0
+        0,
     );
     gl.framebufferTexture2D(
         GL_FRAMEBUFFER,
         GL_DEPTH_ATTACHMENT,
         GL_TEXTURE_2D,
         target.DepthTexture,
-        0
+        0,
     );
 
     // MAX_DRAW_BUFFERS is 4 on Safari 15.
@@ -239,7 +239,7 @@ export function resize_deferred_target(
     gl: WebGL2RenderingContext,
     target: DeferredTarget,
     width: number,
-    height: number
+    height: number,
 ) {
     target.Width = width;
     target.Height = height;
@@ -280,14 +280,14 @@ export function create_depth_target(gl: WebGL2RenderingContext, width: number, h
         GL_DEPTH_ATTACHMENT,
         GL_TEXTURE_2D,
         target.DepthTexture,
-        0
+        0,
     );
     gl.framebufferTexture2D(
         GL_FRAMEBUFFER,
         GL_COLOR_ATTACHMENT0,
         GL_TEXTURE_2D,
         target.ColorTexture,
-        0
+        0,
     );
 
     let status = gl.checkFramebufferStatus(GL_FRAMEBUFFER);

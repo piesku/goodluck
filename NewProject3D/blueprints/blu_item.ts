@@ -69,7 +69,7 @@ export function blueprint_item(game: Game) {
                             [1, 1, 1, 1],
                             5,
                             [1, 1, 1, 0],
-                            1
+                            1,
                         ),
                     ]),
                 ]),
@@ -96,7 +96,7 @@ export function blueprint_item(game: Game) {
                     particles_render.ColorEnd = [1, 0, 0, 0];
                     particles_render.Size = [10, 5];
                 }),
-            ]
+            ],
         ),
     ];
 }

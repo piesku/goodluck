@@ -70,7 +70,7 @@ export function scene_stage(game: Game) {
             [
                 transform([0, 1, 0], undefined, [2, 2, 2]),
                 render_colored_shaded(game.MaterialColoredGouraud, game.MeshCube, [1, 0, 0, 1]),
-            ]
+            ],
         ),
     ]);
 }

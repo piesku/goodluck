@@ -57,7 +57,7 @@ export function sys_render_shading(game: Game, delta: number) {
         game.Targets.Shaded.Width,
         game.Targets.Shaded.Height,
         GL_DEPTH_BUFFER_BIT,
-        GL_NEAREST
+        GL_NEAREST,
     );
     game.Gl.viewport(0, 0, game.Targets.Shaded.Width, game.Targets.Shaded.Height);
     game.Gl.clearColor(0, 0, 0, 1);

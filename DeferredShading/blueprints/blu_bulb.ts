@@ -28,7 +28,7 @@ export function blueprint_bulb(game: Game) {
         transform(),
         control_always(
             null,
-            quat_from_euler([0, 0, 0, 1], float(0, 360), float(0, 360), float(0, 360))
+            quat_from_euler([0, 0, 0, 1], float(0, 360), float(0, 360), float(0, 360)),
         ),
         move(0, float()),
         children([
@@ -45,9 +45,9 @@ export function blueprint_bulb(game: Game) {
                         game.MeshSphereSmooth,
                         bulb_color,
                         0,
-                        1
+                        1,
                     ),
-                ]
+                ],
             ),
         ]),
     ];

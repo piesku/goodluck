@@ -58,7 +58,7 @@ export interface Spritesheet {
 
 export function create_spritesheet_from(
     gl: WebGLRenderingContext,
-    image: HTMLImageElement
+    image: HTMLImageElement,
 ): Spritesheet {
     let texture = gl.createTexture()!;
     gl.bindTexture(GL_TEXTURE_2D, texture);
@@ -85,7 +85,7 @@ export function resize_texture_rgba8(
     gl: WebGL2RenderingContext,
     texture: WebGLTexture,
     width: number,
-    height: number
+    height: number,
 ) {
     gl.bindTexture(GL_TEXTURE_2D, texture);
     gl.texImage2D(
@@ -97,7 +97,7 @@ export function resize_texture_rgba8(
         0,
         GL_RGBA,
         GL_DATA_UNSIGNED_BYTE,
-        null
+        null,
     );
 
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -111,7 +111,7 @@ export function resize_texture_rgba16f(
     gl: WebGL2RenderingContext,
     texture: WebGLTexture,
     width: number,
-    height: number
+    height: number,
 ) {
     gl.bindTexture(GL_TEXTURE_2D, texture);
     gl.texImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_DATA_FLOAT, null);
@@ -127,7 +127,7 @@ export function resize_texture_rgba32f(
     gl: WebGL2RenderingContext,
     texture: WebGLTexture,
     width: number,
-    height: number
+    height: number,
 ) {
     gl.bindTexture(GL_TEXTURE_2D, texture);
     gl.texImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_DATA_FLOAT, null);
@@ -142,7 +142,7 @@ export function resize_texture_depth24(
     gl: WebGL2RenderingContext,
     texture: WebGLTexture,
     width: number,
-    height: number
+    height: number,
 ) {
     gl.bindTexture(GL_TEXTURE_2D, texture);
     gl.texImage2D(
@@ -154,7 +154,7 @@ export function resize_texture_depth24(
         0,
         GL_DEPTH_COMPONENT,
         GL_DATA_UNSIGNED_INT,
-        null
+        null,
     );
 
     gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

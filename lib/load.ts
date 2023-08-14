@@ -19,7 +19,7 @@ export async function load_texture(
         Gl: WebGL2RenderingContext;
         Textures: Record<string, WebGLTexture>;
     },
-    name: string
+    name: string,
 ) {
     let image = await fetch_image("../textures/" + name + ".webp");
     game.Textures[name] = create_texture_from(game.Gl, image);
@@ -36,7 +36,7 @@ export async function load_spritesheet(
         Gl: WebGL2RenderingContext;
         Spritesheets: Record<string, Spritesheet>;
     },
-    name: string
+    name: string,
 ) {
     let image = await fetch_image("../sprites/" + name + ".webp");
     game.Spritesheets[name] = create_spritesheet_from(game.Gl, image);
@@ -62,7 +62,7 @@ export async function load_mesh(
         Meshes: Record<string, Mesh>;
         Ui: HTMLElement;
     },
-    name: string
+    name: string,
 ) {
     let module = await import("../meshes/" + name + ".js");
     game.Meshes[name] = module["mesh_" + name](game.Gl);

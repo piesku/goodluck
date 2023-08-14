@@ -32,7 +32,7 @@ export function render_colored_shaded(
     shininess: number = 0,
     emission: number = 0,
     specular_rgb: Vec3 = [1, 1, 1],
-    front_face: GLenum = GL_CW
+    front_face: GLenum = GL_CW,
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Render;
@@ -65,7 +65,7 @@ export function render_colored_skinned(
     shininess: number = 0,
     emission: number = 0,
     specular_rgb: Vec3 = [1, 1, 1],
-    front_face: GLenum = GL_CW
+    front_face: GLenum = GL_CW,
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Render;

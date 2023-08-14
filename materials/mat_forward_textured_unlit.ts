@@ -34,7 +34,7 @@ let fragment = `#version 300 es\n
 `;
 
 export function mat_forward_textured_unlit(
-    gl: WebGL2RenderingContext
+    gl: WebGL2RenderingContext,
 ): Material<TexturedUnlitLayout> {
     let program = link(gl, vertex, fragment);
     return {

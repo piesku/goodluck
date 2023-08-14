@@ -52,7 +52,7 @@ export abstract class GameImpl {
 
     constructor() {
         document.addEventListener("visibilitychange", () =>
-            document.hidden ? this.Stop() : this.Start()
+            document.hidden ? this.Stop() : this.Start(),
         );
 
         this.Ui.addEventListener("contextmenu", (evt) => evt.preventDefault());

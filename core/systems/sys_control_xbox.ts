@@ -55,7 +55,7 @@ function update(game: Game, entity: Entity) {
         quat_multiply(
             move.LocalRotation,
             move.LocalRotation,
-            quat_from_axis([0, 0, 0, 1], AXIS_Y, -amount)
+            quat_from_axis([0, 0, 0, 1], AXIS_Y, -amount),
         );
     }
 
@@ -74,7 +74,7 @@ function update(game: Game, entity: Entity) {
             quat_multiply(
                 move.SelfRotation,
                 move.SelfRotation,
-                quat_from_axis([0, 0, 0, 1], AXIS_X, amount)
+                quat_from_axis([0, 0, 0, 1], AXIS_X, amount),
             );
         }
     }

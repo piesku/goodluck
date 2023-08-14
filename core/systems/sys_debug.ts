@@ -85,7 +85,7 @@ function wireframe_collider(game: Game, entity: Entity) {
             transform(
                 anchor_collide.Center,
                 undefined,
-                vec3_scale([0, 0, 0], anchor_collide.Half, 2)
+                vec3_scale([0, 0, 0], anchor_collide.Half, 2),
             ),
             render_colored_unlit(game.MaterialWireframe, game.MeshCube, [0, 1, 0, 1]),
         ]);

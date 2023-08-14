@@ -21,7 +21,7 @@ export function load(path: string): Promise<Array<Model>> {
                         (voxel & 15) >> 0,
                         (voxel & 240) >> 4,
                         (voxel & 3840) >> 8,
-                        (voxel & 61440) >> 12
+                        (voxel & 61440) >> 12,
                     );
                 }
 
@@ -43,7 +43,7 @@ export function load(path: string): Promise<Array<Model>> {
                             default:
                                 return val;
                         }
-                    })
+                    }),
                 );
             }
 

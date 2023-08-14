@@ -56,7 +56,7 @@ export function scene_stage(game: Game) {
             [
                 transform([-0.5 * light_spread, -0.866 * light_spread, 0]),
                 light_point([1, 1, 1], light_range),
-            ]
+            ],
         ),
     ]);
 
@@ -75,7 +75,7 @@ export function scene_stage(game: Game) {
             [1, 1, 0, 1],
             16,
             0,
-            [1, 1, 0]
+            [1, 1, 0],
         ),
         render_colored_shaded(
             game.MaterialColoredGouraud,
@@ -83,7 +83,7 @@ export function scene_stage(game: Game) {
             [1, 1, 0, 1],
             128,
             0,
-            [1, 1, 0]
+            [1, 1, 0],
         ),
         render_colored_shaded(
             game.MaterialColoredGouraud,
@@ -91,7 +91,7 @@ export function scene_stage(game: Game) {
             [1, 1, 0, 1],
             512,
             0,
-            [1, 1, 0]
+            [1, 1, 0],
         ),
 
         // Colored Phong shading
@@ -102,7 +102,7 @@ export function scene_stage(game: Game) {
             [1, 1, 0, 1],
             16,
             0,
-            [1, 1, 0]
+            [1, 1, 0],
         ),
         render_colored_shaded(
             game.MaterialColoredPhong,
@@ -110,7 +110,7 @@ export function scene_stage(game: Game) {
             [1, 1, 0, 1],
             128,
             0,
-            [1, 1, 0]
+            [1, 1, 0],
         ),
         render_colored_shaded(
             game.MaterialColoredPhong,
@@ -118,51 +118,51 @@ export function scene_stage(game: Game) {
             [1, 1, 0, 1],
             512,
             0,
-            [1, 1, 0]
+            [1, 1, 0],
         ),
 
         // Textured unlit shading
         render_textured_unlit(
             game.MaterialTexturedUnlit,
             game.MeshCube,
-            game.Textures["Bricks059_1K_Color.jpg"]
+            game.Textures["Bricks059_1K_Color.jpg"],
         ),
         render_textured_unlit(
             game.MaterialTexturedUnlit,
             game.MeshCube,
-            game.Textures["Wood063_1K_Color.jpg"]
+            game.Textures["Wood063_1K_Color.jpg"],
         ),
         render_textured_unlit(
             game.MaterialTexturedUnlit,
             game.MeshCube,
-            game.Textures["Concrete018_1K_Color.jpg"]
+            game.Textures["Concrete018_1K_Color.jpg"],
         ),
         render_textured_unlit(
             game.MaterialTexturedUnlit,
             game.MeshCube,
-            game.Targets.Minimap.ColorTexture
+            game.Targets.Minimap.ColorTexture,
         ),
 
         // Textured Gouraud shading (diffuse only)
         render_textured_shaded(
             game.MaterialTexturedGouraud,
             game.MeshCube,
-            game.Textures["Bricks059_1K_Color.jpg"]
+            game.Textures["Bricks059_1K_Color.jpg"],
         ),
         render_textured_shaded(
             game.MaterialTexturedGouraud,
             game.MeshCube,
-            game.Textures["Wood063_1K_Color.jpg"]
+            game.Textures["Wood063_1K_Color.jpg"],
         ),
         render_textured_shaded(
             game.MaterialTexturedGouraud,
             game.MeshCube,
-            game.Textures["Concrete018_1K_Color.jpg"]
+            game.Textures["Concrete018_1K_Color.jpg"],
         ),
         render_textured_shaded(
             game.MaterialTexturedGouraud,
             game.MeshCube,
-            game.Targets.Minimap.ColorTexture
+            game.Targets.Minimap.ColorTexture,
         ),
 
         // Textured Phong shading (high specular)
@@ -170,25 +170,25 @@ export function scene_stage(game: Game) {
             game.MaterialTexturedPhong,
             game.MeshCube,
             game.Textures["Bricks059_1K_Color.jpg"],
-            512
+            512,
         ),
         render_textured_shaded(
             game.MaterialTexturedPhong,
             game.MeshCube,
             game.Textures["Wood063_1K_Color.jpg"],
-            512
+            512,
         ),
         render_textured_shaded(
             game.MaterialTexturedPhong,
             game.MeshCube,
             game.Textures["Concrete018_1K_Color.jpg"],
-            512
+            512,
         ),
         render_textured_shaded(
             game.MaterialTexturedPhong,
             game.MeshCube,
             game.Targets.Minimap.ColorTexture,
-            512
+            512,
         ),
 
         // Mapped (diffuse, normal, roughness) shading
@@ -197,28 +197,28 @@ export function scene_stage(game: Game) {
             game.MeshCube,
             game.Textures["Bricks059_1K_Color.jpg"],
             game.Textures["Bricks059_1K_Normal.jpg"],
-            game.Textures["Bricks059_1K_Roughness.jpg"]
+            game.Textures["Bricks059_1K_Roughness.jpg"],
         ),
         render_mapped_shaded(
             game.MaterialMapped,
             game.MeshCube,
             game.Textures["Wood063_1K_Color.jpg"],
             game.Textures["Wood063_1K_Normal.jpg"],
-            game.Textures["Wood063_1K_Roughness.jpg"]
+            game.Textures["Wood063_1K_Roughness.jpg"],
         ),
         render_mapped_shaded(
             game.MaterialMapped,
             game.MeshCube,
             game.Textures["Concrete018_1K_Color.jpg"],
             game.Textures["Concrete018_1K_Normal.jpg"],
-            game.Textures["Concrete018_1K_Roughness.jpg"]
+            game.Textures["Concrete018_1K_Roughness.jpg"],
         ),
         render_mapped_shaded(
             game.MaterialMapped,
             game.MeshCube,
             game.Targets.Minimap.ColorTexture,
             game.Textures["Concrete018_1K_Normal.jpg"],
-            game.Textures["Concrete018_1K_Roughness.jpg"]
+            game.Textures["Concrete018_1K_Roughness.jpg"],
         ),
     ];
 

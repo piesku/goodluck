@@ -44,7 +44,7 @@ export function transform(
     translation: Vec3 = [0, 0, 0],
     rotation: Quat = [0, 0, 0, 1],
     scale: Vec3 = [1, 1, 1],
-    is_gyroscope: boolean = false
+    is_gyroscope: boolean = false,
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Transform | Has.Dirty;

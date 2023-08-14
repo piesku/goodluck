@@ -38,7 +38,7 @@ export interface ControlAlways {
 export function control_always(
     direction: Vec3 | null,
     rotation: Quat | null,
-    animation?: Animate["Trigger"]
+    animation?: Animate["Trigger"],
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.ControlAlways;

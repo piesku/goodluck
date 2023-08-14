@@ -24,7 +24,7 @@ export function blueprint_player(game: Game) {
                 render_colored_shaded(
                     game.MaterialColoredShaded,
                     game.MeshMonkey,
-                    [1, 0.3, 0.2, 1]
+                    [1, 0.3, 0.2, 1],
                 ),
             ],
             // Camera rig anchor.
@@ -35,7 +35,7 @@ export function blueprint_player(game: Game) {
                 control_player(false, 0, 0.2, -10, 80),
             ],
             // Overhead light.
-            [transform([0, 2, 0]), light_point([1, 1, 1], 5)]
+            [transform([0, 2, 0]), light_point([1, 1, 1], 5)],
         ),
     ];
 }

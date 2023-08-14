@@ -31,7 +31,7 @@ export function scene_stage(game: Game) {
             view,
             quat_from_euler([0, 0, 0, 1], float(-90, 90), float(-90, 90), float(-90, 90)),
             [float(-edge_length / 2, edge_length / 2), 0, float(-edge_length / 2, edge_length / 2)],
-            [float(0.1, 0.5), float(0.5, 5), float(0.1, 0.5)]
+            [float(0.1, 0.5), float(0.5, 5), float(0.1, 0.5)],
         );
 
         let color = new Float32Array(colors.buffer, i * 4 * 3, 3);

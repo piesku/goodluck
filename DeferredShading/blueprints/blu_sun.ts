@@ -27,7 +27,7 @@ export function blueprint_sun(game: Game) {
                 camera_target(game.Targets.Back, orthographic([15, 15], 1, 100)),
             ],
             // Ambient light.
-            [transform(), light_ambient([1, 1, 1], 0.01)]
+            [transform(), light_ambient([1, 1, 1], 0.01)],
         ),
     ];
 }

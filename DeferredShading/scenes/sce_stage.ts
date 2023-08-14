@@ -63,7 +63,7 @@ export function scene_stage(game: Game) {
                 game.MeshSphereSmooth,
                 [1, 1, 1],
                 element([64, 128, 256, 512]),
-                float(0.1, 0.7)
+                float(0.1, 0.7),
             ),
             children([
                 transform(undefined, undefined, [diameter, diameter, diameter]),

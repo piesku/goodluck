@@ -60,14 +60,14 @@ function update(game: Game, entity: Entity) {
             mat2d_from_ortho(
                 projection.Projection,
                 projection.Radius[0],
-                projection.Radius[0] / aspect
+                projection.Radius[0] / aspect,
             );
         } else {
             // Landscape orientation.
             mat2d_from_ortho(
                 projection.Projection,
                 projection.Radius[1] * aspect,
-                projection.Radius[1]
+                projection.Radius[1],
             );
         }
     }

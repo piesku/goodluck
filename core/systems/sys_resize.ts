@@ -45,7 +45,7 @@ export function sys_resize(game: Game, delta: number) {
                             game.Gl,
                             target,
                             game.ViewportWidth,
-                            game.ViewportHeight
+                            game.ViewportHeight,
                         );
                         break;
                     case TargetKind.Hdr:
@@ -56,7 +56,7 @@ export function sys_resize(game: Game, delta: number) {
                             game.Gl,
                             target,
                             game.ViewportWidth,
-                            game.ViewportHeight
+                            game.ViewportHeight,
                         );
                         break;
                 }
@@ -72,7 +72,7 @@ export function sys_resize(game: Game, delta: number) {
                         camera.ViewportHeight = game.ViewportHeight;
                         update_projection(
                             camera.Projection,
-                            game.ViewportWidth / game.ViewportHeight
+                            game.ViewportWidth / game.ViewportHeight,
                         );
                         break;
                     case CameraKind.Target:
@@ -80,7 +80,7 @@ export function sys_resize(game: Game, delta: number) {
                         camera.ViewportHeight = game.ViewportHeight;
                         update_projection(
                             camera.Projection,
-                            camera.Target.Width / camera.Target.Height
+                            camera.Target.Width / camera.Target.Height,
                         );
                         break;
                     case CameraKind.Xr:
@@ -102,7 +102,7 @@ function update_projection(projection: Projection, aspect: number) {
                     projection.FovY / aspect,
                     aspect,
                     projection.Near,
-                    projection.Far
+                    projection.Far,
                 );
             } else {
                 // Landscape orientation.
@@ -111,7 +111,7 @@ function update_projection(projection: Projection, aspect: number) {
                     projection.FovY,
                     aspect,
                     projection.Near,
-                    projection.Far
+                    projection.Far,
                 );
             }
             break;
@@ -127,7 +127,7 @@ function update_projection(projection: Projection, aspect: number) {
                     -projection.Radius[0] / aspect,
                     -projection.Radius[0],
                     projection.Near,
-                    projection.Far
+                    projection.Far,
                 );
             } else {
                 // Landscape orientation.
@@ -138,7 +138,7 @@ function update_projection(projection: Projection, aspect: number) {
                     -projection.Radius[1],
                     -projection.Radius[1] * aspect,
                     projection.Near,
-                    projection.Far
+                    projection.Far,
                 );
             }
             break;

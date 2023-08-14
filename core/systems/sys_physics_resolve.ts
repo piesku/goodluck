@@ -96,7 +96,7 @@ function update(game: Game, entity: Entity) {
                 vec3_scale(
                     rigid_body.VelocityResolved,
                     rigid_body.VelocityResolved,
-                    rigid_body.Bounciness
+                    rigid_body.Bounciness,
                 );
 
                 if (collision.Hit[1] > 0) {

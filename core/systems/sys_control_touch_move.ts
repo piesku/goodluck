@@ -75,7 +75,7 @@ function update(game: Game, entity: Entity) {
         let amount = clamp(
             min_amount,
             max_amount,
-            game.InputDelta["Touch1Y"] * control.Pitch * TOUCH_SENSITIVITY
+            game.InputDelta["Touch1Y"] * control.Pitch * TOUCH_SENSITIVITY,
         );
         quat_from_axis(rotation, AXIS_X, amount * DEG_TO_RAD);
         // Pitch is post-multiplied, i.e. applied relative to the entity's self

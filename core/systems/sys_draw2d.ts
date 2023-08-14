@@ -33,7 +33,7 @@ export function sys_draw2d(game: Game, delta: number) {
         (-camera.Pv[2] * game.ViewportWidth) / 2,
         (camera.Pv[3] * game.ViewportHeight) / 2,
         ((1 + camera.Pv[4]) * game.ViewportWidth) / 2,
-        ((1 - camera.Pv[5]) * game.ViewportHeight) / 2
+        ((1 - camera.Pv[5]) * game.ViewportHeight) / 2,
     );
 
     for (let ent = 0; ent < game.World.Signature.length; ent++) {
@@ -47,7 +47,7 @@ export function sys_draw2d(game: Game, delta: number) {
                 -node.World[2],
                 node.World[3],
                 node.World[4],
-                -node.World[5]
+                -node.World[5],
             );
 
             let draw = game.World.Draw[ent];

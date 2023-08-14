@@ -22,7 +22,7 @@ export function mat4_set(
     m30: number,
     m31: number,
     m32: number,
-    m33: number
+    m33: number,
 ) {
     out[0] = m00;
     out[1] = m01;
@@ -218,7 +218,7 @@ export function mat4_from_perspective(
     fovy: number,
     aspect: number,
     near: number,
-    far: number
+    far: number,
 ) {
     let f = 1.0 / Math.tan(fovy / 2),
         nf;
@@ -256,7 +256,7 @@ export function mat4_from_ortho(
     bottom: number,
     left: number,
     near: number,
-    far: number
+    far: number,
 ) {
     let lr = 1 / (left - right);
     let bt = 1 / (bottom - top);

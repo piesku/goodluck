@@ -73,7 +73,7 @@ function render(game: Game, eye: CameraEye) {
 function use_colored_shaded(
     game: Game,
     material: Material<ColoredShadedLayout & ForwardShadingLayout>,
-    eye: CameraEye
+    eye: CameraEye,
 ) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
@@ -96,7 +96,7 @@ function draw_colored_shaded(game: Game, transform: Transform, render: RenderCol
 function use_colored_skinned(
     game: Game,
     material: Material<ColoredShadedLayout & ForwardShadingLayout>,
-    eye: CameraEye
+    eye: CameraEye,
 ) {
     game.Gl.useProgram(material.Program);
     game.Gl.uniformMatrix4fv(material.Locations.Pv, false, eye.Pv);
@@ -110,7 +110,7 @@ function draw_colored_skinned(
     game: Game,
     entity: Entity,
     transform: Transform,
-    render: RenderColoredSkinned
+    render: RenderColoredSkinned,
 ) {
     game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
     game.Gl.uniformMatrix4fv(render.Material.Locations.Self, false, transform.Self);

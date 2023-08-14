@@ -53,7 +53,7 @@ export function destroy_entity(world: WorldImpl, entity: Entity) {
 export function first_having(
     world: WorldImpl,
     query: number,
-    start_at: Entity = 0
+    start_at: Entity = 0,
 ): Entity | undefined {
     for (let i = start_at; i < world.Signature.length; i++) {
         if ((world.Signature[i] & query) === query) {

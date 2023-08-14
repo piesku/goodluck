@@ -49,7 +49,7 @@ let fragment = `#version 300 es\n
 `;
 
 export function mat_postprocess_blur(
-    gl: WebGL2RenderingContext
+    gl: WebGL2RenderingContext,
 ): Material<PostprocessLayout & {Horizontal: WebGLUniformLocation}> {
     let program = link(gl, vertex, fragment);
     return {

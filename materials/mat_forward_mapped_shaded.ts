@@ -108,7 +108,7 @@ let fragment = `#version 300 es\n
 `;
 
 export function mat_forward_mapped_shaded(
-    gl: WebGL2RenderingContext
+    gl: WebGL2RenderingContext,
 ): Material<MappedShadedLayout & ForwardShadingLayout> {
     let program = link(gl, vertex, fragment);
     return {

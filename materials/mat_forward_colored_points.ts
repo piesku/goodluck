@@ -27,7 +27,7 @@ let fragment = `#version 300 es\n
 `;
 
 export function mat_forward_colored_points(
-    gl: WebGL2RenderingContext
+    gl: WebGL2RenderingContext,
 ): Material<ColoredUnlitLayout> {
     let program = link(gl, vertex, fragment);
     return {

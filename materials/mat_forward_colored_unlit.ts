@@ -27,7 +27,7 @@ let fragment = `#version 300 es\n
 
 export function mat_forward_colored_unlit(
     gl: WebGL2RenderingContext,
-    mode: GLenum = GL_TRIANGLES
+    mode: GLenum = GL_TRIANGLES,
 ): Material<ColoredUnlitLayout> {
     let program = link(gl, vertex, fragment);
     return {

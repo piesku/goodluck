@@ -78,7 +78,7 @@ export interface RenderColoredUnlit {
 export function render_colored_unlit(
     material: Material<ColoredUnlitLayout>,
     mesh: Mesh,
-    color: Vec4
+    color: Vec4,
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Render;
@@ -111,7 +111,7 @@ export function render_colored_shaded(
     shininess: number = 0,
     emission: number = 0,
     specular_rgb: Vec3 = [1, 1, 1],
-    front_face: GLenum = GL_CW
+    front_face: GLenum = GL_CW,
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Render;
@@ -146,7 +146,7 @@ export function render_colored_shadows(
     shininess: number = 0,
     emission: number = 0,
     specular_rgb: Vec3 = [1, 1, 1],
-    front_face: GLenum = GL_CW
+    front_face: GLenum = GL_CW,
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Render;
@@ -181,7 +181,7 @@ export function render_colored_deferred(
     shininess: number = 0,
     emission: number = 0,
     specular_rgb: Vec3 = [1, 1, 1],
-    front_face: GLenum = GL_CW
+    front_face: GLenum = GL_CW,
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Render;
@@ -212,7 +212,7 @@ export function render_textured_unlit(
     material: Material<TexturedUnlitLayout>,
     mesh: Mesh,
     texture: WebGLTexture,
-    color: Vec4 = [1, 1, 1, 1]
+    color: Vec4 = [1, 1, 1, 1],
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Render;
@@ -248,7 +248,7 @@ export function render_textured_shaded(
     emission: number = 0,
     diffuse_color: Vec4 = [1, 1, 1, 1],
     specular_rgb: Vec3 = [1, 1, 1],
-    front_face: GLenum = GL_CW
+    front_face: GLenum = GL_CW,
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Render;
@@ -285,7 +285,7 @@ export function render_mapped_shaded(
     diffuse_map: WebGLTexture,
     normal_map: WebGLTexture,
     roughness_map: WebGLTexture,
-    diffuse_color: Vec4 = [1, 1, 1, 1]
+    diffuse_color: Vec4 = [1, 1, 1, 1],
 ) {
     return (game: Game, entity: Entity) => {
         if (!mapped_meshes.has(mesh)) {
@@ -426,7 +426,7 @@ export function render_particles_colored(
     start_color: Vec4,
     start_size: number,
     end_color: Vec4,
-    end_size: number
+    end_size: number,
 ) {
     return (game: Game, entity: Entity) => {
         let buffer = game.Gl.createBuffer()!;
@@ -434,7 +434,7 @@ export function render_particles_colored(
         game.Gl.bufferData(
             GL_ARRAY_BUFFER,
             MAX_PARTICLES * FLOATS_PER_PARTICLE * 4,
-            GL_DYNAMIC_DRAW
+            GL_DYNAMIC_DRAW,
         );
 
         game.World.Signature[entity] |= Has.Render;
@@ -472,7 +472,7 @@ export function render_particles_textured(
     start_color: Vec4,
     start_size: number,
     end_color: Vec4,
-    end_size: number
+    end_size: number,
 ) {
     return (game: Game, entity: Entity) => {
         let buffer = game.Gl.createBuffer()!;
@@ -480,7 +480,7 @@ export function render_particles_textured(
         game.Gl.bufferData(
             GL_ARRAY_BUFFER,
             MAX_PARTICLES * FLOATS_PER_PARTICLE * 4,
-            GL_DYNAMIC_DRAW
+            GL_DYNAMIC_DRAW,
         );
 
         game.World.Signature[entity] |= Has.Render;

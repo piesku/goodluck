@@ -11,7 +11,7 @@ export function map_range(
     old_min: number,
     old_max: number,
     new_min: number,
-    new_max: number
+    new_max: number,
 ) {
     return ((value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min;
 }

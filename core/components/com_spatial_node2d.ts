@@ -45,7 +45,7 @@ export function spatial_node2d(is_gyroscope = false) {
         game.World.SpatialNode2D[entity] = {
             World: game.World.InstanceData.subarray(
                 entity * FLOATS_PER_INSTANCE,
-                entity * FLOATS_PER_INSTANCE + 6
+                entity * FLOATS_PER_INSTANCE + 6,
             ),
             Self: mat2d_create(),
             IsGyroscope: is_gyroscope,

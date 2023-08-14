@@ -163,7 +163,7 @@ function use_material(game: Game, render: Render, eye: CameraEye) {
                 game.Gl.uniformMatrix4fv(
                     render.Material.Locations.ShadowSpace,
                     false,
-                    light_camera.Pv
+                    light_camera.Pv,
                 );
             }
             break;
@@ -207,7 +207,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
                 render.Material.Mode,
                 render.Mesh.IndexCount,
                 GL_UNSIGNED_SHORT,
-                0
+                0,
             );
             game.Gl.bindVertexArray(null);
 
@@ -223,7 +223,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
                 render.Material.Mode,
                 render.Mesh.IndexCount,
                 GL_UNSIGNED_SHORT,
-                0
+                0,
             );
             game.Gl.bindVertexArray(null);
             break;
@@ -238,7 +238,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
                 render.Material.Mode,
                 render.Mesh.IndexCount,
                 GL_UNSIGNED_SHORT,
-                0
+                0,
             );
             game.Gl.bindVertexArray(null);
             break;
@@ -261,7 +261,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
                 render.Material.Mode,
                 render.Mesh.IndexCount,
                 GL_UNSIGNED_SHORT,
-                0
+                0,
             );
             game.Gl.bindVertexArray(null);
             break;
@@ -287,7 +287,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
                 render.Material.Mode,
                 render.Mesh.IndexCount,
                 GL_UNSIGNED_SHORT,
-                0
+                0,
             );
             game.Gl.bindVertexArray(null);
             break;
@@ -319,7 +319,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
                 render.Material.Mode,
                 render.Mesh.IndexCount,
                 GL_UNSIGNED_SHORT,
-                0
+                0,
             );
             game.Gl.bindVertexArray(null);
             break;
@@ -341,7 +341,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
                 render.Material.Locations.Details,
                 emitter.Lifespan,
                 emitter.Speed,
-                ...render.Size
+                ...render.Size,
             );
 
             let instances = Float32Array.from(emitter.Instances);
@@ -355,7 +355,7 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
                 GL_FLOAT,
                 false,
                 FLOATS_PER_PARTICLE * 4,
-                0
+                0,
             );
 
             game.Gl.enableVertexAttribArray(render.Material.Locations.Direction);
@@ -365,12 +365,12 @@ function draw_entity(game: Game, entity: Entity, current_target?: WebGLTexture) 
                 GL_FLOAT,
                 false,
                 FLOATS_PER_PARTICLE * 4,
-                4 * 4
+                4 * 4,
             );
             game.Gl.drawArrays(
                 render.Material.Mode,
                 0,
-                emitter.Instances.length / FLOATS_PER_PARTICLE
+                emitter.Instances.length / FLOATS_PER_PARTICLE,
             );
             break;
         }

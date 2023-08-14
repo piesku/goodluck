@@ -53,7 +53,7 @@ export function setup_render2d_buffers(gl: WebGL2RenderingContext, instance_buff
         GL_FLOAT,
         false,
         BYTES_PER_INSTANCE,
-        4 * 4
+        4 * 4,
     );
 
     gl.enableVertexAttribArray(Attribute.InstanceColor);
@@ -68,6 +68,6 @@ export function setup_render2d_buffers(gl: WebGL2RenderingContext, instance_buff
         GL_FLOAT,
         false,
         BYTES_PER_INSTANCE,
-        4 * 12
+        4 * 12,
     );
 }

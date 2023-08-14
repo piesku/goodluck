@@ -55,7 +55,7 @@ export interface CameraCanvas extends CameraEye {
 export function camera_canvas(
     projection: Projection,
     clear_color: Vec4 = [0.9, 0.9, 0.9, 1],
-    clear_mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
+    clear_mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT,
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;
@@ -100,7 +100,7 @@ export function camera_target(
     target: RenderTarget,
     projection: Projection,
     clear_color: Vec4 = [0, 0, 0, 1],
-    clear_mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
+    clear_mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT,
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;
@@ -144,7 +144,7 @@ export interface CameraXr {
  */
 export function camera_xr(
     clear_color: Vec4 = [0.9, 0.9, 0.9, 1],
-    clear_mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
+    clear_mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT,
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.Camera;

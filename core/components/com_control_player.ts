@@ -33,7 +33,7 @@ export function control_player(
     yaw: number,
     pitch: number,
     min_pitch = 0,
-    max_pitch = 0
+    max_pitch = 0,
 ) {
     return (game: Game, entity: Entity) => {
         game.World.Signature[entity] |= Has.ControlPlayer;

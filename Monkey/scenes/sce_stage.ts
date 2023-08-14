@@ -32,7 +32,7 @@ export function scene_stage(game: Game) {
             game.MaterialColoredPhong,
             game.MeshMonkeySmooth,
             [1, 1, 0.3, 1],
-            512
+            512,
         ),
     ]);
 }

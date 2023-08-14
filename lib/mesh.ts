@@ -61,7 +61,7 @@ export function face_cross(out: Vec3, mesh: Mesh, face: Vec3): Vec3 {
             mesh.VertexArray[face[0] * 3 + 0],
             mesh.VertexArray[face[0] * 3 + 1],
             mesh.VertexArray[face[0] * 3 + 2],
-        ]
+        ],
     );
 
     vec3_subtract(
@@ -75,7 +75,7 @@ export function face_cross(out: Vec3, mesh: Mesh, face: Vec3): Vec3 {
             mesh.VertexArray[face[1] * 3 + 0],
             mesh.VertexArray[face[1] * 3 + 1],
             mesh.VertexArray[face[1] * 3 + 2],
-        ]
+        ],
     );
 
     return vec3_cross(out, edge2, edge1);

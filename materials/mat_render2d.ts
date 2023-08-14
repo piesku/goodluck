@@ -81,7 +81,7 @@ let fragment = `#version 300 es\n
 export function mat_render2d(
     gl: WebGL2RenderingContext,
     has_render2d: number,
-    has_spatial_node2d: number
+    has_spatial_node2d: number,
 ): Material<Render2DLayout> {
     let program = link(gl, vertex(has_render2d, has_spatial_node2d), fragment);
     return {

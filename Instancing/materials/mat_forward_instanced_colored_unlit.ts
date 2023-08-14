@@ -51,7 +51,7 @@ let fragment = `#version 300 es\n
 `;
 
 export function mat_forward_instanced_colored_unlit(
-    gl: WebGL2RenderingContext
+    gl: WebGL2RenderingContext,
 ): Material<WorldSpaceLayout & InstancedColumnLayout & InstancedColorLayout & FogLayout> {
     let program = link(gl, vertex, fragment);
     return {

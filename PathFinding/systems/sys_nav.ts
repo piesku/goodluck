@@ -56,7 +56,7 @@ function update(game: Game, entity: Entity) {
         let current_waypoint = agent.Waypoints[0];
         let distance_to_current_waypoint = vec3_distance_squared(
             position,
-            current_waypoint.Position
+            current_waypoint.Position,
         );
         if (distance_to_current_waypoint < 1) {
             let origin = agent.Waypoints.shift();
