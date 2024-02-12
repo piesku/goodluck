@@ -23,7 +23,7 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
 
     // Camera.
-    instantiate(game, [...blueprint_camera(game), set_position(0, 0, 7), set_rotation(0, 180, 0)]);
+    instantiate(game, [...blueprint_camera(game), set_position(0, 0, 9), set_rotation(0, 180, 0)]);
 
     // Minimap Camera.
     instantiate(game, [

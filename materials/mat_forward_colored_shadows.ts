@@ -12,15 +12,18 @@ let vertex = `#version 300 es\n
     uniform mat4 pv;
     uniform mat4 world;
     uniform mat4 self;
+    uniform mat4 shadow_space;
 
     layout(location=${Attribute.Position}) in vec4 attr_position;
     layout(location=${Attribute.Normal}) in vec3 attr_normal;
 
     out vec4 vert_position;
+    out vec4 vert_position_shadow;
     out vec3 vert_normal;
 
     void main() {
         vert_position = world * attr_position;
+        vert_position_shadow = shadow_space * vert_position;
         vert_normal = (vec4(attr_normal, 0.0) * self).xyz;
         gl_Position = pv * vert_position;
     }
@@ -28,7 +31,7 @@ let vertex = `#version 300 es\n
 
 let fragment = `#version 300 es\n
     precision mediump float;
-    precision lowp sampler2DShadow;
+    precision mediump sampler2DShadow;
 
     uniform vec3 eye;
     uniform vec4 diffuse_color;
@@ -36,29 +39,15 @@ let fragment = `#version 300 es\n
     uniform vec4 emissive_color;
     uniform vec4 light_positions[${MAX_FORWARD_LIGHTS}];
     uniform vec4 light_details[${MAX_FORWARD_LIGHTS}];
-    uniform mat4 shadow_space;
     uniform sampler2DShadow shadow_map;
 
     in vec4 vert_position;
+    in vec4 vert_position_shadow;
     in vec3 vert_normal;
 
     out vec4 frag_color;
 
     ${INCLUDE_GAMMA_CORRECTION}
-
-    // How much shadow to apply at world_pos, expressed as [min, 1]:
-    // min = completely in shadow, 1 = completely not in shadow
-    float shadow_factor(vec4 world_pos, float min) {
-        vec4 shadow_space_pos = shadow_space * world_pos;
-        vec3 shadow_space_ndc = shadow_space_pos.xyz / shadow_space_pos.w;
-        // Transform the [-1, 1] NDC to [0, 1] to match the shadow texture data.
-        shadow_space_ndc = shadow_space_ndc * 0.5 + 0.5;
-
-        // Add shadow bias to avoid shadow acne.
-        shadow_space_ndc.z -= 0.001;
-
-        return texture(shadow_map, shadow_space_ndc) * (1.0 - min) + min;
-    }
 
     void main() {
         vec3 world_normal = normalize(vert_normal);
@@ -81,6 +70,11 @@ let fragment = `#version 300 es\n
             vec3 light_normal;
             if (light_kind == ${LightKind.Directional}) {
                 light_normal = light_positions[i].xyz;
+                // --- Shadow mapping ---
+                // Apply the shadow source's projection and add bias to avoid shadow acne.
+                vec3 sample_position = vert_position_shadow.xyz / vert_position_shadow.w - vec3(0, 0, 0.01);
+                // Transform the [-1, 1] NDC to [0, 1] to match the shadow texture data.
+                light_intensity *= texture(shadow_map, sample_position * 0.5 + 0.5);
             } else if (light_kind == ${LightKind.Point}) {
                 vec3 light_dir = light_positions[i].xyz - vert_position.xyz;
                 float light_dist = length(light_dir);
@@ -112,8 +106,7 @@ let fragment = `#version 300 es\n
         }
 
         vec3 emissive_rgb = GAMMA_DECODE(emissive_color.rgb) * emissive_color.a;
-        vec3 shaded_rgb = light_acc * shadow_factor(vert_position, 0.5);
-        frag_color= vec4(GAMMA_ENCODE(shaded_rgb + emissive_rgb), diffuse_color.a);
+        frag_color = vec4(GAMMA_ENCODE(light_acc + emissive_rgb), diffuse_color.a);
     }
 `;
 
