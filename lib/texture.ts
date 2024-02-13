@@ -6,6 +6,7 @@ import {
     GL_DATA_UNSIGNED_INT,
     GL_DEPTH_COMPONENT,
     GL_DEPTH_COMPONENT24,
+    GL_DEPTH_COMPONENT32F,
     GL_LINEAR,
     GL_NEAREST,
     GL_NEAREST_MIPMAP_LINEAR,
@@ -154,6 +155,34 @@ export function resize_texture_depth24(
         0,
         GL_DEPTH_COMPONENT,
         GL_DATA_UNSIGNED_INT,
+        null,
+    );
+
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    gl.texParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    return texture;
+}
+
+export function resize_texture_depth32f(
+    gl: WebGL2RenderingContext,
+    texture: WebGLTexture,
+    width: number,
+    height: number,
+) {
+    gl.bindTexture(GL_TEXTURE_2D, texture);
+    gl.texImage2D(
+        GL_TEXTURE_2D,
+        0,
+        GL_DEPTH_COMPONENT32F,
+        width,
+        height,
+        0,
+        GL_DEPTH_COMPONENT,
+        GL_DATA_FLOAT,
         null,
     );
 

@@ -1,7 +1,7 @@
 import {Output} from "../materials/layout.js";
 import {
     resize_texture_depth24,
-    resize_texture_rgba16f,
+    resize_texture_depth32f,
     resize_texture_rgba32f,
     resize_texture_rgba8,
 } from "./texture.js";
@@ -107,8 +107,8 @@ export function create_hdr_target(
         Width: width,
         Height: height,
         ResizeToViewport: resize_to_viewport,
-        ColorTexture: resize_texture_rgba16f(gl, gl.createTexture()!, width, height),
-        DepthTexture: resize_texture_depth24(gl, gl.createTexture()!, width, height),
+        ColorTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
+        DepthTexture: resize_texture_depth32f(gl, gl.createTexture()!, width, height),
     };
 
     gl.bindFramebuffer(GL_FRAMEBUFFER, target.Framebuffer);
@@ -144,8 +144,8 @@ export function resize_hdr_target(
     target.Width = width;
     target.Height = height;
 
-    resize_texture_rgba16f(gl, target.ColorTexture, target.Width, target.Height);
-    resize_texture_depth24(gl, target.DepthTexture, target.Width, target.Height);
+    resize_texture_rgba32f(gl, target.ColorTexture, target.Width, target.Height);
+    resize_texture_depth32f(gl, target.DepthTexture, target.Width, target.Height);
 }
 
 export interface DeferredTarget {
@@ -178,7 +178,7 @@ export function create_deferred_target(
         SpecularTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
         PositionTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
         NormalTexture: resize_texture_rgba32f(gl, gl.createTexture()!, width, height),
-        DepthTexture: resize_texture_depth24(gl, gl.createTexture()!, width, height),
+        DepthTexture: resize_texture_depth32f(gl, gl.createTexture()!, width, height),
     };
 
     gl.bindFramebuffer(GL_FRAMEBUFFER, target.Framebuffer);
@@ -248,7 +248,7 @@ export function resize_deferred_target(
     resize_texture_rgba32f(gl, target.SpecularTexture, target.Width, target.Height);
     resize_texture_rgba32f(gl, target.PositionTexture, target.Width, target.Height);
     resize_texture_rgba32f(gl, target.NormalTexture, target.Width, target.Height);
-    resize_texture_depth24(gl, target.DepthTexture, target.Width, target.Height);
+    resize_texture_depth32f(gl, target.DepthTexture, target.Width, target.Height);
 }
 
 export interface DepthTarget {
@@ -271,7 +271,7 @@ export function create_depth_target(gl: WebGL2RenderingContext, width: number, h
         Height: height,
         ResizeToViewport: false,
         ColorTexture: resize_texture_rgba8(gl, gl.createTexture()!, width, height),
-        DepthTexture: resize_texture_depth24(gl, gl.createTexture()!, width, height),
+        DepthTexture: resize_texture_depth32f(gl, gl.createTexture()!, width, height),
     };
 
     gl.bindFramebuffer(GL_FRAMEBUFFER, target.Framebuffer);
