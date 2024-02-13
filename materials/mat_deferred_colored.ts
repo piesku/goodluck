@@ -4,7 +4,6 @@ import {Attribute, ColoredDeferredLayout, Output} from "./layout.js";
 import {INCLUDE_GAMMA_CORRECTION} from "./light.js";
 
 let vertex = `#version 300 es\n
-
     uniform mat4 pv;
     uniform mat4 world;
     uniform mat4 self;

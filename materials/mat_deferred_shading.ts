@@ -32,7 +32,7 @@ let vertex = `#version 300 es\n
 
 let fragment = `#version 300 es\n
     precision mediump float;
-    precision lowp sampler2DShadow;
+    precision mediump sampler2DShadow;
 
     uniform vec3 eye;
     uniform sampler2D diffuse_map;
@@ -51,20 +51,6 @@ let fragment = `#version 300 es\n
     in vec4 vert_position;
 
     out vec4 frag_color;
-
-    // How much shadow to apply at world_pos, expressed as [min, 1]:
-    // min = completely in shadow, 1 = completely not in shadow
-    float shadow_factor(vec4 world_pos, float min) {
-        vec4 shadow_space_pos = shadow_space * world_pos;
-        vec3 shadow_space_ndc = shadow_space_pos.xyz / shadow_space_pos.w;
-        // Transform the [-1, 1] NDC to [0, 1] to match the shadow texture data.
-        shadow_space_ndc = shadow_space_ndc * 0.5 + 0.5;
-
-        // Add shadow bias to avoid shadow acne.
-        shadow_space_ndc.z -= 0.001;
-
-        return texture(shadow_map, shadow_space_ndc) * (1.0 - min) + min;
-    }
 
     ${INCLUDE_GAMMA_CORRECTION}
 
@@ -99,6 +85,17 @@ let fragment = `#version 300 es\n
             // Directional lights shine backwards, to match the way cameras work.
             // Add a depth camera to the light entity to make it a shadow source.
             light_normal = light_direction;
+            if (light_kind.y == 1) {
+                // The light is a shadow source.
+                vec4 current_position_shadow_space = shadow_space * current_position;
+                // Apply the shadow source's projection.
+                current_position_shadow_space /= current_position_shadow_space.w;
+                // Add shadow bias to avoid shadow acne.
+                current_position_shadow_space.z -= 0.01;
+                // Transform the [-1, 1] NDC to [0, 1] to match the shadow texture data.
+                // Return: 0 = completely in shadow, 1 = completely not in shadow.
+                light_intensity *= texture(shadow_map, current_position_shadow_space.xyz * 0.5 + 0.5);
+            }
         } else {
             // Point light.
             vec3 light_dir = light_position.xyz - current_position.xyz;
@@ -124,13 +121,7 @@ let fragment = `#version 300 es\n
             }
         }
 
-        if (light_kind.y == 1) {
-            // The light is a shadow source.
-            vec3 shaded_rgb = light_acc * shadow_factor(current_position, 0.0);
-            frag_color = vec4(shaded_rgb, 1.0);
-        } else {
-            frag_color = vec4(light_acc, 1.0);
-        }
+        frag_color = vec4(light_acc, 1.0);
     }
 `;
 

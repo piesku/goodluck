@@ -18,12 +18,12 @@ let vertex = `#version 300 es\n
     layout(location=${Attribute.Normal}) in vec3 attr_normal;
 
     out vec4 vert_position;
-    out vec4 vert_position_shadow;
+    out vec4 vert_position_shadow_space;
     out vec3 vert_normal;
 
     void main() {
         vert_position = world * attr_position;
-        vert_position_shadow = shadow_space * vert_position;
+        vert_position_shadow_space = shadow_space * vert_position;
         vert_normal = (vec4(attr_normal, 0.0) * self).xyz;
         gl_Position = pv * vert_position;
     }
@@ -42,7 +42,7 @@ let fragment = `#version 300 es\n
     uniform sampler2DShadow shadow_map;
 
     in vec4 vert_position;
-    in vec4 vert_position_shadow;
+    in vec4 vert_position_shadow_space;
     in vec3 vert_normal;
 
     out vec4 frag_color;
@@ -71,10 +71,12 @@ let fragment = `#version 300 es\n
             if (light_kind == ${LightKind.Directional}) {
                 light_normal = light_positions[i].xyz;
                 // --- Shadow mapping ---
-                // Apply the shadow source's projection and add bias to avoid shadow acne.
-                vec3 sample_position = vert_position_shadow.xyz / vert_position_shadow.w - vec3(0, 0, 0.01);
+                // Apply the shadow source's projection.
+                vec3 vert_position_shadow_ndc = vert_position_shadow_space.xyz / vert_position_shadow_space.w;
+                // Add bias to avoid shadow acne.
+                vert_position_shadow_ndc.z -= 0.01;
                 // Transform the [-1, 1] NDC to [0, 1] to match the shadow texture data.
-                light_intensity *= texture(shadow_map, sample_position * 0.5 + 0.5);
+                light_intensity *= texture(shadow_map, vert_position_shadow_ndc * 0.5 + 0.5);
             } else if (light_kind == ${LightKind.Point}) {
                 vec3 light_dir = light_positions[i].xyz - vert_position.xyz;
                 float light_dist = length(light_dir);
