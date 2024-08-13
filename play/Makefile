@@ -35,9 +35,9 @@ game.roadroller.js: game.terser.js node_modules
 index.html: game.html game.roadroller.js game.css debug.css posthtml.cjs node_modules
 	node posthtml.cjs $< > $@
 
-# On Ubuntu, install p7zip-full. See https://www.7-zip.org/download.html.
+# https://www.7-zip.org/download.html
 index.zip: index.html
-	7z a -mx=9 -mfb=256 -mpass=15 $@ $^
+	7zz a -mx=9 -mfb=256 -mpass=15 $@ $^
 
 .PHONY: clean
 clean:
