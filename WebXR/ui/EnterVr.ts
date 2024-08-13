@@ -17,12 +17,12 @@ export function EnterVr(game: Game) {
             ${game.XrFrame
                 ? ExitButton()
                 : window.isSecureContext
-                ? navigator.xr
-                    ? game.XrSupported
-                        ? EnterButton()
-                        : `<div style="padding: 1vmin">WebXR headset not found</div>`
-                    : `<div style="padding: 1vmin">WebXR not supported</div>`
-                : `<div style="padding: 1vmin">WebXR requires HTTPS</div>`}
+                  ? navigator.xr
+                      ? game.XrSupported
+                          ? EnterButton()
+                          : `<div style="padding: 1vmin">WebXR headset not found</div>`
+                      : `<div style="padding: 1vmin">WebXR not supported</div>`
+                  : `<div style="padding: 1vmin">WebXR requires HTTPS</div>`}
         </div>
     `;
 }
